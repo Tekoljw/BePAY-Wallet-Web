@@ -1,0 +1,61 @@
+{
+  "list": [
+    {
+      "id": 0,
+      "name": "MetaMask",
+      "src": "icon-right-1",
+      "isOnlyPcShow": true
+    },
+ 
+ 
+
+    {
+      "id": 4,
+      "name": "WalletConnect",
+      "src": "icon-right-5"
+    },
+
+
+    
+
+    {
+      "id": 9,
+      "name": "Coinbase",
+      "src": "icon-right-10"
+    },
+  
+    {
+      "id": 11,
+      "name": "TrustWallet",
+      "src": "icon-right-12",
+      "isOnlyMobileShow": true
+    },
+    {
+      "id": 12,
+      "name": "Polygon",
+      "src": "icon-right-13"
+    },
+    
+    
+    {
+      "id": 13,
+      "name": "BitKeep",
+      "src": "icon-right-14"
+
+    },
+    {
+      "id"  :14,
+      "name":"Bitski",
+      "src": "icon-right-15"
+    },
+    {
+      "id":15,
+      "name":"Ledger",
+      "src": "icon-right-16"
+    },{
+      "id":16,
+      "name":"Binance Smart ",
+      "src": "icon-right-17"
+    }
+  ]
+}

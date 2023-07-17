@@ -1,0 +1,119 @@
+.animate-enter-active,
+.animate-exit-active,
+.animate-enter-done {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1000;
+}
+
+.animateWrapper {
+  position: relative;
+  z-index: 1000;
+  overflow: auto;
+  background-color: #0F172A;
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+}
+
+.animate-enter .animateWrapper {
+  opacity: 0;
+  transition: transform 0.2s, opacity 0.2s;
+  will-change: transform;
+  -webkit-transform: translateY(5%);
+  transform: translateY(5%);
+}
+
+.animate-enter-active .animateWrapper {
+  opacity: 1;
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+  will-change: transform;
+}
+
+.animate-exit .animateWrapper {
+  opacity: 1;
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+}
+
+.animate-exit-active .animateWrapper {
+  opacity: 0;
+  -webkit-transform: translateY(5%);
+  transform: translateY(5%);
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 200;
+  background-color: #000;
+  will-change: opacity;
+}
+
+.animate-enter .modalOverlay {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.animate-enter-active .modalOverlay {
+  opacity: 0.5;
+}
+
+.animate-enter-done .modalOverlay {
+  opacity: 0.5;
+}
+
+.animate-exit .modalOverlay {
+  opacity: 0.5;
+}
+
+.animate-exit-active .modalOverlay {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.animate-close-btn {
+  position: absolute;
+  right: 1.6rem;
+  top: 1.6rem;
+  cursor: pointer;
+}
+
+
+/* 禁止回弹 */
+@media screen and (pointer: coarse) {
+  @supports (-webkit-backdrop-filter: blur(1px)) and (overscroll-behavior-y: none)  {
+    html {
+      min-height: 100%;
+      overscroll-behavior-y: none;
+    }
+  }
+}
+
+@media screen and (pointer: coarse) {
+  @supports (-webkit-backdrop-filter: blur(1px)) and (not (overscroll-behavior-y: none))  {
+    html {
+      height: 100%;
+      overflow: hidden;
+    }
+    body {
+      margin: 0px;
+      max-height: 100%; /* or `height: calc(100% - 16px);` if body has default margin */
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+}
+

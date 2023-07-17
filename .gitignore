@@ -1,0 +1,14 @@
+/.idea/
+/.vscode/
+
+node_modules/
+build/
+/.yarn
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+
+.DS_Store

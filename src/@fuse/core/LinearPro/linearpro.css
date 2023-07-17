@@ -1,0 +1,19 @@
+.borders{
+  /* background-color:#030407;
+   */
+  background-color: blue;
+  width:100%;
+  height:3px;
+  border-radius:10px;
+  animation: process 2500ms;  
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes process {
+  form{
+    width: 100%;
+  }
+  to{
+    width: 0px;
+  }
+}

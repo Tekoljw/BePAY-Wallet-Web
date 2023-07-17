@@ -1,0 +1,125 @@
+import React from 'react';
+import Button from "@mui/material/Button";
+import utils from '../../util/tools/utils'
+import BN from "bn.js";
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    selectUserData,
+    doLogin,
+} from '../../store/user';
+import {
+    selectConfig,
+    getConfig,
+    getNetworks,
+    getPaytokens
+} from "../../store/config";
+
+import history from '@history';
+
+function Login() {
+    const dispatch = useDispatch();
+    const userData = useSelector(selectUserData);
+    const config = useSelector(selectConfig);
+    console.log('userData ==> ', userData);
+    console.log('config ==> ', config);
+
+    const loginBtnClick = async () => {
+        await dispatch(getConfig());
+        // await dispatch(getNetworks());
+        await dispatch(doLogin());
+        // history.push('/home');
+    };
+
+    return (
+        <div>
+            <Button
+                className="px-48 text-lg"
+                size="large"
+                color="secondary"
+                variant="contained"
+                sx={{ backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1rem' }}
+                onClick={() => {
+                    loginBtnClick()
+                }}
+            >
+                Login
+            </Button>
+            <Button
+                className="px-48 text-lg"
+                size="large"
+                color="secondary"
+                variant="contained"
+                sx={{ backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1rem' }}
+                onClick={() => {
+                    return new Promise(async function(resolve, reject) {
+                        const usgtConstruct = utils.contractAbi('USGT');
+                        const usgtConstructObj = await utils.contractAt(usgtConstruct, config.paytokens.USGTToken);
+                        const hashGameConstruct = utils.contractAbi('GameBanker');
+                        const hashGameConstructObj = await utils.contractAt(hashGameConstruct, config.paytokens.HashGameBanker);
+                        try {
+                            let betMoney = 20; // 下注金额
+
+                            // 获取精度
+                            const decimalsRes = (await usgtConstructObj.decimals()).toNumber();
+                            console.log('decimalsRes ====> ', decimalsRes);
+
+                            // 获取派奖地址
+                            const getJackpotPoolRes = await hashGameConstructObj.getJackpotPool();
+                            console.log('getJackpotPoolRes ====> ', getJackpotPoolRes);
+
+                            // 获取奖池余额
+                            const balanceOfRes = (await hashGameConstructObj.balanceOf(getJackpotPoolRes)).div(new BN(10).pow(new BN(decimalsRes))).toNumber();
+                            console.log('balanceOfRes ====> ', balanceOfRes);
+
+                            // 获取冻结金额
+                            const getFreezeBalanceRes = (await hashGameConstructObj.getFreezeBalance()).div(new BN(10).pow(new BN(decimalsRes))).toNumber();
+                            console.log('getFreezeBalanceRes ====> ', getFreezeBalanceRes);
+
+                            // 获取赔率
+                            const getGameBetRateRes = (await hashGameConstructObj.getGameBetRate(1)).toNumber() / 10000;
+                            console.log('getGameBetRateRes ====> ', getGameBetRateRes);
+
+                            if (getGameBetRateRes < 1) {
+                                console.log('赔率错误,小于1');
+                                return
+                            }
+
+                            let canBetMoney = (balanceOfRes - getFreezeBalanceRes) / getGameBetRateRes;
+
+                            if (betMoney > canBetMoney) {
+                                console.log('超出最大限制金额,不允许下注');
+                                console.log(canBetMoney);
+                                return
+                            }
+
+                            betMoney = new BN(10).pow(new BN(decimalsRes)).mul(new BN(betMoney)); // 下注金额转化
+
+                            // 授权
+                            const approveRes = await usgtConstructObj.approve(config.paytokens.HashGameBanker, betMoney, {
+                                from: '0xFf94FE65f27BC48dfFeEC1f3CbDFf741B444af8d'
+                            });
+                            console.log('approveRes ====> ', approveRes);
+
+                            // 获取授权
+                            // const allowanceRes = await usgtConstructObj.allowance('0x732e0Bc0BAa66aC7cae6F44B6DBACaDb55DbC929', '0x8838aa739C4Cd7E80bDfc74eb9541C7dBF3dd553');
+                            // console.log('approveRes ====> ', allowanceRes.div(new BN(10).pow(new BN(decimalsRes))).toNumber());
+
+                            // 下注
+                            const betToGameRes = await hashGameConstructObj.betToGame(1, betMoney, {
+                                from: '0xFf94FE65f27BC48dfFeEC1f3CbDFf741B444af8d'
+                            });
+                            console.log('betToGameRes ====> ', betToGameRes)
+                        } catch (e) {
+                            console.log(e.message)
+                        }
+                    })
+
+                }}
+            >
+                Construct
+            </Button>
+        </div>
+    )
+}
+
+export default Login;
