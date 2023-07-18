@@ -172,6 +172,8 @@ const locale = {
     home_withdraw_24:'Tampal',
     home_withdraw_25:'Jumlah',
     home_withdraw_26:'Pilih Saya',
+    home_withdraw_27: "Akaun PIX",
+    home_withdraw_28: "Jenis akaun",
     
     home_deposite_1: 'Kripto',
     home_deposite_2: 'Fiat',

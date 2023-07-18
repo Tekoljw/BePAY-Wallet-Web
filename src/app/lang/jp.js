@@ -172,6 +172,8 @@ const locale = {
     home_withdraw_24:'貼り付け',
     home_withdraw_25:'量',
     home_withdraw_26:'私の選択',
+    home_withdraw_27: "PIXアカウント",
+    home_withdraw_28: "アカウントの種類",
     
     home_deposite_1: '暗号通貨',
     home_deposite_2: 'フィアット',
@@ -205,6 +207,7 @@ const locale = {
     home_deposite_31: '承認',
     home_deposite_32: '参加する',
     home_deposite_33: '現在の残りNFT：',
+
 
     home_account_1: '現金',
     home_account_2: '検索',

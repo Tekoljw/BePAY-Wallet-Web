@@ -173,6 +173,8 @@ const locale = {
     home_withdraw_24:'붙여넣기',
     home_withdraw_25:'금액',
     home_withdraw_26:'내 것 선택하기',
+    home_withdraw_27: "PIX 계정",
+    home_withdraw_28: "계정 유형",
 
     home_account_1: '법정 화폐',
     home_account_2: '검색',
@@ -182,6 +184,7 @@ const locale = {
     home_account_6: '네트워크',
     home_account_7: '연결 해제',
     home_account_8: '지갑 연결',
+
 
     home_deposite_1: '크립토',
     home_deposite_2: '파이어트',
@@ -215,6 +218,7 @@ const locale = {
     home_deposite_31: '인증',
     home_deposite_32: '참여하다',
     home_deposite_33: '현재 남은 NFTS:',
+
 
     home_wallet_1: 'FuniBox wallet',
     home_wallet_2: '토큰',

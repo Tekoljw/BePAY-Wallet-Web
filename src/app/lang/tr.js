@@ -171,6 +171,8 @@ const locale = {
     home_withdraw_24: 'Yapıştır',
     home_withdraw_25: 'Miktar',
     home_withdraw_26: 'Benimkini Seç',
+    home_withdraw_27: "PIX hesabı",
+    home_withdraw_28: "Hesap türü",
     
     home_deposite_1: 'Kripto',
     home_deposite_2: 'Fiat',

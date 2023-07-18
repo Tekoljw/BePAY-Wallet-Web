@@ -162,6 +162,8 @@ const locale = {
     home_withdraw_24: 'วาง',
     home_withdraw_25: 'จำนวน',
     home_withdraw_26: 'เลือกของฉัน',
+    home_withdraw_27: "บัญชี PIX",
+    home_withdraw_28: "ประเภทบัญชี",
     
     home_withdraw_1: 'เลือกเครือข่าย',
     home_withdraw_2: 'ที่อยู่',

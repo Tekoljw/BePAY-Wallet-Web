@@ -172,6 +172,8 @@ const locale = {
     home_withdraw_24: 'Coller',
     home_withdraw_25: 'Montant',
     home_withdraw_26: 'Choisir mon',
+    home_withdraw_27: "Compte PIX",
+    home_withdraw_28: "Type de compte",
 
     home_deposite_1: 'Cripto',
     home_deposite_2: 'Fiat',

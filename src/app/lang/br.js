@@ -206,6 +206,8 @@ const locale = {
     home_deposite_31: 'Autorizar',
     home_deposite_32: 'Participar',
     home_deposite_33: 'NFTs restantes atualmente:',
+    home_withdraw_27: "Conta PIX",
+    home_withdraw_28: "Tipo de conta",
 
     home_account_1:'Fiat',
     home_account_2:'Pesquisar',

@@ -173,6 +173,8 @@ const locale = {
     home_withdraw_24: 'Wklej',
     home_withdraw_25: 'Ilość',
     home_withdraw_26: 'Wybierz Mój',
+    home_withdraw_27: "Konto PIX",
+    home_withdraw_28: "Rodzaj konta",
 
     home_deposite_1: 'Krypto',
     home_deposite_2: 'Fiat',

@@ -172,6 +172,9 @@ const locale = {
     home_withdraw_24: 'Einfügen',
     home_withdraw_25: 'Betrag',
     home_withdraw_26: 'Meins auswählen',
+    home_withdraw_27: "PIX-Konto",
+    home_withdraw_28: "Kontotyp",
+  
     
     home_deposite_1: 'Krypto',
     home_deposite_2: 'Fiat',
@@ -238,6 +241,7 @@ const locale = {
     home_wallet_19: 'Mindestbetrag erhalten',
     home_wallet_20: 'Gebühr',
     home_wallet_21: 'Jetzt tauschen',
+
 
 
     kyc_1: 'E-Mail',

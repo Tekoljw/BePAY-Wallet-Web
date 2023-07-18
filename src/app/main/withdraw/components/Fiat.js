@@ -40,6 +40,8 @@ import MenuItem from "@mui/material/MenuItem";
 import { useTranslation } from "react-i18next";
 import LoadingButton from "@mui/lab/LoadingButton";
 
+import InputLabel from '@mui/material/InputLabel';
+
 const container = {
     show: {
         transition: {
@@ -56,6 +58,8 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     },
 }));
 
+
+
 const item = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0 },
@@ -70,6 +74,7 @@ function Fiat(props) {
     const [inputVal, setInputVal] = useState({
         bankName: '',
         cardName: '',
+        pixId: '',
         cardNo: '',
         amount: '',
     });
@@ -86,18 +91,26 @@ function Fiat(props) {
     const config = useSelector(selectConfig);
     const mounted = useRef();
 
+    const [accountType, setAccountType] = useState('CPF');
+
+    const handleChangeAccountType = (event) => {
+        setAccountType(event.target.value);
+    };
+
     const handleSubmit = () => {
         let data = {
             amount: inputVal.amount,
             bankName: inputVal.bankName,
-            cardName: inputVal.cardName,
-            cardNo: inputVal.cardNo,
-            currencyCode: currencyCode,
+            accountType,
+            identityInfo: inputVal.pixId,
+            accountOwnerName: inputVal.cardName,
+            accountNo: inputVal.cardNo,
+            currency: currencyCode,
         };
         dispatch(makeWithdrawOrder(data)).then((res) => {
             let result = res.payload;
             if (result && result.status == 'failed') {
-                dispatch(showMessage({ message: result.msg  || 'error', code: 2 }));
+                dispatch(showMessage({ message: result.msg || 'error', code: 2 }));
             } else {
                 dispatch(showMessage({ message: 'success', code: 1 }));
             }
@@ -116,13 +129,14 @@ function Fiat(props) {
         });
     }, []);
 
+
+
     const userData = useSelector(selectUserData);
     const fiatData = userData.fiat || [];
     const paymentFiat = config.payment?.currency;
     const [fiatDisplayData, setFiatDisplayData] = useState([]);
     const [fiats, setFiats] = useState([]);
     const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || 'USD');
-
     const [fiatsSelected, setFiatsSelected] = useState(0);
     // select切换
     const handleChangeFiats = (event) => {
@@ -181,16 +195,11 @@ function Fiat(props) {
         if (fiatData.length === 0 || !paymentFiat) {
             return
         }
-
         let tmpFiatDisplayData = {};
         let tmpPaymentFiat = {};
         let tmpFiatsData = {};
         let tmpFiats = [];
         let displayFiatData = [];
-        fiatDisplayData.map((item, index) => {
-            displayFiatData.push(item.name);
-            tmpFiatDisplayData[item.name] = item
-        });
         if (paymentFiat?.length > 0) {
             paymentFiat.map((item, index) => {
                 if (displayFiatData.indexOf(item.currencyCode) === -1 && item.userShow === true) {
@@ -199,6 +208,10 @@ function Fiat(props) {
                 tmpPaymentFiat[item.currencyCode] = item
             });
         }
+        fiatDisplayData.map((item, index) => {
+            displayFiatData.push(item.name);
+            tmpFiatDisplayData[item.name] = item
+        });
         fiatData?.map((item, index) => {
             tmpFiatsData[item.currencyCode] = item;
         });
@@ -225,6 +238,7 @@ function Fiat(props) {
 
         tmpFiats.sort(sortUseAge);
         setFiats(tmpFiats);
+        setCurrencyCode(tmpFiats[0].currencyCode)
     };
 
     const tidyWalletData = () => {
@@ -237,7 +251,7 @@ function Fiat(props) {
         } else {
             tidyWalletData();
         }
-    }, [fiatData, currencyCode, fiatDisplayData]);
+    }, [fiatData, fiatDisplayData]);
 
     useEffect(() => {
         dispatch(getFiatDisplay()).then((res) => {
@@ -289,7 +303,7 @@ function Fiat(props) {
                                 onChange={handleChangeFiats}
                                 displayEmpty
                                 inputProps={{ "aria-label": "Without label" }}
-                                className="MuiSelect-icon"
+                                className="MuiSelect-icon "
                                 // IconComponent={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
                                 MenuProps={{
                                     PaperProps: {
@@ -376,7 +390,7 @@ function Fiat(props) {
                                 </div>
 
 
-                                <div className="flex" style={{ padding: "16px 16px 16px 0px" }} >
+                                <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
                                     <Typography className="text-16 ">{t('home_withdraw_20')} </Typography>
                                 </div>
                                 <div className="flex items-center justify-between">
@@ -397,6 +411,53 @@ function Fiat(props) {
                                     </div>
                                 </div>
 
+                                {
+                                    currencyCode == "BRL" && <div>
+                                        <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
+                                            <Typography className="text-16 ">{t('home_withdraw_27')}</Typography>
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <FormControl sx={{ width: isMobileMedia ? '77%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
+                                                <OutlinedInput
+                                                    id="outlined-adornment-address send-tips-container-address"
+                                                    value={inputVal.pixId}
+                                                    onChange={handleChangeInputVal('pixId')}
+                                                    aria-describedby="outlined-weight-helper-text"
+                                                    inputProps={{
+                                                        'aria-label': 'pixId',
+                                                    }}
+                                                    placeholder={t('home_withdraw_27')}
+                                                />
+                                            </FormControl>
+
+                                            <div onClick={() => { setOpenWithdrawLog(true) }} className="flex items-center justify-content-center cursor-pointer">
+                                                <img style={{ width: "24px", height: "24px" }} src="assets/images/withdraw/info.png" alt="" />
+                                            </div>
+                                        </div>
+
+                                        <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
+                                            <Typography className="text-16 ">{t('home_withdraw_28')}</Typography>
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <FormControl className='' sx={{ width: isMobileMedia ? '77%' : '89%', borderColor: '#94A3B8', backgroundColor: "#151C2A" }} variant="outlined">
+                                                <InputLabel id="demo-simple-select-label">CPF</InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    value={accountType}
+                                                    label="CPF"
+                                                    onChange={handleChangeAccountType}
+                                                >
+                                                    <MenuItem value={"CPF"}>CPF</MenuItem>
+                                                    <MenuItem value={"CNPJ"}>CNPJ</MenuItem>
+                                                    <MenuItem value={"PHONE"}>PHONE</MenuItem>
+                                                    <MenuItem value={"EMAIL"}>EMAIL</MenuItem>
+                                                </Select>
+
+                                            </FormControl>
+                                        </div>
+                                    </div>
+                                }
 
 
                                 <div className="flex" style={{ padding: "16px 16px 16px 0px" }} >
@@ -445,6 +506,7 @@ function Fiat(props) {
                                         />
                                     </FormControl>
                                 </div>
+
 
                                 <Box
                                     className="py-8"

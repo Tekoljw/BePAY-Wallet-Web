@@ -174,6 +174,8 @@ const locale = {
     home_withdraw_24:'पेस्ट करा',
     home_withdraw_25:'रक्कम',
     home_withdraw_26:'माझं निवडा',
+    home_withdraw_27: "PIX खाते",
+    home_withdraw_28: "खाते प्रकार",
 
     home_account_1:'फिएट',
     home_account_2:'खोज',
@@ -183,6 +185,7 @@ const locale = {
     home_account_6:'नेटवर्क',
     home_account_7:'डिस्कनेक्ट',
     home_account_8:'वॉलेट कनेक्ट करें',
+    
 
 
     home_deposite_1: 'क्रिप्टो',
@@ -217,6 +220,7 @@ const locale = {
     home_deposite_31: 'मंजूर करा',
     home_deposite_32: 'सामील व्हा',
     home_deposite_33: 'वर्तमान उर्वरित NFTS:',
+
 
     home_wallet_1: 'FuniBox wallet',
     home_wallet_2: 'टोकन',

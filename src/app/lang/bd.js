@@ -172,6 +172,8 @@ const locale = {
     home_withdraw_24: 'পেস্ট করুন',
     home_withdraw_25: 'পরিমাণ',
     home_withdraw_26: 'আমার চয়ন করুন',
+    home_withdraw_27: "PIX অ্যাকাউন্ট",
+    home_withdraw_28: "অ্যাকাউন্ট টাইপ",
     
     home_deposite_1: 'ক্রিপ্টো',
     home_deposite_2: 'ফিয়াত',
