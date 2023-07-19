@@ -367,49 +367,51 @@ function Fiat(props) {
                     >
                         <div className="py-16" style={{ paddingTop: 0 }}>
                             <div className="px-16">
+                                {
+                                    currencyCode != "BRL" && <div>
+                                        <div className="flex" style={{ padding: "16px 16px 16px 0px" }} >
+                                            <Typography className="text-16 ">{t('home_withdraw_18')} </Typography>
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <FormControl sx={{ width: isMobileMedia ? '77%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
+                                                <OutlinedInput
+                                                    id="outlined-adornment-address send-tips-container-address"
+                                                    value={inputVal.bankName}
+                                                    onChange={handleChangeInputVal('bankName')}
+                                                    aria-describedby="outlined-weight-helper-text"
+                                                    inputProps={{
+                                                        'aria-label': 'bankName',
+                                                    }}
+                                                    placeholder={t('home_withdraw_19')}
+                                                />
+                                            </FormControl>
+                                            <div onClick={() => { setOpenWithdrawLog(true) }} className="flex items-center justify-content-center cursor-pointer">
+                                                <img style={{ width: "24px", height: "24px" }} src="assets/images/withdraw/info.png" alt="" />
+                                            </div>
+                                        </div>
 
-                                <div className="flex" style={{ padding: "16px 16px 16px 0px" }} >
-                                    <Typography className="text-16 ">{t('home_withdraw_18')} </Typography>
-                                </div>
-                                <div className="flex items-center justify-between">
-                                    <FormControl sx={{ width: isMobileMedia ? '77%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
-                                        <OutlinedInput
-                                            id="outlined-adornment-address send-tips-container-address"
-                                            value={inputVal.bankName}
-                                            onChange={handleChangeInputVal('bankName')}
-                                            aria-describedby="outlined-weight-helper-text"
-                                            inputProps={{
-                                                'aria-label': 'bankName',
-                                            }}
-                                            placeholder={t('home_withdraw_19')}
-                                        />
-                                    </FormControl>
-                                    <div onClick={() => { setOpenWithdrawLog(true) }} className="flex items-center justify-content-center cursor-pointer">
-                                        <img style={{ width: "24px", height: "24px" }} src="assets/images/withdraw/info.png" alt="" />
+                                        <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
+                                            <Typography className="text-16 ">{t('home_withdraw_20')} </Typography>
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <FormControl sx={{ width: isMobileMedia ? '77%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
+                                                <OutlinedInput
+                                                    id="outlined-adornment-address send-tips-container-address"
+                                                    value={inputVal.cardName}
+                                                    onChange={handleChangeInputVal('cardName')}
+                                                    aria-describedby="outlined-weight-helper-text"
+                                                    inputProps={{
+                                                        'aria-label': 'cardName',
+                                                    }}
+                                                    placeholder={t('home_withdraw_21')}
+                                                />
+                                            </FormControl>
+                                            <div onClick={() => { setOpenWithdrawLog(true) }} className="flex items-center justify-content-center cursor-pointer">
+                                                <img style={{ width: "24px", height: "24px" }} src="assets/images/withdraw/info.png" alt="" />
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-
-
-                                <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
-                                    <Typography className="text-16 ">{t('home_withdraw_20')} </Typography>
-                                </div>
-                                <div className="flex items-center justify-between">
-                                    <FormControl sx={{ width: isMobileMedia ? '77%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
-                                        <OutlinedInput
-                                            id="outlined-adornment-address send-tips-container-address"
-                                            value={inputVal.cardName}
-                                            onChange={handleChangeInputVal('cardName')}
-                                            aria-describedby="outlined-weight-helper-text"
-                                            inputProps={{
-                                                'aria-label': 'cardName',
-                                            }}
-                                            placeholder={t('home_withdraw_21')}
-                                        />
-                                    </FormControl>
-                                    <div onClick={() => { setOpenWithdrawLog(true) }} className="flex items-center justify-content-center cursor-pointer">
-                                        <img style={{ width: "24px", height: "24px" }} src="assets/images/withdraw/info.png" alt="" />
-                                    </div>
-                                </div>
+                                }
 
                                 {
                                     currencyCode == "BRL" && <div>

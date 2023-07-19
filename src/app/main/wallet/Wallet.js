@@ -1599,7 +1599,7 @@ function Wallet() {
                       >
                         {Object.entries(ranges).map(([key, label]) => (
                           <Tab
-                            className="text-14 font-semibold min-w-64 wallet-tab-item txtColorTitle zindex opacity-100"
+                            className="text-14 font-semibold min-w-64 wallet-tab-item txtColorTitle zindex opacity-100 testRed"
                             disableRipple
                             key={key}
                             label={label}

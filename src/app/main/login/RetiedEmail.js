@@ -38,7 +38,7 @@ function RetiedEmail() {
             .string()
             .required('Please enter your password.')
             // .min(6, 'Password is too short - should be 6 chars minimum.')
-            .min(6,t("signUp_8"))
+            .min(6, t("signUp_8"))
             .max(16, 'Password is too long - should be 16 chars maximum.'),
     });
     const { control, formState, handleSubmit, reset } = useForm({
@@ -201,9 +201,9 @@ function RetiedEmail() {
 
                         <div className="flex flex-col sm:flex-row items-center">
                             {t('re_tied_email_3')}
-                            <Link className="text-md font-medium" to="/home">
+                            <a href='/home' className="text-md font-medium">
                                 {t('re_tied_email_4')}
-                            </Link>
+                            </a>
                         </div>
 
                         <Button
