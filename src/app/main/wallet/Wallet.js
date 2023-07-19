@@ -94,6 +94,9 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 // const sortUseAge = (a, b) => {
 //   return b.dollarFiat - a.dollarFiat;
 // };
+
+
+
 const sortUseAge = (a, b) => {
   const prioritizedSymbolsFirst = ['eUSGT', 'USGT', 'BGT', 'eBGT'];
   const prioritizedSymbolsSecond = ['USDT', 'USDC', 'DAI', 'BUSD', 'TUSD', 'PAX', 'GUSD', 'USDD'];
@@ -141,9 +144,6 @@ const sortUseAge = (a, b) => {
   }
 };
 
-
-
-
 function Wallet() {
   const { t } = useTranslation("mainPage");
   const dispatch = useDispatch();
@@ -162,6 +162,7 @@ function Wallet() {
   const [ranges, setRanges] = useState([
     'Token', t('home_deposite_2'), t('home_deposite_3')
   ]);
+
   // const walletDisplayData = userData.walletDisplay || [];
   // const walletDisplayData =  [];
   const [walletDisplayData, setwalletDisplayData] = useState([]);
@@ -428,7 +429,6 @@ function Wallet() {
     getSettingSymbol().then((res) => {
       console.log(res);
       var currencyType = res.data?.data?.setting?.currencyType
-      console.log(currencyType, res.data, '111111111111');
       if (currencyType) {
         if (currencyType == 1) {
           tmpRanges = [
@@ -482,7 +482,7 @@ function Wallet() {
   }, []);
   // 搜索
   const doSearch = (searchText) => {
-    if (showType === 0 && walletType === 0) {
+    if (showType === cryptoSelect && walletType === 0) {
       if (searchText) {
         setSearchSymbols([]);
         let tmpSearchArr = [];
@@ -495,7 +495,7 @@ function Wallet() {
       } else {
         setSearchSymbols(symbols);
       }
-    } else if (showType === 1 && walletType === 0) {
+    } else if (showType === fiatSelect && walletType === 0) {
       if (searchText) {
         setSearchFiats([]);
         let tmpSearchArr = [];
@@ -553,7 +553,7 @@ function Wallet() {
         "exchangeRate"
       ) || 0;
     if (walletType === 0) {
-      if (showType === 0) {
+      if (showType === cryptoSelect) {
         if (isFait) {
           for (let i = 0; i < symbolsData.length; i++) {
             let symbolRate = symbolsData[i].rate || 0;
@@ -567,7 +567,7 @@ function Wallet() {
           }
         }
         setTotalBalance(amount.toFixed(2));
-      } else if (showType === 1) {
+      } else if (showType === fiatSelect) {
         for (let i = 0; i < fiatsData.length; i++) {
           let tmpDollarMoney =
             fiatsData[i]["balance"] / fiatsData[i]["exchangeRate"];
@@ -695,7 +695,6 @@ function Wallet() {
     });
 
     tmpSymbols.sort(sortUseAge);
-    console.log(tmpSymbols, 'wallet.......');
     setSymbols(tmpSymbols);
     setSearchSymbols(tmpSymbols);
     setCryptoDisplayShowData(tmpDisplaySymbols);
@@ -763,7 +762,7 @@ function Wallet() {
         // tmpShow = arrayLookup(paymentFiat, 'currencyCode', item, 'userShow');
         tmpShow = tmpPaymentFiat[item]?.userShow;
       }
-
+      
       if (tmpShow === true) {
         // let balance = arrayLookup(fiatsData, 'currencyCode', item, 'balance') || 0;
         let balance = tmpFiatsData[item]?.balance || 0;
@@ -772,7 +771,7 @@ function Wallet() {
           currencyCode: item,
           balance: balance.toFixed(2),
           dollarFiat:
-            balance == 0 ? 0 : balance / tmpPaymentFiat[item]?.exchangeRate,
+            balance == 0 ? 0 : balance * tmpPaymentFiat[item]?.exchangeRate,
         });
       }
     });
@@ -1599,7 +1598,7 @@ function Wallet() {
                       >
                         {Object.entries(ranges).map(([key, label]) => (
                           <Tab
-                            className="text-14 font-semibold min-w-64 wallet-tab-item txtColorTitle zindex opacity-100 testRed"
+                            className="text-14 font-semibold min-w-64 wallet-tab-item txtColorTitle zindex opacity-100"
                             disableRipple
                             key={key}
                             label={label}
@@ -2083,7 +2082,7 @@ function Wallet() {
               )}
 
               {/*中心化的token自定义*/}
-              {doPlus && showType === 0 && walletType === 0 && (
+              {doPlus && showType === cryptoSelect && walletType === 0 && (
                 <div
                   className="mt-8 px-24 pb-8"
                 // style={{ borderBottom: '1px solid #374252' }}
@@ -2135,7 +2134,7 @@ function Wallet() {
               )}
 
               {/*法币自定义*/}
-              {doPlus && showType === 1 && walletType === 0 && (
+              {doPlus && showType === fiatSelect && walletType === 0 && (
                 <div
                   className="mt-8 px-24 pb-8"
                 // style={{ borderBottom: '1px solid #374252' }}
@@ -2319,7 +2318,7 @@ function Wallet() {
                       className="mr-8 flex items-center"
                       style={{ color: "#ffffff" }}
                     >
-                      {(isFait || showType === 1) && (
+                      {(isFait || showType === fiatSelect) && (
                         <div
                           onClick={() => {
                             // setOpenChangeCurrency(true)
@@ -2499,7 +2498,7 @@ function Wallet() {
                       className="mr-8 flex items-center"
                       style={{ color: "#ffffff" }}
                     >
-                      {(isFait || showType === 1) && (
+                      {(isFait || showType === fiatSelect) && (
                         <div
                           onClick={() => {
                             // setOpenChangeCurrency(true)
@@ -2679,7 +2678,7 @@ function Wallet() {
                       className="mr-8 flex items-center"
                       style={{ color: "#ffffff" }}
                     >
-                      {(isFait || showType === 1) && (
+                      {(isFait || showType === fiatSelect) && (
                         <div
                           onClick={() => {
                             // setOpenChangeCurrency(true)
