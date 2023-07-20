@@ -762,7 +762,7 @@ function Wallet() {
         // tmpShow = arrayLookup(paymentFiat, 'currencyCode', item, 'userShow');
         tmpShow = tmpPaymentFiat[item]?.userShow;
       }
-      
+
       if (tmpShow === true) {
         // let balance = arrayLookup(fiatsData, 'currencyCode', item, 'balance') || 0;
         let balance = tmpFiatsData[item]?.balance || 0;
@@ -771,7 +771,7 @@ function Wallet() {
           currencyCode: item,
           balance: balance.toFixed(2),
           dollarFiat:
-            balance == 0 ? 0 : balance * tmpPaymentFiat[item]?.exchangeRate,
+            balance == 0 ? 0 : balance / tmpPaymentFiat[item]?.exchangeRate,
         });
       }
     });
