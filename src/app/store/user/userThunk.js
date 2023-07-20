@@ -409,8 +409,6 @@ export const    doSetNetwork = createAsyncThunk(
 export const selNetwork = createAsyncThunk(
     'user/selNetwork',
     async (settings, { dispatch, getState }) => {
-
-
         console.log(settings);
 
         console.log(getState().user.profile.user.regWallet);
