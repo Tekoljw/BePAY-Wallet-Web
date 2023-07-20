@@ -430,10 +430,6 @@ function Wallet() {
     getSettingSymbol().then((res) => {
       // console.log(res);
       var currencyType = res.data?.data?.setting?.currencyType
-<<<<<<< HEAD
-=======
-      // console.log(currencyType, res.data, '111111111111');
->>>>>>> 44bbe22 (第一次提交)
       if (currencyType) {
         if (currencyType == 1) {
           tmpRanges = [
