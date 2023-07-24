@@ -8,8 +8,9 @@ import utils from "../../util/tools/utils";
 import BN from "bn.js";
 import { getWithdrawTransferStats } from '../wallet/walletThunk';
 import coinbaseWallet from '../../util/web3/coinbase';
-import walletEthereum from '../../util/web3/walletEthereum'
+import walletEthereum from '../../util/web3/walletEthereum';
 import settingsConfig from 'app/configs/settingsConfig';
+import loginWays from '../../main/login/loginWays'
 
 // 获取用户信息
 export const userProfile = createAsyncThunk(
@@ -50,21 +51,27 @@ export const getCurrencySelect = createAsyncThunk(
         }
     }
 );
+
 // 去中心以太链钱包登录
 export const doLogin = createAsyncThunk(
     'user/doLogin',
     async (settings, { dispatch, getState }) => {
-        // console.log(settings,'settings......');
-        const walletType = settings?.walletType || 'metamask';
+        // console.log(settings,'settings................');
+
+        let res =  loginWays.list.find(function(item){
+            return  item.id === settings.id
+          })
+          let walletType = res.name;
+        if (walletType == "MetaMask"){
+            walletType = 'metamask';
+        }
+
         const { config } = getState();
         const web3 = await Web3.connectWeb3(walletType);
-
         let address = web3.coinbase;
-        // console.log(walletType,'walletType........');
-        // console.log(address, 'address......');
+
+       
         let signData = await Web3.loginWallet(address);
-
-
         console.log(signData, 'signData......');
         let data = {
             userAddress: address,
@@ -75,6 +82,8 @@ export const doLogin = createAsyncThunk(
         };
 
         const userLoginData = await React.$api("user.login", data);
+
+        console.log(userLoginData,'userLoginData222223223232323');
 
         if (userLoginData.errno === 0) {
             window.localStorage.setItem('isDecentralized', 1);
@@ -107,7 +116,7 @@ export const mobileLogin = createAsyncThunk(
             password: settings.password,
             // agentId: settings.agentId,
         };
-        const userLoginData = await React.$api("user.mobileLogin", data);
+        const userLoginData = await React.$api("user.mobileLogin",data);
         if (userLoginData.errno === 0) {
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userLoginData));
@@ -379,8 +388,9 @@ export const forgotPass = createAsyncThunk(
     }
 );
 
+
 // 切链接口
-export const doSetNetwork = createAsyncThunk(
+export const    doSetNetwork = createAsyncThunk(
     'user/doSetNetwork',
     async (settings, { dispatch, getState }) => {
         const networkId = settings.networkId;
@@ -399,15 +409,21 @@ export const doSetNetwork = createAsyncThunk(
 export const selNetwork = createAsyncThunk(
     'user/selNetwork',
     async (settings, { dispatch, getState }) => {
+
+
+        console.log(settings);
+
+        console.log(getState().user.profile.user.regWallet);
+
         const { user } = getState();
-        let regWallet = user.profile.user.regWallet;
+        let regWallet = user.profile.user.regWallet;  //BitKeep
         // 验证登录
-        const networkId = settings.id;
-        const chainId = settings.chainId;
-        const networkName = settings.network;
-        const rpc = settings.rpc;
-        const symbol = settings.symbol;
-        const avatar = settings.avatar;
+        const networkId = settings.id;  //11
+        const chainId = settings.chainId; //128
+        const networkName = settings.network; //"HOUBI"
+        const rpc = settings.rpc; /// "huobi"
+        const symbol = settings.symbol; //"HT"
+        const avatar = settings.avatar; 
         try {
             switch (regWallet) {
                 case 'metamask':
@@ -498,12 +514,60 @@ export const selNetwork = createAsyncThunk(
                     }
                     break;
 
+                case 'BitKeep':
+                    const provider = window.bitkeep && window.bitkeep.ethereum;
+
+                    try {
+                        await provider.request({
+                          method: 'wallet_switchEthereumChain',
+                          params: [{ chainId: "0x" + chainId.toString(16) }],
+                        });
+
+                        dispatch(doSetNetwork({
+                            networkId
+                        }));
+                        return true;
+
+                      } catch (switchError) {
+                       console.log(switchError);
+                        if (switchError.code === 4902) {
+                          try {
+                            await ethereum.request({
+                              method: 'wallet_addEthereumChain',
+                              params: [
+                                {
+                                  chainId: "0x" + chainId.toString(16),
+                                  chainName: networkName,
+                                  rpcUrls: [rpc],
+                                },
+                              ],
+                            });
+
+                            await window.ethereum.request({
+                                method: "wallet_switchEthereumChain",
+                                params: [{ chainId: "0x" + chainId.toString(16) }],
+                            });
+
+                            dispatch(doSetNetwork({
+                                networkId
+                            }));
+
+                          } catch (addError) {
+                            // handle "add" error
+                          }
+                        }
+                        // handle other "switch" errors
+                      }
+
+                break;  
             }
         } catch (e) {
         }
 
     }
 );
+
+
 
 // 绑定去中心化钱包
 export const bindWallet = createAsyncThunk(
@@ -609,6 +673,9 @@ export const getUserData = createAsyncThunk(
     'user/getUserData',
     async (settings, { dispatch, getState }) => {
         const userData = await React.$api("user.profile");
+
+        
+
         if (userData.errno === 0) {
             dispatch(updateUser(userData));
             return userData
@@ -733,35 +800,50 @@ export const getDecenterWalletBalance = createAsyncThunk(
     'user/getDecenterWalletBalance',
     async (settings, { dispatch, getState }) => {
         const { user } = getState();
+        
+        // console.log(settings,'settings111111111111111111');
+
+        // console.log(getState().user.profile);
+
         // 验证登录
         const regWallet = localStorage.getItem('walletname');
+        // console.log(regWallet,'regWallet....................');
         let { loginType } = user.profile;
         let symbolAdress = settings.address || '';
         let decimals = settings.decimals || 1;
         let image = settings.image;
         let type = settings.type;
         let currNetworkChainId = settings.networkChainId;
+
+   
+
         if (loginType == 1) {
+
             // console.log(loginType,'address......ß');
             const etherPro = await walletEthereum.ether();
+
             var web3 = await Web3.connectWeb3(regWallet);
             var address = web3.coinbase;
             var networkChainId = web3.networkId;
+    
             if (currNetworkChainId != networkChainId) {
                 dispatch(showMessage({ message: 'Please switch to the correct network', code: 2 }));
                 return false;
             }
 
+
             if (type === 0) {
-                return await (etherPro.request({
+                return  await (etherPro.request({
                     method: 'eth_getBalance',
                     params: [address, 'latest'],
                     "id": 1,
                     "jsonrpc": "2.0"
                 })) / Math.pow(10, decimals);
             }
+            
             // 代币合约
             var symbolConstruct = utils.contractAbi('USGT');
+            // var symbolConstruct = utils.contractAbi('BGT');
             var symbolConstructObj = await utils.contractAt(symbolConstruct, symbolAdress);
             // 查询余额
             var balanceOfRes = (await symbolConstructObj.balanceOf(address)).div(new BN(10).pow(new BN(decimals))).toNumber();

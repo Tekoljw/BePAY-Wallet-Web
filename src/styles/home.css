@@ -685,6 +685,8 @@ input[type='number'] {
 
 .left-side-container .MuiListItem-button .menu-icon {
     display: block;
+    width: 24px;
+    height: 24px;
 }
 
 .left-side-container .MuiListItem-button .menu-icon.active {

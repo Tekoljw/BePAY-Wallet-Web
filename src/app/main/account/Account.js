@@ -19,6 +19,8 @@ import {arrayLookup} from "../../util/tools/function";
 import { showMessage } from 'app/store/fuse/messageSlice';
 
 
+
+
 function AccountPage(props) {
     const dispatch = useDispatch();
     const userData = useSelector(selectUserData);
@@ -59,6 +61,7 @@ function AccountPage(props) {
         dispatch(centerGetUserFiat());
         dispatch(getWithdrawTransferStats());
     }, []);
+
 
     return (
         <Wallet />

@@ -18,6 +18,7 @@ import Security from "../security/Security";
 import Record from "../record/Record";
 import Borrow from "../borrow/Borrow";
 import Pool from "../pool/Pool";
+import Account from "../account/Account"
 
 import { useDispatch, useSelector } from "react-redux";
 import { centerGetTokenBalanceList, getUserData } from '../../store/user/userThunk';

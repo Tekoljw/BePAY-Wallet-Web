@@ -13,6 +13,11 @@ const ether = async () => {
             var injectedProvider = await trustProvider.getTrustWalletInjectedProvider();
             return injectedProvider;
             break;
+        case 'BitKeep':
+            return window.ethereum;
+            break;
+           
+
     };
 };
 export default{

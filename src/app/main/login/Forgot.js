@@ -374,7 +374,7 @@ function ForgotPass() {
                             }
                             type="submit"
                             size="large"
-
+                            
                         >
                             {t('forgot_5')}
                         </Button>

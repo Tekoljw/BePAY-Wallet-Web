@@ -16,6 +16,8 @@ import QrView from '../../store/walletconnect/QRview';
 import phantom from '../../util/web3/phantom1.js';
 import clsx from 'clsx';
 
+import web3 from "web3";
+
 // const isMobileMedia = new MobileDetect(window.navigator.userAgent).mobile();
 
 function LoginSidebarContent(props) {
@@ -31,11 +33,12 @@ function LoginSidebarContent(props) {
             phantom.getRequest();
         }
     };
-
     //end---------------
     //以太链登录
-    const walletLogin = (walletType) => {
-
+    const walletLogin = (walletType,id) => {
+    //    console.log(walletType);
+        console.log(agentId,'agentId................');
+        // let wallettype = walletType
         const checkPhone = () => {
             var sUserAgent = navigator.userAgent.toLowerCase(),
                 bIsIpad = sUserAgent.match(/ipad/i) == "ipad",
@@ -54,33 +57,35 @@ function LoginSidebarContent(props) {
         switch (walletType) {
             case 'trustWallet':
                 if (checkIsPhone) {
-
                     dispatch(doLogin({
                         agentId: agentId,
-                        walletType
+                        walletType,
+                        id
                     }))
                 } else {
                     dispatch(showMessage({ message: 'Only for phone' }))
                 }
                 break;
-            case 'metamask':
+                case 'metamask':
                 if (!checkIsPhone) {
                     dispatch(doLogin({
                         agentId: agentId,
-                        walletType
+                        walletType,
+                        id
                     }))
                 } else {
                     dispatch(showMessage({ message: 'Only for PC' }))
                 }
                 break;
+
             default:
                 dispatch(doLogin({
                     agentId: agentId,
-                    walletType
+                    walletType,
+                    id
                 }));
                 break;
         }
-
     };
     const { t } = useTranslation('mainPage');
     return (
@@ -103,13 +108,13 @@ function LoginSidebarContent(props) {
                                 )
                             } key={index}
                                 onClick={() => {
-                                    way.id === 0 && walletLogin('metamask')
-                                        // way.id === 1 && phantomLogin(),
-                                        // way.id === 4 && WCLogin(),
-                                        // way.id === 9 && walletLogin('coinbase'),
-                                        // way.id === 11 && walletLogin('trustWallet'),
-                                        // way.id === 12 && walletLogin('Polygon'),
-                                        // way.id === 13 && walletLogin('BitKeep')
+                                    way.id === 0 && walletLogin('metamask',way.id)
+                                    // way.id === 1 && phantomLogin(),
+                                    // way.id === 4 && WCLogin(),
+                                    // way.id === 9 && walletLogin('Coinbase',way.id),
+                                    // way.id === 11 && walletLogin('trustWallet'),
+                                    // way.id === 12 && walletLogin('Polygon'),
+                                    way.id === 13 && walletLogin('BitKeep',way.id)
                                 }}
                             // !isMobileMedia && way.id === 11 && color = gray
                             >

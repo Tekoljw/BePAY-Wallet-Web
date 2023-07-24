@@ -14,6 +14,8 @@ export const getUrlParam = (param) => {
     return obj[param]
 };
 
+
+
 export const arrayLookup = (data,key,value,targetKey) => {
     var targetValue = "";
     if (data) {

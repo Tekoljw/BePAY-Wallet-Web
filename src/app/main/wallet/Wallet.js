@@ -56,6 +56,7 @@ import Web3Login from "../login/Web3Login";
 import coinbaseWallet from "../../util/web3/coinbase";
 import { useTranslation } from "react-i18next";
 import openType from './opentype.json'
+import { symbol } from "prop-types";
 const container = {
   show: {
     transition: {
@@ -427,8 +428,12 @@ function Wallet() {
   };
   useEffect(() => {
     getSettingSymbol().then((res) => {
-      console.log(res);
+      // console.log(res);
       var currencyType = res.data?.data?.setting?.currencyType
+<<<<<<< HEAD
+=======
+      // console.log(currencyType, res.data, '111111111111');
+>>>>>>> 44bbe22 (第一次提交)
       if (currencyType) {
         if (currencyType == 1) {
           tmpRanges = [
@@ -472,6 +477,7 @@ function Wallet() {
             tmpFiatSelect = 1;
           }
         }
+
 
         setRanges(tmpRanges);
         setCryptoSelect(tmpCryptoSelect);
@@ -695,6 +701,10 @@ function Wallet() {
     });
 
     tmpSymbols.sort(sortUseAge);
+<<<<<<< HEAD
+=======
+    // console.log(tmpSymbols, 'wallet.......');
+>>>>>>> 44bbe22 (第一次提交)
     setSymbols(tmpSymbols);
     setSearchSymbols(tmpSymbols);
     setCryptoDisplayShowData(tmpDisplaySymbols);
@@ -941,9 +951,13 @@ function Wallet() {
     initWalletData();
   }, []);
 
+
   // 去中心化钱包数据整理
   const decenterWalletFormatAmount = async () => {
+    
     let tmpWalletAmount = walletAmount;
+
+
     let tmpArr = [];
     // 美元汇率
     let dollarCurrencyRate =
@@ -953,12 +967,21 @@ function Wallet() {
         "USD",
         "exchangeRate"
       ) || 0;
+
     for await (let symbol of symbolsData) {
+
       if (symbol.type === 0 || symbol.type === 1) {
+
         var balance = 0;
+
+        // console.log(symbol.networkId);
+        // console.log(userData.userInfo.networkId);
+
+
         if (symbol.networkId === userData.userInfo.networkId) {
           if (tmpWalletAmount[symbol.symbol]) {
             balance = tmpWalletAmount[symbol];
+
           } else {
             let balanceRes = await dispatch(
               getDecenterWalletBalance({
@@ -970,8 +993,13 @@ function Wallet() {
                 networkChainId: arrayLookup(networks, 'id', symbol.networkId, 'chainId'),
               })
             );
+
+            // console.log(balanceRes);
+            
             balance = balanceRes.payload || 0;
+
             tmpWalletAmount[symbol.symbol] = balance;
+
           }
           // let balanceRes = await dispatch(getDecenterWalletBalance({
           //     address: symbol.address,
@@ -979,7 +1007,10 @@ function Wallet() {
           //     type: symbol.type,
           // }));
         }
+        
         balance = Number(balance).toFixed(6);
+
+       
 
         var tmpShow = arrayLookup(
           walletDisplayData,
@@ -987,6 +1018,9 @@ function Wallet() {
           symbol.symbol,
           "show"
         );
+
+       
+
         if (tmpShow === "") {
           tmpShow = symbol.userShow;
         }
@@ -1027,7 +1061,7 @@ function Wallet() {
 
     let tmpSymbols = [];
     let displayData = [];
-    walletDisplayData.map((item, index) => {
+    walletDisplayData?.map((item, index) => {
       if (arrayLookup(tmpArr, "symbol", item, "symbol")) {
         displayData.push(item.name);
       }
@@ -1064,6 +1098,8 @@ function Wallet() {
     setWalletAmount(tmpWalletAmount);
 
   };
+
+
   useEffect(() => {
     let userBindWallet = userData.userInfo.bindWallet ?? false;
     if (userBindWallet && walletType === 1) {
@@ -1103,12 +1139,22 @@ function Wallet() {
     }
   }, [networks]);
 
+
+
+
+// 切换网络
   const changeNetwork = async (network) => {
+
+    // console.log(network);
     const networkRes = await dispatch(selNetwork(network));
     if (networkRes.payload) {
       setOpenChangeNetwork(false);
     }
   };
+
+
+
+
 
   const changeCurrency = async (currency) => {
     await dispatch(updateCurrency(currency));
@@ -1228,24 +1274,29 @@ function Wallet() {
     });
   };
 
-  //修改regWallet
+  // 修改regWallet
   useEffect(() => {
     if (userData.profile?.user?.regWallet) {
       setRegWallet(localStorage.getItem("walletname"));
       setWalletImage(config.walletConfig[regWallet]?.img);
       setwalletTypeTab([oppenappid, userData.profile?.user?.regWallet]);
     }
+
+    // console.log(localStorage.getItem("walletname"),'bitkep登录获取本地存储的token');
+    // console.log(localStorage.getItem("walletname"),'metamask登录获取本地存储的token');
     if (localStorage.getItem("walletname")) {
       setwalletTypeTab([
         oppenappid,
         localStorage.getItem("walletname") === "metamask"
           ? "MetaMask"
           : localStorage.getItem("walletname"),
-      ]);
+      ],);
     } else {
       setwalletTypeTab([oppenappid, "Wallet Connect"]);
     }
   }, [userData.profile?.user?.regWallet]);
+
+
   return (
     <div>
       {/*head*/}
@@ -2442,6 +2493,8 @@ function Wallet() {
                       />
                       Network
                     </Button>
+
+
                     <Button
                       className="foxBtn"
                       style={{
@@ -2891,6 +2944,10 @@ function Wallet() {
             {/* </BootstrapDialog> */}
           </AnimateModal>
 
+
+
+
+
           {/*切换网路*/}
           <BootstrapDialog
             onClose={() => {
@@ -2916,6 +2973,8 @@ function Wallet() {
                     alt="close icon"
                   />
                 </Typography>
+
+
                 <Box className="dialog-content dialog-content-select-network-height">
                   <Box
                     className="dialog-content-inner dialog-content-select-network-width"
@@ -2936,6 +2995,8 @@ function Wallet() {
                       <span style={{ color: "#16c2a3" }}>Etherenum</span>{" "}
                       network.
                     </Typography>
+
+
                     <div className="dialog-select-network flex flex-wrap justify-between">
                       {networkData.map((row, index) => {
                         return (
@@ -2958,11 +3019,18 @@ function Wallet() {
                         );
                       })}
                     </div>
+
+
+
                   </Box>
                 </Box>
               </div>
             </DialogContent>
           </BootstrapDialog>
+
+
+
+
         </Box>
       </motion.div>
     </div>

@@ -14,6 +14,7 @@ export default {
         }
     },
 
+    
     user: {
         setbanner: {
             url: "/user/setbanner",
