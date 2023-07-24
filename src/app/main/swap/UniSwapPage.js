@@ -128,7 +128,7 @@ function UniSwapPage() {
           <Box component={motion.div} variants={item}>
             <div className="Uniswap">
 
-              <SwapWidget width="100%" theme={darkTheme} provider={provider} />
+              <SwapWidget width="100%" theme={darkTheme}  />
               
             </div>
 
