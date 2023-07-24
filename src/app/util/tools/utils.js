@@ -35,13 +35,21 @@ const contractAbi = (type) => {
 //     }
 // }
 async function contractAt(abi, address, onlyRead){
+
     let contract = truffle_contract(abi);
+
     var web3 = await utils_web3.getWeb3();
+
+    console.log(web3.currentProvider);
+
     contract.setProvider(web3.currentProvider);
+
+    console.log(contract);
+
     try {
         // if(!onlyRead){
         //     var lastBlock = await web3.eth.getBlockNumber();
-        //
+        
         //     var gasTracker = store.state.gasTracker;
         //     if(gasTracker &&
         //         parseFloat(gasTracker.lastBlock) > (parseFloat(lastBlock - 50))

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Web3 from "web3";
 import Box from "@mui/material/Box";
 import { motion } from "framer-motion";
 import "../../../styles/home.css";
@@ -16,6 +17,7 @@ import "@uniswap/widgets/fonts.css";
 //导入钱包ethereun
 import coinbaseWallet from "../../util/web3/coinbase";
 import WalletConnectProvider from "@walletconnect/web3-provider";
+
 
 const container = {
   show: {
@@ -35,7 +37,7 @@ function UniSwapPage() {
 
   const userData = useSelector(selectUserData);
   // const regWallet = userData.profile?.user?.regWallet;
-  const regWallet = localStorage.getItem('walletname')
+  const regWallet = localStorage?.getItem('walletname')
 
   const dispatch = useDispatch();
   const config = useSelector(selectConfig);
@@ -47,6 +49,9 @@ function UniSwapPage() {
 
   const [provider, setProvider] = useState({});
   const [isInit, setIsInit] = useState(false);
+
+  const[jsonRpcUrlMap,setjsonRpc] = useState('');
+
   // const getWeb3Provider =  () => {
   //     if (state && state.provider) {
   //         return state.provider;
@@ -64,6 +69,7 @@ function UniSwapPage() {
   //     }
 
   // };
+
 
   const getCoinbaseProvider = async () => {
     var initCoinbase = await coinbaseWallet.initCoinbase();
@@ -83,11 +89,17 @@ function UniSwapPage() {
   };
 
   useEffect(() => {
-    console.log(regWallet, 'regWallet......')
-    console.log(window.ethereum, 'window.ethereum......')
+    
+    let metamask = new Web3(window.ethereum);
+
+  //  console.log(window.ethereum.getBlockNumber);
+     console.log(metamask);
+
+
     switch (regWallet) {
       case "metamask":
         setProvider(window.ethereum);
+        // setProvider(metamask);
         setIsInit(true);
         break;
       case "coinbase":
@@ -95,6 +107,15 @@ function UniSwapPage() {
         break;
       case "trustWallet":
         getTrustWalletProvide();
+        break;
+      case "BitKeep":
+        // setProvider(window.bitkeep && window.bitkeep.ethereum);
+        setProvider(metamask);
+        // setProvider(bitkeep);
+        // setProvider(metamask)
+        setIsInit(true);
+        // setjsonRpc(bitkeep.rpc.rpcUrl);
+
         break;
     }
   }, [regWallet]);

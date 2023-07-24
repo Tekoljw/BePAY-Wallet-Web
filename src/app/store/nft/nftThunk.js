@@ -125,6 +125,7 @@ export const centerNftPool = createAsyncThunk(
 // 获取nft所有者
 export const getOwner = createAsyncThunk(
     'nft/getOwner',
+
     async (settings, { dispatch, getState }) => {
         const nftToken = settings.nftToken || '';
         const tokenId = settings.tokenId;
@@ -133,9 +134,15 @@ export const getOwner = createAsyncThunk(
         // Nft 合约
         const nftConstruct = utils.contractAbi('GenesisRobotNftToken');
         const nftConstructObj = await utils.contractAt(nftConstruct, nftToken);
+        console.log(nftConstructObj);
+
         try {
             const owner = (await nftConstructObj.ownerOf(tokenId)).toUpperCase();
+
+            // console.log(owner,'owner.....................');
+
             let currentUserAddress = user.profile.user.address.toUpperCase();
+
             if (currentUserAddress === owner) {
                 return true
             } else {

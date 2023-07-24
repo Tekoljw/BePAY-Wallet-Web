@@ -66,7 +66,6 @@ const connectWeb3 = async (name) => {
 
         let networkId = await promisify((cb) => web3.eth.getChainId(cb));
 
-
         var coinbase = await promisify((cb) => web3.eth.getCoinbase(cb));
         // window.ethereum.once("accountsChanged", this.accountsChanged);
         window.ethereum.on("chainChanged", () => {
@@ -236,7 +235,7 @@ const connectWeb3 = async (name) => {
     }
   } 
 
-   else if (name === 'BitKeep'){
+   else if (name === "BitKeep" ){
 
     const provider = window.bitkeep && window.bitkeep.ethereum;
 
@@ -365,11 +364,17 @@ const sign = async (message, address) => {
 };
 
 const getWeb3 = async () => {
+
   if (!window.wallet) {
     const state = React.$store.getState();
-    const regWallet = state.user.profile?.user?.regWallet;
+    // const regWallet = state.user.profile?.user?.regWallet;
+
+    const regWallet = window.localStorage.getItem("walletname") || state.user.profile?.user?.regWallet || 'metamask';
+
     await connectWeb3(regWallet);
+    
     return window.wallet
+
   }
   return window.wallet;
 };

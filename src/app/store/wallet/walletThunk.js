@@ -114,8 +114,13 @@ export const getWalletAddressConfig = createAsyncThunk(
 
 // 获取钱包地址
 export const getWalletAddress = createAsyncThunk(
+    
     'wallet/getWalletAddress',
+
     async (settings, { dispatch, getState }) => {
+
+        console.log(settings);
+        
         settings = settings || {};
         let data = {
             symbol: settings.symbol,

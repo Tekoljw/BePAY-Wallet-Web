@@ -1095,7 +1095,6 @@ function Wallet() {
 
   };
 
-
   useEffect(() => {
     let userBindWallet = userData.userInfo.bindWallet ?? false;
     if (userBindWallet && walletType === 1) {
@@ -1135,22 +1134,14 @@ function Wallet() {
     }
   }, [networks]);
 
-
-
-
 // 切换网络
   const changeNetwork = async (network) => {
 
-    // console.log(network);
     const networkRes = await dispatch(selNetwork(network));
     if (networkRes.payload) {
       setOpenChangeNetwork(false);
     }
   };
-
-
-
-
 
   const changeCurrency = async (currency) => {
     await dispatch(updateCurrency(currency));
@@ -3029,6 +3020,7 @@ function Wallet() {
 
         </Box>
       </motion.div>
+      
     </div>
   );
 }

@@ -54,6 +54,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { useStatStyles } from '@chakra-ui/react';
 import history from '@history';
+import { local } from 'web3modal';
 
 
 
@@ -365,6 +366,9 @@ function Deposite() {
     // 获取钱包地址
     const getWalletAddressClick = (id) => {
 
+        // console.log(symbol); //USGT
+        // console.log(id);  //24
+
         dispatch(getWalletAddress({ networkId: id, symbol: symbol })).then((value) => {
             setIsLoading(false);
             let addressDataObj = { ...addressData } || {};
@@ -386,6 +390,7 @@ function Deposite() {
         getWalletAddressClick(id);
         // }
     };
+    
     const handleCheckWalletAddress = (id) => {
         dispatch(checkWalletAddress({ networkId: id, symbol: symbol })).then((value) => {
             let res = value.payload;
@@ -608,6 +613,8 @@ function Deposite() {
         //     );
         // }
     }, [symbol]);
+
+
     const getSettingSymbol = async () => {
         var openAppId = window.sessionStorage.getItem('openAppId') || 0;
         var openIndex = window.sessionStorage.getItem('openIndex') || 0;
@@ -813,6 +820,8 @@ function Deposite() {
                     ))}
                 </Tabs>
             </motion.div>
+
+
             {tabValue === cryptoSelect && <div>
                 <motion.div
                     variants={container}
@@ -1213,6 +1222,8 @@ function Deposite() {
                                     </FormControl> */}
                                 </Box>
                             </DialogContent>
+
+
                             <DialogActions className='mb-20'>
                                 <Button
                                     style={{ height: '4rem', width: '70%', margin: '0rem auto' }}
@@ -1226,12 +1237,19 @@ function Deposite() {
                                     }}
                                 >
                                     {t('home_deposite_29')}
+                                
                                 </Button>
                             </DialogActions>
+
+
+
+
                         </BootstrapDialog>
                     </Box>
                 </motion.div>
             </div>}
+
+
             {tabValue === fiatSelect && <div>
                 <motion.div
                     variants={container}
@@ -1654,6 +1672,7 @@ function Deposite() {
                     {/*</StyledAccordion>*/}
                 </motion.div>
             </div>}
+            
             {tabValue === 2 && <motion.div
                 variants={container}
                 initial="hidden"
@@ -1746,12 +1765,13 @@ function Deposite() {
                             style={{ width: '70%', height: '4rem', display: 'block', fontSize: '2rem', margin: "0 auto", lineHeight: 'initial' }}
                             onClick={() => {
                                 let nftAddress = nftConfig[nftId]?.address
-                                // let nftAddress = '0x1b704281eCbbE12e9ED68931d606a8A5dEAA6B06'
-                                console.log(nftAddress, 'nftAddress')
+
                                 dispatch(getOwner({
                                     nftToken: nftAddress,
                                     tokenId: tokenId
                                 })).then((res) => {
+
+                                    // console.log(res,'res1111111111111111');
                                     if (res.payload) {
                                         doNftTransfer({
                                             tokenId: tokenId,

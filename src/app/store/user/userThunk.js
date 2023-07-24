@@ -529,29 +529,42 @@ export const selNetwork = createAsyncThunk(
                       } catch (switchError) {
                        console.log(switchError);
                         if (switchError.code === 4902) {
+
+                           console.log(symbol);
+
                           try {
-                            await ethereum.request({
-                              method: 'wallet_addEthereumChain',
+                         let res =  await provider.request({
+                              method:'wallet_addEthereumChain',
                               params: [
                                 {
                                   chainId: "0x" + chainId.toString(16),
+                                  nativeCurrency: {
+                                    name: symbol,
+                                    symbol: symbol,
+                                    decimals: 18,
+                                },
                                   chainName: networkName,
                                   rpcUrls: [rpc],
                                 },
                               ],
                             });
 
-                            await window.ethereum.request({
-                                method: "wallet_switchEthereumChain",
+                            console.log(res);
+
+
+                            console.log('222222222222222222222222');
+
+                            await provider.request({
+                                method: 'wallet_switchEthereumChain',
                                 params: [{ chainId: "0x" + chainId.toString(16) }],
-                            });
+                              });
 
                             dispatch(doSetNetwork({
                                 networkId
                             }));
 
                           } catch (addError) {
-                            // handle "add" error
+                            console.log(addError);
                           }
                         }
                         // handle other "switch" errors
@@ -671,8 +684,6 @@ export const getUserData = createAsyncThunk(
     'user/getUserData',
     async (settings, { dispatch, getState }) => {
         const userData = await React.$api("user.profile");
-
-        
 
         if (userData.errno === 0) {
             dispatch(updateUser(userData));

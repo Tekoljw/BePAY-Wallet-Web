@@ -27,10 +27,12 @@
         "@solana/wallet-adapter-base": "^0.9.22",
         "@solana/web3.js": "^1.73.3",
         "@truffle/contract": "^4.6.1",
-        "@uniswap/widgets": "^2.51.2",
+        "@uniswap/sdk-core": "^4.0.6",
+        "@uniswap/v3-sdk": "^3.10.0",
+        "@uniswap/widgets": "^2.53.0",
         "@walletconnect/auth-client": "2.0.3",
         "@walletconnect/client": "^1.8.0",
-        "@walletconnect/ethereum-provider": "^2.7.7",
+        "@walletconnect/ethereum-provider": "^2.9.1",
         "@walletconnect/qrcode-modal": "^1.8.0",
         "@walletconnect/web3-provider": "^1.8.0",
         "@walletconnect/web3wallet": "^1.4.0",
@@ -92,7 +94,7 @@
         "react-masonry-css": "1.0.16",
         "react-number-format": "4.9.3",
         "react-popper": "2.3.0",
-        "react-redux": "8.0.2",
+        "react-redux": "^8.0.2",
         "react-router-dom": "6.3.0",
         "react-spring": "8.0.27",
         "react-swipeable": "7.0.0",
@@ -180,16 +182,16 @@
     },
     "browserslist": {
         "production": [
-         "chrome >= 67",
-         "edge >= 79",
-         "firefox >= 68",
-         "opera >= 54",
-         "safari >= 14"
+            "chrome >= 67",
+            "edge >= 79",
+            "firefox >= 68",
+            "opera >= 54",
+            "safari >= 14"
         ],
         "development": [
-          "last 1 chrome version",
-          "last 1 firefox version",
-          "last 1 safari version"
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
         ]
-      }
+    }
 }

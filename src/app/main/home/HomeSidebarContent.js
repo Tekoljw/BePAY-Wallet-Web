@@ -375,6 +375,8 @@ function HomeSidebarContent(props) {
                             </div>
                         } />
                     </StyledListItem>}
+
+                    
                     {hideMenu.indexOf('security') === -1 && <StyledListItem
                         button
                         className={
