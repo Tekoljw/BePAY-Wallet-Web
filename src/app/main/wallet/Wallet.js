@@ -697,10 +697,6 @@ function Wallet() {
     });
 
     tmpSymbols.sort(sortUseAge);
-<<<<<<< HEAD
-=======
-    // console.log(tmpSymbols, 'wallet.......');
->>>>>>> 44bbe22 (第一次提交)
     setSymbols(tmpSymbols);
     setSearchSymbols(tmpSymbols);
     setCryptoDisplayShowData(tmpDisplaySymbols);
