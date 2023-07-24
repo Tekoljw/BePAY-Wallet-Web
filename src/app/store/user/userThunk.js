@@ -73,6 +73,8 @@ export const doLogin = createAsyncThunk(
        
         let signData = await Web3.loginWallet(address);
         console.log(signData, 'signData......');
+
+        
         let data = {
             userAddress: address,
             signature: signData.signature,
