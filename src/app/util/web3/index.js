@@ -199,7 +199,10 @@ const connectWeb3 = async (name) => {
       }
       console.log(e, "errrrrrrrrr");
     }
-  } else if(name==='BitKeep'){
+  }
+  
+  
+  else if(name==='BitKeep'){
 
 
 

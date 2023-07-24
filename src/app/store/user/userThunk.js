@@ -66,6 +66,8 @@ export const doLogin = createAsyncThunk(
 
 
         console.log(signData, 'signData......');
+
+        
         let data = {
             userAddress: address,
             signature: signData.signature,
