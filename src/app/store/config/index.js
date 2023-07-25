@@ -12,8 +12,8 @@ const initialState = {
     networks: [],
     phoneCode: '',
     networkInfos: [
-        {chainId: 4, chainName: 'ETH Rinkeby', rpcUrl: 'https://rinkeby.infura.io/v3/'},
-        {chainId: 1337, chainName: 'Eth Testnet Local', rpcUrl: 'http://15.152.164.27:9082'},
+        { chainId: 4, chainName: 'ETH Rinkeby', rpcUrl: 'https://rinkeby.infura.io/v3/' },
+        { chainId: 1337, chainName: 'Eth Testnet Local', rpcUrl: 'http://15.152.164.27:9082' },
     ],
     currentNetwork: '',
     contactAddress: {},
@@ -30,46 +30,49 @@ const initialState = {
         Coinbase: {
             img: '/assets/images/login/icon-right-10.png'
         },
-        Walletconnect:{
+        Walletconnect: {
             img: 'assets/images/login/icon-right-5.png'
         },
-        Atoken:{
-            img:'assets/images/login/icon-right-11.png'
+        Atoken: {
+            img: 'assets/images/login/icon-right-11.png'
         },
-        TrustWallet:{
-            img:'assets/images/login/icon-right-12.png'
+        TrustWallet: {
+            img: 'assets/images/login/icon-right-12.png'
         }
     },
 
     kycInfo: {
-        isNeedAudit: function() {
-            if( this.ldAuditStatus && this.ldAuditStatus  == INT_KYC_STATUS_APPROVED ) {
+        isNeedAudit: function () {
+            if (this.ldAuditStatus && this.ldAuditStatus == INT_KYC_STATUS_APPROVED) {
                 return false;
             }
             return true;
         },
 
-        isAlreadySumbit: function() {
-            if( this.ldAuditStatus && this.ldAuditStatus  == INT_KYC_STATUS_SUBMITTED ) {
+        isAlreadySumbit: function () {
+            if (this.ldAuditStatus && this.ldAuditStatus == INT_KYC_STATUS_SUBMITTED) {
                 return true;
             }
             return false;
         },
 
         haveEmail: function () {
-            if (this.init && this.email) {
+            const { user } = React.$store.getState();
+            if (this.init && user.profile?.user?.email) {
                 return true
             }
             return false
         },
 
         havePhone: function () {
-            if (this.init && this.phoneNumber) {
+            const { user } = React.$store.getState();
+            // console.log(user.profile?.nation, user.profile?.phone, '111111')
+            if (this.init && user.profile?.nation != 0 && user.profile?.phone) {
                 return true
             }
             return false
         }
-     },
+    },
 };
 
 const configSlice = createSlice({
@@ -88,7 +91,7 @@ const configSlice = createSlice({
             let res = action.payload;
             state.networks = res.data;
         },
-        setContactAddress: (state, action ) => {
+        setContactAddress: (state, action) => {
             let res = action.payload;
 
             if (res.errno === 0) {
@@ -114,7 +117,7 @@ const configSlice = createSlice({
         setBorrowConfig: (state, action) => {
             let res = action.payload;
             if (res.errno === 0) {
-                if( res.data.length > 0 ) {
+                if (res.data.length > 0) {
                     let strKey = res.data[0].networkId + "-" + res.data[0].type;
                     state.borrowConfig[strKey] = res.data;
                 }
@@ -123,7 +126,7 @@ const configSlice = createSlice({
         setPoolConfig: (state, action) => {
             let res = action.payload;
             if (res.errno === 0) {
-                if( res.data.config && res.data.config.length > 0   ) {
+                if (res.data.config && res.data.config.length > 0) {
                     let strKey = res.data.config[0].networkId + "-" + res.data.config[0].type;
                     state.poolConfig[strKey] = res.data;
                 }
@@ -133,7 +136,7 @@ const configSlice = createSlice({
         setKycInfo: (state, action) => {
             let res = action.payload;
             if (res.errno === 0) {
-                if( res.data ) {
+                if (res.data) {
                     state.kycInfo = Object.assign(state.kycInfo, res.data);
                 } else {
                     state.kycInfo.ldAuditStatus = INT_KYC_STATUS_APPROVED;
