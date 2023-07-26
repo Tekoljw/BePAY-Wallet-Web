@@ -52,11 +52,13 @@ export const getCurrencySelect = createAsyncThunk(
     }
 );
 
+
+
 // 去中心以太链钱包登录
 export const doLogin = createAsyncThunk(
     'user/doLogin',
     async (settings, { dispatch, getState }) => {
-        // console.log(settings,'settings................');
+        console.log(settings,'settings................');
 
         let res =  loginWays.list.find(function(item){
             return  item.id === settings.id
@@ -104,6 +106,9 @@ export const doLogin = createAsyncThunk(
         }
     }
 );
+
+
+
 
 // 手机号/邮箱 登录
 export const mobileLogin = createAsyncThunk(
@@ -513,8 +518,9 @@ export const selNetwork = createAsyncThunk(
                         }
                     }
                     break;
-
                 case 'BitKeep':
+
+                console.log('111111111111111111111111111');
                     const provider = window.bitkeep && window.bitkeep.ethereum;
 
                     try {
@@ -818,7 +824,7 @@ export const getDecenterWalletBalance = createAsyncThunk(
 
         // 验证登录
         const regWallet = localStorage.getItem('walletname');
-        // console.log(regWallet,'regWallet....................');
+        console.log(regWallet,'regWallet....................');
         let { loginType } = user.profile;
         let symbolAdress = settings.address || '';
         let decimals = settings.decimals || 1;

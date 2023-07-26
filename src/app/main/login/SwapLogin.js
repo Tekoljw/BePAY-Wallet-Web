@@ -4,7 +4,7 @@ import React from 'react'
 import { doLogin } from "../../store/user/userThunk";
 
 
-function Web3Login() {
+function SwapLogin() {
     
     const dispatch = useDispatch();
     const urlParam = new URL(window.location.href);
@@ -16,7 +16,10 @@ function Web3Login() {
 
     const checkWallet =(e,id)=>{
         // console.log(id);
-        dispatch(doLogin({pathname,id}))
+
+        if (id === 0 || id === 4){
+            dispatch(doLogin({pathname,id}));
+        }
     }
 
     
@@ -27,7 +30,7 @@ function Web3Login() {
         }}>
             {
                 loginWays.list.map((way, index) => {
-                    const balckimg = way.id === 0 || way.id === 13 ;
+                    const balckimg = way.id === 0 || way.id === 4 ;
                     return (
                         <div
                         
@@ -50,5 +53,5 @@ function Web3Login() {
     );
 }
 
-export default React.memo(Web3Login);
+export default React.memo(SwapLogin);
 

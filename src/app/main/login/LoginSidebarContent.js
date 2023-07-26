@@ -37,7 +37,7 @@ function LoginSidebarContent(props) {
     //以太链登录
     const walletLogin = (walletType,id) => {
     //    console.log(walletType);
-        console.log(agentId,'agentId................');
+        // console.log(agentId,'agentId................');
         // let wallettype = walletType
         const checkPhone = () => {
             var sUserAgent = navigator.userAgent.toLowerCase(),
@@ -53,6 +53,8 @@ function LoginSidebarContent(props) {
                 return true;
             } return false;
         };
+
+        
         const checkIsPhone = checkPhone();
         switch (walletType) {
             case 'trustWallet':
@@ -78,6 +80,18 @@ function LoginSidebarContent(props) {
                 }
                 break;
 
+                case 'BitKeep':
+                    if (!checkIsPhone) {
+                        dispatch(doLogin({
+                            agentId: agentId,
+                            walletType,
+                            id
+                        }))
+                    } else {
+                        dispatch(showMessage({ message: 'Only for PC' }))
+                    }
+                    break;
+
             default:
                 dispatch(doLogin({
                     agentId: agentId,
@@ -98,7 +112,7 @@ function LoginSidebarContent(props) {
             <div className='login-right-btns'>
                 {
                     loginWays.list.map((way, index) => {
-                        const balckimg = way.id === 0;
+                        const balckimg = way.id === 0  ||  way.id === 13 ;
                         return (
                             <div className={
                                 clsx(
@@ -114,7 +128,10 @@ function LoginSidebarContent(props) {
                                     // way.id === 9 && walletLogin('Coinbase',way.id),
                                     // way.id === 11 && walletLogin('trustWallet'),
                                     // way.id === 12 && walletLogin('Polygon'),
-                                    way.id === 13 && walletLogin('BitKeep',way.id)
+                                    way.id === 13 && walletLogin('BitKeep',way.id);
+                                    way.id === 14 && walletLogin('Bitski',way.id);
+                                    way.id === 16 && walletLogin('BinanceSmart',way.id);
+
                                 }}
                             // !isMobileMedia && way.id === 11 && color = gray
                             >

@@ -14,7 +14,7 @@ const ether = async () => {
             return injectedProvider;
             break;
         case 'BitKeep':
-            return window.ethereum;
+            return window.bitkeep && window.bitkeep.ethereum;
             break;
            
 

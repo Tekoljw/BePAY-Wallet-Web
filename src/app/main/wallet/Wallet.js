@@ -986,7 +986,7 @@ function Wallet() {
               })
             );
 
-            // console.log(balanceRes);
+            console.log(balanceRes);
             
             balance = balanceRes.payload || 0;
 
@@ -1002,7 +1002,6 @@ function Wallet() {
         
         balance = Number(balance).toFixed(6);
 
-       
 
         var tmpShow = arrayLookup(
           walletDisplayData,
@@ -1010,8 +1009,6 @@ function Wallet() {
           symbol.symbol,
           "show"
         );
-
-       
 
         if (tmpShow === "") {
           tmpShow = symbol.userShow;
@@ -1132,6 +1129,8 @@ function Wallet() {
 
 // 切换网络
   const changeNetwork = async (network) => {
+
+    console.log(network);
 
     const networkRes = await dispatch(selNetwork(network));
     if (networkRes.payload) {
@@ -2927,10 +2926,6 @@ function Wallet() {
             {/* </BootstrapDialog> */}
           </AnimateModal>
 
-
-
-
-
           {/*切换网路*/}
           <BootstrapDialog
             onClose={() => {
@@ -3010,10 +3005,6 @@ function Wallet() {
               </div>
             </DialogContent>
           </BootstrapDialog>
-
-
-
-
         </Box>
       </motion.div>
       
