@@ -74,6 +74,7 @@ export const doLogin = createAsyncThunk(
 
        
         let signData = await Web3.loginWallet(address);
+
         console.log(signData, 'signData......');
 
         
@@ -416,12 +417,24 @@ export const    doSetNetwork = createAsyncThunk(
 export const selNetwork = createAsyncThunk(
     'user/selNetwork',
     async (settings, { dispatch, getState }) => {
-        console.log(settings);
+        console.log(settings,'settings.................');
 
-        console.log(getState().user.profile.user.regWallet);
+        // console.log(getState().user.profile.user.regWallet);
 
         const { user } = getState();
-        let regWallet = user.profile.user.regWallet;  //BitKeep
+        // let regWallet = user.profile.user.regWallet; //BitKeep
+
+        
+        // let   regWallet1  = localStorage.getItem("walletname");
+        if (localStorage.getItem("walletname")){
+            var regWallet  = localStorage.getItem("walletname");
+        }else {
+            var regWallet = user.profile.user.regWallet;
+        }
+
+        console.log(regWallet);
+
+        
         // 验证登录
         const networkId = settings.id;  //11
         const chainId = settings.chainId; //128
@@ -520,7 +533,6 @@ export const selNetwork = createAsyncThunk(
                     break;
                 case 'BitKeep':
 
-                console.log('111111111111111111111111111');
                     const provider = window.bitkeep && window.bitkeep.ethereum;
 
                     try {

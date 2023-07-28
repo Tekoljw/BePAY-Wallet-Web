@@ -22,7 +22,6 @@ function SwapLogin() {
         }
     }
 
-    
     return (
         <div className="flex justify-center items-center flex-wrap mx-24 mb-16 pt-16  " style={{
             background: '#334155',

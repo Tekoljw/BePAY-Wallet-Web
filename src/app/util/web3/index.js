@@ -15,6 +15,8 @@ import WalletConnect from "@walletconnect/client";
 import QRCodeModal from "@walletconnect/qrcode-modal";
 import { ChargingStationRounded } from "@mui/icons-material";
 
+import { EthereumProvider } from '@walletconnect/ethereum-provider';
+
 
 
 
@@ -266,42 +268,42 @@ const connectWeb3 = async (name) => {
 
 
    } 
-   else if(name === "BinanceSmart"){
+   else if(name === "WalletConnect"){
 
-  //   let address = [];
+    const provider = await EthereumProvider.init({
+      projectId:'f52eb6556997b1ef13ad7fc8ac632ca6',
+      showQrModal: true,
+      qrModalOptions: { themeMode: "light" },
+      chains: [1],
+      methods: ["eth_sendTransaction", "personal_sign"],
+      events: ["chainChanged", "accountsChanged"],
+      metadata: {
+        name: "My Dapp",
+        description: "My Dapp description",
+        url: "https://my-dapp.com",
+        icons: ["https://my-dapp.com/logo.png"],
+      },
+    });
 
-  //   let currentChainId = BinanceChain.chainId;
+    await provider.connect();
 
-  //   console.log(currentChainId);
+    console.log('111111111111111111111111111111111111111111');
 
-  //    var res = BinanceChain.requestAccounts();
-
-  //    console.log(res);
-
-  //  await  BinanceChain.request({method: "eth_requestAccounts"}).then((addresses) => {
-     
-  //       // console.log(addresses);
-
-  //       address = addresses
-  //    })
-
-  //    console.log(address[0]);
-
-
-  //    return(currentChainId,address[0],name);
-
-  // window.BinanceChain.request({method:"eth_accounts"});
-
-  window.BinanceChain.request({method:"eth_sign"});
+    const result = await provider.request({method:'eth_requestAccounts' });
 
 
+    var web3 = new Web3(provider);
 
+    window.wallet = web3;
 
+    console.log(result[0]);  
+
+    let networkId = 1;
+
+    let coinbase = result[0];
+
+    return { networkId,coinbase,name }
 }
-
-  
-
-
 
   else {
     error = "";
@@ -336,8 +338,12 @@ const loginWallet = async (address) => {
   let loginMessage = state.config.system.loginMessage;
   var message = loginMessage + " " + timestamp;
 
+  console.log(address);
+  console.log(message);
+
   try {
     let signature = await sign(message, address);
+
 
     if (signature.error) return signature;
 
@@ -351,19 +357,19 @@ const loginWallet = async (address) => {
 };
 
 const sign = async (message, address) => {
+
   var web3 = window.wallet;
-  // console.log(web3, 'web3....');
+
   try {
     address = web3.utils.toChecksumAddress(address);
-    console.log(message, "message....");
 
     var signature = await promisify((cb) =>
-      web3.eth.personal.sign(message, address, cb)
+      web3.eth.personal.sign(message,address,cb)
     );
 
     return signature;
   } catch (e) {
-    return { error: e.message };
+    return {error: e.message};
   }
 };
 

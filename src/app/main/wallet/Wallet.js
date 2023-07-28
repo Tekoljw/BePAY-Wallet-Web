@@ -1641,6 +1641,7 @@ function Wallet() {
                     </motion.div>
                   </div>
                 )}
+                
 
                 {decentralized != -1 && walletType === 1 && loginType == 1 && (
                   <>
@@ -2865,6 +2866,7 @@ function Wallet() {
               </Box>
             </motion.div>
           )}
+
 
           {/*切换法币*/}
           <AnimateModal

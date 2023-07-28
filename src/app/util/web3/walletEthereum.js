@@ -1,6 +1,7 @@
 
 const ether = async () => {
     const regWallet = localStorage.getItem('walletname');
+    
     switch (regWallet) {
         case 'metamask':
             return window.ethereum;
@@ -16,8 +17,6 @@ const ether = async () => {
         case 'BitKeep':
             return window.bitkeep && window.bitkeep.ethereum;
             break;
-           
-
     };
 };
 export default{

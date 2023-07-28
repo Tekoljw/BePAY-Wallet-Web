@@ -9,6 +9,7 @@ import web3 from "../../util/web3";
 // import trustProvider from '../../util/web3/trustwallet';
 import walletEthereum from '../../util/web3/walletEthereum'
 import ether from '../../util/web3/walletEthereum'
+import Web3 from "web3";
 // 去质押
 export const goTransfer = createAsyncThunk(
     'transfer/goTransfer',
@@ -38,6 +39,7 @@ export const goTransfer = createAsyncThunk(
 export const sendTransaction = createAsyncThunk(
     'transfer/sendTransaction',
     async (settings, { dispatch, getState }) => {
+
         settings = settings || {};
         const { config, user } = getState();
         let amount = settings.amount || 0;
@@ -144,6 +146,9 @@ export const sendTransaction = createAsyncThunk(
 export const foxSendTransaction = createAsyncThunk(
     'transfer/foxSendTransaction',
     async (settings, { dispatch, getState }) => {
+
+
+        console.log(settings,'settings.............................');
         const { config, user } = getState();
         let notPool = settings.notPool;
         let amount = settings.amount || 0;
@@ -163,6 +168,7 @@ export const foxSendTransaction = createAsyncThunk(
             dispatch(showMessage({ message: 'This currency is not currently supported', code: 1 }));
             return false
         }
+
   
         // 转换金额
         amount = new BN(10).pow(new BN(symbolecimals)).mul(new BN(amount * 1000000)).div(new BN(1000000));
@@ -170,51 +176,51 @@ export const foxSendTransaction = createAsyncThunk(
         if (type === 0) {
             try {
                 amount = '0x' + amount.toString(16);
-                // let ether = async () => {
-                //     const regWallet = user.profile?.user?.regWallet;
-                //     switch (regWallet) {
-                //         case 'metamask':
-                //             return window.ethereum;
-                //             break;
-                //         case 'coinbase':
-                //             var initCoinbase = await coinbaseWallet.initCoinbase();
-                //             return initCoinbase;
-                //             break;
-                //         case 'trustWallet':
-                //             var injectedProvider = await trustProvider.getTrustWalletInjectedProvider();
-                //             return injectedProvider;
-                //             break;
-                //     };
-                // };
-                const etherPro = await walletEthereum.ether()
-                console.log('进来了,111')
-                etherPro.request({
-                    method: 'eth_sendTransaction',
-                    params: [{
-                        from: user.userInfo.address,
-                        to: toAddress,
-                        value: amount,
-                    }],
-                }).then((txHash) => {
+            
+                const etherPro = await walletEthereum.ether();
+                console.log('进来了,111');
+
+                console.log(etherPro);
+                // console.log(etherPro.selectedAddress);
+
+                console.log(user.userInfo.address);
+                console.log(toAddress);
+                console.log(amount);
+
+                    etherPro.request({
+                        method: 'eth_sendTransaction',
+                        params: [{
+                            from: user.userInfo.address,
+                            to: toAddress,
+                            value: amount,
+                        }],
+                    }).then((txHash) => {    
+                        dispatch(showMessage({ message: 'success', code: 1 }));
+                        if (!notPool) {
+                            dispatch(afterActive({ txId: txHash, configId: activatyId }));
+                        }
+                        console.log('txHash ==> ', txHash)
+                        return txHash
+                    }).catch((error) => {
+                        dispatch(showMessage({ message: error.message, code: 2 }));
+                        console.log('error ==> ', error)
+                    });
+                    return true
                 
-                    dispatch(showMessage({ message: 'success', code: 1 }));
-                    if (!notPool) {
-                        dispatch(afterActive({ txId: txHash, configId: activatyId }));
-                    }
-                    console.log('txHash ==> ', txHash)
-                    return txHash
-                }).catch((error) => {
-                    dispatch(showMessage({ message: error.message, code: 2 }));
-                    console.log('error ==> ', error)
-                });
-                return true
+                
+                
             } catch (e) {
                 dispatch(showMessage({ message: e.message, code: 2 }));
                 return false
             }
         }
+
+
+
         try {
             console.log('进来了222');
+
+
             // 代币合约
             const symbolConstructObj = await utils.contractAt(utils.contractAbi('USGT'), symbolAddress);
 

@@ -902,6 +902,8 @@ function Deposite() {
                                 )
                             })}
                         </div>
+
+
                         {
                             isGetWalletAddress
                                 ? (//有钱包地址
@@ -957,10 +959,13 @@ function Deposite() {
 
                                                     // }}
                                                     onClick={async () => {
-                                                        if (decentralized != -1 && userData.profile?.loginType != 1) {
+                                                        
+
+                                                        if (decentralized != 1 && userData.profile?.loginType != -1) {                                                      
                                                             // 跳转到 /account 页面
                                                             history.push('/account');
                                                         } else {
+                                                            
                                                             // 保留原有的 onClick 逻辑
                                                             let balanceRes = await dispatch(getDecenterWalletBalance({
                                                                 address: arrayLookup(symbolWallet, 'symbol', symbol, 'address'),
@@ -1111,6 +1116,8 @@ function Deposite() {
                                         }
                                     </>
                                 )}
+
+
                         <BootstrapDialog
                             onClose={() => { setTransferDialogState(false); }}
                             aria-labelledby="customized-dialog-title"
