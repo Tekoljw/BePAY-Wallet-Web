@@ -948,8 +948,7 @@ function Wallet() {
   const decenterWalletFormatAmount = async () => {
     
     let tmpWalletAmount = walletAmount;
-
-
+ 
     let tmpArr = [];
     // 美元汇率
     let dollarCurrencyRate =
@@ -973,7 +972,6 @@ function Wallet() {
         if (symbol.networkId === userData.userInfo.networkId) {
           if (tmpWalletAmount[symbol.symbol]) {
             balance = tmpWalletAmount[symbol];
-
           } else {
             let balanceRes = await dispatch(
               getDecenterWalletBalance({
@@ -986,7 +984,7 @@ function Wallet() {
               })
             );
 
-            console.log(balanceRes);
+            // console.log(balanceRes);
             
             balance = balanceRes.payload || 0;
 
@@ -1089,6 +1087,7 @@ function Wallet() {
   };
 
   useEffect(() => {
+
     let userBindWallet = userData.userInfo.bindWallet ?? false;
     if (userBindWallet && walletType === 1) {
       if (!mounted.current) {
@@ -1137,6 +1136,9 @@ function Wallet() {
       setOpenChangeNetwork(false);
     }
   };
+
+
+
 
   const changeCurrency = async (currency) => {
     await dispatch(updateCurrency(currency));
@@ -3007,6 +3009,7 @@ function Wallet() {
               </div>
             </DialogContent>
           </BootstrapDialog>
+          
         </Box>
       </motion.div>
       

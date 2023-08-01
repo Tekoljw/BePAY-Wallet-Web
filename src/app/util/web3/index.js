@@ -67,7 +67,7 @@ const connectWeb3 = async (name) => {
         }
         var web3 = new Web3(window.ethereum);
 
-        console.log(web3);
+        // console.log(web3);
         
         window.wallet = web3;
 
@@ -263,17 +263,14 @@ const connectWeb3 = async (name) => {
     
    else if (name === "Bitski"){
 
-  
-
-
-
    } 
    else if(name === "WalletConnect"){
+
 
     const provider = await EthereumProvider.init({
       projectId:'f52eb6556997b1ef13ad7fc8ac632ca6',
       showQrModal: true,
-      qrModalOptions: { themeMode: "light" },
+      qrModalOptions: {themeMode:"light"},
       chains: [1],
       methods: ["eth_sendTransaction", "personal_sign"],
       events: ["chainChanged", "accountsChanged"],
@@ -285,24 +282,26 @@ const connectWeb3 = async (name) => {
       },
     });
 
+    console.log(provider);
+
+    
     await provider.connect();
+    console.log(provider);
 
-    console.log('111111111111111111111111111111111111111111');
-
-    const result = await provider.request({method:'eth_requestAccounts' });
-
-
+    const result = await provider.request({method:'eth_requestAccounts'});
+    
     var web3 = new Web3(provider);
+
+    console.log(web3);
 
     window.wallet = web3;
 
-    console.log(result[0]);  
+    let networkId = await promisify((cb) => web3.eth.getChainId(cb));
 
-    let networkId = 1;
+    console.log(networkId);
 
     let coinbase = result[0];
-
-    return { networkId,coinbase,name }
+    return {networkId,coinbase,name}
 }
 
   else {
@@ -311,8 +310,6 @@ const connectWeb3 = async (name) => {
 
   return { error };
 };
-
-
 
 const checkWeb3 = () => {
   // console.log(window.ethereum.isConnected());
