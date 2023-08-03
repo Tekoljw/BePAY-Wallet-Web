@@ -33,7 +33,7 @@ const promisify = (inner) =>
   );
 
   
-const connectWeb3 = async (name) => {
+const connectWeb3 = async (name = 'metamask') => {
   var error = "";
   var injectedProvider = "";
   var connected = "";

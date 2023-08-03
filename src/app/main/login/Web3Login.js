@@ -1,7 +1,7 @@
 import loginWays from "./loginWays";
 import { useDispatch } from "react-redux";
 import React from 'react'
-import { doLogin } from "../../store/user/userThunk";
+import { doLogin, bindWallet } from "../../store/user/userThunk";
 
 
 function Web3Login() {
@@ -9,16 +9,20 @@ function Web3Login() {
     const dispatch = useDispatch();
     const urlParam = new URL(window.location.href);
     const pathname =urlParam?.pathname  //account
+
     // const metamaskLogin = () => {
     //     dispatch(doLogin({pathname}))
         
     // };
 
-    const checkWallet =(e,id)=>{
+    const checkWallet = async (e,id)=>{
         // console.log(id);
-        dispatch(doLogin({pathname,id}))
+        const bindWalletRes = await dispatch(bindWallet());
+        if (bindWalletRes.payload) {
+            dispatch(doLogin({pathname,id}))
+        }
+        
     }
-
     
     return (
         <div className="flex justify-center items-center flex-wrap mx-24 mb-16 pt-16  " style={{

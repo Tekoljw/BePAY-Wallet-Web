@@ -700,7 +700,7 @@ export const bindWallet = createAsyncThunk(
                 signature: signData.signature,
                 timestamp: signData.timestamp,
             };
-
+            
             const doBindWalletRes = await dispatch(doBindWallet(data));
             if (doBindWalletRes.payload) {
                 return true

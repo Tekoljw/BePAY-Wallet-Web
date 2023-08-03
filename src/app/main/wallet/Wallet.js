@@ -946,9 +946,9 @@ function Wallet() {
 
   // 去中心化钱包数据整理
   const decenterWalletFormatAmount = async () => {
-    
+
     let tmpWalletAmount = walletAmount;
- 
+
     let tmpArr = [];
     // 美元汇率
     let dollarCurrencyRate =
@@ -985,7 +985,7 @@ function Wallet() {
             );
 
             // console.log(balanceRes);
-            
+
             balance = balanceRes.payload || 0;
 
             tmpWalletAmount[symbol.symbol] = balance;
@@ -997,7 +997,7 @@ function Wallet() {
           //     type: symbol.type,
           // }));
         }
-        
+
         balance = Number(balance).toFixed(6);
 
 
@@ -1126,7 +1126,7 @@ function Wallet() {
     }
   }, [networks]);
 
-// 切换网络
+  // 切换网络
   const changeNetwork = async (network) => {
 
     console.log(network);
@@ -1406,8 +1406,11 @@ function Wallet() {
                             width: "50%",
                           }}
                           onClick={async () => {
-                            const bindWalletRes = await dispatch(bindWallet());
-                            if (bindWalletRes.payload) {
+                            // const bindWalletRes = await dispatch(bindWallet());
+                            // if (bindWalletRes.payload) {
+                            // decenterWalletFormatAmount();
+                            // }
+                            if (decentralized != -1) {
                               decenterWalletFormatAmount();
                             }
                           }}
@@ -1643,7 +1646,7 @@ function Wallet() {
                     </motion.div>
                   </div>
                 )}
-                
+
 
                 {decentralized != -1 && walletType === 1 && loginType == 1 && (
                   <>
@@ -3009,10 +3012,10 @@ function Wallet() {
               </div>
             </DialogContent>
           </BootstrapDialog>
-          
+
         </Box>
       </motion.div>
-      
+
     </div>
   );
 }
