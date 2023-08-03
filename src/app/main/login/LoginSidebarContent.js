@@ -16,11 +16,19 @@ import QrView from '../../store/walletconnect/QRview';
 import phantom from '../../util/web3/phantom1.js';
 import clsx from 'clsx';
 
-import web3 from "web3";
+import Web3 from "web3";
 
-// const isMobileMedia = new MobileDetect(window.navigator.userAgent).mobile();
+
+// walletconnect钱包导入文件
+
+import { EthereumProvider } from '@walletconnect/ethereum-provider';
+
+
 
 function LoginSidebarContent(props) {
+
+    // f52eb6556997b1ef13ad7fc8ac632ca6
+
     const dispatch = useDispatch();
     const isMobileMedia = new MobileDetect(window.navigator.userAgent).mobile();
     // const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down(isMobileMedia ? 'lg' : 'sm'));
@@ -35,9 +43,9 @@ function LoginSidebarContent(props) {
     };
     //end---------------
     //以太链登录
-    const walletLogin = (walletType,id) => {
-    //    console.log(walletType);
-        console.log(agentId,'agentId................');
+    const walletLogin = (walletType, id) => {
+        //    console.log(walletType);
+        // console.log(agentId,'agentId................');
         // let wallettype = walletType
         const checkPhone = () => {
             var sUserAgent = navigator.userAgent.toLowerCase(),
@@ -53,6 +61,8 @@ function LoginSidebarContent(props) {
                 return true;
             } return false;
         };
+
+
         const checkIsPhone = checkPhone();
         switch (walletType) {
             case 'trustWallet':
@@ -66,7 +76,7 @@ function LoginSidebarContent(props) {
                     dispatch(showMessage({ message: 'Only for phone' }))
                 }
                 break;
-                case 'metamask':
+            case 'metamask':
                 if (!checkIsPhone) {
                     dispatch(doLogin({
                         agentId: agentId,
@@ -78,6 +88,30 @@ function LoginSidebarContent(props) {
                 }
                 break;
 
+            case 'BitKeep':
+                if (!checkIsPhone) {
+                    dispatch(doLogin({
+                        agentId: agentId,
+                        walletType,
+                        id
+                    }))
+                } else {
+                    dispatch(showMessage({ message: 'Only for PC' }))
+                }
+                break;
+
+                case 'WalletConnect':
+                    if (!checkIsPhone) {
+                        dispatch(doLogin({
+                            agentId: agentId,
+                            walletType,
+                            id
+                        }))
+                    } else {
+                        dispatch(showMessage({ message: 'Only for PC' }))
+                    }
+                    break;
+
             default:
                 dispatch(doLogin({
                     agentId: agentId,
@@ -87,7 +121,42 @@ function LoginSidebarContent(props) {
                 break;
         }
     };
+
     const { t } = useTranslation('mainPage');
+
+
+    // async function onConnect() {
+      
+    //     const provider = await EthereumProvider.init({
+    //         projectId:'f52eb6556997b1ef13ad7fc8ac632ca6',
+    //         showQrModal: true,
+    //         qrModalOptions: { themeMode: "light" },
+    //         chains: [1],
+    //         methods: ["eth_sendTransaction", "personal_sign"],
+    //         events: ["chainChanged", "accountsChanged"],
+    //         metadata: {
+    //           name: "My Dapp",
+    //           description: "My Dapp description",
+    //           url: "https://my-dapp.com",
+    //           icons: ["https://my-dapp.com/logo.png"],
+    //         },
+    //       });
+
+
+    //       console.log(provider);
+
+    //       await provider.connect();
+
+    //       const result = await provider.request({method:'eth_requestAccounts' });
+
+
+
+    //       console.log(result);
+
+    // }
+
+
+
     return (
         <div className='login-right-content loginMarginZhong ' style={{ marginLeft: "20px" }}>
             <div className='login-right-content-title font-furore text-20' >
@@ -98,7 +167,7 @@ function LoginSidebarContent(props) {
             <div className='login-right-btns'>
                 {
                     loginWays.list.map((way, index) => {
-                        const balckimg = way.id === 0;
+                        const balckimg = way.id === 0 || way.id === 13;
                         return (
                             <div className={
                                 clsx(
@@ -108,13 +177,16 @@ function LoginSidebarContent(props) {
                                 )
                             } key={index}
                                 onClick={() => {
-                                    way.id === 0 && walletLogin('metamask',way.id)
+                                    way.id === 0 && walletLogin('metamask', way.id)
                                     // way.id === 1 && phantomLogin(),
-                                    // way.id === 4 && WCLogin(),
+                                    way.id === 4 && walletLogin('WalletConnect', way.id)
                                     // way.id === 9 && walletLogin('Coinbase',way.id),
                                     // way.id === 11 && walletLogin('trustWallet'),
                                     // way.id === 12 && walletLogin('Polygon'),
-                                    way.id === 13 && walletLogin('BitKeep',way.id)
+                                    way.id === 13 && walletLogin('BitKeep', way.id);
+                                    // way.id === 14 && walletLogin('Bitski', way.id);
+                                    // way.id === 16 && walletLogin('BinanceSmart', way.id);
+
                                 }}
                             // !isMobileMedia && way.id === 11 && color = gray
                             >
@@ -125,6 +197,7 @@ function LoginSidebarContent(props) {
                     })
                 }
             </div>
+
         </div>
     );
 }

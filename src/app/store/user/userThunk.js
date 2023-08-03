@@ -11,6 +11,7 @@ import coinbaseWallet from '../../util/web3/coinbase';
 import walletEthereum from '../../util/web3/walletEthereum';
 import settingsConfig from 'app/configs/settingsConfig';
 import loginWays from '../../main/login/loginWays'
+import { EthereumProvider } from '@walletconnect/ethereum-provider';
 
 // 获取用户信息
 export const userProfile = createAsyncThunk(
@@ -32,7 +33,7 @@ export const setCurrencySelect = createAsyncThunk(
             currencyType: settings.currencyType,
             currencySymbol: settings.currencySymbol,
         };
-        const setCurrencySelect = await React.$api("account.setCurrencySelect",data);
+        const setCurrencySelect = await React.$api("account.setCurrencySelect", data);
         if (setCurrencySelect.errno === 0) {
             dispatch(updateUser(setCurrencySelect));
         } else {
@@ -52,17 +53,19 @@ export const getCurrencySelect = createAsyncThunk(
     }
 );
 
+
+
 // 去中心以太链钱包登录
 export const doLogin = createAsyncThunk(
     'user/doLogin',
     async (settings, { dispatch, getState }) => {
-        // console.log(settings,'settings................');
+        console.log(settings, 'settings................');
 
-        let res =  loginWays.list.find(function(item){
-            return  item.id === settings.id
-          })
-          let walletType = res.name;
-        if (walletType == "MetaMask"){
+        let res = loginWays.list.find(function (item) {
+            return item.id === settings.id
+        })
+        let walletType = res.name;
+        if (walletType == "MetaMask") {
             walletType = 'metamask';
         }
 
@@ -70,11 +73,12 @@ export const doLogin = createAsyncThunk(
         const web3 = await Web3.connectWeb3(walletType);
         let address = web3.coinbase;
 
-       
+
         let signData = await Web3.loginWallet(address);
+
         console.log(signData, 'signData......');
 
-        
+
         let data = {
             userAddress: address,
             signature: signData.signature,
@@ -85,14 +89,14 @@ export const doLogin = createAsyncThunk(
 
         const userLoginData = await React.$api("user.login", data);
 
-        console.log(userLoginData,'userLoginData222223223232323');
+        console.log(userLoginData, 'userLoginData222223223232323');
 
         if (userLoginData.errno === 0) {
             window.localStorage.setItem('isDecentralized', 1);
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
-            window.localStorage.setItem('walletname',walletType );
+            window.localStorage.setItem('walletname', walletType);
             // dispatch(updateUser(userLoginData));
-            dispatch(updateUser({...userLoginData,pathname:settings.pathname}));
+            dispatch(updateUser({ ...userLoginData, pathname: settings.pathname }));
             if (config.storageKey) {
                 React.$api("security.setKey", {
                     key: config.storageKey,
@@ -104,6 +108,9 @@ export const doLogin = createAsyncThunk(
         }
     }
 );
+
+
+
 
 // 手机号/邮箱 登录
 export const mobileLogin = createAsyncThunk(
@@ -118,7 +125,7 @@ export const mobileLogin = createAsyncThunk(
             password: settings.password,
             // agentId: settings.agentId,
         };
-        const userLoginData = await React.$api("user.mobileLogin",data);
+        const userLoginData = await React.$api("user.mobileLogin", data);
         if (userLoginData.errno === 0) {
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userLoginData));
@@ -392,7 +399,7 @@ export const forgotPass = createAsyncThunk(
 
 
 // 切链接口
-export const    doSetNetwork = createAsyncThunk(
+export const doSetNetwork = createAsyncThunk(
     'user/doSetNetwork',
     async (settings, { dispatch, getState }) => {
         const networkId = settings.networkId;
@@ -411,19 +418,31 @@ export const    doSetNetwork = createAsyncThunk(
 export const selNetwork = createAsyncThunk(
     'user/selNetwork',
     async (settings, { dispatch, getState }) => {
-        console.log(settings);
+        console.log(settings, 'settings.................');
 
-        console.log(getState().user.profile.user.regWallet);
+        // console.log(getState().user.profile.user.regWallet);
 
         const { user } = getState();
-        let regWallet = user.profile.user.regWallet;  //BitKeep
+        // let regWallet = user.profile.user.regWallet; //BitKeep
+
+
+        // let   regWallet1  = localStorage.getItem("walletname");
+        if (localStorage.getItem("walletname")) {
+            var regWallet = localStorage.getItem("walletname");
+        } else {
+            var regWallet = user.profile.user.regWallet;
+        }
+
+        console.log(regWallet);
+
+
         // 验证登录
         const networkId = settings.id;  //11
         const chainId = settings.chainId; //128
         const networkName = settings.network; //"HOUBI"
         const rpc = settings.rpc; /// "huobi"
         const symbol = settings.symbol; //"HT"
-        const avatar = settings.avatar; 
+        const avatar = settings.avatar;
         try {
             switch (regWallet) {
                 case 'metamask':
@@ -513,14 +532,14 @@ export const selNetwork = createAsyncThunk(
                         }
                     }
                     break;
-
                 case 'BitKeep':
+
                     const provider = window.bitkeep && window.bitkeep.ethereum;
 
                     try {
                         await provider.request({
-                          method: 'wallet_switchEthereumChain',
-                          params: [{ chainId: "0x" + chainId.toString(16) }],
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: "0x" + chainId.toString(16) }],
                         });
 
                         dispatch(doSetNetwork({
@@ -528,51 +547,123 @@ export const selNetwork = createAsyncThunk(
                         }));
                         return true;
 
-                      } catch (switchError) {
-                       console.log(switchError);
+                    } catch (switchError) {
+                        console.log(switchError);
                         if (switchError.code === 4902) {
 
-                           console.log(symbol);
+                            console.log(symbol);
 
-                          try {
-                         let res =  await provider.request({
-                              method:'wallet_addEthereumChain',
-                              params: [
-                                {
-                                  chainId: "0x" + chainId.toString(16),
-                                  nativeCurrency: {
-                                    name: symbol,
-                                    symbol: symbol,
-                                    decimals: 18,
-                                },
-                                  chainName: networkName,
-                                  rpcUrls: [rpc],
-                                },
-                              ],
-                            });
+                            try {
+                                let res = await provider.request({
+                                    method: 'wallet_addEthereumChain',
+                                    params: [
+                                        {
+                                            chainId: "0x" + chainId.toString(16),
+                                            nativeCurrency: {
+                                                name: symbol,
+                                                symbol: symbol,
+                                                decimals: 18,
+                                            },
+                                            chainName: networkName,
+                                            rpcUrls: [rpc],
+                                        },
+                                    ],
+                                });
 
-                            console.log(res);
+                                console.log(res);
 
 
-                            console.log('222222222222222222222222');
+                                console.log('222222222222222222222222');
 
-                            await provider.request({
-                                method: 'wallet_switchEthereumChain',
-                                params: [{ chainId: "0x" + chainId.toString(16) }],
-                              });
+                                await provider.request({
+                                    method: 'wallet_switchEthereumChain',
+                                    params: [{ chainId: "0x" + chainId.toString(16) }],
+                                });
 
-                            dispatch(doSetNetwork({
-                                networkId
-                            }));
+                                dispatch(doSetNetwork({
+                                    networkId
+                                }));
 
-                          } catch (addError) {
-                            console.log(addError);
-                          }
+                            } catch (addError) {
+                                console.log(addError);
+                            }
                         }
                         // handle other "switch" errors
-                      }
+                    }
 
-                break;  
+                    break;
+
+                case 'WalletConnect':
+                    const WalletConnectprovider = await EthereumProvider.init({
+                        projectId: 'f52eb6556997b1ef13ad7fc8ac632ca6',
+                        showQrModal: true,
+                        qrModalOptions: { themeMode: "light" },
+                        chains: [1],
+                        methods: ["eth_sendTransaction", "personal_sign", ],
+                        events: ["chainChanged", "accountsChanged"],
+                        metadata: {
+                            name: "My Dapp",
+                            description: "My Dapp description",
+                            url: "https://my-dapp.com",
+                            icons: ["https://my-dapp.com/logo.png"],
+                        },
+                    });
+
+                    try {
+                        await WalletConnectprovider.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: "0x" + chainId.toString(16) }],
+                        });
+
+                        dispatch(doSetNetwork({
+                            networkId
+                        }));
+                        return true;
+
+                    } catch (switchError) {
+                        console.log(switchError);
+                        if (switchError.code === 4001) {
+
+                            console.log(symbol);
+
+                            try {
+                                let res = await WalletConnectprovider.request({
+                                    method: 'wallet_addEthereumChain',
+                                    params: [
+                                        {
+                                            chainId: "0x" + chainId.toString(16),
+                                            nativeCurrency: {
+                                                name: symbol,
+                                                symbol: symbol,
+                                                decimals: 18,
+                                            },
+                                            chainName: networkName,
+                                            rpcUrls: [rpc],
+                                        },
+                                    ],
+                                });
+
+                                console.log(res);
+
+
+                                console.log('222222222222222222222222');
+
+                                await provider.request({
+                                    method: 'wallet_switchEthereumChain',
+                                    params: [{ chainId: "0x" + chainId.toString(16) }],
+                                });
+
+                                dispatch(doSetNetwork({
+                                    networkId
+                                }));
+
+                            } catch (addError) {
+                                console.log(addError);
+                            }
+                        }
+                        // handle other "switch" errors
+                    }
+
             }
         } catch (e) {
         }
@@ -811,10 +902,10 @@ export const getDecenterWalletBalance = createAsyncThunk(
     'user/getDecenterWalletBalance',
     async (settings, { dispatch, getState }) => {
         const { user } = getState();
-        
+
         // console.log(settings,'settings111111111111111111');
 
-        // console.log(getState().user.profile);
+        console.log(getState().user);
 
         // 验证登录
         const regWallet = localStorage.getItem('walletname');
@@ -826,32 +917,37 @@ export const getDecenterWalletBalance = createAsyncThunk(
         let type = settings.type;
         let currNetworkChainId = settings.networkChainId;
 
-   
+        // console.log(currNetworkChainId);
 
         if (loginType == 1) {
-
             // console.log(loginType,'address......ß');
-            const etherPro = await walletEthereum.ether();
 
-            var web3 = await Web3.connectWeb3(regWallet);
-            var address = web3.coinbase;
-            var networkChainId = web3.networkId;
-    
+            if (regWallet === 'WalletConnect') {
+                var address = getState().user.profile;
+                var networkChainId = 1;
+            } else {
+                var etherPro = await walletEthereum.ether();
+                var web3 = await Web3.connectWeb3(regWallet);
+                var address = web3.coinbase;
+                // console.log(address);
+                var networkChainId = web3.networkId;
+            }
+
+
+            // console.log(networkChainId);
             if (currNetworkChainId != networkChainId) {
                 dispatch(showMessage({ message: 'Please switch to the correct network', code: 2 }));
                 return false;
             }
-
-
             if (type === 0) {
-                return  await (etherPro.request({
+                return await (etherPro.request({
                     method: 'eth_getBalance',
                     params: [address, 'latest'],
                     "id": 1,
                     "jsonrpc": "2.0"
                 })) / Math.pow(10, decimals);
             }
-            
+
             // 代币合约
             var symbolConstruct = utils.contractAbi('USGT');
             // var symbolConstruct = utils.contractAbi('BGT');

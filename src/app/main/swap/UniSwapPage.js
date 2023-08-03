@@ -17,6 +17,7 @@ import "@uniswap/widgets/fonts.css";
 //导入钱包ethereun
 import coinbaseWallet from "../../util/web3/coinbase";
 import WalletConnectProvider from "@walletconnect/web3-provider";
+import SwapLogin from "../login/SwapLogin";
 
 
 const container = {
@@ -89,35 +90,51 @@ function UniSwapPage() {
   };
 
   useEffect(() => {
+
+
+     let  res =    window.localStorage.getItem("walletname");
+
+    console.log(res);
+
+    if (res === "metamask"){
+
+      setIsInit(true);
+    }else {
+      setIsInit(false)
+    }
+
+
     
-    let metamask = new Web3(window.ethereum);
+    // let metamask = new Web3(window.ethereum);
 
   //  console.log(window.ethereum.getBlockNumber);
-     console.log(metamask);
+    //  console.log(metamask);
 
 
-    switch (regWallet) {
-      case "metamask":
-        setProvider(window.ethereum);
-        // setProvider(metamask);
-        setIsInit(true);
-        break;
-      case "coinbase":
-        getCoinbaseProvider();
-        break;
-      case "trustWallet":
-        getTrustWalletProvide();
-        break;
-      case "BitKeep":
-        // setProvider(window.bitkeep && window.bitkeep.ethereum);
-        setProvider(metamask);
-        // setProvider(bitkeep);
-        // setProvider(metamask)
-        setIsInit(true);
-        // setjsonRpc(bitkeep.rpc.rpcUrl);
+    // switch (regWallet) {
+    //   case "metamask":
+    //     setProvider(window.ethereum);
+    //     // setProvider(metamask);
+    //     setIsInit(true);
+    //     break;
+    //   case "coinbase":
+    //     getCoinbaseProvider();
+    //     break;
+    //   case "trustWallet":
+    //     getTrustWalletProvide();
+    //     break;
+    //   case "BitKeep":
+    //     // setProvider(window.bitkeep && window.bitkeep.ethereum);
+    //     setProvider(metamask);
+    //     // setProvider(bitkeep);
+    //     // setProvider(metamask)
+    //     setIsInit(true);
+    //     // setjsonRpc(bitkeep.rpc.rpcUrl);
 
-        break;
-    }
+    //     break;
+    // }
+
+
   }, [regWallet]);
 
   return (
@@ -134,6 +151,16 @@ function UniSwapPage() {
 
           </Box>
         )}
+
+        {
+          !isInit && (
+            <Box component={motion.div} variants={item}>
+           
+                <SwapLogin />
+
+          </Box>
+          )
+        }
       </motion.div>
     </div>
   );

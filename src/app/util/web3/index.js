@@ -15,6 +15,11 @@ import WalletConnect from "@walletconnect/client";
 import QRCodeModal from "@walletconnect/qrcode-modal";
 import { ChargingStationRounded } from "@mui/icons-material";
 
+import { EthereumProvider } from '@walletconnect/ethereum-provider';
+
+
+
+
 
 const promisify = (inner) =>
   new Promise((resolve, reject) =>
@@ -61,6 +66,8 @@ const connectWeb3 = async (name) => {
           return { error };
         }
         var web3 = new Web3(window.ethereum);
+
+        // console.log(web3);
         
         window.wallet = web3;
 
@@ -85,48 +92,48 @@ const connectWeb3 = async (name) => {
     return { error };
   }
   
-  // else if (name === "Coinbase") {
-  //   // console.log('11111111111')
-  //   try {
-  //     // let coinbaseInit = await coinbaseWallet.initCoinbase();
-  //     // let web3 = new Web3(coinbaseInit);
-  //     // window.wallet = web3;
-  //     // var networkId = await promisify((cb) => web3.eth.getChainId(cb));
-  //     // // var address = await promisify((cb) => web3.eth.getCoinbase(cb));
-  //     // // var networkId = 1;
-  //     // var address = await coinbaseInit.request({
-  //     //   method: "eth_requestAccounts",
-  //     // });
-  //     // let walletType = "coinbase";
-  //     // return { networkId, coinbase: address[0], walletType };
-  //     if (window.ethereum._state && !window.ethereum._state.initialized) {
-  //       location.reload();
-  //       return { error: "ethereum is uninitialized" };
-  //     }
-  //     var t = await window.ethereum.request({
-  //       method: "eth_requestAccounts",
-  //     });
-  //     if (!t) {
-  //       error = "MetaMask enable Error";
-  //       return { error };
-  //     }
-  //     var web3 = new Web3(window.ethereum);
-  //     window.wallet = web3;
+  else if (name === "Coinbase") {
+    // console.log('11111111111')
+    try {
+      // let coinbaseInit = await coinbaseWallet.initCoinbase();
+      // let web3 = new Web3(coinbaseInit);
+      // window.wallet = web3;
+      // var networkId = await promisify((cb) => web3.eth.getChainId(cb));
+      // // var address = await promisify((cb) => web3.eth.getCoinbase(cb));
+      // // var networkId = 1;
+      // var address = await coinbaseInit.request({
+      //   method: "eth_requestAccounts",
+      // });
+      // let walletType = "coinbase";
+      // return { networkId, coinbase: address[0], walletType };
+      if (window.ethereum._state && !window.ethereum._state.initialized) {
+        location.reload();
+        return { error: "ethereum is uninitialized" };
+      }
+      var t = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      if (!t) {
+        error = "MetaMask enable Error";
+        return { error };
+      }
+      var web3 = new Web3(window.ethereum);
+      window.wallet = web3;
 
-  //     let networkId = await promisify((cb) => web3.eth.getChainId(cb));
-  //     var coinbase = await promisify((cb) => web3.eth.getCoinbase(cb));
+      let networkId = await promisify((cb) => web3.eth.getChainId(cb));
+      var coinbase = await promisify((cb) => web3.eth.getCoinbase(cb));
 
-  //     window.ethereum.on("chainChanged", () => {
-  //       // console.log(111111)
-  //     });
+      window.ethereum.on("chainChanged", () => {
+        // console.log(111111)
+      });
 
-  //     let walletType = "Coinbase";
-  //     return { networkId, coinbase, walletType };
+      let walletType = "Coinbase";
+      return { networkId, coinbase, walletType };
 
-  //   } catch (e) {
-  //     error = e.message;
-  //   }
-  // } 
+    } catch (e) {
+      error = e.message;
+    }
+  } 
 
   else if (name === "trustWallet") {
     try {
@@ -253,51 +260,49 @@ const connectWeb3 = async (name) => {
 
     return { networkId, coinbase, name };
    }
-
-
-  // else if (name === 'BitKeep'){
-
-  //   const provider = window.bitkeep && window.bitkeep.ethereum;
     
+   else if (name === "Bitski"){
+
+   } 
+   else if(name === "WalletConnect"){
 
 
+    const provider = await EthereumProvider.init({
+      projectId:'f52eb6556997b1ef13ad7fc8ac632ca6',
+      showQrModal: true,
+      qrModalOptions: {themeMode:"light"},
+      chains: [1],
+      methods: ["eth_sendTransaction", "personal_sign"],
+      events: ["chainChanged", "accountsChanged"],
+      metadata: {
+        name: "My Dapp",
+        description: "My Dapp description",
+        url: "https://my-dapp.com",
+        icons: ["https://my-dapp.com/logo.png"],
+      },
+    });
 
-  //   if (!provider) {
-  //     window.open('https://bitkeep.com/en/download?type=2');
-  //     return{error:"Please go to our official website to download!!"} 
-  //   }
+    console.log(provider);
 
-  //   if (window.ethereum._state && !window.ethereum._state.initialized) {
-  //     location.reload();
-  //     return { error: "ethereum is uninitialized" };
-  //   }
+    
+    await provider.connect();
+    console.log(provider);
 
-  //   var t = await provider.request({ method: 'eth_requestAccounts' });
+    const result = await provider.request({method:'eth_requestAccounts'});
+    
+    var web3 = new Web3(provider);
 
-  //   if (!t) {
-  //     error = "MetaMask enable Error";
-  //     return { error };
-  //   }
+    console.log(web3);
 
-  //   provider.removeAllListeners();
+    window.wallet = web3;
 
-  //   provider.on('accountsChanged', async (accounts) => {
-  //          return accounts
-  //       });
-  
-  //   var web3 = new Web3(provider);
-  //   window.wallet = web3;  
+    let networkId = await promisify((cb) => web3.eth.getChainId(cb));
 
-  //   let networkId = await promisify((cb) => web3.eth.getChainId(cb));
+    console.log(networkId);
 
-  //   var coinbase = await promisify((cb) => web3.eth.getCoinbase(cb));
-
-  //   provider.on('chainChanged', async (chainId) => {
-  //     console.log("chainId changed");
-  //  });
-
-  //   return { networkId, coinbase, walletType:'BitKeep' };
-  // }
+    let coinbase = result[0];
+    return {networkId,coinbase,name}
+}
 
   else {
     error = "";
@@ -305,8 +310,6 @@ const connectWeb3 = async (name) => {
 
   return { error };
 };
-
-
 
 const checkWeb3 = () => {
   // console.log(window.ethereum.isConnected());
@@ -332,8 +335,12 @@ const loginWallet = async (address) => {
   let loginMessage = state.config.system.loginMessage;
   var message = loginMessage + " " + timestamp;
 
+  console.log(address);
+  console.log(message);
+
   try {
     let signature = await sign(message, address);
+
 
     if (signature.error) return signature;
 
@@ -347,19 +354,19 @@ const loginWallet = async (address) => {
 };
 
 const sign = async (message, address) => {
+
   var web3 = window.wallet;
-  // console.log(web3, 'web3....');
+
   try {
     address = web3.utils.toChecksumAddress(address);
-    console.log(message, "message....");
 
     var signature = await promisify((cb) =>
-      web3.eth.personal.sign(message, address, cb)
+      web3.eth.personal.sign(message,address,cb)
     );
 
     return signature;
   } catch (e) {
-    return { error: e.message };
+    return {error: e.message};
   }
 };
 

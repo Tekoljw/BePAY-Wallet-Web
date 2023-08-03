@@ -61,11 +61,10 @@ function AccountPage(props) {
         dispatch(centerGetUserFiat());
         dispatch(getWithdrawTransferStats());
     }, []);
-
-
     return (
         <Wallet />
     );
 }
+
 
 export default AccountPage;

@@ -948,8 +948,7 @@ function Wallet() {
   const decenterWalletFormatAmount = async () => {
     
     let tmpWalletAmount = walletAmount;
-
-
+ 
     let tmpArr = [];
     // 美元汇率
     let dollarCurrencyRate =
@@ -973,7 +972,6 @@ function Wallet() {
         if (symbol.networkId === userData.userInfo.networkId) {
           if (tmpWalletAmount[symbol.symbol]) {
             balance = tmpWalletAmount[symbol];
-
           } else {
             let balanceRes = await dispatch(
               getDecenterWalletBalance({
@@ -1002,7 +1000,6 @@ function Wallet() {
         
         balance = Number(balance).toFixed(6);
 
-       
 
         var tmpShow = arrayLookup(
           walletDisplayData,
@@ -1010,8 +1007,6 @@ function Wallet() {
           symbol.symbol,
           "show"
         );
-
-       
 
         if (tmpShow === "") {
           tmpShow = symbol.userShow;
@@ -1092,6 +1087,7 @@ function Wallet() {
   };
 
   useEffect(() => {
+
     let userBindWallet = userData.userInfo.bindWallet ?? false;
     if (userBindWallet && walletType === 1) {
       if (!mounted.current) {
@@ -1133,11 +1129,16 @@ function Wallet() {
 // 切换网络
   const changeNetwork = async (network) => {
 
+    console.log(network);
+
     const networkRes = await dispatch(selNetwork(network));
     if (networkRes.payload) {
       setOpenChangeNetwork(false);
     }
   };
+
+
+
 
   const changeCurrency = async (currency) => {
     await dispatch(updateCurrency(currency));
@@ -1642,6 +1643,7 @@ function Wallet() {
                     </motion.div>
                   </div>
                 )}
+                
 
                 {decentralized != -1 && walletType === 1 && loginType == 1 && (
                   <>
@@ -2867,6 +2869,7 @@ function Wallet() {
             </motion.div>
           )}
 
+
           {/*切换法币*/}
           <AnimateModal
             className="faBiDi"
@@ -2926,10 +2929,6 @@ function Wallet() {
             {/* </DialogContent> */}
             {/* </BootstrapDialog> */}
           </AnimateModal>
-
-
-
-
 
           {/*切换网路*/}
           <BootstrapDialog
@@ -3010,10 +3009,7 @@ function Wallet() {
               </div>
             </DialogContent>
           </BootstrapDialog>
-
-
-
-
+          
         </Box>
       </motion.div>
       
