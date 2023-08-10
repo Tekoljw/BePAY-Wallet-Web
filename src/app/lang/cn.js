@@ -57,8 +57,6 @@ const locale = {
     home_2fa_10: '验证码',
     home_2fa_11: '发送',
     
-
-    
     home_record_1: '存款',
     home_record_2: '池',
     home_record_3: '服务费',
@@ -178,6 +176,7 @@ const locale = {
     home_withdraw_26:'选择我的',
     home_withdraw_27: "PIX账号",
     home_withdraw_28: "账号类型",
+    home_withdraw_29: "CPF账号",
     
     home_deposite_1: '加密货币',
     home_deposite_2: '法币',

@@ -175,6 +175,7 @@ const locale = {
     home_withdraw_26:'내 것 선택하기',
     home_withdraw_27: "PIX 계정",
     home_withdraw_28: "계정 유형",
+    home_withdraw_29: "CPF 계정",
 
     home_account_1: '법정 화폐',
     home_account_2: '검색',

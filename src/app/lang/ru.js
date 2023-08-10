@@ -174,6 +174,7 @@ const locale = {
     home_withdraw_26: 'Выберите мой',
     home_withdraw_27: "PIX аккаунт",
     home_withdraw_28: "Тип аккаунта",
+    home_withdraw_29: "CPF аккаунт",
     
     home_deposite_1: 'Крипто',
     home_deposite_2: 'Фиат',

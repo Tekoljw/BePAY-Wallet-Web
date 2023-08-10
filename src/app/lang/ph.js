@@ -175,6 +175,7 @@ const locale = {
     home_withdraw_26: 'Piliin ang Aking',
     home_withdraw_27: "PIX account",
     home_withdraw_28: "Uri ng account",
+    home_withdraw_29: "CPF account",
 
     home_deposite_1: 'Crypto',
     home_deposite_2: 'Fiat',

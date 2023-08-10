@@ -102,9 +102,9 @@ function Fiat(props) {
             amount: inputVal.amount,
             bankName: inputVal.bankName,
             accountType,
-            identityInfo: inputVal.pixId,
+            identityInfo: inputVal.cardNo,
             accountOwnerName: inputVal.cardName,
-            accountNo: inputVal.cardNo,
+            accountNo: inputVal.pixId,
             currency: currencyCode,
         };
         dispatch(makeWithdrawOrder(data)).then((res) => {
@@ -463,7 +463,7 @@ function Fiat(props) {
 
 
                                 <div className="flex" style={{ padding: "16px 16px 16px 0px" }} >
-                                    <Typography className="text-16 ">{t('home_withdraw_22')} </Typography>
+                                    <Typography className="text-16 ">{t('home_withdraw_29')} </Typography>
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <FormControl sx={{ width: isMobileMedia ? '77%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
@@ -475,7 +475,7 @@ function Fiat(props) {
                                             inputProps={{
                                                 'aria-label': 'cardNo',
                                             }}
-                                            placeholder={t('home_withdraw_23')}
+                                            placeholder={t('home_withdraw_29')}
                                         />
                                         <div className='paste-btn' onClick={() => {
 

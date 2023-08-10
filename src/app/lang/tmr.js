@@ -175,6 +175,7 @@ const locale = {
     home_withdraw_26:'எனது தேர்வு செய்யுங்கள்',
     home_withdraw_27: "PIX கணக்கு",
     home_withdraw_28: "கணக்கு வகை",
+    home_withdraw_29: "CPF கணக்கு",
     
     home_deposite_1: 'கிரிப்டோ',
     home_deposite_2: 'பேராசிரியர்',

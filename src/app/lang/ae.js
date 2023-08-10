@@ -176,7 +176,7 @@ const locale = {
     home_withdraw_26: 'اختر حسابي',
     home_withdraw_27: "حساب PIX",
     home_withdraw_28: "نوع الحساب",
-    
+    home_withdraw_29: "حساب CPF",
     
     home_deposite_1: 'Crypto',
     home_deposite_2: 'Fiat',

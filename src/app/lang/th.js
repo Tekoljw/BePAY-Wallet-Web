@@ -164,6 +164,7 @@ const locale = {
     home_withdraw_26: 'เลือกของฉัน',
     home_withdraw_27: "บัญชี PIX",
     home_withdraw_28: "ประเภทบัญชี",
+    home_withdraw_29: "บัญชี CPF",
     
     home_withdraw_1: 'เลือกเครือข่าย',
     home_withdraw_2: 'ที่อยู่',

@@ -47,6 +47,7 @@ function StyledAccordionSelect (props) {
     const symbol = props.symbol ?? [];
     const isSetAmount = props.isSetAmount ?? false;
     const isExpand = props.expand ?? false;
+    const test = props.test;
 
     const config = useSelector(selectConfig);
     const [selected, setSelected] = useState(0);

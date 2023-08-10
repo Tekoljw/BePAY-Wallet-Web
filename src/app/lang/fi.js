@@ -174,6 +174,7 @@ const locale = {
     home_withdraw_26: 'Valitse oma',
     home_withdraw_27: "PIX-tili",
     home_withdraw_28: "Tilin tyyppi",
+    home_withdraw_29: "CPF-tili",
 
     home_deposite_1: 'Krypto',
     home_deposite_2: 'Fiat',

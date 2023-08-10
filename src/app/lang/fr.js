@@ -174,6 +174,7 @@ const locale = {
     home_withdraw_26: 'Choisir mon',
     home_withdraw_27: "Compte PIX",
     home_withdraw_28: "Type de compte",
+    home_withdraw_29: "Compte CPF",
 
     home_deposite_1: 'Cripto',
     home_deposite_2: 'Fiat',

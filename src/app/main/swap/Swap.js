@@ -79,7 +79,7 @@ function Swap() {
 
   const dispatch = useDispatch();
   const config = useSelector(selectConfig);
-  const symbols = config.symbols;
+  const swapData = config.swapConfig;
   const symbolsData = config.symbols;
   const networks = config.networks;
   const fiatData = useSelector(selectUserData).fiat;
@@ -115,16 +115,20 @@ function Swap() {
   const [decentralized, setDdecentralized] = useState(
     localStorage.getItem("isDecentralized")
   );
+
   const [regWallet, setRegWallet] = useState(
     window.localStorage.getItem("walletname")
   );
+
   const [oppenappid, setopenapp] = useState('Funibox Wallet'
     // window.sessionStorage.getItem("openAppId")
   );
+
   const walletImage = config.walletConfig[regWallet]?.img || "";
   const [inputVal, setInputVal] = useState({
     amount: 0.0,
   });
+
   const { t } = useTranslation("mainPage");
   const walletTypeTab = [
     // t("home_wallet_1"),
@@ -132,28 +136,20 @@ function Swap() {
     decentralized == -1 ? 'Wallet Connect' : `${regWallet ?? "Wallet Connect"}`,
   ];
 
+  const [swapCoinConfig, setSwapCoinConfig] = useState({});
+
   useEffect(() => {
     if (window.sessionStorage.getItem("openAppId")) {
       if (openType.list[0].no == window.sessionStorage.getItem("openAppId")) {
-        console.log('');
         setopenapp('Funibet Wallet')
       }
       if (openType.list[1].no == window.sessionStorage.getItem("openAppId")) {
         setopenapp('BeingFi Wallet')
       }
     }
-
   }, [window.sessionStorage.getItem("openAppId")])
 
-
-
-
   const handleChangeInputVal = (prop, value) => (event) => {
-    console.log(event.target.value);
-    console.log(
-      arrayLookup(symbolWallet, "symbol", symbol, "balance"),
-      "balance......"
-    );
     if (
       Number(event.target.value) >
       Number(arrayLookup(symbolWallet, "symbol", symbol, "balance"))
@@ -186,6 +182,7 @@ function Swap() {
       withdrawLock: item.withdrawLock || 0,
     };
   }
+
   function ismore(inputVal) {
     if (
       Number(inputVal) >
@@ -194,32 +191,10 @@ function Swap() {
       return true;
     } else return false;
   }
-  // const symbolsFormatAmount = () => {
-  //     let tmpSymbols = [];
-  //     let currencyRate = arrayLookup(config.payment.currency, 'currencyCode', currencyCode, 'exchangeRate') || 0;
-  //     // 美元汇率
-  //     let dollarCurrencyRate = arrayLookup(config.payment.currency, 'currencyCode', 'USD', 'exchangeRate') || 0;
-  //     cryptoDisplayData.forEach((i)=>{
-  //         if(i.show){
-  //             let item = symbolsData.find(sub=>sub.symbol===i.name)||i;
-  //             if(item.symbol) {
-  //                 let newItem = toNewItem(item,currencyRate,dollarCurrencyRate);
-  //                 tmpSymbols.push(newItem);
-  //             }
-  //
-  //         }
-  //     })
-  //
-  //     symbolsData.forEach(item=>{
-  //         if(item.userShow && !tmpSymbols.find(i=>i.symbol===item.symbol)){
-  //             let newItem = toNewItem(item,currencyRate,dollarCurrencyRate);
-  //             tmpSymbols.push(newItem);
-  //         }
-  //     })
-  //     setSymbolWallet(tmpSymbols);
-  // };
 
-  const symbolsFormatAmount = () => {
+
+  // 整理symbol数据
+  const arrangeSymbolAmountData = (data) => {
     let currencyRate =
       arrayLookup(
         config.payment.currency,
@@ -227,16 +202,7 @@ function Swap() {
         currencyCode,
         "exchangeRate"
       ) || 0;
-    let displayData = [];
-    cryptoDisplayData?.map((item, index) => {
-      displayData.push(item.name);
-    });
-    symbolsData.map((item, index) => {
-      if (displayData.indexOf(item.symbol) === -1 && item.userShow === true) {
-        displayData.push(item.symbol);
-      }
-    });
-    let tmpSymbols = [];
+
     // 美元汇率
     let dollarCurrencyRate =
       arrayLookup(
@@ -245,7 +211,10 @@ function Swap() {
         "USD",
         "exchangeRate"
       ) || 0;
-    displayData.forEach((item, index) => {
+
+    let resultSymbolData = [];
+
+    data.forEach((item, index) => {
       var tmpShow = arrayLookup(cryptoDisplayData, "name", item, "show");
       if (tmpShow === "") {
         tmpShow = arrayLookup(symbolsData, "symbol", item, "userShow");
@@ -254,7 +223,7 @@ function Swap() {
         // 兑换成USDT的汇率
         let symbolRate = arrayLookup(symbolsData, "symbol", item, "rate") || 0;
         var balance = getUserMoney(item);
-        tmpSymbols.push({
+        resultSymbolData.push({
           avatar: arrayLookup(symbolsData, "symbol", item, "avatar") || "",
           symbol: item,
           balance: balance, // 余额
@@ -267,6 +236,94 @@ function Swap() {
         });
       }
     });
+    return resultSymbolData
+  }
+
+
+  // 整理symbol数据
+  const arrangeSymbolAmountDataFrom = (data) => {
+
+    let currencyRate =
+      arrayLookup(
+        config.payment.currency,
+        "currencyCode",
+        currencyCode,
+        "exchangeRate"
+      ) || 0;
+
+    // 美元汇率
+    let dollarCurrencyRate =
+      arrayLookup(
+        config.payment.currency,
+        "currencyCode",
+        "USD",
+        "exchangeRate"
+      ) || 0;
+
+    let resultSymbolDataFormat = {};
+
+    Object.keys(data)?.forEach((item, index) => {
+      let resultSymbolData = [];
+      data[item].forEach((item, index) => {
+        var tmpShow = arrayLookup(cryptoDisplayData, "name", item.base_coin, "show");
+        if (tmpShow === "") {
+          tmpShow = arrayLookup(symbolsData, "symbol", item.base_coin, "userShow");
+        }
+        if (tmpShow === true) {
+          // 兑换成USDT的汇率
+          let symbolRate = arrayLookup(symbolsData, "symbol", item.base_coin, "rate") || 0;
+          var balance = getUserMoney(item.base_coin);
+          resultSymbolData.push({
+            avatar: arrayLookup(symbolsData, "symbol", item.base_coin, "avatar") || "",
+            symbol: item.base_coin,
+            balance: balance, // 余额
+            dollarFiat: (balance * symbolRate * dollarCurrencyRate).toFixed(2), // 换算成美元
+            currencyAmount: (balance * symbolRate * currencyRate).toFixed(2), // 换算成当前选择法币
+            tradeLock:
+              arrayLookup(walletData.inner, "symbol", item.base_coin, "tradeLock") || 0,
+            withdrawLock:
+              arrayLookup(walletData.inner, "symbol", item.base_coin, "withdrawLock") || 0,
+          });
+        }
+      });
+      resultSymbolDataFormat.push(resultSymbolData);
+    });
+    return resultSymbolDataFormat
+  }
+
+
+  const symbolsFormatAmount = async () => {
+
+    let displayData = [];
+    let tmpCoinData = {};
+    // cryptoDisplayData?.map((item, index) => {
+    //   displayData.push(item.name);
+    // });
+    // symbolsData.map((item, index) => {
+    //   if (displayData.indexOf(item.symbol) === -1 && item.userShow === true) {
+    //     displayData.push(item.symbol);
+    //   }
+    // });
+    await Object.keys(swapData)?.map((item) => {
+      if (arrayLookup(symbolsData, "symbol", swapData[item].base_coin, "symbol")) {
+
+        if (displayData.indexOf(swapData[item].base_coin) == -1) {
+          displayData.push(swapData[item].base_coin);
+          tmpCoinData[swapData[item].base_coin] = [swapData[item]]
+        } else {
+          tmpCoinData[swapData[item].base_coin].push(swapData[item])
+        }
+      }
+    });
+
+    setSwapCoinConfig(tmpCoinData);
+
+    let tmpSymbols = [];
+    tmpSymbols = arrangeSymbolAmountData(displayData);
+
+    let tmpSwapSymbols = {};
+    tmpSwapSymbols = arrangeSymbolAmountDataFrom(tmpCoinData);
+
     const sortUseAge = (a, b) => {
       const prioritizedSymbolsFirst = ['eUSGT', 'USGT', 'BGT', 'eBGT'];
       const prioritizedSymbolsSecond = ['USDT', 'USDC', 'DAI', 'BUSD', 'TUSD', 'PAX', 'GUSD', 'USDD'];
@@ -307,11 +364,13 @@ function Swap() {
         return dollarFiatB - dollarFiatA;
       }
     };
+
     const sortUseLen = (a, b) => {
       return a.networkLen - b.networkLen;
     };
 
     let tmpNetworks = {};
+
     tmpSymbols.forEach((item, index) => {
       var tmpNetId = [];
       var tmpNetData = [];
@@ -338,14 +397,20 @@ function Swap() {
           });
         }
       }
-
       tmpNetData.sort(sortUseLen);
       tmpNetworks[item.symbol] = tmpNetData;
     });
-    console.log(tmpSymbols, 'tmpNetData......');
+
+
     tmpSymbols.sort(sortUseAge)
-    setSymbolWallet(tmpSymbols.filter(i => i.symbol !== 'eUSGT'));
+    setSymbolWallet(
+      tmpSymbols.filter(i => i.symbol !== 'eUSGT')
+    );
+
   };
+
+
+
   const getUserMoney = (symbol) => {
     let arr = userData.wallet.inner || [];
     let balance = arrayLookup(arr, "symbol", symbol, "balance") || 0;
@@ -408,7 +473,7 @@ function Swap() {
 
   useEffect(() => {
     dispatch(getSwapConfig()).then((res) => {
-      res.errno === 0 && dispatch(setSwapConfig(res));
+      res.payload.errno === 0 && dispatch(setSwapConfig(res.payload));
     });
   }, []);
 
@@ -417,6 +482,7 @@ function Swap() {
       setRegWallet(toRegWallet(userData.profile?.user?.regWallet));
     }
   }, [userData.profile?.user?.regWallet]);
+
 
   return (
     <div>
@@ -618,7 +684,7 @@ function Swap() {
           </div>
 
           <Box
-            className="w-full rounded-16 border flex flex-col"
+            className="w-full rounded-16 border flex flex-col "
             sx={{
               backgroundColor: "#1E293B",
               border: "none",
@@ -631,48 +697,10 @@ function Swap() {
                 setSymbol={setSymbol}
               />
             )}
-            {/* <StyledAccordion */}
-            {/*     component={motion.div} */}
-            {/*     variants={item} */}
-            {/*     classes={{ */}
-            {/*         root: 'FaqPage-panel shadow', */}
-            {/*     }} */}
-            {/*     expanded={expanded === 1} */}
-            {/*     onChange={toggleAccordion(1)} */}
-            {/* > */}
-            {/*     <AccordionSummary */}
-            {/*         expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>} */}
-            {/*     > */}
-            {/*         <div className="flex items-center py-4 flex-grow" style={{width: '100%'}}> */}
-            {/*             <div className="flex items-center"> */}
-            {/*                 <img style={{ */}
-            {/*                     width: '3rem' */}
-            {/*                 }} src="assets/images/deposite/bnb.png" alt=""/> */}
-            {/*                 <div className="px-12 font-medium"> */}
-            {/*                     <Typography className="text-16 font-medium">BNB</Typography> */}
-            {/*                     <Typography className="text-14" style={{color: '#94A3B8'}}>Binance Coin</Typography> */}
-            {/*                 </div> */}
-            {/*             </div> */}
-            {/*             <div style={{marginLeft: 'auto'}}> */}
-            {/*                 <div className="px-12 font-medium" style={{textAlign: 'right'}}> */}
-            {/*                     <Typography className="text-16 font-medium">0.00000001</Typography> */}
-            {/*                     <Typography className="text-14" style={{color: '#94A3B8'}}>$12.00</Typography> */}
-            {/*                 </div> */}
-            {/*             </div> */}
-            {/*         </div> */}
-            {/*     </AccordionSummary> */}
-
-            {/*     <AccordionDetails> */}
-            {/*     </AccordionDetails> */}
-            {/* </StyledAccordion> */}
           </Box>
 
           <div className="flex items-center justify-content-center -mb-56 -mt-4 position-re">
             <div className="cursor-pointer swap-btn flex items-center justify-content-center">
-              {/* <FuseSvgIcon className="list-item-icon" color="action" size={52}> */}
-              {/*material-twotone:transform*/}
-              {/* material-twotone:import_export */}
-              {/* </FuseSvgIcon> */}
               <img src="assets/images/swap/arrow-down.png" alt="" />
             </div>
           </div>
@@ -697,40 +725,6 @@ function Swap() {
                 setSymbol={setFormatSymbol}
               />
             )}
-            {/* <StyledAccordion */}
-            {/*     component={motion.div} */}
-            {/*     variants={item} */}
-            {/*     classes={{ */}
-            {/*         root: 'FaqPage-panel shadow', */}
-            {/*     }} */}
-            {/*     expanded={expanded === 2} */}
-            {/*     onChange={toggleAccordion(2)} */}
-            {/* > */}
-            {/*     <AccordionSummary */}
-            {/*         expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>} */}
-            {/*     > */}
-            {/*         <div className="flex items-center py-4 flex-grow" style={{width: '100%'}}> */}
-            {/*             <div className="flex items-center"> */}
-            {/*                 <img style={{ */}
-            {/*                     width: '3rem' */}
-            {/*                 }} src="assets/images/deposite/usd.png" alt=""/> */}
-            {/*                 <div className="px-12 font-medium"> */}
-            {/*                     <Typography className="text-18 font-medium">BNB</Typography> */}
-            {/*                     <Typography className="text-14" style={{color: '#94A3B8'}}>Binance Coin</Typography> */}
-            {/*                 </div> */}
-            {/*             </div> */}
-            {/*             <div style={{marginLeft: 'auto'}}> */}
-            {/*                 <div className="px-12 font-medium" style={{textAlign: 'right'}}> */}
-            {/*                     <Typography className="text-18 font-medium">0.00000001</Typography> */}
-            {/*                     <Typography className="text-14" style={{color: '#94A3B8'}}>$12.00</Typography> */}
-            {/*                 </div> */}
-            {/*             </div> */}
-            {/*         </div> */}
-            {/*     </AccordionSummary> */}
-
-            {/*     <AccordionDetails> */}
-            {/*     </AccordionDetails> */}
-            {/* </StyledAccordion> */}
           </Box>
 
           <Typography
@@ -750,15 +744,6 @@ function Swap() {
               sx={{ width: "100%", borderColor: "#1E293B" }}
               variant="outlined"
             >
-              {/* <OutlinedInput
-                            id="outlined-adornment-address send-tips-container-address"
-                            value={inputVal.amount}
-                            onChange={handleChangeInputVal('amount')}
-                            aria-describedby="outlined-weight-helper-text"
-                            inputProps={{
-                                'aria-label': 'address',
-                            }}
-                        /> */}
               <TextField
                 error={ismore(inputVal.amount)}
                 helperText={
@@ -850,29 +835,6 @@ function Swap() {
           </Box>
 
           <Box component={motion.div} variants={item}>
-            {/* <Typography className="my-8 text-16 color-ffffff text-center" style={{ color: '#7e8c9f', marginTop: '3.3rem', marginBottom: '1.3rem' }}>
-                        Accessed 11 Exchange platforms:
-                    </Typography>
-                    <div className="my-8">
-                        <div className="flex items-center justify-content-center">
-                            <img className="mx-4 swap-img" src="assets/images/swap/1.png" alt="" />
-                            <img className="mx-4 swap-img" src="assets/images/swap/2.png" alt="" />
-                            <img className="mx-4 swap-img" src="assets/images/swap/3.png" alt="" />
-                            <img className="mx-4 swap-img" src="assets/images/swap/4.png" alt="" />
-                            <img className="mx-4 swap-img" src="assets/images/swap/5.png" alt="" />
-                            <img className="mx-4 swap-img" src="assets/images/swap/6.png" alt="" />
-                            <img className="mx-4 swap-img" src="assets/images/swap/7.png" alt="" />
-                        </div>
-                        <div className="flex items-center justify-content-center my-12">
-                            <img className="mx-4 swap-img" src="assets/images/swap/8.png" alt="" />
-                            <img className="mx-4 swap-img" src="assets/images/swap/9.png" alt="" />
-                            <img className="mx-4 swap-img" src="assets/images/swap/10.png" alt="" />
-                            <img className="mx-4 swap-img" src="assets/images/swap/11.png" alt="" />
-                            <img className="mx-4 swap-img" src="assets/images/swap/12.png" alt="" />
-                            <img className="mx-4 swap-img" src="assets/images/swap/13.png" alt="" />
-                        </div>
-                    </div> */}
-
             <Button
               style={{ width: "63%", margin: "2.9rem auto", display: "block" }}
               disabled={ismore(inputVal.amount)}
@@ -887,7 +849,7 @@ function Swap() {
               {t("home_wallet_21")}
             </Button>
 
-            
+
           </Box>
         </motion.div>
       )}

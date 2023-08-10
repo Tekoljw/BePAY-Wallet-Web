@@ -174,6 +174,7 @@ const locale = {
     home_withdraw_26: '選擇我的',
     home_withdraw_27: "PIX帳號",
     home_withdraw_28: "帳號類型",
+    home_withdraw_29: "CPF帳號",
     
     home_deposite_1: '加密貨幣',
     home_deposite_2: '法幣',

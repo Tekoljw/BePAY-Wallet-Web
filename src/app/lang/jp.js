@@ -174,6 +174,7 @@ const locale = {
     home_withdraw_26:'私の選択',
     home_withdraw_27: "PIXアカウント",
     home_withdraw_28: "アカウントの種類",
+    home_withdraw_29: "CPFアカウント",
     
     home_deposite_1: '暗号通貨',
     home_deposite_2: 'フィアット',

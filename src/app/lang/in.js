@@ -173,6 +173,7 @@ const locale = {
     home_withdraw_26: 'मेरा चुनें',
     home_withdraw_27: "PIX खाता",
     home_withdraw_28: "खाता प्रकार",
+    home_withdraw_29: "CPF खाता",
     
     home_deposite_1: 'क्रिप्टो',
     home_deposite_2: 'फिएट',

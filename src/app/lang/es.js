@@ -175,7 +175,8 @@ const locale = {
     home_withdraw_26:'Elegir mi cuenta',
     home_withdraw_27: "Cuenta PIX",
     home_withdraw_28: "Tipo de cuenta",
-    
+    home_withdraw_29: "Cuenta CPF",
+
     home_deposite_1: 'Cripto',
     home_deposite_2: 'Fiat',
     home_deposite_3: 'NFTs',
