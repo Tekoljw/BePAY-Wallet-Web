@@ -25,7 +25,7 @@ import { tokenTransfer } from "../../store/user/userThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { selectConfig } from "../../store/config";
-import {arrayLookup, getNowTime} from "../../util/tools/function";
+import { arrayLookup, getNowTime } from "../../util/tools/function";
 import { openScan, closeScan } from "../../util/tools/scanqrcode";
 import { getWithDrawConfig, WalletConfigDefineMap, evalTokenTransferFee, getWithdrawHistoryAddress, delWithdrawHistoryAddress, getWithdrawTransferStats } from "app/store/wallet/walletThunk";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
@@ -485,7 +485,8 @@ function Withdraw(props) {
 
     const [tabValue, setTabValue] = useState(0);
     const [ranges, setRanges] = useState([
-        t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
+        t('home_deposite_1'), t('home_deposite_2')
+        // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
     ]);
     const [cryptoSelect, setCryptoSelect] = useState(0);
     const [fiatSelect, setFiatSelect] = useState(1);
@@ -521,14 +522,16 @@ function Withdraw(props) {
             if (currencyType) {
                 if (currencyType == 1) {
                     tmpRanges = [
-                        t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
+                        t('home_deposite_1'), t('home_deposite_2')
+                        // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
                     ];
                     tmpCryptoSelect = 0;
                     tmpFiatSelect = 1;
                 } else {
                     console.log('存在.......');
                     var tmpRanges = [
-                        t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
+                        t('home_deposite_2'), t('home_deposite_1')
+                        // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
                     ];
                     var tmpCryptoSelect = 1;
                     var tmpFiatSelect = 0;
@@ -539,21 +542,24 @@ function Withdraw(props) {
             }
             else if (userData.profile?.loginType) {
                 var tmpRanges = [
-                    t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
+                    t('home_deposite_2'), t('home_deposite_1')
+                    // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
                 ];
                 var tmpCryptoSelect = 1;
                 var tmpFiatSelect = 0;
                 if (userData.profile.wallet.Crypto < userData.profile.wallet.Fiat) {
                 } else if (userData.profile.wallet.Crypto > userData.profile.wallet.Fiat) {
                     tmpRanges = [
-                        t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
+                        t('home_deposite_1'), t('home_deposite_2')
+                        // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
                     ];
                     tmpCryptoSelect = 0;
                     tmpFiatSelect = 1;
                 } else {
                     if (userData.profile?.loginType == 1) {
                         tmpRanges = [
-                            t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
+                            t('home_deposite_1'), t('home_deposite_2')
+                            // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
                         ];
                         tmpCryptoSelect = 0;
                         tmpFiatSelect = 1;

@@ -257,7 +257,8 @@ function Deposite() {
 
 
     const [ranges, setRanges] = useState([
-        t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
+        t('home_deposite_1'), t('home_deposite_2')
+        // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
     ]);
     const [walletloginname, setwalletloginname] = useState(window.localStorage.getItem('walletname') === 'metamask' ? 'MetaMask' : localStorage.getItem('walletname'))
     const [decentralized, setDdecentralized] = useState(window.localStorage.getItem('isDecentralized'));
@@ -390,7 +391,7 @@ function Deposite() {
         getWalletAddressClick(id);
         // }
     };
-    
+
     const handleCheckWalletAddress = (id) => {
         dispatch(checkWalletAddress({ networkId: id, symbol: symbol })).then((value) => {
             let res = value.payload;
@@ -662,25 +663,27 @@ function Deposite() {
                 setRanges(tmpRanges);
                 setCryptoSelect(tmpCryptoSelect);
                 setFiatSelect(tmpFiatSelect);
-
             }
             else if (userData.profile?.loginType) {
                 var tmpRanges = [
-                    t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
+                    t('home_deposite_2'), t('home_deposite_1')
+                    // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
                 ];
                 var tmpCryptoSelect = 1;
                 var tmpFiatSelect = 0;
                 if (userData.profile.wallet.Crypto < userData.profile.wallet.Fiat) {
                 } else if (userData.profile.wallet.Crypto > userData.profile.wallet.Fiat) {
                     tmpRanges = [
-                        t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
+                        t('home_deposite_1'), t('home_deposite_2')
+                        // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
                     ];
                     tmpCryptoSelect = 0;
                     tmpFiatSelect = 1;
                 } else {
                     if (userData.profile?.loginType == 1) {
                         tmpRanges = [
-                            t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
+                            t('home_deposite_1'), t('home_deposite_2')
+                            // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
                         ];
                         tmpCryptoSelect = 0;
                         tmpFiatSelect = 1;
@@ -959,13 +962,13 @@ function Deposite() {
 
                                                     // }}
                                                     onClick={async () => {
-                                                        
 
-                                                        if (decentralized != 1 && userData.profile?.loginType != -1) {                                                      
+
+                                                        if (decentralized != 1 && userData.profile?.loginType != -1) {
                                                             // 跳转到 /account 页面
                                                             history.push('/account');
                                                         } else {
-                                                            
+
                                                             // 保留原有的 onClick 逻辑
                                                             let balanceRes = await dispatch(getDecenterWalletBalance({
                                                                 address: arrayLookup(symbolWallet, 'symbol', symbol, 'address'),
@@ -1244,7 +1247,7 @@ function Deposite() {
                                     }}
                                 >
                                     {t('home_deposite_29')}
-                                
+
                                 </Button>
                             </DialogActions>
 
@@ -1679,7 +1682,8 @@ function Deposite() {
                     {/*</StyledAccordion>*/}
                 </motion.div>
             </div>}
-            
+
+            {/* 上线暂时关闭
             {tabValue === 2 && <motion.div
                 variants={container}
                 initial="hidden"
@@ -1777,8 +1781,6 @@ function Deposite() {
                                     nftToken: nftAddress,
                                     tokenId: tokenId
                                 })).then((res) => {
-
-                                    // console.log(res,'res1111111111111111');
                                     if (res.payload) {
                                         doNftTransfer({
                                             tokenId: tokenId,
@@ -1788,106 +1790,12 @@ function Deposite() {
                                 })
                             }}
                         >
-                            {t('kyc_23')} 
+                            {t('kyc_23')}
                         </Button>
                     )}
-                    {/*<Typography className="text-16 px-16 my-12">{t('home_deposite_4')}</Typography>*/}
-                    {/*<div className="flex px-16" style={{ flexWrap: 'wrap', paddingLeft: '0.7rem', paddingRight: '0.7rem' }}>*/}
-                    {/*    {nftNetwork?.map((item, index) => {*/}
-                    {/*        return (*/}
-                    {/*            <div*/}
-                    {/*                onClick={() => {*/}
-                    {/*                    // setNftWalletName(item.walletName);*/}
-                    {/*                    setNftWalletKey(index);*/}
-                    {/*                    getNftWalletAddressClick('DeFi')*/}
-                    {/*                }}*/}
-                    {/*                className={clsx('flex items-center px-8 rounded-8 border cursor-pointer deposite-token ', nftWalletKey === index && 'active-border')}*/}
-                    {/*                key={index}*/}
-                    {/*                style={{*/}
-                    {/*                    margin: '.8rem 1%',*/}
-                    {/*                    paddingLeft: '0.2rem',*/}
-                    {/*                    paddingRight: '0.2rem',*/}
-                    {/*                    borderRadius: '0.5rem'*/}
-                    {/*                }}*/}
-                    {/*            >*/}
-                    {/*                <img style={{ width: '2rem', borderRadius: '50%' }} src={item.url} alt="" />*/}
-                    {/*                <div className="px-12"*/}
-                    {/*                    style={{*/}
-                    {/*                        paddingLeft: '0.4rem',*/}
-                    {/*                        paddingRight: '0.4rem'*/}
-                    {/*                    }}*/}
-                    {/*                >*/}
-                    {/*                    <Typography className={clsx("text-14 font-medium", nftWalletKey === index && 'color-ffffff')}>*/}
-                    {/*                        {item.protol}*/}
-                    {/*                    </Typography>*/}
-                    {/*                    <Typography className={clsx("text-12 font-medium color-grey", nftWalletKey === index && 'color-ffffff')}>*/}
-                    {/*                        {item.network}*/}
-                    {/*                    </Typography>*/}
-                    {/*                </div>*/}
-                    {/*            </div>*/}
-                    {/*        )*/}
-                    {/*    })}*/}
-                    {/*</div>*/}
-                    {/*<Typography className="text-20 px-16 my-24 text-center" style={{ margin: '1rem' }}>*/}
-                    {/*    NFT {t('home_deposite_5')}(*/}
-                    {/*    {nftNetwork[nftWalletKey].network}*/}
-                    {/*    )*/}
-                    {/*</Typography>*/}
-                    {/*<div>*/}
-                    {/*    <div>*/}
-                    {/*        <QRCode*/}
-                    {/*            style={{*/}
-                    {/*                padding: '10px',*/}
-                    {/*                borderRadius: '8px',*/}
-                    {/*                background: '#ffffff',*/}
-                    {/*                margin: '10px auto',*/}
-                    {/*            }}*/}
-                    {/*            value={nftWalletAddress ? nftWalletAddress : ''}*/}
-                    {/*            size={138}*/}
-                    {/*        />*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
-                    {/*<div className="px-16 my-24 fa-input-conatiner">*/}
-                    {/*    <FormControl sx={{ width: '100%' }} variant="outlined">*/}
-                    {/*        <OutlinedInput*/}
-                    {/*            disabled={true}*/}
-                    {/*            id="outlined-adornment-weight"*/}
-                    {/*            value={nftWalletAddress}*/}
-                    {/*            endAdornment={isGetWalletAddress ? <InputAdornment position="end">*/}
-                    {/*                <IconButton*/}
-                    {/*                    aria-label="toggle password visibility"*/}
-                    {/*                    onClick={() => {*/}
-                    {/*                        handleCopyText(nftWalletAddress)*/}
-                    {/*                    }}*/}
-                    {/*                    edge="end"*/}
-                    {/*                >*/}
-                    {/*                    <img src="assets/images/deposite/copy.png" alt="" />*/}
-                    {/*                </IconButton>*/}
-                    {/*            </InputAdornment> : null}*/}
-                    {/*            aria-describedby="outlined-weight-helper-text"*/}
-                    {/*            inputProps={{*/}
-                    {/*                'aria-label': 'weight',*/}
-                    {/*            }}*/}
-                    {/*        />*/}
-                    {/*    </FormControl>*/}
-                    {/*</div>*/}
-                    {/*<Typography className="text-14 px-16 my-12">*/}
-                    {/*    {nftNetwork[nftWalletKey].desc}*/}
-                    {/*</Typography>*/}
-                    {/*<Box*/}
-                    {/*    className="mx-16"*/}
-                    {/*    sx={{*/}
-                    {/*        backgroundColor: '#0F172A',*/}
-                    {/*        borderRadius: '8px'*/}
-                    {/*    }}*/}
-                    {/*>*/}
-                    {/*    <Typography className="text-14 px-16 my-12 " style={{ margin: '0.8rem 0' }}>*/}
-                    {/*        <span style={{ color: '#FCE100' }}>⚠</span>*/}
-                    {/*        {nftNetwork[nftWalletKey].desc2}*/}
-                    {/*    </Typography>*/}
-                    {/*</Box>*/}
+
                 </Box>
-            </motion.div>}
+            </motion.div>} */}
 
         </div>
     )

@@ -439,7 +439,8 @@ function Wallet() {
         } else {
           console.log('存在.......');
           var tmpRanges = [
-            t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
+            t('home_deposite_2'), t('home_deposite_1')
+            // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
           ];
           var tmpCryptoSelect = 1;
           var tmpFiatSelect = 0;
@@ -452,7 +453,8 @@ function Wallet() {
       }
       else if (userData.profile?.loginType) {
         var tmpRanges = [
-          t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
+          t('home_deposite_2'), t('home_deposite_1')
+          // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
         ];
         var tmpCryptoSelect = 1;
         var tmpFiatSelect = 0;
@@ -557,7 +559,7 @@ function Wallet() {
       if (showType === cryptoSelect) {
         let symbolList = {};
         for (let i = 0; i < symbolsData.length; i++) {
-            symbolList[symbolsData[i].symbol] = symbolsData[i];
+          symbolList[symbolsData[i].symbol] = symbolsData[i];
         }
         if (isFait) {
           Object.keys(symbolList).forEach((key) => {
@@ -570,8 +572,8 @@ function Wallet() {
           Object.keys(symbolList).forEach((key) => {
             let symbolRate = symbolList[key].rate || 0;
             amount +=
-                getUserMoney(symbolList[key].symbol) *
-                symbolRate;
+              getUserMoney(symbolList[key].symbol) *
+              symbolRate;
           });
         }
         setTotalBalance(amount.toFixed(2));
