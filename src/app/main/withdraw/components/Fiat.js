@@ -22,7 +22,7 @@ import { makeWithdrawOrder } from "../../../store/payment/paymentThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../../components/StyledAccordionSelect";
 import { selectConfig } from "../../../store/config";
-import { arrayLookup } from "../../../util/tools/function";
+import {arrayLookup, getNowTime} from "../../../util/tools/function";
 import { openScan, closeScan } from "../../../util/tools/scanqrcode";
 import { getWithDrawConfig, WalletConfigDefineMap, evalTokenTransferFee, getWithdrawHistoryAddress, getWithdrawTransferStats } from "app/store/wallet/walletThunk";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
@@ -68,6 +68,7 @@ const item = {
 function Fiat(props) {
     const { t } = useTranslation('mainPage');
     const [openTiBi, setOpenTiBi] = useState(false);
+    const [withdrawOrderID, setWithdrawOrderID] = useState(true);
     const [openLoad, setOpenLoad] = useState(false);
     const isMobileMedia = new MobileDetect(window.navigator.userAgent).mobile();
     const dispatch = useDispatch();
@@ -107,11 +108,15 @@ function Fiat(props) {
             accountNo: inputVal.pixId,
             currency: currencyCode,
         };
+        setOpenLoad(true)
         dispatch(makeWithdrawOrder(data)).then((res) => {
             let result = res.payload;
-            if (result && result.status == 'failed') {
+            if (result === false || result.status == 'failed') {
                 dispatch(showMessage({ message: result.msg || 'error', code: 2 }));
+                setOpenLoad(false)
             } else {
+                setOpenTiBi(true)
+                setWithdrawOrderID(result.out_trade_no);
                 dispatch(showMessage({ message: 'success', code: 1 }));
             }
         });
@@ -208,7 +213,7 @@ function Fiat(props) {
                 tmpPaymentFiat[item.currencyCode] = item
             });
         }
-        fiatDisplayData.map((item, index) => {
+        fiatDisplayData?.map((item, index) => {
             displayFiatData.push(item.name);
             tmpFiatDisplayData[item.name] = item
         });
@@ -536,11 +541,6 @@ function Fiat(props) {
                             style={{ width: '24rem', height: '4rem', fontSize: "20px", margin: '1rem auto 2.5rem', display: 'block', lineHeight: "inherit", padding: "0px" }}
                             onClick={() => {
                                 handleSubmit()
-
-                                // setTimeout(() => {
-                                //     setOpenTiBi(true)
-                                // }, 3000);
-                                // setOpenLoad(true)
                             }}
                         >
                             {t('home_withdraw_10')}
@@ -626,11 +626,11 @@ function Fiat(props) {
                                 <motion.div variants={item}>
                                     <img style={{ margin: "0 auto", width: "60px", height: "60px", marginTop: "10px" }} src='assets/images/wallet/naoZhong.png'></img>
                                 </motion.div>
-                                <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "20px", fontSize: "24px" }}>-2,500 USD</motion.div>
+                                <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "20px", fontSize: "24px" }}>-{inputVal.amount} {currencyCode}</motion.div>
                                 <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "10px", fontSize: "16px", color: "#ffc600" }}>● Pending Review</motion.div>
                                 <motion.div variants={item} className='flex justify-content-space px-20 mt-40' >
                                     <div style={{ color: "#888B92" }}>Bank</div>
-                                    <div>First National City Bank</div>
+                                    <div>{inputVal.bankName}</div>
                                 </motion.div>
 
                                 <motion.div variants={item} className='flex justify-content-space px-20 mt-40' >
@@ -640,17 +640,17 @@ function Fiat(props) {
 
                                 <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
                                     <div style={{ color: "#888B92" }}>Name</div>
-                                    <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>zwk</div>
+                                    <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{inputVal.cardName}</div>
                                 </motion.div>
 
                                 <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
                                     <div style={{ color: "#888B92" }}>Address</div>
-                                    <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>Room 1201, 11th Floor, Trump Building, 1 King's Road, Queens, New York, USA</div>
+                                    <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{inputVal.cardNo}</div>
                                 </motion.div>
 
                                 <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
                                     <div style={{ color: "#888B92" }}>ID</div>
-                                    <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>fe7993aceb3c2cdf9a9186a5cc5</div>
+                                    <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{withdrawOrderID}</div>
                                 </motion.div>
 
                                 {/* <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
@@ -660,7 +660,7 @@ function Fiat(props) {
 
                                 <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
                                     <div style={{ color: "#888B92" }}>Time</div>
-                                    <div>2023/6/18 16:40:21</div>
+                                    <div>{getNowTime()}</div>
                                 </motion.div>
                             </motion.div>
                         </Box>

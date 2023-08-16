@@ -17,10 +17,13 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from 'react-redux';
+import { motion } from "framer-motion";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
 
 import {
     sendSms,
-    forgotPass
+    forgotPass, sendEmail
 } from '../../store/user/userThunk';
 import Select from "@mui/material/Select";
 import phoneCode from "../../../phone/phoneCode";
@@ -44,6 +47,7 @@ import LoginSidebarContent from './LoginSidebarContent';
 // let blnTest = filter.test('q12345678')
 
 const defaultValues = {
+    email: '',
     nationCode: '',
     phone: '',
     smsCode: '',
@@ -56,8 +60,8 @@ function ForgotPass() {
     const { pathname } = useLocation();
     const [selectedCountryCode, setSelectedCountryCode] = useState("");
     const schema = yup.object().shape({
-        nationCode: yup.string().required('You must enter your nationCode'),
-        phone: yup.string().required('You must enter a phone'),
+        // nationCode: yup.string().required('You must enter your nationCode'),
+        // phone: yup.string().required('You must enter a phone'),
         smsCode: yup.string().required(t('signUp_7')),
         password: yup
             .string()
@@ -68,6 +72,8 @@ function ForgotPass() {
         passwordConfirm: yup.string().oneOf([yup.ref('password'), null], t('signUp_9')),
     });
 
+    const ranges = [t('signIn_4'), t('signIn_5')];
+    const [tabValue, setTabValue] = useState(0);
     const { control, formState, handleSubmit, reset } = useForm({
         mode: 'onChange',
         defaultValues,
@@ -102,30 +108,40 @@ function ForgotPass() {
         }
     }, [time]);
 
-    async function sendCode() {
-        const data = {
-            codeType: 2,
-            nationCode: control._formValues.nationCode,
-            phone: control._formValues.phone,
-        };
-        setSelectedCountryCode(control._formValues.nationCode);
-        var nation = control._formValues.nationCode
-        const sendRes = await dispatch(sendSms(data));
+    async function sendCode(isEmail = false) {
+        let sendRes;
+        if (isEmail) {
+            const data = {
+                codeType: 2,
+                email: control._formValues.email,
+            };
+            sendRes = await dispatch(sendEmail(data));
+        } else {
+            const data = {
+                codeType: 2,
+                nationCode: control._formValues.nationCode,
+                phone: control._formValues.phone,
+            };
+            setSelectedCountryCode(control._formValues.nationCode);
+            var nation = control._formValues.nationCode
+            sendRes = await dispatch(sendSms(data));
+
+        }
+
         if (sendRes.payload) {
             setTime(60)
         }
+
     }
 
     async function onSubmit() {
-
         // 密码必须为6-18位数，且包含大小写字母和特殊符号
         let regu = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!~@#$%^&*,\.])[0-9a-zA-Z!~@#$%^&*,\\.]{6,18}$/;
         var re = new RegExp(regu);
-        if (!re.test(control._formValues.password)) {
-            dispatch(showMessage({ message: t('errorMsg_3'), code: 2 }));
-            return
-        }
-
+        // if (!re.test(control._formValues.password)) {
+        //     dispatch(showMessage({ message: t('errorMsg_3'), code: 2 }));
+        //     return
+        // }
         await dispatch(forgotPass(control._formValues));
     }
 
@@ -165,6 +181,47 @@ function ForgotPass() {
                         {/*    Sign in*/}
                         {/*</Link>*/}
                     </div>
+                    <Tabs
+                        component={motion.div}
+                        value={tabValue}
+                        onChange={(ev, value) => {
+                            setTabValue(value);
+                            control._formValues.phone = '';
+                            control._formValues.email = '';
+                        }}
+                        indicatorColor="secondary"
+                        textColor="inherit"
+                        // variant="scrollable"
+                        scrollButtons={false}
+                        className="min-h-32 "
+                        style={{ padding: '0 0', margin: '1.9rem 0px 2.4rem', borderColor: 'transparent', backgroundColor: '#1E293B', width: '144px', borderRadius: '20px', height: '3.2rem' }}
+                        classes={{ indicator: 'flex justify-center bg-transparent w-full h-full ' }}
+                        TabIndicatorProps={{
+                            children: (
+                                <Box
+                                    sx={{ bgcolor: 'text.disabled' }}
+                                    className="fontStyle w-full h-full rounded-full huaKuaBgColor1"
+                                />
+                            ),
+                        }}
+                        sx={{
+                            borderBottom: '1px solid #374252',
+                            padding: '1rem 1.2rem'
+                        }}
+                    >
+                        {Object.entries(ranges).map(([key, label]) => (
+                            <Tab
+                                className="fontStyle text-14 font-semibold min-h-32 min-w-72 px-8 txtColorTitle zindex opacity-100"
+                                disableRipple
+                                key={key}
+                                label={label}
+                                style={{ opacity: '1!important' }}
+                                sx={{
+                                    color: '#FFFFFF', height: '3.2rem', opacity: '1'
+                                }}
+                            />
+                        ))}
+                    </Tabs>
 
                     <form
                         name="registerForm"
@@ -191,77 +248,31 @@ function ForgotPass() {
                         {/*    )}*/}
                         {/*/>*/}
 
-                        <Controller
-                            name="nationCode"
-                            control={control}
-                            render={({ field }) => (
-                                <Autocomplete
-                                    // disablePortal
-                                    className="mb-24"
-                                    options={phoneCode.list}
-                                    autoHighlight
-                                    onInputChange={(event, newInputValue) => {
-                                        setTmpPhoneCode(newInputValue.replace(/\+/g, ""));
-                                    }}
-                                    filterOptions={(options) => {
-                                        const reg = new RegExp(tmpPhoneCode, 'i');
-                                        const array = options.filter((item) => {
-                                            return reg.test(item.phone_code) || reg.test(item.local_name)
-                                        });
-                                        return array;
-                                    }}
-                                    onChange={(res, option) => {
-                                        control._formValues.nationCode = option.phone_code
-                                    }}
-                                    getOptionLabel={(option) => { return control._formValues.nationCode }}
-                                    renderOption={(props, option) => (
-                                        <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                                            <img
-                                                loading="lazy"
-                                                width="20"
-                                                src={`/assets/images/country/${option.country_code}.png`}
-                                                alt=""
-                                            />
-                                            {option.local_name} ({option.country_code}) +{option.phone_code}
-                                        </Box>
-                                    )}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            label={t('signIn_6')}
-                                            inputProps={{
-                                                ...params.inputProps,
-                                                autoComplete: 'nationCode', // disable autocomplete and autofill
-                                            }}
-                                        />
-                                    )}
-                                />
-                            )}
-                        />
-
-                        <Controller
-                            name="phone"
+                        {tabValue === 1 && <Controller
+                            name="email"
                             control={control}
                             render={({ field }) => (
                                 <FormControl variant="outlined" className="mb-24">
                                     <InputLabel
                                         style={{
-                                            color: !!errors.phone && '#f44336'
+                                            color: !!errors.email && '#f44336'
                                         }}
-                                    >{t('signIn_4')}*</InputLabel>
+                                    >{t('signIn_5')}*</InputLabel>
                                     <OutlinedInput
                                         {...field}
-                                        label={t('signIn_4')}
-                                        type="number"
+                                        label={t('signIn_5')}
+                                        type="email"
                                         variant="outlined"
                                         required
                                         fullWidth
-                                        error={!!errors.phone}
+                                        error={!!errors.email}
                                         endAdornment={
                                             <InputAdornment position="end">
                                                 {time <= 0 && <IconButton
                                                     aria-label="toggle password visibility"
-                                                    onClick={sendCode}
+                                                    onClick={() => {
+                                                        sendCode(true)
+                                                    }}
                                                     // onMouseDown={handleMouseDownPassword}
                                                     edge="end"
                                                     sx={{
@@ -280,7 +291,7 @@ function ForgotPass() {
                                             </InputAdornment>
                                         }
                                     />
-                                    {!!errors.phone &&
+                                    {!!errors.email &&
                                         <div
                                             style={{
                                                 fontSize: '1.2rem',
@@ -294,12 +305,125 @@ function ForgotPass() {
                                                 marginLeft: '14px',
                                             }}
                                         >
-                                            {errors?.phone?.message}
+                                            {errors?.email?.message}
                                         </div>
                                     }
                                 </FormControl>
                             )}
-                        />
+                        />}
+
+                        {tabValue === 0 && (<>
+                            <Controller
+                                name="nationCode"
+                                control={control}
+                                render={({ field }) => (
+                                    <Autocomplete
+                                        // disablePortal
+                                        className="mb-24"
+                                        options={phoneCode.list}
+                                        autoHighlight
+                                        onInputChange={(event, newInputValue) => {
+                                            setTmpPhoneCode(newInputValue.replace(/\+/g, ""));
+                                        }}
+                                        filterOptions={(options) => {
+                                            const reg = new RegExp(tmpPhoneCode, 'i');
+                                            const array = options.filter((item) => {
+                                                return reg.test(item.phone_code) || reg.test(item.local_name)
+                                            });
+                                            return array;
+                                        }}
+                                        onChange={(res, option) => {
+                                            control._formValues.nationCode = option.phone_code
+                                        }}
+                                        getOptionLabel={(option) => { return control._formValues.nationCode }}
+                                        renderOption={(props, option) => (
+                                            <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                                                <img
+                                                    loading="lazy"
+                                                    width="20"
+                                                    src={`/assets/images/country/${option.country_code}.png`}
+                                                    alt=""
+                                                />
+                                                {option.local_name} ({option.country_code}) +{option.phone_code}
+                                            </Box>
+                                        )}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                label={t('signIn_6')}
+                                                inputProps={{
+                                                    ...params.inputProps,
+                                                    autoComplete: 'nationCode', // disable autocomplete and autofill
+                                                }}
+                                            />
+                                        )}
+                                    />
+                                )}
+                            />
+
+                            <Controller
+                                name="phone"
+                                control={control}
+                                render={({ field }) => (
+                                    <FormControl variant="outlined" className="mb-24">
+                                        <InputLabel
+                                            style={{
+                                                color: !!errors.phone && '#f44336'
+                                            }}
+                                        >{t('signIn_4')}*</InputLabel>
+                                        <OutlinedInput
+                                            {...field}
+                                            label={t('signIn_4')}
+                                            type="number"
+                                            variant="outlined"
+                                            required
+                                            fullWidth
+                                            error={!!errors.phone}
+                                            endAdornment={
+                                                <InputAdornment position="end">
+                                                    {time <= 0 && <IconButton
+                                                        aria-label="toggle password visibility"
+                                                        onClick={sendCode}
+                                                        // onMouseDown={handleMouseDownPassword}
+                                                        edge="end"
+                                                        sx={{
+                                                            fontSize: '1.4rem',
+                                                            borderRadius: '5px'
+                                                        }}
+                                                    >
+                                                        {t('forgot_3')}
+                                                    </IconButton>}
+
+                                                    {time > 0 &&
+                                                        <div>
+                                                            {time} s
+                                                        </div>
+                                                    }
+                                                </InputAdornment>
+                                            }
+                                        />
+                                        {!!errors.phone &&
+                                            <div
+                                                style={{
+                                                    fontSize: '1.2rem',
+                                                    color: '#f44336',
+                                                    fontWeight: 400,
+                                                    lineHeight: 1.66,
+                                                    textAlign: 'left',
+                                                    marginTop: '3px',
+                                                    marginRight: '14px',
+                                                    marginBottom: 0,
+                                                    marginLeft: '14px',
+                                                }}
+                                            >
+                                                {errors?.phone?.message}
+                                            </div>
+                                        }
+                                    </FormControl>
+                                )}
+                            />
+                        </>)}
+
 
                         <Controller
                             name="smsCode"
@@ -366,11 +490,9 @@ function ForgotPass() {
                             color="secondary"
                             className=" w-full mt-24"
                             aria-label="Register"
-                            // disabled={_.isEmpty(dirtyFields) || !isValid}
                             disabled={
                                 _.isEmpty(dirtyFields) ||
-                                !isValid ||
-                                (selectedCountryCode !== "" && selectedCountryCode !== control._formValues.nationCode)
+                                !isValid
                             }
                             type="submit"
                             size="large"

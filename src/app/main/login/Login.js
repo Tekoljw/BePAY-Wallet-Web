@@ -422,7 +422,11 @@ function Login() {
                             <Tabs
                                 component={motion.div}
                                 value={tabValue}
-                                onChange={(ev, value) => setTabValue(value)}
+                                onChange={(ev, value) => {
+                                    setTabValue(value);
+                                    control._formValues.phone = '';
+                                    control._formValues.email = '';
+                                }}
                                 indicatorColor="secondary"
                                 textColor="inherit"
                                 // variant="scrollable"

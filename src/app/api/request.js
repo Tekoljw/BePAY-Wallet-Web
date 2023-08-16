@@ -17,7 +17,8 @@ service.interceptors.request.use(
         if (!config.headers['Wallet-OpenApp-Id']) {
             config.headers['Wallet-OpenApp-Id'] = `${window.sessionStorage.getItem(
                 'openAppId'
-            ) || 0}`;
+            // ) || 0}`;
+            ) || '6436951541b60d250c692481'}`;
         }
 
         if (!config.headers['Wallet-OpenApp-Index']) {

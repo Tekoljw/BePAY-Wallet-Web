@@ -428,7 +428,6 @@ function Wallet() {
   };
   useEffect(() => {
     getSettingSymbol().then((res) => {
-      // console.log(res);
       var currencyType = res.data?.data?.setting?.currencyType
       if (currencyType) {
         if (currencyType == 1) {
@@ -481,7 +480,7 @@ function Wallet() {
       }
     })
     // dispatch(getCurrencySelect());
-  }, []);
+  }, [userData]);
   // 搜索
   const doSearch = (searchText) => {
     if (showType === cryptoSelect && walletType === 0) {
@@ -556,17 +555,24 @@ function Wallet() {
       ) || 0;
     if (walletType === 0) {
       if (showType === cryptoSelect) {
+        let symbolList = {};
+        for (let i = 0; i < symbolsData.length; i++) {
+            symbolList[symbolsData[i].symbol] = symbolsData[i];
+        }
         if (isFait) {
-          for (let i = 0; i < symbolsData.length; i++) {
-            let symbolRate = symbolsData[i].rate || 0;
+          Object.keys(symbolList).forEach((key) => {
+            let symbolRate = symbolList[key].rate || 0;
             amount +=
-              getUserMoney(symbolsData[i].symbol) * (symbolRate * currencyRate);
-          }
+              getUserMoney(symbolList[key].symbol) *
+              (symbolRate * currencyRate);
+          });
         } else {
-          for (let i = 0; i < symbolsData.length; i++) {
-            let symbolRate = symbolsData[i].rate || 0;
-            amount += getUserMoney(symbolsData[i].symbol) * symbolRate;
-          }
+          Object.keys(symbolList).forEach((key) => {
+            let symbolRate = symbolList[key].rate || 0;
+            amount +=
+                getUserMoney(symbolList[key].symbol) *
+                symbolRate;
+          });
         }
         setTotalBalance(amount.toFixed(2));
       } else if (showType === fiatSelect) {
@@ -615,6 +621,7 @@ function Wallet() {
     walletType,
     currencyCode,
     isFait,
+    ranges,
   ]);
 
   // 美元汇率
@@ -816,7 +823,7 @@ function Wallet() {
         }
       }
     }
-  }, [fiatsData, currencyCode, showType, fiatDisplayData]);
+  }, [fiatsData, currencyCode, showType, fiatDisplayData, ranges]);
 
   //nft 数据整理
   const nftFormatAmount = () => {

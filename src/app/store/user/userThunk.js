@@ -384,6 +384,7 @@ export const forgotPass = createAsyncThunk(
         let data = {
             nationCode: settings.nationCode,
             phone: settings.phone,
+            email: settings.email,
             password: settings.password,
             smsCode: settings.smsCode,
         };
@@ -858,12 +859,14 @@ export const tokenTransfer = createAsyncThunk(
         const transferRes = await React.$api("wallet.tokenTransfer", data);
 
         if (transferRes.errno === 0) {
-            dispatch(getTransferOrder({
-                orderId: transferRes.data
-            }));
+            // dispatch(getTransferOrder({
+            //     orderId: transferRes.data
+            // }));
             dispatch(showMessage({ message: 'pending...', code: 1 }));
+            return transferRes.data
         } else {
             dispatch(showMessage({ message: transferRes.errmsg, code: 2 }));
+            return false
         }
     }
 );

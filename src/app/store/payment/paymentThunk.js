@@ -164,10 +164,12 @@ export const makeWithdrawOrder = createAsyncThunk(
     'payment/makeWithdrawOrder',
     async (settings, { dispatch, getState }) => {
         const result = await React.$api("payment.makeWithdrawOrder", settings);
+        console.log(result.errno === 0, 'result')
         if (result.errno === 0) {
             return result.data
         } else {
             dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            return false
         }
     }
 );

@@ -47,3 +47,16 @@ export const judgeIosOrAndroid = () => {
         return 'android'
     }
 };
+
+export const getNowTime = () => {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+    var minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+    var second = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+    var currentTime = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+    return currentTime;
+}
+

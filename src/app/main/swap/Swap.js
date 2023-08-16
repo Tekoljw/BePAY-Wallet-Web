@@ -260,7 +260,7 @@ function Swap() {
         "exchangeRate"
       ) || 0;
 
-    let resultSymbolDataFormat = {};
+    let resultSymbolDataFormat = [];
 
     Object.keys(data)?.forEach((item, index) => {
       let resultSymbolData = [];
@@ -473,7 +473,7 @@ function Swap() {
 
   useEffect(() => {
     dispatch(getSwapConfig()).then((res) => {
-      res.payload.errno === 0 && dispatch(setSwapConfig(res.payload));
+      res.payload?.errno === 0 && dispatch(setSwapConfig(res.payload));
     });
   }, []);
 

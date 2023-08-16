@@ -25,7 +25,7 @@ import { tokenTransfer } from "../../store/user/userThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { selectConfig } from "../../store/config";
-import { arrayLookup } from "../../util/tools/function";
+import {arrayLookup, getNowTime} from "../../util/tools/function";
 import { openScan, closeScan } from "../../util/tools/scanqrcode";
 import { getWithDrawConfig, WalletConfigDefineMap, evalTokenTransferFee, getWithdrawHistoryAddress, delWithdrawHistoryAddress, getWithdrawTransferStats } from "app/store/wallet/walletThunk";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
@@ -170,6 +170,7 @@ function Withdraw(props) {
     const [openWithdrawLog, setOpenWithdrawLog] = useState(false);
     const [openGoogleCode, setOpenGoogleCode] = useState(false);
     const [openTiBi, setOpenTiBi] = useState(false);
+    const [withDrawOrderID, setWithDrawOrderID] = useState('');
     const [openLoad, setOpenLoad] = useState(false);
     const [openPaste, setOpenPaste] = useState(false);
     const walletData = useSelector(selectUserData).wallet;
@@ -237,8 +238,14 @@ function Withdraw(props) {
             priceLevel: amountTab,
             bAppendFee: tmpBAppendFee,
         };
-        dispatch(tokenTransfer(data)).then(() => {
+        setOpenLoad(true);
+        dispatch(tokenTransfer(data)).then((res) => {
             setGoogleCode('');
+            if (res.payload) {
+                setOpenTiBi(true)
+                setWithDrawOrderID(res.payload);
+            }
+
         });
     };
     const handleCopyText = (text) => {
@@ -653,7 +660,7 @@ function Withdraw(props) {
                                             // className="flex items-center px-8 rounded-8 border"
                                             className={clsx('flex items-center px-8 rounded-8 border cursor-pointer deposite-token', networkId === item.id && 'active-border')}
                                             onClick={() => {
-                                                // setWalletName(item.network);
+                                                setWalletName(item.network);
                                                 setNetworkId(item.id);
                                             }}
                                             style={{
@@ -823,11 +830,6 @@ function Withdraw(props) {
                                 onClick={() => {
 
                                     handleSubmit()
-
-                                    // setTimeout(() => {
-                                    //     setOpenTiBi(true)
-                                    // }, 3000);
-                                    // setOpenLoad(true)
                                 }}
                             >
                                 {t('home_withdraw_10')}
@@ -946,36 +948,35 @@ function Withdraw(props) {
                                     <motion.div variants={item}>
                                         <img style={{ margin: "0 auto", width: "60px", height: "60px", marginTop: "10px" }} src='assets/images/wallet/naoZhong.png'></img>
                                     </motion.div>
-                                    <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "20px", fontSize: "24px" }}>-2,500 USDT</motion.div>
+                                    <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "20px", fontSize: "24px" }}>-{inputVal.amount} {symbol}</motion.div>
                                     <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "10px", fontSize: "16px", color: "#ffc600" }}>● Pending Review</motion.div>
                                     <motion.div variants={item} className='flex justify-content-space px-20 mt-40' >
                                         <div style={{ color: "#888B92" }}>NetWork</div>
-                                        <div>TRC20</div>
+                                        <div>{walletName}</div>
                                     </motion.div>
 
                                     <motion.div variants={item} className='flex justify-content-space px-20 mt-40' >
                                         <div style={{ color: "#888B92" }}>Type</div>
                                         <div>Crypto</div>
                                     </motion.div>
-
                                     <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
                                         <div style={{ color: "#888B92" }}>Address</div>
-                                        <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>0x4867cf194bf42fd5e446eaf360af380f4094053a</div>
+                                        <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{inputVal.address}</div>
                                     </motion.div>
 
                                     <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
                                         <div style={{ color: "#888B92" }}>ID</div>
-                                        <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>fe7993aceb3c2cdf9a9186a5cc5</div>
+                                        <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{withDrawOrderID}</div>
                                     </motion.div>
 
                                     <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
                                         <div style={{ color: "#888B92" }}>Fee</div>
-                                        <div>0.8 USDT</div>
+                                        <div>{fee} {symbol}</div>
                                     </motion.div>
 
                                     <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
                                         <div style={{ color: "#888B92" }}>Time</div>
-                                        <div>2023/6/9 22:10:20</div>
+                                        <div>{getNowTime()}</div>
                                     </motion.div>
                                 </motion.div>
                             </Box>
