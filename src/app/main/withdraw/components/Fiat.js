@@ -18,7 +18,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../../store/user";
 import { getListBank } from "../../../store/user/userThunk";
-import { makeWithdrawOrder } from "../../../store/payment/paymentThunk";
+import { makeWithdrawOrder, getFiatFee } from "../../../store/payment/paymentThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../../components/StyledAccordionSelect";
 import { selectConfig } from "../../../store/config";
@@ -68,7 +68,7 @@ const item = {
 function Fiat(props) {
     const { t } = useTranslation('mainPage');
     const [openTiBi, setOpenTiBi] = useState(false);
-    const [withdrawOrderID, setWithdrawOrderID] = useState(true);
+    const [withdrawOrderID, setWithdrawOrderID] = useState('');
     const [openLoad, setOpenLoad] = useState(false);
     const isMobileMedia = new MobileDetect(window.navigator.userAgent).mobile();
     const dispatch = useDispatch();
@@ -116,7 +116,7 @@ function Fiat(props) {
                 setOpenLoad(false)
             } else {
                 setOpenTiBi(true)
-                setWithdrawOrderID(result.out_trade_no);
+                setWithdrawOrderID(result.outTradeNo);
                 dispatch(showMessage({ message: 'success', code: 1 }));
             }
         });
@@ -128,7 +128,6 @@ function Fiat(props) {
         dispatch(getListBank()).then((res) => {
             let result = res.payload;
             if (result) {
-                console.log('result', result)
                 setHistoryAddress(result);
             }
         });
@@ -142,12 +141,12 @@ function Fiat(props) {
     const [fiatDisplayData, setFiatDisplayData] = useState([]);
     const [fiats, setFiats] = useState([]);
     const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || 'USD');
+    const [fee, setFee] = useState(0);
     const [fiatsSelected, setFiatsSelected] = useState(0);
     // select切换
     const handleChangeFiats = (event) => {
         setFiatsSelected(event.target.value);
         setCurrencyCode(fiats[event.target.value].currencyCode);
-        console.log('currencyCode', fiats[event.target.value].currencyCode)
     };
 
     //从大到小排列
@@ -264,6 +263,20 @@ function Fiat(props) {
             setFiatDisplayData(result?.data);
         });
     }, []);
+
+    useEffect(() => {
+        if (inputVal.amount > 0) {
+            dispatch(getFiatFee({
+                currency: currencyCode,
+                wayCode: '',
+                amount: inputVal.amount
+            })).then((res) => {
+                let result = res.payload;
+                setFee(result)
+            })
+        }
+
+    }, [inputVal.amount, currencyCode])
 
     const [percentage, setPercentage] = useState('');
     const handleClick = (index) => {
@@ -523,7 +536,7 @@ function Fiat(props) {
                                     }}
                                 >
                                     <Typography className="text-14 px-16">
-                                        <span style={{ color: '#FCE100' }}>⚠</span>{t('home_withdraw_15')}  . {t('home_withdraw_16')}. {t('home_withdraw_17')}
+                                        <span style={{ color: '#FCE100' }}>⚠</span>{t('home_withdraw_15')} {fee} {currencyCode} . {t('home_withdraw_16')}. {t('home_withdraw_17')}
                                     </Typography>
                                 </Box>
 

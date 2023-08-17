@@ -55,6 +55,29 @@ export const getSwapPrice = createAsyncThunk(
     }
 );
 
+export const getSwapFiat = createAsyncThunk(
+    '/swap/fiat',
+    async (settings, { dispatch, getState }) => {
+
+        settings = settings || {};
+
+        let data = {
+            srcSymbol: settings.srcSymbol,
+            dstSymbol: settings.dstSymbol,
+            amount: settings.amount,
+        };
+
+        const resultData = await React.$api("swap.fiat", data);
+
+        if (resultData.errno === 0) {
+            dispatch(showMessage({ message: 'success', code: 1 }));
+            return resultData;
+        } else {
+            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+        }
+    }
+);
+
 // 获取兑换 价格信息
 export const getSwapCrypto = createAsyncThunk(
     '/swap/crypto',

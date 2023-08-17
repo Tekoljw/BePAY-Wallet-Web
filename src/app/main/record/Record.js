@@ -71,7 +71,7 @@ function Record() {
         { id: 6, label: t('home_record_6') },
         // { id: 7, label: 'Fiat Buy' },
         { id: 8, label: t('home_record_14') },
-        // { id: 9, label: 'Swap' },
+        { id: 9, label: 'Swap' },
         // { id: 10, label: 'Admin Withdraw' },
         // { id: 11, label: 'Hash Game Bet' },
         { id: 12, label: t('home_record_15') },

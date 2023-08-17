@@ -89,8 +89,9 @@ function Login() {
         agentId: ''
     };
 
+
     const [profile, setProfile] = useState([]);
-    const clientId = '865862527951-at7efv2rkgf6cuie4qa803ia1s346656.apps.googleusercontent.com';
+    const clientId = '399356987565-oh5vkr3jl2ckuqlgoacn429eucmmkntd.apps.googleusercontent.com';
 
     useEffect(() => {
         const initClient = () => {
@@ -722,7 +723,7 @@ function Login() {
                                         <GoogleLogin
                                             render={(renderProps) => (
                                                 <img
-                                                    // onClick={renderProps.onClick}
+                                                    onClick={renderProps.onClick}
                                                     disabled={renderProps.disabled}
                                                     style={{ height: "80%" }}
                                                     src="/assets/images/login/icon-3.png"
