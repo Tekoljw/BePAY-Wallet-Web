@@ -797,7 +797,7 @@ function Deposite() {
                     variant="scrollable"
                     scrollButtons={false}
                     className="min-h-40 wallet-show-type wallet-show-type-tab ml-16 mr-12 "
-                    classes={{ indicator: 'flex justify-center bg-transparent w-full h-full min-h-32' }}
+                    classes={{ indicator: 'flex justify-center bg-transparent w-full h-full min-h-32 ' }}
                     TabIndicatorProps={{
                         children: (
                             <Box
@@ -817,7 +817,8 @@ function Deposite() {
                             key={key}
                             label={label}
                             sx={{
-                                color: '#FFFFFF', height: '3.5rem', width: '10.8rem'
+                                color: '#FFFFFF', height: '3.5rem', width: '16.8rem'
+                                // color: '#FFFFFF', height: '3.5rem', width: '10.8rem'
                             }}
                         />
                     ))}

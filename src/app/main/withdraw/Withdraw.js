@@ -610,7 +610,8 @@ function Withdraw(props) {
                                 key={key}
                                 label={label}
                                 sx={{
-                                    color: '#FFFFFF', height: '3.5rem', width: '10.8rem'
+                                    color: '#FFFFFF', height: '3.5rem', width: '16.8rem'
+                                    // color: '#FFFFFF', height: '3.5rem', width: '10.8rem'
                                 }}
                             />
                         ))}
