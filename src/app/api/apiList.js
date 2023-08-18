@@ -128,6 +128,10 @@ export default {
             url: "/mobile/telegramLogin",
             method: "post",
         },
+        googleLogin: {
+            url: "/mobile/googleLogin",
+            method: "post",
+        },
         emailRegister: {
             url: "/email/register",
             method: "post",

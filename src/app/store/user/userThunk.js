@@ -184,6 +184,27 @@ export const telegramLoginApi = createAsyncThunk(
     }
 );
 
+// google 登录
+export const googleLoginApi = createAsyncThunk(
+    'user/googleLoginApi',
+    async (settings, { dispatch, getState }) => {
+        const { config } = getState();
+        const userLoginData = await React.$api("user.googleLogin", settings);
+        if (userLoginData.errno === 0) {
+            dispatch(showMessage({ message: 'Sign Success', code: 1 }));
+            dispatch(updateUser(userLoginData));
+            if (config.storageKey) {
+                React.$api("security.setKey", {
+                    key: config.storageKey,
+                    value: userLoginData.data.token
+                })
+            }
+        } else {
+            dispatch(showMessage({ message: userLoginData.errmsg, code: 2 }));
+        }
+    }
+);
+
 // 自动连接钱包
 export const automaticConnectWeb3 = createAsyncThunk(
     'user/automaticConnectWeb3',
