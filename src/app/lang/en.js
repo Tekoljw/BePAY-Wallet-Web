@@ -301,6 +301,18 @@ const locale = {
     reset_pass_5: 'Password (Confirm)',
     reset_pass_6: 'Reset your password',
 
+    home_Transaction:'Transaction',
+    home_PendingReview:'Pending Review',
+    home_NetWork:'NetWork',
+    home_Type:'Type',
+    home_ID:'ID',
+    home_Time:'Time',
+    home_Bank:'Bank',
+    home_Name:'Name',
+
+
+
+
 
 };
 

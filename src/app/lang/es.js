@@ -299,6 +299,15 @@ const locale = {
     reset_pass_4: 'Nueva contraseña',
     reset_pass_5: 'Confirmar contraseña',
     reset_pass_6: 'Restablece tu contraseña',
+
+    home_Transaction: 'Transacción',
+    home_PendingReview: 'Revisión Pendiente',
+    home_NetWork: 'Red',
+    home_Type: 'Tipo',
+    home_ID: 'ID',
+    home_Time: 'Tiempo',
+    home_Bank: 'Banco',
+    home_Name: 'Nombre',
     
 };
 export default locale;

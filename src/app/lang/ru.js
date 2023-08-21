@@ -298,6 +298,14 @@ const locale = {
     reset_pass_5: 'Пароль (подтверждение)',
     reset_pass_6: 'Сбросить ваш пароль',
 
+    home_Transaction: 'Транзакция',
+    home_PendingReview: 'Ожидание обзора',
+    home_NetWork: 'Сеть',
+    home_Type: 'Тип',
+    home_ID: 'ИДентификатор',
+    home_Time: 'Время',
+    home_Bank: 'Банк',
+    home_Name: 'Имя',
 };
 
 export default locale;

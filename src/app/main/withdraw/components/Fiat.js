@@ -610,7 +610,7 @@ function Fiat(props) {
                 >
                     <DialogContent dividers >
                         <div className='dialog-box' >
-                            <Typography id="customized-dialog-title" className="text-24 dialog-title-text" style={{ textAlign: "center", marginTop: "10px" }}>Transaction
+                            <Typography id="customized-dialog-title" className="text-24 dialog-title-text" style={{ textAlign: "center", marginTop: "10px" }}>{t('home_Transaction')}
                                 <img src="assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => {
                                     setOpenTiBi(false)
                                     setOpenLoad(false)
@@ -627,29 +627,29 @@ function Fiat(props) {
                                     <img style={{ margin: "0 auto", width: "60px", height: "60px", marginTop: "10px" }} src='assets/images/wallet/naoZhong.png'></img>
                                 </motion.div>
                                 <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "20px", fontSize: "24px" }}>-{inputVal.amount} {currencyCode}</motion.div>
-                                <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "10px", fontSize: "16px", color: "#ffc600" }}>● Pending Review</motion.div>
+                                <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "10px", fontSize: "16px", color: "#ffc600" }}>● {t('home_PendingReview')}</motion.div>
                                 <motion.div variants={item} className='flex justify-content-space px-20 mt-40' >
-                                    <div style={{ color: "#888B92" }}>Bank</div>
+                                    <div style={{ color: "#888B92" }}>{t('home_Bank')}</div>
                                     <div>{inputVal.bankName}</div>
                                 </motion.div>
 
                                 <motion.div variants={item} className='flex justify-content-space px-20 mt-40' >
-                                    <div style={{ color: "#888B92" }}>Type</div>
+                                    <div style={{ color: "#888B92" }}>{t('home_Type')}</div>
                                     <div>Fiat</div>
                                 </motion.div>
 
                                 <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
-                                    <div style={{ color: "#888B92" }}>Name</div>
+                                    <div style={{ color: "#888B92" }}>{t('home_Name')}</div>
                                     <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{inputVal.cardName}</div>
                                 </motion.div>
 
                                 <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
-                                    <div style={{ color: "#888B92" }}>Address</div>
+                                    <div style={{ color: "#888B92" }}>{t('home_withdraw_14')}</div>
                                     <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{inputVal.cardNo}</div>
                                 </motion.div>
 
                                 <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
-                                    <div style={{ color: "#888B92" }}>ID</div>
+                                    <div style={{ color: "#888B92" }}>{t('home_ID')}</div>
                                     <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{withdrawOrderID}</div>
                                 </motion.div>
 
@@ -657,9 +657,8 @@ function Fiat(props) {
                                         <div style={{ color: "#888B92" }}>Fee</div>
                                         <div>0.8 USDT</div>
                                     </motion.div> */}
-
                                 <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
-                                    <div style={{ color: "#888B92" }}>Time</div>
+                                    <div style={{ color: "#888B92" }}>{t('home_Time')}</div>
                                     <div>{getNowTime()}</div>
                                 </motion.div>
                             </motion.div>

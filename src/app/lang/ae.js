@@ -301,7 +301,14 @@ const locale = {
     reset_pass_5: 'تأكيد كلمة المرور',
     reset_pass_6: 'إعادة تعيين كلمة المرور',
 
-
+    home_Transaction: 'معاملة',
+    home_PendingReview: 'بانتظار المراجعة',
+    home_NetWork: 'شبكة',
+    home_Type: 'نوع',
+    home_ID: 'الرقم المعرفي',
+    home_Time: 'الوقت',
+    home_Bank: 'البنك',
+    home_Name: 'الاسم',
 
 };
 

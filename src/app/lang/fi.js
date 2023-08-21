@@ -299,6 +299,15 @@ const locale = {
     reset_pass_5: 'Salasana (vahvista)',
     reset_pass_6: 'Nollaa salasanasi',
 
+    home_Transaction: 'Tapahtuma',
+    home_PendingReview: 'Odottaa tarkastelua',
+    home_NetWork: 'Verkko',
+    home_Type: 'Tyyppi',
+    home_ID: 'ID',
+    home_Time: 'Aika',
+    home_Bank: 'Pankki',
+    home_Name: 'Nimi',
+
 
 
 

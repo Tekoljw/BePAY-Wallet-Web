@@ -300,6 +300,14 @@ const locale = {
     reset_pass_5: 'Kata Sandi (Konfirmasi)',
     reset_pass_6: 'Atur ulang kata sandi Anda',
 
+    home_Transaction: 'Transaksi',
+    home_PendingReview: 'Menunggu Ulasan',
+    home_NetWork: 'Rangkaian',
+    home_Type: 'Jenis',
+    home_ID: 'ID',
+    home_Time: 'Masa',
+    home_Bank: 'Bank',
+    home_Name: 'Nama',
 };
 
 export default locale;

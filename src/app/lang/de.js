@@ -303,6 +303,14 @@ const locale = {
     reset_pass_5: 'Passwort bestätigen',
     reset_pass_6: 'Passwort zurücksetzen',
 
+    home_Transaction: 'Transaktion',
+    home_PendingReview: 'Ausstehende Überprüfung',
+    home_NetWork: 'Netzwerk',
+    home_Type: 'Typ',
+    home_ID: 'ID',
+    home_Time: 'Zeit',
+    home_Bank: 'Bank',
+    home_Name: 'Name',
 
 };
 

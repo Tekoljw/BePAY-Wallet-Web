@@ -299,6 +299,14 @@ const locale = {
     reset_pass_5:'確認密碼',
     reset_pass_6:'重置密碼',
 
+    home_Transaction: '交易',
+    home_PendingReview: '待審核',
+    home_NetWork: '網路',
+    home_Type: '類型',
+    home_ID: 'ID',
+    home_Time: '時間',
+    home_Bank: '銀行',
+    home_Name: '名稱',
 };
 
 export default locale;

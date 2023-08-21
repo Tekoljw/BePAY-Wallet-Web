@@ -301,6 +301,14 @@ const locale = {
     reset_pass_5: 'Hasło (potwierdź)',
     reset_pass_6: 'Resetuj swoje hasło',
 
+    home_Transaction: 'Transakcja',
+    home_PendingReview: 'Oczekiwanie na Przegląd',
+    home_NetWork: 'Sieć',
+    home_Type: 'Typ',
+    home_ID: 'ID',
+    home_Time: 'Czas',
+    home_Bank: 'Bank',
+    home_Name: 'Nazwa',
 };
 
 export default locale;

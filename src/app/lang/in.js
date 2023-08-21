@@ -296,6 +296,17 @@ const locale = {
     reset_pass_4: 'Kata Sandi Baru',
     reset_pass_5: 'Konfirmasi Kata Sandi Baru',
     reset_pass_6: 'Reset kata sandi Anda',
+
+    home_Transaction: 'लेन-देन',
+    home_PendingReview: 'समीक्षा की प्रतीक्षा में',
+    home_NetWork: 'नेटवर्क',
+    home_Type: 'प्रकार',
+    home_ID: 'आईडी',
+    home_Time: 'समय',
+    home_Bank: 'बैंक',
+    home_Name: 'नाम',
+
+
     };
 
 export default locale;

@@ -298,6 +298,14 @@ const locale = {
     reset_pass_5: 'Şifre (Onay)',
     reset_pass_6: 'Şifrenizi sıfırlayın',
 
+    home_Transaction: 'İşlem',
+    home_PendingReview: 'İnceleme Bekliyor',
+    home_NetWork: 'Ağ',
+    home_Type: 'Tip',
+    home_ID: 'Kimlik',
+    home_Time: 'Zaman',
+    home_Bank: 'Banka',
+    home_Name: 'Ad',
     };
     
 export default locale;

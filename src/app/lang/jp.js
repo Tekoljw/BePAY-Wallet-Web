@@ -300,6 +300,14 @@ const locale = {
     reset_pass_5: 'パスワード（確認用）',
     reset_pass_6: 'パスワードをリセットする',
 
+    home_Transaction: '取引',
+    home_PendingReview: '審査中',
+    home_NetWork: 'ネットワーク',
+    home_Type: 'タイプ',
+    home_ID: 'ID',
+    home_Time: '時間',
+    home_Bank: '銀行',
+    home_Name: '名前',
 };
 
 export default locale;

@@ -285,6 +285,14 @@ const locale = {
     reset_pass_5: 'Xác nhận mật khẩu',
     reset_pass_6: 'Đặt lại mật khẩu của bạn',
 
+    home_Transaction: 'Giao dịch',
+    home_PendingReview: 'Đang chờ xem xét',
+    home_NetWork: 'Mạng',
+    home_Type: 'Loại',
+    home_ID: 'ID',
+    home_Time: 'Thời gian',
+    home_Bank: 'Ngân hàng',
+    home_Name: 'Tên',
     };
 
 export default locale;
