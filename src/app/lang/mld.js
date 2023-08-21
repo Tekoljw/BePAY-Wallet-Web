@@ -303,6 +303,14 @@ const locale = {
     reset_pass_5: 'संकेतशब्द (पुष्टी करा)',
     reset_pass_6: 'तुमचा संकेतशब्द रीसेट करा',
 
+    home_Transaction: 'व्यवहार',
+    home_PendingReview: 'समीक्षेसाठी प्रलंबित',
+    home_NetWork: 'नेटवर्क',
+    home_Type: 'प्रकार',
+    home_ID: 'आयडी',
+    home_Time: 'वेळ',
+    home_Bank: 'बँक',
+    home_Name: 'नाव',
 
     };
     

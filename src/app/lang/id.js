@@ -297,6 +297,16 @@ const locale = {
     reset_pass_4: 'Kata Sandi Baru',
     reset_pass_5: 'Konfirmasi Kata Sandi Baru',
     reset_pass_6: 'Reset kata sandi Anda',
+
+
+    home_Transaction: 'Transaksi',
+    home_PendingReview: 'Menunggu Ulasan',
+    home_NetWork: 'Jaringan',
+    home_Type: 'Tipe',
+    home_ID: 'ID',
+    home_Time: 'Waktu',
+    home_Bank: 'Bank',
+    home_Name: 'Nama',
     };
 
 export default locale;

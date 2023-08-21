@@ -302,6 +302,14 @@ const locale = {
     reset_pass_5: '비밀번호 (확인)',
     reset_pass_6: '비밀번호 재설정',
 
+    home_Transaction: '거래',
+    home_PendingReview: '검토 대기 중',
+    home_NetWork: '네트워크',
+    home_Type: '유형',
+    home_ID: 'ID',
+    home_Time: '시간',
+    home_Bank: '은행',
+    home_Name: '이름',
 
 };
 

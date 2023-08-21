@@ -300,6 +300,14 @@ const locale = {
     reset_pass_5: 'Confirmer le mot de passe',
     reset_pass_6: 'Réinitialiser votre mot de passe',
 
+    home_Transaction: 'Transaction',
+    home_PendingReview: 'En attente de révision',
+    home_NetWork: 'Réseau',
+    home_Type: 'Type',
+    home_ID: 'ID',
+    home_Time: 'Heure',
+    home_Bank: 'Banque',
+    home_Name: 'Nom',
 
 
     

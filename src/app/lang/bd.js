@@ -299,6 +299,15 @@ const locale = {
     reset_pass_5: 'পাসওয়ার্ড (কনফার্ম)',
     reset_pass_6: 'আপনার পাসওয়ার্ড রিসেট করুন',
 
+    home_Transaction: 'লেনদেন',
+    home_PendingReview: 'পূর্বর্নিম্ন পর্যালোচনা',
+    home_NetWork: 'নেটওয়ার্ক',
+    home_Type: 'ধরন',
+    home_ID: 'আইডি',
+    home_Time: 'সময়',
+    home_Bank: 'ব্যাংক',
+    home_Name: 'নাম',
+
     };
 
 export default locale;

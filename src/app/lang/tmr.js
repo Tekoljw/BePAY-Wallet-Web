@@ -299,6 +299,16 @@ const locale = {
     reset_pass_4: 'புதிய கடவுச்சொல்',
     reset_pass_5: 'கடவுச்சொல் (உறுதி)',
     reset_pass_6: 'உங்கள் கடவுச்சொல்லை மீளமைக்கவும்',
+
+    home_Transaction: 'பரிவர்த்தனை',
+    home_PendingReview: 'முன்னிரு பரிசீலனை',
+    home_NetWork: 'பிணையம்',
+    home_Type: 'வகை',
+    home_ID: 'ஐடி',
+    home_Time: 'நேரம்',
+    home_Bank: 'வங்கி',
+    home_Name: 'பெயர்',
+
 };
 
 export default locale;

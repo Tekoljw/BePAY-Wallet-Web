@@ -300,6 +300,15 @@ const locale = {
     reset_pass_5: 'Senha (Confirmação)',
     reset_pass_6: 'Redefinir sua senha',
 
+    home_Transaction: 'Transação',
+    home_PendingReview: 'Pendente de Revisão',
+    home_NetWork: 'Rede',
+    home_Type: 'Tipo',
+    home_ID: 'ID',
+    home_Time: 'Tempo',
+    home_Bank: 'Banco',
+    home_Name: 'Nome',
+
 };
 export default locale;
     

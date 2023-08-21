@@ -299,9 +299,16 @@ const locale = {
     reset_pass_3: 'Lumang Password',
     reset_pass_4: 'Bagong Password',
     reset_pass_5: 'Password (Kumpirmahin)',
-    reset_pass_6: 'I-reset ang iyong password'
+    reset_pass_6: 'I-reset ang iyong password',
 
-
+    home_Transaction: 'Transaksyon',
+    home_PendingReview: 'Naghihintay ng Pagsusuri',
+    home_NetWork: 'Network',
+    home_Type: 'Uri',
+    home_ID: 'ID',
+    home_Time: 'Oras',
+    home_Bank: 'Bangko',
+    home_Name: 'Pangalan',
 
     
 }
