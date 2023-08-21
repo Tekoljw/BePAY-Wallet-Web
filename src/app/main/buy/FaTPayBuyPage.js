@@ -129,21 +129,21 @@ function FaTPayBuyPage() {
 
 
     return (
-        <Root
-            header={
-                <Hidden smUp={!isMobileMedia} lgUp={isMobileMedia}>
-                    <IconButton
-                        onClick={() => {
-                            setLeftSidebarOpen(true);
-                        }}
-                        aria-label="open left sidebar"
-                        size="large"
-                    >
-                        <FuseSvgIcon>heroicons-outline:menu</FuseSvgIcon>
-                    </IconButton>
-                </Hidden>
-            }
-            content={
+        // <Root
+        //     header={
+        //         <Hidden smUp={!isMobileMedia} lgUp={isMobileMedia}>
+        //             <IconButton
+        //                 onClick={() => {
+        //                     setLeftSidebarOpen(true);
+        //                 }}
+        //                 aria-label="open left sidebar"
+        //                 size="large"
+        //             >
+        //                 <FuseSvgIcon>heroicons-outline:menu</FuseSvgIcon>
+        //             </IconButton>
+        //         </Hidden>
+        //     }
+        //     content={
                 <div>
                     {/*head*/}
                     <motion.div
@@ -177,14 +177,14 @@ function FaTPayBuyPage() {
                     </motion.div>
 
                 </div>
-            }
-            leftSidebarOpen={leftSidebarOpen}
-            leftSidebarOnClose={() => {
-                setLeftSidebarOpen(false);
-            }}
-            leftSidebarContent={<HomeSidebarContent tab={'buy'}/>}
-            scroll={isMobile ? 'normal' : 'content'}
-        />
+        //     }
+        //     leftSidebarOpen={leftSidebarOpen}
+        //     leftSidebarOnClose={() => {
+        //         setLeftSidebarOpen(false);
+        //     }}
+        //     leftSidebarContent={<HomeSidebarContent tab={'buy'}/>}
+        //     scroll={isMobile ? 'normal' : 'content'}
+        // />
 
     )
 }

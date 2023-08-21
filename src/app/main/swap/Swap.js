@@ -15,7 +15,7 @@ import openType from '../wallet/opentype.json'
 import {
   getSwapConfig,
   getSwapPrice,
-  getSwapCrypto,
+  getSwapCrypto, getSwapFiat,
 } from "../../store/swap/swapThunk";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -81,6 +81,7 @@ function Swap() {
   const config = useSelector(selectConfig);
   const swapData = config.swapConfig;
   const symbolsData = config.symbols;
+  const fiatsData = config.payment?.currency;
   const networks = config.networks;
   const fiatData = useSelector(selectUserData).fiat;
   const userData = useSelector(selectUserData);
@@ -215,16 +216,11 @@ function Swap() {
     let resultSymbolData = [];
 
     data.forEach((item, index) => {
-      var tmpShow = arrayLookup(cryptoDisplayData, "name", item, "show");
-      if (tmpShow === "") {
-        tmpShow = arrayLookup(symbolsData, "symbol", item, "userShow");
-      }
-      if (tmpShow === true) {
         // 兑换成USDT的汇率
-        let symbolRate = arrayLookup(symbolsData, "symbol", item, "rate") || 0;
+        let symbolRate = arrayLookup(symbolsData, "symbol", item, "rate") || arrayLookup(fiatsData, "currencyCode", item, "exchangeRate") || 0;
         var balance = getUserMoney(item);
         resultSymbolData.push({
-          avatar: arrayLookup(symbolsData, "symbol", item, "avatar") || "",
+          avatar: arrayLookup(symbolsData, "symbol", item, "avatar") || arrayLookup(fiatsData, "currencyCode", item, "avatar") || "",
           symbol: item,
           balance: balance, // 余额
           dollarFiat: (balance * symbolRate * dollarCurrencyRate).toFixed(2), // 换算成美元
@@ -234,7 +230,6 @@ function Swap() {
           withdrawLock:
             arrayLookup(walletData.inner, "symbol", item, "withdrawLock") || 0,
         });
-      }
     });
     return resultSymbolData
   }
@@ -260,33 +255,28 @@ function Swap() {
         "exchangeRate"
       ) || 0;
 
-    let resultSymbolDataFormat = [];
+    let resultSymbolDataFormat = {};
 
     Object.keys(data)?.forEach((item, index) => {
       let resultSymbolData = [];
       data[item].forEach((item, index) => {
-        var tmpShow = arrayLookup(cryptoDisplayData, "name", item.base_coin, "show");
-        if (tmpShow === "") {
-          tmpShow = arrayLookup(symbolsData, "symbol", item.base_coin, "userShow");
-        }
-        if (tmpShow === true) {
           // 兑换成USDT的汇率
-          let symbolRate = arrayLookup(symbolsData, "symbol", item.base_coin, "rate") || 0;
-          var balance = getUserMoney(item.base_coin);
+          let symbolRate = arrayLookup(symbolsData, "symbol", item.quote_coin, "rate") || arrayLookup(fiatsData, "currencyCode", item.quote_coin, "exchangeRate") || 0;
+          var balance = getUserMoney(item.quote_coin);
+
           resultSymbolData.push({
-            avatar: arrayLookup(symbolsData, "symbol", item.base_coin, "avatar") || "",
-            symbol: item.base_coin,
+            avatar: arrayLookup(symbolsData, "symbol", item.quote_coin, "avatar") || arrayLookup(fiatsData, "currencyCode", item.quote_coin, "avatar") || "",
+            symbol: item.quote_coin,
             balance: balance, // 余额
             dollarFiat: (balance * symbolRate * dollarCurrencyRate).toFixed(2), // 换算成美元
             currencyAmount: (balance * symbolRate * currencyRate).toFixed(2), // 换算成当前选择法币
             tradeLock:
-              arrayLookup(walletData.inner, "symbol", item.base_coin, "tradeLock") || 0,
+              arrayLookup(walletData.inner, "symbol", item.quote_coin, "tradeLock") || 0,
             withdrawLock:
-              arrayLookup(walletData.inner, "symbol", item.base_coin, "withdrawLock") || 0,
+              arrayLookup(walletData.inner, "symbol", item.quote_coin, "withdrawLock") || 0,
           });
-        }
       });
-      resultSymbolDataFormat.push(resultSymbolData);
+      resultSymbolDataFormat[item] = resultSymbolData;
     });
     return resultSymbolDataFormat
   }
@@ -296,17 +286,9 @@ function Swap() {
 
     let displayData = [];
     let tmpCoinData = {};
-    // cryptoDisplayData?.map((item, index) => {
-    //   displayData.push(item.name);
-    // });
-    // symbolsData.map((item, index) => {
-    //   if (displayData.indexOf(item.symbol) === -1 && item.userShow === true) {
-    //     displayData.push(item.symbol);
-    //   }
-    // });
+    let tmpCoinFiatData = {};
     await Object.keys(swapData)?.map((item) => {
-      if (arrayLookup(symbolsData, "symbol", swapData[item].base_coin, "symbol")) {
-
+      if (arrayLookup(symbolsData, "symbol", swapData[item].base_coin, "symbol") || arrayLookup(fiatData, 'currencyCode', swapData[item].base_coin, 'currencyCode')) {
         if (displayData.indexOf(swapData[item].base_coin) == -1) {
           displayData.push(swapData[item].base_coin);
           tmpCoinData[swapData[item].base_coin] = [swapData[item]]
@@ -316,13 +298,12 @@ function Swap() {
       }
     });
 
-    setSwapCoinConfig(tmpCoinData);
-
     let tmpSymbols = [];
     tmpSymbols = arrangeSymbolAmountData(displayData);
 
     let tmpSwapSymbols = {};
     tmpSwapSymbols = arrangeSymbolAmountDataFrom(tmpCoinData);
+    setSwapCoinConfig(tmpSwapSymbols);
 
     const sortUseAge = (a, b) => {
       const prioritizedSymbolsFirst = ['eUSGT', 'USGT', 'BGT', 'eBGT'];
@@ -401,7 +382,6 @@ function Swap() {
       tmpNetworks[item.symbol] = tmpNetData;
     });
 
-
     tmpSymbols.sort(sortUseAge)
     setSymbolWallet(
       tmpSymbols.filter(i => i.symbol !== 'eUSGT')
@@ -413,8 +393,14 @@ function Swap() {
 
   const getUserMoney = (symbol) => {
     let arr = userData.wallet.inner || [];
+    let fiatArr = userData.fiat || [];
     let balance = arrayLookup(arr, "symbol", symbol, "balance") || 0;
-    return balance.toFixed(6);
+    if (balance > 0) {
+      return balance.toFixed(6);
+    } else {
+      balance = arrayLookup(fiatArr, "currencyCode", symbol, "balance") || 0;
+      return balance.toFixed(2);
+    }
   };
 
   const [percentage, setPercentage] = useState("");
@@ -440,26 +426,48 @@ function Swap() {
   };
 
   const onSubmit = () => {
-    console.log(regWallet);
-    dispatch(
-      getSwapPrice({
-        srcSymbol: symbol,
-        dstSymbol: formatSymbol,
-        amount: inputVal.amount,
-      })
-    ).then((res) => {
-      let result = res.payload;
-      if (result) {
-        setPriceData(result.data);
-        dispatch(
-          getSwapCrypto({
+    if (arrayLookup(symbolsData, "symbol", symbol, "symbol")) {
+      dispatch(
+          getSwapPrice({
             srcSymbol: symbol,
             dstSymbol: formatSymbol,
             amount: inputVal.amount,
           })
-        );
-      }
-    });
+      ).then((res) => {
+        let result = res.payload;
+        console.log(result, 'result')
+        if (result && result.errno === 0) {
+          let qty_base = result.data.qty_base;
+          let qty_quote = result.data.qty_quote;
+          if (result.data.pair !== (symbol + formatSymbol)) {
+            qty_base = result.data.qty_quote;
+          } else {
+            qty_quote = result.data.qty_base;
+          }
+          setPriceData(result.data);
+          dispatch(
+              getSwapCrypto({
+                srcSymbol: symbol,
+                dstSymbol: formatSymbol,
+                amount: inputVal.amount,
+                priceId: result.data.price_id ?? '',
+                qtyBase: qty_base,
+                qtyQuote: qty_quote,
+                price: result.data.price ?? 0,
+              })
+          );
+        }
+      });
+    } else {
+      dispatch(
+          getSwapFiat({
+            srcSymbol: symbol,
+            dstSymbol: formatSymbol,
+            amount: inputVal.amount,
+          })
+      );
+    }
+
   };
   useEffect(() => {
     setHasData(
@@ -482,7 +490,6 @@ function Swap() {
       setRegWallet(toRegWallet(userData.profile?.user?.regWallet));
     }
   }, [userData.profile?.user?.regWallet]);
-
 
   return (
     <div>
@@ -718,9 +725,9 @@ function Swap() {
               border: "none",
             }}
           >
-            {symbolWallet.length > 0 && (
+            {swapCoinConfig[symbol]?.length > 0 && (
               <StyledAccordionSelect
-                symbol={symbolWallet}
+                symbol={swapCoinConfig[symbol]}
                 currencyCode="USD"
                 setSymbol={setFormatSymbol}
               />

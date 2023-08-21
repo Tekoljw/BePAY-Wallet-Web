@@ -164,7 +164,7 @@ function StyledAccordionSelect (props) {
                                         <img style={{
                                             width: '3rem',
                                             borderRadius: '50%'
-                                        }} src={arrayLookup(config.symbols, 'symbol', row.symbol, 'avatar')} alt=""/>
+                                        }} src={row.avatar} alt=""/>
                                         <div className="px-12 font-medium">
                                             <Typography className="text-18 font-medium">{row.symbol}</Typography>
                                             <Typography className="text-14" style={{color: '#94A3B8'}}>{row.symbol}</Typography>

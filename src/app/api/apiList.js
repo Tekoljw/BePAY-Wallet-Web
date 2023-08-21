@@ -128,6 +128,10 @@ export default {
             url: "/mobile/telegramLogin",
             method: "post",
         },
+        googleLogin: {
+            url: "/mobile/googleLogin",
+            method: "post",
+        },
         emailRegister: {
             url: "/email/register",
             method: "post",
@@ -352,6 +356,10 @@ export default {
         makeWithdrawOrder: {
             url: "/payment/makeWithdrawOrder",
             method: "post",
+        },
+        fiatWithdrawFee: {
+            url: "/payment/fiatWithdrawFee",
+            method: "post",
         }
     },
 
@@ -470,6 +478,11 @@ export default {
 
         crypto: {
             url: "/swap/crypto",
+            method: "post",
+        },
+
+        fiat: {
+            url: "/swap/Fiat",
             method: "post",
         },
 

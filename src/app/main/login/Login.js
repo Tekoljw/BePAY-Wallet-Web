@@ -21,7 +21,8 @@ import {
     // doLogin,
     mobileLogin,
     facebookLoginApi,
-    telegramLoginApi
+    telegramLoginApi,
+    googleLoginApi
 } from '../../store/user/userThunk';
 import { selectConfig, setStorageKey } from "../../store/config";
 import { motion } from "framer-motion";
@@ -65,6 +66,7 @@ const Root = styled(FusePageCarded)(({ theme }) => ({
 
 function Login() {
     const { t } = useTranslation('mainPage');
+    const dispatch = useDispatch();
 
     const [logo, setLogo] = useState("assets/images/logo/logo.png");
     /**
@@ -89,8 +91,9 @@ function Login() {
         agentId: ''
     };
 
+
     const [profile, setProfile] = useState([]);
-    const clientId = '865862527951-at7efv2rkgf6cuie4qa803ia1s346656.apps.googleusercontent.com';
+    const clientId = '399356987565-oh5vkr3jl2ckuqlgoacn429eucmmkntd.apps.googleusercontent.com';
 
     useEffect(() => {
         const initClient = () => {
@@ -104,7 +107,10 @@ function Login() {
 
     const onSuccess = (res) => {
         setProfile(res.profileObj);
-        console.log(res);
+        if (res.tokenId) {
+            console.log(res.tokenId, 'res.tokenId')
+            dispatch(googleLoginApi({ id_token: res.tokenId}))
+        }
     };
 
     const onFailure = (err) => {
@@ -126,7 +132,6 @@ function Login() {
     const isMobileMedia = new MobileDetect(window.navigator.userAgent).mobile();
     const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down(isMobileMedia ? 'lg' : 'sm'));
     const [rightSidebarOpen, setRightSidebarOpen] = useState(!isMobile);
-    const dispatch = useDispatch();
 
     const ranges = [t('signIn_4'), t('signIn_5')];
     const [tabValue, setTabValue] = useState(0);
@@ -709,12 +714,12 @@ function Login() {
 
                                 <div className={clsx("flex items-center mt-32 ", (tabValue === 1) && 'loginMarginB')} style={{ flexWrap: 'wrap' }}>
                                     <Button className='txtColorTitleSmall' style={{ width: '30%', margin: '.5rem 1.5%', backgroundColor: '#1E293B', borderColor: 'transparent', opacity: "0.5" }} variant="outlined"
-                                    // onClick={() => facebookLogin()}
+                                    onClick={() => facebookLogin()}
                                     >
                                         <img style={{ height: '80%' }} src="/assets/images/login/icon-1.png" alt="" />
                                     </Button>
                                     <Button className='txtColorTitleSmall' onClick={() => {
-                                        // loginTelegram()
+                                        loginTelegram()
                                     }} style={{ width: '30%', margin: '.5rem 1.5%', backgroundColor: '#1E293B', borderColor: 'transparent', opacity: "0.5" }} variant="outlined">
                                         <img style={{ height: '80%' }} src="/assets/images/login/icon-2.png" alt="" />
                                     </Button>
@@ -722,7 +727,7 @@ function Login() {
                                         <GoogleLogin
                                             render={(renderProps) => (
                                                 <img
-                                                    // onClick={renderProps.onClick}
+                                                    onClick={renderProps.onClick}
                                                     disabled={renderProps.disabled}
                                                     style={{ height: "80%" }}
                                                     src="/assets/images/login/icon-3.png"
