@@ -1419,7 +1419,7 @@ function Deposite() {
                                         <div className="flex items-center">
                                             <img style={{
                                                 width: '3rem'
-                                            }} src="assets/images/deposite/touchngo.png" alt="" />
+                                            }} src={bankItem.url || "assets/images/deposite/touchngo.png"} alt="" />
                                             <div className="px-12 font-medium">
                                                 <Typography className="text-18 font-medium">{bankItem.payName}</Typography>
                                             </div>
@@ -1447,11 +1447,11 @@ function Deposite() {
                                             />
                                         </FormControl>
                                         <div className="flex weight-list">
-                                            <div
-                                                onClick={() => { setWeight(10) }}
-                                                className={clsx('weight-item px-16 py-8 text-center my-12 touchnGoListDi color-0F172A', weight === 10 && 'weight-active')}>
-                                                10
-                                            </div>
+                                            {/*<div*/}
+                                            {/*    onClick={() => { setWeight(10) }}*/}
+                                            {/*    className={clsx('weight-item px-16 py-8 text-center my-12 touchnGoListDi color-0F172A', weight === 10 && 'weight-active')}>*/}
+                                            {/*    10*/}
+                                            {/*</div>*/}
                                             <div
                                                 onClick={() => { setWeight(51) }}
                                                 className={clsx('weight-item px-16 py-8 text-center my-12 touchnGoListDi color-0F172A', weight === 51 && 'weight-active')}>
