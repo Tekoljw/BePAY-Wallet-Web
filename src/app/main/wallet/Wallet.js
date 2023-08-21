@@ -597,12 +597,12 @@ function Wallet() {
     } else {
       if (isFait) {
         for (let i = 0; i < decenterSymbols.length; i++) {
-          let symbolRate = decenterSymbols[i].rate || 0;
+          let symbolRate = arrayLookup(symbolsData, "symbol", decenterSymbols[i].symbol, "rate") || 0;
           amount += decenterSymbols[i].balance * (symbolRate * currencyRate);
         }
       } else {
         for (let i = 0; i < decenterSymbols.length; i++) {
-          let symbolRate = decenterSymbols[i].rate || 0;
+          let symbolRate = arrayLookup(symbolsData, "symbol", decenterSymbols[i].symbol, "rate") || 0;
           amount += decenterSymbols[i].balance * symbolRate;
         }
       }
@@ -618,6 +618,7 @@ function Wallet() {
     symbolsData,
     userData.wallet.inner,
     decenterSymbols,
+    decenterSymbolsSearch,
     currencyCode,
     showType,
     walletType,

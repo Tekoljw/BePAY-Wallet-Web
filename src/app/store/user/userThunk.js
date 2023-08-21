@@ -59,8 +59,6 @@ export const getCurrencySelect = createAsyncThunk(
 export const doLogin = createAsyncThunk(
     'user/doLogin',
     async (settings, { dispatch, getState }) => {
-        console.log(settings, 'settings................');
-
         let res = loginWays.list.find(function (item) {
             return item.id === settings.id
         })
@@ -69,15 +67,16 @@ export const doLogin = createAsyncThunk(
             walletType = 'metamask';
         }
 
-        const { config } = getState();
+        const { config, user } = getState();
         const web3 = await Web3.connectWeb3(walletType);
         let address = web3.coinbase;
 
+        if (user.profile?.user?.address && user.profile?.user?.address !== address) {
+            dispatch(showMessage({ message: 'The address is different from the previous one, please log in again', code: 2 }));
+            return false;
+        }
 
         let signData = await Web3.loginWallet(address);
-
-        console.log(signData, 'signData......');
-
 
         let data = {
             userAddress: address,
@@ -88,8 +87,6 @@ export const doLogin = createAsyncThunk(
         };
 
         const userLoginData = await React.$api("user.login", data);
-
-        console.log(userLoginData, 'userLoginData222223223232323');
 
         if (userLoginData.errno === 0) {
             window.localStorage.setItem('isDecentralized', 1);
@@ -929,11 +926,9 @@ export const getDecenterWalletBalance = createAsyncThunk(
 
         // console.log(settings,'settings111111111111111111');
 
-        console.log(getState().user);
-
         // 验证登录
         const regWallet = localStorage.getItem('walletname');
-        // console.log(regWallet,'regWallet....................');
+        console.log(regWallet,'regWallet....................');
         let { loginType } = user.profile;
         let symbolAdress = settings.address || '';
         let decimals = settings.decimals || 1;

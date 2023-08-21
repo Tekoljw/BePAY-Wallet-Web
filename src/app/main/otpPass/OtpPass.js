@@ -131,7 +131,7 @@ const [isdisable, setisdisable] = useState(true)
                 const focus = index === curFocusIndexRef.current;
                 return (
                     <input
-                        disabled={!googleTextKey}
+                        // disabled={!googleTextKey}
                         // autoFocus 
                         key={index}
                         ref={(ref) => (inputsRef.current[index] = ref)}
