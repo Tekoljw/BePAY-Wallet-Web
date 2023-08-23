@@ -34,7 +34,7 @@ import {
     WalletConfigDefineMap,
     checkWalletAddress,
     getNftConfig,
-    centerGetNftList
+    centerGetNftList, getFiatDisplay
 } from "app/store/wallet/walletThunk";
 import { goCenterTransfer, getOwner } from "app/store/nft/nftThunk";
 import QRCode from "qrcode.react";
@@ -315,8 +315,7 @@ function Deposite() {
     // select切换
     const handleChangeFiats = (event) => {
         setFiatsSelected(event.target.value);
-        setCurrencyCode(fiatData[event.target.value].currencyCode);
-        // setCurrencyBalance(fiatData[event.target.value].balance);
+        setCurrencyCode(fiats[event.target.value].currencyCode);
     };
     //设置图片地址
     const toRegWallet = (regWalletParam) => {
@@ -778,6 +777,85 @@ function Deposite() {
             }, 10000);
         }
     }, [isConfirmTransfer]);
+
+
+
+    const paymentFiat = config.payment?.currency;
+    const [fiatDisplayData, setFiatDisplayData] = useState([]);
+    const [fiats, setFiats] = useState([]);
+    const fiatsFormatAmount = () => {
+        console.log(fiatData, 'fiatData......')
+        if (fiatData.length === 0) {
+            return
+        }
+        let tmpFiatDisplayData = {};
+        let tmpPaymentFiat = {};
+        let tmpFiatsData = {};
+        let tmpFiats = [];
+        let displayFiatData = [];
+        if (paymentFiat?.length > 0) {
+            paymentFiat.map((item, index) => {
+                if (displayFiatData.indexOf(item.currencyCode) === -1 && item.userShow === true) {
+                    displayFiatData.push(item.currencyCode);
+                }
+                tmpPaymentFiat[item.currencyCode] = item
+            });
+        }
+        fiatDisplayData?.map((item, index) => {
+            displayFiatData.push(item.name);
+            tmpFiatDisplayData[item.name] = item
+        });
+        if (fiatData.length > 0) {
+            fiatData?.map((item, index) => {
+                tmpFiatsData[item.currencyCode] = item;
+            });
+        }
+
+        displayFiatData.forEach((item) => {
+            // var tmpShow = arrayLookup(fiatDisplayData, 'name', item, 'show');
+            var tmpShow = tmpFiatDisplayData[item]?.show;
+            if (tmpShow === '' || tmpShow === null || tmpShow === undefined) {
+                // tmpShow = arrayLookup(paymentFiat, 'currencyCode', item, 'userShow');
+                tmpShow = tmpPaymentFiat[item]?.userShow;
+            }
+
+            if (tmpShow === true) {
+                // let balance = arrayLookup(fiatsData, 'currencyCode', item, 'balance') || 0;
+                let balance = tmpFiatsData[item]?.balance || 0;
+                tmpFiats.push({
+                    avatar: tmpPaymentFiat[item]?.avatar || '',
+                    currencyCode: item,
+                    balance: balance === 0 ? 0.00 : balance.toFixed(2),
+                    dollarFiat: (balance == 0) ? 0 : balance / tmpPaymentFiat[item]?.exchangeRate
+                })
+            }
+        });
+
+        tmpFiats.sort(sortUseAge);
+        setFiats(tmpFiats);
+        if (tmpFiats.length > 0) {
+            setCurrencyCode(tmpFiats[0]?.currencyCode)
+        }
+    };
+
+    const tidyFiatWalletData = () => {
+        fiatsFormatAmount();
+    };
+
+    useEffect(() => {
+        if (!mounted.current) {
+            mounted.current = true;
+        } else {
+            tidyFiatWalletData();
+        }
+    }, [fiatData, fiatDisplayData]);
+
+    useEffect(() => {
+        dispatch(getFiatDisplay()).then((res) => {
+            let result = res.payload;
+            setFiatDisplayData(result?.data);
+        });
+    }, []);
 
     return (
         <div>
@@ -1307,7 +1385,7 @@ function Deposite() {
                                     },
                                 }}
                             >
-                                {fiatData.length > 0 && fiatData?.map((row, index) => {
+                                {fiats.length > 0 && fiats?.map((row, index) => {
                                     return (
                                         <MenuItem
                                             key={index}
