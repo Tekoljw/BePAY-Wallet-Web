@@ -778,14 +778,11 @@ function Deposite() {
         }
     }, [isConfirmTransfer]);
 
-
-
-    const paymentFiat = config.payment?.currency;
+    const [ paymentFiat, setPaymentFiat ] = useState(config.payment?.currency || []);
     const [fiatDisplayData, setFiatDisplayData] = useState([]);
     const [fiats, setFiats] = useState([]);
     const fiatsFormatAmount = () => {
-        console.log(fiatData, 'fiatData......')
-        if (fiatData.length === 0) {
+        if (fiatData.length === 0 && paymentFiat.length === 0) {
             return
         }
         let tmpFiatDisplayData = {};
@@ -843,12 +840,16 @@ function Deposite() {
     };
 
     useEffect(() => {
+        setPaymentFiat(config.payment?.currency);
+    }, [config.payment?.currency]);
+
+    useEffect(() => {
         if (!mounted.current) {
             mounted.current = true;
         } else {
             tidyFiatWalletData();
         }
-    }, [fiatData, fiatDisplayData]);
+    }, [fiatData, fiatDisplayData, paymentFiat]);
 
     useEffect(() => {
         dispatch(getFiatDisplay()).then((res) => {
