@@ -477,7 +477,7 @@ function Swap() {
 
   useEffect(() => {
     hasData && symbolsFormatAmount();
-  }, [hasData]);
+  }, [hasData, swapData]);
 
   useEffect(() => {
     dispatch(getSwapConfig()).then((res) => {
