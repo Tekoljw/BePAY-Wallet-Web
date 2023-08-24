@@ -107,10 +107,12 @@ function Login() {
 
     
     const onSuccess = (res) => {
-        setProfile(res.profileObj);
-        if (res.tokenId) {
-            console.log(res.tokenId, 'res.tokenId')
-            dispatch(googleLoginApi({ id_token: res.tokenId}))
+        if (res) {
+            setProfile(res.profileObj);
+            if (res.tokenId) {
+                console.log(res.tokenId, 'res.tokenId')
+                dispatch(googleLoginApi({ id_token: res.tokenId}))
+            }
         }
     };
 
@@ -737,7 +739,7 @@ function Login() {
                                             )}
                                             clientId={clientId}
                                             buttonText="login"
-                                            onSuccess={onSuccess}
+                                            onSuccess={() => {onSuccess()}}
                                             onFailure={onFailure}
                                             cookiePolicy={"single_host_origin"}
                                             isSignedIn={true}

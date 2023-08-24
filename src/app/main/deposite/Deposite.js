@@ -816,7 +816,7 @@ function Deposite() {
                 tmpShow = tmpPaymentFiat[item]?.userShow;
             }
 
-            if (tmpShow === true) {
+            if (tmpShow === true && !arrayLookup(tmpFiats, 'currencyCode', item, 'currencyCode')) {
                 // let balance = arrayLookup(fiatsData, 'currencyCode', item, 'balance') || 0;
                 let balance = tmpFiatsData[item]?.balance || 0;
                 tmpFiats.push({
@@ -829,6 +829,7 @@ function Deposite() {
         });
 
         tmpFiats.sort(sortUseAge);
+       
         setFiats(tmpFiats);
         if (tmpFiats.length > 0) {
             setCurrencyCode(tmpFiats[0]?.currencyCode)

@@ -22,7 +22,7 @@ import { makeWithdrawOrder, getFiatFee } from "../../../store/payment/paymentThu
 import BN from "bn.js";
 import StyledAccordionSelect from "../../../components/StyledAccordionSelect";
 import { selectConfig } from "../../../store/config";
-import {arrayLookup, getNowTime} from "../../../util/tools/function";
+import { arrayLookup, getNowTime } from "../../../util/tools/function";
 import { openScan, closeScan } from "../../../util/tools/scanqrcode";
 import { getWithDrawConfig, WalletConfigDefineMap, evalTokenTransferFee, getWithdrawHistoryAddress, getWithdrawTransferStats } from "app/store/wallet/walletThunk";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
@@ -228,7 +228,7 @@ function Fiat(props) {
                 tmpShow = tmpPaymentFiat[item]?.userShow;
             }
 
-            if (tmpShow === true) {
+            if (tmpShow === true && !arrayLookup(tmpFiats, 'currencyCode', item, 'currencyCode')) {
                 // let balance = arrayLookup(fiatsData, 'currencyCode', item, 'balance') || 0;
                 let balance = tmpFiatsData[item]?.balance || 0;
                 tmpFiats.push({
