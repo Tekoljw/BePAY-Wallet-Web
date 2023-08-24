@@ -818,11 +818,12 @@ function Deposite() {
 
             if (tmpShow === true && !arrayLookup(tmpFiats, 'currencyCode', item, 'currencyCode')) {
                 // let balance = arrayLookup(fiatsData, 'currencyCode', item, 'balance') || 0;
-                let balance = tmpFiatsData[item]?.balance || 0;
+                var balance = tmpFiatsData[item]?.balance || 0;
                 tmpFiats.push({
                     avatar: tmpPaymentFiat[item]?.avatar || '',
                     currencyCode: item,
-                    balance: balance === 0 ? 0.00 : balance.toFixed(2),
+                    // balance: balance == 0 ? 0.00 : balance.toFixed(2),
+                    balance,
                     dollarFiat: (balance == 0) ? 0 : balance / tmpPaymentFiat[item]?.exchangeRate
                 })
             }
