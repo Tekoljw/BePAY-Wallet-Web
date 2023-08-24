@@ -875,7 +875,7 @@ function Swap() {
         userData.profile?.loginType != 1 && (
           <>
             {" "}
-            <Web3Login />
+            {/*<Web3Login />*/}
           </>
         )}
     </div>
