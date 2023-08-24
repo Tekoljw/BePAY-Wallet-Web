@@ -105,6 +105,7 @@ function Login() {
         gapi.load('client:auth2', initClient);
     });
 
+    
     const onSuccess = (res) => {
         setProfile(res.profileObj);
         if (res.tokenId) {
