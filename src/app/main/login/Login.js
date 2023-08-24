@@ -738,10 +738,10 @@ function Login() {
                                             )}
                                             clientId={clientId}
                                             buttonText="login"
-                                            onSuccess={() => {onSuccess()}}
+                                            onSuccess={onSuccess}
                                             onFailure={onFailure}
                                             cookiePolicy={"single_host_origin"}
-                                            isSignedIn={true}
+                                            // isSignedIn={true}
                                         //   icon={false}
                                         />
                                         {/* <img style={{ height: '80%' }} src="/assets/images/login/icon-3.png" alt="" /> */}
