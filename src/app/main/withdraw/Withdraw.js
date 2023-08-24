@@ -397,7 +397,7 @@ function Withdraw(props) {
             if (tmpShow === '') {
                 tmpShow = arrayLookup(symbolsData, 'symbol', item, 'userShow');
             }
-            if (tmpShow === true) {
+            if (tmpShow === true && item != 'eBGT') {
                 // 兑换成USDT的汇率
                 let symbolRate = arrayLookup(symbolsData, 'symbol', item, 'rate') || 0;
                 var balance = getUserMoney(item);
