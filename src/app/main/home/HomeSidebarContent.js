@@ -53,7 +53,9 @@ function HomeSidebarContent(props) {
         window.localStorage.setItem('phoneTab', tab);
     }
 
-    const [activeMenu, setTab] = useState(props.tab !== 'home' ? props.tab : 'wallet');
+
+    
+    const [activeMenu, setTab] = useState('');
 
     const tabClick = (tab) => {
         history.push(tab === 'wallet' ? '/home' : `/home/${tab}`);
@@ -95,6 +97,12 @@ function HomeSidebarContent(props) {
     }, [config]);
 
     useEffect(() => {
+        if (isMobileMedia) {
+            setTab(props.tab !== 'home' ? props.tab : 'wallet');
+        } else {
+            setTab(props.tab !== 'home' ? props.tab : 'deposite');
+        }
+        
         dispatch(getMenuList()).then(res => {
             let result = res.payload
             if (result) {
@@ -376,7 +384,7 @@ function HomeSidebarContent(props) {
                         } />
                     </StyledListItem>}
 
-                    
+
                     {hideMenu.indexOf('security') === -1 && <StyledListItem
                         button
                         className={
