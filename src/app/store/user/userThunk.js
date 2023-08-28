@@ -71,7 +71,7 @@ export const doLogin = createAsyncThunk(
         const web3 = await Web3.connectWeb3(walletType);
         let address = web3.coinbase;
 
-        if (user.profile?.user?.regWallet || user.profile?.user?.address !== address) {
+        if (user.profile?.user?.regWallet && user.profile?.user?.address !== address) {
             dispatch(showMessage({ message: 'The address is different from the previous one, please log in again', code: 2 }));
             return false;
         }
