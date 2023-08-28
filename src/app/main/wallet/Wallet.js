@@ -432,7 +432,8 @@ function Wallet() {
       if (currencyType) {
         if (currencyType == 1) {
           tmpRanges = [
-            'Token', t('home_deposite_2'), t('home_deposite_3')
+            'Token', t('home_deposite_2')
+            // 'Token', t('home_deposite_2'), t('home_deposite_3')
           ];
           tmpCryptoSelect = 0;
           tmpFiatSelect = 1;
@@ -461,14 +462,16 @@ function Wallet() {
         if (userData.profile.wallet.Crypto < userData.profile.wallet.Fiat) {
         } else if (userData.profile.wallet.Crypto > userData.profile.wallet.Fiat) {
           tmpRanges = [
-            'Token', t('home_deposite_2'), t('home_deposite_3')
+            'Token', t('home_deposite_2')
+            // 'Token', t('home_deposite_2'), t('home_deposite_3')
           ];
           tmpCryptoSelect = 0;
           tmpFiatSelect = 1;
         } else {
           if (userData.profile?.loginType == 1) {
             tmpRanges = [
-              'Token', t('home_deposite_2'), t('home_deposite_3')
+              'Token', t('home_deposite_2')
+              // 'Token', t('home_deposite_2'), t('home_deposite_3')
             ];
             tmpCryptoSelect = 0;
             tmpFiatSelect = 1;
