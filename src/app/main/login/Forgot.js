@@ -383,7 +383,7 @@ function ForgotPass() {
                                                 <InputAdornment position="end">
                                                     {time <= 0 && <IconButton
                                                         aria-label="toggle password visibility"
-                                                        onClick={sendCode}
+                                                        onClick={() => {sendCode(false)}}
                                                         // onMouseDown={handleMouseDownPassword}
                                                         edge="end"
                                                         sx={{
