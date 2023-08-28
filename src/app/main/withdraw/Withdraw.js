@@ -241,8 +241,8 @@ function Withdraw(props) {
         setOpenLoad(true);
         dispatch(tokenTransfer(data)).then((res) => {
             setGoogleCode('');
+            setOpenTiBi(true);
             if (res.payload) {
-                setOpenTiBi(true)
                 setWithDrawOrderID(res.payload);
             }
 

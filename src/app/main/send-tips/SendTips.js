@@ -184,6 +184,7 @@ function SendTips(props) {
             if (tmpSymbol.indexOf(symbols[i].symbol) == -1 && symbols[i].symbol != 'eUSGT') {
                 tmpSymbol.push(symbols[i].symbol)
                 tmpSymbolWallet.push({
+                    avatar: symbols[i].avatar,
                     balance: arrayLookup(walletData.inner, 'symbol', symbols[i].symbol, 'balance') || 0,
                     symbol: symbols[i].symbol,
                     tradeLock: arrayLookup(walletData.inner, 'symbol', symbols[i].symbol, 'tradeLock') || 0,
