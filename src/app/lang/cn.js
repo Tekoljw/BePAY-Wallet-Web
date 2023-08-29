@@ -310,6 +310,14 @@ const locale = {
    home_Bank: '银行',
    home_Name: '名称',
 
+   Kyc_34: '您还没有进行过KYC吗？',
+   Kyc_35: "前往KYC",
+   Kyc_36: "身份证",
+   Kyc_37: "护照",
+   Kyc_38: "驾照",
+   Kyc_39: "居住证",
+   Kyc_40: "您已完成KYC实名认证",
+
 
 };
 

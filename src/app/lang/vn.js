@@ -293,6 +293,14 @@ const locale = {
     home_Time: 'Thời gian',
     home_Bank: 'Ngân hàng',
     home_Name: 'Tên',
+
+    Kyc_34: 'Bạn chưa thực hiện KYC à?',
+    Kyc_35: "Đi đến KYC",
+    Kyc_36: "Chứng minh thư",
+    Kyc_37: "Hộ chiếu",
+    Kyc_38: "Bằng lái xe",
+    Kyc_39: "Giấy phép cư trú",
+    Kyc_40: "Bạn đã hoàn thành xác thực tên thật KYC",
     };
 
 export default locale;

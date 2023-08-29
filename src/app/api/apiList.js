@@ -403,7 +403,11 @@ export default {
         getTransferStats: {
             url: "/wallet/getTransferStats",
             method: "post",
-        }
+        },
+        cryptoWithdrawFee: {
+            url: "/wallet/cryptoWithdrawFee",
+            method: "post",
+        },
     },
 
     account:{

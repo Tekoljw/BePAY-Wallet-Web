@@ -306,6 +306,14 @@ const locale = {
     home_Time: 'Zaman',
     home_Bank: 'Banka',
     home_Name: 'Ad',
+
+    Kyc_34: 'Henüz KYC gerçekleştirmediniz mi?',
+    Kyc_35: "KYC'ye git",
+    Kyc_36: "Kimlik kartı",
+    Kyc_37: "Pasaport",
+    Kyc_38: "Sürücü belgesi",
+    Kyc_39: "İkamet izni",
+    Kyc_40: "KYC gerçek ad doğrulamasını tamamladınız",
     };
     
 export default locale;

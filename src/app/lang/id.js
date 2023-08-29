@@ -307,6 +307,14 @@ const locale = {
     home_Time: 'Waktu',
     home_Bank: 'Bank',
     home_Name: 'Nama',
+
+    Kyc_34: "Apakah Anda belum melakukan KYC?",
+    Kyc_35: "Pergi ke KYC",
+    Kyc_36: "Kartu identitas",
+    Kyc_37: "Paspor",
+    Kyc_38: "Surat Izin Mengemudi",
+    Kyc_39: "Kartu Izin Tinggal",
+    Kyc_40: "Anda telah menyelesaikan otentikasi nama asli KYC",
     };
 
 export default locale;

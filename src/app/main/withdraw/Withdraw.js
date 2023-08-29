@@ -27,7 +27,7 @@ import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { selectConfig } from "../../store/config";
 import { arrayLookup, getNowTime } from "../../util/tools/function";
 import { openScan, closeScan } from "../../util/tools/scanqrcode";
-import { getWithDrawConfig, WalletConfigDefineMap, evalTokenTransferFee, getWithdrawHistoryAddress, delWithdrawHistoryAddress, getWithdrawTransferStats } from "app/store/wallet/walletThunk";
+import { getWithDrawConfig, WalletConfigDefineMap, evalTokenTransferFee, cryptoWithdrawFee, getWithdrawHistoryAddress, delWithdrawHistoryAddress, getWithdrawTransferStats } from "app/store/wallet/walletThunk";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
 import Dialog from "@mui/material/Dialog/Dialog";
 import OtpPass from "../otpPass/OtpPass";
@@ -156,10 +156,17 @@ function Withdraw(props) {
     const [symbolWallet, setSymbolWallet] = useState([]);
     const [amountTab, setAmountTab] = useState('HIGHER');
     const [fee, setFee] = useState(0);
+    const [TransactionFee, setTransactionFee] = useState(0);
     const [bAppendFee, setBAppendFee] = useState(false);
+
     const handleChangeInputVal = (prop, value) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
+        if (prop == 'amount' && event.target.value != '' && event.target.value != 0) {
+            console.log(networkId, 'networkId')
+            evalFee2(networkId, symbol, event.target.value);
+        }
     };
+
     const changeAddress = (prop, value) => {
         setInputVal({ ...inputVal, [prop]: value });
     };
@@ -314,7 +321,7 @@ function Withdraw(props) {
             networkId: networkId,
             priceLevel: priceLevel,
             decimals: decimals,
-            setFee: setFee
+            // setFee: setFee
         })).then((res) => {
             let resData = res.payload;
             if (resData.data == 0) {
@@ -325,11 +332,30 @@ function Withdraw(props) {
             setFee(fee);
         });
     };
+
+    const evalFee2 = (networkId, coinName, amount) => {
+        dispatch(cryptoWithdrawFee({
+            networkId: networkId,
+            coinName: coinName,
+            amount: amount,
+        })).then((res) => {
+            let resData = res.payload;
+            if (resData && resData.data != 0) {
+                let TransactionFee = (resData.data).toFixed(2);
+                setTransactionFee(TransactionFee);
+            } else {
+                setTransactionFee(0);
+                return
+            }
+            
+        });
+    };
+
     const del = (item) => {
         dispatch(delWithdrawHistoryAddress(item)).then((res) => {
             dispatch(getWithdrawHistoryAddress()).then((res) => {
 
-                if (res.payload.data.length > 0) {
+                if (res.payload?.data?.length > 0) {
                     setHistoryAddress(res.payload.data);
                 } else {
                     setHistoryAddress([])
@@ -342,7 +368,7 @@ function Withdraw(props) {
     };
     useEffect(() => {
         dispatch(getWithdrawHistoryAddress()).then((res) => {
-            if (res.payload.data.length > 0) {
+            if (res.payload?.data?.length > 0) {
                 setHistoryAddress(res.payload.data);
             }
         });
@@ -790,7 +816,7 @@ function Withdraw(props) {
                                         </div>
                                     </div>
                                     <div className="flex items-center justify-between my-16" style={{ marginTop: 0 }}>
-                                        <Typography className="text-16 cursor-pointer">
+                                        <Typography className="text-16 cursor-pointer ">
                                             <p style={{ fontSize: '1.3rem' }}> {t('home_withdraw_7')}: {fee}  {symbol}</p>
                                         </Typography>
                                         <Typography
@@ -818,7 +844,7 @@ function Withdraw(props) {
                                         }}
                                     >
                                         <Typography className="text-14 px-16 ">
-                                            <span style={{ color: '#FCE100' }}>⚠</span> {t('home_withdraw_15')}{fee}  {symbol}{t('home_withdraw_16')}{t('home_withdraw_17')}
+                                            <span style={{ color: '#FCE100' }}>⚠</span> {t('home_withdraw_15')}{TransactionFee}  {symbol}{t('home_withdraw_16')}{t('home_withdraw_17')}
                                         </Typography>
                                     </Box>
 

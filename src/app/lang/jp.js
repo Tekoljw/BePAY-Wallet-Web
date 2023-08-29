@@ -308,6 +308,14 @@ const locale = {
     home_Time: '時間',
     home_Bank: '銀行',
     home_Name: '名前',
+
+    Kyc_34: "まだKYCを行っていないのですか？",
+    Kyc_35: "KYC पर जाएं",
+    Kyc_36: "身分証明書",
+    Kyc_37: "パスポート",
+    Kyc_38: "運転免許証",
+    Kyc_39: "在留カード",
+    Kyc_40: "あなたはKYC実名認証を完了しました",
 };
 
 export default locale;

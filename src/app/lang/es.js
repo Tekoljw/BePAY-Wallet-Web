@@ -308,6 +308,14 @@ const locale = {
     home_Time: 'Tiempo',
     home_Bank: 'Banco',
     home_Name: 'Nombre',
+
+    Kyc_34: "¿Todavía no has realizado el KYC?",
+    Kyc_35: "Ir a KYC",
+    Kyc_36: "Tarjeta de identificación",
+    Kyc_37: "Pasaporte",
+    Kyc_38: "Licencia de conducir",
+    Kyc_39: "Permiso de residencia",
+    Kyc_40: "Ha completado la autenticación de nombre real KYC",
     
 };
 export default locale;

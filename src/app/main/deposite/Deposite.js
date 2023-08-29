@@ -254,8 +254,6 @@ function Deposite() {
         );
     }
 
-
-
     const [ranges, setRanges] = useState([
         t('home_deposite_1'), t('home_deposite_2')
         // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
@@ -347,6 +345,7 @@ function Deposite() {
             notPool: true,
             networkId: networkId
         })).then((res) => {
+            fbq('track', 'Purchase', { value: inputValue, currency: symbol });
             let tx = res.payload
             if (tx && arrayLookup(symbolWallet, 'symbol', symbol, 'isManualNotify') == 1) {
                 dispatch(manualCryptoNotify({
@@ -423,6 +422,7 @@ function Deposite() {
         if (result) {
             if (result.payUrl) {
                 window.open(result.payUrl, "_blank");
+                fbq('track', 'InitiateCheckout');
             }
 
             if (result.status === 'failed') {
@@ -778,7 +778,7 @@ function Deposite() {
         }
     }, [isConfirmTransfer]);
 
-    const [ paymentFiat, setPaymentFiat ] = useState(config.payment?.currency || []);
+    const [paymentFiat, setPaymentFiat] = useState(config.payment?.currency || []);
     const [fiatDisplayData, setFiatDisplayData] = useState([]);
     const [fiats, setFiats] = useState([]);
     const fiatsFormatAmount = () => {
@@ -830,7 +830,7 @@ function Deposite() {
         });
 
         tmpFiats.sort(sortUseAge);
-       
+
         setFiats(tmpFiats);
         if (tmpFiats.length > 0) {
             setCurrencyCode(tmpFiats[0]?.currencyCode)

@@ -310,7 +310,13 @@ const locale = {
     home_Bank: 'Bangko',
     home_Name: 'Pangalan',
 
-    
+    Kyc_34: 'indi mo pa ba isinagawa ang KYC?',
+    Kyc_35: "Pumunta sa KYC",
+    Kyc_36: "ID card",
+    Kyc_37: "Pasaporte",
+    Kyc_38: "Lisensya sa pagmamaneho",
+    Kyc_39: "Residence Permit",
+    Kyc_40: "Natapos mo na ang KYC real-name authentication",
 }
 
 export default locale;

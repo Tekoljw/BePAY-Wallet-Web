@@ -286,7 +286,7 @@ function SendTips(props) {
             console.log(res, '.........res');
             dispatch(getSendTipsHistoryAddress()).then((res) => {
 
-                if (res.payload.data.length > 0) {
+                if (res.payload?.data?.length > 0) {
                     setHistoryAddress(res.payload.data);
                 } else {
                     setHistoryAddress([])
@@ -299,7 +299,7 @@ function SendTips(props) {
     };
     useEffect(() => {
         dispatch(getSendTipsHistoryAddress()).then((res) => {
-            if (res.payload.data.length > 0) {
+            if (res.payload?.data?.length > 0) {
                 setHistoryAddress(res.payload.data);
             }
         });

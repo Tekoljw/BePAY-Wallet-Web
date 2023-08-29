@@ -307,6 +307,14 @@ const locale = {
     home_Time: '時間',
     home_Bank: '銀行',
     home_Name: '名稱',
+
+    Kyc_34: "您還沒有進行過KYC嗎？",
+    Kyc_35: "前往KYC",
+    Kyc_36: "身份證",
+    Kyc_37: "護照",
+    Kyc_38: "駕照",
+    Kyc_39: "居住證",
+    Kyc_40: "您已完成KYC實名認證",
 };
 
 export default locale;

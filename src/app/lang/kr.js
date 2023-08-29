@@ -311,6 +311,14 @@ const locale = {
     home_Bank: '은행',
     home_Name: '이름',
 
+    Kyc_34: "아직 KYC를 진행하지 않으셨습니까?",
+    Kyc_35: "KYC로 이동",
+    Kyc_36: "신분증",
+    Kyc_37: "여권",
+    Kyc_38: "운전면허증",
+    Kyc_39: "거주증",
+    Kyc_40: "실명 인증 KYC를 완료했습니다",
+
 };
 
 export default locale

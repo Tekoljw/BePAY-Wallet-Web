@@ -312,6 +312,14 @@ const locale = {
     home_Bank: 'Bank',
     home_Name: 'Name',
 
+    Kyc_34: "Haben Sie noch kein KYC durchgeführt?",
+    Kyc_35: "Zum KYC gehen",
+    Kyc_36: "Ausweis",
+    Kyc_37: "Reisepass",
+    Kyc_38: "Führerschein",
+    Kyc_39: "Aufenthaltserlaubnis",
+    Kyc_40: "Sie haben die KYC-Echtnamensauthentifizierung abgeschlossen",
+
 };
 
 export default locale;

@@ -308,6 +308,14 @@ const locale = {
     home_Bank: 'Pankki',
     home_Name: 'Nimi',
 
+    Kyc_34: "Et ole vielä suorittanut KYC-tarkastusta?",
+    Kyc_35: "Siirry KYC:hen",
+    Kyc_36: "Henkilökortti",
+    Kyc_37: "Passi",
+    Kyc_38: "Ajokortti",
+    Kyc_39: "Oleskelulupa",
+    Kyc_40: "Olet suorittanut KYC:n oikean nimen todennuksen",
+
 
 
 

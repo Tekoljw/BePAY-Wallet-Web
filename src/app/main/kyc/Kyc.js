@@ -395,9 +395,9 @@ function Kyc(props) {
                     <div className="flex items-baseline mt-2 font-medium text-14" style={{ marginBottom: '2rem', marginTop: 0 }}>
                         {
                             pageState === 0 ?
-                                <Typography>Have you not conducted KYC yet?
+                                <Typography>{t('kyc_34')}
                                     <span className="ml-4 color-16c2a3">
-                                        Go to KYC
+                                        {t('kyc_35')}
                                     </span>
                                 </Typography> :
                                 <Typography>{t('kyc_25')}
@@ -816,17 +816,17 @@ function Kyc(props) {
                                             label="IdType"
                                             onChange={handleChangeInputVal('idType')}
                                         >
-                                            <MenuItem value={'id_card'}>id_card</MenuItem>{/*身份证*/}
-                                            <MenuItem value={'passport'}>passport</MenuItem>{/*护照*/}
-                                            <MenuItem value={'dl'}>dl</MenuItem>{/*驾照*/}
-                                            <MenuItem value={'residence_permit'}>residence_permit</MenuItem>{/*居住证*/}
+                                            <MenuItem value={'id_card'}>{t('kyc_36')}</MenuItem>{/*身份证*/}
+                                            <MenuItem value={'passport'}>{t('kyc_37')}</MenuItem>{/*护照*/}
+                                            <MenuItem value={'dl'}>{t('kyc_38')}</MenuItem>{/*驾照*/}
+                                            <MenuItem value={'residence_permit'}>{t('kyc_39')}</MenuItem>{/*居住证*/}
                                         </Select>
                                     </FormControl>
                                 </div>
 
                                 <div className="mb-24">
                                     <Typography className="text-16 upload-title">
-                                    {t('kyc_16')}
+                                        {t('kyc_16')}
                                     </Typography>
                                     <div className="flex flex-wrap items-center justify-content-start">
                                         {inputVal.idFrontUrl &&
@@ -859,7 +859,7 @@ function Kyc(props) {
 
                                 <div className="mb-24">
                                     <Typography className="text-16 upload-title">
-                                    {t('kyc_17')}
+                                        {t('kyc_17')}
                                     </Typography>
                                     <div className="flex flex-wrap items-center justify-content-start">
                                         {inputVal.idBackUrl &&
@@ -892,7 +892,7 @@ function Kyc(props) {
 
                                 <div className="mb-24">
                                     <Typography className="text-16 upload-title">
-                                    {t('kyc_18')}
+                                        {t('kyc_18')}
                                     </Typography>
                                     <div className="flex flex-wrap items-center justify-content-start">
                                         {inputVal.selfPhotoUrl &&
@@ -925,7 +925,7 @@ function Kyc(props) {
 
                                 <div className="mb-24">
                                     <Typography className="text-16 upload-title">
-                                    {t('kyc_19')}
+                                        {t('kyc_19')}
                                     </Typography>
                                     <div className="flex flex-wrap items-center justify-content-start">
                                         {inputVal.proofOfAddressUrl &&
@@ -1059,7 +1059,7 @@ function Kyc(props) {
 
                             {isNeedAudit() === false && <>
                                 <Typography className="text-16 cursor-pointer">
-                                    You have completed kyc real-name authentication
+                                    {t('kyc_40')}
                                 </Typography>
                             </>}
 

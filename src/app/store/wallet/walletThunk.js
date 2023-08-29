@@ -61,7 +61,7 @@ export const getWithDrawConfig = createAsyncThunk(
     }
 );
 
-// 预估提现手续费
+// 预估gas手续费
 export const evalTokenTransferFee = createAsyncThunk(
     'wallet/evalTokenTransferFee',
     async (settings, { dispatch, getState }) => {
@@ -101,6 +101,28 @@ export const evalTokenTransferFee = createAsyncThunk(
 );
 
 
+
+//手续费
+export const cryptoWithdrawFee = createAsyncThunk(
+    'wallet/cryptoWithdrawFee',
+    async (settings, { dispatch, getState }) => {
+        settings = settings || {};
+        let data = {
+            networkId: settings.networkId,
+            coinName: settings.coinName,
+            amount: settings.amount,
+        };
+        const resultData = await React.$api("wallet.cryptoWithdrawFee", data);
+        if (resultData.errno === 0) {
+            return resultData;
+        }
+    }
+);
+
+
+
+
+
 // 获取钱包地址配置信息
 export const getWalletAddressConfig = createAsyncThunk(
     'wallet/getWalletAddressConfig',
@@ -114,13 +136,13 @@ export const getWalletAddressConfig = createAsyncThunk(
 
 // 获取钱包地址
 export const getWalletAddress = createAsyncThunk(
-    
+
     'wallet/getWalletAddress',
 
     async (settings, { dispatch, getState }) => {
 
         console.log(settings);
-        
+
         settings = settings || {};
         let data = {
             symbol: settings.symbol,
@@ -198,7 +220,7 @@ export const getWalletDisplay = createAsyncThunk(
 
         const resultData = await React.$api("account.getWalletDisplay");
         // if (resultData.errno === 0) {
-            dispatch(updateWalletDisplay(resultData));
+        dispatch(updateWalletDisplay(resultData));
         return resultData;
         // }
     }
@@ -321,7 +343,7 @@ export const delSendTipsHistoryAddress = createAsyncThunk(
     'account/removeHistoryAddress',
     async (settings, { dispatch, getState }) => {
         // let data = settings.symbols || [];
-        const resultData = await React.$api("account.removeHistoryAddress",{address:settings,historyType:2});
+        const resultData = await React.$api("account.removeHistoryAddress", { address: settings, historyType: 2 });
         if (resultData.errno === 0) {
             return resultData;
         }
@@ -332,7 +354,7 @@ export const delWithdrawHistoryAddress = createAsyncThunk(
     'account/removeHistoryAddress',
     async (settings, { dispatch, getState }) => {
         // let data = settings.symbols || [];
-        const resultData = await React.$api("account.removeHistoryAddress",{address:settings,historyType:1});
+        const resultData = await React.$api("account.removeHistoryAddress", { address: settings, historyType: 1 });
         if (resultData.errno === 0) {
             return resultData;
         }

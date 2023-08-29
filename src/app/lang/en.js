@@ -310,7 +310,13 @@ const locale = {
     home_Bank:'Bank',
     home_Name:'Name',
 
-
+    Kyc_34: "Have you not conducted KYC yet?",
+    Kyc_35: "Go to KYC",
+    Kyc_36: "ID card",
+    Kyc_37: "Passport",
+    Kyc_38: "Driver's License",
+    Kyc_39: "Residence Permit",
+    Kyc_40: "You have completed KYC real-name authentication",
 
 
 

@@ -202,7 +202,7 @@ function Nft(props) {
         handleEvalWithdrawFee();
 
         dispatch(getWithdrawHistoryAddress()).then((res) => {
-            if (res.payload.data.length > 0) {
+            if (res.payload?.data?.length > 0) {
                 setHistoryAddress(res.payload.data);
             }
         });
