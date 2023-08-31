@@ -1814,7 +1814,7 @@ function Wallet() {
                                 key={index}
                               >
                                 <div className="flex px-8 items-center">
-                                  {/* <img style={{ borderRadius: '50%' }} className="mx-4" width="24" src={row.avatar} alt="" /> */}
+                                   <img style={{ borderRadius: '50%' }} className="mx-4" width="24" src={row.avatar} alt="" />
                                   {row.symbol}
                                 </div>
                                 {isFait && (
@@ -2430,7 +2430,7 @@ function Wallet() {
                           setHideSmall(!hideSmall);
                           document
                             .getElementsByClassName("FusePageCarded-content")[0]
-                            .scrollIntoView();
+                            ?.scrollIntoView();
                         }}
                         inputProps={{ "aria-label": "controlled" }}
                       />
@@ -2612,7 +2612,7 @@ function Wallet() {
                           setHideSmall(!hideSmall);
                           document
                             .getElementsByClassName("FusePageCarded-content")[0]
-                            .scrollIntoView();
+                            ?.scrollIntoView();
                         }}
                         inputProps={{ "aria-label": "controlled" }}
                       />
@@ -2792,7 +2792,7 @@ function Wallet() {
                           setHideSmall(!hideSmall);
                           document
                             .getElementsByClassName("FusePageCarded-content")[0]
-                            .scrollIntoView();
+                            ?.scrollIntoView();
                         }}
                         inputProps={{ "aria-label": "controlled" }}
                       />
