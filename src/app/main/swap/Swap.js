@@ -491,6 +491,13 @@ function Swap() {
     }
   }, [userData.profile?.user?.regWallet]);
 
+  useEffect(() => {
+    setFormatSymbol('');
+    if (swapCoinConfig[symbol]) {
+      setFormatSymbol(swapCoinConfig[symbol][0].symbol);
+    }
+  }, [symbol]);
+
   return (
     <div>
       <div

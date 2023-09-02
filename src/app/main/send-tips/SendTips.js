@@ -229,12 +229,15 @@ function SendTips(props) {
         });
     };
     function ismore(inputVal) {
-        if (Number(inputVal) > Number(arrayLookup(symbolWallet, 'symbol', symbol, 'balance'))) {
+        if (Number(inputVal) > Number(arrayLookup(symbolWallet, 'symbol', symbol, 'balance')) || Number(inputVal) <= 0) {
 
             return true
         } else return false
     }
     const handleSubmit = () => {
+        if (inputVal.amount <= 0) {
+            return
+        }
         const rate = arrayLookup(symbols, 'symbol', symbol, 'rate');
         let conversionAmount = rate * inputVal.amount;
         if (conversionAmount >= transferState.limitSingle && googleCode.length < 6) {

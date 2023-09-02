@@ -58,7 +58,7 @@ function StyledAccordionSelect (props) {
     if (symbol.length === 0) {
         return <></>
     }
-    const [symbolName, setSymbolName] = useState(arrayLookup(config.symbols, 'symbol', symbol[selected].symbol, 'name'));
+    const [symbolName, setSymbolName] = useState(arrayLookup(config.symbols, 'symbol', symbol[selected]?.symbol, 'name'));
     const [expanded, setExpanded] = useState(isExpand);
     const toggleAccordion = (panel) => (event, _expanded) => {
         setExpanded(_expanded ? panel : false);
@@ -86,13 +86,13 @@ function StyledAccordionSelect (props) {
     }, []);
     useEffect(() => {
         if (props.setSymbol) {
-            props.setSymbol(symbol[selected].symbol);
+            props.setSymbol(symbol[selected]?.symbol || '');
         }
         if (props.setAmount) {
-            props.setAmount(symbol[selected].balance);
+            props.setAmount(symbol[selected]?.balance || 0);
         }
         // console.log(symbol);
-        setSymbolName(arrayLookup(config.symbols, 'symbol', symbol[selected].symbol, 'name'));
+        setSymbolName(arrayLookup(config.symbols, 'symbol', symbol[selected]?.symbol, 'name'));
 
 
     }, [selected, symbol]);
