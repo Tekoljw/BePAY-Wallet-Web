@@ -51,7 +51,7 @@ const container = {
     },
 };
 const sortUseAge = (a, b) => {
-    const prioritizedSymbolsFirst = ['eUSGT', 'USGT', 'BGT', 'eBGT'];
+    const prioritizedSymbolsFirst = ['eUSDT', 'USDT', 'BGT', 'eBGT'];
     const prioritizedSymbolsSecond = ['USDT', 'USDC', 'DAI', 'BUSD', 'TUSD', 'PAX', 'GUSD', 'USDD'];
 
     // 检查币种是否属于优先展示的币种
@@ -472,7 +472,7 @@ function Withdraw(props) {
         });
         tmpSymbols.sort(sortUseAge);
         console.log(tmpSymbols);
-        setSymbolWallet(tmpSymbols.filter(i => i.symbol !== 'eUSGT'));
+        setSymbolWallet(tmpSymbols.filter(i => i.symbol !== 'eUSDT'));
         setNetworkData(tmpNetworks);
     };
 

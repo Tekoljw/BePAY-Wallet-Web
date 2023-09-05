@@ -25,7 +25,7 @@ import { arrayLookup } from "../../util/tools/function";
 import { useTranslation } from "react-i18next";
 
 const sortUseAge = (a, b) => {
-    const prioritizedSymbolsFirst = ['eUSGT', 'USGT', 'BGT', 'eBGT'];
+    const prioritizedSymbolsFirst = ['eUSDT', 'USDT', 'BGT', 'eBGT'];
     const prioritizedSymbolsSecond = ['USDT', 'USDC', 'DAI', 'BUSD', 'TUSD', 'PAX', 'GUSD','USDD'];
   
     // 检查币种是否属于优先展示的币种
@@ -124,7 +124,7 @@ function Borrow() {
         let tmpSymbol = [];
         let tmpSymbolWallet = [];
         for (let i = 0; i < symbols.length; i++) {
-            if (tmpSymbol.indexOf(symbols[i].symbol) == -1 && symbols[i].symbol != 'eUSGT' && symbols[i].symbol != 'eBGT') {
+            if (tmpSymbol.indexOf(symbols[i].symbol) == -1 && symbols[i].symbol != 'eUSDT' && symbols[i].symbol != 'eBGT') {
                 tmpSymbol.push(symbols[i].symbol)
                 tmpSymbolWallet.push({
                     balance: arrayLookup(walletData.inner, 'symbol', symbols[i].symbol, 'balance') || 0,

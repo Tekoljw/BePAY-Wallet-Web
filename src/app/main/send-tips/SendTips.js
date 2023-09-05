@@ -120,7 +120,7 @@ function SendTips(props) {
     const transferStats = useSelector(selectUserData).transferStats;
     const hasAuthGoogle = useSelector(selectUserData).userInfo?.hasAuthGoogle
     const sortUseAge = (a, b) => {
-        const prioritizedSymbolsFirst = ['eUSGT', 'USGT', 'BGT', 'eBGT'];
+        const prioritizedSymbolsFirst = ['eUSDT', 'USDT', 'BGT', 'eBGT'];
         const prioritizedSymbolsSecond = ['USDT', 'USDC', 'DAI', 'BUSD', 'TUSD', 'PAX', 'GUSD', 'USDD'];
 
         // 检查币种是否属于优先展示的币种
@@ -181,7 +181,7 @@ function SendTips(props) {
         let tmpSymbol = [];
         let tmpSymbolWallet = [];
         for (let i = 0; i < symbols.length; i++) {
-            if (tmpSymbol.indexOf(symbols[i].symbol) == -1 && symbols[i].symbol != 'eUSGT') {
+            if (tmpSymbol.indexOf(symbols[i].symbol) == -1 && symbols[i].symbol != 'eUSDT') {
                 tmpSymbol.push(symbols[i].symbol)
                 tmpSymbolWallet.push({
                     avatar: symbols[i].avatar,

@@ -306,7 +306,7 @@ function Swap() {
     setSwapCoinConfig(tmpSwapSymbols);
 
     const sortUseAge = (a, b) => {
-      const prioritizedSymbolsFirst = ['eUSGT', 'USGT', 'BGT', 'eBGT'];
+      const prioritizedSymbolsFirst = ['eUSDT', 'USDT', 'BGT', 'eBGT'];
       const prioritizedSymbolsSecond = ['USDT', 'USDC', 'DAI', 'BUSD', 'TUSD', 'PAX', 'GUSD', 'USDD'];
 
       // 检查币种是否属于优先展示的币种
@@ -384,7 +384,7 @@ function Swap() {
 
     tmpSymbols.sort(sortUseAge)
     setSymbolWallet(
-      tmpSymbols.filter(i => i.symbol !== 'eUSGT')
+      tmpSymbols.filter(i => i.symbol !== 'eUSDT')
     );
 
   };
