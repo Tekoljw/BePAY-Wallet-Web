@@ -316,6 +316,9 @@ const locale = {
     Kyc_38: "رخصة القيادة",
     Kyc_39: "بطاقة الإقامة",
     Kyc_40: "لقد أتممت مصادقة الاسم الحقيقي KYC",
+
+
+
 };
 
 export default locale;

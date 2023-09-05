@@ -171,7 +171,6 @@ const locale = {
     home_withdraw_22:'收款人账户',
     home_withdraw_23:'收款人账户名',
     home_withdraw_24:'粘贴',
-    home_withdraw_24:'金额',
     home_withdraw_25:'金额',
     home_withdraw_26:'选择我的',
     home_withdraw_27: "PIX账号",

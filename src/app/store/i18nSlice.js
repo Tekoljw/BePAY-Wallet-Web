@@ -53,6 +53,8 @@ const i18nSlice = createSlice({
       { id: 'bd', title: 'বাংলা', flag: 'BD' },
       { id: 'hk', title: '繁体', flag: 'HK' },
       { id: 'cn', title: '简体', flag: 'CN' },
+      { id: 'mm', title: '繁体', flag: 'MM' },
+      { id: 'pak', title: '简体', flag: 'Pak' },
     ],
   },
 

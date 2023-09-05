@@ -26,6 +26,8 @@ import tmr from '../../lang/tmr';
 import tr from '../../lang/tr';
 import vn from '../../lang/vn';
 import ru from '../../lang/ru';
+import mm from '../../lang/mm';
+import pak from '../../lang/pak';
 
 
 
@@ -53,6 +55,8 @@ i18next.addResourceBundle('tmr', 'mainPage', tmr);
 i18next.addResourceBundle('tr', 'mainPage', tr);
 i18next.addResourceBundle('vn', 'mainPage', vn);
 i18next.addResourceBundle('ru', 'mainPage', ru);
+i18next.addResourceBundle('mm', 'mainPage', mm);
+i18next.addResourceBundle('pak', 'mainPage', pak);
 
 const ComingSoonConfig = {
     settings: {
