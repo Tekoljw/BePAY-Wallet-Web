@@ -395,9 +395,9 @@ function Kyc(props) {
                     <div className="flex items-baseline mt-2 font-medium text-14" style={{ marginBottom: '2rem', marginTop: 0 }}>
                         {
                             pageState === 0 ?
-                                <Typography>{t('kyc_34')}
+                                <Typography>{t('Kyc_34')}
                                     <span className="ml-4 color-16c2a3">
-                                        {t('kyc_35')}
+                                        {t('Kyc_35')}
                                     </span>
                                 </Typography> :
                                 <Typography>{t('kyc_25')}
@@ -808,7 +808,7 @@ function Kyc(props) {
                                     </Typography> */}
 
                                     <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_15')}</InputLabel>
+                                        <InputLabel id="demo-simple-select-label">{t('Kyc_15')}</InputLabel>
                                         <Select
                                             labelId="demo-simple-select-label"
                                             id="demo-simple-select"
@@ -816,10 +816,10 @@ function Kyc(props) {
                                             label="IdType"
                                             onChange={handleChangeInputVal('idType')}
                                         >
-                                            <MenuItem value={'id_card'}>{t('kyc_36')}</MenuItem>{/*身份证*/}
-                                            <MenuItem value={'passport'}>{t('kyc_37')}</MenuItem>{/*护照*/}
-                                            <MenuItem value={'dl'}>{t('kyc_38')}</MenuItem>{/*驾照*/}
-                                            <MenuItem value={'residence_permit'}>{t('kyc_39')}</MenuItem>{/*居住证*/}
+                                            <MenuItem value={'id_card'}>{t('Kyc_36')}</MenuItem>{/*身份证*/}
+                                            <MenuItem value={'passport'}>{t('Kyc_37')}</MenuItem>{/*护照*/}
+                                            <MenuItem value={'dl'}>{t('Kyc_38')}</MenuItem>{/*驾照*/}
+                                            <MenuItem value={'residence_permit'}>{t('Kyc_39')}</MenuItem>{/*居住证*/}
                                         </Select>
                                     </FormControl>
                                 </div>
@@ -1059,7 +1059,7 @@ function Kyc(props) {
 
                             {isNeedAudit() === false && <>
                                 <Typography className="text-16 cursor-pointer">
-                                    {t('kyc_40')}
+                                    {t('Kyc_40')}
                                 </Typography>
                             </>}
 
