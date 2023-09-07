@@ -165,13 +165,13 @@ function ClassicSignUpPage() {
     }
 
     async function onSubmit() {
-        // 密码必须为6-18位数，且包含大小写字母和特殊符号
-        let regu = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!~@#$%^&*,\.])[0-9a-zA-Z!~@#$%^&*,\\.]{6,18}$/;
-        var re = new RegExp(regu);
-        if (!re.test(control._formValues.password)) {
-            dispatch(showMessage({ message: t('errorMsg_3'), code: 3 }));
-            return
-        }
+        // // 密码必须为6-18位数，且包含大小写字母和特殊符号
+        // let regu = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!~@#$%^&*,\.])[0-9a-zA-Z!~@#$%^&*,\\.]{6,18}$/;
+        // var re = new RegExp(regu);
+        // if (!re.test(control._formValues.password)) {
+        //     dispatch(showMessage({ message: t('errorMsg_3'), code: 3 }));
+        //     return
+        // }
 
         if (tabValue === 0) {
             await dispatch(signUp(control._formValues));

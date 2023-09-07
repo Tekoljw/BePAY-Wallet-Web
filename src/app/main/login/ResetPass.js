@@ -52,13 +52,13 @@ const schema = yup.object().shape({
     const dispatch = useDispatch();
 
     async function onSubmit() {
-        // 密码必须为6-16x位数，且包含大小写字母和特殊符号
-        let regu = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!~@#$%^&*,\.])[0-9a-zA-Z!~@#$%^&*,\\.]{6,16}$/;
-        var re = new RegExp(regu);
-        if (!re.test(control._formValues.password)) {
-            dispatch(showMessage({ message: t('errorMsg_3'), code: 3 }));
-            return
-        }
+        // // 密码必须为6-16x位数，且包含大小写字母和特殊符号
+        // let regu = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!~@#$%^&*,\.])[0-9a-zA-Z!~@#$%^&*,\\.]{6,16}$/;
+        // var re = new RegExp(regu);
+        // if (!re.test(control._formValues.password)) {
+        //     dispatch(showMessage({ message: t('errorMsg_3'), code: 3 }));
+        //     return
+        // }
 
         await dispatch(resetPass(control._formValues));
     }
