@@ -43,6 +43,7 @@ import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import { showMessage } from 'app/store/fuse/messageSlice';
+import countryLang from "../../json/country";
 
 /**
  * Form Validation Schema
@@ -100,6 +101,20 @@ function ClassicSignUpPage() {
         resolver: yupResolver(schema),
     });
 
+    const countryLangChange = (lang) => {
+        const tempLang = [];
+        Object.keys(countryLang).map((item) => {
+            if (countryLang[item].langCode == lang) {
+                tempLang.push(item)
+            }
+        })
+        if (tempLang.length > 0) {
+            return tempLang[0];
+        } else {
+            return Object.keys(countryLang)[0];
+        }
+    };
+
     const { isValid, dirtyFields, errors } = formState;
     const [tmpPhoneCode, setTmpPhoneCode] = useState('');
     const ranges = [t('signIn_4'), t('signIn_5')];
@@ -149,6 +164,7 @@ function ClassicSignUpPage() {
                 codeType: 1,
                 nationCode: control._formValues.nationCode,
                 phone: control._formValues.phone,
+                lang: countryLangChange(window.localStorage.getItem('lang')),
             };
             sendRes = await dispatch(sendSms(data));
         } else {

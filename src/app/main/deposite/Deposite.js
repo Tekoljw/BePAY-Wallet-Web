@@ -1528,11 +1528,11 @@ function Deposite() {
                                             />
                                         </FormControl>
                                         <div className="flex weight-list">
-                                            {/*<div*/}
-                                            {/*    onClick={() => { setWeight(10) }}*/}
-                                            {/*    className={clsx('weight-item px-16 py-8 text-center my-12 touchnGoListDi color-0F172A', weight === 10 && 'weight-active')}>*/}
-                                            {/*    10*/}
-                                            {/*</div>*/}
+                                            <div
+                                                onClick={() => { setWeight(2) }}
+                                                className={clsx('weight-item px-16 py-8 text-center my-12 touchnGoListDi color-0F172A', weight === 2 && 'weight-active')}>
+                                                2
+                                            </div>
                                             <div
                                                 onClick={() => { setWeight(51) }}
                                                 className={clsx('weight-item px-16 py-8 text-center my-12 touchnGoListDi color-0F172A', weight === 51 && 'weight-active')}>

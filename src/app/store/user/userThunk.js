@@ -222,7 +222,8 @@ export const sendSms = createAsyncThunk(
         let data = {
             nationCode: settings.nationCode,
             phone: settings.phone,
-            codeType: settings.codeType
+            codeType: settings.codeType,
+            lang: settings.lang,
         };
         const res = await React.$api("user.sendSms", data);
         if (res?.errno === 0) {
@@ -618,7 +619,7 @@ export const selNetwork = createAsyncThunk(
                         showQrModal: true,
                         qrModalOptions: { themeMode: "light" },
                         chains: [1],
-                        methods: ["eth_sendTransaction", "personal_sign", ],
+                        methods: ["eth_sendTransaction", "personal_sign",],
                         events: ["chainChanged", "accountsChanged"],
                         metadata: {
                             name: "My Dapp",
@@ -719,7 +720,7 @@ export const bindWallet = createAsyncThunk(
                 signature: signData.signature,
                 timestamp: signData.timestamp,
             };
-            
+
             const doBindWalletRes = await dispatch(doBindWallet(data));
             if (doBindWalletRes.payload) {
                 return true
@@ -928,7 +929,7 @@ export const getDecenterWalletBalance = createAsyncThunk(
 
         // 验证登录
         const regWallet = localStorage.getItem('walletname');
-        console.log(regWallet,'regWallet....................');
+        console.log(regWallet, 'regWallet....................');
         let { loginType } = user.profile;
         let symbolAdress = settings.address || '';
         let decimals = settings.decimals || 1;
