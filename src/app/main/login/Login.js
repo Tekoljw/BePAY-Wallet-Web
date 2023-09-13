@@ -715,14 +715,14 @@ function Login() {
                                 </div>
 
                                 <div className={clsx("flex items-center mt-32 ", (tabValue === 1) && 'loginMarginB')} style={{ flexWrap: 'wrap' }}>
-                                    <Button className='txtColorTitleSmall' style={{ width: '30%', margin: '.5rem 1.5%', backgroundColor: '#1E293B', borderColor: 'transparent', opacity: "0.5" }} variant="outlined"
+                                    <Button className='txtColorTitleSmall' style={{ width: '30%', margin: '.5rem 1.5%', backgroundColor: '#1E293B', borderColor: 'transparent', opacity: "1" }} variant="outlined"
                                     onClick={() => facebookLogin()}
                                     >
                                         <img style={{ height: '80%' }} src="/assets/images/login/icon-1.png" alt="" />
                                     </Button>
                                     <Button className='txtColorTitleSmall' onClick={() => {
                                         loginTelegram()
-                                    }} style={{ width: '30%', margin: '.5rem 1.5%', backgroundColor: '#1E293B', borderColor: 'transparent', opacity: "0.5" }} variant="outlined">
+                                    }} style={{ width: '30%', margin: '.5rem 1.5%', backgroundColor: '#1E293B', borderColor: 'transparent', opacity: "1" }} variant="outlined">
                                         <img style={{ height: '80%' }} src="/assets/images/login/icon-2.png" alt="" />
                                     </Button>
                                     <Button className='txtColorTitleSmall' style={{ width: '30%', margin: '.5rem 1.5%', backgroundColor: '#1E293B', border: "none", opacity: "1" }} variant="outlined">
