@@ -2406,7 +2406,7 @@ function Wallet() {
                       {totalBalance}
                     </div>
                   </div>
-                  {showType !== fiatSelect && loginType == 1 && (
+                  {showType !== fiatSelect && (
                     <div className="flex justify-between items-center my-4">
                       <div>{t("home_account_4")} </div>
                       <div className="huaDongM">
@@ -2588,7 +2588,7 @@ function Wallet() {
                       {totalBalance}
                     </div>
                   </div>
-                  {showType !== fiatSelect && loginType == 2 && (
+                  {showType !== fiatSelect && (
                     <div className="flex justify-between items-center my-4">
                       <div>{t("home_account_4")} </div>
                       <div className="huaDongM">
