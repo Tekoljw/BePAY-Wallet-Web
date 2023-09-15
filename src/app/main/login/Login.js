@@ -135,7 +135,7 @@ function Login() {
     const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down(isMobileMedia ? 'lg' : 'sm'));
     const [rightSidebarOpen, setRightSidebarOpen] = useState(!isMobile);
 
-    const ranges = [t('signIn_4'), t('signIn_5')];
+    const ranges = [ t('signIn_5'), t('signIn_4') ];
     const [tabValue, setTabValue] = useState(0);
     const { control, formState, handleSubmit, reset } = useForm({
         mode: 'onChange',
@@ -474,7 +474,7 @@ function Login() {
                                 className="flex flex-col justify-center w-full mt-8 fontStyle "
                                 onSubmit={handleSubmit(onSubmit)}
                             >
-                                {tabValue === 1 && <Controller
+                                {tabValue === 0 && <Controller
                                     name="email"
                                     control={control}
                                     render={({ field }) => (
@@ -493,7 +493,7 @@ function Login() {
                                     )}
                                 />}
 
-                                {tabValue === 0 && <>
+                                {tabValue === 1 && <>
                                     {/*<Controller*/}
                                     {/*    name="nationCode"*/}
                                     {/*    control={control}*/}
@@ -714,7 +714,7 @@ function Login() {
                                     <div className="flex-auto mt-px border-t" />
                                 </div>
 
-                                <div className={clsx("flex items-center mt-32 ", (tabValue === 1) && 'loginMarginB')} style={{ flexWrap: 'wrap' }}>
+                                <div className={clsx("flex items-center mt-32 ", (tabValue === 0) && 'loginMarginB')} style={{ flexWrap: 'wrap' }}>
                                     <Button className='txtColorTitleSmall' style={{ width: '30%', margin: '.5rem 1.5%', backgroundColor: '#1E293B', borderColor: 'transparent', opacity: "0.5" }} variant="outlined"
                                     onClick={() => facebookLogin()}
                                     >

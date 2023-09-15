@@ -35,7 +35,7 @@ export const setCurrencySelect = createAsyncThunk(
         };
         const setCurrencySelect = await React.$api("account.setCurrencySelect", data);
         if (setCurrencySelect.errno === 0) {
-            dispatch(updateUser(setCurrencySelect));
+            // dispatch(updateUser(setCurrencySelect));
         } else {
             dispatch(showMessage({ message: setCurrencySelect.errmsg, code: 2 }));
         }
@@ -46,7 +46,7 @@ export const getCurrencySelect = createAsyncThunk(
     async (settings, { dispatch, getState }) => {
         const getCurrencySelect = await React.$api("account.getCurrencySelect");
         if (getCurrencySelect.errno === 0) {
-            dispatch(updateUser(getCurrencySelect));
+            // dispatch(updateUser(getCurrencySelect));
         } else {
             dispatch(showMessage({ message: getCurrencySelect.errmsg, code: 2 }));
         }
