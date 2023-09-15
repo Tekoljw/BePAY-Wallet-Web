@@ -117,7 +117,7 @@ function ClassicSignUpPage() {
 
     const { isValid, dirtyFields, errors } = formState;
     const [tmpPhoneCode, setTmpPhoneCode] = useState('');
-    const ranges = [t('signIn_4'), t('signIn_5')];
+    const ranges = [ t('signIn_5'), t('signIn_4') ];
     const [tabValue, setTabValue] = useState(0);
 
     const dispatch = useDispatch();
@@ -159,7 +159,7 @@ function ClassicSignUpPage() {
     async function sendCode() {
         setSelectedCountryCode(control._formValues.nationCode);
         let sendRes = {};
-        if (tabValue === 0) {
+        if (tabValue === 1) {
             const data = {
                 codeType: 1,
                 nationCode: control._formValues.nationCode,
@@ -189,7 +189,7 @@ function ClassicSignUpPage() {
         //     return
         // }
 
-        if (tabValue === 0) {
+        if (tabValue === 1) {
             await dispatch(signUp(control._formValues));
         } else {
             await dispatch(emailSignUp(control._formValues));
@@ -266,7 +266,7 @@ function ClassicSignUpPage() {
                         className="flex flex-col justify-center w-full mt-8"
                         onSubmit={handleSubmit(onSubmit)}
                     >
-                        {tabValue === 0 && <>
+                        {tabValue === 1 && <>
                             {/*<Controller*/}
                             {/*    name="nationCode"*/}
                             {/*    control={control}*/}
@@ -396,7 +396,7 @@ function ClassicSignUpPage() {
                             />
                         </>}
 
-                        {tabValue === 1 && <Controller
+                        {tabValue === 0 && <Controller
                             name="email"
                             control={control}
                             render={({ field }) => (
