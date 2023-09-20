@@ -71,11 +71,14 @@ export const doLogin = createAsyncThunk(
         const web3 = await Web3.connectWeb3(walletType);
         let address = web3.coinbase;
 
-        if (user.profile?.user?.regWallet && user.profile?.user?.address !== address) {
-            dispatch(showMessage({ message: 'The address is different from the previous one, please log in again', code: 2 }));
-            return false;
-        }
 
+        const userBindWallet = user.userInfo.bindWallet ?? false;
+        if (userBindWallet) {
+            if (user.profile?.user?.address !== address) {
+                dispatch(showMessage({ message: 'The address is different from the previous one, please log in again', code: 2 }));
+                return false;
+            }
+        }
         let signData = await Web3.loginWallet(address);
 
         let data = {
@@ -711,6 +714,14 @@ export const bindWallet = createAsyncThunk(
         //     }
         // }
 
+        let res = loginWays.list.find(function (item) {
+            return item.id === settings.id
+        })
+        let walletType = res.name;
+        if (walletType == "MetaMask") {
+            walletType = 'metamask';
+        }
+
         if (!userBindWallet) {
             const web3 = await Web3.connectWeb3();
             let address = web3.coinbase;
@@ -719,6 +730,7 @@ export const bindWallet = createAsyncThunk(
                 walletAddress: address,
                 signature: signData.signature,
                 timestamp: signData.timestamp,
+                regWallet: walletType
             };
 
             const doBindWalletRes = await dispatch(doBindWallet(data));
@@ -742,6 +754,7 @@ export const doBindWallet = createAsyncThunk(
             walletAddress: settings.walletAddress,
             signature: settings.signature,
             timestamp: settings.timestamp,
+            regWallet: settings.regWallet
         };
 
         const sendResult = await React.$api("user.bindWallet", data);

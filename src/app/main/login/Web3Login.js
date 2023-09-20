@@ -17,7 +17,7 @@ function Web3Login() {
 
     const checkWallet = async (e,id)=>{
         // console.log(id);
-        const bindWalletRes = await dispatch(bindWallet());
+        const bindWalletRes = await dispatch(bindWallet({id}));
         if (bindWalletRes.payload) {
             dispatch(doLogin({pathname,id}))
         }
