@@ -98,6 +98,22 @@ function Fiat(props) {
         setAccountType(event.target.value);
     };
 
+    const getEntryType = (currencyCode) => {
+        var result = '';
+        switch (currencyCode) {
+            case 'BRL':
+                result = 'PIX'
+                break
+            case 'IDR':
+                result = 'Dana'
+                break
+            default:
+                break
+        }
+
+        return result
+    }
+
     const handleSubmit = () => {
         let data = {
             amount: inputVal.amount,
@@ -107,6 +123,7 @@ function Fiat(props) {
             accountOwnerName: inputVal.cardName,
             accountNo: inputVal.pixId,
             currency: currencyCode,
+            entryType: getEntryType(currencyCode)
         };
         setOpenLoad(true)
         dispatch(makeWithdrawOrder(data)).then((res) => {
@@ -386,7 +403,7 @@ function Fiat(props) {
                         <div className="py-16" style={{ paddingTop: 0 }}>
                             <div className="px-16">
                                 {
-                                    currencyCode != "BRL" && <div>
+                                    (currencyCode !== "BRL" && currencyCode !== "IDR") && <div>
                                         <div className="flex" style={{ padding: "16px 16px 16px 0px" }} >
                                             <Typography className="text-16 ">{t('home_withdraw_18')} </Typography>
                                         </div>
@@ -431,8 +448,32 @@ function Fiat(props) {
                                     </div>
                                 }
 
+                                {currencyCode === 'IDR' && <div>
+                                    <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
+                                        <Typography className="text-16 ">{t('home_withdraw_27')}</Typography>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <FormControl sx={{ width: isMobileMedia ? '77%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
+                                            <OutlinedInput
+                                                id="outlined-adornment-address send-tips-container-address"
+                                                value={inputVal.pixId}
+                                                onChange={handleChangeInputVal('pixId')}
+                                                aria-describedby="outlined-weight-helper-text"
+                                                inputProps={{
+                                                    'aria-label': 'pixId',
+                                                }}
+                                                placeholder={t('home_withdraw_27')}
+                                            />
+                                        </FormControl>
+
+                                        <div onClick={() => { setOpenWithdrawLog(true) }} className="flex items-center justify-content-center cursor-pointer">
+                                            <img style={{ width: "24px", height: "24px" }} src="assets/images/withdraw/info.png" alt="" />
+                                        </div>
+                                    </div>
+                                </div>}
+
                                 {
-                                    currencyCode == "BRL" && <div>
+                                    (currencyCode == "BRL") && <div>
                                         <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
                                             <Typography className="text-16 ">{t('home_withdraw_27')}</Typography>
                                         </div>
@@ -476,33 +517,35 @@ function Fiat(props) {
 
                                             </FormControl>
                                         </div>
+
+                                        <div className="flex" style={{ padding: "16px 16px 16px 0px" }} >
+                                            <Typography className="text-16 ">{t('home_withdraw_29')} </Typography>
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <FormControl sx={{ width: isMobileMedia ? '77%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
+                                                <OutlinedInput
+                                                    id="outlined-adornment-address send-tips-container-address"
+                                                    value={inputVal.cardNo}
+                                                    onChange={handleChangeInputVal('cardNo')}
+                                                    aria-describedby="outlined-weight-helper-text"
+                                                    inputProps={{
+                                                        'aria-label': 'cardNo',
+                                                    }}
+                                                    placeholder={t('home_withdraw_29')}
+                                                />
+                                                <div className='paste-btn' onClick={() => {
+
+                                                }}>{t('home_withdraw_11')}</div>
+                                            </FormControl>
+                                            <div onClick={() => { setOpenWithdrawLog(true) }} className="flex items-center justify-content-center cursor-pointer">
+                                                <img style={{ width: "24px", height: "24px" }} src="assets/images/withdraw/info.png" alt="" />
+                                            </div>
+                                        </div>
                                     </div>
                                 }
 
 
-                                <div className="flex" style={{ padding: "16px 16px 16px 0px" }} >
-                                    <Typography className="text-16 ">{t('home_withdraw_29')} </Typography>
-                                </div>
-                                <div className="flex items-center justify-between">
-                                    <FormControl sx={{ width: isMobileMedia ? '77%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
-                                        <OutlinedInput
-                                            id="outlined-adornment-address send-tips-container-address"
-                                            value={inputVal.cardNo}
-                                            onChange={handleChangeInputVal('cardNo')}
-                                            aria-describedby="outlined-weight-helper-text"
-                                            inputProps={{
-                                                'aria-label': 'cardNo',
-                                            }}
-                                            placeholder={t('home_withdraw_29')}
-                                        />
-                                        <div className='paste-btn' onClick={() => {
 
-                                        }}>{t('home_withdraw_11')}</div>
-                                    </FormControl>
-                                    <div onClick={() => { setOpenWithdrawLog(true) }} className="flex items-center justify-content-center cursor-pointer">
-                                        <img style={{ width: "24px", height: "24px" }} src="assets/images/withdraw/info.png" alt="" />
-                                    </div>
-                                </div>
 
 
                                 <Typography className="text-16  mt-16 " style={{ width: "89%", display: "flex", justifyContent: " space-between" }}>

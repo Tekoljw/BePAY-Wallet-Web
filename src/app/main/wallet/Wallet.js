@@ -1776,17 +1776,7 @@ function Wallet() {
                     )}
                   </>
                 )}
-                {decentralized !== -1 && walletType === 1 && loginType == 2 && (
-                  <div style={{ margin: "0 auto" }}>
-                    <Web3Login />
-                  </div>
-                )}
                 {decentralized == -1 && walletType === 1 && (
-                  <div style={{ margin: "0 auto" }}>
-                    <Web3Login />
-                  </div>
-                )}
-                {decentralized !== -1 && walletType === 1 && loginType == 3 && (
                   <div style={{ margin: "0 auto" }}>
                     <Web3Login />
                   </div>
