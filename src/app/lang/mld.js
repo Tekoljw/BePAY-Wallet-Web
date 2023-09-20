@@ -174,7 +174,7 @@ const locale = {
     home_withdraw_24:'पेस्ट करा',
     home_withdraw_25:'रक्कम',
     home_withdraw_26:'माझं निवडा',
-    home_withdraw_27: "PIX खाते",
+    home_withdraw_27: "खाते",
     home_withdraw_28: "खाते प्रकार",
     home_withdraw_29: "CPF खाते",
 

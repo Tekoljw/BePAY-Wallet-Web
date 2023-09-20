@@ -172,7 +172,7 @@ const locale = {
     home_withdraw_24: 'Coller',
     home_withdraw_25: 'Montant',
     home_withdraw_26: 'Choisir mon',
-    home_withdraw_27: "Compte PIX",
+    home_withdraw_27: "Compte",
     home_withdraw_28: "Type de compte",
     home_withdraw_29: "Compte CPF",
 

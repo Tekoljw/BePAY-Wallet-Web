@@ -173,7 +173,7 @@ const locale = {
     home_withdraw_24:'Paste',
     home_withdraw_25:'Amount',
     home_withdraw_26:'Choose My',
-    home_withdraw_27: "PIX account",
+    home_withdraw_27: "Account",
     home_withdraw_28: "Account type",
     home_withdraw_29: "CPF account",
 

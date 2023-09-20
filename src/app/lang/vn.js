@@ -158,7 +158,7 @@ const locale = {
     home_withdraw_24: 'Dán',
     home_withdraw_25: 'Số tiền',
     home_withdraw_26: 'Chọn của tôi',
-    home_withdraw_27: "Tài khoản PIX",
+    home_withdraw_27: "Tài khoản",
     home_withdraw_28: "Loại tài khoản",
     home_withdraw_29: "Tài khoản CPF",
     

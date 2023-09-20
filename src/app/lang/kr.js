@@ -173,7 +173,7 @@ const locale = {
     home_withdraw_24:'붙여넣기',
     home_withdraw_25:'금액',
     home_withdraw_26:'내 것 선택하기',
-    home_withdraw_27: "PIX 계정",
+    home_withdraw_27: "계정",
     home_withdraw_28: "계정 유형",
     home_withdraw_29: "CPF 계정",
 

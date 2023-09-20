@@ -172,7 +172,7 @@ const locale = {
     home_withdraw_24:'貼り付け',
     home_withdraw_25:'量',
     home_withdraw_26:'私の選択',
-    home_withdraw_27: "PIXアカウント",
+    home_withdraw_27: "アカウント",
     home_withdraw_28: "アカウントの種類",
     home_withdraw_29: "CPFアカウント",
     

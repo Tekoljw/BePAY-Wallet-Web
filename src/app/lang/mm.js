@@ -172,7 +172,7 @@ const locale = {
     home_withdraw_24: 'စာရွက်ထုတ်ရန်',
     home_withdraw_25: 'ပမာဏ',
     home_withdraw_26: 'ကျွန်ုပ်ရုန်းအားရွာရန်',
-    home_withdraw_27: "PIX အကောင်း",
+    home_withdraw_27: "အကောင်း",
     home_withdraw_28: "အကောင့်အမျိုးအစား",
     home_withdraw_29: "CPF အကောင့်",
     

@@ -173,7 +173,7 @@ const locale = {
     home_withdraw_24:'ஒட்டு',
     home_withdraw_25:'தொகை',
     home_withdraw_26:'எனது தேர்வு செய்யுங்கள்',
-    home_withdraw_27: "PIX கணக்கு",
+    home_withdraw_27: "கணக்கு",
     home_withdraw_28: "கணக்கு வகை",
     home_withdraw_29: "CPF கணக்கு",
     
