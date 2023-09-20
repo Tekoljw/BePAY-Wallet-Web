@@ -170,7 +170,7 @@ function RetiedEmail() {
                                 <TextField
                                     {...field}
                                     className="mb-24"
-                                    label={t('signIn_7')}
+                                    label={t('signIn_8')}
                                     type="number"
                                     error={!!errors.smsCode}
                                     helperText={errors?.smsCode?.message}
