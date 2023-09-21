@@ -1776,7 +1776,7 @@ function Wallet() {
                     )}
                   </>
                 )}
-                {decentralized == -1 && walletType === 1 && (
+                {(decentralized == -1 || !decentralized) && walletType === 1 && (
                   <div style={{ margin: "0 auto" }}>
                     <Web3Login />
                   </div>
