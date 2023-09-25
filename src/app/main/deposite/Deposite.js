@@ -1517,7 +1517,7 @@ function Deposite() {
                                     <div>
                                         <FormControl className="my-16" sx={{ width: '100%' }} variant="outlined">
                                             <OutlinedInput
-                                                disabled={true}
+                                                disabled={false}
                                                 id="outlined-adornment-weight send-tips-container-amount"
                                                 value={weight}
                                                 endAdornment={<InputAdornment position="end">MAX</InputAdornment>}
@@ -1525,14 +1525,17 @@ function Deposite() {
                                                 inputProps={{
                                                     'aria-label': 'weight',
                                                 }}
+                                                onChange={(event) => {
+                                                    setWeight(event.target.value)
+                                                }}
                                             />
                                         </FormControl>
                                         <div className="flex weight-list">
-                                            <div
+                                            {/* <div
                                                 onClick={() => { setWeight(2) }}
                                                 className={clsx('weight-item px-16 py-8 text-center my-12 touchnGoListDi color-0F172A', weight === 2 && 'weight-active')}>
                                                 2
-                                            </div>
+                                            </div> */}
                                             <div
                                                 onClick={() => { setWeight(51) }}
                                                 className={clsx('weight-item px-16 py-8 text-center my-12 touchnGoListDi color-0F172A', weight === 51 && 'weight-active')}>
@@ -1564,6 +1567,7 @@ function Deposite() {
                                                 5000
                                             </div>
                                         </div>
+
                                         <div className="my-16 flex items-center justify-content-center">
                                             <Button
                                                 className="px-48 text-lg btnColorTitleBig"
