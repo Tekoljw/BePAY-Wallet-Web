@@ -163,6 +163,7 @@ function Wallet() {
   const [ranges, setRanges] = useState([
     'Token', t('home_deposite_2'), t('home_deposite_3')
   ]);
+  const [ userSetting, setUserSetting ] = useState({});
 
   // const walletDisplayData = userData.walletDisplay || [];
   // const walletDisplayData =  [];
@@ -334,12 +335,6 @@ function Wallet() {
     var openIndex = window.sessionStorage.getItem('openIndex') || 0;
     const service = axios.create({
       timeout: 50000, // request timeout
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Finger-Nft-Token": window.localStorage.getItem(`Authorization-${openAppId}-${openIndex}`) || "",
-        "Wallet-OpenApp-Id": openAppId,
-        "Wallet-OpenApp-Index": openIndex,
-      },
     });
     var post = {
       url: `${domain.FUNIBET_API_DOMAIN}/gamecenter/setUserSetting`,
@@ -347,6 +342,20 @@ function Wallet() {
       data: qs.stringify(data),
       async: true,
     };
+
+    service.interceptors.request.use(
+        config => {
+          config.headers['Finger-Nft-Token'] = `${window.localStorage.getItem(
+              `Authorization-${window.sessionStorage.getItem('openAppId') || 0}-${window.sessionStorage.getItem('openIndex') || 0}`
+          ) || ''}`;
+          config.headers['Wallet-OpenApp-Id'] = openAppId || '6436951541b60d250c692481';
+
+          config.headers['Wallet-OpenApp-Index'] = openIndex;
+
+          return config;
+        },
+        err => Promise.reject(err)
+    )
 
     let res = await service(post);
     if (res.data.errno === 0) {
@@ -407,10 +416,6 @@ function Wallet() {
     var openIndex = window.sessionStorage.getItem('openIndex') || 0;
     const service = axios.create({
       timeout: 50000, // request timeout
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Finger-Nft-Token": window.localStorage.getItem(`Authorization-${openAppId}-${openIndex}`) || "",
-      },
     });
     var post = {
       url: `${domain.FUNIBET_API_DOMAIN}/gamecenter/getUserSetting`,
@@ -418,74 +423,92 @@ function Wallet() {
       // data: qs.stringify(data),
       async: true,
     };
+    service.interceptors.request.use(
+        config => {
+          config.headers['Finger-Nft-Token'] = `${window.localStorage.getItem(
+              `Authorization-${window.sessionStorage.getItem('openAppId') || 0}-${window.sessionStorage.getItem('openIndex') || 0}`
+          ) || ''}`;
+          config.headers['Wallet-OpenApp-Id'] = openAppId || '6436951541b60d250c692481';
+
+          config.headers['Wallet-OpenApp-Index'] = openIndex;
+
+          return config;
+        },
+        err => Promise.reject(err)
+    )
 
     let res = await service(post);
-    // console.log(res, 'res........');
+
     if (res.data.errno === 0) {
+      setUserSetting(res.data.data);
+      setFiatDisplaySubmit(res.data.data.setting.fiatCode, true)
+      // console.log(res.data.data, 'res........');
     }
 
     return res;
   };
   useEffect(() => {
-    getSettingSymbol().then((res) => {
-      var currencyType = res.data?.data?.setting?.currencyType
-      if (currencyType) {
-        if (currencyType == 1) {
-          tmpRanges = [
-            'Token', t('home_deposite_2')
-            // 'Token', t('home_deposite_2'), t('home_deposite_3')
-          ];
-          tmpCryptoSelect = 0;
-          tmpFiatSelect = 1;
-        } else {
-          console.log('存在.......');
-          var tmpRanges = [
-            t('home_deposite_2'), t('home_deposite_1')
-            // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
-          ];
-          var tmpCryptoSelect = 1;
-          var tmpFiatSelect = 0;
-        }
-
-        setRanges(tmpRanges);
-        setCryptoSelect(tmpCryptoSelect);
-        setFiatSelect(tmpFiatSelect);
-
-      }
-      else if (userData.profile?.loginType) {
-        var tmpRanges = [
-          t('home_deposite_2'), t('home_deposite_1')
-          // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
-        ];
-        var tmpCryptoSelect = 1;
-        var tmpFiatSelect = 0;
-        if (userData.profile.wallet.Crypto < userData.profile.wallet.Fiat) {
-        } else if (userData.profile.wallet.Crypto > userData.profile.wallet.Fiat) {
-          tmpRanges = [
-            'Token', t('home_deposite_2')
-            // 'Token', t('home_deposite_2'), t('home_deposite_3')
-          ];
-          tmpCryptoSelect = 0;
-          tmpFiatSelect = 1;
-        } else {
-          if (userData.profile?.loginType == 1) {
+    if (JSON.stringify(userData.profile) !== '{}') {
+      getSettingSymbol().then((res) => {
+        var currencyType = res.data?.data?.setting?.currencyType
+        if (currencyType) {
+          if (currencyType == 1) {
             tmpRanges = [
               'Token', t('home_deposite_2')
               // 'Token', t('home_deposite_2'), t('home_deposite_3')
             ];
             tmpCryptoSelect = 0;
             tmpFiatSelect = 1;
+          } else {
+            console.log('存在.......');
+            var tmpRanges = [
+              t('home_deposite_2'), t('home_deposite_1')
+              // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
+            ];
+            var tmpCryptoSelect = 1;
+            var tmpFiatSelect = 0;
           }
+
+          setRanges(tmpRanges);
+          setCryptoSelect(tmpCryptoSelect);
+          setFiatSelect(tmpFiatSelect);
+
         }
+        else if (userData.profile?.loginType) {
+          var tmpRanges = [
+            t('home_deposite_2'), t('home_deposite_1')
+            // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
+          ];
+          var tmpCryptoSelect = 1;
+          var tmpFiatSelect = 0;
+          if (userData.profile.wallet.Crypto < userData.profile.wallet.Fiat) {
+          } else if (userData.profile.wallet.Crypto > userData.profile.wallet.Fiat) {
+            tmpRanges = [
+              'Token', t('home_deposite_2')
+              // 'Token', t('home_deposite_2'), t('home_deposite_3')
+            ];
+            tmpCryptoSelect = 0;
+            tmpFiatSelect = 1;
+          } else {
+            if (userData.profile?.loginType == 1) {
+              tmpRanges = [
+                'Token', t('home_deposite_2')
+                // 'Token', t('home_deposite_2'), t('home_deposite_3')
+              ];
+              tmpCryptoSelect = 0;
+              tmpFiatSelect = 1;
+            }
+          }
 
 
-        setRanges(tmpRanges);
-        setCryptoSelect(tmpCryptoSelect);
-        setFiatSelect(tmpFiatSelect);
-      }
-    })
+          setRanges(tmpRanges);
+          setCryptoSelect(tmpCryptoSelect);
+          setFiatSelect(tmpFiatSelect);
+        }
+      })
+    }
     // dispatch(getCurrencySelect());
-  }, [userData]);
+  }, [userData.profile]);
   // 搜索
   const doSearch = (searchText) => {
     if (showType === cryptoSelect && walletType === 0) {
@@ -736,12 +759,28 @@ function Wallet() {
     showType,
   ]);
 
+  // 讲某个币种排到最前面
+  const pinToTopCurrency = (data, currencyCode) => {
+    let topData = []
+    let otherData = []
+    data.length && data.forEach((item, index) => {
+      if (item.currencyCode === currencyCode) {
+        topData.push(item)
+      } else {
+        otherData.push(item)
+      }
+    })
+
+    return [...topData, ...otherData]
+  }
+
   // 法币数据整理
   const fiatsFormatAmount = () => {
     if (
       fiatsData.constructor !== Array ||
       fiatsData.length === 0 ||
-      !paymentFiat
+      !paymentFiat ||
+      JSON.stringify(userSetting) === '{}'
     ) {
       return;
     }
@@ -812,6 +851,8 @@ function Wallet() {
     }
 
     tmpFiats.sort(sortUseAge);
+    tmpFiats = pinToTopCurrency(tmpFiats, userSetting.setting.fiatCode);
+
     setFiats(tmpFiats);
     setSearchFiats(tmpFiats);
     setFiatDisplayShowData(tmpDisplayFiats);
@@ -829,7 +870,7 @@ function Wallet() {
         }
       }
     }
-  }, [fiatsData, currencyCode, showType, fiatDisplayData, ranges]);
+  }, [fiatsData, currencyCode, showType, fiatDisplayData, ranges, userSetting?.setting]);
 
   //nft 数据整理
   const nftFormatAmount = () => {
