@@ -410,6 +410,12 @@ function Deposite() {
 
     // 法币充值
     const fiatRecharge = async (bankID) => {
+        if (currencyCode === 'IDR') {
+            if (weight < 20000) {
+                dispatch(showMessage({ message: 'The minimum payment amount is 20000', code: 2 }));
+                return
+            }
+        }
         const res = await dispatch(makeOrder({
             bankcode: bankID,
             // currency: arrayLookup(currencys, 'currencyCode', currencyCode, 'id'),
@@ -1507,7 +1513,9 @@ function Deposite() {
                                         </div>
                                         <div style={{ marginLeft: 'auto' }}>
                                             <div className="px-12 font-medium" style={{ textAlign: 'right' }}>
-                                                <Typography className="text-14" style={{ color: '#94A3B8' }}>{t('home_deposite_18')}:51-5000</Typography>
+                                                {currencyCode === 'IDR' && <Typography className="text-14" style={{ color: '#94A3B8' }}>{t('home_deposite_18')}:20000 - ∞</Typography>}
+                                                {currencyCode !== 'IDR' && <Typography className="text-14" style={{ color: '#94A3B8' }}>{t('home_deposite_18')}:51-5000</Typography>}
+
                                             </div>
                                         </div>
                                     </div>
@@ -1530,12 +1538,15 @@ function Deposite() {
                                                 }}
                                             />
                                         </FormControl>
-                                        <div className="flex weight-list">
-                                            {/* <div
-                                                onClick={() => { setWeight(2) }}
-                                                className={clsx('weight-item px-16 py-8 text-center my-12 touchnGoListDi color-0F172A', weight === 2 && 'weight-active')}>
-                                                2
-                                            </div> */}
+
+
+                                        {currencyCode !== 'IDR' && <div className="flex weight-list">
+                                            {/*<div*/}
+                                            {/*    onClick={() => { setWeight(10) }}*/}
+                                            {/*    className={clsx('weight-item px-16 py-8 text-center my-12 touchnGoListDi color-0F172A', weight === 10 && 'weight-active')}>*/}
+                                            {/*    10*/}
+                                            {/*</div>*/}
+
                                             <div
                                                 onClick={() => { setWeight(51) }}
                                                 className={clsx('weight-item px-16 py-8 text-center my-12 touchnGoListDi color-0F172A', weight === 51 && 'weight-active')}>
@@ -1566,7 +1577,46 @@ function Deposite() {
                                                 className={clsx('weight-item px-16 py-8 text-center my-12 touchnGoListDi color-0F172A', weight === 5000 && 'weight-active')}>
                                                 5000
                                             </div>
-                                        </div>
+
+                                        </div>}
+
+                                        {currencyCode === 'IDR' && <div className="flex weight-list">
+                                            {/*<div*/}
+                                            {/*    onClick={() => { setWeight(10) }}*/}
+                                            {/*    className={clsx('weight-item px-16 py-8 text-center my-12 touchnGoListDi color-0F172A', weight === 10 && 'weight-active')}>*/}
+                                            {/*    10*/}
+                                            {/*</div>*/}
+                                            <div
+                                                onClick={() => { setWeight(20000) }}
+                                                className={clsx('weight-item px-16 py-8 text-center my-12 touchnGoListDi color-0F172A', weight === 20000 && 'weight-active')}>
+                                                20000
+                                            </div>
+                                            <div
+                                                onClick={() => { setWeight(50000) }}
+                                                className={clsx('weight-item px-16 py-8 text-center my-12 touchnGoListDi color-0F172A', weight === 50000 && 'weight-active')}>
+                                                50000
+                                            </div>
+                                            <div
+                                                onClick={() => { setWeight(100000) }}
+                                                className={clsx('weight-item px-16 py-8 text-center my-12 touchnGoListDi color-0F172A', weight === 100000 && 'weight-active')}>
+                                                100000
+                                            </div>
+                                            <div
+                                                onClick={() => { setWeight(200000) }}
+                                                className={clsx('weight-item px-16 py-8 text-center my-12 touchnGoListDi color-0F172A', weight === 200000 && 'weight-active')}>
+                                                200000
+                                            </div>
+                                            <div
+                                                onClick={() => { setWeight(500000) }}
+                                                className={clsx('weight-item px-16 py-8 text-center my-12 touchnGoListDi color-0F172A', weight === 500000 && 'weight-active')}>
+                                                500000
+                                            </div>
+                                            <div
+                                                onClick={() => { setWeight(1000000) }}
+                                                className={clsx('weight-item px-16 py-8 text-center my-12 touchnGoListDi color-0F172A', weight === 1000000 && 'weight-active')}>
+                                                1000000
+                                            </div>
+                                        </div>}
 
                                         <div className="my-16 flex items-center justify-content-center">
                                             <Button
