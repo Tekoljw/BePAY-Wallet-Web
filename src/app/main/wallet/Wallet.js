@@ -3048,9 +3048,6 @@ function Wallet() {
                         );
                       })}
                     </div>
-
-
-
                   </Box>
                 </Box>
               </div>
