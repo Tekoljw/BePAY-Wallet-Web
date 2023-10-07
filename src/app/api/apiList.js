@@ -360,8 +360,14 @@ export default {
         fiatWithdrawFee: {
             url: "/payment/fiatWithdrawFee",
             method: "post",
+        },
+
+        payoutBank: {
+            url: "/payment/payoutBank",
+            method: "post",
         }
-    },
+
+},
 
     wallet:{
         centerGetTokenBalanceList: {

@@ -1514,9 +1514,7 @@ function Deposite() {
                                             </div>
                                             <div style={{ marginLeft: 'auto' }}>
                                                 <div className="px-12 font-medium" style={{ textAlign: 'right' }}>
-                                                    {currencyCode === 'IDR' && <Typography className="text-14" style={{ color: '#94A3B8' }}>{t('home_deposite_18')}:20000 - ∞</Typography>}
-                                                    {currencyCode !== 'IDR' && <Typography className="text-14" style={{ color: '#94A3B8' }}>{t('home_deposite_18')}:51-5000</Typography>}
-
+                                                    <Typography className="text-14" style={{ color: '#94A3B8' }}>{t('home_deposite_18')}:{bankItem.minValue} - {bankItem.maxValue}</Typography>
                                                 </div>
                                             </div>
                                         </div>

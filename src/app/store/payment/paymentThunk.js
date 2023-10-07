@@ -199,3 +199,17 @@ export const makeOrder = createAsyncThunk(
         }
     }
 );
+
+
+// 法币提币银行类型
+export const payoutBank = createAsyncThunk(
+    'payment/payoutBank',
+    async (settings, { dispatch, getState }) => {
+        const result = await React.$api("payment.payoutBank");
+        if (result.errno === 0) {
+            return result.data
+        } else {
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+        }
+    }
+);
