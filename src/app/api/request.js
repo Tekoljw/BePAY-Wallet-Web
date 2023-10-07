@@ -27,7 +27,6 @@ service.interceptors.request.use(
                 'openIndex'
             ) || 0;
         }
-
         return config;
     },
     err => Promise.reject(err)
