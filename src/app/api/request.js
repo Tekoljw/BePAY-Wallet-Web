@@ -17,16 +17,15 @@ service.interceptors.request.use(
         if (!config.headers['Wallet-OpenApp-Id']) {
             config.headers['Wallet-OpenApp-Id'] = window.sessionStorage.getItem(
                 'openAppId'
-            ) || '647f374d41b6e0bf81055cc6';
+            ) || 0;
             // ) || '6436951541b60d250c692481';
             // ) || '64915ebf60b24e97a4584544';
-
         }
 
         if (!config.headers['Wallet-OpenApp-Index']) {
             config.headers['Wallet-OpenApp-Index'] = window.sessionStorage.getItem(
                 'openIndex'
-            ) || 110;
+            ) || 0;
         }
 
         return config;
