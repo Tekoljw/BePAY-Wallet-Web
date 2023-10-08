@@ -75,6 +75,7 @@ function Kyc(props) {
 
     useEffect(() => {
         setPageState(1);
+
         if (kycInfo.init) {
             if (!kycInfo.haveEmail()) {
                 setPageState(1);
@@ -83,9 +84,9 @@ function Kyc(props) {
 
             if (!kycInfo.havePhone()) {
                 setPageState(2);
+                setTabValue(1);
                 return
             }
-
             setPageState(0);
         }
     }, [kycInfo]);
@@ -124,6 +125,7 @@ function Kyc(props) {
     const [tmpPhoneCode, setTmpPhoneCode] = useState('');
 
     const ranges = ['Email', 'Phone'];
+
     const [tabValue, setTabValue] = useState(pageState === 0 ? 0 : pageState - 1);
 
     const [time, setTime] = useState(null);
@@ -379,7 +381,7 @@ function Kyc(props) {
                     variants={container}
                     initial="hidden"
                     animate="show"
-                    className="tongYongChuang"
+                    className="tongYongChuang "
                     style={{ margin: "0px auto " }}
                 >
                     {/* <div style={{ color: '#ffffff', display: 'flex' }} onClick={() => {history.push('/wallet/home');;}} className="items-center my-8">
@@ -392,7 +394,8 @@ function Kyc(props) {
                             <img className='back-modal-title-img' src="assets/images/logo/icon-back.png" alt="back icon" />
                             Back
                         </Typography> */}
-                    <div className="flex items-baseline mt-2 font-medium text-14" style={{ marginBottom: '2rem', marginTop: 0 }}>
+
+                    {/* <div className="flex items-baseline mt-2 font-medium text-14" style={{ marginBottom: '2rem', marginTop: 0 }}>
                         {
                             pageState === 0 ?
                                 <Typography>{t('Kyc_34')}
@@ -406,19 +409,19 @@ function Kyc(props) {
                                     </span>
                                 </Typography>
                         }
-                    </div>
+                    </div> */}
 
                     {pageState === 0 && <>
                         <Box
                             component={motion.div}
                             variants={item}
-                            className="w-full rounded-16 border flex flex-col"
+                            className="w-full rounded-16 border flex flex-col "
                             sx={{
                                 border: 'none'
                             }}
                         >
                             {isNeedAudit() && <>
-                                <div className="flex items-center justify-between">
+                                <div className="flex items-center justify-between ">
                                     {/* <Typography
                                         style={{
                                             width: "35%",
@@ -1097,7 +1100,7 @@ function Kyc(props) {
                         >
                             {Object.entries(ranges).map(([key, label]) => (
                                 <Tab
-                                    className="text-14 font-semibold min-h-32 min-w-72 px-8 txtColorTitle zindex opacity-100"
+                                    className="text-14 font-semibold min-h-32 min-w-72 px-8 txtColorTitle zindex opacity-100 "
                                     disableRipple
                                     key={key}
                                     label={label}

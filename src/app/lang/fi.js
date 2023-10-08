@@ -172,7 +172,7 @@ const locale = {
     home_withdraw_24: 'Liitä',
     home_withdraw_25: 'Määrä',
     home_withdraw_26: 'Valitse oma',
-    home_withdraw_27: "PIX-tili",
+    home_withdraw_27: "Tili",
     home_withdraw_28: "Tilin tyyppi",
     home_withdraw_29: "CPF-tili",
 

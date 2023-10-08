@@ -172,7 +172,7 @@ const locale = {
     home_withdraw_24: '貼上',
     home_withdraw_25: '金額',
     home_withdraw_26: '選擇我的',
-    home_withdraw_27: "PIX帳號",
+    home_withdraw_27: "帳號",
     home_withdraw_28: "帳號類型",
     home_withdraw_29: "CPF帳號",
     

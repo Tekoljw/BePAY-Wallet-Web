@@ -110,7 +110,7 @@ function Login() {
             setProfile(res.profileObj);
             if (res.tokenId) {
                 console.log(res.tokenId, 'res.tokenId')
-                dispatch(googleLoginApi({ id_token: res.tokenId}))
+                dispatch(googleLoginApi({ id_token: res.tokenId }))
             }
         }
     };
@@ -135,7 +135,7 @@ function Login() {
     const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down(isMobileMedia ? 'lg' : 'sm'));
     const [rightSidebarOpen, setRightSidebarOpen] = useState(!isMobile);
 
-    const ranges = [ t('signIn_5'), t('signIn_4') ];
+    const ranges = [t('signIn_5'), t('signIn_4')];
     const [tabValue, setTabValue] = useState(0);
     const { control, formState, handleSubmit, reset } = useForm({
         mode: 'onChange',
@@ -714,15 +714,16 @@ function Login() {
                                     <div className="flex-auto mt-px border-t" />
                                 </div>
 
+
                                 <div className={clsx("flex items-center mt-32 ", (tabValue === 0) && 'loginMarginB')} style={{ flexWrap: 'wrap' }}>
-                                    <Button className='txtColorTitleSmall' style={{ width: '30%', margin: '.5rem 1.5%', backgroundColor: '#1E293B', borderColor: 'transparent', opacity: "0.5" }} variant="outlined"
-                                    onClick={() => facebookLogin()}
+                                    <Button className='txtColorTitleSmall' style={{ width: '30%', margin: '.5rem 1.5%', backgroundColor: '#1E293B', borderColor: 'transparent', opacity: "1" }} variant="outlined"
+                                        onClick={() => facebookLogin()}
                                     >
                                         <img style={{ height: '80%' }} src="/assets/images/login/icon-1.png" alt="" />
                                     </Button>
                                     <Button className='txtColorTitleSmall' onClick={() => {
                                         loginTelegram()
-                                    }} style={{ width: '30%', margin: '.5rem 1.5%', backgroundColor: '#1E293B', borderColor: 'transparent', opacity: "0.5" }} variant="outlined">
+                                    }} style={{ width: '30%', margin: '.5rem 1.5%', backgroundColor: '#1E293B', borderColor: 'transparent', opacity: "1" }} variant="outlined">
                                         <img style={{ height: '80%' }} src="/assets/images/login/icon-2.png" alt="" />
                                     </Button>
                                     <Button className='txtColorTitleSmall' style={{ width: '30%', margin: '.5rem 1.5%', backgroundColor: '#1E293B', border: "none", opacity: "1" }} variant="outlined">
@@ -741,7 +742,7 @@ function Login() {
                                             onSuccess={onSuccess}
                                             onFailure={onFailure}
                                             cookiePolicy={"single_host_origin"}
-                                            // isSignedIn={true}
+                                        // isSignedIn={true}
                                         //   icon={false}
                                         />
                                         {/* <img style={{ height: '80%' }} src="/assets/images/login/icon-3.png" alt="" /> */}

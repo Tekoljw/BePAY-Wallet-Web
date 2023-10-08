@@ -72,7 +72,7 @@ function ForgotPass() {
         passwordConfirm: yup.string().oneOf([yup.ref('password'), null], t('signUp_9')),
     });
 
-    const ranges = [t('signIn_4'), t('signIn_5')];
+    const ranges = [t('signIn_5'),t('signIn_4') ];
     const [tabValue, setTabValue] = useState(0);
     const { control, formState, handleSubmit, reset } = useForm({
         mode: 'onChange',
@@ -248,7 +248,7 @@ function ForgotPass() {
                         {/*    )}*/}
                         {/*/>*/}
 
-                        {tabValue === 1 && <Controller
+                        {tabValue === 0 && <Controller
                             name="email"
                             control={control}
                             render={({ field }) => (
@@ -312,7 +312,7 @@ function ForgotPass() {
                             )}
                         />}
 
-                        {tabValue === 0 && (<>
+                        {tabValue === 1 && (<>
                             <Controller
                                 name="nationCode"
                                 control={control}

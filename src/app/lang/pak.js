@@ -173,7 +173,7 @@ const locale = {
     home_withdraw_24: 'پیسٹ کریں',
     home_withdraw_25: 'مقدار',
     home_withdraw_26: 'میرے اکاؤنٹ سے منتخب کریں',
-    home_withdraw_27: "PIX اکاؤنٹ",
+    home_withdraw_27: "اکاؤنٹ",
     home_withdraw_28: "اکاؤنٹ کی قسم",
     home_withdraw_29: "CPF اکاؤنٹ",    
     

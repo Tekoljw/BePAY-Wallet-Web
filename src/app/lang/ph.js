@@ -173,7 +173,7 @@ const locale = {
     home_withdraw_24: 'I-paste',
     home_withdraw_25: 'Halaga',
     home_withdraw_26: 'Piliin ang Aking',
-    home_withdraw_27: "PIX account",
+    home_withdraw_27: "account",
     home_withdraw_28: "Uri ng account",
     home_withdraw_29: "CPF account",
 

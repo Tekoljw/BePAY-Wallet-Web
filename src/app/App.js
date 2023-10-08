@@ -54,7 +54,6 @@ const App = () => {
     const lang = getUrlParam('lang')==='undefined'?'en':getUrlParam('lang');
 
 
-
     useEffect(() => {
 
         dispatch(changeLanguage(lang));
@@ -69,6 +68,9 @@ const App = () => {
         }
         if (openIndex) {
             window.sessionStorage.setItem('openIndex', openIndex)
+        }
+        if (lang) {
+            window.localStorage.setItem('lang', lang)
         }
     }, []);
 
