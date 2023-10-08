@@ -99,17 +99,7 @@ function Fiat(props) {
     };
 
     const getEntryType = (currencyCode) => {
-        var result = '';
-        switch (currencyCode) {
-            case 'BRL':
-                result = 'PIX'
-                break
-            case 'IDR':
-                result = bankList[entryType].bankCode ?? 'Dana'
-                break
-            default:
-                break
-        }
+        var result = bankList[currencyCode][entryType].bankCode;
 
         return result
     }
@@ -161,7 +151,7 @@ function Fiat(props) {
     const [fee, setFee] = useState(0);
     const [fiatsSelected, setFiatsSelected] = useState(0);
     const [ entryType, setEntryType ] = useState(0);
-    const [ bankList, setBankList ] = useState([]);
+    const [ bankList, setBankList ] = useState({});
     // select切换
     const handleChangeFiats = (event) => {
         setFiatsSelected(event.target.value);
@@ -176,7 +166,15 @@ function Fiat(props) {
         dispatch(payoutBank()).then((res) => {
             let result = res.payload
             if (result) {
-                setBankList(result)
+                let tmpBank = {}
+                result.map((item) => {
+                    if (tmpBank[item.currency]) {
+                        tmpBank[item.currency].push(item)
+                    } else {
+                        tmpBank[item.currency] = [item]
+                    }
+                })
+                setBankList(tmpBank)
             }
         })
     }
@@ -487,6 +485,9 @@ function Fiat(props) {
                                         </div>
                                     </div>
 
+                                </div>}
+
+                                {bankList[currencyCode]?.length > 0 && <>
                                     <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
                                         <Typography className="text-16 ">{t('home_withdraw_28')}</Typography>
                                     </div>
@@ -523,27 +524,26 @@ function Fiat(props) {
                                                     },
                                                 }}
                                             >
-                                                {bankList.length > 0 && bankList.map((row, index) => {
-                                                    if (row.currency === 'IDR') {
-                                                        return (
-                                                            <MenuItem
-                                                                key={index}
-                                                                value={index}
+                                                {bankList[currencyCode]?.length > 0 && bankList[currencyCode].map((row, index) => {
+                                                    return (
+                                                        <MenuItem
+                                                            key={index}
+                                                            value={index}
+                                                        >
+                                                            <div
+                                                                className="flex items-center py-4 flex-grow"
+                                                                style={{ width: '100%' }}
                                                             >
-                                                                <div
-                                                                    className="flex items-center py-4 flex-grow"
-                                                                    style={{ width: '100%' }}
-                                                                >
-                                                                    <Typography className="text-16 font-medium">{row.bankName}</Typography>
-                                                                </div>
-                                                            </MenuItem>
-                                                        )
-                                                    }
+                                                                <Typography className="text-16 font-medium">{row.bankName}</Typography>
+                                                            </div>
+                                                        </MenuItem>
+                                                    )
                                                 })}
                                             </Select>
                                         </FormControl>
                                     </div>
-                                </div>}
+
+                                </>}
 
                                 {
                                     (currencyCode == "BRL") && <div>
