@@ -352,7 +352,7 @@ export const resetPass = createAsyncThunk(
         const userResetPassData = await React.$api("user.changePass", data);
         if (userResetPassData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
-            history.push('/login');
+            history.push('/wallet/login');
         } else {
             dispatch(showMessage({ message: userResetPassData.errmsg, code: 2 }));
         }
@@ -372,7 +372,7 @@ export const changePhone = createAsyncThunk(
         const userResetPassData = await React.$api("user.changePhone", data);
         if (userResetPassData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
-            history.push('/home');
+            history.push('/wallet/home');;
         } else {
             dispatch(showMessage({ message: userResetPassData.errmsg, code: 2 }));
         }
@@ -391,7 +391,7 @@ export const changeEmail = createAsyncThunk(
         const userResetPassData = await React.$api("user.changeEmail", data);
         if (userResetPassData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
-            history.push('/home');
+            history.push('/wallet/home');;
         } else {
             dispatch(showMessage({ message: userResetPassData.errmsg, code: 2 }));
         }
@@ -412,7 +412,7 @@ export const forgotPass = createAsyncThunk(
         const userForgotData = await React.$api("user.resetPass", data);
         if (userForgotData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
-            history.push('/login');
+            history.push('/wallet/login');
         } else {
             dispatch(showMessage({ message: userForgotData.errmsg, code: 2 }));
         }

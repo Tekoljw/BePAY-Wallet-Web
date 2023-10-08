@@ -171,7 +171,7 @@ function Buy(props) {
             //     // balance: 11         // 法币金额
             // });
         } else if (payType === 'FaTPay') {
-            history.push('/fatpaybuy', {
+            history.push('/wallet/fatpaybuy', {
                 symbol: symbol,     // 加密货币
                 // num: 10,            // 加密货币数量
                 // currency: 'USD',    // 法币

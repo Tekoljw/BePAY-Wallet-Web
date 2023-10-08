@@ -27,7 +27,7 @@ function Login() {
         await dispatch(getConfig());
         // await dispatch(getNetworks());
         await dispatch(doLogin());
-        // history.push('/home');
+        // history.push('/wallet/home');;
     };
 
     return (

@@ -172,6 +172,7 @@
         "typescript": "^4.6.4",
         "util": "^0.12.4"
     },
+    "homepage": "/wallet/",
     "scripts": {
         "start": "react-app-rewired  start",
         "build": "react-app-rewired build",

@@ -7,6 +7,6 @@ mock.onAny().passThrough();
 
 if (module?.hot?.status() === 'apply') {
   const { pathname } = history.location;
-  history.push('/loading');
+  history.push('/wallet/loading');
   history.push({ pathname });
 }

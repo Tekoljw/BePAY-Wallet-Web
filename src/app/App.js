@@ -82,7 +82,9 @@ const App = () => {
         <CacheProvider value={createCache(emotionCacheOptions[langDirection])}>
             <FuseTheme theme={mainTheme} direction={langDirection}>
                 {/*<AuthProvider>*/}
-                <BrowserRouter>
+                <BrowserRouter
+                    basename="/wallet"
+                >
                     {/*<FuseAuthorization*/}
                     {/*    userRole={userRole}*/}
                     {/*    loginRedirectUrl={settingsConfig.loginRedirectUrl}*/}

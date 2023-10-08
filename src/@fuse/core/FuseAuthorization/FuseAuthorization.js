@@ -62,7 +62,7 @@ class FuseAuthorization extends PureComponent {
         Redirect to Login Page
         */
     if (!userRole || userRole.length === 0) {
-      setTimeout(() => history.push('/login'), 0);
+      setTimeout(() => history.push('/wallet/login'), 0);
       loginRedirectUrl = pathname;
     } else {
       /*

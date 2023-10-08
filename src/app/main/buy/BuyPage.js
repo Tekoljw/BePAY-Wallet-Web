@@ -116,7 +116,7 @@ function BuyPage() {
         }
 
         if (kycInfo.init === true && isNeedAudit() === true) {
-            history.push('/kyc');
+            history.push('/wallet/kyc');
         }
     }, [kycInfo]);
 

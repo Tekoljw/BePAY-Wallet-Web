@@ -114,7 +114,7 @@ function FaTPayBuyPage() {
 
     useEffect(() => {
         if (isInitial && isNeedAudit() === true) {
-            history.push('/kyc');
+            history.push('/wallet/kyc');
         }
     }, [isInitial, kycInfo]);
 
@@ -122,7 +122,7 @@ function FaTPayBuyPage() {
         if (configValue.url) {
             if (isNeedAudit() === false && isValidConfig() === true) {
                 window.open(configValue.url);
-                history.push('/home/buyCrypto');
+                history.push('/wallet/home/buyCrypto');
             }
         }
     }, [configValue.url]);

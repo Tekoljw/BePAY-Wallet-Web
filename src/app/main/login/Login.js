@@ -356,7 +356,7 @@ function Login() {
             // if (response.authResponse.accessToken) {
             //localStorage.setItem('Authorization', response.authResponse.accessToken);
             // setTimeout(() => {
-            //     history.push('/home');
+            //     history.push('/wallet/home');;
             // }, 1000);
             // }
         } else {

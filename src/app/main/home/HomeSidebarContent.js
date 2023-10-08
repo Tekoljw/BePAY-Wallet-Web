@@ -58,7 +58,7 @@ function HomeSidebarContent(props) {
     const [activeMenu, setTab] = useState('');
 
     const tabClick = (tab) => {
-        history.push(tab === 'wallet' ? '/home' : `/home/${tab}`);
+        history.push(tab === 'wallet' ? '/wallet/home' : `/wallet/home/${tab}`);
         // history.push(`/home/${tab}`);
         // console.log('tab', tab);
         // history.push({pathname: tab});
@@ -395,7 +395,7 @@ function HomeSidebarContent(props) {
                         }
                         onClick={(ev) => {
                             setTab('security');
-                            history.push('/home/security');
+                            history.push('/wallet/home/security');
                         }}
                     >
                         <div className='iconWz'>

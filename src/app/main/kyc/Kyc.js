@@ -382,12 +382,12 @@ function Kyc(props) {
                     className="tongYongChuang"
                     style={{ margin: "0px auto " }}
                 >
-                    {/* <div style={{ color: '#ffffff', display: 'flex' }} onClick={() => {history.push('/home');}} className="items-center my-8">
+                    {/* <div style={{ color: '#ffffff', display: 'flex' }} onClick={() => {history.push('/wallet/home');;}} className="items-center my-8">
                         <FuseSvgIcon className="text-48" size={16} color="action">heroicons-outline:chevron-left</FuseSvgIcon>
                         <Typography className="text-16 mx-8">Back</Typography>
 
                     </div> */}
-                    {/* <Typography onClick={() => { history.push('/home'); }}
+                    {/* <Typography onClick={() => { history.push('/wallet/home');; }}
                             className={clsx("mt-32 text-20 font-extrabold tracking-tight leading-tight flex items-center justify-content-start back-modal-title cursor-pointer btnColorTitleBig", pageState === 0 && 'kyc-back-modal-title kyc-back-modal-title-bg')}>
                             <img className='back-modal-title-img' src="assets/images/logo/icon-back.png" alt="back icon" />
                             Back

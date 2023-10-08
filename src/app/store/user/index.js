@@ -37,7 +37,7 @@ const userSlice = createSlice({
                         history.push(res.pathname)
                         history.go(0)
                     }else{
-                        history.push('/home');
+                        history.push('/wallet/home');;
                     }
 
                     window.parent.postMessage(JSON.stringify({

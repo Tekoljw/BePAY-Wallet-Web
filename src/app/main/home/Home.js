@@ -122,19 +122,19 @@ function HomePage(props) {
             }
 
             if (tmpCurrentTab === 'deposite') {
-                history.push('/home/deposite')
+                history.push('/wallet/home/deposite')
                 slide.style.transform = `translateX(${1 * 100}%)`;
                 navLinks.forEach(link => link.classList.remove('active'));
                 navLinks[1].classList.add('active');
                 slide.style.backgroundColor = "#2C3640";
             } else if (tmpCurrentTab === 'withdraw') {
-                history.push('/home/withdraw')
+                history.push('/wallet/home/withdraw')
                 slide.style.transform = `translateX(${2 * 100}%)`;
                 navLinks.forEach(link => link.classList.remove('active'));
                 navLinks[2].classList.add('active');
                 slide.style.backgroundColor = "#2C3640";
             } else if (tmpCurrentTab === 'account') {
-                history.push('/home/wallet')
+                history.push('/wallet/home/wallet')
                 slide.style.transform = `translateX(${0 * 100}%)`;
                 navLinks.forEach(link => link.classList.remove('active'));
                 navLinks[0].classList.add('active');
@@ -304,7 +304,7 @@ function HomePage(props) {
                             <div class="slide"></div>
                             <div class="nav-link active" data-index="0" onClick={() => {
                                 changePhoneTab('account')
-                                history.push('/home/wallet')
+                                history.push('/wallet/home/wallet')
                             }}>
                                 <img class="material-icons md-18" width="24px" src={currentTab === 'account' ? 'assets/images/menu/icon-wallet-active2.png' : 'assets/images/menu/icon-wallet-active.png'} alt="" />
                                 {/* <i class="material-icons md-18">signal_cellular_alt</i> */}
@@ -312,7 +312,7 @@ function HomePage(props) {
                             </div>
                             <div class="nav-link" data-index="1" onClick={() => {
                                 changePhoneTab('deposite')
-                                history.push('/home/deposite')
+                                history.push('/wallet/home/deposite')
                             }}>
                                 {/* {changePhoneTab('deposit')} */}
                                 <img class="material-icons md-18" width="24px" src={currentTab === 'deposite' ? 'assets/images/menu/deposite-active2.png' : 'assets/images/menu/deposite-active.png'} alt="" />
@@ -320,7 +320,7 @@ function HomePage(props) {
                             </div>
                             <div class="nav-link" data-index="2" onClick={() => {
                                 changePhoneTab('withdraw')
-                                history.push('/home/withdraw')
+                                history.push('/wallet/home/withdraw')
                             }}>
                                 {/* {changePhoneTab('withdraw')} */}
                                 <img class="material-icons md-18" width="24px" src={currentTab === 'withdraw' ? 'assets/images/menu/withdraw-active2.png' : 'assets/images/menu/withdraw-active.png'} alt="" />

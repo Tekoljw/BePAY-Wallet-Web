@@ -43,9 +43,9 @@ service.interceptors.response.use(
                 var openAppId = window.sessionStorage.getItem('openAppId') || 0;
                 var openIndex = window.sessionStorage.getItem('openIndex') || 0;
                 localStorage.removeItem(`Authorization-${openAppId}-${openIndex}`);
-                if (window.location.pathname !== '/sign-up' && window.location.pathname !== '/login') {
-                    history.push("/login" + window.location.search);
-                } else if (window.location.pathname === '/login') {
+                if (window.location.pathname !== '/wallet/sign-up' && window.location.pathname !== '/wallet/login') {
+                    history.push("/wallet/login" + window.location.search);
+                } else if (window.location.pathname === '/wallet/login') {
                     console.log(window.location.pathname, 'window.location.pathname')
                 }
             }, 500);

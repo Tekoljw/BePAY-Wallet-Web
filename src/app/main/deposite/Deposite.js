@@ -1054,7 +1054,7 @@ function Deposite() {
 
                                                         if (decentralized != 1 && userData.profile?.loginType != -1) {
                                                             // 跳转到 /account 页面
-                                                            history.push('/account');
+                                                            history.push('/wallet/account');
                                                         } else {
 
                                                             // 保留原有的 onClick 逻辑
