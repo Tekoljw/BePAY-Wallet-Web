@@ -291,6 +291,7 @@ function Deposite() {
     const [submitDisabled, setSubmitDisabled] = useState(false);
     const [isGetWalletAddress, setIsGetWalletAddress] = useState(false);
 
+
     const config = useSelector(selectConfig);
     const userData = useSelector(selectUserData);
     const currencys = useSelector(selectConfig).payment.currency || [];
@@ -357,6 +358,12 @@ function Deposite() {
         });
         // }
     };
+
+
+    const backLoading = () => {
+        setTimeout(() => setIsLoading(false), 10000);
+    };
+
 
     useEffect(() => {
         setSubmitDisabled(!transferFormData.money || !transferFormData.amount);
@@ -430,7 +437,6 @@ function Deposite() {
                 window.open(result.payUrl, "_blank");
                 fbq('track', 'InitiateCheckout');
             }
-
             if (result.status === 'failed') {
                 dispatch(showMessage({ message: result.errMsg, code: 2 }));
             }
@@ -1189,26 +1195,27 @@ function Deposite() {
                                                 {t('home_deposite_14')}
                                             </Typography>
                                         </Box>
-                                        {
-                                            // isGetWalletAddress &&
-                                            (<div className='login-right-btns-item text-16 flex items-center justify-start txtColorTitleSmall bg-success btn-center'
+                                        {isLoading && <div style={{ marginBottom: "20px" }} >
+                                            <FuseLoading />
+                                        </div>}
+                                        {!isLoading &&
+                                            <div className='login-right-btns-item text-16 flex items-center justify-start txtColorTitleSmall bg-success btn-center'
                                                 style={{ width: '21rem', marginBottom: '50px' }}
                                                 onClick={async () => {
+                                                    setIsLoading(true);
                                                     getWalletAddressClick(networkId);
                                                 }}
                                             >
                                                 <div className='flex justify-content-center' style={{ width: "180px", overflow: "hidden" }}>
                                                     <img className='login-way-img button-noreduce'
-                                                        src="assets/images/menu/icon-wallet-active.png "
+                                                        src="assets/images/menu/icon-wallet-active.png"
                                                         alt="" />
                                                     <span className='login-way-name'>{t('home_deposite_13')}</span>
                                                 </div>
-                                            </div>)
+                                            </div>
                                         }
                                     </>
                                 )}
-
-
                         <BootstrapDialog
                             onClose={() => { setTransferDialogState(false); }}
                             aria-labelledby="customized-dialog-title"
@@ -1610,21 +1617,25 @@ function Deposite() {
                                                     1000000
                                                 </div>
                                             </div>}
-
-                                            <div className="my-16 flex items-center justify-content-center">
-                                                <Button
-                                                    className="px-48 text-lg btnColorTitleBig"
-                                                    size="large"
-                                                    color="secondary"
-                                                    variant="contained"
-                                                    sx={{ backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1rem' }}
-                                                    onClick={() => {
-                                                        fiatRecharge(bankItem.id);
-                                                    }}
-                                                >
-                                                    {t('home_borrow_8')}
-                                                </Button>
-                                            </div>
+                                            {isLoading && <FuseLoading />}
+                                            {!isLoading &&
+                                                <div className="my-16 flex items-center justify-content-center">
+                                                    <Button
+                                                        className="px-48 text-lg btnColorTitleBig"
+                                                        size="large"
+                                                        color="secondary"
+                                                        variant="contained"
+                                                        sx={{ backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1rem' }}
+                                                        onClick={() => {
+                                                            setIsLoading(true);
+                                                            fiatRecharge(bankItem.id);
+                                                            backLoading();
+                                                        }}
+                                                    >
+                                                        {t('home_borrow_8')}
+                                                    </Button>
+                                                </div>
+                                            }
                                         </div>
                                     </AccordionDetails>
                                 </StyledAccordion>

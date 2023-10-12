@@ -316,7 +316,6 @@ export const signUp = createAsyncThunk(
         if (userSignUpData.errno === 0) {
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userSignUpData));
-            history.push('login')    
         } else {
             dispatch(showMessage({ message: userSignUpData.errmsg, code: 2 }));
         }
@@ -337,7 +336,6 @@ export const emailSignUp = createAsyncThunk(
         if (userSignUpData.errno === 0) {
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userSignUpData));
-            history.push('login')    
         } else {
             dispatch(showMessage({ message: userSignUpData.errmsg, code: 2 }));
         }
