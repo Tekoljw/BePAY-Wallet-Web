@@ -212,7 +212,7 @@ function HomePage(props) {
                     <div className="flex flex-col w-full items-center pb-24">
                         <Box
                             className="w-full rounded-16 border py-12 flex flex-col"
-                            style={{ paddingTop: isMobileMedia ? '1.2rem' : 0 }}
+                            style={{ paddingTop: isMobileMedia ? '0rem' : 0 }}
                             sx={{
                                 backgroundColor: (theme) =>
                                     theme.palette.mode === 'light'

@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectConfig } from "../../store/config";
 import { useTranslation } from "react-i18next";
 import { getMenuList } from "app/store/config/configThunk";
+import { isMobile } from 'web3modal';
 
 const isMobileMedia = new MobileDetect(window.navigator.userAgent).mobile();
 
@@ -117,15 +118,13 @@ function HomeSidebarContent(props) {
         })
     }, [])
 
-
-    useEffect(() => {
-        if (window.localStorage.getItem('phoneTab')) {
-            if (window.localStorage.getItem('phoneTab') == "deposite" || window.localStorage.getItem('phoneTab') == "withdraw" || window.localStorage.getItem('phoneTab') == "buyCrypto" || window.localStorage.getItem('phoneTab') == "swap" || window.localStorage.getItem('phoneTab') == "borrow" || window.localStorage.getItem('phoneTab') == "c2c" || window.localStorage.getItem('phoneTab') == "pools" || window.localStorage.getItem('phoneTab') == "sendTips" || window.localStorage.getItem('phoneTab') == "record" || window.localStorage.getItem('phoneTab') == "nft" || window.localStorage.getItem('phoneTab') == "security") {
-                tabClick(window.localStorage.getItem('phoneTab'));
-            }
-        }
-    }, []);
-
+    // useEffect(() => {
+    //     if (window.localStorage.getItem('phoneTab') && isMobile()) {
+    //         if (window.localStorage.getItem('phoneTab') == "deposite" || window.localStorage.getItem('phoneTab') == "withdraw" || window.localStorage.getItem('phoneTab') == "buyCrypto" || window.localStorage.getItem('phoneTab') == "swap" || window.localStorage.getItem('phoneTab') == "borrow" || window.localStorage.getItem('phoneTab') == "c2c" || window.localStorage.getItem('phoneTab') == "pools" || window.localStorage.getItem('phoneTab') == "sendTips" || window.localStorage.getItem('phoneTab') == "record" || window.localStorage.getItem('phoneTab') == "nft" || window.localStorage.getItem('phoneTab') == "security") {
+    //             tabClick(window.localStorage.getItem('phoneTab'));
+    //         }
+    //     }
+    // }, []);
 
     return (
         <div className={!isMobileMedia ? "px-16 py-24 text-18 left-side-text-box" : "px-16 py-24 text-18"}>
