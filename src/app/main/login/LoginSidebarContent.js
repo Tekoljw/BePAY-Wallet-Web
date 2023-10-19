@@ -24,7 +24,6 @@ import Web3 from "web3";
 import { EthereumProvider } from '@walletconnect/ethereum-provider';
 
 
-
 function LoginSidebarContent(props) {
 
     // f52eb6556997b1ef13ad7fc8ac632ca6
@@ -100,17 +99,17 @@ function LoginSidebarContent(props) {
                 }
                 break;
 
-                case 'WalletConnect':
-                    if (!checkIsPhone) {
-                        dispatch(doLogin({
-                            agentId: agentId,
-                            walletType,
-                            id
-                        }))
-                    } else {
-                        dispatch(showMessage({ message: 'Only for PC' }))
-                    }
-                    break;
+            case 'WalletConnect':
+                if (!checkIsPhone) {
+                    dispatch(doLogin({
+                        agentId: agentId,
+                        walletType,
+                        id
+                    }))
+                } else {
+                    dispatch(showMessage({ message: 'Only for PC' }))
+                }
+                break;
 
             default:
                 dispatch(doLogin({
@@ -126,7 +125,7 @@ function LoginSidebarContent(props) {
 
 
     // async function onConnect() {
-      
+
     //     const provider = await EthereumProvider.init({
     //         projectId:'f52eb6556997b1ef13ad7fc8ac632ca6',
     //         showQrModal: true,
@@ -156,15 +155,16 @@ function LoginSidebarContent(props) {
     // }
 
 
-
     return (
         <div className='login-right-content loginMarginZhong ' style={{ marginLeft: "20px" }}>
-            <div className='login-right-content-title font-furore text-20' >
+
+            {!isMobileMedia && <div className='login-right-content-title font-furore text-20 ' >
                 <span className="color-16c2a3">
                     Web 3.0
                 </span> {t('signIn_1')}
             </div>
-            <div className='login-right-btns'>
+            }
+            <div className={clsx("login-right-btns", !isMobileMedia ? "mt-2" : "mt-12")}>
                 {
                     loginWays.list.map((way, index) => {
                         const balckimg = way.id === 0 || way.id === 13;
@@ -172,7 +172,7 @@ function LoginSidebarContent(props) {
                             <div className={
                                 clsx(
                                     `${balckimg == true ? '' : 'checkIsPhone'}`,
-                                    'login-right-btns-item text-16 flex items-center justify-start txtColorTitleSmall',
+                                    'login-right-btns-item text-16 flex items-center justify-start txtColorTitleSmall ',
                                     ((!isMobileMedia && way.isOnlyMobileShow) || (isMobileMedia && way.isOnlyPcShow)) && 'checkIsPhone'
                                 )
                             } key={index}
@@ -186,9 +186,8 @@ function LoginSidebarContent(props) {
                                     way.id === 13 && walletLogin('BitKeep', way.id);
                                     // way.id === 14 && walletLogin('Bitski', way.id);
                                     // way.id === 16 && walletLogin('BinanceSmart', way.id);
-
                                 }}
-                            // !isMobileMedia && way.id === 11 && color = gray
+                                style={{ width: "23rem" }}
                             >
                                 <img className='login-way-img' src={`/assets/images/login/${way.src}.png`} alt="" />
                                 <span className='login-way-name'>{way.name}</span>
@@ -197,7 +196,6 @@ function LoginSidebarContent(props) {
                     })
                 }
             </div>
-
         </div>
     );
 }

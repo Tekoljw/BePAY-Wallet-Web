@@ -55,6 +55,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { useStatStyles } from '@chakra-ui/react';
 import history from '@history';
 import { local } from 'web3modal';
+import LoadingButton from "@mui/lab/LoadingButton";
 
 
 
@@ -230,6 +231,8 @@ function Deposite() {
     const { t } = useTranslation('mainPage');
     const dispatch = useDispatch();
     const mounted = useRef();
+    const [openLoad, setOpenLoad] = useState(false);
+    const [cryptoOpenLoad, setCryptoOpenLoad] = useState(false);
 
     function BootstrapDialogTitle(props) {
         const { children, onClose, ...other } = props;
@@ -359,9 +362,8 @@ function Deposite() {
         // }
     };
 
-
     const backLoading = () => {
-        setTimeout(() => setIsLoading(false), 10000);
+        setTimeout(() => setOpenLoad(false), 10000);
     };
 
 
@@ -377,6 +379,7 @@ function Deposite() {
 
         dispatch(getWalletAddress({ networkId: id, symbol: symbol })).then((value) => {
             setIsLoading(false);
+            setCryptoOpenLoad(false);
             let addressDataObj = { ...addressData } || {};
             if (!addressDataObj[symbol]) {
                 addressDataObj[symbol] = {}
@@ -386,7 +389,6 @@ function Deposite() {
             if (!value.payload) return;
             setWalletAddress(value.payload.data);
             setIsGetWalletAddress(true);
-            console.log(value.payloa, 'value.payqoad/............');
         });
     };
 
@@ -1195,25 +1197,27 @@ function Deposite() {
                                                 {t('home_deposite_14')}
                                             </Typography>
                                         </Box>
-                                        {isLoading && <div style={{ marginBottom: "20px" }} >
-                                            <FuseLoading />
-                                        </div>}
-                                        {!isLoading &&
-                                            <div className='login-right-btns-item text-16 flex items-center justify-start txtColorTitleSmall bg-success btn-center'
-                                                style={{ width: '21rem', marginBottom: '50px' }}
+                                        <div className='flex justify-content-center' style={{ width: "100%", overflow: "hidden" }}>
+                                            <LoadingButton className="px-48 text-lg btnColorTitleBig"
+                                                size="large"
+                                                color="secondary"
+                                                variant="contained"
+                                                loading={cryptoOpenLoad}
+                                                sx={{ backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1rem' }}
                                                 onClick={async () => {
-                                                    setIsLoading(true);
+                                                    setCryptoOpenLoad(true);
                                                     getWalletAddressClick(networkId);
                                                 }}
+                                                style={{ width: "28rem" }}
                                             >
-                                                <div className='flex justify-content-center' style={{ width: "180px", overflow: "hidden" }}>
-                                                    <img className='login-way-img button-noreduce'
+                                                <div className='flex justify-content-center' style={{ width: "280px", overflow: "hidden" }}>
+                                                    {!cryptoOpenLoad && <img className='login-way-img button-noreduce'
                                                         src="assets/images/menu/icon-wallet-active.png"
-                                                        alt="" />
+                                                        alt="" />}
                                                     <span className='login-way-name'>{t('home_deposite_13')}</span>
                                                 </div>
-                                            </div>
-                                        }
+                                            </LoadingButton>
+                                        </div>
                                     </>
                                 )}
                         <BootstrapDialog
@@ -1345,9 +1349,6 @@ function Deposite() {
 
                                 </Button>
                             </DialogActions>
-
-
-
 
                         </BootstrapDialog>
                     </Box>
@@ -1617,25 +1618,23 @@ function Deposite() {
                                                     1000000
                                                 </div>
                                             </div>}
-                                            {isLoading && <FuseLoading />}
-                                            {!isLoading &&
-                                                <div className="my-16 flex items-center justify-content-center">
-                                                    <Button
-                                                        className="px-48 text-lg btnColorTitleBig"
-                                                        size="large"
-                                                        color="secondary"
-                                                        variant="contained"
-                                                        sx={{ backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1rem' }}
-                                                        onClick={() => {
-                                                            setIsLoading(true);
-                                                            fiatRecharge(bankItem.id);
-                                                            backLoading();
-                                                        }}
-                                                    >
-                                                        {t('home_borrow_8')}
-                                                    </Button>
-                                                </div>
-                                            }
+                                            <div className="my-16 flex items-center justify-content-center">
+                                                <LoadingButton
+                                                    className="px-48 text-lg btnColorTitleBig"
+                                                    size="large"
+                                                    color="secondary"
+                                                    variant="contained"
+                                                    loading={openLoad}
+                                                    sx={{ backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1rem' }}
+                                                    onClick={() => {
+                                                        setOpenLoad(true);
+                                                        fiatRecharge(bankItem.id);
+                                                        backLoading();
+                                                    }}
+                                                >
+                                                    {t('home_borrow_8')}
+                                                </LoadingButton>
+                                            </div>
                                         </div>
                                     </AccordionDetails>
                                 </StyledAccordion>

@@ -1093,6 +1093,11 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     cursor: pointer;
 }
 
+
+.muiltr-j8snnk-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root.Mui-disabled {
+    background-color: rgba(13, 148, 136, 0.3) !important;
+}
+
 .blackimg img {
     /* filter: grayscale(100%)  */
     opacity: 0.4;
@@ -1373,6 +1378,7 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     .dialog-container .muiltr-1loik7f-MuiPaper-root-MuiDialog-paper {
         max-width: 360px;
     }
+
     .dialog-select-fiat-item {
         width: 13.5rem;
         height: 3.5rem;
@@ -1426,6 +1432,10 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
 
     .table-page-pl {
         margin-bottom: 3rem;
+    }
+
+    .dark .muiltr-1u2w381-MuiModal-root-MuiDrawer-root .muiltr-1dqueaj-MuiPaper-root-MuiDrawer-paper {
+        background-color: #0E1421 !important;
     }
 
 }
