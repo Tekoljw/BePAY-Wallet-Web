@@ -445,7 +445,7 @@ function Nft(props) {
                                         }}>Paste</div>
                                     </FormControl>
                                     <div onClick={() => { setOpenWithdrawLog(true) }} className="flex items-center justify-content-center cursor-pointer">
-                                        <img style={{ width: "24px", height: "24px" }} src="assets/images/withdraw/info.png" alt="" />
+                                        <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
                                     </div>
                                 </div>
 
@@ -594,7 +594,7 @@ function Nft(props) {
                     <DialogContent dividers>
                         <div className='dialog-box'>
                             <Typography id="customized-dialog-title" className="text-24 px-16  dialog-title-text">&nbsp;
-                                <img src="assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => { setOpenWithdrawLog(false) }} alt="close icon" />
+                                <img src="wallet/assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => { setOpenWithdrawLog(false) }} alt="close icon" />
                             </Typography>
                         </div>
                         <Box
@@ -617,10 +617,10 @@ function Nft(props) {
                                                     {item}
                                                 </Typography>
                                                 <IconButton onClick={() => navigator.clipboard.writeText(item)}>
-                                                    <img src="assets/images/deposite/copy.png" alt="" />
+                                                    <img src="wallet/assets/images/deposite/copy.png" alt="" />
                                                 </IconButton>
                                                 <IconButton>
-                                                    <img src="assets/images/deposite/delete.png" alt="" />
+                                                    <img src="wallet/assets/images/deposite/delete.png" alt="" />
                                                 </IconButton>
                                             </div>
                                         )
@@ -643,7 +643,7 @@ function Nft(props) {
                     <DialogContent dividers >
                         <div className='dialog-box' >
                             <Typography id="customized-dialog-title" className="text-24 dialog-title-text" style={{ textAlign: "center", marginTop: "10px" }}>Transaction
-                                <img src="assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => {
+                                <img src="wallet/assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => {
                                     setOpenTiBi(false)
                                     setOpenLoad(false)
                                 }} alt="close icon" />
@@ -656,10 +656,10 @@ function Nft(props) {
                                 animate="show"
                                 className="dialog-content-inner  border-r-5">
                                 <motion.div variants={item}>
-                                    <img style={{ margin: "0 auto", width: "60px", height: "60px", marginTop: "10px" }} src='assets/images/wallet/naoZhong.png'></img>
+                                    <img style={{ margin: "0 auto", width: "60px", height: "60px", marginTop: "10px" }} src='wallet/assets/images/wallet/naoZhong.png'></img>
                                 </motion.div>
                                 <motion.div className='flex justify-content-center' variants={item} style={{ margin: "0 auto", marginTop: "20px", fontSize: "20px", }}>
-                                    <img style={{ width: "28px", height: "28px", borderRadius: "5px" }} src='assets/images/wallet/zt.png'></img>
+                                    <img style={{ width: "28px", height: "28px", borderRadius: "5px" }} src='wallet/assets/images/wallet/zt.png'></img>
                                     <div className='ml-12'>BeingFi Genesis Robot</div>
                                 </motion.div>
                                 <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "10px", fontSize: "16px", color: "#ffc600" }}>● Pending Review</motion.div>

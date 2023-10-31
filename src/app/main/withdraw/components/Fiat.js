@@ -435,7 +435,7 @@ function Fiat(props) {
                                                 />
                                             </FormControl>
                                             <div onClick={() => { setOpenWithdrawLog(true) }} className="flex items-center justify-content-center cursor-pointer">
-                                                <img style={{ width: "24px", height: "24px" }} src="assets/images/withdraw/info.png" alt="" />
+                                                <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
                                             </div>
                                         </div>
 
@@ -456,7 +456,7 @@ function Fiat(props) {
                                                 />
                                             </FormControl>
                                             <div onClick={() => { setOpenWithdrawLog(true) }} className="flex items-center justify-content-center cursor-pointer">
-                                                <img style={{ width: "24px", height: "24px" }} src="assets/images/withdraw/info.png" alt="" />
+                                                <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
                                             </div>
                                         </div>
                                     </div>
@@ -481,7 +481,7 @@ function Fiat(props) {
                                         </FormControl>
 
                                         <div onClick={() => { setOpenWithdrawLog(true) }} className="flex items-center justify-content-center cursor-pointer">
-                                            <img style={{ width: "24px", height: "24px" }} src="assets/images/withdraw/info.png" alt="" />
+                                            <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
                                         </div>
                                     </div>
 
@@ -565,7 +565,7 @@ function Fiat(props) {
                                             </FormControl>
 
                                             <div onClick={() => { setOpenWithdrawLog(true) }} className="flex items-center justify-content-center cursor-pointer">
-                                                <img style={{ width: "24px", height: "24px" }} src="assets/images/withdraw/info.png" alt="" />
+                                                <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
                                             </div>
                                         </div>
 
@@ -611,7 +611,7 @@ function Fiat(props) {
                                                 }}>{t('home_withdraw_11')}</div>
                                             </FormControl>
                                             <div onClick={() => { setOpenWithdrawLog(true) }} className="flex items-center justify-content-center cursor-pointer">
-                                                <img style={{ width: "24px", height: "24px" }} src="assets/images/withdraw/info.png" alt="" />
+                                                <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
                                             </div>
                                         </div>
                                     </div>
@@ -690,7 +690,7 @@ function Fiat(props) {
                     <DialogContent dividers>
                         <div className='dialog-box'>
                             <Typography id="customized-dialog-title" className="text-24 px-16  dialog-title-text">&nbsp;
-                                <img src="assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => { setOpenWithdrawLog(false) }} alt="close icon" />
+                                <img src="wallet/assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => { setOpenWithdrawLog(false) }} alt="close icon" />
                             </Typography>
                         </div>
                         <Box
@@ -718,7 +718,7 @@ function Fiat(props) {
                                                     {item.cardNo}
                                                 </Typography>
                                                 <IconButton>
-                                                    <img src="assets/images/deposite/delete.png" alt="" />
+                                                    <img src="wallet/assets/images/deposite/delete.png" alt="" />
                                                 </IconButton>
                                             </div>
                                         )
@@ -740,7 +740,7 @@ function Fiat(props) {
                     <DialogContent dividers >
                         <div className='dialog-box' >
                             <Typography id="customized-dialog-title" className="text-24 dialog-title-text" style={{ textAlign: "center", marginTop: "10px" }}>{t('home_Transaction')}
-                                <img src="assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => {
+                                <img src="wallet/assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => {
                                     setOpenTiBi(false)
                                     setOpenLoad(false)
                                 }} alt="close icon" />
@@ -753,7 +753,7 @@ function Fiat(props) {
                                 animate="show"
                                 className="dialog-content-inner  border-r-5">
                                 <motion.div variants={item}>
-                                    <img style={{ margin: "0 auto", width: "60px", height: "60px", marginTop: "10px" }} src='assets/images/wallet/naoZhong.png'></img>
+                                    <img style={{ margin: "0 auto", width: "60px", height: "60px", marginTop: "10px" }} src='wallet/assets/images/wallet/naoZhong.png'></img>
                                 </motion.div>
                                 <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "20px", fontSize: "24px" }}>-{inputVal.amount} {currencyCode}</motion.div>
                                 <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "10px", fontSize: "16px", color: "#ffc600" }}>● {t('home_PendingReview')}</motion.div>

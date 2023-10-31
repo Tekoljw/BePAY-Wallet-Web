@@ -196,7 +196,7 @@ function Borrow() {
                             {/* <FuseSvgIcon className="list-item-icon" sx={{ color: '#76819B' }} size={52}>
                                 feather:chevrons-down
                             </FuseSvgIcon> */}
-                            <img src="assets/images/borrow/double-arrow.png" alt="" />
+                            <img src="wallet/assets/images/borrow/double-arrow.png" alt="" />
                         </div>
                     </motion.div>
 
@@ -229,7 +229,7 @@ function Borrow() {
                         {/*            <div className="flex items-center">*/}
                         {/*                <img style={{*/}
                         {/*                    width: '3rem'*/}
-                        {/*                }} src="assets/images/deposite/usd.png" alt=""/>*/}
+                        {/*                }} src="wallet/assets/images/deposite/usd.png" alt=""/>*/}
                         {/*                <div className="px-12 font-medium">*/}
                         {/*                    <Typography className="text-16 font-medium">BNB</Typography>*/}
                         {/*                    <Typography className="text-12" style={{color: '#94A3B8'}}>Binance Coin</Typography>*/}

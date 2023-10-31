@@ -77,16 +77,17 @@ function Kyc(props) {
         setPageState(1);
 
         if (kycInfo.init) {
-            if (!kycInfo.haveEmail()) {
-                setPageState(1);
-                return
-            }
-
             if (!kycInfo.havePhone()) {
                 setPageState(2);
                 setTabValue(1);
                 return
             }
+
+            if (!kycInfo.haveEmail()) {
+                setPageState(1);
+                return
+            }
+
             setPageState(0);
         }
     }, [kycInfo]);
@@ -391,7 +392,7 @@ function Kyc(props) {
                     </div> */}
                     {/* <Typography onClick={() => { history.push('/wallet/home');; }}
                             className={clsx("mt-32 text-20 font-extrabold tracking-tight leading-tight flex items-center justify-content-start back-modal-title cursor-pointer btnColorTitleBig", pageState === 0 && 'kyc-back-modal-title kyc-back-modal-title-bg')}>
-                            <img className='back-modal-title-img' src="assets/images/logo/icon-back.png" alt="back icon" />
+                            <img className='back-modal-title-img' src="wallet/assets/images/logo/icon-back.png" alt="back icon" />
                             Back
                         </Typography> */}
 
@@ -847,7 +848,7 @@ function Kyc(props) {
                                                 component="label"
                                                 onClick={() => { setKeyName('idFrontUrl') }}
                                             >
-                                                <img style={{ display: 'block' }} src='assets/images/kyc/icon-upload.png' alt="" />
+                                                <img style={{ display: 'block' }} src='wallet/assets/images/kyc/icon-upload.png' alt="" />
                                                 <input
                                                     accept="image/*"
                                                     className="hidden"
@@ -880,7 +881,7 @@ function Kyc(props) {
                                                 component="label"
                                                 onClick={() => { setKeyName('idBackUrl') }}
                                             >
-                                                <img style={{ display: 'block' }} src='assets/images/kyc/icon-upload.png' alt="" />
+                                                <img style={{ display: 'block' }} src='wallet/assets/images/kyc/icon-upload.png' alt="" />
                                                 <input
                                                     accept="image/*"
                                                     className="hidden"
@@ -913,7 +914,7 @@ function Kyc(props) {
                                                 component="label"
                                                 onClick={() => { setKeyName('selfPhotoUrl') }}
                                             >
-                                                <img style={{ display: 'block' }} src='assets/images/kyc/icon-upload.png' alt="" />
+                                                <img style={{ display: 'block' }} src='wallet/assets/images/kyc/icon-upload.png' alt="" />
                                                 <input
                                                     accept="image/*"
                                                     className="hidden"
@@ -946,7 +947,7 @@ function Kyc(props) {
                                                 component="label"
                                                 onClick={() => { setKeyName('proofOfAddressUrl') }}
                                             >
-                                                <img style={{ display: 'block' }} src='assets/images/kyc/icon-upload.png' alt="" />
+                                                <img style={{ display: 'block' }} src='wallet/assets/images/kyc/icon-upload.png' alt="" />
                                                 <input
                                                     accept="image/*"
                                                     className="hidden"
@@ -1262,7 +1263,7 @@ function Kyc(props) {
                                             <img
                                                 loading="lazy"
                                                 width="20"
-                                                src={`/assets/images/country/${option.country_code}.png`}
+                                                src={`/wallet/assets/images/country/${option.country_code}.png`}
                                                 alt=""
                                             />
                                             {option.local_name} ({option.country_code}) +{option.phone_code}

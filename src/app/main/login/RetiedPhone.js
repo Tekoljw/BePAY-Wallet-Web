@@ -146,7 +146,7 @@ function RetiedPhone() {
                                             <img
                                                 loading="lazy"
                                                 width="20"
-                                                src={`/assets/images/country/${option.country_code}.png`}
+                                                src={`/wallet/assets/images/country/${option.country_code}.png`}
                                                 alt=""
                                             />
                                             {option.local_name} ({option.country_code}) +{option.phone_code}

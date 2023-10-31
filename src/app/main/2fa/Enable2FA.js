@@ -155,7 +155,7 @@ function Enable2FA() {
                                         }}
                                         edge="end"
                                     >
-                                        <img src="assets/images/deposite/copy.png" alt="" />
+                                        <img src="wallet/assets/images/deposite/copy.png" alt="" />
                                     </IconButton>
                                 </InputAdornment>}
                                 aria-describedby="outlined-weight-helper-text"

@@ -448,7 +448,7 @@ function SendTips(props) {
                                                 setOpenChangeCurrency(true);
                                             }}
                                             className="flex items-center justify-content-center cursor-pointer">
-                                            <img src="assets/images/withdraw/code.png" alt="" />
+                                            <img src="wallet/assets/images/withdraw/code.png" alt="" />
                                         </div>
                                     </>}
                                     <div
@@ -456,7 +456,7 @@ function SendTips(props) {
                                             setOpenWithdrawLog(true)
                                         }}
                                         className="flex items-center justify-content-center cursor-pointer">
-                                        <img style={{ width: "24px", height: "24px" }} src="assets/images/withdraw/info.png" alt="" />
+                                        <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
                                     </div>
                                 </div>
 
@@ -577,9 +577,9 @@ function SendTips(props) {
                         <DialogContent dividers>
                             <div style={{ width: '100%', height: '90vh', backgroundColor: '#181818' }}>
                                 <Typography className="text-18 px-16 my-12 font-medium flex items-center justify-between scan-code-top">
-                                    <img className='scan-code-back' src="assets/images/withdraw/icon-back.png" onClick={() => { setOpenChangeCurrency(false); closeScan(); }} alt="back-button" />
+                                    <img className='scan-code-back' src="wallet/assets/images/withdraw/icon-back.png" onClick={() => { setOpenChangeCurrency(false); closeScan(); }} alt="back-button" />
                                     <span className='scan-code-title text-18'>{t('home_sendTips_10')}</span>
-                                    <img className='scan-code-camera' src="assets/images/withdraw/scan-code-img.png" alt="back-button" />
+                                    <img className='scan-code-camera' src="wallet/assets/images/withdraw/scan-code-img.png" alt="back-button" />
                                 </Typography>
                                 <div id="qrcode_reader" className='qrcode-reader' style={{ width: '300px', minHeight: "200px" }}></div>
                                 <div className='scan-code-bottom-tips'>{t('home_sendTips_11')}</div>
@@ -597,7 +597,7 @@ function SendTips(props) {
                         <DialogContent dividers>
                             <div className='dialog-box'>
                                 <Typography id="customized-dialog-title" className="text-24 px-16  dialog-title-text">&nbsp;
-                                    <img src="assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => { setOpenWithdrawLog(false) }} alt="close icon" />
+                                    <img src="wallet/assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => { setOpenWithdrawLog(false) }} alt="close icon" />
                                 </Typography>
                             </div>
                             <Box
@@ -620,10 +620,10 @@ function SendTips(props) {
                                                         {item}
                                                     </Typography>
                                                     <IconButton onClick={() => { handleCopyText(item) }}>
-                                                        <img src="assets/images/deposite/copy.png" alt="" />
+                                                        <img src="wallet/assets/images/deposite/copy.png" alt="" />
                                                     </IconButton>
                                                     <IconButton onClick={() => { del(item) }}>
-                                                        <img src="assets/images/deposite/delete.png" alt="" />
+                                                        <img src="wallet/assets/images/deposite/delete.png" alt="" />
                                                     </IconButton>
                                                 </div>
                                             )

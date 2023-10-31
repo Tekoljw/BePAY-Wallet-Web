@@ -1398,7 +1398,7 @@ function Wallet() {
                             <img
                               className="mr-8"
                               width="22"
-                              src="/assets/images/menu/icon-wallet-active.png"
+                              src="/wallet/assets/images/menu/icon-wallet-active.png"
                               alt=""
                             />
                           }
@@ -1423,31 +1423,31 @@ function Wallet() {
                               src={(() => {
                                 switch (walletloginname) {
                                   case "BitKeep":
-                                    return "/assets/images/login/icon-right-14.png";
+                                    return "/wallet/assets/images/login/icon-right-14.png";
                                   case "MetaMask":
-                                    return "/assets/images/login/icon-right-1.png";
+                                    return "/wallet/assets/images/login/icon-right-1.png";
                                   case "WalletConnect":
-                                    return "/assets/images/login/icon-right-5.png";
+                                    return "/wallet/assets/images/login/icon-right-5.png";
                                   case "coinbase":
-                                    return "/assets/images/login/icon-right-10.png";
+                                    return "/wallet/assets/images/login/icon-right-10.png";
                                   case "TrustWallet":
-                                    return "/assets/images/login/icon-right-12.png";
+                                    return "/wallet/assets/images/login/icon-right-12.png";
                                   case "Coinbase":
-                                    return "/assets/images/login/icon-right-4.png";
+                                    return "/wallet/assets/images/login/icon-right-4.png";
                                   case "Polygon":
-                                    return "/assets/images/login/icon-right-13.png";
+                                    return "/wallet/assets/images/login/icon-right-13.png";
                                   case "Bitski":
-                                    return "/assets/images/login/icon-right-15.png";
+                                    return "/wallet/assets/images/login/icon-right-15.png";
                                   case "CLedger":
-                                    return "/assets/images/login/icon-right-16.png";
+                                    return "/wallet/assets/images/login/icon-right-16.png";
                                   case "Binance Smart":
-                                    return "/assets/images/login/icon-right-17.png";
+                                    return "/wallet/assets/images/login/icon-right-17.png";
                                   case "BeingFi Wallet":
-                                    return "/assets/images/menu/LOGO.png ";
+                                    return "/wallet/assets/images/menu/LOGO.png ";
                                   case "value2":
                                     return "";
                                   default:
-                                    return "/assets/images/menu/icon-wallet-active.png ";
+                                    return "/wallet/assets/images/menu/icon-wallet-active.png ";
                                 }
                               })()}
                               alt=""
@@ -1481,35 +1481,35 @@ function Wallet() {
                           <img
                             className="mr-8"
                             width="22"
-                            // src="/assets/images/logo/loading-img.png"
+                            // src="/wallet/assets/images/logo/loading-img.png"
                             src={(() => {
                               switch (label) {
                                 case "BitKeep":
-                                  return "/assets/images/login/icon-right-14.png";
+                                  return "/wallet/assets/images/login/icon-right-14.png";
                                 case "MetaMask":
-                                  return "/assets/images/login/icon-right-1.png";
+                                  return "/wallet/assets/images/login/icon-right-1.png";
                                 case "WalletConnect":
-                                  return "/assets/images/login/icon-right-5.png";
+                                  return "/wallet/assets/images/login/icon-right-5.png";
                                 case "coinbase":
-                                  return "/assets/images/login/icon-right-10.png";
+                                  return "/wallet/assets/images/login/icon-right-10.png";
                                 case "TrustWallet":
-                                  return "/assets/images/login/icon-right-12.png";
+                                  return "/wallet/assets/images/login/icon-right-12.png";
                                 case "Coinbase":
-                                  return "/assets/images/login/icon-right-4.png";
+                                  return "/wallet/assets/images/login/icon-right-4.png";
                                 case "Polygon":
-                                  return "/assets/images/login/icon-right-13.png";
+                                  return "/wallet/assets/images/login/icon-right-13.png";
                                 case "Bitski":
-                                  return "/assets/images/login/icon-right-15.png";
+                                  return "/wallet/assets/images/login/icon-right-15.png";
                                 case "CLedger":
-                                  return "/assets/images/login/icon-right-16.png";
+                                  return "/wallet/assets/images/login/icon-right-16.png";
                                 case "Binance Smart":
-                                  return "/assets/images/login/icon-right-17.png";
+                                  return "/wallet/assets/images/login/icon-right-17.png";
                                 case "Wallet Connect":
-                                  return "/assets/images/menu/icon-wallet-active.png ";
+                                  return "/wallet/assets/images/menu/icon-wallet-active.png ";
                                 case "BeingFi Wallet":
-                                  return "/assets/images/menu/LOGO.png ";
+                                  return "/wallet/assets/images/menu/LOGO.png ";
                                 default:
-                                  return "/assets/images/logo/loading-img.png ";
+                                  return "/wallet/assets/images/logo/loading-img.png ";
                               }
                             })()}
                             alt=""
@@ -1542,7 +1542,7 @@ function Wallet() {
               {/*        setWalletType('metamask');*/}
               {/*    }}*/}
               {/*>*/}
-              {/*    <img className="mr-8" width="22" src="/assets/images/connect/metamask.png" alt="" />*/}
+              {/*    <img className="mr-8" width="22" src="/wallet/assets/images/connect/metamask.png" alt="" />*/}
               {/*    Metamask*/}
               {/*</div>*/}
             </div>
@@ -1614,7 +1614,7 @@ function Wallet() {
                       )}
                       <img
                         width="16"
-                        src="assets/images/wallet/addreduce.png"
+                        src="wallet/assets/images/wallet/addreduce.png"
                         onClick={() => {
                           setDoPlus(!doPlus);
                         }}
@@ -1732,7 +1732,7 @@ function Wallet() {
                         </FormControl>
                         <img
                           width="16"
-                          src="assets/images/wallet/addreduce.png"
+                          src="wallet/assets/images/wallet/addreduce.png"
                           onClick={() => {
                             setDoPlus(!doPlus);
                           }}
@@ -2486,7 +2486,7 @@ function Wallet() {
                 {/*                    }}*/}
                 {/*                    edge="end"*/}
                 {/*                >*/}
-                {/*                    <img src="assets/images/deposite/copy.png" alt=""/>*/}
+                {/*                    <img src="wallet/assets/images/deposite/copy.png" alt=""/>*/}
                 {/*                </IconButton>*/}
                 {/*            </InputAdornment>}*/}
                 {/*            aria-describedby="outlined-weight-helper-text"*/}
@@ -2520,7 +2520,7 @@ function Wallet() {
                       <img
                         className="mr-4"
                         style={{ height: "80%" }}
-                        src="assets/images/deposite/bnb.png"
+                        src="wallet/assets/images/deposite/bnb.png"
                         alt=""
                       />
                       Network
@@ -2668,7 +2668,7 @@ function Wallet() {
                 {/*                    }}*/}
                 {/*                    edge="end"*/}
                 {/*                >*/}
-                {/*                    <img src="assets/images/deposite/copy.png" alt=""/>*/}
+                {/*                    <img src="wallet/assets/images/deposite/copy.png" alt=""/>*/}
                 {/*                </IconButton>*/}
                 {/*            </InputAdornment>}*/}
                 {/*            aria-describedby="outlined-weight-helper-text"*/}
@@ -2702,7 +2702,7 @@ function Wallet() {
                       <img
                         className="mr-4"
                         style={{ height: "80%" }}
-                        src="assets/images/deposite/bnb.png"
+                        src="wallet/assets/images/deposite/bnb.png"
                         alt=""
                       />
                       Network
@@ -2848,7 +2848,7 @@ function Wallet() {
                 {/*                    }}*/}
                 {/*                    edge="end"*/}
                 {/*                >*/}
-                {/*                    <img src="assets/images/deposite/copy.png" alt=""/>*/}
+                {/*                    <img src="wallet/assets/images/deposite/copy.png" alt=""/>*/}
                 {/*                </IconButton>*/}
                 {/*            </InputAdornment>}*/}
                 {/*            aria-describedby="outlined-weight-helper-text"*/}
@@ -2882,7 +2882,7 @@ function Wallet() {
                       <img
                         className="mr-4"
                         style={{ height: "80%" }}
-                        src="assets/images/deposite/bnb.png"
+                        src="wallet/assets/images/deposite/bnb.png"
                         alt=""
                       />
                       Network
@@ -2994,7 +2994,7 @@ function Wallet() {
                 >
                   &nbsp;
                   <img
-                    src="assets/images/logo/icon-close.png"
+                    src="wallet/assets/images/logo/icon-close.png"
                     className="dialog-close-btn"
                     onClick={() => {
                       setOpenChangeNetwork(false);

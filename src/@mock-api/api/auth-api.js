@@ -93,7 +93,7 @@ mock.onPost('/api/auth/sign-up').reply((request) => {
       role: 'admin',
       data: {
         displayName,
-        photoURL: 'assets/images/avatars/Abbott.jpg',
+        photoURL: 'wallet/assets/images/avatars/Abbott.jpg',
         email,
         settings: {},
         shortcuts: [],

@@ -86,7 +86,7 @@ function ForgotPass() {
     const dispatch = useDispatch();
 
     const [selected, setSelected] = useState('');
-    const [logo, setLogo] = useState("assets/images/logo/logo.png");
+    const [logo, setLogo] = useState("wallet/assets/images/logo/logo.png");
 
     const handleChange = (event) => {
         control._formValues.nationCode = event.target.value;
@@ -341,7 +341,7 @@ function ForgotPass() {
                                                 <img
                                                     loading="lazy"
                                                     width="20"
-                                                    src={`/assets/images/country/${option.country_code}.png`}
+                                                    src={`/wallet/assets/images/country/${option.country_code}.png`}
                                                     alt=""
                                                 />
                                                 {option.local_name} ({option.country_code}) +{option.phone_code}

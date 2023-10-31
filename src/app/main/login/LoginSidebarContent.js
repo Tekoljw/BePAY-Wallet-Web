@@ -189,7 +189,7 @@ function LoginSidebarContent(props) {
                                 }}
                                 style={{ width: "23rem" }}
                             >
-                                <img className='login-way-img' src={`/assets/images/login/${way.src}.png`} alt="" />
+                                <img className='login-way-img' src={`/wallet/assets/images/login/${way.src}.png`} alt="" />
                                 <span className='login-way-name'>{way.name}</span>
                             </div>
                         )

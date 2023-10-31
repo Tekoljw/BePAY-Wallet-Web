@@ -419,7 +419,7 @@ function Buy(props) {
                                         width: '30px',
                                         borderRadius: '5px',
                                     }}>
-                                        <img className='border-r-10' src="assets/images/buy/LegendTrading.png" alt=""/>
+                                        <img className='border-r-10' src="wallet/assets/images/buy/LegendTrading.png" alt=""/>
                                     </div>
                                     <div className="px-12 font-medium">
                                         <Typography className="text-20 font-medium">LegendTrading</Typography>
@@ -427,9 +427,9 @@ function Buy(props) {
                                 </div>
                                 <div style={{marginLeft: 'auto'}}>
                                     <div className="px-12 font-medium flex justify-content-center items-center" style={{textAlign: 'right'}}>
-                                        <div className="mx-4"><img src="assets/images/buy/visa.png" alt=""/></div>
-                                        <div className="mx-4"><img src="assets/images/buy/jh.png" alt=""/></div>
-                                        <div className="mx-4"><img src="assets/images/buy/jcb.png" alt=""/></div>
+                                        <div className="mx-4"><img src="wallet/assets/images/buy/visa.png" alt=""/></div>
+                                        <div className="mx-4"><img src="wallet/assets/images/buy/jh.png" alt=""/></div>
+                                        <div className="mx-4"><img src="wallet/assets/images/buy/jcb.png" alt=""/></div>
                                     </div>
                                 </div>
                             </div>
@@ -463,7 +463,7 @@ function Buy(props) {
                                             borderRadius: '5px',
 
                                         }}>
-                                            <img className='border-r-10' src="assets/images/buy/FaTPay.png" alt=""/>
+                                            <img className='border-r-10' src="wallet/assets/images/buy/FaTPay.png" alt=""/>
                                         </div>
                                         <div className="px-12 font-medium">
                                             <Typography className="text-20 font-medium">FaTPay</Typography>
@@ -471,9 +471,9 @@ function Buy(props) {
                                     </div>
                                     <div style={{marginLeft: 'auto'}}>
                                         <div className="px-12 font-medium flex justify-content-center items-center" style={{textAlign: 'right'}}>
-                                            <div className="mx-4"><img src="assets/images/buy/visa.png" alt=""/></div>
-                                            <div className="mx-4"><img src="assets/images/buy/jh.png" alt=""/></div>
-                                            <div className="mx-4"><img src="assets/images/buy/jcb.png" alt=""/></div>
+                                            <div className="mx-4"><img src="wallet/assets/images/buy/visa.png" alt=""/></div>
+                                            <div className="mx-4"><img src="wallet/assets/images/buy/jh.png" alt=""/></div>
+                                            <div className="mx-4"><img src="wallet/assets/images/buy/jcb.png" alt=""/></div>
                                         </div>
                                     </div>
                                 </div>

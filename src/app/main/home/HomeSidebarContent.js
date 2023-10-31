@@ -46,7 +46,7 @@ const StyledListItem = styled(ListItem)(({ theme, active }) => ({
 function HomeSidebarContent(props) {
     const { t } = useTranslation('mainPage');
     const dispatch = useDispatch();
-    const [logo, setLogo] = useState("assets/images/logo/logo.png");
+    const [logo, setLogo] = useState("wallet/assets/images/logo/logo.png");
     const [hideMenu, setHideMenu] = useState([]);
 
     const changePhoneTab = (tab) => {
@@ -139,7 +139,7 @@ function HomeSidebarContent(props) {
                         !isMobileMedia &&
                         <div>
                             <img className="left-side-logo" src={logo} />
-                            <img className="left-side-line" src="assets/images/logo/left-side-line.png" alt="left-side-line" />
+                            <img className="left-side-line" src="wallet/assets/images/logo/left-side-line.png" alt="left-side-line" />
                         </div>
                     }
                     {/*<StyledListItem*/}
@@ -158,8 +158,8 @@ function HomeSidebarContent(props) {
                     {/*        heroicons-outline:pencil-alt*/}
                     {/*    </FuseSvgIcon> *!/*/}
                     {/*    <div className='iconWz'>*/}
-                    {/*        <img className='menu-icon ' src='assets/images/menu/icon-wallet.png' alt='icon' />*/}
-                    {/*        <img className='menu-icon  active' src='assets/images/menu/icon-wallet-active.png' alt='icon' />*/}
+                    {/*        <img className='menu-icon ' src='wallet/assets/images/menu/icon-wallet.png' alt='icon' />*/}
+                    {/*        <img className='menu-icon  active' src='wallet/assets/images/menu/icon-wallet-active.png' alt='icon' />*/}
                     {/*    </div>*/}
                     {/*    <ListItemText className="truncate font16" primary="Account" disableTypography />*/}
                     {/*</StyledListItem>*/}
@@ -181,8 +181,8 @@ function HomeSidebarContent(props) {
                             material-twotone:login
                         </FuseSvgIcon> */}
                             <div className='iconWz'>
-                                <img className='menu-icon ' src='assets/images/menu/deposite.png' alt='icon' />
-                                <img className='menu-icon  active' src='assets/images/menu/deposite-active.png' alt='icon' />
+                                <img className='menu-icon ' src='wallet/assets/images/menu/deposite.png' alt='icon' />
+                                <img className='menu-icon  active' src='wallet/assets/images/menu/deposite-active.png' alt='icon' />
                             </div>
                             <ListItemText className="truncate font16" primary={t('menu_2')} disableTypography />
                         </StyledListItem>
@@ -203,8 +203,8 @@ function HomeSidebarContent(props) {
                             material-twotone:logout
                         </FuseSvgIcon> */}
                         <div className='iconWz'>
-                            <img className='menu-icon ' src='assets/images/menu/withdraw.png' alt='icon' />
-                            <img className='menu-icon  active' src='assets/images/menu/withdraw-active.png' alt='icon' />
+                            <img className='menu-icon ' src='wallet/assets/images/menu/withdraw.png' alt='icon' />
+                            <img className='menu-icon  active' src='wallet/assets/images/menu/withdraw-active.png' alt='icon' />
                         </div>
                         <ListItemText className="truncate font16" primary={t('menu_3')} disableTypography />
                     </StyledListItem>}
@@ -225,8 +225,8 @@ function HomeSidebarContent(props) {
                             material-twotone:credit_card
                         </FuseSvgIcon> */}
                         <div className='iconWz'>
-                            <img className='menu-icon ' src='assets/images/menu/buyCrypto.png' alt='icon' />
-                            <img className='menu-icon  active' src='assets/images/menu/buyCrypto-active.png' alt='icon' />
+                            <img className='menu-icon ' src='wallet/assets/images/menu/buyCrypto.png' alt='icon' />
+                            <img className='menu-icon  active' src='wallet/assets/images/menu/buyCrypto-active.png' alt='icon' />
                         </div>
                         <ListItemText className="truncate font16" primary={t('menu_4')} disableTypography />
                     </StyledListItem>}
@@ -247,8 +247,8 @@ function HomeSidebarContent(props) {
                             material-outline:sync_alt
                         </FuseSvgIcon> */}
                         <div className='iconWz'>
-                            <img className='menu-icon ' src='assets/images/menu/icon-wallet.png' alt='icon' />
-                            <img className='menu-icon  active' src='assets/images/menu/icon-wallet-active.png' alt='icon' />
+                            <img className='menu-icon ' src='wallet/assets/images/menu/icon-wallet.png' alt='icon' />
+                            <img className='menu-icon  active' src='wallet/assets/images/menu/icon-wallet-active.png' alt='icon' />
                         </div>
                         <ListItemText className="truncate font16" primary={t('menu_5')} disableTypography />
                     </StyledListItem>}
@@ -266,8 +266,8 @@ function HomeSidebarContent(props) {
                         }}
                     >
                         <div className='iconWz'>
-                            <img className='menu-icon ' src='assets/images/menu/icon-borrow.png' alt='icon' />
-                            <img className='menu-icon  active' src='assets/images/menu/icon-borrow-active.png' alt='icon' />
+                            <img className='menu-icon ' src='wallet/assets/images/menu/icon-borrow.png' alt='icon' />
+                            <img className='menu-icon  active' src='wallet/assets/images/menu/icon-borrow-active.png' alt='icon' />
                         </div>
                         <ListItemText className="truncate font16" primary={t('menu_6')} disableTypography />
                     </StyledListItem>}
@@ -287,8 +287,8 @@ function HomeSidebarContent(props) {
                             heroicons-outline:user-group
                         </FuseSvgIcon> */}
                         <div className='iconWz'>
-                            <img className='menu-icon ' src='assets/images/menu/c2c.png' alt='icon' />
-                            <img className='menu-icon  active' src='assets/images/menu/c2c-active.png' alt='icon' />
+                            <img className='menu-icon ' src='wallet/assets/images/menu/c2c.png' alt='icon' />
+                            <img className='menu-icon  active' src='wallet/assets/images/menu/c2c-active.png' alt='icon' />
                         </div>
                         <ListItemText className="truncate" primary={t('menu_7')} disableTypography />
                     </StyledListItem>}
@@ -306,8 +306,8 @@ function HomeSidebarContent(props) {
                         }}
                     >
                         <div className='iconWz'>
-                            <img className='menu-icon ' src='assets/images/menu/icon-pools.png' alt='icon' />
-                            <img className='menu-icon  active' src='assets/images/menu/icon-pools-active.png' alt='icon' />
+                            <img className='menu-icon ' src='wallet/assets/images/menu/icon-pools.png' alt='icon' />
+                            <img className='menu-icon  active' src='wallet/assets/images/menu/icon-pools-active.png' alt='icon' />
                         </div>
                         <ListItemText className="truncate font16" primary={t('menu_8')} disableTypography />
                     </StyledListItem>}
@@ -328,8 +328,8 @@ function HomeSidebarContent(props) {
                             material-twotone:launch
                         </FuseSvgIcon> */}
                         <div className='iconWz'>
-                            <img className='menu-icon ' src='assets/images/menu/sendTips.png' alt='icon' />
-                            <img className='menu-icon  active' src='assets/images/menu/sendTips-active.png' alt='icon' />
+                            <img className='menu-icon ' src='wallet/assets/images/menu/sendTips.png' alt='icon' />
+                            <img className='menu-icon  active' src='wallet/assets/images/menu/sendTips-active.png' alt='icon' />
                         </div>
                         <ListItemText className="truncate font16" primary={t('menu_9')} disableTypography />
                     </StyledListItem>}
@@ -350,8 +350,8 @@ function HomeSidebarContent(props) {
                             material-outline:text_snippet
                         </FuseSvgIcon> */}
                         <div className='iconWz'>
-                            <img className='menu-icon ' src='assets/images/menu/record.png' alt='icon' />
-                            <img className='menu-icon  active' src='assets/images/menu/record-active.png' alt='icon' />
+                            <img className='menu-icon ' src='wallet/assets/images/menu/record.png' alt='icon' />
+                            <img className='menu-icon  active' src='wallet/assets/images/menu/record-active.png' alt='icon' />
                         </div>
                         <ListItemText className="truncate font16" primary={t('menu_10')} disableTypography />
                     </StyledListItem>}
@@ -372,8 +372,8 @@ function HomeSidebarContent(props) {
                             heroicons-outline:pencil-alt
                         </FuseSvgIcon> */}
                         <div className='iconWz'>
-                            <img className='menu-icon ' src='assets/images/menu/icon-ntfs.png' alt='icon' />
-                            <img className='menu-icon  active' src='assets/images/menu/icon-ntfs-active.png' alt='icon' />
+                            <img className='menu-icon ' src='wallet/assets/images/menu/icon-ntfs.png' alt='icon' />
+                            <img className='menu-icon  active' src='wallet/assets/images/menu/icon-ntfs-active.png' alt='icon' />
                         </div>
                         <ListItemText className="truncate font16" disableTypography children={
                             <div>NFT
@@ -398,8 +398,8 @@ function HomeSidebarContent(props) {
                         }}
                     >
                         <div className='iconWz'>
-                            <img className='menu-icon ' src='assets/images/menu/security.png' alt='icon' />
-                            <img className='menu-icon  active' src='assets/images/menu/security-active.png' alt='icon' />
+                            <img className='menu-icon ' src='wallet/assets/images/menu/security.png' alt='icon' />
+                            <img className='menu-icon  active' src='wallet/assets/images/menu/security-active.png' alt='icon' />
                         </div>
                         <ListItemText className="truncate font16" primary={t('menu_17')} disableTypography />
                     </StyledListItem>}
@@ -417,8 +417,8 @@ function HomeSidebarContent(props) {
                         }}
                     >
                         <div className='iconWz'>
-                            <img className='menu-icon ' src='assets/images/menu/icon-2fa.png' alt='icon' />
-                            <img className='menu-icon  active' src='assets/images/menu/icon-2fa-active.png' alt='icon' />
+                            <img className='menu-icon ' src='wallet/assets/images/menu/icon-2fa.png' alt='icon' />
+                            <img className='menu-icon  active' src='wallet/assets/images/menu/icon-2fa-active.png' alt='icon' />
                         </div>
                         <ListItemText className="truncate font16" primary={t('menu_12')} disableTypography />
                     </StyledListItem> */}
@@ -437,8 +437,8 @@ function HomeSidebarContent(props) {
                         }}
                     >
                         <div className='iconWz'>
-                            <img className='menu-icon ' src='assets/images/menu/icon-2fa.png' alt='icon' />
-                            <img className='menu-icon  active' src='assets/images/menu/icon-2fa-active.png' alt='icon' />
+                            <img className='menu-icon ' src='wallet/assets/images/menu/icon-2fa.png' alt='icon' />
+                            <img className='menu-icon  active' src='wallet/assets/images/menu/icon-2fa-active.png' alt='icon' />
                         </div>
                         <ListItemText className="truncate font16" primary={t('menu_14')} disableTypography />
                     </StyledListItem> */}
@@ -456,8 +456,8 @@ function HomeSidebarContent(props) {
                         }}
                     >
                         <div className='iconWz'>
-                            <img className='menu-icon ' src='assets/images/menu/icon-2fa.png' alt='icon' />
-                            <img className='menu-icon  active' src='assets/images/menu/icon-2fa-active.png' alt='icon' />
+                            <img className='menu-icon ' src='wallet/assets/images/menu/icon-2fa.png' alt='icon' />
+                            <img className='menu-icon  active' src='wallet/assets/images/menu/icon-2fa-active.png' alt='icon' />
                         </div>
                         <ListItemText className="truncate font16" primary={t('menu_15')} disableTypography />
                     </StyledListItem> */}
@@ -475,8 +475,8 @@ function HomeSidebarContent(props) {
                         }}
                     >
                         <div className='iconWz'>
-                            <img className='menu-icon ' src='assets/images/menu/kyc.png' alt='icon' />
-                            <img className='menu-icon  active' src='assets/images/menu/kyc-active.png' alt='icon' />
+                            <img className='menu-icon ' src='wallet/assets/images/menu/kyc.png' alt='icon' />
+                            <img className='menu-icon  active' src='wallet/assets/images/menu/kyc-active.png' alt='icon' />
                         </div>
                         <ListItemText className="truncate" primary={t('menu_16')} disableTypography />
                     </StyledListItem>} */}
