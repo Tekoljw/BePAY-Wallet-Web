@@ -365,6 +365,11 @@ export default {
         payoutBank: {
             url: "/payment/payoutBank",
             method: "post",
+        },
+
+        payoutPayWays: {
+            url: "/payment/payoutPayWays",
+            method: "post",
         }
 
 },

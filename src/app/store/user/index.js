@@ -32,7 +32,7 @@ const userSlice = createSlice({
 
 
                 setTimeout(() => {
-                    if (res?.pathname && res?.pathname !== '/login'){
+                    if (res?.pathname && res?.pathname !== '/wallet/login'){
                         // dispatch(push(res.pathname))
                         history.push(res.pathname)
                         history.go(0)
