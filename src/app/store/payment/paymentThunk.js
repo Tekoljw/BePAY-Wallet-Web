@@ -213,3 +213,16 @@ export const payoutBank = createAsyncThunk(
         }
     }
 );
+
+// 法币提币出金方式
+export const payoutPayWays = createAsyncThunk(
+    'payment/payoutPayWays',
+    async (settings, { dispatch, getState }) => {
+        const result = await React.$api("payment.payoutPayWays");
+        if (result.errno === 0) {
+            return result.data
+        } else {
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+        }
+    }
+);
