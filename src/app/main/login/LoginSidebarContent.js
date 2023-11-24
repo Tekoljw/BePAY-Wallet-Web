@@ -72,7 +72,7 @@ function LoginSidebarContent(props) {
                         id
                     }))
                 } else {
-                    dispatch(showMessage({ message: 'Only for phone' }))
+                    dispatch(showMessage({ message: t('error_7') }))
                 }
                 break;
             case 'metamask':
@@ -83,7 +83,7 @@ function LoginSidebarContent(props) {
                         id
                     }))
                 } else {
-                    dispatch(showMessage({ message: 'Only for PC' }))
+                    dispatch(showMessage({ message: t('error_8') }))
                 }
                 break;
 
@@ -95,7 +95,7 @@ function LoginSidebarContent(props) {
                         id
                     }))
                 } else {
-                    dispatch(showMessage({ message: 'Only for PC' }))
+                    dispatch(showMessage({ message: t('error_8') }))
                 }
                 break;
 
@@ -107,7 +107,7 @@ function LoginSidebarContent(props) {
                         id
                     }))
                 } else {
-                    dispatch(showMessage({ message: 'Only for PC' }))
+                    dispatch(showMessage({ message: t('error_8') }))
                 }
                 break;
 

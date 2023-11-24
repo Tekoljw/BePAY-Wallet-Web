@@ -126,7 +126,7 @@ function Fiat(props) {
         dispatch(makeWithdrawOrder(data)).then((res) => {
             let result = res.payload;
             if (result === false || result.status == 'failed') {
-                dispatch(showMessage({ message: result.msg || 'error', code: 2 }));
+                dispatch(showMessage({ message: t('error_10'), code: 2 }));
                 setOpenLoad(false)
             } else {
                 setOpenTiBi(true)

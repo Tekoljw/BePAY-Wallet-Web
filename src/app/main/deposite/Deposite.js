@@ -421,7 +421,7 @@ function Deposite() {
     const fiatRecharge = async (bankID) => {
         if (currencyCode === 'IDR') {
             if (weight < 20000) {
-                dispatch(showMessage({ message: 'The minimum payment amount is 20000', code: 2 }));
+                dispatch(showMessage({ message: t('error_4'), code: 2 }));
                 return
             }
         }
@@ -440,7 +440,7 @@ function Deposite() {
                 fbq('track', 'InitiateCheckout');
             }
             if (result.status === 'failed') {
-                dispatch(showMessage({ message: result.errMsg, code: 2 }));
+                dispatch(showMessage({ message: t('error_5'), code: 2 }));
             }
         }
     };

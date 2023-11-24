@@ -76,7 +76,7 @@ export const getContactAddress = createAsyncThunk(
             dispatch(setContactAddress(configData));
             return configData.data;
         } else {
-            dispatch(showMessage({ message: configData.errmsg, code: 2 }));
+            dispatch(showMessage({ message: t('error_14'), code: 2 }));
         }
     }
 );

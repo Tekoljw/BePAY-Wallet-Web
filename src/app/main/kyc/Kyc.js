@@ -274,7 +274,7 @@ function Kyc(props) {
         if (inputVal.birthDate != '') {
             if (! /^[1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/.test(inputVal.birthDate)) {
                 if (bShowMsg) {
-                    dispatch(showMessage({ message: 'invalid birthDate format', code: 2 }));
+                    dispatch(showMessage({ message: t('error_6'), code: 2 }));
                 }
 
                 return false;

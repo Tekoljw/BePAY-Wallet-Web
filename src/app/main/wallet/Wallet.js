@@ -2538,7 +2538,7 @@ function Wallet() {
                       variant="outlined"
                       onClick={() => {
                         dispatch(
-                          showMessage({ message: "Disconnect", code: 3 })
+                          showMessage({ message: t('error_9'), code: 3 })
                         );
                         setTimeout(() => {
                           setDdecentralized(-1);
@@ -2718,7 +2718,7 @@ function Wallet() {
                       variant="outlined"
                       onClick={() => {
                         dispatch(
-                          showMessage({ message: "Disconnect", code: 3 })
+                          showMessage({ message: t('error_9'), code: 3 })
                         );
                         setTimeout(() => {
                           setDdecentralized(-1);
@@ -2898,7 +2898,7 @@ function Wallet() {
                       variant="outlined"
                       onClick={() => {
                         dispatch(
-                          showMessage({ message: "Disconnect", code: 3 })
+                          showMessage({ message: t('error_9'), code: 3 })
                         );
                         setTimeout(() => {
                           setDdecentralized(-1);

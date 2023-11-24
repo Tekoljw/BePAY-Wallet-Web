@@ -38,7 +38,7 @@ export const goMintNft = createAsyncThunk(
       return true
     } catch (e) {
       console.log(e.message, 'errorMsg')
-      dispatch(showMessage({ message: 'Mint error', code: 2 }));
+      dispatch(showMessage({ message: t('error_15'), code: 2 }));
       return false
     }
   }
@@ -54,7 +54,7 @@ export const getGenesisRobotConfig = createAsyncThunk(
       // dispatch(showMessage({ message: 'success' }));
       return resultData.data;
     } else {
-      dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+      dispatch(showMessage({ message: t('error_2'), code: 2 }));
       return false
     }
   }
@@ -75,7 +75,7 @@ export const mintGenesisRobot = createAsyncThunk(
       // dispatch(showMessage({ message: 'success' }));
       return resultData.data;
     } else {
-      dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+      dispatch(showMessage({ message: t('error_15'), code: 2 }));
       return false
     }
   }
@@ -94,7 +94,7 @@ export const queryContractResult = createAsyncThunk(
     if (resultData.errno === 0) {
       return resultData.data || '';
     } else {
-      dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+      dispatch(showMessage({ message: t('error_2'), code: 2 }));
       return false
     }
   }
@@ -116,7 +116,7 @@ export const centerNftPool = createAsyncThunk(
             dispatch(showMessage({ message: 'Success', code: 1 }));
             return resultData.data || '';
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            dispatch(showMessage({ message: t('error_16'), code: 2 }));
             return false
         }
     }
@@ -146,12 +146,11 @@ export const getOwner = createAsyncThunk(
             if (currentUserAddress === owner) {
                 return true
             } else {
-                dispatch(showMessage({ message: 'Not the owner of this nft', code: 2 }));
+                dispatch(showMessage({ message: t('error_19'), code: 2 }));
                 return false
             }
         } catch (e) {
-            console.log(e.message, 'errorMsg')
-            dispatch(showMessage({ message: 'Owner error', code: 2 }));
+            dispatch(showMessage({ message: t('error_17'), code: 2 }));
             return false
         }
     }
@@ -180,8 +179,7 @@ export const goCenterTransfer = createAsyncThunk(
                 return safeTransferFromObj.tx
             }
         } catch (e) {
-            console.log(e.message, 'errorMsg')
-            dispatch(showMessage({ message: 'transfer error', code: 2 }));
+            dispatch(showMessage({ message: t('error_18'), code: 2 }));
             return false
         }
     }

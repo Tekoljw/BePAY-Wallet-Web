@@ -26,7 +26,7 @@ import { centerGetUserFiat, getWithdrawTransferStats } from '../../store/wallet/
 import { getSymbols, paymentConfig, getContactAddress } from "../../store/config/configThunk";
 import { getBorrowConfig } from "../../store/borrow/borrowThunk";
 import { getPoolConfig } from "../../store/pool/poolThunk";
-// import {useTranslation} from "react-i18next";
+import {useTranslation} from "react-i18next";
 // import { changeLanguage } from 'app/store/i18nSlice';
 import ComingSoon from "../coming-soon/ComingSoon";
 import web3 from '../../util/web3';
@@ -47,7 +47,7 @@ const Root = styled(FusePageCarded)(({ theme }) => ({
 }));
 
 function HomePage(props) {
-    // const { t } = useTranslation('mainPage');
+    const { t } = useTranslation('mainPage');
     const dispatch = useDispatch();
     const isMobileMedia = new MobileDetect(window.navigator.userAgent).mobile();
     const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down(isMobileMedia ? 'lg' : 'sm'));
@@ -83,7 +83,7 @@ function HomePage(props) {
                 if (networks.length > 0 && res) {
                     let tmpNetworkId = arrayLookup(networks, 'chainId', res, 'id');
                     if (!tmpNetworkId) {
-                        dispatch(showMessage({ message: 'This chain is not supported', code: 2 }));
+                        dispatch(showMessage({ message: t('error_3'), code: 2 }));
                     }
                 }
                 if (window.ethereum) {
@@ -91,7 +91,7 @@ function HomePage(props) {
                         let network = chainId.toString();
                         let tmpNetworkId = arrayLookup(networks, 'chainId', network, 'id');
                         if (networks.length > 0 && !tmpNetworkId) {
-                            dispatch(showMessage({ message: 'This chain is not supported', code: 2 }));
+                            dispatch(showMessage({ message: t('error_3'), code: 2 }));
                         }
                     });
                 }

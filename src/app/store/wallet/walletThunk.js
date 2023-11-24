@@ -44,7 +44,7 @@ export const centerGetUserFiat = createAsyncThunk(
         if (balanceList.errno === 0) {
             dispatch(updateFiat(balanceList));
         } else {
-            dispatch(showMessage({ message: balanceList.errmsg, code: 2 }));
+            dispatch(showMessage({ message: t('error_2'), code: 2 }));
         }
     }
 );
@@ -154,7 +154,7 @@ export const getWalletAddress = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData;
         }
-        dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+        dispatch(showMessage({ message: t('error_39'), code: 2 }));
     }
 );
 
@@ -174,7 +174,7 @@ export const checkWalletAddress = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData;
         }
-        dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+        dispatch(showMessage({ message: t('error_40'), code: 2 }));
     }
 );
 
@@ -418,7 +418,7 @@ export const nftWithdraw = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData.data;
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            dispatch(showMessage({ message: t('error_22'), code: 2 }));
         }
     }
 );
