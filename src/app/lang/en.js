@@ -321,7 +321,7 @@ const locale = {
     error_0: "",
     error_1: "",
     error_2: "",
-    error_3: "Current blockchain is not supported",
+    error_3: "blockchain is not supported",
     error_4: "",
     error_5: "",
     error_6: "",

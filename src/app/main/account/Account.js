@@ -32,18 +32,18 @@ function AccountPage(props) {
             web3.getChainId().then((res) => {
                 if (networks.length > 0 && res) {
                     let tmpNetworkId = arrayLookup(networks, 'chainId', res, 'id');
-                    if (!tmpNetworkId) {
-                        dispatch(showMessage({ message: t('error_3'), code: 2 }));
-                    }
+                    // if (!tmpNetworkId) {
+                    //     dispatch(showMessage({ message: t('error_3'), code: 2 }));
+                    // }
                 }
 
                 if (window.ethereum) {
                     window.ethereum.on("chainChanged", (chainId) => {
                         let network = chainId.toString();
                         let tmpNetworkId = arrayLookup(networks, 'chainId', network, 'id');
-                        if (networks.length > 0 && !tmpNetworkId) {
-                            dispatch(showMessage({ message: t('error_3'), code: 2 }));
-                        }
+                        // if (networks.length > 0 && !tmpNetworkId) {
+                        //     dispatch(showMessage({ message: t('error_3'), code: 2 }));
+                        // }
                     });
                 }
             })

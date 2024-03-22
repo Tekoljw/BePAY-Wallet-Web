@@ -323,6 +323,13 @@ input[type='number'] {
     border: 1px solid red;
 }
 
+.cardSty {
+    width: 87%;
+    aspect-ratio: 864 / 304;
+    background-image: url("../../public/assets/images/withdraw/cardDi.png");
+    background-size: cover;
+    background-position: center;
+}
 
 
 .txtColorTitle {
@@ -1343,6 +1350,8 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
 .loginMarginZhong {
     margin-right: -10px;
 }
+
+
 
 @media screen and (min-width: 0px) and (max-width: 750px) {
 

@@ -57,6 +57,7 @@ import coinbaseWallet from "../../util/web3/coinbase";
 import { useTranslation } from "react-i18next";
 import openType from './opentype.json'
 import { symbol } from "prop-types";
+import { Image } from "@mui/icons-material";
 const container = {
   show: {
     transition: {
@@ -163,7 +164,7 @@ function Wallet() {
   const [ranges, setRanges] = useState([
     'Token', t('home_deposite_2'), t('home_deposite_3')
   ]);
-  const [ userSetting, setUserSetting ] = useState({});
+  const [userSetting, setUserSetting] = useState({});
 
   // const walletDisplayData = userData.walletDisplay || [];
   // const walletDisplayData =  [];
@@ -344,17 +345,17 @@ function Wallet() {
     };
 
     service.interceptors.request.use(
-        config => {
-          config.headers['Finger-Nft-Token'] = `${window.localStorage.getItem(
-              `Authorization-${window.sessionStorage.getItem('openAppId') || 0}-${window.sessionStorage.getItem('openIndex') || 0}`
-          ) || ''}`;
-          config.headers['Wallet-OpenApp-Id'] = openAppId || '6436951541b60d250c692481';
+      config => {
+        config.headers['Finger-Nft-Token'] = `${window.localStorage.getItem(
+          `Authorization-${window.sessionStorage.getItem('openAppId') || 0}-${window.sessionStorage.getItem('openIndex') || 0}`
+        ) || ''}`;
+        config.headers['Wallet-OpenApp-Id'] = openAppId || '6436951541b60d250c692481';
 
-          config.headers['Wallet-OpenApp-Index'] = openIndex;
+        config.headers['Wallet-OpenApp-Index'] = openIndex;
 
-          return config;
-        },
-        err => Promise.reject(err)
+        return config;
+      },
+      err => Promise.reject(err)
     )
 
     let res = await service(post);
@@ -424,17 +425,17 @@ function Wallet() {
       async: true,
     };
     service.interceptors.request.use(
-        config => {
-          config.headers['Finger-Nft-Token'] = `${window.localStorage.getItem(
-              `Authorization-${window.sessionStorage.getItem('openAppId') || 0}-${window.sessionStorage.getItem('openIndex') || 0}`
-          ) || ''}`;
-          config.headers['Wallet-OpenApp-Id'] = openAppId || '6436951541b60d250c692481';
+      config => {
+        config.headers['Finger-Nft-Token'] = `${window.localStorage.getItem(
+          `Authorization-${window.sessionStorage.getItem('openAppId') || 0}-${window.sessionStorage.getItem('openIndex') || 0}`
+        ) || ''}`;
+        config.headers['Wallet-OpenApp-Id'] = openAppId || '6436951541b60d250c692481';
 
-          config.headers['Wallet-OpenApp-Index'] = openIndex;
+        config.headers['Wallet-OpenApp-Index'] = openIndex;
 
-          return config;
-        },
-        err => Promise.reject(err)
+        return config;
+      },
+      err => Promise.reject(err)
     )
 
     let res = await service(post);
@@ -1552,6 +1553,34 @@ function Wallet() {
             variants={container}
             initial="hidden"
             animate="show"
+            className="pb-8 flex justify-center"
+          >
+            <div
+              className="cardSty"
+              style={{ flexWrap: "warp" }}
+            >
+              <div className=" flex px-16 " style={{ width: "100%", height: "3rem", marginTop: "7%" }}>
+                <Image width="20px" height="20px"
+                  src="/wallet/assets/images/wallet/yan.png"></Image>
+                <div className="text-20 ml-10" style={{ color: "#84A59F" }}>WALLET BALANCE</div>
+              </div>
+              <div className=" flex mt-16 items-conter px-16" style={{ width: "100%", marginTop: "6%", justifyContent: "space-between" }}>
+                <div className="flex">
+                  <Image width="3rem" height="3rem"
+                    src="https://bedao.io/static/Icon/currency/USD.png"></Image>
+                  <div className="text-24 ml-10" style={{ color: "#ffffff" }}>136,921.126</div>
+                </div>
+                <div className="text-16" style={{ width: "14rem", textAlign: "center", height: "3rem", lineHeight: "3rem", color: "#3E9178", borderRadius: "99px", background: "#D4FFF3" }}>
+                  Activate Visa
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            variants={container}
+            initial="hidden"
+            animate="show"
             className="p-24 pb-4"
             style={{ paddingTop: "0.7rem" }}
           >
@@ -1848,7 +1877,7 @@ function Wallet() {
                                 key={index}
                               >
                                 <div className="flex px-8 items-center">
-                                   <img style={{ borderRadius: '50%' }} className="mx-4" width="24" src={row.avatar} alt="" />
+                                  <img style={{ borderRadius: '50%' }} className="mx-4" width="24" src={row.avatar} alt="" />
                                   {row.symbol}
                                 </div>
                                 {isFait && (
@@ -3055,9 +3084,9 @@ function Wallet() {
           </BootstrapDialog>
 
         </Box>
-      </motion.div>
+      </motion.div >
 
-    </div>
+    </div >
   );
 }
 
