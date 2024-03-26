@@ -14,7 +14,20 @@ export const getUrlParam = (param) => {
     return obj[param]
 };
 
+// 获取openAppId
+export const getOpenAppId = () => {
+    return  window.sessionStorage.getItem('openAppId') || 0;
+};
 
+// 获取openAppIndex
+export const getOpenAppIndex = () => {
+    return  window.sessionStorage.getItem('openIndex') || 0;
+};
+
+// 获取accessType(0:正常方式，1:telegram小程序)
+export const getAccessType = () => {
+    return  window.localStorage.getItem('accessType') || 0;
+};
 
 export const arrayLookup = (data,key,value,targetKey) => {
     var targetValue = "";

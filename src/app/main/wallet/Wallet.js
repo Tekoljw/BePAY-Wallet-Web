@@ -9,7 +9,7 @@ import history from "@history";
 import { useSelector, useDispatch } from "react-redux";
 import { selectConfig } from "../../store/config";
 import { selectUserData } from "../../store/user";
-import { arrayLookup, getUrlParam } from "../../util/tools/function";
+import {arrayLookup, getOpenAppId, getOpenAppIndex, getUrlParam} from "../../util/tools/function";
 import { updateCurrency, updateWalletDisplay } from "../../store/user";
 import { showMessage } from "app/store/fuse/messageSlice";
 import { centerGetNftList } from '../../store/wallet/walletThunk';
@@ -331,8 +331,8 @@ function Wallet() {
   };
 
   const saveSettingSymbol = async (data) => {
-    var openAppId = window.sessionStorage.getItem('openAppId') || 0;
-    var openIndex = window.sessionStorage.getItem('openIndex') || 0;
+    var openAppId = getOpenAppId();
+    var openIndex = getOpenAppIndex();
     const service = axios.create({
       timeout: 50000, // request timeout
     });
@@ -346,7 +346,7 @@ function Wallet() {
     service.interceptors.request.use(
         config => {
           config.headers['Finger-Nft-Token'] = `${window.localStorage.getItem(
-              `Authorization-${window.sessionStorage.getItem('openAppId') || 0}-${window.sessionStorage.getItem('openIndex') || 0}`
+              `Authorization-${getOpenAppId()}-${getOpenAppIndex()}`
           ) || ''}`;
           config.headers['Wallet-OpenApp-Id'] = openAppId || '6436951541b60d250c692481';
 
@@ -412,8 +412,8 @@ function Wallet() {
     }
   };
   const getSettingSymbol = async () => {
-    var openAppId = window.sessionStorage.getItem('openAppId') || 0;
-    var openIndex = window.sessionStorage.getItem('openIndex') || 0;
+    var openAppId = getOpenAppId();
+    var openIndex = getOpenAppIndex();
     const service = axios.create({
       timeout: 50000, // request timeout
     });
@@ -426,7 +426,7 @@ function Wallet() {
     service.interceptors.request.use(
         config => {
           config.headers['Finger-Nft-Token'] = `${window.localStorage.getItem(
-              `Authorization-${window.sessionStorage.getItem('openAppId') || 0}-${window.sessionStorage.getItem('openIndex') || 0}`
+              `Authorization-${getOpenAppId()}-${getOpenAppIndex()}`
           ) || ''}`;
           config.headers['Wallet-OpenApp-Id'] = openAppId || '6436951541b60d250c692481';
 

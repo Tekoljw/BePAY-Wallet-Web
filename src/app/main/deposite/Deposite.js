@@ -25,7 +25,7 @@ import '../../../styles/home.css';
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
 import { selectConfig } from "../../store/config";
-import { arrayLookup } from "../../util/tools/function";
+import {arrayLookup, getOpenAppId, getOpenAppIndex} from "../../util/tools/function";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { foxSendTransaction, manualCryptoNotify } from "../../store/transfer/transferThunk";
 import {
@@ -630,8 +630,8 @@ function Deposite() {
 
 
     const getSettingSymbol = async () => {
-        var openAppId = window.sessionStorage.getItem('openAppId') || 0;
-        var openIndex = window.sessionStorage.getItem('openIndex') || 0;
+        var openAppId = getOpenAppId();
+        var openIndex = getOpenAppIndex();
         const service = axios.create({
             timeout: 50000, // request timeout
             headers: {

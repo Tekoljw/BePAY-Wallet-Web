@@ -47,6 +47,7 @@ const App = () => {
     const dispatch = useDispatch();
     const openAppId = getUrlParam('openAppId') || 0;
     const openIndex = getUrlParam('openIndex') || 0;
+    const accessType = getUrlParam('accessType') || 0;
     const langDirection = useSelector(selectCurrentLanguageDirection);
     const mainTheme = useSelector(selectMainTheme);
     const token = useSelector(selectUserData).token;
@@ -68,6 +69,9 @@ const App = () => {
         }
         if (openIndex) {
             window.sessionStorage.setItem('openIndex', openIndex)
+        }
+        if (accessType) {
+            window.localStorage.setItem('accessType', accessType)
         }
         if (lang) {
             window.localStorage.setItem('lang', lang)

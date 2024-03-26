@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '@history'
+import {getOpenAppId, getOpenAppIndex} from "../util/tools/function";
 
 const service = axios.create({
     timeout: 50000, // request timeout
@@ -10,7 +11,7 @@ service.interceptors.request.use(
     config => {
         if (!config.headers['Finger-Nft-Token']) {
             config.headers['Finger-Nft-Token'] = `${window.localStorage.getItem(
-                `Authorization-${window.sessionStorage.getItem('openAppId') || 0}-${window.sessionStorage.getItem('openIndex') || 0}`
+                `Authorization-${getOpenAppId()}-${getOpenAppIndex()}`
             ) || ''}`;
         }
 
@@ -39,8 +40,8 @@ service.interceptors.response.use(
         const res = response.data;
         if (res.errno === 501) {
             setTimeout(() => {
-                var openAppId = window.sessionStorage.getItem('openAppId') || 0;
-                var openIndex = window.sessionStorage.getItem('openIndex') || 0;
+                var openAppId = getOpenAppId();
+                var openIndex = getOpenAppIndex();
                 localStorage.removeItem(`Authorization-${openAppId}-${openIndex}`);
                 if (window.location.pathname !== '/wallet/sign-up' && window.location.pathname !== '/wallet/login') {
                     history.push("/wallet/login" + window.location.search);
