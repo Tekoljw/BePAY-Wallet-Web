@@ -138,7 +138,7 @@ function BindMailbox() {
                   >
                       <div className="w-full">
                           <Typography className="mt-32 text-20 font-extrabold tracking-tight leading-tight flex items-center justify-content-start back-modal-title cursor-pointer">
-                            <img className='back-modal-title-img' src="assets/images/logo/icon-back.png" alt="back icon" />
+                            <img className='back-modal-title-img' src="wallet/assets/images/logo/icon-back.png" alt="back icon" />
                             Back
                           </Typography>
                           <div className="flex items-baseline mt-2 font-medium text-14" style={{marginBottom: '2rem', marginTop: 0}}>
@@ -221,7 +221,7 @@ function BindMailbox() {
                                                       <img
                                                           loading="lazy"
                                                           width="20"
-                                                          src={`/assets/images/country/${option.country_code}.png`}
+                                                          src={`/wallet/assets/images/country/${option.country_code}.png`}
                                                           alt=""
                                                       />
                                                       {option.local_name} ({option.country_code}) +{option.phone_code}

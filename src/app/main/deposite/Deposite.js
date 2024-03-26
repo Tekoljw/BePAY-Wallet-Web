@@ -181,8 +181,8 @@ const handleCopyText = (text) => {
 };
 
 const nftNetwork = [
-    { network: "BSC", walletName: "BSC", protol: "BSC", url: 'assets/images/deposite/btc.png', 'desc': 'BSC', 'desc2': 'BSC-2' },
-    { network: "Ethereum", walletName: "ETH", protol: "ETH", url: 'assets/images/deposite/btc.png', 'desc': 'ETH', 'desc2': 'ETH-2' },
+    { network: "BSC", walletName: "BSC", protol: "BSC", url: 'wallet/assets/images/deposite/btc.png', 'desc': 'BSC', 'desc2': 'BSC-2' },
+    { network: "Ethereum", walletName: "ETH", protol: "ETH", url: 'wallet/assets/images/deposite/btc.png', 'desc': 'ETH', 'desc2': 'ETH-2' },
 ];
 
 function Deposite() {
@@ -421,7 +421,7 @@ function Deposite() {
     const fiatRecharge = async (bankID) => {
         if (currencyCode === 'IDR') {
             if (weight < 20000) {
-                dispatch(showMessage({ message: 'The minimum payment amount is 20000', code: 2 }));
+                dispatch(showMessage({ message: t('error_4'), code: 2 }));
                 return
             }
         }
@@ -440,7 +440,7 @@ function Deposite() {
                 fbq('track', 'InitiateCheckout');
             }
             if (result.status === 'failed') {
-                dispatch(showMessage({ message: result.errMsg, code: 2 }));
+                dispatch(showMessage({ message: t('error_5'), code: 2 }));
             }
         }
     };
@@ -1028,7 +1028,7 @@ function Deposite() {
                                                     {isLoading && <FuseLoading />}
                                                     {!isLoading && <img
                                                         className="txtColorTitleSmall"
-                                                        src="assets/images/deposite/refresh.png"
+                                                        src="wallet/assets/images/deposite/refresh.png"
                                                         alt=""
                                                         onClick={() => {
                                                             handleWalletAddress(networkId).bind(this, 0);
@@ -1089,35 +1089,35 @@ function Deposite() {
                                                         {/* <img className='login-way-img'
 
                                                 src={
-                                                    (decentralized != 1 || userData.profile?.loginType != 1) ? `/assets/images/menu/icon-wallet-active.png` : `${walletImage}`} alt="" /> */}
+                                                    (decentralized != 1 || userData.profile?.loginType != 1) ? `/wallet/assets/images/menu/icon-wallet-active.png` : `${walletImage}`} alt="" /> */}
                                                         <img className='login-way-img button-noreduce'
                                                             src={
                                                                 (() => {
                                                                     switch (walletloginname) {
                                                                         case 'BitKeep':
-                                                                            return '/assets/images/login/icon-right-14.png';
+                                                                            return '/wallet/assets/images/login/icon-right-14.png';
                                                                         case 'MetaMask':
-                                                                            return '/assets/images/login/icon-right-1.png';
+                                                                            return '/wallet/assets/images/login/icon-right-1.png';
                                                                         case 'WalletConnect':
-                                                                            return '/assets/images/login/icon-right-5.png';
+                                                                            return '/wallet/assets/images/login/icon-right-5.png';
                                                                         case 'coinbase':
-                                                                            return '/assets/images/login/icon-right-10.png';
+                                                                            return '/wallet/assets/images/login/icon-right-10.png';
                                                                         case 'TrustWallet':
-                                                                            return '/assets/images/login/icon-right-12.png';
+                                                                            return '/wallet/assets/images/login/icon-right-12.png';
                                                                         case 'Coinbase':
-                                                                            return '/assets/images/login/icon-right-4.png';
+                                                                            return '/wallet/assets/images/login/icon-right-4.png';
                                                                         case 'Polygon':
-                                                                            return '/assets/images/login/icon-right-13.png';
+                                                                            return '/wallet/assets/images/login/icon-right-13.png';
                                                                         case 'Bitski':
-                                                                            return '/assets/images/login/icon-right-15.png';
+                                                                            return '/wallet/assets/images/login/icon-right-15.png';
                                                                         case 'CLedger':
-                                                                            return '/assets/images/login/icon-right-16.png';
+                                                                            return '/wallet/assets/images/login/icon-right-16.png';
                                                                         case 'Binance Smart':
-                                                                            return '/assets/images/login/icon-right-17.png';
+                                                                            return '/wallet/assets/images/login/icon-right-17.png';
                                                                         case 'value2':
                                                                             return '';
                                                                         default:
-                                                                            return '/assets/images/menu/icon-wallet-active.png ';
+                                                                            return '/wallet/assets/images/menu/icon-wallet-active.png ';
                                                                     }
                                                                 })()
                                                             }
@@ -1157,7 +1157,7 @@ function Deposite() {
                                                                 }}
                                                                 edge="end"
                                                             >
-                                                                <img src="assets/images/deposite/copy.png" alt="" />
+                                                                <img src="wallet/assets/images/deposite/copy.png" alt="" />
                                                             </IconButton>
                                                         </InputAdornment>}
                                                         aria-describedby="outlined-weight-helper-text "
@@ -1212,7 +1212,7 @@ function Deposite() {
                                             >
                                                 <div className='flex justify-content-center' style={{ width: "280px", overflow: "hidden" }}>
                                                     {!cryptoOpenLoad && <img className='login-way-img button-noreduce'
-                                                        src="assets/images/menu/icon-wallet-active.png"
+                                                        src="wallet/assets/images/menu/icon-wallet-active.png"
                                                         alt="" />}
                                                     <span className='login-way-name'>{t('home_deposite_13')}</span>
                                                 </div>
@@ -1246,7 +1246,7 @@ function Deposite() {
                                                         {balanceAll}
                                                     </div>
                                                 </div>
-                                                {/* <img className='w-16 h-8 mt-12 cursor-pointer' src="assets/images/deposite/jianTou.png" style={{ marginLeft: "16px" }} ></img> */}
+                                                {/* <img className='w-16 h-8 mt-12 cursor-pointer' src="wallet/assets/images/deposite/jianTou.png" style={{ marginLeft: "16px" }} ></img> */}
                                             </div>
 
                                             <div className='flex' style={{ width: "147px", marginLeft: "15px", height: "50px", backgroundColor: "#1e293b", borderRadius: "5px" }} >
@@ -1267,7 +1267,7 @@ function Deposite() {
 
                                         </div>
 
-                                        <img style={{ position: "absolute", left: "161px", top: "10px" }} src='assets/images/deposite/fenPei.png'></img>
+                                        <img style={{ position: "absolute", left: "161px", top: "10px" }} src='wallet/assets/images/deposite/fenPei.png'></img>
                                     </div>
 
                                     {/* <div className='flex justify-content-space cursor-pointer' style={{ widht: "340px", marginLeft: "12px", marginBottom: "20px" }}>
@@ -1515,7 +1515,7 @@ function Deposite() {
                                             <div className="flex items-center">
                                                 <img style={{
                                                     width: '3rem'
-                                                }} src={bankItem.url || "assets/images/deposite/touchngo.png"} alt="" />
+                                                }} src={bankItem.url || "wallet/assets/images/deposite/touchngo.png"} alt="" />
                                                 <div className="px-12 font-medium">
                                                     <Typography className="text-18 font-medium">{bankItem.payName}</Typography>
                                                 </div>
@@ -1594,7 +1594,7 @@ function Deposite() {
                     {/*            <div className="flex items-center">*/}
                     {/*                <img style={{*/}
                     {/*                    width: '3rem'*/}
-                    {/*                }} src="assets/images/deposite/touchngo.png" alt=""/>*/}
+                    {/*                }} src="wallet/assets/images/deposite/touchngo.png" alt=""/>*/}
                     {/*                <div className="px-12 font-medium">*/}
                     {/*                    <Typography className="text-18 font-medium">Touchn Go</Typography>*/}
                     {/*                </div>*/}
@@ -1683,7 +1683,7 @@ function Deposite() {
                     {/*            <div className="flex items-center">*/}
                     {/*                <img style={{*/}
                     {/*                    width: '3rem'*/}
-                    {/*                }} src="assets/images/deposite/touchngo.png" alt=""/>*/}
+                    {/*                }} src="wallet/assets/images/deposite/touchngo.png" alt=""/>*/}
                     {/*                <div className="px-12 font-medium">*/}
                     {/*                    <Typography className="text-18 font-medium">Touchn Go</Typography>*/}
                     {/*                </div>*/}

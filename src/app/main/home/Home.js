@@ -26,7 +26,7 @@ import { centerGetUserFiat, getWithdrawTransferStats } from '../../store/wallet/
 import { getSymbols, paymentConfig, getContactAddress } from "../../store/config/configThunk";
 import { getBorrowConfig } from "../../store/borrow/borrowThunk";
 import { getPoolConfig } from "../../store/pool/poolThunk";
-// import {useTranslation} from "react-i18next";
+import {useTranslation} from "react-i18next";
 // import { changeLanguage } from 'app/store/i18nSlice';
 import ComingSoon from "../coming-soon/ComingSoon";
 import web3 from '../../util/web3';
@@ -47,11 +47,11 @@ const Root = styled(FusePageCarded)(({ theme }) => ({
 }));
 
 function HomePage(props) {
-    // const { t } = useTranslation('mainPage');
+    const { t } = useTranslation('mainPage');
     const dispatch = useDispatch();
     const isMobileMedia = new MobileDetect(window.navigator.userAgent).mobile();
     const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down(isMobileMedia ? 'lg' : 'sm'));
-    const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobile);
+    const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobileMedia);
     const userData = useSelector(selectUserData);
     // const [ isLoading, setIsLoading ] = useState(true);
     // const getUrlParam = (param) => {
@@ -83,7 +83,7 @@ function HomePage(props) {
                 if (networks.length > 0 && res) {
                     let tmpNetworkId = arrayLookup(networks, 'chainId', res, 'id');
                     if (!tmpNetworkId) {
-                        dispatch(showMessage({ message: 'This chain is not supported', code: 2 }));
+                        dispatch(showMessage({ message: t('error_3'), code: 2 }));
                     }
                 }
                 if (window.ethereum) {
@@ -91,7 +91,7 @@ function HomePage(props) {
                         let network = chainId.toString();
                         let tmpNetworkId = arrayLookup(networks, 'chainId', network, 'id');
                         if (networks.length > 0 && !tmpNetworkId) {
-                            dispatch(showMessage({ message: 'This chain is not supported', code: 2 }));
+                            dispatch(showMessage({ message: t('error_3'), code: 2 }));
                         }
                     });
                 }
@@ -306,7 +306,7 @@ function HomePage(props) {
                                 changePhoneTab('account')
                                 history.push('/wallet/home/wallet')
                             }}>
-                                <img class="material-icons md-18" width="24px" src={currentTab === 'account' ? 'assets/images/menu/icon-wallet-active2.png' : 'assets/images/menu/icon-wallet-active.png'} alt="" />
+                                <img class="material-icons md-18" width="24px" src={currentTab === 'account' ? 'wallet/assets/images/menu/icon-wallet-active2.png' : 'wallet/assets/images/menu/icon-wallet-active.png'} alt="" />
                                 {/* <i class="material-icons md-18">signal_cellular_alt</i> */}
                                 <span class="nav-text">Account</span>
                             </div>
@@ -315,7 +315,7 @@ function HomePage(props) {
                                 history.push('/wallet/home/deposite')
                             }}>
                                 {/* {changePhoneTab('deposit')} */}
-                                <img class="material-icons md-18" width="24px" src={currentTab === 'deposite' ? 'assets/images/menu/deposite-active2.png' : 'assets/images/menu/deposite-active.png'} alt="" />
+                                <img class="material-icons md-18" width="24px" src={currentTab === 'deposite' ? 'wallet/assets/images/menu/deposite-active2.png' : 'wallet/assets/images/menu/deposite-active.png'} alt="" />
                                 <span class="nav-text">Deposit</span>
                             </div>
                             <div class="nav-link" data-index="2" onClick={() => {
@@ -323,7 +323,7 @@ function HomePage(props) {
                                 history.push('/wallet/home/withdraw')
                             }}>
                                 {/* {changePhoneTab('withdraw')} */}
-                                <img class="material-icons md-18" width="24px" src={currentTab === 'withdraw' ? 'assets/images/menu/withdraw-active2.png' : 'assets/images/menu/withdraw-active.png'} alt="" />
+                                <img class="material-icons md-18" width="24px" src={currentTab === 'withdraw' ? 'wallet/assets/images/menu/withdraw-active2.png' : 'wallet/assets/images/menu/withdraw-active.png'} alt="" />
                                 <span class="nav-text">Withdraw</span>
                             </div>
                         </nav>

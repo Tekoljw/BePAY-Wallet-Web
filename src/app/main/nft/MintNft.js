@@ -88,12 +88,13 @@ function MintNft(props) {
     return mintStatusRes
   }
 
+  
   // 提示信息
   const showMsg = (code, num, msg) => {
     if (code === 1) {
       dispatch(showMessage({ message: msg ?? `successfully mint ${num}`, code: 1 }))
     } else {
-      dispatch(showMessage({ message: msg ?? `Mint error`, code: 2 }))
+      dispatch(showMessage({ message: t('error_2'), code: 2 }))
     }
   }
 

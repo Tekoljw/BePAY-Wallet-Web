@@ -350,7 +350,7 @@ function NftPool(props) {
                         >
                             &nbsp;
                             <img
-                                src="assets/images/logo/icon-close.png"
+                                src="wallet/assets/images/logo/icon-close.png"
                                 className="dialog-close-btn"
                                 onClick={() => {
                                     setOpenChangeNetwork(false);

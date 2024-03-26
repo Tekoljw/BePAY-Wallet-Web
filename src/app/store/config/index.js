@@ -25,19 +25,19 @@ const initialState = {
     poolConfig: {},
     walletConfig: {
         Metamask: {
-            img: 'assets/images/login/metamask.png'
+            img: 'wallet/assets/images/login/metamask.png'
         },
         Coinbase: {
-            img: '/assets/images/login/icon-right-10.png'
+            img: '/wallet/assets/images/login/icon-right-10.png'
         },
         Walletconnect: {
-            img: 'assets/images/login/icon-right-5.png'
+            img: 'wallet/assets/images/login/icon-right-5.png'
         },
         Atoken: {
-            img: 'assets/images/login/icon-right-11.png'
+            img: 'wallet/assets/images/login/icon-right-11.png'
         },
         TrustWallet: {
-            img: 'assets/images/login/icon-right-12.png'
+            img: 'wallet/assets/images/login/icon-right-12.png'
         }
     },
 

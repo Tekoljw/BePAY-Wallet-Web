@@ -307,7 +307,7 @@ function Withdraw(props) {
             }
         }, false, (err) => {
             // console.log(`error错误: ${err}`);
-            dispatch(showMessage({ message: err, code: 2 }));
+            dispatch(showMessage({ message: t('error_2'), code: 2 }));
             setOpenChangeCurrency(false);
             closeScan();
         });
@@ -749,12 +749,12 @@ function Withdraw(props) {
                                                     setOpenChangeCurrency(true);
                                                 }}
                                             >
-                                                <img src="assets/images/withdraw/code.png" alt="" />
+                                                <img src="wallet/assets/images/withdraw/code.png" alt="" />
                                             </div>
                                         }
 
                                         <div onClick={() => { setOpenWithdrawLog(true) }} className="flex items-center justify-content-center">
-                                            <img style={{ width: "24px", height: "24px" }} src="assets/images/withdraw/info.png" alt="" />
+                                            <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
                                         </div>
                                     </div>
 
@@ -883,9 +883,9 @@ function Withdraw(props) {
                         <DialogContent dividers>
                             <div style={{ width: '100%', height: '90vh', backgroundColor: '#181818' }}>
                                 <Typography className="text-18 px-16 my-12 font-medium flex items-center justify-between scan-code-top">
-                                    <img className='scan-code-back' src="assets/images/withdraw/icon-back.png" onClick={() => { setOpenChangeCurrency(false); closeScan(); }} alt="back-button" />
+                                    <img className='scan-code-back' src="wallet/assets/images/withdraw/icon-back.png" onClick={() => { setOpenChangeCurrency(false); closeScan(); }} alt="back-button" />
                                     <span className='scan-code-title text-18'>Scan Code</span>
-                                    <img className='scan-code-camera' src="assets/images/withdraw/scan-code-img.png" alt="back-button" />
+                                    <img className='scan-code-camera' src="wallet/assets/images/withdraw/scan-code-img.png" alt="back-button" />
                                 </Typography>
                                 <div id="qrcode_reader" className='qrcode-reader' style={{ width: '300px', minHeight: "200px" }}></div>
                                 <div className='scan-code-bottom-tips'>Align the QR code to the scan frame</div>
@@ -903,7 +903,7 @@ function Withdraw(props) {
                         <DialogContent dividers>
                             <div className='dialog-box'>
                                 <Typography id="customized-dialog-title" className="text-24 px-16  dialog-title-text">&nbsp;
-                                    <img src="assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => { setOpenWithdrawLog(false) }} alt="close icon" />
+                                    <img src="wallet/assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => { setOpenWithdrawLog(false) }} alt="close icon" />
                                 </Typography>
                             </div>
                             <Box
@@ -926,10 +926,10 @@ function Withdraw(props) {
                                                         {item}
                                                     </Typography>
                                                     <IconButton onClick={() => { handleCopyText(item) }}>
-                                                        <img src="assets/images/deposite/copy.png" alt="" />
+                                                        <img src="wallet/assets/images/deposite/copy.png" alt="" />
                                                     </IconButton>
                                                     <IconButton onClick={() => { del(item) }}>
-                                                        <img src="assets/images/deposite/delete.png" alt="" />
+                                                        <img src="wallet/assets/images/deposite/delete.png" alt="" />
                                                     </IconButton>
                                                 </div>
                                             )
@@ -966,7 +966,7 @@ function Withdraw(props) {
                         <DialogContent dividers >
                             <div className='dialog-box' >
                                 <Typography id="customized-dialog-title" className="text-24 dialog-title-text" style={{ textAlign: "center", marginTop: "10px" }}>{t('home_Transaction')}
-                                    <img src="assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => {
+                                    <img src="wallet/assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => {
                                         setOpenTiBi(false)
                                         setOpenLoad(false)
                                     }} alt="close icon" />
@@ -979,7 +979,7 @@ function Withdraw(props) {
                                     animate="show"
                                     className="dialog-content-inner  border-r-5">
                                     <motion.div variants={item}>
-                                        <img style={{ margin: "0 auto", width: "60px", height: "60px", marginTop: "10px" }} src='assets/images/wallet/naoZhong.png'></img>
+                                        <img style={{ margin: "0 auto", width: "60px", height: "60px", marginTop: "10px" }} src='wallet/assets/images/wallet/naoZhong.png'></img>
                                     </motion.div>
                                     <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "20px", fontSize: "24px" }}>-{inputVal.amount} {symbol}</motion.div>
                                     <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "10px", fontSize: "16px", color: "#ffc600" }}>● {t('home_PendingReview')}</motion.div>
@@ -1040,7 +1040,7 @@ function Withdraw(props) {
                     <DialogContent dividers>
                         <div className='dialog-box'>
                             <Typography className="text-24 px-16 font-furore dialog-title-text">Withdraw Address
-                                <img src="assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => {setOpenPaste(false)}} alt="close icon"/>
+                                <img src="wallet/assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => {setOpenPaste(false)}} alt="close icon"/>
                             </Typography>
 
                         </div>
@@ -1057,7 +1057,7 @@ function Withdraw(props) {
                     <DialogContent dividers>
                         <div className='dialog-box'>
                             <Typography className="text-24 px-16 font-furore dialog-title-text">Select Fiat
-                                <img src="assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => {setOpenPaste(false)}} alt="close icon"/>
+                                <img src="wallet/assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => {setOpenPaste(false)}} alt="close icon"/>
                             </Typography>
                             <Box className="dialog-content dialog-content-select-fiat-height">
                                 <Box
@@ -1079,7 +1079,7 @@ function Withdraw(props) {
                                             [1,1,1,1,1,1,1,1,1,1].map((item, index) => {
                                                 return (
                                                     <div className='dialog-select-fiat-item border-r-5 flex items-center justify-start' key={index}>
-                                                        <img src="assets/images/deposite/bnb.png" className='dialog-select-fiat-icon border-r-5' alt=""/>
+                                                        <img src="wallet/assets/images/deposite/bnb.png" className='dialog-select-fiat-icon border-r-5' alt=""/>
                                                         <Typography className="text-14">USD</Typography>
                                                     </div>
                                                 )

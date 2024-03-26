@@ -126,7 +126,7 @@ function KycModal() {
                   >
                       <div className="w-full">
                           <Typography className="mt-32 text-20 font-extrabold tracking-tight leading-tight flex items-center justify-content-start back-modal-title kyc-back-modal-title cursor-pointer">
-                            <img className='back-modal-title-img' src="assets/images/logo/icon-back.png" alt="back icon" />
+                            <img className='back-modal-title-img' src="wallet/assets/images/logo/icon-back.png" alt="back icon" />
                             Back
                           </Typography>
                           <div className="flex items-baseline mt-2 font-medium text-14" style={{marginBottom: '2rem', marginTop: 0}}>
@@ -211,7 +211,7 @@ function KycModal() {
                                                 <img
                                                     loading="lazy"
                                                     width="20"
-                                                    src={`/assets/images/country/${option.country_code}.png`}
+                                                    src={`/wallet/assets/images/country/${option.country_code}.png`}
                                                     alt=""
                                                 />
                                                 {option.local_name} ({option.country_code}) +{option.phone_code}
@@ -371,7 +371,7 @@ function KycModal() {
                                                 <img
                                                     loading="lazy"
                                                     width="20"
-                                                    src={`/assets/images/country/${option.country_code}.png`}
+                                                    src={`/wallet/assets/images/country/${option.country_code}.png`}
                                                     alt=""
                                                 />
                                                 {option.local_name} ({option.country_code}) +{option.phone_code}
@@ -467,7 +467,7 @@ function KycModal() {
                                                 component="label"
                                                 onClick={() => {setKeyName('idFrontUrl')}}
                                               >
-                                                <img style={{ display: 'block' }} src='assets/images/kyc/icon-upload.png' alt=""/>
+                                                <img style={{ display: 'block' }} src='wallet/assets/images/kyc/icon-upload.png' alt=""/>
                                                 <input
                                                     accept="image/*"
                                                     className="hidden"
@@ -517,7 +517,7 @@ function KycModal() {
                                                 component="label"
                                                 onClick={() => {setKeyName('idBackUrl')}}
                                               >
-                                                <img style={{ display: 'block' }} src='assets/images/kyc/icon-upload.png' alt=""/>
+                                                <img style={{ display: 'block' }} src='wallet/assets/images/kyc/icon-upload.png' alt=""/>
                                                 <input
                                                     accept="image/*"
                                                     className="hidden"
@@ -567,7 +567,7 @@ function KycModal() {
                                                 component="label"
                                                 onClick={() => {setKeyName('selfPhotoUrl')}}
                                               >
-                                                <img style={{ display: 'block' }} src='assets/images/kyc/icon-upload.png' alt=""/>
+                                                <img style={{ display: 'block' }} src='wallet/assets/images/kyc/icon-upload.png' alt=""/>
                                                 <input
                                                     accept="image/*"
                                                     className="hidden"
@@ -617,7 +617,7 @@ function KycModal() {
                                                 component="label"
                                                 onClick={() => {setKeyName('proofOfAddressUrl')}}
                                               >
-                                                <img style={{ display: 'block' }} src='assets/images/kyc/icon-upload.png' alt=""/>
+                                                <img style={{ display: 'block' }} src='wallet/assets/images/kyc/icon-upload.png' alt=""/>
                                                 <input
                                                     accept="image/*"
                                                     className="hidden"

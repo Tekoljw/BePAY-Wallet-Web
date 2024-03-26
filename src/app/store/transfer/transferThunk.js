@@ -65,12 +65,12 @@ export const sendTransaction = createAsyncThunk(
         const tmpNetworkId = arrayLookup(config.networks, 'id', networkId, 'chainId');
 
         if (chainId != tmpNetworkId) {
-            dispatch(showMessage({ message: 'Current chain error', code: 3 }));
+            dispatch(showMessage({ message: t('error_41'), code: 3 }));
             return false
         }
 
         if (symbolAddress.length === 0) {
-            dispatch(showMessage({ message: 'This currency is not currently supported', code: 3 }));
+            dispatch(showMessage({ message: t('error_28'), code: 3 }));
             return false
         }
 
@@ -92,7 +92,7 @@ export const sendTransaction = createAsyncThunk(
                     dispatch(afterActive({ txId: txHash, configId: activatyId }));
                     console.log('txHash ==> ', txHash)
                 }).catch((error) => {
-                    dispatch(showMessage({ message: error.message, code: 2 }));
+                    dispatch(showMessage({ message: t('error_18'), code: 2 }));
                     console.log('error ==> ', error)
                 });
                 return true
@@ -202,15 +202,12 @@ export const foxSendTransaction = createAsyncThunk(
                         console.log('txHash ==> ', txHash)
                         return txHash
                     }).catch((error) => {
-                        dispatch(showMessage({ message: error.message, code: 2 }));
+                        dispatch(showMessage({ message: t('error_18'), code: 2 }));
                         console.log('error ==> ', error)
                     });
                     return true
-                
-                
-                
             } catch (e) {
-                dispatch(showMessage({ message: e.message, code: 2 }));
+                dispatch(showMessage({ message: t('error_18'), code: 2 }));
                 return false
             }
         }
@@ -234,7 +231,7 @@ export const foxSendTransaction = createAsyncThunk(
             }
             return transferRes.tx;
         } catch (e) {
-            dispatch(showMessage({ message: e.message, code: 2 }));
+            dispatch(showMessage({ message: t('error_18'), code: 2 }));
             return false
         }
     }
@@ -253,7 +250,7 @@ export const manualCryptoNotify = createAsyncThunk(
         };
         const resultData = await React.$api("payment.manualCryptoNotify", data);
         if (resultData.errno !== 0) {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            dispatch(showMessage({ message: t('error_2'), code: 2 }));
         } else {
             // console.log(resultData)
         }
@@ -275,7 +272,7 @@ export const afterActive = createAsyncThunk(
         if (resultData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            dispatch(showMessage({ message: t('error_2'), code: 2 }));
         }
     }
 
@@ -294,7 +291,7 @@ export const directActive = createAsyncThunk(
         if (resultData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            dispatch(showMessage({ message: t('error_2'), code: 2 }));
         }
     }
 );
@@ -312,7 +309,7 @@ export const releaseActive = createAsyncThunk(
         if (resultData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            dispatch(showMessage({ message: t('error_1'), code: 2 }));
         }
     }
 

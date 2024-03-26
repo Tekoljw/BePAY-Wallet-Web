@@ -65,7 +65,7 @@ function ToolbarLayout1(props) {
             {/*  <NavigationShortcuts />*/}
             {/*</Hidden>*/}
             <Hidden>
-              <img src="assets/images/logo/funihash-logo.png" className="funihash-logo" alt=""/>
+              <img src="wallet/assets/images/logo/funihash-logo.png" className="funihash-logo" alt=""/>
             </Hidden>
           </div>
 

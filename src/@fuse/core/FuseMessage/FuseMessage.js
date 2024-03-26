@@ -105,10 +105,10 @@
 //             className="FuseMessage-content messageBgColor "
 //             message={
 //               <div className="flex items-center">
-//                 {options.code === 1 && <img className='w-24 h-24' src="assets/images/menu/success.png"></img>}
-//                 {options.code === 2 && <img className='w-24 h-24' src="assets/images/menu/error.png"></img>}
-//                 {options.code === 3 && <img className='w-24 h-24' src="assets/images/menu/tanHao.png"></img>}
-//                 {(options.code === undefined || options.code === null) && <img className='w-24 h-24' src="assets/images/menu/success.png"></img>}
+//                 {options.code === 1 && <img className='w-24 h-24' src="wallet/assets/images/menu/success.png"></img>}
+//                 {options.code === 2 && <img className='w-24 h-24' src="wallet/assets/images/menu/error.png"></img>}
+//                 {options.code === 3 && <img className='w-24 h-24' src="wallet/assets/images/menu/tanHao.png"></img>}
+//                 {(options.code === undefined || options.code === null) && <img className='w-24 h-24' src="wallet/assets/images/menu/success.png"></img>}
 //                 {variantIcon[options.variant] && (<FuseSvgIcon color="inherit">{variantIcon[options.variant]}</FuseSvgIcon>)}
 //                 <Typography className="mx-8">{options.message}</Typography>
 //                 {/* <Typography className="mx-8">Successfully logged in</Typography> */}
@@ -281,13 +281,13 @@ function FuseMessage(props) {
           <SnackbarContent className="FuseMessage-content messageBgColor "
             message={
               <div className="flex items-center ">
-                {/* {options.code === 1 && <img className='w-24 h-24' src="assets/images/index/success.png"></img>}
-                {options.code === 2 && <img className='w-24 h-24' src="assets/images/index/error.png"></img>}
-                {options.code === 3 && <img className='w-24 h-24' src="assets/images/index/tanHao.png"></img>} */}
-                  {options.code === 1 && <img className='w-24 h-24' src="assets/images/menu/success.png"></img>}
-                 {options.code === 2 && <img className='w-24 h-24' src="assets/images/menu/error.png"></img>}
-                {options.code === 3 && <img className='w-24 h-24' src="assets/images/menu/tanHao.png"></img>}
-                {(options.code === undefined || options.code === null) && <img className='w-24 h-24' src="assets/images/menu/tanHao.png"></img>}
+                {/* {options.code === 1 && <img className='w-24 h-24' src="wallet/assets/images/index/success.png"></img>}
+                {options.code === 2 && <img className='w-24 h-24' src="wallet/assets/images/index/error.png"></img>}
+                {options.code === 3 && <img className='w-24 h-24' src="wallet/assets/images/index/tanHao.png"></img>} */}
+                  {options.code === 1 && <img className='w-24 h-24' src="wallet/assets/images/menu/success.png"></img>}
+                 {options.code === 2 && <img className='w-24 h-24' src="wallet/assets/images/menu/error.png"></img>}
+                {options.code === 3 && <img className='w-24 h-24' src="wallet/assets/images/menu/tanHao.png"></img>}
+                {(options.code === undefined || options.code === null) && <img className='w-24 h-24' src="wallet/assets/images/menu/tanHao.png"></img>}
                 {variantIcon[options.variant] && (
                   <FuseSvgIcon color="inherit">{variantIcon[options.variant]}</FuseSvgIcon>
                 )}

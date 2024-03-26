@@ -1340,6 +1340,10 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     width: 375px !important;
 }
 
+.loginMarginZhong {
+    margin-right: -10px;
+}
+
 @media screen and (min-width: 0px) and (max-width: 750px) {
 
     .diBanColor {

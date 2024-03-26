@@ -544,7 +544,7 @@ function Swap() {
                     <img
                       className="mr-8"
                       width="22"
-                      src="/assets/images/logo/loading-img.png"
+                      src="/wallet/assets/images/logo/loading-img.png"
                       alt=""
                     />
                   }
@@ -572,29 +572,29 @@ function Swap() {
                         src={(() => {
                           switch (walletloginname) {
                             case "BitKeep":
-                              return "/assets/images/login/icon-right-14.png";
+                              return "/wallet/assets/images/login/icon-right-14.png";
                             case "MetaMask":
-                              return "/assets/images/login/icon-right-1.png";
+                              return "/wallet/assets/images/login/icon-right-1.png";
                             case "WalletConnect":
-                              return "/assets/images/login/icon-right-5.png";
+                              return "/wallet/assets/images/login/icon-right-5.png";
                             case "coinbase":
-                              return "/assets/images/login/icon-right-10.png";
+                              return "/wallet/assets/images/login/icon-right-10.png";
                             case "TrustWallet":
-                              return "/assets/images/login/icon-right-12.png";
+                              return "/wallet/assets/images/login/icon-right-12.png";
                             case "Coinbase":
-                              return "/assets/images/login/icon-right-4.png";
+                              return "/wallet/assets/images/login/icon-right-4.png";
                             case "Polygon":
-                              return "/assets/images/login/icon-right-13.png";
+                              return "/wallet/assets/images/login/icon-right-13.png";
                             case "Bitski":
-                              return "/assets/images/login/icon-right-15.png";
+                              return "/wallet/assets/images/login/icon-right-15.png";
                             case "CLedger":
-                              return "/assets/images/login/icon-right-16.png";
+                              return "/wallet/assets/images/login/icon-right-16.png";
                             case "Binance Smart":
-                              return "/assets/images/login/icon-right-17.png";
+                              return "/wallet/assets/images/login/icon-right-17.png";
                             case "BeingFi Wallet":
-                              return "/assets/images/menu/LOGO.png ";
+                              return "/wallet/assets/images/menu/LOGO.png ";
                             default:
-                              return "/assets/images/menu/icon-wallet-active.png ";
+                              return "/wallet/assets/images/menu/icon-wallet-active.png ";
                           }
                         })()}
                         alt=""
@@ -619,7 +619,7 @@ function Swap() {
                       <img
                         className="mr-8"
                         width="22"
-                        src="/assets/images/menu/icon-wallet-active.png"
+                        src="/wallet/assets/images/menu/icon-wallet-active.png"
                         alt=""
                       />
                     }
@@ -715,7 +715,7 @@ function Swap() {
 
           <div className="flex items-center justify-content-center -mb-56 -mt-4 position-re">
             <div className="cursor-pointer swap-btn flex items-center justify-content-center">
-              <img src="assets/images/swap/arrow-down.png" alt="" />
+              <img src="wallet/assets/images/swap/arrow-down.png" alt="" />
             </div>
           </div>
 

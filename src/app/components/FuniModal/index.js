@@ -22,7 +22,7 @@ const AnimateModal = (props) => {
       <div ref={nodeRef}>
         <div className="modalOverlay"></div>
         <div className={className + " animateWrapper"}>
-          <img src="assets/images/logo/icon-close.png" className='animate-close-btn' onClick={onClose} alt="close icon" />
+          <img src="wallet/assets/images/logo/icon-close.png" className='animate-close-btn' onClick={onClose} alt="close icon" />
           {children}
         </div>
       </div>

@@ -33,7 +33,7 @@ function AccountPage(props) {
                 if (networks.length > 0 && res) {
                     let tmpNetworkId = arrayLookup(networks, 'chainId', res, 'id');
                     if (!tmpNetworkId) {
-                        dispatch(showMessage({ message: 'This chain is not supported', code: 2 }));
+                        dispatch(showMessage({ message: t('error_3'), code: 2 }));
                     }
                 }
 
@@ -42,7 +42,7 @@ function AccountPage(props) {
                         let network = chainId.toString();
                         let tmpNetworkId = arrayLookup(networks, 'chainId', network, 'id');
                         if (networks.length > 0 && !tmpNetworkId) {
-                            dispatch(showMessage({ message: 'This chain is not supported', code: 2 }));
+                            dispatch(showMessage({ message: t('error_3'), code: 2 }));
                         }
                     });
                 }

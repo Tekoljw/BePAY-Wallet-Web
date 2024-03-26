@@ -68,7 +68,7 @@ function Login() {
     const { t } = useTranslation('mainPage');
     const dispatch = useDispatch();
 
-    const [logo, setLogo] = useState("assets/images/logo/logo.png");
+    const [logo, setLogo] = useState("wallet/assets/images/logo/logo.png");
     /**
      * Form Validation Schema
      */
@@ -548,7 +548,7 @@ function Login() {
                                     {/*                                        width: '25px',*/}
                                     {/*                                        height: '25px'*/}
                                     {/*                                    }}*/}
-                                    {/*                                    src={"/assets/images/country/" + row.country_code + ".png"}*/}
+                                    {/*                                    src={"/wallet/assets/images/country/" + row.country_code + ".png"}*/}
                                     {/*                                    alt=""*/}
                                     {/*                                />*/}
                                     {/*                                <div className="ml-4">{row.local_name}</div>*/}
@@ -613,7 +613,7 @@ function Login() {
                                                         <img
                                                             loading="lazy"
                                                             width="20"
-                                                            src={`/assets/images/country/${option.country_code}.png`}
+                                                            src={`/wallet/assets/images/country/${option.country_code}.png`}
                                                             alt=""
                                                         />
                                                         {option.local_name} ({option.country_code}) +{option.phone_code}
@@ -719,12 +719,12 @@ function Login() {
                                     <Button className='txtColorTitleSmall' style={{ width: '30%', margin: '.5rem 1.5%', backgroundColor: '#1E293B', borderColor: 'transparent', opacity: "1" }} variant="outlined"
                                         onClick={() => facebookLogin()}
                                     >
-                                        <img style={{ height: '80%' }} src="/assets/images/login/icon-1.png" alt="" />
+                                        <img style={{ height: '80%' }} src="/wallet/assets/images/login/icon-1.png" alt="" />
                                     </Button>
                                     <Button className='txtColorTitleSmall' onClick={() => {
                                         loginTelegram()
                                     }} style={{ width: '30%', margin: '.5rem 1.5%', backgroundColor: '#1E293B', borderColor: 'transparent', opacity: "1" }} variant="outlined">
-                                        <img style={{ height: '80%' }} src="/assets/images/login/icon-2.png" alt="" />
+                                        <img style={{ height: '80%' }} src="/wallet/assets/images/login/icon-2.png" alt="" />
                                     </Button>
                                     <Button className='txtColorTitleSmall' style={{ width: '30%', margin: '.5rem 1.5%', backgroundColor: '#1E293B', border: "none", opacity: "1" }} variant="outlined">
                                         <GoogleLogin
@@ -733,7 +733,7 @@ function Login() {
                                                     onClick={renderProps.onClick}
                                                     disabled={renderProps.disabled}
                                                     style={{ height: "80%" }}
-                                                    src="/assets/images/login/icon-3.png"
+                                                    src="/wallet/assets/images/login/icon-3.png"
                                                     alt=""
                                                 />
                                             )}
@@ -745,10 +745,10 @@ function Login() {
                                         // isSignedIn={true}
                                         //   icon={false}
                                         />
-                                        {/* <img style={{ height: '80%' }} src="/assets/images/login/icon-3.png" alt="" /> */}
+                                        {/* <img style={{ height: '80%' }} src="/wallet/assets/images/login/icon-3.png" alt="" /> */}
                                     </Button>
                                     {/* {isMobileMedia && <Button className='txtColorTitleSmall' onClick={() => { walletLogin('trustWallet') }} style={{ width: '30%', margin: '.5rem 1.5%', backgroundColor: '#1E293B', borderColor: 'transparent' }} variant="outlined">
-                                <img style={{ height: '80%' }} src="/assets/images/login/icon-4.png" alt="" />
+                                <img style={{ height: '80%' }} src="/wallet/assets/images/login/icon-4.png" alt="" />
                             </Button>} */}
                                 </div>
                                 {/* //待修改 */}

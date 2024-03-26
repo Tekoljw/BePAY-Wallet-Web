@@ -75,7 +75,7 @@ function ClassicSignUpPage() {
     const [selectedCountryCode, setSelectedCountryCode] = useState("");
     const config = useSelector(selectConfig);
 
-    const [logo, setLogo] = useState("assets/images/logo/logo.png");
+    const [logo, setLogo] = useState("wallet/assets/images/logo/logo.png");
 
     const schema = yup.object().shape({
         // email: yup.string().email('You must enter a valid email').required('You must enter a email'),
@@ -313,7 +313,7 @@ function ClassicSignUpPage() {
                                                 <img
                                                     loading="lazy"
                                                     width="20"
-                                                    src={`/assets/images/country/${option.country_code}.png`}
+                                                    src={`/wallet/assets/images/country/${option.country_code}.png`}
                                                     alt=""
                                                 />
                                                 {option.local_name} ({option.country_code}) +{option.phone_code}
@@ -572,7 +572,7 @@ function ClassicSignUpPage() {
                     <DialogContent dividers className='netWorkDi2'>
                         <div className='dialog-box '>
                             <Typography id="customized-dialog-title" className="text-24 px-16 dialog-title-text netWorkTxtWh">&nbsp;
-                                <img src="assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => { setOpenChangeNetwork(false) }} alt="close icon" />
+                                <img src="wallet/assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => { setOpenChangeNetwork(false) }} alt="close icon" />
                             </Typography>
                             <Box className="dialog-content dialog-content-select-network-height">
                                 <Box

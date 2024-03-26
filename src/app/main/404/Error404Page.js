@@ -11,7 +11,7 @@ function Error404Page() {
           initial={{ opacity: 0, scale: 0.6 }}
           animate={{ opacity: 1, scale: 1, transition: { delay: 0.1 } }}
         >
-          <img src="assets/images/wallet/404.png"></img>
+          <img src="wallet/assets/images/wallet/404.png"></img>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 40 }}

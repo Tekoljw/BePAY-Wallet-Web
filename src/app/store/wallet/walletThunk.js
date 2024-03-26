@@ -9,30 +9,30 @@ import BN from "bn.js";
 
 export const WalletConfigDefineMap = {
     "ETH": {
-        network: "Ethereum", walletName: "ETH", protol: "ERC20", url: 'assets/images/deposite/btc.png', 'desc': 'ETH', 'desc2': 'ETH-2'
+        network: "Ethereum", walletName: "ETH", protol: "ERC20", url: 'wallet/assets/images/deposite/btc.png', 'desc': 'ETH', 'desc2': 'ETH-2'
     },
 
     "BSC": {
-        network: "BSC", walletName: "BSC", protol: "BEP20", url: 'assets/images/deposite/btc.png', 'desc': 'BSC', 'desc2': 'BSC-2'
+        network: "BSC", walletName: "BSC", protol: "BEP20", url: 'wallet/assets/images/deposite/btc.png', 'desc': 'BSC', 'desc2': 'BSC-2'
     },
 
     "BTC": {
-        network: "Bitcoin", walletName: "BTC", protol: "BTC", url: 'assets/images/deposite/btc.png', 'desc': 'This address accepts only BTC, transferring here any other coin or WBTC both TRC-20 and ERC-20 will result in fund loss. Please copy BTC address.', 'desc2': 'The minimum deposit amount 0.00005 BTC, lower amount won\'t be credited or refunded.'
+        network: "Bitcoin", walletName: "BTC", protol: "BTC", url: 'wallet/assets/images/deposite/btc.png', 'desc': 'This address accepts only BTC, transferring here any other coin or WBTC both TRC-20 and ERC-20 will result in fund loss. Please copy BTC address.', 'desc2': 'The minimum deposit amount 0.00005 BTC, lower amount won\'t be credited or refunded.'
     },
 
     "USDT_TRC": {
-        network: "Tron", walletName: "USDT_TRC", protol: "TRC20", url: 'assets/images/deposite/btc.png', 'desc': 'USDT_TRC', 'desc2': 'USDT_TRC-2'
+        network: "Tron", walletName: "USDT_TRC", protol: "TRC20", url: 'wallet/assets/images/deposite/btc.png', 'desc': 'USDT_TRC', 'desc2': 'USDT_TRC-2'
     },
 
     "USDT_ERC": {
-        network: "Ethereum", walletName: "ETH", protol: "ERC20", url: 'assets/images/deposite/btc.png', 'desc': 'USDT_ERC', 'desc2': 'USDT_ERC-2'
+        network: "Ethereum", walletName: "ETH", protol: "ERC20", url: 'wallet/assets/images/deposite/btc.png', 'desc': 'USDT_ERC', 'desc2': 'USDT_ERC-2'
     },
 
     "USDT_BTC": {
-        network: "Bitcoin", walletName: "BTC", protol: "BTC", url: 'assets/images/deposite/btc.png', 'desc': 'USDT_ERC', 'desc2': 'USDT_ERC-2'
+        network: "Bitcoin", walletName: "BTC", protol: "BTC", url: 'wallet/assets/images/deposite/btc.png', 'desc': 'USDT_ERC', 'desc2': 'USDT_ERC-2'
     },
     "USDT_TRX": {
-        network: "Tron", walletName: "USDT_TRX", protol: "TRC20", url: 'assets/images/deposite/btc.png', 'desc': 'USDT_TRC', 'desc2': 'USDT_TRC-200'
+        network: "Tron", walletName: "USDT_TRX", protol: "TRC20", url: 'wallet/assets/images/deposite/btc.png', 'desc': 'USDT_TRC', 'desc2': 'USDT_TRC-200'
     },
 };
 
@@ -44,7 +44,7 @@ export const centerGetUserFiat = createAsyncThunk(
         if (balanceList.errno === 0) {
             dispatch(updateFiat(balanceList));
         } else {
-            dispatch(showMessage({ message: balanceList.errmsg, code: 2 }));
+            dispatch(showMessage({ message: t('error_2'), code: 2 }));
         }
     }
 );
@@ -154,7 +154,7 @@ export const getWalletAddress = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData;
         }
-        dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+        dispatch(showMessage({ message: t('error_39'), code: 2 }));
     }
 );
 
@@ -174,7 +174,7 @@ export const checkWalletAddress = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData;
         }
-        dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+        dispatch(showMessage({ message: t('error_40'), code: 2 }));
     }
 );
 
@@ -418,7 +418,7 @@ export const nftWithdraw = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData.data;
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            dispatch(showMessage({ message: t('error_22'), code: 2 }));
         }
     }
 );

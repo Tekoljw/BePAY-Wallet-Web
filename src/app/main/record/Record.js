@@ -204,7 +204,7 @@ function Record() {
                             </Table>
                         </TableContainer>
                         {transferList?.records?.length === 0 && <div className="mt-12 no-data-container " style={{height: 'calc(100vh - 24rem)'}}>
-                            <img className='noDataImg' src='assets/images/logo/xc.png'></img>
+                            <img className='noDataImg' src='wallet/assets/images/logo/xc.png'></img>
                             <div className='noDataImgTxt text-22'>{t('home_record_12')}</div></div>}
                     </Paper>
                 </Box>
