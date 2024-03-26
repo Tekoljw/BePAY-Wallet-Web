@@ -9,24 +9,20 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
     config => {
+        const OpenAppId = getOpenAppId();
+        const OpenAppIndex = getOpenAppIndex();
         if (!config.headers['Finger-Nft-Token']) {
             config.headers['Finger-Nft-Token'] = `${window.localStorage.getItem(
-                `Authorization-${getOpenAppId()}-${getOpenAppIndex()}`
+                `Authorization-${OpenAppId}-${OpenAppIndex}`
             ) || ''}`;
         }
 
         if (!config.headers['Wallet-OpenApp-Id']) {
-            config.headers['Wallet-OpenApp-Id'] = window.sessionStorage.getItem(
-                'openAppId'
-            // ) || 0;
-            ) || '6436951541b60d250c692481';
-            // ) || '64915ebf60b24e97a4584544';
+            config.headers['Wallet-OpenApp-Id'] = OpenAppId;
         }
 
         if (!config.headers['Wallet-OpenApp-Index']) {
-            config.headers['Wallet-OpenApp-Index'] = window.sessionStorage.getItem(
-                'openIndex'
-            ) || 0;
+            config.headers['Wallet-OpenApp-Index'] = OpenAppIndex;
         }
         return config;
     },
@@ -38,7 +34,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     response => {
         const res = response.data;
-        if (res.errno === 501) {
+        if (res.errno === 501) { //api 请求返回没有验证登录就跳转登录页面
             setTimeout(() => {
                 var openAppId = getOpenAppId();
                 var openIndex = getOpenAppIndex();
