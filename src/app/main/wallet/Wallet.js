@@ -50,7 +50,6 @@ import AnimateModal from "../../components/FuniModal";
 import axios from "axios";
 import domain from "../../api/Domain";
 import phoneCode from "../../../phone/phoneCode";
-import service from "../../api/request";
 import qs from "qs";
 import Web3Login from "../login/Web3Login";
 import coinbaseWallet from "../../util/web3/coinbase";
