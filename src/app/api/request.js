@@ -36,8 +36,8 @@ service.interceptors.response.use(
         const res = response.data;
         if (res.errno === 501) { //api 请求返回没有验证登录就跳转登录页面
             setTimeout(() => {
-                var openAppId = getOpenAppId();
-                var openIndex = getOpenAppIndex();
+                const openAppId = getOpenAppId();
+                const openIndex = getOpenAppIndex();
                 localStorage.removeItem(`Authorization-${openAppId}-${openIndex}`);
                 if (window.location.pathname !== '/wallet/sign-up' && window.location.pathname !== '/wallet/login') {
                     history.push("/wallet/login" + window.location.search);
