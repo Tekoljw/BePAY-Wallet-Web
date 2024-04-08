@@ -48,6 +48,7 @@ const App = () => {
     const openAppId = getUrlParam('openAppId') || 0;
     const openIndex = getUrlParam('openIndex') || 0;
     const accessType = getUrlParam('accessType') || 0;
+    const thirdPartId = getUrlParam('thirdPartId') || 0;
     const langDirection = useSelector(selectCurrentLanguageDirection);
     const mainTheme = useSelector(selectMainTheme);
     const token = useSelector(selectUserData).token;
@@ -61,14 +62,15 @@ const App = () => {
 
         dispatch(getNetworks());
         dispatch(getConfig());
-        // dispatch(getKycInfo({
-        //     unloginerror: false
-        // }));
+
         if (openAppId) {
             window.sessionStorage.setItem('openAppId', openAppId)
         }
         if (openIndex) {
             window.sessionStorage.setItem('openIndex', openIndex)
+        }
+        if (thirdPartId) {
+            window.localStorage.setItem('thirdPartId', thirdPartId)
         }
         if (accessType) {
             window.localStorage.setItem('accessType', accessType)

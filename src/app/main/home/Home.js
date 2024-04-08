@@ -30,13 +30,14 @@ import {useTranslation} from "react-i18next";
 // import { changeLanguage } from 'app/store/i18nSlice';
 import ComingSoon from "../coming-soon/ComingSoon";
 import web3 from '../../util/web3';
-import { arrayLookup } from "../../util/tools/function";
+import {arrayLookup, getAccessType, getThirdPartId} from "../../util/tools/function";
 import { selectConfig } from "../../store/config";
 import { showMessage } from 'app/store/fuse/messageSlice';
 import MobileDetect from 'mobile-detect';
 import { selectUserData } from "../../store/user";
 import { SvgIcon } from '@mui/material';
 import history from '@history';
+import {loginTelegram, requestUserLoginData} from "../../util/tools/loginFunction";
 // import FuseLoading from '@fuse/core/FuseLoading';
 
 const Root = styled(FusePageCarded)(({ theme }) => ({
@@ -179,15 +180,17 @@ function HomePage(props) {
     // });
 
     useEffect(() => {
-        dispatch(getUserData());
-        dispatch(getSymbols());
-        dispatch(getContactAddress());
-        dispatch(paymentConfig());
-        dispatch(getBorrowConfig());
-        dispatch(getPoolConfig());
-        dispatch(centerGetTokenBalanceList());
-        dispatch(centerGetUserFiat());
-        dispatch(getWithdrawTransferStats());
+        const accessType = getAccessType();
+        switch (accessType){
+            case 1:{
+                loginTelegram();
+                break;
+            }
+            default:{
+                requestUserLoginData();
+                break;
+            }
+        }
     }, []);
 
     return (

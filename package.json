@@ -174,7 +174,7 @@
     },
     "homepage": "/wallet/",
     "scripts": {
-        "start": "react-app-rewired  start",
+        "start": "react-app-rewired start",
         "build": "react-app-rewired build",
         "test": "react-app-rewired test --env=node",
         "eject": "react-app-rewired eject",

@@ -673,10 +673,6 @@ function Wallet() {
     cryptoDisplayData?.map((item, index) => {
       displayData.push(item.name);
       tmpCryptoDisplayData[item.name] = item;
-      //   if (arrayLookup(symbolsData, "symbol", item, "symbol")) {
-      //     displayData.push(item.name);
-      //     tmpCryptoDisplayData[item.name] = item;
-      //   }
     });
 
     symbolsData?.map((item, index) => {

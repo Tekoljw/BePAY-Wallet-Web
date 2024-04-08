@@ -12,6 +12,8 @@ import walletEthereum from '../../util/web3/walletEthereum';
 import settingsConfig from 'app/configs/settingsConfig';
 import loginWays from '../../main/login/loginWays'
 import { EthereumProvider } from '@walletconnect/ethereum-provider';
+import {getAccessType} from "../../util/tools/function";
+import {requestUserLoginData} from "../../util/tools/loginFunction";
 
 // 获取用户信息
 export const userProfile = createAsyncThunk(
@@ -151,6 +153,10 @@ export const facebookLoginApi = createAsyncThunk(
         if (userLoginData.errno === 0) {
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userLoginData));
+            const accessType = getAccessType();
+            if(accessType !== 0){ //其他第三方直接登录成功后，开启请求基础数据
+                requestUserLoginData();
+            }
             if (config.storageKey) {
                 React.$api("security.setKey", {
                     key: config.storageKey,

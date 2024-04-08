@@ -119,10 +119,6 @@ export const cryptoWithdrawFee = createAsyncThunk(
     }
 );
 
-
-
-
-
 // 获取钱包地址配置信息
 export const getWalletAddressConfig = createAsyncThunk(
     'wallet/getWalletAddressConfig',
