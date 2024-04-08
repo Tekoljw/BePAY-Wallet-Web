@@ -30,7 +30,7 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import { useState, useEffect } from "react";
-import { arrayLookup, getUrlParam } from "../../util/tools/function";
+import {arrayLookup, getOpenAppId, getThirdPartId, getUrlParam} from "../../util/tools/function";
 import phoneCode from '../../../phone/phoneCode';
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -55,6 +55,7 @@ import { rgbToHex } from '@mui/system';
 import { gapi } from "gapi-script";
 import { GoogleLogin } from "react-google-login";
 import utils from '../../util/tools/utils';
+import {loginTelegram} from "../../util/tools/loginFunction";
 
 
 const Root = styled(FusePageCarded)(({ theme }) => ({
@@ -242,7 +243,7 @@ function Login() {
     }, []);
     useEffect(() => {
         if (config) {
-            let openAppId = window.sessionStorage.getItem('openAppId')
+            let openAppId = getOpenAppId();
             if (openAppId) {
                 setLogo(`${config.staticSourceUrl}/${openAppId}.png`)
             }
@@ -383,20 +384,6 @@ function Login() {
 
     }, []);
 
-    const loginTelegram = () => {
-        //这里唯一要做的就是把你机器人参数传入进去
-        window.Telegram.Login.auth({ bot_id: '6180064197', request_access: 'write', embed: 1 }, (data) => {
-            console.log(data, '这是回调数据');//这里的data和之前返回的user数据和格式无差异
-            if (!data) {
-                // fail
-                return
-            }
-            telegramCallbackFn(data);
-        });
-    };
-    const telegramCallbackFn = (data) => {
-        dispatch(telegramLoginApi(data))
-    };
     const defaultView = () => {
 
         return (

@@ -17,6 +17,7 @@ import {selectConfig} from "../../store/config";
 import web3 from "../../util/web3";
 import {arrayLookup} from "../../util/tools/function";
 import { showMessage } from 'app/store/fuse/messageSlice';
+import {requestUserLoginData} from "../../util/tools/loginFunction";
 
 
 
@@ -51,15 +52,7 @@ function AccountPage(props) {
     }, [config.networks]);
 
     useEffect(() => {
-        dispatch(getUserData());
-        dispatch(getSymbols());
-        dispatch(getContactAddress());
-        dispatch(paymentConfig());
-        dispatch(getBorrowConfig());
-        dispatch(getPoolConfig());
-        dispatch(centerGetTokenBalanceList());
-        dispatch(centerGetUserFiat());
-        dispatch(getWithdrawTransferStats());
+        requestUserLoginData();
     }, []);
     return (
         <Wallet />

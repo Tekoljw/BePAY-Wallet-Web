@@ -4,6 +4,7 @@ import { PureComponent } from 'react';
 import { matchRoutes } from 'react-router-dom';
 import withRouter from '@fuse/core/withRouter';
 import history from '@history';
+import {getOpenAppId, getOpenAppIndex} from "../../../app/util/tools/function";
 
 let loginRedirectUrl = null;
 
@@ -53,7 +54,7 @@ class FuseAuthorization extends PureComponent {
 
 
     let token = `${window.localStorage.getItem(
-        `Authorization-${window.sessionStorage.getItem('openAppId') || 0}-${window.sessionStorage.getItem('openIndex') || 0}`
+        `Authorization-${getOpenAppId()}-${getOpenAppIndex()}`
     ) || ''}`;
     // userRole = userRole || (token ? 'home': '');
     console.log(userRole, 'userRole.......')

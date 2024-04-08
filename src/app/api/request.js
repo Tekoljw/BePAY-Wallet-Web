@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '@history'
+import {getOpenAppId, getOpenAppIndex} from "../util/tools/function";
 
 const service = axios.create({
     timeout: 50000, // request timeout
@@ -8,24 +9,20 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
     config => {
+        const OpenAppId = getOpenAppId();
+        const OpenAppIndex = getOpenAppIndex();
         if (!config.headers['Finger-Nft-Token']) {
             config.headers['Finger-Nft-Token'] = `${window.localStorage.getItem(
-                `Authorization-${window.sessionStorage.getItem('openAppId') || 0}-${window.sessionStorage.getItem('openIndex') || 0}`
+                `Authorization-${OpenAppId}-${OpenAppIndex}`
             ) || ''}`;
         }
 
         if (!config.headers['Wallet-OpenApp-Id']) {
-            config.headers['Wallet-OpenApp-Id'] = window.sessionStorage.getItem(
-                'openAppId'
-            // ) || 0;
-            ) || '6436951541b60d250c692481';
-            // ) || '64915ebf60b24e97a4584544';
+            config.headers['Wallet-OpenApp-Id'] = OpenAppId;
         }
 
         if (!config.headers['Wallet-OpenApp-Index']) {
-            config.headers['Wallet-OpenApp-Index'] = window.sessionStorage.getItem(
-                'openIndex'
-            ) || 0;
+            config.headers['Wallet-OpenApp-Index'] = OpenAppIndex;
         }
         return config;
     },
@@ -37,10 +34,10 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     response => {
         const res = response.data;
-        if (res.errno === 501) {
+        if (res.errno === 501) { //api 请求返回没有验证登录就跳转登录页面
             setTimeout(() => {
-                var openAppId = window.sessionStorage.getItem('openAppId') || 0;
-                var openIndex = window.sessionStorage.getItem('openIndex') || 0;
+                const openAppId = getOpenAppId();
+                const openIndex = getOpenAppIndex();
                 localStorage.removeItem(`Authorization-${openAppId}-${openIndex}`);
                 if (window.location.pathname !== '/wallet/sign-up' && window.location.pathname !== '/wallet/login') {
                     history.push("/wallet/login" + window.location.search);

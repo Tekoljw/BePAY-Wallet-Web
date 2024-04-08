@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import history from '@history';
 import { useHistory } from 'react-router-dom';
+import {getOpenAppId, getOpenAppIndex} from "../../util/tools/function";
 // state
 const initialState = {
     token: '',
@@ -26,8 +27,8 @@ const userSlice = createSlice({
             state.profile = res.data;
             if (res.data.token) {
                 state.token = res.data.token;
-                var openAppId = window.sessionStorage.getItem('openAppId') || 0;
-                var openIndex = window.sessionStorage.getItem('openIndex') || 0;
+                var openAppId = getOpenAppId();
+                var openIndex = getOpenAppIndex();
                 window.localStorage.setItem(`Authorization-${openAppId}-${openIndex}`, res.data.token);
 
 
@@ -37,7 +38,7 @@ const userSlice = createSlice({
                         history.push(res.pathname)
                         history.go(0)
                     }else{
-                        history.push('/wallet/home');;
+                        history.push('/wallet/home');
                     }
 
                     window.parent.postMessage(JSON.stringify({
@@ -51,8 +52,8 @@ const userSlice = createSlice({
             let res = action.payload;
             if (res.data.token) {
                 state.token = res.data.token;
-                var openAppId = window.sessionStorage.getItem('openAppId') || 0;
-                var openIndex = window.sessionStorage.getItem('openIndex') || 0;
+                var openAppId = getOpenAppId();
+                var openIndex = getOpenAppIndex();
                 localStorage.setItem(`Authorization-${openAppId}-${openIndex}`, res.data.token);
             }
         },

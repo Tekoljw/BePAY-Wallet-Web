@@ -25,7 +25,7 @@ import { tokenTransfer } from "../../store/user/userThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { selectConfig } from "../../store/config";
-import { arrayLookup, getNowTime } from "../../util/tools/function";
+import {arrayLookup, getNowTime, getOpenAppId, getOpenAppIndex} from "../../util/tools/function";
 import { openScan, closeScan } from "../../util/tools/scanqrcode";
 import { getWithDrawConfig, WalletConfigDefineMap, evalTokenTransferFee, cryptoWithdrawFee, getWithdrawHistoryAddress, delWithdrawHistoryAddress, getWithdrawTransferStats } from "app/store/wallet/walletThunk";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
@@ -517,8 +517,8 @@ function Withdraw(props) {
     const [cryptoSelect, setCryptoSelect] = useState(0);
     const [fiatSelect, setFiatSelect] = useState(1);
     const getSettingSymbol = async () => {
-        var openAppId = window.sessionStorage.getItem('openAppId') || 0;
-        var openIndex = window.sessionStorage.getItem('openIndex') || 0;
+        var openAppId = getOpenAppId();
+        var openIndex = getOpenAppIndex();
         const service = axios.create({
             timeout: 50000, // request timeout
             headers: {
