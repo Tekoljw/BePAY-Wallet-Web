@@ -155,7 +155,7 @@ export const facebookLoginApi = createAsyncThunk(
             dispatch(updateUser(userLoginData));
             const accessType = getAccessType();
             if(accessType !== 0){ //其他第三方直接登录成功后，开启请求基础数据
-                requestUserLoginData();
+                requestUserLoginData(dispatch);
             }
             if (config.storageKey) {
                 React.$api("security.setKey", {
