@@ -187,7 +187,7 @@ function HomePage(props) {
                 break;
             }
             default:{
-                requestUserLoginData();
+                requestUserLoginData(dispatch);
                 break;
             }
         }

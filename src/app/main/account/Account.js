@@ -52,7 +52,7 @@ function AccountPage(props) {
     }, [config.networks]);
 
     useEffect(() => {
-        requestUserLoginData();
+        requestUserLoginData(dispatch);
     }, []);
     return (
         <Wallet />

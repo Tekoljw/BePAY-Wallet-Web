@@ -25,7 +25,7 @@ const telegramCallbackFn = (data) => {
 };
 
 //请求用户登录基础数据
-export const requestUserLoginData = () => {
+export const requestUserLoginData = (dispatch) => {
     dispatch(getUserData());
     dispatch(getSymbols());
     dispatch(getContactAddress());
