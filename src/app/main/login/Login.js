@@ -30,7 +30,7 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import { useState, useEffect } from "react";
-import {arrayLookup, getOpenAppId, getThirdPartId, getUrlParam} from "../../util/tools/function";
+import { arrayLookup, getOpenAppId, getThirdPartId, getUrlParam } from "../../util/tools/function";
 import phoneCode from '../../../phone/phoneCode';
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -55,7 +55,7 @@ import { rgbToHex } from '@mui/system';
 import { gapi } from "gapi-script";
 import { GoogleLogin } from "react-google-login";
 import utils from '../../util/tools/utils';
-import {loginTelegram} from "../../util/tools/loginFunction";
+import { loginTelegram } from "../../util/tools/loginFunction";
 
 
 const Root = styled(FusePageCarded)(({ theme }) => ({
@@ -68,6 +68,18 @@ const Root = styled(FusePageCarded)(({ theme }) => ({
 function Login() {
     const { t } = useTranslation('mainPage');
     const dispatch = useDispatch();
+    const [width, setWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWidth(window.innerWidth);
+        };
+        window.addEventListener('resize', handleResize);
+        // 清理事件监听器
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     const [logo, setLogo] = useState("wallet/assets/images/logo/logo.png");
     /**
@@ -747,8 +759,7 @@ function Login() {
                             </form>
                         </div>
                         {
-                            !isMobileMedia &&
-                            <LoginSidebarContent tab={pathname.substring(pathname.lastIndexOf('\/') + 1, pathname.length) || 'wallet'} />
+                            width >= 400 && !isMobileMedia ? <LoginSidebarContent tab={pathname.substring(pathname.lastIndexOf('\/') + 1, pathname.length) || 'wallet'} /> : null
                         }
                     </Paper>
                 }
