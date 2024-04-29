@@ -124,8 +124,10 @@ function HomePage(props) {
 
     useEffect(() => {
         const accessType = getAccessType();
+        console.log(accessType, '请求的 accessType');
         switch (accessType){
             case 1:{ //telegramWebApp
+                console.log(accessType, '请求telegramWebAppLoginApi方式登录');
                 dispatch(telegramWebAppLoginApi({
                     autoLoginUserId:getThirdPartId(),
                     autologinKey:getAutoLoginKey()})
