@@ -34,6 +34,11 @@ export const getThirdPartId = () => {
     return  window.localStorage.getItem('thirdPartId') || 0;
 };
 
+// 获取自动登录的key
+export const getAutoLoginKey = () => {
+    return  window.localStorage.getItem('autoLoginKey') || 0;
+};
+
 export const arrayLookup = (data,key,value,targetKey) => {
     var targetValue = "";
     if (data) {

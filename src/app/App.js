@@ -49,6 +49,7 @@ const App = () => {
     const openIndex = getUrlParam('openIndex') || 0;
     const accessType = getUrlParam('accessType') || 0;
     const thirdPartId = getUrlParam('thirdPartId') || 0;
+    const autoLoginKey = getUrlParam('autoLoginKey') || 0;
     const langDirection = useSelector(selectCurrentLanguageDirection);
     const mainTheme = useSelector(selectMainTheme);
     const token = useSelector(selectUserData).token;
@@ -74,6 +75,9 @@ const App = () => {
         }
         if (accessType) {
             window.localStorage.setItem('accessType', accessType)
+        }
+        if (autoLoginKey) {
+            window.localStorage.setItem('autoLoginKey', autoLoginKey)
         }
         if (lang) {
             window.localStorage.setItem('lang', lang)

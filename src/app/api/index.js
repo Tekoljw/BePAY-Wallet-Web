@@ -22,7 +22,7 @@ export default function api(url, data = {}) {
         url: URL_PREFIX + api.url,
         method: api.method,
     };
-    if (url == "storage.upload" || url === "storage.multiupload") {
+    if (url === "storage.upload" || url === "storage.multiupload") {
         post.headers = { "Content-Type": "multipart/form-data" };
         post.data = data;
     } else if (api.json) {
