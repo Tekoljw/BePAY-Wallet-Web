@@ -18,26 +18,20 @@ import Security from "../security/Security";
 import Record from "../record/Record";
 import Borrow from "../borrow/Borrow";
 import Pool from "../pool/Pool";
-import Account from "../account/Account"
 
 import { useDispatch, useSelector } from "react-redux";
-import { centerGetTokenBalanceList, getUserData } from '../../store/user/userThunk';
-import { centerGetUserFiat, getWithdrawTransferStats } from '../../store/wallet/walletThunk';
-import { getSymbols, paymentConfig, getContactAddress } from "../../store/config/configThunk";
-import { getBorrowConfig } from "../../store/borrow/borrowThunk";
-import { getPoolConfig } from "../../store/pool/poolThunk";
 import {useTranslation} from "react-i18next";
-// import { changeLanguage } from 'app/store/i18nSlice';
 import ComingSoon from "../coming-soon/ComingSoon";
 import web3 from '../../util/web3';
-import {arrayLookup, getAccessType, getThirdPartId} from "../../util/tools/function";
-import { selectConfig } from "../../store/config";
+import {arrayLookup, getAccessType, getAutoLoginKey, getThirdPartId} from "../../util/tools/function";
+import { selectConfig } from "app/store/config";
 import { showMessage } from 'app/store/fuse/messageSlice';
 import MobileDetect from 'mobile-detect';
-import { selectUserData } from "../../store/user";
+import { selectUserData } from "app/store/user";
 import { SvgIcon } from '@mui/material';
 import history from '@history';
 import {loginTelegram, requestUserLoginData} from "../../util/tools/loginFunction";
+import {mobileLogin, telegramWebAppLoginApi} from "app/store/user/userThunk";
 // import FuseLoading from '@fuse/core/FuseLoading';
 
 const Root = styled(FusePageCarded)(({ theme }) => ({
@@ -54,26 +48,6 @@ function HomePage(props) {
     const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down(isMobileMedia ? 'lg' : 'sm'));
     const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobileMedia);
     const userData = useSelector(selectUserData);
-    // const [ isLoading, setIsLoading ] = useState(true);
-    // const getUrlParam = (param) => {
-    //     const res = window.location.href;
-    //     const URL = res.split('?')[1];
-    //     if (!URL) {
-    //         return
-    //     }
-    //     let obj = {}; // 声明参数对象
-    //     let arr = URL.split("&");
-    //     for (let i = 0; i < arr.length; i++) {
-    //         let arrNew = arr[i].split("=");
-    //         obj[arrNew[0]] = arrNew[1];
-    //     }
-    //     return obj[param]
-    // };
-    // const defaultTab = getUrlParam('tab') ? getUrlParam('tab') : 'wallet';
-
-    // const testClick = () => {
-    //     dispatch(changeLanguage('zh'));
-    // };
     const config = useSelector(selectConfig);
     const networks = config.networks || [];
     const { pathname } = useLocation();
@@ -148,42 +122,14 @@ function HomePage(props) {
         }
     }, [window.localStorage.getItem('phoneTab')]);
 
-    // useEffect(() => {
-    //     console.log(window.localStorage.getItem('phoneTab'), '11111111111111111111111111111111')
-    //     setCurrentTab(window.localStorage.getItem('phoneTab'))
-    // }, [window.localStorage.getItem('phoneTab')]);
-
-
-
-
-    //监听其他地方该值的变化
-    // useEffect(() => {
-    //     if () {}
-    //     setCurrentTab(window.localStorage.getItem('phoneTab'));
-    // }, []);
-
-
-    // const componentDidUpdate = () => {
-    //     console.log(1);
-    // setTimeout(() => {
-    //     setIsLoading(false);
-    // }, 3000)
-    // };
-
-    // useEffect(() => {
-    //    if (!mounted.current) {
-    //        mounted.current = true;
-    //    } else {
-    // componentDidUpdate();
-    // console.log('componentsDidUpdate')
-    //    }
-    // });
-
     useEffect(() => {
         const accessType = getAccessType();
         switch (accessType){
-            case 1:{
-                loginTelegram();
+            case 1:{ //telegramWebApp
+                dispatch(telegramWebAppLoginApi({
+                    autoLoginUserId:getThirdPartId(),
+                    autologinKey:getAutoLoginKey()})
+                );
                 break;
             }
             default:{
@@ -268,8 +214,6 @@ function HomePage(props) {
                             {/*{tab === 'borrow' && <ComingSoon />}*/}
                             {/*{tab === 'pools' && <ComingSoon />}*/}
                             {/*{tab === 'sendTips' && <ComingSoon />}*/}
-
-
 
                             {/* {tab === 'c2c' && <ComingSoon />}
                             {tab === 'nft' && <ComingSoon />}

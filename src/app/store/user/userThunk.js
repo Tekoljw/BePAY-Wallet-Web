@@ -178,6 +178,32 @@ export const telegramLoginApi = createAsyncThunk(
         if (userLoginData.errno === 0) {
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userLoginData));
+            const accessType = getAccessType();
+            if(accessType !== 0){ //其他第三方直接登录成功后，开启请求基础数据
+                requestUserLoginData(dispatch);
+            }
+            if (config.storageKey) {
+                React.$api("security.setKey", {
+                    key: config.storageKey,
+                    value: userLoginData.data.token
+                })
+            }
+        } else {
+            dispatch(showMessage({ message: t('error_0'), code: 2 }));
+        }
+    }
+);
+
+// telegramWebApp 登录
+export const telegramWebAppLoginApi = createAsyncThunk(
+    'user/telegramWebAppLogin',
+    async (settings, { dispatch, getState }) => {
+        const { config } = getState();
+        const userLoginData = await React.$api("user.telegramWebAppLogin", settings);
+        if (userLoginData.errno === 0) {
+            dispatch(showMessage({ message: 'Sign Success', code: 1 }));
+            dispatch(updateUser(userLoginData));
+            requestUserLoginData(dispatch);
             if (config.storageKey) {
                 React.$api("security.setKey", {
                     key: config.storageKey,

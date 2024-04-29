@@ -1,6 +1,7 @@
 import axios from 'axios'
 import history from '@history'
-import {getOpenAppId, getOpenAppIndex} from "../util/tools/function";
+import {getAccessType, getOpenAppId, getOpenAppIndex} from "../util/tools/function";
+import {requestUserLoginData} from "../util/tools/loginFunction";
 
 const service = axios.create({
     timeout: 50000, // request timeout
@@ -35,16 +36,21 @@ service.interceptors.response.use(
     response => {
         const res = response.data;
         if (res.errno === 501) { //api 请求返回没有验证登录就跳转登录页面
-            setTimeout(() => {
-                const openAppId = getOpenAppId();
-                const openIndex = getOpenAppIndex();
-                localStorage.removeItem(`Authorization-${openAppId}-${openIndex}`);
-                if (window.location.pathname !== '/wallet/sign-up' && window.location.pathname !== '/wallet/login') {
-                    history.push("/wallet/login" + window.location.search);
-                } else if (window.location.pathname === '/wallet/login') {
-                    console.log(window.location.pathname, 'window.location.pathname')
-                }
-            }, 500);
+            const accessType = getAccessType();
+            if(accessType !== 0){ //其他第三方自动登录成功后，开启请求基础数据
+                //第三方自动登录，暂时不做处理
+            }else{
+                setTimeout(() => {
+                    const openAppId = getOpenAppId();
+                    const openIndex = getOpenAppIndex();
+                    localStorage.removeItem(`Authorization-${openAppId}-${openIndex}`);
+                    if (window.location.pathname !== '/wallet/sign-up' && window.location.pathname !== '/wallet/login') {
+                        history.push("/wallet/login" + window.location.search);
+                    } else if (window.location.pathname === '/wallet/login') {
+                        console.log(window.location.pathname, 'window.location.pathname')
+                    }
+                }, 500);
+            }
             return res;
         } else {
             return res;
