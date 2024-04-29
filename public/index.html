@@ -86,8 +86,8 @@
         }
 
         body #fuse-splash-screen img {
-            width: 290px;
-            max-width: 290px;
+            width: 234px;
+            max-width: 192px;
         }
 
         #spinner {
@@ -146,6 +146,7 @@
             }
         }
 
+
         @keyframes shine-animation {
             0% {
                 transform: translateY(-200%);
@@ -157,13 +158,13 @@
         }
 
         .logo-container {
-            width: 234px;
-            height: 192px;
+            width: 132px;
+            height: 132px;
             position: relative;
             background: url('wallet/assets/images/logo/logo-prefix.png') no-repeat center center;
-            background-size: 234px 192px;
-            mask-image: url('wallet/assets/images/logo/logo-prefix.png');
-            mask-size: 234px 192px;
+            background-size: 132px 132px;
+            mask: url(#logo-mask);
+            -webkit-mask: url(#logo-mask);
             mask-repeat: no-repeat;
             mask-position: center;
         }
@@ -174,9 +175,9 @@
             top: 50%;
             left: 0;
             width: 100%;
-            height: 60%;
+            height: 26%;
             background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.8), transparent);
-            animation: shine-animation 3s infinite linear;
+            animation: shine-animation 1s infinite linear;
             transform: translateY(-50%);
         }
     </style>
@@ -209,6 +210,14 @@
     <div id='root' class='flex funbetTxt'>
         <!-- FUSE Splash Screen -->
         <div id='fuse-splash-screen'>
+            <svg width="0" height="0">
+                <defs>
+                    <mask id="logo-mask" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
+                        <image xlink:href="wallet/assets/images/logo/logo-prefix.png" width="1" height="1"
+                            preserveAspectRatio="xMidYMid slice" />
+                    </mask>
+                </defs>
+            </svg>
             <div class='logo-container'>
                 <!-- <img class="logo-container" id='logo-prefix' src='wallet/assets/images/logo/logo-prefix.png' alt='logo'> -->
                 <!-- <img width='290' id='logo-prefix'> -->
@@ -218,6 +227,8 @@
                 <div class='bounce2'></div>
                 <div class='bounce3'></div>
             </div> -->
+            <img class="loadImgbf" width='234' height="41" style="margin-top: 20px;"
+                src='wallet/assets/images/logo/logo-prefix2.png'>
         </div>
         <!-- / FUSE Splash Screen -->
     </div>
