@@ -128,7 +128,7 @@ function HomePage(props) {
         console.log(getThirdPartId(), '请求的 ThirdPartId');
         console.log(getAutoLoginKey(), '请求的 AutoLoginKey');
         switch (accessType){
-            case 1:{ //telegramWebApp
+            case "1":{ //telegramWebApp
                 console.log(accessType, '请求telegramWebAppLoginApi方式登录');
                 dispatch(telegramWebAppLoginApi({
                     autoLoginUserId:getThirdPartId(),
@@ -137,6 +137,7 @@ function HomePage(props) {
                 break;
             }
             default:{
+                console.log(accessType, '请求默认方式登录');
                 requestUserLoginData(dispatch);
                 break;
             }
