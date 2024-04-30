@@ -132,7 +132,7 @@ function HomePage(props) {
                 console.log(accessType, '请求telegramWebAppLoginApi方式登录');
                 dispatch(telegramWebAppLoginApi({
                     autoLoginUserId:getThirdPartId(),
-                    autologinKey:getAutoLoginKey()})
+                    autoLoginKey:getAutoLoginKey()})
                 );
                 break;
             }
