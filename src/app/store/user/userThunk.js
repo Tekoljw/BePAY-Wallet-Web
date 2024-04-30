@@ -12,8 +12,34 @@ import walletEthereum from '../../util/web3/walletEthereum';
 import settingsConfig from 'app/configs/settingsConfig';
 import loginWays from '../../main/login/loginWays'
 import { EthereumProvider } from '@walletconnect/ethereum-provider';
-import {getAccessType} from "../../util/tools/function";
+import {getAccessType, getAutoLoginKey, getThirdPartId} from "../../util/tools/function";
 import {requestUserLoginData} from "../../util/tools/loginFunction";
+
+// 检查用户是否已经登录
+export const checkLoginState = createAsyncThunk(
+    'user/checkLoginState',
+    async (settings, { dispatch, getState }) => {
+        const loginState = await React.$api("user.checkLoginState");
+        if (loginState.errno === 501) { //没有登录
+            const accessType = getAccessType();
+            switch (accessType){
+                case "1":{ //telegramWebApp
+                    console.log(accessType, '请求telegramWebAppLoginApi方式登录');
+                    dispatch(telegramWebAppLoginApi({
+                        autoLoginUserId:getThirdPartId(),
+                        autoLoginKey:getAutoLoginKey()})
+                    );
+                    break;
+                }
+            }
+        } else if(loginState.errno === 0){ //已经登录成功
+            //请求对应的数据
+            requestUserLoginData(dispatch);
+        } else { //其他错误
+            dispatch(showMessage({ message: t('error_0'), code: 2 }));
+        }
+    }
+);
 
 // 获取用户信息
 export const userProfile = createAsyncThunk(
@@ -27,6 +53,7 @@ export const userProfile = createAsyncThunk(
         }
     }
 );
+
 // 设置CurrencySelect
 export const setCurrencySelect = createAsyncThunk(
     'setCurrencySelect',
