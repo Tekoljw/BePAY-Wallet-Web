@@ -65,7 +65,7 @@ export const doLogin = createAsyncThunk(
             return item.id === settings.id
         })
         let walletType = res.name;
-        if (walletType == "MetaMask") {
+        if (walletType === "MetaMask") {
             walletType = 'metamask';
         }
 
