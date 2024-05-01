@@ -31,7 +31,7 @@ import { selectUserData } from "app/store/user";
 import { SvgIcon } from '@mui/material';
 import history from '@history';
 import {loginTelegram, requestUserLoginData} from "../../util/tools/loginFunction";
-import {mobileLogin, telegramWebAppLoginApi} from "app/store/user/userThunk";
+import { checkLoginState } from "app/store/user/userThunk";
 // import FuseLoading from '@fuse/core/FuseLoading';
 
 const Root = styled(FusePageCarded)(({ theme }) => ({
@@ -129,11 +129,8 @@ function HomePage(props) {
         //console.log(getAutoLoginKey(), '请求的 AutoLoginKey');
         switch (accessType){
             case "1":{ //telegramWebApp
-                console.log(accessType, '请求telegramWebAppLoginApi方式登录');
-                dispatch(telegramWebAppLoginApi({
-                    autoLoginUserId:getThirdPartId(),
-                    autoLoginKey:getAutoLoginKey()})
-                );
+                console.log(accessType, '请求telegramWebAppLoginApi方式登录,检查登录状态');
+                dispatch(checkLoginState());
                 break;
             }
             default:{

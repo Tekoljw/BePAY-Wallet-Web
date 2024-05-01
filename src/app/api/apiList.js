@@ -92,6 +92,10 @@ export default {
             url: "/user/listmygame",
             method: "post",
         },
+        checkLoginState:{
+            url: "/user/checkLoginState",
+            method: "post",
+        },
         chain: {
             url: "/mobile/networks",
             method: "post",
