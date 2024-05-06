@@ -15,6 +15,7 @@ import Button from "@mui/material/Button";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import FormControl from "@mui/material/FormControl";
 import {useTranslation} from "react-i18next";
+import ComingSoon from "../coming-soon/ComingSoon";
 
 const container = {
     show: {
@@ -227,7 +228,7 @@ function Pool() {
                         </Box>
                     )
                 })}
-
+                <ComingSoon />
             </motion.div>
         </div>
     )

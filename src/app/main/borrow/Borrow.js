@@ -27,17 +27,17 @@ import { useTranslation } from "react-i18next";
 const sortUseAge = (a, b) => {
     const prioritizedSymbolsFirst = ['eUSDT', 'USDT', 'BGT', 'eBGT'];
     const prioritizedSymbolsSecond = ['USDT', 'USDC', 'DAI', 'BUSD', 'TUSD', 'PAX', 'GUSD','USDD'];
-  
+
     // 检查币种是否属于优先展示的币种
     const isPrioritizedAFirst = prioritizedSymbolsFirst.includes(a.symbol);
     const isPrioritizedBFirst = prioritizedSymbolsFirst.includes(b.symbol);
     const isPrioritizedASecond = prioritizedSymbolsSecond.includes(a.symbol);
     const isPrioritizedBSecond = prioritizedSymbolsSecond.includes(b.symbol);
-  
+
     // 获取币种 a 和币种 b 的 dollarFiat 值
     const dollarFiatA = parseFloat(a.dollarFiat);
     const dollarFiatB = parseFloat(b.dollarFiat);
-  
+
     if (isPrioritizedAFirst && isPrioritizedBFirst) {
       // 如果两个币种都属于第一组优先展示的币种，则比较它们的 dollarFiat 值进行排序
       return dollarFiatB - dollarFiatA;
@@ -127,6 +127,7 @@ function Borrow() {
             if (tmpSymbol.indexOf(symbols[i].symbol) == -1 && symbols[i].symbol != 'eUSDT' && symbols[i].symbol != 'eBGT') {
                 tmpSymbol.push(symbols[i].symbol)
                 tmpSymbolWallet.push({
+                    avatar: symbols[i].avatar,
                     balance: arrayLookup(walletData.inner, 'symbol', symbols[i].symbol, 'balance') || 0,
                     symbol: symbols[i].symbol,
                     tradeLock: arrayLookup(walletData.inner, 'symbol', symbols[i].symbol, 'tradeLock') || 0,
