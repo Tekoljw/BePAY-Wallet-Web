@@ -463,7 +463,7 @@ function SendTips(props) {
                                 <Typography className="text-16 cursor-pointer mt-16" style={{ marginTop: '1rem' }}>
                                     {t('home_sendTips_3')}
                                 </Typography>
-                                <div className="flex items-center py-16 justify-between" style={{ paddingTop: '1.3rem', marginRight: '-0.8rem', marginBottom: '1rem' }}>
+                                <div className="flex  py-16 justify-between" style={{ paddingTop: '1.3rem', marginRight: '-0.8rem', marginBottom: '1rem' }}>
                                     <FormControl sx={{ width: tabValue === 0 ? '73.4%' : '98%', borderColor: '#94A3B8' }} variant="outlined">
                                         {/* <OutlinedInput
                                             id="outlined-adornment-address send-tips-container-amount"
@@ -480,7 +480,6 @@ function SendTips(props) {
                                             }}
                                             type="number"
                                         /> */}
-
                                         <TextField
                                             error={ismore(inputVal.amount)}
                                             helperText={ismore(inputVal.amount) ? t('home_deposite_28') : ''}
@@ -494,7 +493,6 @@ function SendTips(props) {
                                                 'aria-label': 'amount',
                                             }}
                                             FormHelperTextProps={{ className: "form-helper-text" }}
-
                                         />
                                     </FormControl>
                                     {tabValue === 0 && <>
