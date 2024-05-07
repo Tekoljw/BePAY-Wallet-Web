@@ -17,7 +17,7 @@ export const goTransfer = createAsyncThunk(
         settings = settings || {};
 
         const { user } = getState();
-        if (user.userInfo.loginType == 1) {
+        if (user.userInfo.loginType === "web3_wallet") {
             dispatch(sendTransaction({
                 amount: settings.amount,
                 symbol: settings.symbol,

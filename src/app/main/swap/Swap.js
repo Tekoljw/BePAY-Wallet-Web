@@ -879,7 +879,7 @@ function Swap() {
       )}
       {decentralized != -1 &&
         walletType == 1 &&
-        userData.profile?.loginType != 1 && (
+        userData.profile?.loginType !== "web3_wallet" && (
           <>
             {" "}
             {/*<Web3Login />*/}

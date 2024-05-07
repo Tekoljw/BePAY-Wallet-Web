@@ -566,7 +566,7 @@ function Withdraw(props) {
                 setCryptoSelect(tmpCryptoSelect);
                 setFiatSelect(tmpFiatSelect);
             }
-            else if (userData.profile?.loginType) {
+            else if (userData.profile?.loginType !== "unknown") {
                 var tmpRanges = [
                     t('home_deposite_2'), t('home_deposite_1')
                     // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
@@ -582,7 +582,7 @@ function Withdraw(props) {
                     tmpCryptoSelect = 0;
                     tmpFiatSelect = 1;
                 } else {
-                    if (userData.profile?.loginType == 1) {
+                    if (userData.profile?.loginType === "web3_wallet") {
                         tmpRanges = [
                             t('home_deposite_1'), t('home_deposite_2')
                             // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')

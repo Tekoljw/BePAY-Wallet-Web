@@ -115,7 +115,7 @@ function MintNft(props) {
 
       setMintClick(false);
       // 去中心化钱包
-      if (userData.loginType == 1) {
+      if (userData.loginType === "web3_wallet") {
         var res = await dispatch(goMintNft({
           userAddress: userData.user.address,
           nftToken: contractToken,
