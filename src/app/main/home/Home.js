@@ -1,4 +1,4 @@
-import React,{ useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Routes, Route, useLocation } from "react-router-dom";
 import { lighten, styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -20,17 +20,17 @@ import Borrow from "../borrow/Borrow";
 import Pool from "../pool/Pool";
 
 import { useDispatch, useSelector } from "react-redux";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 import ComingSoon from "../coming-soon/ComingSoon";
 import web3 from '../../util/web3';
-import {arrayLookup, getAccessType, getAutoLoginKey, getThirdPartId} from "../../util/tools/function";
+import { arrayLookup, getAccessType, getAutoLoginKey, getThirdPartId } from "../../util/tools/function";
 import { selectConfig } from "app/store/config";
 import { showMessage } from 'app/store/fuse/messageSlice';
 import MobileDetect from 'mobile-detect';
 import { selectUserData } from "app/store/user";
 import { SvgIcon } from '@mui/material';
 import history from '@history';
-import {loginTelegram, requestUserLoginData} from "../../util/tools/loginFunction";
+import { loginTelegram, requestUserLoginData } from "../../util/tools/loginFunction";
 import { checkLoginState } from "app/store/user/userThunk";
 // import FuseLoading from '@fuse/core/FuseLoading';
 
@@ -127,13 +127,13 @@ function HomePage(props) {
         console.log(accessType, '请求的 accessType');
         //console.log(getThirdPartId(), '请求的 ThirdPartId');
         //console.log(getAutoLoginKey(), '请求的 AutoLoginKey');
-        switch (accessType){
-            case "1":{ //telegramWebApp
+        switch (accessType) {
+            case "1": { //telegramWebApp
                 console.log(accessType, '请求telegramWebAppLoginApi方式登录,检查登录状态');
                 dispatch(checkLoginState());
                 break;
             }
-            default:{
+            default: {
                 console.log(accessType, '请求默认方式登录');
                 requestUserLoginData(dispatch);
                 break;
@@ -244,9 +244,9 @@ function HomePage(props) {
                         }}
                         aria-label="open left sidebar"
                         size="large"
-                        style={{ maxWidth: "40px", marginLeft: "2rem" }}
+                        style={{ maxWidth: "40px", marginLeft: "2rem", padding: "8px" }}
                     >
-                        <FuseSvgIcon>heroicons-outline:menu-alt-1</FuseSvgIcon>
+                        <img class="" src='wallet/assets/images/menu/heroicons-outline.png' alt="" />
                     </IconButton>
                     <div class="phone-bottom ">
                         <nav class="nav">
