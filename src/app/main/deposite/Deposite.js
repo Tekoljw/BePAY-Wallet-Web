@@ -677,7 +677,7 @@ function Deposite() {
                 setCryptoSelect(tmpCryptoSelect);
                 setFiatSelect(tmpFiatSelect);
             }
-            else if (userData.profile?.loginType) {
+            else if (userData.profile?.loginType !== "unknown") {
                 var tmpRanges = [
                     t('home_deposite_2'), t('home_deposite_1')
                     // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
@@ -693,7 +693,7 @@ function Deposite() {
                     tmpCryptoSelect = 0;
                     tmpFiatSelect = 1;
                 } else {
-                    if (userData.profile?.loginType == 1) {
+                    if (userData.profile?.loginType === "web3_wallet") {
                         tmpRanges = [
                             t('home_deposite_1'), t('home_deposite_2')
                             // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
@@ -1060,7 +1060,7 @@ function Deposite() {
                                                     onClick={async () => {
 
 
-                                                        if (decentralized != 1 && userData.profile?.loginType != -1) {
+                                                        if (decentralized != 1 && userData.profile?.loginType != "unkown") {
                                                             // 跳转到 /account 页面
                                                             history.push('/wallet/account');
                                                         } else {
@@ -1124,7 +1124,7 @@ function Deposite() {
                                                             alt=""
                                                         />
                                                         <span className='login-way-name'>
-                                                            {(decentralized != -1 && userData.profile?.loginType == 1) ? t('home_deposite_12') : t('home_deposite_10')}
+                                                            {(decentralized != -1 && userData.profile?.loginType === "web3_wallet") ? t('home_deposite_12') : t('home_deposite_10')}
 
                                                         </span>
                                                     </div>

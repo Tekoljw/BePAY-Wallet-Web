@@ -474,7 +474,7 @@ function Wallet() {
           setFiatSelect(tmpFiatSelect);
 
         }
-        else if (userData.profile?.loginType) {
+        else if (userData.profile?.loginType !== "unknown") {
           var tmpRanges = [
             t('home_deposite_2'), t('home_deposite_1')
             // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
@@ -490,7 +490,7 @@ function Wallet() {
             tmpCryptoSelect = 0;
             tmpFiatSelect = 1;
           } else {
-            if (userData.profile?.loginType == 1) {
+            if (userData.profile?.loginType === "web3_wallet") {
               tmpRanges = [
                 'Token', t('home_deposite_2')
                 // 'Token', t('home_deposite_2'), t('home_deposite_3')
@@ -1726,7 +1726,7 @@ function Wallet() {
                 )}
 
 
-                {decentralized != -1 && walletType === 1 && loginType == 1 && (
+                {decentralized != -1 && walletType === 1 && loginType === "web3_wallet" && (
                   <>
                     <div>
                       <div className="px-24 flex justify-between items-center">
@@ -2397,7 +2397,7 @@ function Wallet() {
             </Box>
           </motion.div>
 
-          {decentralized != -1 && loginType == 1 && (
+          {decentralized != -1 && loginType === "web3_wallet" && (
             <motion.div
               variants={container}
               initial="hidden"
@@ -2579,7 +2579,7 @@ function Wallet() {
               </Box>
             </motion.div>
           )}
-          {decentralized != -1 && loginType != 1 && walletType == 0 && (
+          {decentralized != -1 && loginType !== "web3_wallet" && walletType == 0 && (
             <motion.div
               variants={container}
               initial="hidden"

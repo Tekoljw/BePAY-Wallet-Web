@@ -269,7 +269,7 @@ export const automaticConnectWeb3 = createAsyncThunk(
     'user/automaticConnectWeb3',
     async (settings, { dispatch, getState }) => {
         const { user } = getState();
-        if (user.userInfo.loginType == 1) {
+        if (user.userInfo.loginType === "web3_wallet") {
             if (!window.wallet) {
                 const web3 = await Web3.connectWeb3();
             }
@@ -1011,7 +1011,7 @@ export const getDecenterWalletBalance = createAsyncThunk(
 
         // console.log(currNetworkChainId);
 
-        if (loginType == 1) {
+        if (loginType === "web3_wallet") {
             // console.log(loginType,'address......ß');
 
             if (regWallet === 'WalletConnect') {
