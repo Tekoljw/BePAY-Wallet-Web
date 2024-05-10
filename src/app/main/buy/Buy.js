@@ -69,6 +69,7 @@ function Buy(props) {
     const fiatsData = useSelector(selectUserData).fiat || [];
     const config = useSelector(selectConfig);
     const currencys = useSelector(selectConfig).payment.currency || [];
+    const symbols = useSelector(selectConfig).symbols || [];
     const [ fiats, setFiats ] = useState([]);
     const [ fiatsSelected, setFiatsSelected ] = useState(0);
     const [ currencyCode, setCurrencyCode ] = useState('USD');
@@ -122,10 +123,12 @@ function Buy(props) {
             });
 
         }
+
         if (allSymbols?.length > 0) {
             let tmpSymbols = [];
             for (let i = 0; i < allSymbols.length; i++) {
                 tmpSymbols[i] = {
+                    avatar: arrayLookup(symbols, 'symbol', allSymbols[i], 'avatar') || 0,
                     balance: (arrayLookup(walletData.inner, 'symbol', allSymbols[i], 'balance') || 0).toFixed(6),
                     symbol: allSymbols[i],
                     tradeLock: arrayLookup(walletData.inner, 'symbol', allSymbols[i], 'tradeLock') || 0,
@@ -179,6 +182,16 @@ function Buy(props) {
             });
         }
     };
+
+    // 初始化symbol & fiat
+    const initSymbolAndFiat = () => {
+        setSymbol('');
+        setSymbolWallet([]);
+        setFiats([]);
+        setFiatsSelected(0);
+        setCurrencyCode('USD');
+        setCurrencyBalance(0);
+    }
 
     return (
         <div>
@@ -401,6 +414,7 @@ function Buy(props) {
                         }}
                         onClick={() => {
                             setPayType('LegendTrading');
+                            initSymbolAndFiat();
                             getSdkSymbolData('LegendTrading');
                         }}
                     >
@@ -444,6 +458,7 @@ function Buy(props) {
                             }}
                             onClick={() => {
                                 setPayType('FaTPay');
+                                initSymbolAndFiat();
                                 getSdkSymbolData('FaTPay');
                             }}
                         >
