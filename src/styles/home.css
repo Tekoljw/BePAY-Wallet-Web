@@ -323,6 +323,11 @@ input[type='number'] {
     border: 1px solid red;
 }
 
+.cardImg {
+    width: 30px;
+    height: 30px;
+}
+
 .cardSty {
     width: 87%;
     aspect-ratio: 864 / 304;
@@ -1449,6 +1454,11 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
 
     .dark .muiltr-1u2w381-MuiModal-root-MuiDrawer-root .muiltr-1dqueaj-MuiPaper-root-MuiDrawer-paper {
         background-color: #0E1421 !important;
+    }
+
+    .cardImg {
+        width: 30px;
+        height: 30px;
     }
 
 }

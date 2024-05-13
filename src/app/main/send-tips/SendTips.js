@@ -322,7 +322,7 @@ function SendTips(props) {
 
     return (
         <div>
-            <div className="send-tips-container">
+            <div className="send-tips-container mt-12">
                 <motion.div
                     variants={container}
                     initial="hidden"

@@ -606,7 +606,7 @@ function Withdraw(props) {
                     variants={container}
                     initial="hidden"
                     animate="show"
-                    className='mb-16'
+                    className='mb-6 mt-12'
                 >
                     <Tabs
                         component={motion.div}

@@ -499,7 +499,7 @@ function Swap() {
   }, [symbol]);
 
   return (
-    <div>
+    <div  className='mt-12'>
       <div
         className="flex justify-center items-center wallet-top radius999"
         style={{ marginBottom: "16px" }}

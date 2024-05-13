@@ -151,7 +151,7 @@ function Borrow() {
                     variants={container}
                     initial="hidden"
                     animate="show"
-                    className="p-24 borrow-container"
+                    className="p-24 borrow-container mt-10"
                     style={{ paddingTop: 0, paddingBottom: 0 }}
                 >
                     <div className="mb-16 flex items-center justify-between color-76819B" style={{ marginBottom: '0.8rem' }}>

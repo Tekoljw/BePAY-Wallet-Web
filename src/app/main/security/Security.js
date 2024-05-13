@@ -111,7 +111,7 @@ function Security(props) {
                     variants={container}
                     initial="hidden"
                     animate="show"
-                    className='mb-16 '
+                    className='mb-16 mt-12'
                 >
                     <Tabs
                         value={tabValue}

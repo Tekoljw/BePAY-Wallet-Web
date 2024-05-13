@@ -9,7 +9,7 @@ import history from "@history";
 import { useSelector, useDispatch } from "react-redux";
 import { selectConfig } from "../../store/config";
 import { selectUserData } from "../../store/user";
-import {arrayLookup, getOpenAppId, getOpenAppIndex, getUrlParam} from "../../util/tools/function";
+import { arrayLookup, getOpenAppId, getOpenAppIndex, getUrlParam } from "../../util/tools/function";
 import { updateCurrency, updateWalletDisplay } from "../../store/user";
 import { showMessage } from "app/store/fuse/messageSlice";
 import { centerGetNftList } from '../../store/wallet/walletThunk';
@@ -346,7 +346,7 @@ function Wallet() {
     service.interceptors.request.use(
       config => {
         config.headers['Finger-Nft-Token'] = `${window.localStorage.getItem(
-            `Authorization-${getOpenAppId()}-${getOpenAppIndex()}`
+          `Authorization-${getOpenAppId()}-${getOpenAppIndex()}`
         ) || ''}`;
         config.headers['Wallet-OpenApp-Id'] = openAppId || '6436951541b60d250c692481';
 
@@ -426,7 +426,7 @@ function Wallet() {
     service.interceptors.request.use(
       config => {
         config.headers['Finger-Nft-Token'] = `${window.localStorage.getItem(
-            `Authorization-${getOpenAppId()}-${getOpenAppIndex()}`
+          `Authorization-${getOpenAppId()}-${getOpenAppIndex()}`
         ) || ''}`;
         config.headers['Wallet-OpenApp-Id'] = openAppId || '6436951541b60d250c692481';
 
@@ -1346,7 +1346,7 @@ function Wallet() {
             variants={container}
             initial="hidden"
             animate="show"
-            className="pb-8"
+            className="pb-12 mt-12"
           // style={{
           //     borderBottom: '1px solid #374252'
           // }}
@@ -1544,33 +1544,32 @@ function Wallet() {
             </div>
           </motion.div>
 
-          <motion.div
+          {walletType === 0 && (<motion.div
             variants={container}
             initial="hidden"
             animate="show"
-            className="pb-8 flex justify-center"
+            className="pb-6 flex justify-center"
           >
             <div
               className="cardSty"
               style={{ flexWrap: "warp" }}
             >
               <div className=" flex px-16 " style={{ width: "100%", height: "3rem", marginTop: "7%" }}>
-                <Image width="20px" height="20px"
-                  src="/wallet/assets/images/wallet/yan.png"></Image>
+                <img className="cardImg"
+                  src="/wallet/assets/images/withdraw/yan.png"></img>
                 <div className="text-20 ml-10" style={{ color: "#84A59F" }}>WALLET BALANCE</div>
               </div>
               <div className=" flex mt-16 items-conter px-16" style={{ width: "100%", marginTop: "6%", justifyContent: "space-between" }}>
                 <div className="flex">
-                  <Image width="3rem" height="3rem"
-                    src="https://bedao.io/static/Icon/currency/USD.png"></Image>
-                  <div className="text-24 ml-10" style={{ color: "#ffffff" }}>136,921.126</div>
+                  <img className="cardImg" src="/wallet/assets/images/withdraw/USDT.png"></img>
+                  <div className="text-24 ml-10" style={{ color: "#ffffff" }}>1691.126</div>
                 </div>
                 <div className="text-16" style={{ width: "14rem", textAlign: "center", height: "3rem", lineHeight: "3rem", color: "#3E9178", borderRadius: "99px", background: "#D4FFF3" }}>
                   Activate Visa
                 </div>
               </div>
             </div>
-          </motion.div>
+          </motion.div>)}
 
           <motion.div
             variants={container}

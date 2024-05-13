@@ -881,6 +881,7 @@ function Deposite() {
                 variants={container}
                 initial="hidden"
                 animate="show"
+                className='mt-12'
             >
                 <Tabs
                     component={motion.div}
