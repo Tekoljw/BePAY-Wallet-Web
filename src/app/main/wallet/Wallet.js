@@ -156,6 +156,7 @@ function Wallet() {
   const [hideSmall, setHideSmall] = useState(false);
   const config = useSelector(selectConfig);
   const userData = useSelector(selectUserData);
+  const [walletConnectShow, setWalletConnectShow] = useState(false);
   const symbolsData = config.symbols;
   const networks = config.networks || [];
   const fiatsData = userData.fiat || [];
@@ -1331,6 +1332,14 @@ function Wallet() {
   }, [userData.profile?.user?.regWallet]);
 
 
+  useEffect(() => {
+    if (loginType === "telegram_web_app") {
+      setWalletConnectShow(true);
+    }
+  }, []);
+
+
+
   return (
     <div>
       {/*head*/}
@@ -1342,70 +1351,131 @@ function Wallet() {
             backgroundColor: "#0E1421",
           }}
         >
+
+
           <motion.div
             variants={container}
             initial="hidden"
             animate="show"
             className="pb-12 mt-12"
-          // style={{
-          //     borderBottom: '1px solid #374252'
-          // }}
           >
-            <div
-              className="flex justify-center items-center wallet-top radius999 "
-              style={{ width: "87%" }}
-            >
-              <Tabs
-                component={motion.div}
-                variants={item}
-                value={walletType}
-                onChange={(ev, value) => setWalletType(value)}
-                indicatorColor="secondary"
-                textColor="inherit"
-                variant="scrollable"
-                scrollButtons={false}
-                className="wallet-show-type"
-                classes={{
-                  indicator:
-                    "flex justify-between bg-transparent w-full h-full min-h-28 radius999",
-                }}
-                TabIndicatorProps={{
-                  children: (
-                    <Box className="w-full h-full rounded-full huaKuaBgColor0 min-h-28 radius999" />
-                  ),
-                }}
-                sx={{
-                  // padding: '1rem 1.2rem',
-                  flex: 1,
-                }}
+            {
+              !walletConnectShow && <div
+                className="flex justify-center items-center wallet-top radius999"
+                style={{ width: "87%" }}
               >
-                {Object.entries(walletTypeTab).map(([key, label]) => {
-                  if (label?.length === regWallet?.length) {
-                    if (label == "") {
-                      setDdecentralized(-1);
-                    }
-                    if (decentralized == -1) {
-                      return (
-                        <Tab
-                          className="text-16 font-semibold min-h-28 min-w-64 px-32 mt-4 txtColorTitle text-nowrap opacity-100 zindex radius999"
-                          disableRipple
-                          key={key}
-                          icon={
-                            <img
-                              className="mr-8"
-                              width="22"
-                              src="/wallet/assets/images/menu/icon-wallet-active.png"
-                              alt=""
-                            />
-                          }
-                          iconPosition="start"
-                          label={"Wallet Connect"}
-                          sx={{
-                            color: "#FFFFFF",
-                            width: "50%",
-                          }}
-                        />
-                      );
+                <Tabs
+                  component={motion.div}
+                  variants={item}
+                  value={walletType}
+                  onChange={(ev, value) => setWalletType(value)}
+                  indicatorColor="secondary"
+                  textColor="inherit"
+                  variant="scrollable"
+                  scrollButtons={false}
+                  className="wallet-show-type"
+                  classes={{
+                    indicator:
+                      "flex justify-between bg-transparent w-full h-full min-h-28 radius999",
+                  }}
+                  TabIndicatorProps={{
+                    children: (
+                      <Box className="w-full h-full rounded-full huaKuaBgColor0 min-h-28 radius999" />
+                    ),
+                  }}
+                  sx={{
+                    // padding: '1rem 1.2rem',
+                    flex: 1,
+                  }}
+                >
+                  {Object.entries(walletTypeTab).map(([key, label]) => {
+                    if (label?.length === regWallet?.length) {
+                      if (label == "") {
+                        setDdecentralized(-1);
+                      }
+                      if (decentralized == -1) {
+                        return (
+                          <Tab
+                            className="text-16 font-semibold min-h-28 min-w-64 px-32 mt-4 txtColorTitle text-nowrap opacity-100 zindex radius999"
+                            disableRipple
+                            key={key}
+                            icon={
+                              <img
+                                className="mr-8"
+                                width="22"
+                                src="/wallet/assets/images/menu/icon-wallet-active.png"
+                                alt=""
+                              />
+                            }
+                            iconPosition="start"
+                            label={"Wallet Connect"}
+                            sx={{
+                              color: "#FFFFFF",
+                              width: "50%",
+                            }}
+                          />
+                        );
+                      } else {
+                        return (
+                          <Tab
+                            className="text-16 font-semibold min-h-28 min-w-64 px-32 mt-4 txtColorTitle text-nowrap opacity-100 zindex radius999"
+                            disableRipple
+                            key={key}
+                            icon={
+                              <img
+                                className="mr-8"
+                                width="22"
+                                src={(() => {
+                                  switch (walletloginname) {
+                                    case "BitKeep":
+                                      return "/wallet/assets/images/login/icon-right-14.png";
+                                    case "MetaMask":
+                                      return "/wallet/assets/images/login/icon-right-1.png";
+                                    case "WalletConnect":
+                                      return "/wallet/assets/images/login/icon-right-5.png";
+                                    case "coinbase":
+                                      return "/wallet/assets/images/login/icon-right-10.png";
+                                    case "TrustWallet":
+                                      return "/wallet/assets/images/login/icon-right-12.png";
+                                    case "Coinbase":
+                                      return "/wallet/assets/images/login/icon-right-4.png";
+                                    case "Polygon":
+                                      return "/wallet/assets/images/login/icon-right-13.png";
+                                    case "Bitski":
+                                      return "/wallet/assets/images/login/icon-right-15.png";
+                                    case "CLedger":
+                                      return "/wallet/assets/images/login/icon-right-16.png";
+                                    case "Binance Smart":
+                                      return "/wallet/assets/images/login/icon-right-17.png";
+                                    case "BeingFi Wallet":
+                                      return "/wallet/assets/images/menu/LOGO.png ";
+                                    case "value2":
+                                      return "";
+                                    default:
+                                      return "/wallet/assets/images/menu/icon-wallet-active.png ";
+                                  }
+                                })()}
+                                alt=""
+                              />
+                            }
+                            iconPosition="start"
+                            label={walletloginname}
+                            sx={{
+                              color: "#FFFFFF",
+                              width: "50%",
+                            }}
+                            onClick={async () => {
+                              // const bindWalletRes = await dispatch(bindWallet());
+                              // if (bindWalletRes.payload) {
+                              // decenterWalletFormatAmount();
+                              // }
+                              if (decentralized != -1) {
+                                decenterWalletFormatAmount();
+                              }
+                            }}
+                          />
+                        );
+                      }
                     } else {
                       return (
                         <Tab
@@ -1416,8 +1486,9 @@ function Wallet() {
                             <img
                               className="mr-8"
                               width="22"
+                              // src="/wallet/assets/images/logo/loading-img.png"
                               src={(() => {
-                                switch (walletloginname) {
+                                switch (label) {
                                   case "BitKeep":
                                     return "/wallet/assets/images/login/icon-right-14.png";
                                   case "MetaMask":
@@ -1438,110 +1509,50 @@ function Wallet() {
                                     return "/wallet/assets/images/login/icon-right-16.png";
                                   case "Binance Smart":
                                     return "/wallet/assets/images/login/icon-right-17.png";
+                                  case "Wallet Connect":
+                                    return "/wallet/assets/images/menu/icon-wallet-active.png ";
                                   case "BeingFi Wallet":
                                     return "/wallet/assets/images/menu/LOGO.png ";
-                                  case "value2":
-                                    return "";
                                   default:
-                                    return "/wallet/assets/images/menu/icon-wallet-active.png ";
+                                    return "/wallet/assets/images/logo/loading-img.png ";
                                 }
                               })()}
                               alt=""
                             />
                           }
                           iconPosition="start"
-                          label={walletloginname}
+                          label={label}
                           sx={{
                             color: "#FFFFFF",
                             width: "50%",
                           }}
-                          onClick={async () => {
-                            // const bindWalletRes = await dispatch(bindWallet());
-                            // if (bindWalletRes.payload) {
-                            // decenterWalletFormatAmount();
-                            // }
-                            if (decentralized != -1) {
-                              decenterWalletFormatAmount();
-                            }
-                          }}
                         />
                       );
                     }
-                  } else {
-                    return (
-                      <Tab
-                        className="text-16 font-semibold min-h-28 min-w-64 px-32 mt-4 txtColorTitle text-nowrap opacity-100 zindex radius999"
-                        disableRipple
-                        key={key}
-                        icon={
-                          <img
-                            className="mr-8"
-                            width="22"
-                            // src="/wallet/assets/images/logo/loading-img.png"
-                            src={(() => {
-                              switch (label) {
-                                case "BitKeep":
-                                  return "/wallet/assets/images/login/icon-right-14.png";
-                                case "MetaMask":
-                                  return "/wallet/assets/images/login/icon-right-1.png";
-                                case "WalletConnect":
-                                  return "/wallet/assets/images/login/icon-right-5.png";
-                                case "coinbase":
-                                  return "/wallet/assets/images/login/icon-right-10.png";
-                                case "TrustWallet":
-                                  return "/wallet/assets/images/login/icon-right-12.png";
-                                case "Coinbase":
-                                  return "/wallet/assets/images/login/icon-right-4.png";
-                                case "Polygon":
-                                  return "/wallet/assets/images/login/icon-right-13.png";
-                                case "Bitski":
-                                  return "/wallet/assets/images/login/icon-right-15.png";
-                                case "CLedger":
-                                  return "/wallet/assets/images/login/icon-right-16.png";
-                                case "Binance Smart":
-                                  return "/wallet/assets/images/login/icon-right-17.png";
-                                case "Wallet Connect":
-                                  return "/wallet/assets/images/menu/icon-wallet-active.png ";
-                                case "BeingFi Wallet":
-                                  return "/wallet/assets/images/menu/LOGO.png ";
-                                default:
-                                  return "/wallet/assets/images/logo/loading-img.png ";
-                              }
-                            })()}
-                            alt=""
-                          />
-                        }
-                        iconPosition="start"
-                        label={label}
-                        sx={{
-                          color: "#FFFFFF",
-                          width: "50%",
-                        }}
-                      />
-                    );
-                  }
-                })}
-              </Tabs>
-              {/*<div*/}
-              {/*    className={clsx('wallet-top-item py-14 cursor-pointer txtColorTitle', walletType === 'funi' && 'wallet-top-item-active')}*/}
-              {/*    onClick={() => { setWalletType('funi') }}*/}
-              {/*>*/}
-              {/*    FuniBox Wallet*/}
-              {/*</div>*/}
-              {/*<div*/}
-              {/*    className={clsx('wallet-top-item py-14 flex justify-center items-center cursor-pointer txtColorTitle', walletType === 'metamask' && 'wallet-top-item-active')}*/}
-              {/*    onClick={async () => {*/}
-              {/*        const bindWalletRes = await dispatch(bindWallet());*/}
-              {/*        if (bindWalletRes.payload) {*/}
-              {/*            decenterWalletFormatAmount();*/}
-              {/*        }*/}
-              {/*        setWalletType('metamask');*/}
-              {/*    }}*/}
-              {/*>*/}
-              {/*    <img className="mr-8" width="22" src="/wallet/assets/images/connect/metamask.png" alt="" />*/}
-              {/*    Metamask*/}
-              {/*</div>*/}
-            </div>
+                  })}
+                </Tabs>
+                {/*<div*/}
+                {/*    className={clsx('wallet-top-item py-14 cursor-pointer txtColorTitle', walletType === 'funi' && 'wallet-top-item-active')}*/}
+                {/*    onClick={() => { setWalletType('funi') }}*/}
+                {/*>*/}
+                {/*    FuniBox Wallet*/}
+                {/*</div>*/}
+                {/*<div*/}
+                {/*    className={clsx('wallet-top-item py-14 flex justify-center items-center cursor-pointer txtColorTitle', walletType === 'metamask' && 'wallet-top-item-active')}*/}
+                {/*    onClick={async () => {*/}
+                {/*        const bindWalletRes = await dispatch(bindWallet());*/}
+                {/*        if (bindWalletRes.payload) {*/}
+                {/*            decenterWalletFormatAmount();*/}
+                {/*        }*/}
+                {/*        setWalletType('metamask');*/}
+                {/*    }}*/}
+                {/*>*/}
+                {/*    <img className="mr-8" width="22" src="/wallet/assets/images/connect/metamask.png" alt="" />*/}
+                {/*    Metamask*/}
+                {/*</div>*/}
+              </div>
+            }
+
           </motion.div>
 
           {walletType === 0 && (<motion.div

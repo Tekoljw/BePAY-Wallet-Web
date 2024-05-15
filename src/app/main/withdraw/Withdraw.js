@@ -25,7 +25,7 @@ import { tokenTransfer } from "../../store/user/userThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { selectConfig } from "../../store/config";
-import {arrayLookup, getNowTime, getOpenAppId, getOpenAppIndex} from "../../util/tools/function";
+import { arrayLookup, getNowTime, getOpenAppId, getOpenAppIndex } from "../../util/tools/function";
 import { openScan, closeScan } from "../../util/tools/scanqrcode";
 import { getWithDrawConfig, WalletConfigDefineMap, evalTokenTransferFee, cryptoWithdrawFee, getWithdrawHistoryAddress, delWithdrawHistoryAddress, getWithdrawTransferStats } from "app/store/wallet/walletThunk";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
@@ -139,6 +139,8 @@ const item = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0 },
 };
+
+
 
 function Withdraw(props) {
     const navigate = useNavigate()
@@ -347,7 +349,7 @@ function Withdraw(props) {
                 setTransactionFee(0);
                 return
             }
-            
+
         });
     };
 
