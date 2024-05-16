@@ -21,7 +21,7 @@ import {selectUserData} from "./store/user";
 import {getUrlParam} from "./util/tools/function";
 import { getKycInfo } from "app/store/payment/paymentThunk";
 import { changeLanguage } from "./store/i18nSlice";
- 
+
 // import axios from 'axios';
 /**
  * Axios HTTP Request defaults
@@ -50,6 +50,7 @@ const App = () => {
     const accessType = getUrlParam('accessType') || 0;
     const thirdPartId = getUrlParam('thirdPartId') || 0;
     const autoLoginKey = getUrlParam('autoLoginKey') || 0;
+    const storageKey = getUrlParam('storageKey') || '';
     const langDirection = useSelector(selectCurrentLanguageDirection);
     const mainTheme = useSelector(selectMainTheme);
     const token = useSelector(selectUserData).token;
@@ -81,6 +82,10 @@ const App = () => {
         }
         if (lang) {
             window.localStorage.setItem('lang', lang)
+        }
+
+        if (storageKey) {
+            window.localStorage.setItem('storageKey', storageKey)
         }
     }, []);
 

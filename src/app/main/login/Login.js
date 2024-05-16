@@ -157,7 +157,7 @@ function Login() {
     });
     const [tmpPhoneCode, setTmpPhoneCode] = useState('');
     const { isValid, dirtyFields, errors } = formState;
-    const storageKey = getUrlParam('storageKey');
+    const storageKey = getUrlParam('storageKey') ?? window.localStorage.getItem('storageKey');
     const [selected, setSelected] = useState('');
     const config = useSelector(selectConfig);
     //以下是walletconnect代码
