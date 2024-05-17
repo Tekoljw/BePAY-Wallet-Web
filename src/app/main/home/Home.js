@@ -51,6 +51,7 @@ function HomePage(props) {
     const config = useSelector(selectConfig);
     const networks = config.networks || [];
     const { pathname } = useLocation();
+    const [menuShow, setMenuShow] = useState(false);
     useEffect(() => {
         let userBindWallet = userData.userInfo.bindWallet ?? false;
         if (userBindWallet) {
@@ -140,6 +141,14 @@ function HomePage(props) {
             }
         }
     }, []);
+
+
+    useEffect(() => {
+        if (userData?.userInfo?.loginType === "telegram_web_app") {
+            setMenuShow(true);
+            setLeftSidebarOpen(false);
+        }
+    }, [userData?.userInfo?.loginType]);
 
     return (
         <>
@@ -238,16 +247,18 @@ function HomePage(props) {
             />
             {isMobile && <div >
                 <div class="containerMenu " style={{ position: "fixed", left: "0", right: "0", bottom: "0", zIndex: "999999", width: "100%", height: "60px ", margin: "0px auto", backgroundColor: "#171F29" }}>
-                    <IconButton
-                        onClick={() => {
-                            setLeftSidebarOpen(true);
-                        }}
-                        aria-label="open left sidebar"
-                        size="large"
-                        style={{ maxWidth: "40px", marginLeft: "2rem", padding: "8px" }}
-                    >
-                        <img class="" src='wallet/assets/images/menu/heroicons-outline.png' alt="" />
-                    </IconButton>
+                    {
+                        !menuShow && <IconButton
+                            onClick={() => {
+                                setLeftSidebarOpen(true);
+                            }}
+                            aria-label="open left sidebar"
+                            size="large"
+                            style={{ maxWidth: "40px", marginLeft: "2rem", padding: "8px" }}
+                        >
+                            <img class="" src='wallet/assets/images/menu/heroicons-outline.png' alt="" />
+                        </IconButton>
+                    }
                     <div class="phone-bottom ">
                         <nav class="nav">
                             <div class="slide"></div>

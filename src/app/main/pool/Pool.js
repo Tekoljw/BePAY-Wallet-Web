@@ -70,7 +70,7 @@ function Pool() {
         <div>
             {/*head*/}
             <motion.div
-                className="p-24"
+                className="pt-24"
                 variants={container}
                 initial="hidden"
                 animate="show"

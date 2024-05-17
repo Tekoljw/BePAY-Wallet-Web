@@ -412,6 +412,7 @@ function Wallet() {
       setIsSearch(false);
     }
   };
+
   const getSettingSymbol = async () => {
     var openAppId = getOpenAppId();
     var openIndex = getOpenAppIndex();
@@ -443,11 +444,11 @@ function Wallet() {
     if (res.data.errno === 0) {
       setUserSetting(res.data.data);
       setFiatDisplaySubmit(res.data.data.setting.fiatCode, true)
-      // console.log(res.data.data, 'res........');
     }
 
     return res;
   };
+
   useEffect(() => {
     if (JSON.stringify(userData.profile) !== '{}') {
       getSettingSymbol().then((res) => {
@@ -1333,10 +1334,10 @@ function Wallet() {
 
 
   useEffect(() => {
-    if (loginType === "telegram_web_app") {
+    if (userData?.userInfo?.loginType === "telegram_web_app") {
       setWalletConnectShow(true);
     }
-  }, []);
+  }, [userData?.userInfo?.loginType]);
 
 
 
