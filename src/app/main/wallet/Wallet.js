@@ -1363,7 +1363,6 @@ function Wallet() {
             {
               !walletConnectShow && <div
                 className="flex justify-center items-center wallet-top radius999"
-                style={{ width: "87%" }}
               >
                 <Tabs
                   component={motion.div}
@@ -1587,22 +1586,23 @@ function Wallet() {
             variants={container}
             initial="hidden"
             animate="show"
-            className="p-24 pb-4"
+            className="px-15 pb-4"
             style={{ paddingTop: "0.7rem" }}
           >
             <Box
               component={motion.div}
               variants={item}
-              className="w-full rounded-16 border flex flex-col pt-16"
+              className="w-full border flex flex-col pt-16"
               sx={{
                 backgroundColor: "#1E293B",
                 border: "none",
+                borderRadius: "1rem"
               }}
             >
               <motion.div variants={container} initial="hidden" animate="show">
                 {walletType === 0 && (
                   <div>
-                    <div className="px-24 flex justify-between items-center">
+                    <div className="flex justify-between items-center" style={{ marginBottom: "20px", marginLeft: "15px", marginRight: "15px" }}>
                       {searchInput && (
                         <>
                           <FuseSvgIcon
@@ -1864,7 +1864,7 @@ function Wallet() {
                       variants={container}
                       initial="hidden"
                       animate="show"
-                      className="mt-8 px-24 pb-8 "
+                      className="pb-8 "
                     >
 
                       {searchSymbols.map((row, index) => {
@@ -1941,7 +1941,6 @@ function Wallet() {
                     initial="hidden"
                     animate="show"
                     className="mt-8 px-24 pb-8 "
-                  // style={{ borderBottom: '1px solid #374252' }}
                   >
                     {searchFiats.map((row, index) => {
                       if (hideSmall) {
@@ -2534,7 +2533,7 @@ function Wallet() {
                 {/* search区域 */}
                 {decentralized != -1 && walletType === 1 && (
                   <div
-                    className="mt-8 px-24 flex justify-between items-center"
+                    className="mt-8 px-24 flex justify-between items-center testRed"
                     style={{
                       marginTop: 0,
                       marginBottom: "1rem",
@@ -2595,8 +2594,8 @@ function Wallet() {
               variants={container}
               initial="hidden"
               animate="show"
-              className="p-24"
-              style={{ paddingTop: "1.1rem" }}
+              className="px-15 mb-36"
+              style={{ paddingTop: "1rem" }}
             >
               <Box
                 component={motion.div}
@@ -2607,7 +2606,7 @@ function Wallet() {
                   border: "none",
                 }}
               >
-                <div className="mt-8 px-24">
+                <div className="mt-8 px-15">
                   <div
                     className="flex justify-between items-center my-4 "
                     style={{ height: "2rem" }}

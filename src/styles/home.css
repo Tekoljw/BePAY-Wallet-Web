@@ -247,7 +247,7 @@ input[type='number'] {
 }
 
 .wallet-top {
-    width: 80%;
+    width: calc(100% - 3rem);
     border-radius: 24px;
     background: #334155;
     margin: auto;
@@ -329,7 +329,7 @@ input[type='number'] {
 }
 
 .cardSty {
-    width: 87%;
+    width: calc(100% - 3rem);
     aspect-ratio: 864 / 304;
     background-image: url("../../public/assets/images/withdraw/cardDi.png");
     background-size: cover;
@@ -593,16 +593,17 @@ input[type='number'] {
     padding-top: 0%;
 }
 
+.px-15 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
 .my-12 {
     margin-top: 0;
 }
 
 .min-h-35 {
     margin-top: 0 !important
-}
-
-.px-24 {
-    margin-bottom: 10px;
 }
 
 #outlined-adornment-address-wallet {
@@ -616,7 +617,7 @@ input[type='number'] {
 
 .wallet-show-type-tab {
     padding-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: 14px;
     padding-bottom: 0;
     height: 3.6rem;
     min-height: 3.6rem;

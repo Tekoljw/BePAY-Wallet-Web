@@ -258,8 +258,8 @@ function Deposite() {
     }
 
     const [ranges, setRanges] = useState([
-        t('home_deposite_1'), t('home_deposite_2')
-        // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
+        // t('home_deposite_1'), t('home_deposite_2')
+        t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
     ]);
     const [walletloginname, setwalletloginname] = useState(window.localStorage.getItem('walletname') === 'metamask' ? 'MetaMask' : localStorage.getItem('walletname'))
     const [decentralized, setDdecentralized] = useState(window.localStorage.getItem('isDecentralized'));
@@ -679,24 +679,24 @@ function Deposite() {
             }
             else if (userData.profile?.loginType !== "unknown") {
                 var tmpRanges = [
-                    t('home_deposite_2'), t('home_deposite_1')
-                    // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
+                    // t('home_deposite_2'), t('home_deposite_1')
+                    t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
                 ];
                 var tmpCryptoSelect = 1;
                 var tmpFiatSelect = 0;
                 if (userData.profile.wallet.Crypto < userData.profile.wallet.Fiat) {
                 } else if (userData.profile.wallet.Crypto > userData.profile.wallet.Fiat) {
                     tmpRanges = [
-                        t('home_deposite_1'), t('home_deposite_2')
-                        // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
+                        // t('home_deposite_1'), t('home_deposite_2')
+                        t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
                     ];
                     tmpCryptoSelect = 0;
                     tmpFiatSelect = 1;
                 } else {
                     if (userData.profile?.loginType === "web3_wallet") {
                         tmpRanges = [
-                            t('home_deposite_1'), t('home_deposite_2')
-                            // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
+                            // t('home_deposite_1'), t('home_deposite_2')
+                            t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
                         ];
                         tmpCryptoSelect = 0;
                         tmpFiatSelect = 1;
@@ -892,8 +892,8 @@ function Deposite() {
                     textColor="inherit"
                     variant="scrollable"
                     scrollButtons={false}
-                    className="min-h-40 wallet-show-type wallet-show-type-tab ml-16 mr-12 "
-                    classes={{ indicator: 'flex justify-center bg-transparent w-full h-full min-h-32 ' }}
+                    className="min-h-36 wallet-show-type wallet-show-type-tab"
+                    classes={{ indicator: 'flex justify-center bg-transparent w-full h-full min-h-36 ' }}
                     TabIndicatorProps={{
                         children: (
                             <Box
@@ -913,8 +913,8 @@ function Deposite() {
                             key={key}
                             label={label}
                             sx={{
-                                color: '#FFFFFF', height: '3.5rem', width: '16.8rem'
-                                // color: '#FFFFFF', height: '3.5rem', width: '10.8rem'
+                                // color: '#FFFFFF', height: '3.5rem', width: '16.8rem'
+                                color: '#FFFFFF', height: '3.2rem', width: '10.8rem'
                             }}
                         />
                     ))}
@@ -958,7 +958,7 @@ function Deposite() {
                         component={motion.div}
                         variants={item}
                         className="w-full rounded-16 border flex flex-col py-16"
-                        style={{ borderRadius: '0.5rem' }}
+                        style={{ borderRadius: '1rem' }}
                         sx={{
                             backgroundColor: '#1E293B',
                             border: 'none'
@@ -1362,7 +1362,7 @@ function Deposite() {
                     variants={container}
                     initial="hidden"
                     animate="show"
-                    className="p-24"
+                    className="px-15"
                 >
                     <Box
                         className="w-full rounded-16 border flex flex-col select-fieldset-noborder"
