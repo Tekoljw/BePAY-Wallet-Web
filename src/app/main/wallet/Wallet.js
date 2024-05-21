@@ -322,7 +322,7 @@ function Wallet() {
       currencyType: type,
       currencySymbol: symbol
     }
-    saveSettingSymbol(data);
+    // saveSettingSymbol(data);
     // setCurrencySelect(currencydata)
     dispatch(setCurrencySelect(currencydata)).then((res) => {
       dispatch(getCurrencySelect());
@@ -412,6 +412,7 @@ function Wallet() {
     }
   };
   const getSettingSymbol = async () => {
+    return {}
     var openAppId = getOpenAppId();
     var openIndex = getOpenAppIndex();
     const service = axios.create({

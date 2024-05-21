@@ -630,6 +630,7 @@ function Deposite() {
 
 
     const getSettingSymbol = async () => {
+        return {}
         var openAppId = getOpenAppId();
         var openIndex = getOpenAppIndex();
         const service = axios.create({
@@ -656,7 +657,7 @@ function Deposite() {
     useEffect(() => {
         getSettingSymbol().then((res) => {
             var currencyType = res.data?.data?.setting?.currencyType
-            console.log(currencyType);
+            console.log(currencyType, 'currencyType.....');
             if (currencyType) {
                 if (currencyType == 1) {
                     tmpRanges = [
