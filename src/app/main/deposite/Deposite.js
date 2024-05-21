@@ -1534,13 +1534,23 @@ function Deposite() {
                                         <div>
                                             <FormControl className="my-16" sx={{ width: '100%' }} variant="outlined">
                                                 <OutlinedInput
-                                                    disabled={true}
+                                                    type='number'
+                                                    disabled={false}
                                                     id="outlined-adornment-weight send-tips-container-amount"
                                                     value={weight}
                                                     endAdornment={<InputAdornment position="end">MAX</InputAdornment>}
                                                     aria-describedby="outlined-weight-helper-text"
                                                     inputProps={{
                                                         'aria-label': 'weight',
+                                                    }}
+                                                    onChange={(event) => {
+                                                        if (event.target.value === '') {
+                                                            setWeight('')
+                                                            return
+                                                        }
+                                                        if (bankItem.minValue <= event.target.value && event.target.value <= bankItem.maxValue) {
+                                                            setWeight(event.target.value);
+                                                        }
                                                     }}
                                                 />
                                             </FormControl>
