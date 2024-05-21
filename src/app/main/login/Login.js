@@ -56,6 +56,7 @@ import { gapi } from "gapi-script";
 import { GoogleLogin } from "react-google-login";
 import utils from '../../util/tools/utils';
 import { loginTelegram } from "../../util/tools/loginFunction";
+import { getIPExtendInfo } from "app/store/config/configThunk";
 
 
 const Root = styled(FusePageCarded)(({ theme }) => ({
@@ -309,27 +310,30 @@ function Login() {
 
     useEffect(() => {
         const getPhoneCode = async () => {
-            const service = axios.create({
-                timeout: 50000, // request timeout
-            });
-            var post = {
-                url: `${domain.FUNIBET_API_DOMAIN}/gamecenter/getIPExtendInfo`,
-                method: 'post',
-                async: true
-            };
+            // const service = axios.create({
+            //     timeout: 50000, // request timeout
+            // });
+            // var post = {
+            //     url: `${domain.FUNIBET_API_DOMAIN}/gamecenter/getIPExtendInfo`,
+            //     method: 'post',
+            //     async: true
+            // };
 
-            let res = await service(post);
-            if (res.data.errno === 0) {
-                let countryText = res.data.data.queryCountry;
-                if (countryText) {
-                    phoneCode.list.map((item) => {
-                        if (item.chinese_name === countryText) {
-                            setTmpCode(item.phone_code);
-                            return
-                        }
-                    })
+
+            let res = dispatch(getIPExtendInfo()).then((res) => {
+                let result = res.payload
+                if (result.queryCountry) {
+                    let countryText = result.queryCountry;
+                    if (countryText) {
+                        phoneCode.list.map((item) => {
+                            if (item.chinese_name === countryText) {
+                                setTmpCode(item.phone_code);
+                                return
+                            }
+                        })
+                    }
                 }
-            }
+            });
         };
         getPhoneCode();
     }, []);

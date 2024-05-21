@@ -147,3 +147,16 @@ export const getMenuList = createAsyncThunk(
     }
 );
 
+// 获取IP
+export const getIPExtendInfo = createAsyncThunk(
+    '/config/getIPExtendInfo',
+    async (settings, { dispatch, getState }) => {
+        const ipInfoResult = await React.$api("config.getIPExtendInfo")
+        if (ipInfoResult.errno === 0) {
+            return ipInfoResult.data
+        }
+
+        return false
+    }
+);
+

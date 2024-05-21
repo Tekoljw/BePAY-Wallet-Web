@@ -11,10 +11,14 @@ export default {
         menuList: {
             url: "/menu/list",
             method: "post",
+        },
+        getIPExtendInfo: {
+            url: "/mobile/getIPExtendInfo",
+            method: "post",
         }
     },
 
-    
+
     user: {
         setbanner: {
             url: "/user/setbanner",
