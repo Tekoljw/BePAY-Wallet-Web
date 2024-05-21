@@ -776,8 +776,7 @@ function Wallet() {
     if (
       fiatsData.constructor !== Array ||
       fiatsData.length === 0 ||
-      !paymentFiat ||
-      JSON.stringify(userSetting) === '{}'
+      !paymentFiat
     ) {
       return;
     }
@@ -848,16 +847,18 @@ function Wallet() {
     }
 
     tmpFiats.sort(sortUseAge);
-    tmpFiats = pinToTopCurrency(tmpFiats, userSetting.setting.fiatCode);
+    // tmpFiats = pinToTopCurrency(tmpFiats, userSetting.setting.fiatCode);
 
     setFiats(tmpFiats);
     setSearchFiats(tmpFiats);
     setFiatDisplayShowData(tmpDisplayFiats);
   };
   useEffect(() => {
+    console.log('useEffectuseEffectuseEffectuseEffect')
     if (!mounted.current) {
       mounted.current = true;
     } else {
+      console.log('fiatsFormatAmount')
       fiatsFormatAmount();
       if (isSearch) {
         if (walletType === 0) {
