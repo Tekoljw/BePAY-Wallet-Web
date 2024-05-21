@@ -323,7 +323,7 @@ function Wallet() {
       currencyType: type,
       currencySymbol: symbol
     }
-    saveSettingSymbol(data);
+    // saveSettingSymbol(data);
     // setCurrencySelect(currencydata)
     dispatch(setCurrencySelect(currencydata)).then((res) => {
       dispatch(getCurrencySelect());
@@ -414,6 +414,7 @@ function Wallet() {
   };
 
   const getSettingSymbol = async () => {
+    return {}
     var openAppId = getOpenAppId();
     var openIndex = getOpenAppIndex();
     const service = axios.create({
@@ -777,8 +778,7 @@ function Wallet() {
     if (
       fiatsData.constructor !== Array ||
       fiatsData.length === 0 ||
-      !paymentFiat ||
-      JSON.stringify(userSetting) === '{}'
+      !paymentFiat
     ) {
       return;
     }
@@ -849,16 +849,18 @@ function Wallet() {
     }
 
     tmpFiats.sort(sortUseAge);
-    tmpFiats = pinToTopCurrency(tmpFiats, userSetting.setting.fiatCode);
+    // tmpFiats = pinToTopCurrency(tmpFiats, userSetting.setting.fiatCode);
 
     setFiats(tmpFiats);
     setSearchFiats(tmpFiats);
     setFiatDisplayShowData(tmpDisplayFiats);
   };
   useEffect(() => {
+    console.log('useEffectuseEffectuseEffectuseEffect')
     if (!mounted.current) {
       mounted.current = true;
     } else {
+      console.log('fiatsFormatAmount')
       fiatsFormatAmount();
       if (isSearch) {
         if (walletType === 0) {

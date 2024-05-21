@@ -519,6 +519,7 @@ function Withdraw(props) {
     const [cryptoSelect, setCryptoSelect] = useState(0);
     const [fiatSelect, setFiatSelect] = useState(1);
     const getSettingSymbol = async () => {
+        return {}
         var openAppId = getOpenAppId();
         var openIndex = getOpenAppIndex();
         const service = axios.create({
