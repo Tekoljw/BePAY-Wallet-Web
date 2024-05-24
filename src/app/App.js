@@ -51,6 +51,7 @@ const App = () => {
     const thirdPartId = getUrlParam('thirdPartId') || 0;
     const autoLoginKey = getUrlParam('autoLoginKey') || 0;
     const storageKey = getUrlParam('storageKey') || '';
+    const loginType = getUrlParam('loginType') || '';
     const langDirection = useSelector(selectCurrentLanguageDirection);
     const mainTheme = useSelector(selectMainTheme);
     const token = useSelector(selectUserData).token;
@@ -83,9 +84,11 @@ const App = () => {
         if (lang) {
             window.localStorage.setItem('lang', lang)
         }
-
         if (storageKey) {
             window.localStorage.setItem('storageKey', storageKey)
+        }
+        if (loginType) {
+            window.localStorage.setItem('loginType', loginType)
         }
     }, []);
 

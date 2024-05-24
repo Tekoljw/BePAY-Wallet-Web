@@ -52,6 +52,8 @@ function HomePage(props) {
     const networks = config.networks || [];
     const { pathname } = useLocation();
     const [menuShow, setMenuShow] = useState(false);
+    const loginType = window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType;
+
     useEffect(() => {
         let userBindWallet = userData.userInfo.bindWallet ?? false;
         if (userBindWallet) {
@@ -144,11 +146,11 @@ function HomePage(props) {
 
 
     useEffect(() => {
-        if (userData?.userInfo?.loginType === "telegram_web_app") {
+        if (loginType === "telegram_web_app") {
             setMenuShow(true);
             setLeftSidebarOpen(false);
         }
-    }, [userData?.userInfo?.loginType]);
+    }, [loginType]);
 
     return (
         <>

@@ -194,7 +194,7 @@ function Wallet() {
   );
   const [walletImage, setWalletImage] = useState("");
 
-  const loginType = userData?.userInfo?.loginType;
+  const loginType = window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType;
   useEffect(() => {
     if (window.sessionStorage.getItem("openAppId")) {
       if (openType.list[0].no == window.sessionStorage.getItem("openAppId")) {
@@ -484,8 +484,8 @@ function Wallet() {
           ];
           var tmpCryptoSelect = 1;
           var tmpFiatSelect = 0;
-          if (userData.profile.wallet.Crypto < userData.profile.wallet.Fiat) {
-          } else if (userData.profile.wallet.Crypto > userData.profile.wallet.Fiat) {
+          if (userData.profile.wallet?.Crypto < userData.profile.wallet?.Fiat) {
+          } else if (userData.profile.wallet?.Crypto > userData.profile.wallet?.Fiat) {
             tmpRanges = [
               'Token', t('home_deposite_2')
               // 'Token', t('home_deposite_2'), t('home_deposite_3')
@@ -1336,10 +1336,10 @@ function Wallet() {
 
 
   useEffect(() => {
-    if (userData?.userInfo?.loginType === "telegram_web_app") {
+    if (loginType === "telegram_web_app") {
       setWalletConnectShow(true);
     }
-  }, [userData?.userInfo?.loginType]);
+  }, [loginType]);
 
 
 

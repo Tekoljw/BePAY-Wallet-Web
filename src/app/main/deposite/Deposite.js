@@ -685,8 +685,8 @@ function Deposite() {
                 ];
                 var tmpCryptoSelect = 1;
                 var tmpFiatSelect = 0;
-                if (userData.profile.wallet.Crypto < userData.profile.wallet.Fiat) {
-                } else if (userData.profile.wallet.Crypto > userData.profile.wallet.Fiat) {
+                if (userData.profile.wallet?.Crypto < userData.profile.wallet?.Fiat) {
+                } else if (userData.profile.wallet?.Crypto > userData.profile.wallet?.Fiat) {
                     tmpRanges = [
                         // t('home_deposite_1'), t('home_deposite_2')
                         t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')

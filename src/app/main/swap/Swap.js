@@ -276,6 +276,7 @@ function Swap() {
               arrayLookup(walletData.inner, "symbol", item.quote_coin, "withdrawLock") || 0,
           });
       });
+
       resultSymbolDataFormat[item] = resultSymbolData;
     });
     return resultSymbolDataFormat
