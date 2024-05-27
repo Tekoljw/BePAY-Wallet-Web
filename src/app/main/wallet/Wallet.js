@@ -1575,7 +1575,7 @@ function Wallet() {
               <div className=" flex mt-16 items-conter px-16" style={{ width: "100%", marginTop: "6%", justifyContent: "space-between" }}>
                 <div className="flex">
                   <img className="cardImg" src="/wallet/assets/images/withdraw/USDT.png"></img>
-                  <div className="text-24 ml-10" style={{ color: "#ffffff" }}>1691.126</div>
+                  <div className="text-24 ml-10" style={{ color: "#ffffff" }}>{(userData.profile.wallet?.Crypto + userData.profile.wallet?.Fiat).toFixed(2) ?? '0.00'}</div>
                 </div>
                 <div className="text-16" style={{ width: "14rem", textAlign: "center", height: "3rem", lineHeight: "3rem", color: "#3E9178", borderRadius: "99px", background: "#D4FFF3" }}>
                   Activate Visa

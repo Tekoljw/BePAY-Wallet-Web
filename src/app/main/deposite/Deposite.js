@@ -1497,6 +1497,7 @@ function Deposite() {
                         {/*</StyledAccordion>*/}
                     </Box>
                     <Typography className="text-16 px-16 my-10">{t('home_deposite_17')}</Typography>
+
                     {bankCodeList.length > 0 && bankCodeList?.map((bankItem) => {
                         if (currencyCode === bankItem.currency) {
                             return (
@@ -1544,11 +1545,14 @@ function Deposite() {
                                                         'aria-label': 'weight',
                                                     }}
                                                     onChange={(event) => {
+                                                        console.log(bankItem.minValue)
+                                                        console.log(bankItem.maxValue)
+                                                        console.log(event.target.value)
                                                         if (event.target.value === '') {
                                                             setWeight('')
                                                             return
                                                         }
-                                                        if (bankItem.minValue <= event.target.value && event.target.value <= bankItem.maxValue) {
+                                                        if (event.target.value < bankItem.maxValue) {
                                                             setWeight(event.target.value);
                                                         }
                                                     }}
