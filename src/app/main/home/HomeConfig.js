@@ -84,6 +84,10 @@ const HomeConfig = {
                     element: lazy(() => import('../deposite/Deposite')),
                 },
                 {
+                    path: 'card',
+                    element: lazy(() => import('../card/Card')),
+                },
+                {
                     path: 'withdraw',
                     element: lazy(() => import('../withdraw/Withdraw')),
                 },
@@ -127,6 +131,7 @@ const HomeConfig = {
                     path: 'wallet',
                     element: lazy(() => import('../wallet/Wallet')),
                 },
+
 
             ]
         },

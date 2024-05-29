@@ -44,6 +44,7 @@ const locale = {
     menu_15: 'Edit Pass',
     menu_16: 'KYC',
     menu_17: 'Security',
+    menu_18: 'Credit card',
 
     home_2fa_1: 'Step 1',
     home_2fa_2: 'Download and ',

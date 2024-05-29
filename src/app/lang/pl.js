@@ -45,6 +45,7 @@ const locale = {
     menu_15: 'Edytuj hasło',
     menu_16: 'KYC',
     menu_17: 'Bezpieczeństwo',
+    menu_18: 'karta kredytowa',
     
     home_2fa_1: 'Krok 1',
     home_2fa_2: 'Pobierz i',

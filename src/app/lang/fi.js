@@ -44,6 +44,7 @@ const locale = {
     menu_15: 'Muokkaa salasanaa',
     menu_16: 'KYC',
     menu_17: 'Turvallisuus',
+    menu_18: 'luottokortti',
     
     home_2fa_1: 'Vaihe 1',
     home_2fa_2: 'Lataa ja ',

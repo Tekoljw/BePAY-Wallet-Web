@@ -44,6 +44,7 @@ const locale = {
     menu_15: 'Passwort bearbeiten',
     menu_16: 'KYC',
     menu_17: 'Sicherheit',
+    menu_18: 'Kreditkarte',
     
     home_2fa_1: 'Schritt 1',
     home_2fa_2: 'Herunterladen und',

@@ -255,6 +255,151 @@ input[type='number'] {
     font-weight: 700;
 }
 
+.cardName {
+    font-size: 2rem;
+    margin: 1rem 0rem 1rem 1rem;
+}
+
+.responsive-div {
+    position: relative;
+    width: 100%;
+    padding-bottom: 58.1%;
+    /* Aspect ratio of 716:416 (416 / 716 * 100) */
+    /* Just for visual demonstration */
+}
+
+.cardJianGe {
+    margin-bottom: 2.5rem;
+}
+
+.cardNameInFoDi {
+    width: 94%;
+    height: 8rem;
+    background-color: #374252;
+    margin: 0 auto;
+    border-radius: 0 0 1rem 1rem;
+    padding-top: 0.8rem;
+}
+
+.cardNameInFoMyDi {
+    width: 94%;
+    height: 4rem;
+    background-color: #374252;
+    margin: 0 auto;
+    border-radius: 0 0 1rem 1rem;
+    padding-top: 0.8rem;
+}
+
+.openingFee {
+    color: #46DFB7;
+    height: 3.6rem;
+    line-height: 3.6rem;
+    text-align: center;
+}
+
+.openCardBtn {
+    background-color: #0D9488;
+    border-radius: 5rem;
+    font-weight: bold;
+    height: 3.2rem;
+    line-height: 3.2rem;
+    text-align: center;
+    padding: 0rem 1rem;
+    min-width: 7.2rem;
+}
+
+.responsive-div-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.card1Bg {
+    background-image: url("../../public/assets/images/card/card1.png");
+    background-size: cover;
+    background-position: center;
+}
+
+.card2Bg {
+    background-image: url("../../public/assets/images/card/card2.png");
+    background-size: cover;
+    background-position: center;
+}
+
+.card3Bg {
+    background-image: url("../../public/assets/images/card/card3.png");
+    background-size: cover;
+    background-position: center;
+}
+
+.card4Bg {
+    background-image: url("../../public/assets/images/card/card4.png");
+    background-size: cover;
+    background-position: center;
+}
+
+.card5Bg {
+    background-image: url("../../public/assets/images/card/card5.png");
+    background-size: cover;
+    background-position: center;
+}
+
+.cardZhiDi {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.zhangDanZi {
+    height: 3rem;
+    line-height: 3rem;
+    font-size: 1.8rem;
+}
+
+.cardIconW {
+    width: 3rem;
+    height: 3rem;
+    margin-right: 1rem;
+}
+
+.cardIconJiaHao {
+    width: 4rem;
+    height: 4rem;
+    margin-right: 1rem;
+}
+
+.cardIconW2 {
+    width: 2.2rem;
+    height: 2.2rem;
+    margin-left: 0.4rem;
+}
+
+.cardNumber {
+    width: 84%;
+    margin: 0 auto;
+    height: 40%;
+    font-size: 170%;
+}
+
+.cardBeiMian {
+    width: 100%;
+    text-align: right;
+    margin: 0 auto;
+    height: 50%;
+}
+
+.kaBeiZi {
+    font-size: 1.8rem;
+    padding-right: 1.5rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    width: 35%;
+}
+
+
 .wallet-top-item {
     width: 50%;
     text-align: center;
@@ -266,6 +411,13 @@ input[type='number'] {
 }
 
 .wallet-show-type {
+    font-size: 14px;
+    font-weight: 500;
+    color: #94A3B8;
+    border-radius: 20px;
+}
+
+.card-show-type {
     font-size: 14px;
     font-weight: 500;
     color: #94A3B8;
@@ -496,6 +648,10 @@ input[type='number'] {
     justify-content: space-between !important;
 }
 
+.card-show-type .muiltr-heg063-MuiTabs-flexContainer {
+    justify-content: space-between !important;
+}
+
 .buy-pay-type-acitve {
     border: 1px solid #2DD4BF !important;
 }
@@ -627,6 +783,54 @@ input[type='number'] {
     background-color: #374252;
     border-radius: 3rem;
     height: 3.6rem;
+}
+
+.card-show-type-tab {
+    padding-top: 0;
+    margin-bottom: 14px;
+    padding-bottom: 0;
+    height: 4.8rem;
+    min-height: 4.8rem;
+}
+
+.card-show-type-tab .muiltr-69z67c-MuiTabs-scroller {
+    background-color: #374252;
+    border-radius: 3rem;
+    height: 4.8rem;
+}
+
+.cardSelectBg {
+    padding: '0 1.5rem 0rem 1.5rem';
+}
+
+.myCardDi {
+    width: calc(100% - 3rem);
+    margin: 0 auto 1.5rem auto;
+    height: 10rem;
+    background: linear-gradient(to right, #109F82, #01403B);
+    border-radius: 1rem;
+}
+
+.cardSelectBgPadding {
+    width: calc(100% - 3rem);
+    margin: 0 auto;
+    padding: '1.5rem 1.5rem 0rem 1.5rem';
+    background-color: #1E293B;
+    border-radius: 1rem;
+}
+
+.tianJiaKaPian {
+    background-color: #374252;
+    margin: 1.5rem auto 1.5rem auto;
+    width: calc(100% - 2rem);
+    height: 6rem;
+    border-radius: 1.5rem;
+}
+
+
+
+.cardBigBtn {
+    min-height: 4.8rem !important;
 }
 
 .wallet-tab-item {

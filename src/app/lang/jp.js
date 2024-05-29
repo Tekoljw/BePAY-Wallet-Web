@@ -44,6 +44,7 @@ const locale = {
     menu_15: 'パスワードの編集',
     menu_16: 'KYC',
     menu_17: 'セキュリティ',
+    menu_18: 'クレジットカード',
     
     home_2fa_1: 'ステップ1',
     home_2fa_2: 'Google Authenticatorをダウンロードして',

@@ -44,6 +44,7 @@ const locale = {
     menu_15: 'Şifre Düzenleme',
     menu_16: 'KYC',
     menu_17: 'Güvenlik',
+    menu_18: 'kredi kartı',
     
     home_2fa_1: 'Adım 1',
     home_2fa_2: 'Google Authenticator\'ı ',

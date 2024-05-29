@@ -44,6 +44,7 @@ const locale = {
     menu_15: 'Baguhin ang Password',
     menu_16: 'KYC',
     menu_17: 'Seguridad',
+    menu_18: 'credit card',
     
     home_2fa_1: 'Hakbang 1',
     home_2fa_2: 'I-download at ',

@@ -44,6 +44,7 @@ const locale = {
     menu_15: '비밀번호 변경',
     menu_16: 'KYC',
     menu_17: '보안',
+    menu_18: '신용 카드',
     
     home_2fa_1: '1단계',
     home_2fa_2: 'Google Authenticator 앱을 다운로드하고 설치하세요.',

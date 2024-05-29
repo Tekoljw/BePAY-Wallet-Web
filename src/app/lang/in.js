@@ -44,6 +44,7 @@ const locale = {
     menu_15: 'पासवर्ड संपादित करें',
     menu_16: 'KYC',
     menu_17: 'सुरक्षा',
+    menu_18: 'क्रेडिट कार्ड',
     
     home_2fa_1: 'चरण 1',
     home_2fa_2: 'Google Authenticator डाउनलोड और ',

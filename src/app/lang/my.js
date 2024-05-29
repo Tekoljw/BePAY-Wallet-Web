@@ -44,6 +44,7 @@ const locale = {
     menu_15: 'Edit Kata Laluan',
     menu_16: 'KYC',
     menu_17: 'Keselamatan',
+    menu_18: 'kad kredit',
     
     home_2fa_1: 'Langkah 1',
     home_2fa_2: 'Muat turun dan',

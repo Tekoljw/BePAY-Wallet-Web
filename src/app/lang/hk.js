@@ -44,6 +44,7 @@ const locale = {
     menu_15: '修改密碼',
     menu_16: 'KYC',
     menu_17: '安全',
+    menu_18: '信用卡',
     
     home_2fa_1: '第一步',
     home_2fa_2: '下載並 ',

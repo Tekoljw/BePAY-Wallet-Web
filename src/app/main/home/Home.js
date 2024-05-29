@@ -18,6 +18,7 @@ import Security from "../security/Security";
 import Record from "../record/Record";
 import Borrow from "../borrow/Borrow";
 import Pool from "../pool/Pool";
+import Card from "../card/Card";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -186,6 +187,7 @@ function HomePage(props) {
                         >
                             <Routes>
                                 <Route index element={<Deposite />} />
+                                <Route path="card" element={<Card />} />
                                 <Route path="deposite" element={<Deposite />} />
                                 <Route path="withdraw" element={<Withdraw tab='address' />} />
                                 <Route path="buyCrypto" element={<Buy />} />

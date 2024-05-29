@@ -44,6 +44,7 @@ const locale = {
     menu_15: 'கடவுச்சொல் திருத்தம்',
     menu_16: 'KYC',
     menu_17: 'பாதுகாப்பு',
+    menu_18: 'கடன் அட்டை',
     
     home_2fa_1: 'படி 1',
     home_2fa_2: 'Google Authenticator ஐ பதிவிறக்கி ',

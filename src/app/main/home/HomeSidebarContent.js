@@ -55,7 +55,7 @@ function HomeSidebarContent(props) {
     }
 
 
-    
+
     const [activeMenu, setTab] = useState('');
 
     const tabClick = (tab) => {
@@ -103,7 +103,7 @@ function HomeSidebarContent(props) {
         } else {
             setTab(props.tab !== 'home' ? props.tab : 'deposite');
         }
-        
+
         dispatch(getMenuList()).then(res => {
             let result = res.payload
             if (result) {
@@ -187,6 +187,28 @@ function HomeSidebarContent(props) {
                             <ListItemText className="truncate font16" primary={t('menu_2')} disableTypography />
                         </StyledListItem>
                     }
+
+                    {hideMenu.indexOf('card') === -1 && <StyledListItem
+                        button
+                        className={
+                            clsx(
+                                '',
+                                activeMenu === 'card' && 'active'
+                            )
+                        }
+                        onClick={(ev) => {
+                            setTab('card');
+                            history.push('/wallet/home/card');
+                        }}
+                    >
+                        <div className='iconWz'>
+                            <img className='menu-icon ' src='wallet/assets/images/menu/card.png' alt='icon' />
+                            <img className='menu-icon  active' src='wallet/assets/images/menu/card-active.png' alt='icon' />
+                        </div>
+                        <ListItemText className="truncate font16" primary={t('menu_18')} disableTypography />
+                    </StyledListItem>}
+
+
                     {hideMenu.indexOf('withdraw') === -1 && <StyledListItem
                         button
                         className={
@@ -403,6 +425,10 @@ function HomeSidebarContent(props) {
                         </div>
                         <ListItemText className="truncate font16" primary={t('menu_17')} disableTypography />
                     </StyledListItem>}
+
+
+
+
 
                     {/* <StyledListItem
                         button

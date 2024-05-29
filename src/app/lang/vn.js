@@ -39,6 +39,12 @@ const locale = {
     menu_10: 'Ghi chép',
     menu_11: 'Thị trường NFT',
     menu_12: 'Bật 2FA',
+    menu_13: 'Tái liên kết email',
+    menu_14: 'tái liên kết điện thoại',
+    menu_15: 'đặt lại mật khẩu',
+    menu_16: 'KYC',
+    menu_17: 'bảo mật',
+    menu_18: 'thẻ tín dụng',
     
     home_2fa_1: 'Bước 1',
     home_2fa_2: 'Tải xuống và ',
