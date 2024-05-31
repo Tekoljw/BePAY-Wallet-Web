@@ -264,12 +264,52 @@ input[type='number'] {
     position: relative;
     width: 100%;
     padding-bottom: 58.1%;
+    overflow: hidden;
+    /* 隐藏溢出的内容 */
     /* Aspect ratio of 716:416 (416 / 716 * 100) */
     /* Just for visual demonstration */
 }
 
+.shrink {
+    animation: shrink 0.6s forwards;
+    /* 1秒动画，结束后保持最终状态 */
+}
+
+.alphaCard {
+    animation: alphaCard 0.3s forwards;
+}
+
+
+@keyframes shrink {
+    0% {
+        width: 100%;
+    }
+
+    50% {
+        width: 0;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes alphaCard {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.xiaoShi {
+    display: none;
+}
+
 .cardJianGe {
-    margin-bottom: 2.5rem;
+    margin: 0rem auto 2.5rem auto;
 }
 
 .cardNameInFoDi {
@@ -283,11 +323,63 @@ input[type='number'] {
 
 .cardNameInFoMyDi {
     width: 94%;
-    height: 4rem;
+    height: 4.4rem;
     background-color: #374252;
-    margin: 0 auto;
+    background: linear-gradient(to bottom, #1E293B, #374252);
+    margin: -1rem auto 0rem auto;
     border-radius: 0 0 1rem 1rem;
-    padding-top: 0.8rem;
+    padding-top: 1.6rem;
+}
+
+.shenQingCard {
+    width: 76%;
+    margin: 0 auto;
+    aspect-ratio: 716 / 416;
+}
+
+.cardGongNeng {
+    width: 48%;
+    aspect-ratio: 716 / 416;
+}
+
+.gongNengZiW {
+    width: 100%;
+    text-align: center;
+}
+
+.gongNengLanW {
+    width: 33.33%;
+}
+
+.gongNengTuBiao {
+    margin: 0 auto;
+    width: 4rem;
+    height: 4rem;
+}
+
+
+.gongNengZi {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.cardGongNengBgW {
+    width: calc(100% - 3rem);
+    margin: 0 auto;
+}
+
+.myCardInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.shenQingCardDi {
+    background-image: url("../../public/assets/images/card/shenQingCardDi.png");
+    width: calc(100% - 3rem);
+    aspect-ratio: 716 / 416;
+    background-size: cover;
+    background-position: center;
 }
 
 .openingFee {
@@ -301,11 +393,59 @@ input[type='number'] {
     background-color: #0D9488;
     border-radius: 5rem;
     font-weight: bold;
-    height: 3.2rem;
-    line-height: 3.2rem;
+    height: 3rem;
+    line-height: 3rem;
     text-align: center;
     padding: 0rem 1rem;
-    min-width: 7.2rem;
+    min-width: 9rem;
+}
+
+.quanYiDi {
+    background-color: #1E293B;
+    margin: 0 auto;
+    width: calc(100% - 3rem);
+    height: auto;
+    border-radius: 1rem;
+}
+
+.quanYiLv {
+    color: #19D5B8;
+}
+
+.quanYiHui {
+    color: #B3B3B3;
+    text-decoration: line-through;
+}
+
+.quanYiHuiZi2 {
+    color: #B3B3B3;
+    height: 5rem;
+}
+
+
+.langYouZi {
+    max-width: 70%;
+    text-align: end;
+    word-wrap: break-word;
+    /* 强制长单词换行 */
+    white-space: normal;
+    /* 允许正常的换行 */
+    height: 5rem;
+}
+
+.kaPianQuanYiZi {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.kaPianInfo {
+    text-align: center;
+    min-width: 9rem;
+    text-Decoration: underline;
+
 }
 
 .responsive-div-content {
@@ -336,12 +476,28 @@ input[type='number'] {
 
 .card4Bg {
     background-image: url("../../public/assets/images/card/card4.png");
-    background-size: cover;
-    background-position: center;
+    background-size: 100% 100%;
+    /* 背景图片初始尺寸 */
+    background-repeat: no-repeat;
+    /* 背景图片不重复 */
+}
+
+.card41Bg {
+    background-image: url("../../public/assets/images/card/card4_1.png");
+    background-size: 100% 100%;
+    /* 背景图片初始尺寸 */
+    background-repeat: no-repeat;
+    /* 背景图片不重复 */
 }
 
 .card5Bg {
     background-image: url("../../public/assets/images/card/card5.png");
+    background-size: cover;
+    background-position: center;
+}
+
+.card6Bg {
+    background-image: url("../../public/assets/images/card/card6.png");
     background-size: cover;
     background-position: center;
 }
@@ -355,13 +511,37 @@ input[type='number'] {
 .zhangDanZi {
     height: 3rem;
     line-height: 3rem;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
+}
+
+.quanYiZi {
+    height: 2.5rem;
+    line-height: 2.5rem;
+}
+
+.quanYiHuiZi {
+    color: #B3B3B3;
+}
+
+.quanYiIcon {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-right: 0.8rem;
 }
 
 .cardIconW {
-    width: 3rem;
-    height: 3rem;
+    margin-top: 0.25rem;
+    width: 2.5rem;
+    height: 2.5rem;
     margin-right: 1rem;
+}
+
+.cardIconInFoW {
+    margin-top: 0.25rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    transform: rotateY(180deg);
+    margin-left: 1.5rem;
 }
 
 .cardIconJiaHao {
@@ -373,29 +553,43 @@ input[type='number'] {
 .cardIconW2 {
     width: 2.2rem;
     height: 2.2rem;
-    margin-left: 0.4rem;
 }
 
 .cardNumber {
     width: 84%;
     margin: 0 auto;
-    height: 40%;
+    height: 22%;
     font-size: 170%;
 }
 
 .cardBeiMian {
+    width: 84%;
+    margin: 0 auto;
+    height: 22%;
+}
+
+.cardZhuangTaiDi {
     width: 100%;
-    text-align: right;
     margin: 0 auto;
     height: 50%;
 }
 
+.cardZhuangTai {
+    font-size: 2.5rem;
+    color: #ffc600;
+    text-align: center;
+    height: 4rem;
+    line-height: 4rem;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+
+
 .kaBeiZi {
     font-size: 1.8rem;
-    padding-right: 1.5rem;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-top-left-radius: 50px;
-    border-bottom-left-radius: 50px;
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 50px;
     width: 35%;
 }
 
@@ -607,6 +801,12 @@ input[type='number'] {
 
 .huaKuaBgColor {
     background: #111827;
+}
+
+.huaKuaBgColorCard {
+    border-radius: 0px !important;
+    background: #1E293B;
+    border-bottom: 1px solid #12C1A2;
 }
 
 .no-data-container {
@@ -1401,8 +1601,23 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     padding: 2rem 2rem 0rem 2rem;
 }
 
+.faBiDiCard {
+    width: calc(100% - 3rem);
+    padding: 1.5rem 1.5rem 0rem 1.5rem;
+}
+
+
+
 .faBiBoxDi {
     width: 380px;
+}
+
+.cardInFoDi {
+    width: 430px;
+    height: 667px;
+    max-width: 430px;
+    max-height: 667px;
+    padding: 2rem 2rem 0rem 2rem;
 }
 
 
