@@ -258,8 +258,8 @@ function Deposite() {
     }
 
     const [ranges, setRanges] = useState([
-        // t('home_deposite_1'), t('home_deposite_2')
-        t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
+        t('home_deposite_1'), t('home_deposite_2')
+        // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
     ]);
     const [walletloginname, setwalletloginname] = useState(window.localStorage.getItem('walletname') === 'metamask' ? 'MetaMask' : localStorage.getItem('walletname'))
     const [decentralized, setDdecentralized] = useState(window.localStorage.getItem('isDecentralized'));
@@ -661,14 +661,16 @@ function Deposite() {
             if (currencyType) {
                 if (currencyType == 1) {
                     tmpRanges = [
-                        t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
+                        // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
+                        t('home_deposite_1'), t('home_deposite_2')
                     ];
                     tmpCryptoSelect = 0;
                     tmpFiatSelect = 1;
                 } else {
                     console.log('存在.......');
                     var tmpRanges = [
-                        t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
+                        // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
+                        t('home_deposite_2'), t('home_deposite_1')
                     ];
                     var tmpCryptoSelect = 1;
                     var tmpFiatSelect = 0;
@@ -680,24 +682,24 @@ function Deposite() {
             }
             else if (userData.profile?.loginType !== "unknown") {
                 var tmpRanges = [
-                    // t('home_deposite_2'), t('home_deposite_1')
-                    t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
+                    t('home_deposite_2'), t('home_deposite_1')
+                    // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
                 ];
                 var tmpCryptoSelect = 1;
                 var tmpFiatSelect = 0;
                 if (userData.profile.wallet?.Crypto < userData.profile.wallet?.Fiat) {
                 } else if (userData.profile.wallet?.Crypto > userData.profile.wallet?.Fiat) {
                     tmpRanges = [
-                        // t('home_deposite_1'), t('home_deposite_2')
-                        t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
+                        t('home_deposite_1'), t('home_deposite_2')
+                        // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
                     ];
                     tmpCryptoSelect = 0;
                     tmpFiatSelect = 1;
                 } else {
                     if (userData.profile?.loginType === "web3_wallet") {
                         tmpRanges = [
-                            // t('home_deposite_1'), t('home_deposite_2')
-                            t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
+                            t('home_deposite_1'), t('home_deposite_2')
+                            // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
                         ];
                         tmpCryptoSelect = 0;
                         tmpFiatSelect = 1;

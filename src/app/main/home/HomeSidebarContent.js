@@ -55,7 +55,7 @@ function HomeSidebarContent(props) {
     }
 
 
-    
+
     const [activeMenu, setTab] = useState('');
 
     const tabClick = (tab) => {
@@ -103,7 +103,7 @@ function HomeSidebarContent(props) {
         } else {
             setTab(props.tab !== 'home' ? props.tab : 'deposite');
         }
-        
+
         dispatch(getMenuList()).then(res => {
             let result = res.payload
             if (result) {
@@ -231,86 +231,86 @@ function HomeSidebarContent(props) {
                         <ListItemText className="truncate font16" primary={t('menu_4')} disableTypography />
                     </StyledListItem>}
 
-                    {hideMenu.indexOf('swap') === -1 && <StyledListItem
-                        button
-                        className={
-                            clsx(
-                                '',
-                                activeMenu === 'swap' && 'active'
-                            )
-                        }
-                        onClick={(ev) => {
-                            tabClick('swap');
-                        }}
-                    >
-                        {/* <FuseSvgIcon className="list-item-icon" color="disabled">
-                            material-outline:sync_alt
-                        </FuseSvgIcon> */}
-                        <div className='iconWz'>
-                            <img className='menu-icon ' src='wallet/assets/images/menu/icon-wallet.png' alt='icon' />
-                            <img className='menu-icon  active' src='wallet/assets/images/menu/icon-wallet-active.png' alt='icon' />
-                        </div>
-                        <ListItemText className="truncate font16" primary={t('menu_5')} disableTypography />
-                    </StyledListItem>}
+                    {/*{hideMenu.indexOf('swap') === -1 && <StyledListItem*/}
+                    {/*    button*/}
+                    {/*    className={*/}
+                    {/*        clsx(*/}
+                    {/*            '',*/}
+                    {/*            activeMenu === 'swap' && 'active'*/}
+                    {/*        )*/}
+                    {/*    }*/}
+                    {/*    onClick={(ev) => {*/}
+                    {/*        tabClick('swap');*/}
+                    {/*    }}*/}
+                    {/*>*/}
+                    {/*    /!* <FuseSvgIcon className="list-item-icon" color="disabled">*/}
+                    {/*        material-outline:sync_alt*/}
+                    {/*    </FuseSvgIcon> *!/*/}
+                    {/*    <div className='iconWz'>*/}
+                    {/*        <img className='menu-icon ' src='wallet/assets/images/menu/icon-wallet.png' alt='icon' />*/}
+                    {/*        <img className='menu-icon  active' src='wallet/assets/images/menu/icon-wallet-active.png' alt='icon' />*/}
+                    {/*    </div>*/}
+                    {/*    <ListItemText className="truncate font16" primary={t('menu_5')} disableTypography />*/}
+                    {/*</StyledListItem>}*/}
 
-                    {hideMenu.indexOf('borrow') === -1 && <StyledListItem
-                        button
-                        className={
-                            clsx(
-                                '',
-                                activeMenu === 'borrow' && 'active'
-                            )
-                        }
-                        onClick={(ev) => {
-                            tabClick('borrow');
-                        }}
-                    >
-                        <div className='iconWz'>
-                            <img className='menu-icon ' src='wallet/assets/images/menu/icon-borrow.png' alt='icon' />
-                            <img className='menu-icon  active' src='wallet/assets/images/menu/icon-borrow-active.png' alt='icon' />
-                        </div>
-                        <ListItemText className="truncate font16" primary={t('menu_6')} disableTypography />
-                    </StyledListItem>}
+                    {/*{hideMenu.indexOf('borrow') === -1 && <StyledListItem*/}
+                    {/*    button*/}
+                    {/*    className={*/}
+                    {/*        clsx(*/}
+                    {/*            '',*/}
+                    {/*            activeMenu === 'borrow' && 'active'*/}
+                    {/*        )*/}
+                    {/*    }*/}
+                    {/*    onClick={(ev) => {*/}
+                    {/*        tabClick('borrow');*/}
+                    {/*    }}*/}
+                    {/*>*/}
+                    {/*    <div className='iconWz'>*/}
+                    {/*        <img className='menu-icon ' src='wallet/assets/images/menu/icon-borrow.png' alt='icon' />*/}
+                    {/*        <img className='menu-icon  active' src='wallet/assets/images/menu/icon-borrow-active.png' alt='icon' />*/}
+                    {/*    </div>*/}
+                    {/*    <ListItemText className="truncate font16" primary={t('menu_6')} disableTypography />*/}
+                    {/*</StyledListItem>}*/}
 
-                    {hideMenu.indexOf('c2c') === -1 && <StyledListItem
-                        button
-                        className={
-                            clsx(
-                                '',
-                                activeMenu === 'c2c' && 'active')
-                        }
-                        onClick={(ev) => {
-                            tabClick('c2c');
-                        }}
-                    >
-                        {/* <FuseSvgIcon className="list-item-icon" color="disabled">
-                            heroicons-outline:user-group
-                        </FuseSvgIcon> */}
-                        <div className='iconWz'>
-                            <img className='menu-icon ' src='wallet/assets/images/menu/c2c.png' alt='icon' />
-                            <img className='menu-icon  active' src='wallet/assets/images/menu/c2c-active.png' alt='icon' />
-                        </div>
-                        <ListItemText className="truncate" primary={t('menu_7')} disableTypography />
-                    </StyledListItem>}
+                    {/*{hideMenu.indexOf('c2c') === -1 && <StyledListItem*/}
+                    {/*    button*/}
+                    {/*    className={*/}
+                    {/*        clsx(*/}
+                    {/*            '',*/}
+                    {/*            activeMenu === 'c2c' && 'active')*/}
+                    {/*    }*/}
+                    {/*    onClick={(ev) => {*/}
+                    {/*        tabClick('c2c');*/}
+                    {/*    }}*/}
+                    {/*>*/}
+                    {/*    /!* <FuseSvgIcon className="list-item-icon" color="disabled">*/}
+                    {/*        heroicons-outline:user-group*/}
+                    {/*    </FuseSvgIcon> *!/*/}
+                    {/*    <div className='iconWz'>*/}
+                    {/*        <img className='menu-icon ' src='wallet/assets/images/menu/c2c.png' alt='icon' />*/}
+                    {/*        <img className='menu-icon  active' src='wallet/assets/images/menu/c2c-active.png' alt='icon' />*/}
+                    {/*    </div>*/}
+                    {/*    <ListItemText className="truncate" primary={t('menu_7')} disableTypography />*/}
+                    {/*</StyledListItem>}*/}
 
-                    {hideMenu.indexOf('pools') === -1 && <StyledListItem
-                        button
-                        className={
-                            clsx(
-                                '',
-                                activeMenu === 'pools' && 'active'
-                            )
-                        }
-                        onClick={(ev) => {
-                            tabClick('pools');
-                        }}
-                    >
-                        <div className='iconWz'>
-                            <img className='menu-icon ' src='wallet/assets/images/menu/icon-pools.png' alt='icon' />
-                            <img className='menu-icon  active' src='wallet/assets/images/menu/icon-pools-active.png' alt='icon' />
-                        </div>
-                        <ListItemText className="truncate font16" primary={t('menu_8')} disableTypography />
-                    </StyledListItem>}
+                    {/*{hideMenu.indexOf('pools') === -1 && <StyledListItem*/}
+                    {/*    button*/}
+                    {/*    className={*/}
+                    {/*        clsx(*/}
+                    {/*            '',*/}
+                    {/*            activeMenu === 'pools' && 'active'*/}
+                    {/*        )*/}
+                    {/*    }*/}
+                    {/*    onClick={(ev) => {*/}
+                    {/*        tabClick('pools');*/}
+                    {/*    }}*/}
+                    {/*>*/}
+                    {/*    <div className='iconWz'>*/}
+                    {/*        <img className='menu-icon ' src='wallet/assets/images/menu/icon-pools.png' alt='icon' />*/}
+                    {/*        <img className='menu-icon  active' src='wallet/assets/images/menu/icon-pools-active.png' alt='icon' />*/}
+                    {/*    </div>*/}
+                    {/*    <ListItemText className="truncate font16" primary={t('menu_8')} disableTypography />*/}
+                    {/*</StyledListItem>}*/}
 
                     {hideMenu.indexOf('sendTips') === -1 && <StyledListItem
                         button
@@ -356,32 +356,32 @@ function HomeSidebarContent(props) {
                         <ListItemText className="truncate font16" primary={t('menu_10')} disableTypography />
                     </StyledListItem>}
 
-                    {hideMenu.indexOf('nft') === -1 && <StyledListItem
-                        button
-                        className={
-                            clsx(
-                                '',
-                                activeMenu === 'nft' && 'active'
-                            )
-                        }
-                        onClick={(ev) => {
-                            tabClick('nft');
-                        }}
-                    >
-                        {/* <FuseSvgIcon className="list-item-icon" color="disabled">
-                            heroicons-outline:pencil-alt
-                        </FuseSvgIcon> */}
-                        <div className='iconWz'>
-                            <img className='menu-icon ' src='wallet/assets/images/menu/icon-ntfs.png' alt='icon' />
-                            <img className='menu-icon  active' src='wallet/assets/images/menu/icon-ntfs-active.png' alt='icon' />
-                        </div>
-                        <ListItemText className="truncate font16" disableTypography children={
-                            <div>NFT
-                                {activeMenu === 'nft' && <div className="text-12" style={{ color: "#ffffff" }} >{t('menu_11')}</div>}
-                                {activeMenu != 'nft' && <div className="text-12" style={{ color: "#575D6A" }} >{t('menu_11')}</div>}
-                            </div>
-                        } />
-                    </StyledListItem>}
+                    {/*{hideMenu.indexOf('nft') === -1 && <StyledListItem*/}
+                    {/*    button*/}
+                    {/*    className={*/}
+                    {/*        clsx(*/}
+                    {/*            '',*/}
+                    {/*            activeMenu === 'nft' && 'active'*/}
+                    {/*        )*/}
+                    {/*    }*/}
+                    {/*    onClick={(ev) => {*/}
+                    {/*        tabClick('nft');*/}
+                    {/*    }}*/}
+                    {/*>*/}
+                    {/*    /!* <FuseSvgIcon className="list-item-icon" color="disabled">*/}
+                    {/*        heroicons-outline:pencil-alt*/}
+                    {/*    </FuseSvgIcon> *!/*/}
+                    {/*    <div className='iconWz'>*/}
+                    {/*        <img className='menu-icon ' src='wallet/assets/images/menu/icon-ntfs.png' alt='icon' />*/}
+                    {/*        <img className='menu-icon  active' src='wallet/assets/images/menu/icon-ntfs-active.png' alt='icon' />*/}
+                    {/*    </div>*/}
+                    {/*    <ListItemText className="truncate font16" disableTypography children={*/}
+                    {/*        <div>NFT*/}
+                    {/*            {activeMenu === 'nft' && <div className="text-12" style={{ color: "#ffffff" }} >{t('menu_11')}</div>}*/}
+                    {/*            {activeMenu != 'nft' && <div className="text-12" style={{ color: "#575D6A" }} >{t('menu_11')}</div>}*/}
+                    {/*        </div>*/}
+                    {/*    } />*/}
+                    {/*</StyledListItem>}*/}
 
 
                     {hideMenu.indexOf('security') === -1 && <StyledListItem
