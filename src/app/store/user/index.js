@@ -36,7 +36,7 @@ const userSlice = createSlice({
                     if (res?.pathname && res?.pathname !== '/wallet/login'){
                         // dispatch(push(res.pathname))
                         history.push(res.pathname)
-                        history.go(0)
+                        // history.go(0)
                     }else{
                         history.push('/wallet/home');
                     }
