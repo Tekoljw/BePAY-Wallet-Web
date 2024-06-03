@@ -55,7 +55,6 @@ function HomeSidebarContent(props) {
     }
 
 
-
     const [activeMenu, setTab] = useState('');
 
     const tabClick = (tab) => {
@@ -188,27 +187,6 @@ function HomeSidebarContent(props) {
                         </StyledListItem>
                     }
 
-                    {hideMenu.indexOf('card') === -1 && <StyledListItem
-                        button
-                        className={
-                            clsx(
-                                '',
-                                activeMenu === 'card' && 'active'
-                            )
-                        }
-                        onClick={(ev) => {
-                            setTab('card');
-                            history.push('/wallet/home/card');
-                        }}
-                    >
-                        <div className='iconWz'>
-                            <img className='menu-icon ' src='wallet/assets/images/menu/card.png' alt='icon' />
-                            <img className='menu-icon  active' src='wallet/assets/images/menu/card-active.png' alt='icon' />
-                        </div>
-                        <ListItemText className="truncate font16" primary={t('menu_18')} disableTypography />
-                    </StyledListItem>}
-
-
                     {hideMenu.indexOf('withdraw') === -1 && <StyledListItem
                         button
                         className={
@@ -229,6 +207,26 @@ function HomeSidebarContent(props) {
                             <img className='menu-icon  active' src='wallet/assets/images/menu/withdraw-active.png' alt='icon' />
                         </div>
                         <ListItemText className="truncate font16" primary={t('menu_3')} disableTypography />
+                    </StyledListItem>}
+
+                    {hideMenu.indexOf('card') === -1 && <StyledListItem
+                        button
+                        className={
+                            clsx(
+                                '',
+                                activeMenu === 'card' && 'active'
+                            )
+                        }
+                        onClick={(ev) => {
+                            setTab('card');
+                            history.push('/wallet/home/card');
+                        }}
+                    >
+                        <div className='iconWz'>
+                            <img className='menu-icon ' src='wallet/assets/images/menu/card.png' alt='icon' />
+                            <img className='menu-icon  active' src='wallet/assets/images/menu/card-active.png' alt='icon' />
+                        </div>
+                        <ListItemText className="truncate font16" primary={t('menu_18')} disableTypography />
                     </StyledListItem>}
 
                     {hideMenu.indexOf('buyCrypto') === -1 && <StyledListItem

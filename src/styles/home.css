@@ -265,6 +265,7 @@ input[type='number'] {
     width: 100%;
     padding-bottom: 58.1%;
     overflow: hidden;
+    z-index: 99;
     /* 隐藏溢出的内容 */
     /* Aspect ratio of 716:416 (416 / 716 * 100) */
     /* Just for visual demonstration */
@@ -337,10 +338,29 @@ input[type='number'] {
     aspect-ratio: 716 / 416;
 }
 
+.walletBalanceZi {
+    height: 2.4rem;
+    line-height: 2.4rem;
+    font-size: 1.5rem;
+}
+
 .cardGongNeng {
     width: 48%;
     aspect-ratio: 716 / 416;
 }
+
+.zhangDanXiangQinZi {
+    width: 30%;
+    height: 3rem;
+    text-align: center;
+    font-size: 1.5rem;
+    text-decoration: underline;
+    color: #D4FFF3;
+    padding-right: 1.6rem;
+    margin: "0rem 2rem 0rem 2rem"
+}
+
+
 
 .gongNengZiW {
     width: 100%;
@@ -355,6 +375,43 @@ input[type='number'] {
     margin: 0 auto;
     width: 4rem;
     height: 4rem;
+}
+
+.cardGongNengMyDi {
+    width: 94%;
+    margin: 0 auto;
+    margin: -0.5rem auto 0rem auto;
+    z-index: 98;
+}
+
+.gongNengTan1 {
+    border-radius: 1rem !important;
+    background-color: #364151
+}
+
+.gongNengTan2 {
+    background: linear-gradient(to bottom, #1E293B, #374252);
+    border-radius: 1rem !important;
+    padding-top: 0.4rem;
+    font-size: 1.6rem;
+}
+
+.gongNengTan2 .muiltr-19hn6xk-MuiAccordionSummary-expandIconWrapper .muiltr-hgpioi-MuiSvgIcon-root {
+    font-size: 3rem;
+}
+
+.gongNengTan3 {
+    background-color: #364151;
+    border-radius: 0rem 0rem 1rem 1rem;
+    padding: 0rem 0.5rem 2.5rem 0.5rem;
+}
+
+.sticky {
+    position: -webkit-sticky;
+    /* 对 Safari 的兼容 */
+    position: sticky;
+    top: 0;
+    /* 距离视口顶部的距离 */
 }
 
 
@@ -654,6 +711,46 @@ input[type='number'] {
     background: #2A3546;
 }
 
+.accountGongNengKuang {
+    width: calc(100% - 3rem);
+    margin: 0 auto 0.5rem auto;
+}
+
+.accountGongNengDi {
+    width: 23%;
+    background-color: #1E293B;
+    border-radius: 1rem;
+    padding: 0.5rem 0 0.5rem 0;
+}
+
+.shouYeYuanJiao {
+    border-radius: 1rem;
+}
+
+.eyeGongNengZi {
+    font-size: 2.8rem;
+    height: 3rem;
+    line-height: 3rem;
+    margin-left: 1rem;
+}
+
+.eyeGongNengZi2 {
+    font-size: 3.2rem;
+    height: 3.2rem;
+    line-height: 3.2rem;
+    margin-left: 1rem;
+}
+
+.accountGoneNengImg {
+    width: 2.6rem;
+    margin: 0 auto;
+}
+
+.accountGoneNengZi {
+    width: 100%;
+    text-align: center;
+}
+
 .wallet-network-btn {
     margin: .5rem 1%;
     border-radius: 8px;
@@ -670,16 +767,24 @@ input[type='number'] {
 }
 
 .cardImg {
-    width: 30px;
-    height: 30px;
+    width: 24px;
+    height: 24px;
 }
 
 .cardSty {
     width: calc(100% - 3rem);
-    aspect-ratio: 864 / 304;
+    aspect-ratio: 864 / 289;
     background-image: url("../../public/assets/images/withdraw/cardDi.png");
     background-size: cover;
     background-position: center;
+}
+
+.danChuangTxt {
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow-wrap: break-word;
+    font-size: 1.6rem;
+    padding-bottom: 2rem;
 }
 
 
@@ -987,7 +1092,7 @@ input[type='number'] {
 
 .card-show-type-tab {
     padding-top: 0;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     padding-bottom: 0;
     height: 4.8rem;
     min-height: 4.8rem;
@@ -1607,6 +1712,7 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
 }
 
 
+.danChuangTxt {}
 
 .faBiBoxDi {
     width: 380px;
@@ -1634,6 +1740,9 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     /* background-color: rgba(30, 41, 59, 0.6);
     backdrop-filter: blur(6px); */
 }
+
+
+
 
 .phone-bottom .nav {
     color: #14C2A3;
@@ -1768,6 +1877,17 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     margin-bottom: 7.7rem;
 }
 
+.boxWidthCard {
+    width: 100% !important;
+}
+
+.boxCardBtn {
+    width: 42%;
+    font-size: 1.6rem;
+    background-color: #0D9488;
+    color: #ffffff;
+}
+
 .boxWidth {
     width: 375px !important;
 }
@@ -1874,11 +1994,6 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
 
     .dark .muiltr-1u2w381-MuiModal-root-MuiDrawer-root .muiltr-1dqueaj-MuiPaper-root-MuiDrawer-paper {
         background-color: #0E1421 !important;
-    }
-
-    .cardImg {
-        width: 30px;
-        height: 30px;
     }
 
 }

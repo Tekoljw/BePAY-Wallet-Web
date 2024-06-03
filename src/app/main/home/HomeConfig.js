@@ -84,12 +84,12 @@ const HomeConfig = {
                     element: lazy(() => import('../deposite/Deposite')),
                 },
                 {
-                    path: 'card',
-                    element: lazy(() => import('../card/Card')),
-                },
-                {
                     path: 'withdraw',
                     element: lazy(() => import('../withdraw/Withdraw')),
+                },
+                {
+                    path: 'card',
+                    element: lazy(() => import('../card/Card')),
                 },
                 {
                     path: 'buyCrypto',

@@ -38,6 +38,10 @@ import { useTranslation } from "react-i18next";
 import PropTypes from 'prop-types';
 import AnimateModal from "../../components/FuniModal";
 import LoadingButton from "@mui/lab/LoadingButton";
+import history from '@history';
+import AccordionActions from '@mui/material/AccordionActions';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { margin } from '@mui/system';
 
 
 
@@ -66,8 +70,15 @@ function Card(props) {
     const [fanZhuan, setFanZhuan] = useState(false);
     const [openXiangQing, setOpenXiangQing] = useState(false);
     const [openMyCard, setOpenMyCard] = useState(false);
+    const [openAnimateModal, setOpenAnimateModal] = useState(false);
+    const [openCardBtnShow, setOpenCardBtnShow] = useState(false);
+    const [openAnimateHuanKa, setOpenAnimateHuanKa] = useState(false);
+    const [isOpenEye, setIsOpenEye] = useState(false);
 
 
+    const changePhoneTab = (tab) => {
+        window.localStorage.setItem('phoneTab', tab);
+    }
 
     const handleImgClick = (e, action) => {
         e.stopPropagation(); // 阻止事件冒泡
@@ -75,8 +86,17 @@ function Card(props) {
     };
 
     const kaPianGongNeng = () => {
-        setOpenMyCard(true);
+        // setOpenMyCard(true);
     };
+
+    const myFunction = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // 平滑滚动
+        });
+    };
+
+
 
     const FanKa = () => {
         setKaBeiButton(true);
@@ -141,7 +161,7 @@ function Card(props) {
                     >
                         {Object.entries(ranges)?.map(([key, label]) => (
                             <Tab
-                                className="text-14 font-semibold min-w-64  txtColorTitle zindex opacity-100 cardBigBtn"
+                                className="text-16 font-semibold min-w-64  txtColorTitle zindex opacity-100 cardBigBtn"
                                 disableRipple
                                 key={key}
                                 icon={
@@ -168,29 +188,57 @@ function Card(props) {
                             />
                         ))}
                     </Tabs>
-
                     {
                         tabValue === 0 &&
                         <div>
-                            <motion.div variants={item} className='myCardDi p-16'>
-                                <div className='flex justify-between'>
-                                    <div className='flex'>
-                                        <img className='cardIconW' src="wallet/assets/images/card/zhangDanIcon.png" alt="" />
-                                        <div className='zhangDanZi'>账单</div>
-                                    </div>
-                                    <div className='flex items-center'>
-                                        <div className='zhangDanZi'>明细</div>
-                                        <img className='cardIconW2' src="wallet/assets/images/card/goJianTou.png" alt="" />
-                                    </div>
-                                </div>
 
-                                <div className='flex pt-12 justify-between'>
-                                    <div className='flex'>
-                                        <img className='cardIconW' src="wallet/assets/images/card/usd.png" alt="" />
-                                        <div className='zhangDanZi'>可用余额</div>
+                            <motion.div
+                                variants={container}
+                                initial="hidden"
+                                animate="show"
+                                className="pb-12 flex justify-center"
+                            >
+                                <div
+                                    className="cardSty"
+                                    style={{ flexWrap: "warp" }}
+                                >
+
+                                    <div className="flex justify-between" style={{ marginTop: "6.5%" }}>
+                                        <div className=" flex px-16 " style={{ width: "70%", height: "3rem" }}>
+                                            {
+                                                isOpenEye && <img className="cardImg"
+                                                    src="/wallet/assets/images/withdraw/yan2.png"
+                                                    onClick={() => {
+                                                        setIsOpenEye(!isOpenEye);
+                                                    }}></img>
+
+                                            }
+                                            {
+                                                !isOpenEye && <img className="cardImg"
+                                                    src="/wallet/assets/images/withdraw/yan.png"
+                                                    onClick={() => {
+                                                        setIsOpenEye(!isOpenEye);
+                                                    }}></img>
+                                            }
+                                            <div className="ml-8 walletBalanceZi" style={{ color: "#84A59F" }} >Wallet Balance</div>
+                                        </div>
+                                        <div className="zhangDanXiangQinZi" onClick={() => {
+                                            changePhoneTab("record");
+                                            history.push('/wallet/home/record')
+                                        }} >账单详情</div>
                                     </div>
 
-                                    <div className='zhangDanZi'>158.00</div>
+                                    <div className=" flex items-conter px-16" style={{ width: "100%", marginTop: "1.5rem", justifyContent: "space-between" }}>
+                                        <div className="flex" style={{ width: "70%" }}>
+                                            <img className="cardImg mt-3" src="/wallet/assets/images/withdraw/usd.png" onClick={() => {
+                                               
+                                            }}></img>
+                                            {
+                                                isOpenEye ? <div className="eyeGongNengZi" style={{ color: "#ffffff" }}>{(userData.profile.wallet?.Crypto + userData.profile.wallet?.Fiat).toFixed(2) ?? '0.00'}</div>
+                                                    : <div className="eyeGongNengZi2 pt-5" style={{ color: "#ffffff" }}>******</div>
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
                             </motion.div>
 
@@ -223,7 +271,7 @@ function Card(props) {
                                         >
                                             {Object.entries(['虚拟卡', '实体卡']).map(([key, label]) => (
                                                 <Tab
-                                                    className="text-14 font-semibold min-h-32 min-w-64 mx4 px-12 txtColorTitle opacity-100 zindex"
+                                                    className="text-16 font-semibold min-h-32 min-w-64 mx4 px-12 txtColorTitle opacity-100 zindex"
                                                     disableRipple
                                                     key={key}
                                                     label={label}
@@ -235,7 +283,7 @@ function Card(props) {
                                         </Tabs>
 
                                         {
-                                            smallTabValue === 0 && <div style={{ marginTop: "1.5rem" }}>
+                                            smallTabValue === 0 && <div style={{ margin: "1.5rem 0rem 6rem 0rem" }}>
                                                 <motion.div variants={item}
                                                     initial="hidden"
                                                     animate="show"
@@ -278,11 +326,55 @@ function Card(props) {
                                                         </div>
                                                     </div>
 
-                                                    <div className='cardNameInFoMyDi px-16'>
-                                                        <div className='flex justify-between'>
-                                                            <div>余额</div>
-                                                            <div>$158.00</div>
-                                                        </div>
+                                                    <div className='cardGongNengMyDi'>
+                                                        <Accordion className='gongNengTan1'>
+                                                            <AccordionSummary
+                                                                expandIcon={<ExpandMoreIcon />}
+                                                                aria-controls="panel1-content"
+                                                                id="panel1-header"
+                                                                className='gongNengTan2'
+                                                            >
+                                                                设置
+                                                            </AccordionSummary>
+
+                                                            <AccordionDetails className='gongNengTan3'>
+                                                                <div className='flex justify-center'>
+                                                                    <div className='gongNengLanW' onClick={() => {
+                                                                        setOpenAnimateModal(true);
+                                                                    }} >
+                                                                        <img className='gongNengTuBiao' src="wallet/assets/images/menu/guaShi.png"></img>
+                                                                        <div className='gongNengZiW mt-10 text-16'>一键冻结</div>
+                                                                    </div>
+                                                                    <div className='gongNengLanW' onClick={() => {
+                                                                        setOpenAnimateHuanKa(true);
+                                                                    }}>
+                                                                        <img className='gongNengTuBiao' src="wallet/assets/images/menu/gengHuanKaPian.png"></img>
+                                                                        <div className='gongNengZiW mt-10 text-16'>更换卡片</div>
+                                                                    </div>
+
+                                                                    <div className='gongNengLanW'>
+                                                                        <img className='gongNengTuBiao' src="wallet/assets/images/menu/miMaGuanLi.png"></img>
+                                                                        <div className='gongNengZiW mt-10 text-16'>密码管理</div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div className='mt-24 flex justify-center'>
+                                                                    <div className='gongNengLanW'>
+                                                                        <img className='gongNengTuBiao' src="wallet/assets/images/menu/daE.png"></img>
+                                                                        <div className='gongNengZiW mt-10 text-16'>大额预约</div>
+                                                                    </div>
+                                                                    <div className='gongNengLanW'>
+                                                                        <img className='gongNengTuBiao' src="wallet/assets/images/menu/bangDing.png"></img>
+                                                                        <div className='gongNengZiW mt-10 text-16'>解除订阅</div>
+                                                                    </div>
+                                                                    <div className='gongNengLanW'>
+                                                                        <img className='gongNengTuBiao' src="wallet/assets/images/menu/atm.png"></img>
+                                                                        <div className='gongNengZiW mt-10 text-16'>ATM/POS</div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </AccordionDetails>
+                                                        </Accordion>
                                                     </div>
                                                 </motion.div>
 
@@ -303,12 +395,15 @@ function Card(props) {
                                                     </div>
                                                 </motion.div>
                                             </div>
+
                                         }
                                         {
                                             smallTabValue === 1 && <div>
-                                                <div className='tianJiaKaPian flex items-center pl-16'>
+                                                <div className='tianJiaKaPian flex items-center pl-16' onClick={() => {
+                                                    setTabValue(1);
+                                                }}>
                                                     <img className='cardIconW' src="wallet/assets/images/card/jiaHao.png" alt="" />
-                                                    <div className='zhangDanZi'>申请更多卡片</div>
+                                                    <div className='zhangDanZi' >申请更多卡片</div>
                                                 </div>
                                             </div>
                                         }
@@ -349,7 +444,7 @@ function Card(props) {
                                     >
                                         {Object.entries(['虚拟卡', '实体卡']).map(([key, label]) => (
                                             <Tab
-                                                className="text-14 font-semibold min-h-32 min-w-64 mx4 px-12 txtColorTitle opacity-100 zindex"
+                                                className="text-16 font-semibold min-h-32 min-w-64 mx4 px-12 txtColorTitle opacity-100 zindex"
                                                 disableRipple
                                                 key={key}
                                                 label={label}
@@ -371,6 +466,7 @@ function Card(props) {
                                                 <div className="responsive-div">
                                                     <div className="responsive-div-content card1Bg" onClick={() => {
                                                         setOpenXiangQing(true);
+                                                        myFunction;
                                                     }}   >
                                                     </div>
                                                 </div>
@@ -379,6 +475,7 @@ function Card(props) {
                                                         <div style={{ fontWeight: "bold" }}>VISA卡</div>
                                                         <div className='kaPianInfo' onClick={() => {
                                                             setOpenXiangQing(true);
+                                                            myFunction;
                                                         }}   >卡片详情</div>
                                                     </div>
                                                     <div className='flex justify-between items-center mt-8'>
@@ -398,6 +495,7 @@ function Card(props) {
                                                 <div className="responsive-div">
                                                     <div className="responsive-div-content card2Bg" onClick={() => {
                                                         setOpenXiangQing(true);
+                                                        myFunction;
                                                     }}  >
                                                     </div>
                                                 </div>
@@ -406,6 +504,7 @@ function Card(props) {
                                                         <div style={{ fontWeight: "bold" }}>MASTER卡</div>
                                                         <div className='kaPianInfo' onClick={() => {
                                                             setOpenXiangQing(true);
+                                                            myFunction;
                                                         }}  >卡片详情</div>
                                                     </div>
                                                     <div className='flex justify-between items-center mt-8'>
@@ -427,6 +526,7 @@ function Card(props) {
                                                 <div className="responsive-div">
                                                     <div className="responsive-div-content card3Bg" onClick={() => {
                                                         setOpenXiangQing(true);
+                                                        myFunction;
                                                     }}  >
                                                     </div>
                                                 </div>
@@ -435,6 +535,7 @@ function Card(props) {
                                                         <div style={{ fontWeight: "bold" }}>MASTER卡</div>
                                                         <div className='kaPianInfo' onClick={() => {
                                                             setOpenXiangQing(true);
+                                                            myFunction;
                                                         }}  >卡片详情</div>
                                                     </div>
                                                     <div className='flex justify-between items-center mt-8'>
@@ -453,6 +554,7 @@ function Card(props) {
                                                 <div className="responsive-div">
                                                     <div className="responsive-div-content card6Bg" onClick={() => {
                                                         setOpenXiangQing(true);
+                                                        myFunction;
                                                     }}  >
                                                     </div>
                                                 </div>
@@ -461,6 +563,7 @@ function Card(props) {
                                                         <div style={{ fontWeight: "bold" }}>VISA卡</div>
                                                         <div className='kaPianInfo' onClick={() => {
                                                             setOpenXiangQing(true);
+                                                            myFunction;
                                                         }}  >卡片详情</div>
                                                     </div>
                                                     <div className='flex justify-between items-center mt-8'>
@@ -478,15 +581,17 @@ function Card(props) {
                 </motion.div>
             </div>
 
-            {openXiangQing && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }}>
+            {openXiangQing && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
                 <motion.div
                     variants={container}
                     initial="hidden"
                     animate="show"
                     className='mt-12'
+                    id="stickyGo"
                 >
                     <div className='flex' onClick={() => {
                         setOpenXiangQing(false);
+                        myFunction;
                     }}   >
                         <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>返回</span>
                     </div>
@@ -600,7 +705,7 @@ function Card(props) {
                             sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
                             style={{ width: '24rem', height: '4rem', fontSize: "20px", margin: '1rem auto 2.5rem', display: 'block', lineHeight: "inherit", padding: "0px" }}
                             onClick={() => {
-
+                                setOpenXiangQing(false);
                             }}
                         >
                             立即申请
@@ -609,11 +714,10 @@ function Card(props) {
                     <motion.div variants={item} className='flex mt-10 ' style={{ height: "5rem" }}>
                     </motion.div>
                 </motion.div>
-            </div>
-            }
+            </div>}
 
 
-            {openMyCard && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }}>
+            {/* {openMyCard && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }}>
                 <motion.div
                     variants={container}
                     initial="hidden"
@@ -625,33 +729,6 @@ function Card(props) {
                     }}   >
                         <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>返回</span>
                     </div>
-
-                    <div className='mt-20'>
-                        <motion.div variants={item} className=' flex justify-between cardGongNengBgW '>
-                            <div className='myCardInfo'>
-                                <div className='text-16'>卡片余额</div>
-                                <div className='gongNengZi'>$158.00</div>
-                                <div className='text-16'>实体卡</div>
-                                <div className='text-16'>6215 8321 7581 7549</div>
-                            </div>
-                            <img className='cardGongNeng' src="wallet/assets/images/card/card1.png"></img>
-                        </motion.div>
-                    </div>
-
-
-                    <motion.div variants={item} className='flex mt-20'>
-                        <div className='quanYiDi' style={{ padding: "1.5rem" }}>
-                            <div className=''>
-                                <div className='text-16 quanYiHuiZi'>今日消费</div>
-                            </div>
-                            <div className='flex justify-between mt-10'>
-                                <div className='text-18'>$0.00</div>
-                                <div className='text-16'>账单明细</div>
-                            </div>
-
-                        </div>
-                    </motion.div>
-
 
                     <motion.div variants={item} className='flex mt-20'>
                         <div className='quanYiDi' style={{ padding: "1.5rem" }}>
@@ -665,68 +742,122 @@ function Card(props) {
 
                         </div>
                     </motion.div>
-
                     <motion.div variants={item} className='flex mt-20'>
-                        <div className='quanYiDi' style={{ padding: "1.5rem" }}>
-                            <div className='mt-10'>
-                                <div className='text-16' style={{ fontWeight: "600" }}>卡片功能</div>
-                            </div>
-
-                            <div className='mt-16 flex justify-center'>
-                                <div className='gongNengLanW'>
-                                    <img className='gongNengTuBiao' src="wallet/assets/images/menu/zhuanZhang.png"></img>
-                                    <div className='gongNengZiW mt-10 text-16'>转账</div>
-                                </div>
-                                <div className='gongNengLanW'>
-                                    <img className='gongNengTuBiao' src="wallet/assets/images/menu/chunRu.png"></img>
-                                    <div className='gongNengZiW mt-10 text-16'>存入</div>
-                                </div>
-                                <div className='gongNengLanW'>
-                                    <img className='gongNengTuBiao' src="wallet/assets/images/menu/miMaGuanLi.png"></img>
-                                    <div className='gongNengZiW mt-10 text-16'>密码管理</div>
-                                </div>
-                            </div>
-
-                            <div className='mt-24 flex justify-center'>
-                                <div className='gongNengLanW'>
-                                    <img className='gongNengTuBiao' src="wallet/assets/images/menu/guaShi.png"></img>
-                                    <div className='gongNengZiW mt-10 text-16'>一键冻结</div>
-                                </div>
-                                <div className='gongNengLanW'>
-                                    <img className='gongNengTuBiao' src="wallet/assets/images/menu/gengHuanKaPian.png"></img>
-                                    <div className='gongNengZiW mt-10 text-16'>更换卡片</div>
-                                </div>
-                                <div className='gongNengLanW'>
-                                    <img className='gongNengTuBiao' src="wallet/assets/images/menu/atm.png"></img>
-                                    <div className='gongNengZiW mt-10 text-16'>ATM/POS设置</div>
-                                </div>
-                            </div>
-
-                            <div className='mt-24 flex justify-center'>
-                                <div className='gongNengLanW'>
-                                    <img className='gongNengTuBiao' src="wallet/assets/images/menu/daE.png"></img>
-                                    <div className='gongNengZiW mt-10 text-16'>大额预约</div>
-                                </div>
-                                <div className='gongNengLanW'>
-                                    <img className='gongNengTuBiao' src="wallet/assets/images/menu/bangDing.png"></img>
-                                    <div className='gongNengZiW mt-10 text-16'>解除绑定</div>
-                                </div>
-                                <div className='gongNengLanW'>
-                                    <img className='gongNengTuBiao' src="wallet/assets/images/menu/geRenXinXi.png"></img>
-                                    <div className='gongNengZiW mt-10 text-16'>个人信息</div>
-                                </div>
-                            </div>
-
-                            <div className='mt-16 flex justify-center'>
-                            </div>
-                        </div>
                     </motion.div>
-
                     <div className='flex mt-10 ' style={{ height: "5rem" }}>
                     </div>
                 </motion.div>
-            </div>
-            }
+            </div>} */}
+
+
+            <AnimateModal
+                className="faBiDiCard"
+                open={openAnimateModal}
+                onClose={() => setOpenAnimateModal(false)}
+            >
+                <Box
+                    className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard"
+                    sx={{
+                        backgroundColor: "#1e293b",
+                        padding: "1.5rem",
+                        overflow: "hidden",
+                        margin: "3rem auto 0rem auto"
+                    }}
+                >
+                    <div className="dialog-select-fiat danChuangTxt">
+                        是否将卡号5487 3254 1474 6658的卡片进行冻结？
+                    </div>
+                </Box>
+
+                <div className='flex mt-32 mb-32 px-15 justify-between' >
+                    <LoadingButton
+                        disabled={false}
+                        className="boxCardBtn"
+                        color="secondary"
+                        loading={openCardBtnShow}
+                        variant="contained"
+                        onClick={() => {
+                            setOpenCardBtnShow(true);
+                            setTimeout(() => {
+                                setOpenAnimateModal(false);
+                                setOpenCardBtnShow(false);
+                            }, 1500);
+                        }}
+                    >
+                        冻结
+                    </LoadingButton>
+
+
+                    <LoadingButton
+                        disabled={false}
+                        className="boxCardBtn"
+                        color="secondary"
+                        loading={false}
+                        variant="contained"
+                        onClick={() => {
+                            setOpenAnimateModal(false)
+                        }}
+                    >
+                        取消
+                    </LoadingButton>
+                </div>
+            </AnimateModal>
+
+
+            <AnimateModal
+                className="faBiDiCard"
+                open={openAnimateHuanKa}
+                onClose={() => setOpenAnimateHuanKa(false)}
+            >
+                <Box
+                    className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard"
+                    sx={{
+                        backgroundColor: "#1e293b",
+                        padding: "1.5rem",
+                        overflow: "hidden",
+                        margin: "3rem auto 0rem auto"
+                    }}
+                >
+                    <div className="dialog-select-fiat danChuangTxt">
+                        将卡号5487 3254 1474 6658的卡片进行更换，是否沿用旧卡片的申请信息？
+                    </div>
+                </Box>
+
+                <div className='flex mt-32 mb-32 px-15 justify-between' >
+                    <LoadingButton
+                        disabled={false}
+                        className="boxCardBtn"
+                        color="secondary"
+                        loading={false}
+                        variant="contained"
+                        onClick={() => {
+                            setOpenAnimateHuanKa(false)
+                        }}
+
+                    >
+                        变更
+                    </LoadingButton>
+
+
+                    <LoadingButton
+                        disabled={false}
+                        className="boxCardBtn"
+                        color="secondary"
+                        loading={openCardBtnShow}
+                        variant="contained"
+                        onClick={() => {
+                            setOpenCardBtnShow(true);
+                            setTimeout(() => {
+                                setOpenAnimateHuanKa(false);
+                                setOpenCardBtnShow(false);
+                            }, 1500);
+                        }}
+                    >
+                        沿用
+                    </LoadingButton>
+                </div>
+            </AnimateModal>
+
         </div>
     )
 }

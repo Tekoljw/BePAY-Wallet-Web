@@ -165,6 +165,7 @@ function Wallet() {
     'Token', t('home_deposite_2'), t('home_deposite_3')
   ]);
   const [userSetting, setUserSetting] = useState({});
+  const [isOpenEye, setIsOpenEye] = useState(false);
 
   // const walletDisplayData = userData.walletDisplay || [];
   // const walletDisplayData =  [];
@@ -174,6 +175,10 @@ function Wallet() {
   useEffect(() => {
     setwalletDisplayData(userData.walletDisplay);
   }, [userData]);
+
+  const changePhoneTab = (tab) => {
+    window.localStorage.setItem('phoneTab', tab);
+  }
 
   //修改渲染过多
   const toRegWallet = (regWalletParam) => {
@@ -1554,7 +1559,6 @@ function Wallet() {
                 {/*</div>*/}
               </div>
             }
-
           </motion.div>
 
           {walletType === 0 && (<motion.div
@@ -1567,29 +1571,96 @@ function Wallet() {
               className="cardSty"
               style={{ flexWrap: "warp" }}
             >
-              <div className=" flex px-16 " style={{ width: "100%", height: "3rem", marginTop: "7%" }}>
-                <img className="cardImg"
-                  src="/wallet/assets/images/withdraw/yan.png"></img>
-                <div className="text-20 ml-10" style={{ color: "#84A59F" }}>WALLET BALANCE</div>
-              </div>
-              <div className=" flex mt-16 items-conter px-16" style={{ width: "100%", marginTop: "6%", justifyContent: "space-between" }}>
-                <div className="flex">
-                  <img className="cardImg" src="/wallet/assets/images/withdraw/USDT.png"></img>
-                  <div className="text-24 ml-10" style={{ color: "#ffffff" }}>{(userData.profile.wallet?.Crypto + userData.profile.wallet?.Fiat).toFixed(2) ?? '0.00'}</div>
+
+              <div className="flex justify-between" style={{ marginTop: "6.5%" }}>
+                <div className=" flex px-16 " style={{ width: "70%", height: "3rem" }}>
+                  {
+                    isOpenEye && <img className="cardImg"
+                      src="/wallet/assets/images/withdraw/yan2.png"
+                      onClick={() => {
+                        setIsOpenEye(!isOpenEye);
+                      }}></img>
+
+                  }
+                  {
+                    !isOpenEye && <img className="cardImg"
+                      src="/wallet/assets/images/withdraw/yan.png"
+                      onClick={() => {
+                        setIsOpenEye(!isOpenEye);
+                      }}></img>
+                  }
+                  <div className="ml-8 walletBalanceZi" style={{ color: "#84A59F" }} >Wallet Balance</div>
                 </div>
-                <div className="text-16" style={{ width: "14rem", textAlign: "center", height: "3rem", lineHeight: "3rem", color: "#3E9178", borderRadius: "99px", background: "#D4FFF3" }}>
-                  Activate Visa
+                <div className="zhangDanXiangQinZi" onClick={() => {
+                  changePhoneTab("record");
+                  history.push('/wallet/home/record')
+                }} >账单详情</div>
+              </div>
+
+              <div className=" flex items-conter px-16" style={{ width: "100%", marginTop: "1.5rem", justifyContent: "space-between" }}>
+                <div className="flex" style={{ width: "70%" }}>
+                  <img className="cardImg mt-3" src="/wallet/assets/images/withdraw/usd.png" onClick={() => {
+                    setOpenAnimateModal(true);
+                  }}></img>
+                  {
+                    isOpenEye ? <div className="eyeGongNengZi" style={{ color: "#ffffff" }}>{(userData.profile.wallet?.Crypto + userData.profile.wallet?.Fiat).toFixed(2) ?? '0.00'}</div>
+                      : <div className="eyeGongNengZi2 pt-5" style={{ color: "#ffffff" }}>******</div>
+                  }
+                </div>
+                <div className="text-16" style={{ width: "30%", textAlign: "center", height: "3rem", lineHeight: "3rem", color: "#3E9178", borderRadius: "99px", background: "#D4FFF3" }} onClick={() => {
+                  changePhoneTab("card");
+                  history.push('/wallet/home/card')
+                }} >
+                  My Cards
                 </div>
               </div>
             </div>
           </motion.div>)}
+
+          {walletType === 0 && <motion.div
+            variants={container}
+            initial="hidden"
+            animate="show"
+            className="pt-6 pb-5 flex justify-between accountGongNengKuang">
+            <div className="accountGongNengDi" onClick={() => {
+              changePhoneTab("deposite");
+              history.push('/wallet/home/deposite')
+            }}>
+              <img className="accountGoneNengImg" src="/wallet/assets/images/menu/deposite-active2.png"></img>
+              <div className="accountGoneNengZi">Recive</div>
+            </div>
+
+            <div className="accountGongNengDi" onClick={() => {
+              changePhoneTab("withdraw");
+              history.push('/wallet/home/withdraw')
+            }}>
+              <img className="accountGoneNengImg" src="/wallet/assets/images/menu/withdraw-active2.png"></img>
+              <div className="accountGoneNengZi">Send</div>
+            </div>
+
+            <div className="accountGongNengDi" onClick={() => {
+              changePhoneTab("swap");
+              history.push('/wallet/home/swap')
+            }}>
+              <img className="accountGoneNengImg" src="/wallet/assets/images/menu/swap-active2.png"></img>
+              <div className="accountGoneNengZi">Swap</div>
+            </div>
+
+            <div className="accountGongNengDi" onClick={() => {
+              changePhoneTab("buyCrypto");
+              history.push('/wallet/home/buyCrypto')
+            }}>
+              <img className="accountGoneNengImg" src="/wallet/assets/images/menu/buyCrypto-active2.png"></img>
+              <div className="accountGoneNengZi">Buy</div>
+            </div>
+          </motion.div>
+          }
 
           <motion.div
             variants={container}
             initial="hidden"
             animate="show"
             className="px-15 pb-4"
-            style={{ paddingTop: "0.7rem" }}
           >
             <Box
               component={motion.div}
@@ -2602,7 +2673,7 @@ function Wallet() {
               <Box
                 component={motion.div}
                 variants={item}
-                className="w-full rounded-16 border flex flex-col"
+                className="w-full border flex flex-col shouYeYuanJiao"
                 sx={{
                   backgroundColor: "#1E293B",
                   border: "none",
