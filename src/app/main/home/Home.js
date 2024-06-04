@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import ComingSoon from "../coming-soon/ComingSoon";
 import web3 from '../../util/web3';
-import { arrayLookup, getAccessType, getAutoLoginKey, getThirdPartId } from "../../util/tools/function";
+import {arrayLookup, getAccessType, getAutoLoginKey, getThirdPartId, setPhoneTab} from "../../util/tools/function";
 import { selectConfig } from "app/store/config";
 import { showMessage } from 'app/store/fuse/messageSlice';
 import MobileDetect from 'mobile-detect';
@@ -55,6 +55,47 @@ function HomePage(props) {
     const [menuShow, setMenuShow] = useState(false);
     const loginType = window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType;
 
+    //改变手机分页
+    const changePhoneTab = (changeTab) => {
+        if (isMobile) {
+            const phoneTab = setPhoneTab(changeTab);
+            const navLinks = document.querySelectorAll('.nav-link');
+            const slide = document.querySelector('.slide');
+            navLinks.forEach((link) => link.addEventListener('click', handleClick));
+
+            function handleClick() {
+                const index = parseInt(this.dataset.index);
+                slide.style.transform = `translateX(${index * 100}%)`;
+                navLinks.forEach(link => link.classList.remove('active'));
+                this.classList.add('active');
+            }
+
+            if (phoneTab === 'deposite') {
+                history.push('/wallet/home/deposite')
+                slide.style.transform = `translateX(${1 * 100}%)`;
+                navLinks.forEach(link => link.classList.remove('active'));
+                navLinks[1].classList.add('active');
+                slide.style.backgroundColor = "#2C3640";
+            } else if (phoneTab === 'withdraw') {
+                history.push('/wallet/home/withdraw')
+                slide.style.transform = `translateX(${2 * 100}%)`;
+                navLinks.forEach(link => link.classList.remove('active'));
+                navLinks[2].classList.add('active');
+                slide.style.backgroundColor = "#2C3640";
+            } else if (phoneTab === 'account') {
+                history.push('/wallet/home/wallet')
+                slide.style.transform = `translateX(${0 * 100}%)`;
+                navLinks.forEach(link => link.classList.remove('active'));
+                navLinks[0].classList.add('active');
+                slide.style.backgroundColor = "#2C3640";
+            } else {
+                // slide.style.transform = `translateX(${0 * 100}%)`;
+                slide.style.backgroundColor = "#171F29";
+                navLinks.forEach(link => link.classList.remove('active'));
+            }
+        }
+    }
+
     useEffect(() => {
         let userBindWallet = userData.userInfo.bindWallet ?? false;
         if (userBindWallet) {
@@ -78,55 +119,10 @@ function HomePage(props) {
         }
     }, [config.networks]);
 
-    const mounted = useRef();
-    const [currentTab, setCurrentTab] = useState(window.localStorage.getItem('phoneTab') ?? 'account');
-    const changePhoneTab = (tab) => {
-        setCurrentTab(tab)
-        window.localStorage.setItem('phoneTab', tab);
-    }
-
     useEffect(() => {
-        if (isMobile) {
-            let tmpCurrentTab = window.localStorage.getItem('phoneTab')
-            setCurrentTab(window.localStorage.getItem('phoneTab'))
-
-            const navLinks = document.querySelectorAll('.nav-link');
-            const slide = document.querySelector('.slide');
-            navLinks.forEach((link) => link.addEventListener('click', handleClick));
-            function handleClick() {
-                const index = parseInt(this.dataset.index);
-                slide.style.transform = `translateX(${index * 100}%)`;
-                navLinks.forEach(link => link.classList.remove('active'));
-                this.classList.add('active');
-            }
-
-            if (tmpCurrentTab === 'deposite') {
-                history.push('/wallet/home/deposite')
-                slide.style.transform = `translateX(${1 * 100}%)`;
-                navLinks.forEach(link => link.classList.remove('active'));
-                navLinks[1].classList.add('active');
-                slide.style.backgroundColor = "#2C3640";
-            } else if (tmpCurrentTab === 'withdraw') {
-                history.push('/wallet/home/withdraw')
-                slide.style.transform = `translateX(${2 * 100}%)`;
-                navLinks.forEach(link => link.classList.remove('active'));
-                navLinks[2].classList.add('active');
-                slide.style.backgroundColor = "#2C3640";
-            } else if (tmpCurrentTab === 'account') {
-                history.push('/wallet/home/wallet')
-                slide.style.transform = `translateX(${0 * 100}%)`;
-                navLinks.forEach(link => link.classList.remove('active'));
-                navLinks[0].classList.add('active');
-                slide.style.backgroundColor = "#2C3640";
-            } else {
-                // slide.style.transform = `translateX(${0 * 100}%)`;
-                slide.style.backgroundColor = "#171F29";
-                navLinks.forEach(link => link.classList.remove('active'));
-            }
+        if(!window.localStorage.getItem('phoneTab')){
+            changePhoneTab('account');
         }
-    }, [window.localStorage.getItem('phoneTab')]);
-
-    useEffect(() => {
         const accessType = getAccessType();
         console.log(accessType, '请求的 accessType');
         //console.log(getThirdPartId(), '请求的 ThirdPartId');

@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "../../../styles/home.css";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
-import { arrayLookup } from "../../util/tools/function";
+import {arrayLookup, setPhoneTab} from "../../util/tools/function";
 import { selectConfig, setSwapConfig } from "app/store/config";
 import { selectUserData } from "app/store/user";
 import { getCryptoDisplay } from "app/store/wallet/walletThunk";
@@ -481,6 +481,7 @@ function Swap() {
   }, [hasData, swapData]);
 
   useEffect(() => {
+    setPhoneTab('swap');
     dispatch(getSwapConfig()).then((res) => {
       res.payload?.errno === 0 && dispatch(setSwapConfig(res.payload));
     });

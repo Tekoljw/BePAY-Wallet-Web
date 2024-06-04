@@ -39,6 +39,13 @@ export const getAutoLoginKey = () => {
     return  window.localStorage.getItem('autoLoginKey') || 0;
 };
 
+// 设置手机分页
+export const setPhoneTab = (phoneTab) =>{
+    if(window.localStorage.getItem('phoneTab') !== phoneTab){
+        window.localStorage.setItem('phoneTab', phoneTab);
+    }
+}
+
 export const arrayLookup = (data,key,value,targetKey) => {
     var targetValue = "";
     if (data) {

@@ -26,12 +26,8 @@ import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { borderRadius } from '@mui/system';
-
-
-
-
-
-
+import {useTranslation} from "react-i18next";
+import {setPhoneTab} from "../../util/tools/function";
 
 const container = {
     show: {
@@ -120,6 +116,9 @@ function Record() {
         }));
     };
 
+    useEffect(() => {
+        setPhoneTab('record');
+    }, []);
 
     useEffect(() => {
         setTypeItem(1);

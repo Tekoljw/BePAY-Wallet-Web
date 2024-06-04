@@ -25,7 +25,7 @@ import { tokenTransfer } from "../../store/user/userThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { selectConfig } from "../../store/config";
-import { arrayLookup, getNowTime, getOpenAppId, getOpenAppIndex } from "../../util/tools/function";
+import {arrayLookup, getNowTime, getOpenAppId, getOpenAppIndex, setPhoneTab} from "../../util/tools/function";
 import { openScan, closeScan } from "../../util/tools/scanqrcode";
 import { getWithDrawConfig, WalletConfigDefineMap, evalTokenTransferFee, cryptoWithdrawFee, getWithdrawHistoryAddress, delWithdrawHistoryAddress, getWithdrawTransferStats } from "app/store/wallet/walletThunk";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
@@ -369,31 +369,12 @@ function Withdraw(props) {
         });
     };
     useEffect(() => {
+        setPhoneTab('withdraw');
         dispatch(getWithdrawHistoryAddress()).then((res) => {
             if (res.payload?.data?.length > 0) {
                 setHistoryAddress(res.payload.data);
             }
         });
-        // dispatch(getWithDrawConfig()).then((res) => {
-        //     const data = res.payload.data;
-        //     let tmpSymbolWallet = [];
-        //
-        //     Object.keys(data).forEach((item, index) => {
-        //         tmpSymbolWallet.push({
-        //             balance: arrayLookup(walletData.inner, 'symbol', item, 'balance') || 0,
-        //             symbol: item,
-        //             tradeLock: arrayLookup(walletData.inner, 'symbol', item, 'tradeLock') || 0,
-        //             withdrawLock: arrayLookup(walletData.inner, 'symbol', item, 'withdrawLock') || 0
-        //         });
-        //     });
-        //     if (tmpSymbolWallet.length > 0) {
-        //         setWithdrawConfig(data);
-        //         setSymbolWallet(tmpSymbolWallet);
-        //         setSymbol(tmpSymbolWallet[0].symbol);
-        //         setWalletName(data[Object.keys(data)[0]][0]);
-        //     }
-        // });
-
     }, []);
 
     const fiatData = useSelector(selectUserData).fiat;
