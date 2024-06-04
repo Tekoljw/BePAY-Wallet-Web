@@ -18,7 +18,20 @@ import TableRow from '@mui/material/TableRow';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { transferRecords } from '../../store/user/userThunk';
 import { selectUserData } from '../../store/user';
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
+import LoadingButton from "@mui/lab/LoadingButton";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { borderRadius } from '@mui/system';
+
+
+
+
+
+
 
 const container = {
     show: {
@@ -39,7 +52,7 @@ function Record() {
     const [type, setType] = useState(1);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [ transferList, setTransferList ] = useState([]);
+    const [transferList, setTransferList] = useState([]);
 
     // public static final int CONST_LOG_TYPE_DEPOSIT                = 1;
     // public static final int CONST_LOG_TYPE_POOL_TAKE_OUT            = 2;
@@ -75,9 +88,9 @@ function Record() {
         // { id: 10, label: 'Admin Withdraw' },
         // { id: 11, label: 'Hash Game Bet' },
         { id: 12, label: t('home_record_15') },
-        { id: 13, label: t('home_record_16')  },
-        { id: 14, label: t('home_record_17')  },
-        { id: 15, label: t('home_record_18')  },
+        { id: 13, label: t('home_record_16') },
+        { id: 14, label: t('home_record_17') },
+        { id: 15, label: t('home_record_18') },
         // { id: 16, label: 'TRANSFER_TO_GAME' },
         // { id: 17, label: 'TRANSFER_FROM_GAME' },
     ];
@@ -108,7 +121,12 @@ function Record() {
     };
 
 
-    useEffect( () => {
+    useEffect(() => {
+        setTypeItem(1);
+    }, []);
+
+
+    useEffect(() => {
         if (type) {
             dispatch(transferRecords({
                 logType: type,
@@ -120,17 +138,36 @@ function Record() {
         }
     }, [type]);
 
+
+    const [typeItem, setTypeItem] = React.useState('1');
+    const [timeItem, setTimeItem] = React.useState('105');
+
+    const [moreBtnShow, setMoreBtnShow] = React.useState(true);
+
+    const handleChange = (event) => {
+        setTypeItem(event.target.value);
+        if (event.target.value === 1 || event.target.value === 4) {
+            setMoreBtnShow(true)
+        } else {
+            setMoreBtnShow(false)
+        }
+    };
+
+    const handleChange2 = (event) => {
+        setTimeItem(event.target.value);
+    };
+
+    const [openMore, setOpenMore] = useState(false);
+
     return (
         <div>
-            {/*head*/}
-            <motion.div
+            {/* <motion.div
                 variants={container}
                 initial="hidden"
                 animate="show"
                 className="p-24 pb-24"
                 style={{marginBottom: '0', paddingBottom: '0'}}
             >
-                {/*1*/}
                 <Box
                     className="w-full rounded-16 border flex color-76819B"
                     sx={{
@@ -219,11 +256,308 @@ function Record() {
                 page={page}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
-                // SelectProps={
-                //     IconComponent: <FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>
-                // }
-            />
-        </div>
+            /> */}
+
+            <motion.div
+                variants={container}
+                initial="hidden"
+                animate="show"
+                className="select-fieldset-noborder recordPx  flex justify-between"
+            >
+
+                <FormControl sx={{
+                    m: 1,
+                    width: "58%",
+                    margin: 0,
+                    border: 'none',
+                    borderRadius: '10px!important',
+                    backgroundColor: '#1E293B!important',
+                    '&:before': {
+                        display: 'none',
+                    },
+                    '&:first-of-type': {},
+                    '&:last-of-type': {
+                        marginBottom: 0,
+                    }
+                }}
+                >
+                    <Select
+                        value={typeItem}
+                        onChange={handleChange}
+                        displayEmpty
+                        className="MuiSelect-icon recordSelectHeight"
+                        MenuProps={{
+                            PaperProps: {
+                                style: {
+                                    maxHeight: 450,
+                                    border: 'none'
+                                },
+                            },
+                        }}
+                    >
+                        <MenuItem value={1} className='text-16'>Recive</MenuItem>
+                        <MenuItem value={2} className='text-16'>SendTips</MenuItem>
+                        <MenuItem value={3} className='text-16'>Sell</MenuItem>
+                        <MenuItem value={4} className='text-16'>Card</MenuItem>
+                        <MenuItem value={5} className='text-16'>Swap</MenuItem>
+                        <MenuItem value={6} className='text-16'>Withdraw</MenuItem>
+                        <MenuItem value={7} className='text-16'>Volunteer Stake</MenuItem>
+                        <MenuItem value={8} className='text-16'>Volunteer UnStake</MenuItem>
+                        <MenuItem value={9} className='text-16'>Task Code</MenuItem>
+                    </Select>
+                </FormControl>
+
+
+                <FormControl sx={{
+                    m: 1,
+                    width: "38%",
+                    margin: 0,
+                    border: 'none',
+                    borderRadius: '10px!important',
+                    backgroundColor: '#1E293B!important',
+                    '&:before': {
+                        display: 'none',
+                    },
+                    '&:first-of-type': {},
+                    '&:last-of-type': {
+                        marginBottom: 0,
+                    }
+                }}
+                >
+                    <Select
+                        value={timeItem}
+                        onChange={handleChange2}
+                        displayEmpty
+                        className="MuiSelect-icon recordSelectHeight"
+                        MenuProps={{
+                            PaperProps: {
+                                style: {
+                                    maxHeight: 600,
+                                    border: 'none'
+                                },
+                            },
+                        }}
+                    >
+                        <MenuItem value={101} className='text-16'>January</MenuItem>
+                        <MenuItem value={102} className='text-16'>February</MenuItem>
+                        <MenuItem value={103} className='text-16'>March</MenuItem>
+                        <MenuItem value={104} className='text-16'>April</MenuItem>
+                        <MenuItem value={105} className='text-16'>May</MenuItem>
+                        <MenuItem value={106} className='text-16'>June</MenuItem>
+                        <MenuItem value={107} className='text-16'>July</MenuItem>
+                        <MenuItem value={108} className='text-16'>August</MenuItem>
+                        <MenuItem value={109} className='text-16'>September</MenuItem>
+                        <MenuItem value={110} className='text-16'>October</MenuItem>
+                        <MenuItem value={111} className='text-16'>November</MenuItem>
+                        <MenuItem value={112} className='text-16'>December</MenuItem>
+                    </Select>
+                </FormControl>
+            </motion.div>
+
+
+            <motion.div
+                variants={container}
+                initial="hidden"
+                animate="show"
+                className=""
+            >
+                <Box
+                    className="flex flex-col color-76819B recordW"
+                    component={motion.div}
+                    variants={item}
+                >
+                    {/* <Paper sx={{ width: '100%' }} style={{ backgroundColor: '#1E293B' }}>
+                        <TableContainer sx={{ height: transferList?.records?.length !== 0 ? 'calc(100vh - 22rem)' : '0' }}>
+                            <Table aria-label="sticky table" style={{ backgroundColor: '#1E293B' }}>
+                                <TableHead>
+                                    <TableRow>
+                                        {columns.map((column, index) => (
+                                            <TableCell
+                                                key={column.field}
+                                                align={column.align}
+                                                style={{ color: '#6f7a94', padding: '1rem 0', borderBottomColor: '#151c2a', backgroundColor: '#1E293B', paddingLeft: index === 0 ? '1rem' : '0', paddingRight: index === columns.length - 1 ? '1rem' : '0' }}
+                                            >
+                                                {column.label}
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {(transferList?.records ?? [])
+                                        .map((row) => {
+                                            return (
+                                                <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                                                    {columns.map((column) => {
+                                                        const value = row[column.field];
+                                                        return (
+                                                            <TableCell key={column.field} align={column.align}
+                                                                style={{ backgroundColor: '#1E293B', color: '#FFFFF', fontSize: '14px', padding: '4px 5px', border: 'none' }}
+                                                            >
+                                                                {column.format ? column.format(value) : value}
+                                                            </TableCell>
+                                                        );
+                                                    })}
+                                                </TableRow>
+                                            );
+                                        })}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+
+                        {transferList?.records?.length === 0 && <div className="mt-12 no-data-container" style={{ height: 'calc(100vh - 24rem)' }}>
+                            <img className='noDataImg' src='wallet/assets/images/logo/xc.png'></img>
+                            <div className='noDataImgTxt text-22'>{t('home_record_12')}</div></div>}
+                    </Paper> */}
+
+
+                    <div className='px-12' style={{ width: '100%', borderRadius: "1rem", backgroundColor: '#1E293B', height: transferList?.records?.length !== 0 ? 'calc(100vh - 21.5rem)' : '0' }}>
+
+                        {
+                            typeItem === 1 && < div >
+                                <div className='py-20' style={{ borderBottom: "solid 1px #646F83" }}>
+                                    <div className='flex justify-between '>
+                                        <div className='flex'>
+                                            <div className='recordListZi'>Recive</div>
+                                            <div className='recordListZi ml-10'>USDT</div>
+                                        </div>
+                                        <div className='recordListZi2'>4000.00</div>
+                                    </div>
+                                    <div className='recordListSmallZi'>balance <span>5700.00</span></div>
+                                    <div className='recordListSmallZi'>05-22 14:32:18</div>
+                                </div>
+
+                                <div className='py-20' style={{ borderBottom: "solid 1px #646F83" }}>
+                                    <div className='flex justify-between '>
+                                        <div className='flex'>
+                                            <div className='recordListZi'>Recive</div>
+                                            <div className='recordListZi ml-10'>USDT</div>
+                                        </div>
+                                        <div className='recordListZi2'>1000.00</div>
+                                    </div>
+                                    <div className='recordListSmallZi'>balance <span>1700.00</span></div>
+                                    <div className='recordListSmallZi'>05-22 14:32:18</div>
+                                </div>
+
+                                <div className='py-20' style={{ borderBottom: "solid 1px #646F83" }}>
+                                    <div className='flex justify-between '>
+                                        <div className='flex'>
+                                            <div className='recordListZi'>Recive</div>
+                                            <div className='recordListZi ml-10'>USDT</div>
+                                        </div>
+                                        <div className='recordListZi2'>500.00</div>
+                                    </div>
+                                    <div className='recordListSmallZi'>balance <span>700.00</span></div>
+                                    <div className='recordListSmallZi'>05-22 14:32:18</div>
+                                </div>
+
+                                <div className='py-20' style={{ borderBottom: "solid 1px #646F83" }}>
+                                    <div className='flex justify-between '>
+                                        <div className='flex'>
+                                            <div className='recordListZi'>Recive</div>
+                                            <div className='recordListZi ml-10'>USDT</div>
+                                        </div>
+                                        <div className='recordListZi2'>100.00</div>
+                                    </div>
+                                    <div className='recordListSmallZi'>balance <span>200.00</span></div>
+                                    <div className='recordListSmallZi'>05-22 14:32:18</div>
+                                </div>
+
+                                <div className='py-20' style={{ borderBottom: "solid 1px #646F83" }}>
+                                    <div className='flex justify-between '>
+                                        <div className='flex'>
+                                            <div className='recordListZi'>Recive</div>
+                                            <div className='recordListZi ml-10'>USDT</div>
+                                        </div>
+                                        <div className='recordListZi2'>100.00</div>
+                                    </div>
+                                    <div className='recordListSmallZi'>balance <span>100.00</span></div>
+                                    <div className='recordListSmallZi'>05-22 14:32:18</div>
+                                </div>
+                            </div>
+                        }
+
+                        {
+                            typeItem === 4 && < div >
+                                <div className='py-20' style={{ borderBottom: "solid 1px #646F83" }}>
+                                    <div className='flex justify-between '>
+                                        <div className='recordListZi recordMaxW'>Hangzhou Taobao Network Co., Ltd</div>
+                                        <div className='recordListZi2'>-4000.00</div>
+                                    </div>
+                                    <div className='recordListSmallZi'><span>5874 5489 3654 7451</span></div>
+                                    <div className='recordListSmallZi'>05-22 14:32:18</div>
+                                </div>
+
+                                <div className='py-20' style={{ borderBottom: "solid 1px #646F83" }}>
+                                    <div className='flex justify-between '>
+                                        <div className='recordListZi recordMaxW'>Shanghai Metro Transportation</div>
+                                        <div className='recordListZi2'>-3000.00</div>
+                                    </div>
+                                    <div className='recordListSmallZi'><span>5874 5489 3654 7451</span></div>
+                                    <div className='recordListSmallZi'>05-22 14:32:18</div>
+                                </div>
+
+                                <div className='py-20' style={{ borderBottom: "solid 1px #646F83" }}>
+                                    <div className='flex justify-between '>
+                                        <div className='recordListZi recordMaxW'>Cool and trendy play</div>
+                                        <div className='recordListZi2'>-100.00</div>
+                                    </div>
+                                    <div className='recordListSmallZi'><span>5874 5489 3654 7451</span></div>
+                                    <div className='recordListSmallZi'>05-22 14:32:18</div>
+                                </div>
+
+                                <div className='py-20' style={{ borderBottom: "solid 1px #646F83" }}>
+                                    <div className='flex justify-between '>
+                                        <div className='recordListZi recordMaxW'>Yonghui Supermarket</div>
+                                        <div className='recordListZi2'>-300.00</div>
+                                    </div>
+                                    <div className='recordListSmallZi'><span>5874 5489 3654 7451</span></div>
+                                    <div className='recordListSmallZi'>05-22 14:32:18</div>
+                                </div>
+
+                                <div className='py-20' style={{ borderBottom: "solid 1px #646F83" }}>
+                                    <div className='flex justify-between '>
+                                        <div className='recordListZi recordMaxW'>Snack Supermarket</div>
+                                        <div className='recordListZi2'>-520.15</div>
+                                    </div>
+                                    <div className='recordListSmallZi'><span>5874 5489 3654 7451</span></div>
+                                    <div className='recordListSmallZi'>05-22 14:32:18</div>
+                                </div>
+                            </div>
+                        }
+
+                        {
+                            typeItem === 2 && <div className="mt-12 no-data-container" style={{ height: 'calc(100vh - 24rem)' }}>
+                                <img className='noDataImg' src='wallet/assets/images/logo/xc.png'></img>
+                                <div className='noDataImgTxt text-22'>{t('home_record_12')}</div></div>
+                        }
+                        {
+                            typeItem === 3 && <div className="mt-12 no-data-container" style={{ height: 'calc(100vh - 24rem)' }}>
+                                <img className='noDataImg' src='wallet/assets/images/logo/xc.png'></img>
+                                <div className='noDataImgTxt text-22'>{t('home_record_12')}</div></div>
+                        }
+                    </div>
+
+                    {
+                        moreBtnShow && <LoadingButton
+                            disabled={false}
+                            className='px-48 btnColorTitleBig loadingBtnSty recordMoreBtn'
+                            color="secondary"
+                            loading={false}
+                            variant="contained"
+                            onClick={() => {
+                                setOpenMore(false);
+                            }}
+                        >
+                            More
+                        </LoadingButton>
+                    }
+
+                </Box>
+
+            </motion.div>
+
+
+        </div >
     )
 }
 

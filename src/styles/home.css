@@ -856,6 +856,18 @@ input[type='number'] {
     transition: all 0.25s;
 }
 
+.recordMoreBtn {
+    background-color: #0D9488;
+    color: #ffffff;
+    width: 24rem;
+    height: 4rem;
+    font-size: 20px;
+    margin: 2rem auto 2rem auto;
+    display: block;
+    line-height: inherit;
+    padding: 0px;
+}
+
 .btnColorTitleBig:hover {
     filter: brightness(1.2);
     transition: all 0.25s;
@@ -924,7 +936,9 @@ input[type='number'] {
 }
 
 .noDataImg {
-    margin: 0 auto 1.5rem;
+    margin: 2rem auto;
+    width: 50%;
+    height: auto;
 }
 
 .noDataImgTxt {
@@ -945,8 +959,53 @@ input[type='number'] {
     background-color: #334155;
 }
 
+.recordPx {
+    padding: 1.2rem 1.5rem 0rem 1.5rem;
+}
+
 .BtcHeight {
     height: 70px;
+}
+
+.recordW {
+    width: calc(100% - 3rem);
+    margin: 1.2rem auto 0rem auto;
+    background-color: '#1E293B';
+}
+
+.recordSelectHeight {
+    height: 50px;
+    font-size: 1.6rem !important;
+}
+
+.recordListZi {
+    color: #ffffff;
+    font-size: 1.6rem;
+    height: 3rem;
+    line-height: 3rem;
+}
+
+.recordMaxW {
+    width: 50%;
+    /* 设置宽度为50% */
+    white-space: nowrap;
+    /* 禁止换行 */
+    overflow: hidden;
+    /* 隐藏超出部分 */
+    text-overflow: ellipsis;
+    /* 超出部分用省略号显示 */
+}
+
+.recordListSmallZi {
+    height: 2.6rem;
+    line-height: 2.6rem;
+}
+
+.recordListZi2 {
+    color: #ffffff;
+    font-size: 2.3rem;
+    height: 3rem;
+    line-height: 3rem;
 }
 
 .wallet-show-type .muiltr-heg063-MuiTabs-flexContainer {
