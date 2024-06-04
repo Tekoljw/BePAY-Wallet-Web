@@ -51,7 +51,6 @@ const App = () => {
     const thirdPartId = getUrlParam('thirdPartId') || 0;
     const autoLoginKey = getUrlParam('autoLoginKey') || 0;
     const storageKey = getUrlParam('storageKey') || '';
-    const loginType = getUrlParam('loginType') || '';
     const langDirection = useSelector(selectCurrentLanguageDirection);
     const mainTheme = useSelector(selectMainTheme);
     const token = useSelector(selectUserData).token;
@@ -76,7 +75,13 @@ const App = () => {
             window.localStorage.setItem('thirdPartId', thirdPartId)
         }
         if (accessType) {
-            window.localStorage.setItem('accessType', accessType)
+            window.localStorage.setItem('accessType', accessType);
+            switch (accessType){
+                case 1:{ //telegramWebApp
+                    window.localStorage.setItem('loginType', "telegram_web_app");
+                    break;
+                }
+            }
         }
         if (autoLoginKey) {
             window.localStorage.setItem('autoLoginKey', autoLoginKey)
@@ -86,9 +91,6 @@ const App = () => {
         }
         if (storageKey) {
             window.localStorage.setItem('storageKey', storageKey)
-        }
-        if (loginType) {
-            window.localStorage.setItem('loginType', loginType)
         }
     }, []);
 

@@ -9,7 +9,7 @@ import history from "@history";
 import { useSelector, useDispatch } from "react-redux";
 import { selectConfig } from "../../store/config";
 import { selectUserData } from "../../store/user";
-import { arrayLookup, getOpenAppId, getOpenAppIndex, getUrlParam } from "../../util/tools/function";
+import {arrayLookup, getOpenAppId, getOpenAppIndex, getUrlParam, setPhoneTab} from "../../util/tools/function";
 import { updateCurrency, updateWalletDisplay } from "../../store/user";
 import { showMessage } from "app/store/fuse/messageSlice";
 import { centerGetNftList } from '../../store/wallet/walletThunk';
@@ -999,6 +999,7 @@ function Wallet() {
     })
   };
   useEffect(() => {
+    setPhoneTab('account');
     initWalletData();
   }, []);
 

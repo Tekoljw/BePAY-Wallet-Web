@@ -25,7 +25,7 @@ import '../../../styles/home.css';
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
 import { selectConfig } from "../../store/config";
-import {arrayLookup, getOpenAppId, getOpenAppIndex} from "../../util/tools/function";
+import {arrayLookup, getOpenAppId, getOpenAppIndex, setPhoneTab} from "../../util/tools/function";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { foxSendTransaction, manualCryptoNotify } from "../../store/transfer/transferThunk";
 import {
@@ -875,6 +875,7 @@ function Deposite() {
     }, [fiatData, fiatDisplayData, paymentFiat]);
 
     useEffect(() => {
+        setPhoneTab('deposite');
         dispatch(getFiatDisplay()).then((res) => {
             let result = res.payload;
             setFiatDisplayData(result?.data);

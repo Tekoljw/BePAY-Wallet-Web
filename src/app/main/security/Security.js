@@ -22,7 +22,7 @@ import { tokenTransfer } from "../../store/user/userThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { selectConfig } from "../../store/config";
-import { arrayLookup } from "../../util/tools/function";
+import {arrayLookup, setPhoneTab} from "../../util/tools/function";
 import { openScan, closeScan } from "../../util/tools/scanqrcode";
 import { getWithDrawConfig, WalletConfigDefineMap, evalTokenTransferFee, getWithdrawHistoryAddress, getWithdrawTransferStats } from "app/store/wallet/walletThunk";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
@@ -101,8 +101,8 @@ function Security(props) {
     const [tabValue, setTabValue] = useState(0);
     const [ranges, setRanges] = useState([t('menu_12'), t('menu_13'), t('menu_14'), t('menu_15'), t('menu_16')]);
     useEffect(() => {
-    }
-    );
+            setPhoneTab('security');
+    },[]);
 
     return (
         <div>

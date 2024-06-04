@@ -49,30 +49,11 @@ function HomeSidebarContent(props) {
     const [logo, setLogo] = useState("wallet/assets/images/logo/logo.png");
     const [hideMenu, setHideMenu] = useState([]);
 
-    const changePhoneTab = (tab) => {
-        setTab(tab)
-        window.localStorage.setItem('phoneTab', tab);
-    }
-
-
-    const [activeMenu, setTab] = useState('');
+    const [activeMenu, setMenuTab] = useState('');
 
     const tabClick = (tab) => {
         history.push(tab === 'wallet' ? '/wallet/home' : `/wallet/home/${tab}`);
-        // history.push(`/home/${tab}`);
-        // console.log('tab', tab);
-        // history.push({pathname: tab});
-        // if (props.setTab) {
-        // setTab(tab)
-        changePhoneTab(tab)
-        // }
-        // setTab(tab);
-        // if (props.setIsLoading) {
-        // props.setIsLoading(true);
-        // setTimeout(() => {
-        //     props.setIsLoading(false)
-        // }, 3000)
-        // }
+        setMenuTab(tab)
     };
 
     const config = useSelector(selectConfig);

@@ -19,6 +19,7 @@ import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { transferRecords } from '../../store/user/userThunk';
 import { selectUserData } from '../../store/user';
 import {useTranslation} from "react-i18next";
+import {setPhoneTab} from "../../util/tools/function";
 
 const container = {
     show: {
@@ -107,6 +108,9 @@ function Record() {
         }));
     };
 
+    useEffect(() => {
+        setPhoneTab('record');
+    }, []);
 
     useEffect( () => {
         if (type) {

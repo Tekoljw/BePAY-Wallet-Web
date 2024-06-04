@@ -20,8 +20,8 @@ import { selectUserData } from "../../store/user";
 import { tokenTransfer } from "../../store/user/userThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
-import { selectConfig } from "../../store/config";
-import { arrayLookup } from "../../util/tools/function";
+import {selectConfig, setSwapConfig} from "../../store/config";
+import {arrayLookup, setPhoneTab} from "../../util/tools/function";
 import { openScan, closeScan } from "../../util/tools/scanqrcode";
 import { getWithDrawConfig, WalletConfigDefineMap, evalTokenTransferFee, getWithdrawHistoryAddress, getWithdrawTransferStats } from "app/store/wallet/walletThunk";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
@@ -42,6 +42,7 @@ import history from '@history';
 import AccordionActions from '@mui/material/AccordionActions';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { margin } from '@mui/system';
+import {getSwapConfig} from "app/store/swap/swapThunk";
 
 
 
@@ -75,7 +76,6 @@ function Card(props) {
     const [openAnimateHuanKa, setOpenAnimateHuanKa] = useState(false);
     const [isOpenEye, setIsOpenEye] = useState(false);
 
-
     const changePhoneTab = (tab) => {
         window.localStorage.setItem('phoneTab', tab);
     }
@@ -95,8 +95,6 @@ function Card(props) {
             behavior: 'smooth' // 平滑滚动
         });
     };
-
-
 
     const FanKa = () => {
         setKaBeiButton(true);
@@ -126,6 +124,10 @@ function Card(props) {
             document.getElementById('cardNumberOne').classList.add('alphaCard');
         }, 600);
     };
+
+    useEffect(() => {
+        setPhoneTab('card');
+    }, []);
 
     return (
         <div className='' style={{ position: "relative" }}>
@@ -223,7 +225,7 @@ function Card(props) {
                                             <div className="ml-8 walletBalanceZi" style={{ color: "#84A59F" }} >Wallet Balance</div>
                                         </div>
                                         <div className="zhangDanXiangQinZi" onClick={() => {
-                                            changePhoneTab("record");
+                                            changePhoneTab('record');
                                             history.push('/wallet/home/record')
                                         }} >账单详情</div>
                                     </div>

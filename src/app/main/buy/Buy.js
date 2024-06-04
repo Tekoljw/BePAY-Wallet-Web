@@ -18,7 +18,7 @@ import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import {useSelector, useDispatch} from "react-redux";
 import {selectUserData} from "../../store/user";
 import {selectConfig} from "../../store/config";
-import {arrayLookup} from "../../util/tools/function";
+import {arrayLookup, setPhoneTab} from "../../util/tools/function";
 import Button from "@mui/material/Button";
 import { getFaTPayCryptoTarget, getFaTPayPaymentOption, getLegendTradingCryptoTarget, getLegendTradingPaymentOption } from "../../store/payment/paymentThunk";
 import MenuItem from "@mui/material/MenuItem";
@@ -152,6 +152,11 @@ function Buy(props) {
             }
         }
     };
+
+    useEffect(() => {
+        setPhoneTab('buyCrypto');
+    }, []);
+
     useEffect(() => {
         getSdkSymbolData(payType);
     }, [walletData.inner]);
