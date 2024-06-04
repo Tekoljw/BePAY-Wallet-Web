@@ -122,7 +122,8 @@ function HomePage(props) {
     }, [config.networks]);
 
     useEffect(() => {
-        if(!window.localStorage.getItem('phoneTab')){
+        currentPhoneTab = window.localStorage.getItem('phoneTab');
+        if(!currentPhoneTab){
             changePhoneTab('account');
         }
         const accessType = getAccessType();
