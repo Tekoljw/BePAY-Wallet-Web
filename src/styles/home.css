@@ -862,7 +862,7 @@ input[type='number'] {
     width: 24rem;
     height: 4rem;
     font-size: 20px;
-    margin: 2rem auto 2rem auto;
+    margin: 2rem auto;
     display: block;
     line-height: inherit;
     padding: 0px;

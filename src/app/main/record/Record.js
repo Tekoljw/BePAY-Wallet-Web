@@ -45,8 +45,8 @@ function Record() {
     const { t } = useTranslation('mainPage');
     const dispatch = useDispatch();
     const [type, setType] = useState(1);
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [page, setPage] = React.useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
     const [transferList, setTransferList] = useState([]);
 
     // public static final int CONST_LOG_TYPE_DEPOSIT                = 1;
@@ -88,7 +88,10 @@ function Record() {
         { id: 15, label: t('home_record_18') },
         // { id: 16, label: 'TRANSFER_TO_GAME' },
         // { id: 17, label: 'TRANSFER_FROM_GAME' },
+        { id: 18, label: 'Card' },
     ];
+
+    const [timeItem, setTimeItem] = React.useState(1);
     const columns = [
         { field: 'type', label: t('home_record_19'), minWidth: 100, align: 'left', format: (value) => { return typeList.find(v => { return v.id == value }).label } },
         { field: 'symbol', label: t('home_record_8'), minWidth: 100, align: 'center' },
@@ -105,57 +108,50 @@ function Record() {
         }));
     };
 
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(event.target.value);
-        setPage(0);
-        dispatch(transferRecords({
-            logType: type,
-            page: 0,
-            limit: event.target.value
-        }));
-    };
+    const handleTransferRecord = (pageParam) => {
+        if (type) {
+            dispatch(transferRecords({
+                logType: type,
+                month: timeItem,
+                page: pageParam ?? page,
+                limit: rowsPerPage
+            })).then((res) => {
+                let result = res.payload
+                setTransferList([ ...transferList, ...result?.records])
+                setPage(result.current)
+
+                if (result.current === result.pages) {
+                    setMoreBtnShow(false)
+                } else {
+                    setMoreBtnShow(true)
+                }
+            })
+        }
+    }
 
     useEffect(() => {
         setPhoneTab('record');
     }, []);
 
-    useEffect(() => {
-        setTypeItem(1);
-    }, []);
-
 
     useEffect(() => {
-        if (type) {
-            dispatch(transferRecords({
-                logType: type,
-                page: page,
-                limit: rowsPerPage
-            })).then((res) => {
-                setTransferList(res.payload)
-            })
-        }
-    }, [type]);
+        handleTransferRecord()
+    }, [type, timeItem]);
 
 
-    const [typeItem, setTypeItem] = React.useState('1');
-    const [timeItem, setTimeItem] = React.useState('105');
-
-    const [moreBtnShow, setMoreBtnShow] = React.useState(true);
+    const [moreBtnShow, setMoreBtnShow] = React.useState(false);
 
     const handleChange = (event) => {
-        setTypeItem(event.target.value);
-        if (event.target.value === 1 || event.target.value === 4) {
-            setMoreBtnShow(true)
-        } else {
-            setMoreBtnShow(false)
-        }
+        setPage(0);
+        setTransferList([]);
+        setType(event.target.value);
     };
 
     const handleChange2 = (event) => {
+        setPage(0);
+        setTransferList([]);
         setTimeItem(event.target.value);
     };
-
-    const [openMore, setOpenMore] = useState(false);
 
     return (
         <div>
@@ -280,7 +276,7 @@ function Record() {
                 }}
                 >
                     <Select
-                        value={typeItem}
+                        value={type}
                         onChange={handleChange}
                         displayEmpty
                         className="MuiSelect-icon recordSelectHeight"
@@ -293,15 +289,11 @@ function Record() {
                             },
                         }}
                     >
-                        <MenuItem value={1} className='text-16'>Recive</MenuItem>
-                        <MenuItem value={2} className='text-16'>SendTips</MenuItem>
-                        <MenuItem value={3} className='text-16'>Sell</MenuItem>
-                        <MenuItem value={4} className='text-16'>Card</MenuItem>
-                        <MenuItem value={5} className='text-16'>Swap</MenuItem>
-                        <MenuItem value={6} className='text-16'>Withdraw</MenuItem>
-                        <MenuItem value={7} className='text-16'>Volunteer Stake</MenuItem>
-                        <MenuItem value={8} className='text-16'>Volunteer UnStake</MenuItem>
-                        <MenuItem value={9} className='text-16'>Task Code</MenuItem>
+                        {typeList.map((item) => {
+                            return (
+                                <MenuItem value={item.id} className='text-16'>{item.label}</MenuItem>
+                            )
+                        })}
                     </Select>
                 </FormControl>
 
@@ -336,18 +328,18 @@ function Record() {
                             },
                         }}
                     >
-                        <MenuItem value={101} className='text-16'>January</MenuItem>
-                        <MenuItem value={102} className='text-16'>February</MenuItem>
-                        <MenuItem value={103} className='text-16'>March</MenuItem>
-                        <MenuItem value={104} className='text-16'>April</MenuItem>
-                        <MenuItem value={105} className='text-16'>May</MenuItem>
-                        <MenuItem value={106} className='text-16'>June</MenuItem>
-                        <MenuItem value={107} className='text-16'>July</MenuItem>
-                        <MenuItem value={108} className='text-16'>August</MenuItem>
-                        <MenuItem value={109} className='text-16'>September</MenuItem>
-                        <MenuItem value={110} className='text-16'>October</MenuItem>
-                        <MenuItem value={111} className='text-16'>November</MenuItem>
-                        <MenuItem value={112} className='text-16'>December</MenuItem>
+                        <MenuItem value={1} className='text-16'>January</MenuItem>
+                        <MenuItem value={2} className='text-16'>February</MenuItem>
+                        <MenuItem value={3} className='text-16'>March</MenuItem>
+                        <MenuItem value={4} className='text-16'>April</MenuItem>
+                        <MenuItem value={5} className='text-16'>May</MenuItem>
+                        <MenuItem value={6} className='text-16'>June</MenuItem>
+                        <MenuItem value={7} className='text-16'>July</MenuItem>
+                        <MenuItem value={8} className='text-16'>August</MenuItem>
+                        <MenuItem value={9} className='text-16'>September</MenuItem>
+                        <MenuItem value={10} className='text-16'>October</MenuItem>
+                        <MenuItem value={11} className='text-16'>November</MenuItem>
+                        <MenuItem value={12} className='text-16'>December</MenuItem>
                     </Select>
                 </FormControl>
             </motion.div>
@@ -408,74 +400,32 @@ function Record() {
                     </Paper> */}
 
 
-                    <div className='px-12' style={{ width: '100%', borderRadius: "1rem", backgroundColor: '#1E293B', height: transferList?.records?.length !== 0 ? 'calc(100vh - 21.5rem)' : '0' }}>
+                    <div className='px-12' style={{ width: '100%', borderRadius: "1rem", backgroundColor: '#1E293B'}}>
 
-                        {
-                            typeItem === 1 && < div >
+                        {transferList?.length > 0 ? (transferList?.map((transferItem) => {
+                            return (
                                 <div className='py-20' style={{ borderBottom: "solid 1px #646F83" }}>
                                     <div className='flex justify-between '>
                                         <div className='flex'>
-                                            <div className='recordListZi'>Recive</div>
-                                            <div className='recordListZi ml-10'>USDT</div>
+                                            <div className='recordListZi'>{typeList.find(v => { return v.id == (transferItem.type).label })}</div>
+                                            <div className='recordListZi ml-10'>{transferItem.symbol}</div>
                                         </div>
-                                        <div className='recordListZi2'>4000.00</div>
+                                        <div className='recordListZi2'>{transferItem.amount}</div>
                                     </div>
-                                    <div className='recordListSmallZi'>balance <span>5700.00</span></div>
-                                    <div className='recordListSmallZi'>05-22 14:32:18</div>
+                                    <div className='recordListSmallZi'>balance <span>{transferItem.balance}</span></div>
+                                    <div className='recordListSmallZi'>{formatDistanceToNow(new Date(transferItem.createTime * 1000))}</div>
                                 </div>
-
-                                <div className='py-20' style={{ borderBottom: "solid 1px #646F83" }}>
-                                    <div className='flex justify-between '>
-                                        <div className='flex'>
-                                            <div className='recordListZi'>Recive</div>
-                                            <div className='recordListZi ml-10'>USDT</div>
-                                        </div>
-                                        <div className='recordListZi2'>1000.00</div>
-                                    </div>
-                                    <div className='recordListSmallZi'>balance <span>1700.00</span></div>
-                                    <div className='recordListSmallZi'>05-22 14:32:18</div>
-                                </div>
-
-                                <div className='py-20' style={{ borderBottom: "solid 1px #646F83" }}>
-                                    <div className='flex justify-between '>
-                                        <div className='flex'>
-                                            <div className='recordListZi'>Recive</div>
-                                            <div className='recordListZi ml-10'>USDT</div>
-                                        </div>
-                                        <div className='recordListZi2'>500.00</div>
-                                    </div>
-                                    <div className='recordListSmallZi'>balance <span>700.00</span></div>
-                                    <div className='recordListSmallZi'>05-22 14:32:18</div>
-                                </div>
-
-                                <div className='py-20' style={{ borderBottom: "solid 1px #646F83" }}>
-                                    <div className='flex justify-between '>
-                                        <div className='flex'>
-                                            <div className='recordListZi'>Recive</div>
-                                            <div className='recordListZi ml-10'>USDT</div>
-                                        </div>
-                                        <div className='recordListZi2'>100.00</div>
-                                    </div>
-                                    <div className='recordListSmallZi'>balance <span>200.00</span></div>
-                                    <div className='recordListSmallZi'>05-22 14:32:18</div>
-                                </div>
-
-                                <div className='py-20' style={{ borderBottom: "solid 1px #646F83" }}>
-                                    <div className='flex justify-between '>
-                                        <div className='flex'>
-                                            <div className='recordListZi'>Recive</div>
-                                            <div className='recordListZi ml-10'>USDT</div>
-                                        </div>
-                                        <div className='recordListZi2'>100.00</div>
-                                    </div>
-                                    <div className='recordListSmallZi'>balance <span>100.00</span></div>
-                                    <div className='recordListSmallZi'>05-22 14:32:18</div>
-                                </div>
+                            )
+                        })) : (
+                            <div className="mt-12 no-data-container" style={{ height: 'calc(100vh - 24rem)' }}>
+                                <img className='noDataImg' src='wallet/assets/images/logo/xc.png'></img>
+                                <div className='noDataImgTxt text-22'>{t('home_record_12')}</div>
                             </div>
-                        }
+                        )}
+
 
                         {
-                            typeItem === 4 && < div >
+                            type === 4 && < div >
                                 <div className='py-20' style={{ borderBottom: "solid 1px #646F83" }}>
                                     <div className='flex justify-between '>
                                         <div className='recordListZi recordMaxW'>Hangzhou Taobao Network Co., Ltd</div>
@@ -522,34 +472,21 @@ function Record() {
                                 </div>
                             </div>
                         }
-
                         {
-                            typeItem === 2 && <div className="mt-12 no-data-container" style={{ height: 'calc(100vh - 24rem)' }}>
-                                <img className='noDataImg' src='wallet/assets/images/logo/xc.png'></img>
-                                <div className='noDataImgTxt text-22'>{t('home_record_12')}</div></div>
-                        }
-                        {
-                            typeItem === 3 && <div className="mt-12 no-data-container" style={{ height: 'calc(100vh - 24rem)' }}>
-                                <img className='noDataImg' src='wallet/assets/images/logo/xc.png'></img>
-                                <div className='noDataImgTxt text-22'>{t('home_record_12')}</div></div>
+                            moreBtnShow && <LoadingButton
+                                disabled={false}
+                                className='px-48 btnColorTitleBig loadingBtnSty recordMoreBtn'
+                                color="secondary"
+                                loading={false}
+                                variant="contained"
+                                onClick={() => {
+                                    handleTransferRecord(page + 1)
+                                }}
+                            >
+                                More
+                            </LoadingButton>
                         }
                     </div>
-
-                    {
-                        moreBtnShow && <LoadingButton
-                            disabled={false}
-                            className='px-48 btnColorTitleBig loadingBtnSty recordMoreBtn'
-                            color="secondary"
-                            loading={false}
-                            variant="contained"
-                            onClick={() => {
-                                setOpenMore(false);
-                            }}
-                        >
-                            More
-                        </LoadingButton>
-                    }
-
                 </Box>
 
             </motion.div>

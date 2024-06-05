@@ -882,7 +882,8 @@ export const transferRecords = createAsyncThunk(
     async (settings, { dispatch, getState }) => {
         let data = {
             logType: settings.logType,
-            page: settings.page + 1,
+            month: settings.month,
+            page: settings.page,
             limit: settings.limit,
         };
         const tranferList = await React.$api("transfer.records", data);
