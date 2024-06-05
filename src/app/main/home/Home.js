@@ -34,6 +34,7 @@ import history from '@history';
 import { loginTelegram, requestUserLoginData } from "../../util/tools/loginFunction";
 import { checkLoginState } from "app/store/user/userThunk";
 // import FuseLoading from '@fuse/core/FuseLoading';
+import clsx from 'clsx';
 
 const Root = styled(FusePageCarded)(({ theme }) => ({
     '& .FusePageCarded-header': {},
@@ -54,46 +55,35 @@ function HomePage(props) {
     const { pathname } = useLocation();
     const [menuShow, setMenuShow] = useState(false);
     const loginType = window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType;
-    let currentPhoneTab = window.localStorage.getItem('phoneTab') ?? 'account';
+    let currentPhoneTab = window.localStorage.getItem('phoneTab') ?? 'wallet';
 
+    // 滑动滑块
+    const changeSlider = (phoneTab) => {
+        const slide = document.querySelector('.slide');
+        if (phoneTab === 'deposite') {
+            slide.style.transform = `translateX(${1 * 100}%)`;
+            slide.style.backgroundColor = "#2C3640";
+        } else if (phoneTab === 'withdraw') {
+            slide.style.transform = `translateX(${2 * 100}%)`;
+            slide.style.backgroundColor = "#2C3640";
+        } else if (phoneTab === 'wallet') {
+            slide.style.transform = `translateX(${0 * 100}%)`;
+            slide.style.backgroundColor = "#2C3640";
+        }
+    }
     //改变手机分页
     const changePhoneTab = (changeTab) => {
         if (isMobile) {
-            currentPhoneTab = changeTab;
-            const phoneTab = setPhoneTab(changeTab);
-            const navLinks = document.querySelectorAll('.nav-link');
-            const slide = document.querySelector('.slide');
-            navLinks.forEach((link) => link.addEventListener('click', handleClick));
-
-            function handleClick() {
-                const index = parseInt(this.dataset.index);
-                slide.style.transform = `translateX(${index * 100}%)`;
-                navLinks.forEach(link => link.classList.remove('active'));
-                this.classList.add('active');
-            }
-
-            if (phoneTab === 'deposite') {
+            setPhoneTab(changeTab);
+            if (changeTab === 'deposite') {
                 history.push('/wallet/home/deposite')
-                slide.style.transform = `translateX(${1 * 100}%)`;
-                navLinks.forEach(link => link.classList.remove('active'));
-                navLinks[1].classList.add('active');
-                slide.style.backgroundColor = "#2C3640";
-            } else if (phoneTab === 'withdraw') {
+                changeSlider('deposite')
+            } else if (changeTab === 'withdraw') {
                 history.push('/wallet/home/withdraw')
-                slide.style.transform = `translateX(${2 * 100}%)`;
-                navLinks.forEach(link => link.classList.remove('active'));
-                navLinks[2].classList.add('active');
-                slide.style.backgroundColor = "#2C3640";
-            } else if (phoneTab === 'account') {
+                changeSlider('withdraw')
+            } else if (changeTab === 'wallet') {
                 history.push('/wallet/home/wallet')
-                slide.style.transform = `translateX(${0 * 100}%)`;
-                navLinks.forEach(link => link.classList.remove('active'));
-                navLinks[0].classList.add('active');
-                slide.style.backgroundColor = "#2C3640";
-            } else {
-                // slide.style.transform = `translateX(${0 * 100}%)`;
-                slide.style.backgroundColor = "#171F29";
-                navLinks.forEach(link => link.classList.remove('active'));
+                changeSlider('wallet')
             }
         }
     }
@@ -124,7 +114,9 @@ function HomePage(props) {
     useEffect(() => {
         currentPhoneTab = window.localStorage.getItem('phoneTab');
         if(!currentPhoneTab){
-            changePhoneTab('account');
+            changePhoneTab('wallet');
+        } else {
+            changeSlider(currentPhoneTab)
         }
         const accessType = getAccessType();
         console.log(accessType, '请求的 accessType');
@@ -265,15 +257,15 @@ function HomePage(props) {
                     <div class="phone-bottom ">
                         <nav class="nav">
                             <div class="slide"></div>
-                            <div class="nav-link active" data-index="0" onClick={() => {
-                                changePhoneTab('account')
+                            <div className={clsx("nav-link", currentPhoneTab === 'wallet' && 'active')} data-index="0" onClick={() => {
+                                changePhoneTab('wallet')
                                 history.push('/wallet/home/wallet')
                             }}>
-                                <img class="material-icons md-18" width="24px" src={currentPhoneTab === 'account' ? 'wallet/assets/images/menu/icon-wallet-active2.png' : 'wallet/assets/images/menu/icon-wallet-active.png'} alt="" />
+                                <img class="material-icons md-18" width="24px" src={currentPhoneTab === 'wallet' ? 'wallet/assets/images/menu/icon-wallet-active2.png' : 'wallet/assets/images/menu/icon-wallet-active.png'} alt="" />
                                 {/* <i class="material-icons md-18">signal_cellular_alt</i> */}
                                 <span class="nav-text">Account</span>
                             </div>
-                            <div class="nav-link" data-index="1" onClick={() => {
+                            <div className={clsx("nav-link", currentPhoneTab === 'deposite' && 'active')} data-index="1" onClick={() => {
                                 changePhoneTab('deposite')
                                 history.push('/wallet/home/deposite')
                             }}>
@@ -281,7 +273,7 @@ function HomePage(props) {
                                 <img class="material-icons md-18" width="24px" src={currentPhoneTab === 'deposite' ? 'wallet/assets/images/menu/deposite-active2.png' : 'wallet/assets/images/menu/deposite-active.png'} alt="" />
                                 <span class="nav-text">Deposit</span>
                             </div>
-                            <div class="nav-link" data-index="2" onClick={() => {
+                            <div className={clsx("nav-link", currentPhoneTab === 'withdraw' && 'active')} data-index="2" onClick={() => {
                                 changePhoneTab('withdraw')
                                 history.push('/wallet/home/withdraw')
                             }}>

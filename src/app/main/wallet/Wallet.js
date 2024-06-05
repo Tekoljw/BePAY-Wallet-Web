@@ -1004,7 +1004,7 @@ function Wallet() {
     })
   };
   useEffect(() => {
-    setPhoneTab('account');
+    setPhoneTab('wallet');
     setTimeout(() => {
       initWalletData()
     }, 500)

@@ -26,7 +26,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { borderRadius } from '@mui/system';
-import {setPhoneTab} from "../../util/tools/function";
+import {setPhoneTab, getNowTime} from "../../util/tools/function";
 
 const container = {
     show: {
@@ -291,7 +291,7 @@ function Record() {
                     >
                         {typeList.map((item) => {
                             return (
-                                <MenuItem value={item.id} className='text-16'>{item.label}</MenuItem>
+                                <MenuItem key={item.id} value={item.id} className='text-16'>{item.label}</MenuItem>
                             )
                         })}
                     </Select>
@@ -402,9 +402,9 @@ function Record() {
 
                     <div className='px-12' style={{ width: '100%', borderRadius: "1rem", backgroundColor: '#1E293B'}}>
 
-                        {transferList?.length > 0 ? (transferList?.map((transferItem) => {
+                        {transferList?.length > 0 ? (transferList?.map((transferItem, index) => {
                             return (
-                                <div className='py-20' style={{ borderBottom: "solid 1px #646F83" }}>
+                                <div key={transferItem.id} className='py-20' style={{ borderBottom: index != (transferList.length - 1) ? "solid 1px #646F83" : '' }}>
                                     <div className='flex justify-between '>
                                         <div className='flex'>
                                             <div className='recordListZi'>{typeList.find(v => { return v.id == (transferItem.type) }).label}</div>
@@ -413,7 +413,7 @@ function Record() {
                                         <div className='recordListZi2'>{transferItem.amount}</div>
                                     </div>
                                     <div className='recordListSmallZi'>balance <span>{transferItem.balance}</span></div>
-                                    <div className='recordListSmallZi'>{formatDistanceToNow(new Date(transferItem.createTime * 1000))}</div>
+                                    <div className='recordListSmallZi'>{getNowTime(transferItem.createTime * 1000)}</div>
                                 </div>
                             )
                         })) : (

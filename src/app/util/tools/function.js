@@ -78,8 +78,11 @@ export const judgeIosOrAndroid = () => {
     }
 };
 
-export const getNowTime = () => {
+export const getNowTime = (time) => {
     var date = new Date();
+    if (time) {
+        date = new Date(time);
+    }
     var year = date.getFullYear();
     var month = date.getMonth() + 1;
     var day = date.getDate();
