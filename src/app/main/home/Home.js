@@ -69,6 +69,8 @@ function HomePage(props) {
         } else if (phoneTab === 'wallet') {
             slide.style.transform = `translateX(${0 * 100}%)`;
             slide.style.backgroundColor = "#2C3640";
+        } else {
+            slide.style.background = "#171F29";
         }
     }
     //改变手机分页
@@ -112,12 +114,6 @@ function HomePage(props) {
     }, [config.networks]);
 
     useEffect(() => {
-        currentPhoneTab = window.localStorage.getItem('phoneTab');
-        if(!currentPhoneTab){
-            changePhoneTab('wallet');
-        } else {
-            changeSlider(currentPhoneTab)
-        }
         const accessType = getAccessType();
         console.log(accessType, '请求的 accessType');
         //console.log(getThirdPartId(), '请求的 ThirdPartId');
@@ -135,6 +131,16 @@ function HomePage(props) {
             }
         }
     }, []);
+
+    useEffect(() => {
+        currentPhoneTab = window.localStorage.getItem('phoneTab');
+        if(!currentPhoneTab){
+            changePhoneTab('wallet');
+        } else {
+            console.log(currentPhoneTab,'currentPhoneTab')
+            changeSlider(currentPhoneTab)
+        }
+    }, [window.localStorage.getItem('phoneTab')])
 
 
     useEffect(() => {

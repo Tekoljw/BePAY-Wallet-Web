@@ -117,13 +117,15 @@ function Record() {
                 limit: rowsPerPage
             })).then((res) => {
                 let result = res.payload
-                setTransferList([ ...transferList, ...result?.records])
-                setPage(result.current)
+                if (result?.records?.length > 0) {
+                    setTransferList([ ...transferList, ...result?.records])
+                    setPage(result.current)
 
-                if (result.current === result.pages) {
-                    setMoreBtnShow(false)
-                } else {
-                    setMoreBtnShow(true)
+                    if (result.current === result.pages) {
+                        setMoreBtnShow(false)
+                    } else {
+                        setMoreBtnShow(true)
+                    }
                 }
             })
         }
@@ -142,12 +144,14 @@ function Record() {
     const [moreBtnShow, setMoreBtnShow] = React.useState(false);
 
     const handleChange = (event) => {
+        setMoreBtnShow(false)
         setPage(0);
         setTransferList([]);
         setType(event.target.value);
     };
 
     const handleChange2 = (event) => {
+        setMoreBtnShow(false)
         setPage(0);
         setTransferList([]);
         setTimeItem(event.target.value);

@@ -197,6 +197,7 @@ function HomeSidebarContent(props) {
                         onClick={(ev) => {
                             changePhoneTab('card');
                             history.push('/wallet/home/card');
+                            tabClick('card');
                         }}
                     >
                         <div className='iconWz'>
