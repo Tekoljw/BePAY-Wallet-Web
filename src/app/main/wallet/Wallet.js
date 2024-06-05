@@ -745,14 +745,16 @@ function Wallet() {
     if (!mounted.current) {
       mounted.current = true;
     } else {
-      symbolsFormatAmount();
-      if (isSearch) {
-        if (walletType === 0) {
-          doSearchData(inputVal.searchText);
-        } else if (walletType === 1) {
-          doSearch(inputVal.searchText);
+      setTimeout(() => {
+        symbolsFormatAmount();
+        if (isSearch) {
+          if (walletType === 0) {
+            doSearchData(inputVal.searchText);
+          } else if (walletType === 1) {
+            doSearch(inputVal.searchText);
+          }
         }
-      }
+      }, 100)
     }
   }, [
     symbolsData,
@@ -861,21 +863,21 @@ function Wallet() {
     setFiatDisplayShowData(tmpDisplayFiats);
   };
   useEffect(() => {
-    console.log('useEffectuseEffectuseEffectuseEffect')
     if (!mounted.current) {
       mounted.current = true;
     } else {
-      console.log('fiatsFormatAmount')
-      fiatsFormatAmount();
-      if (isSearch) {
-        if (walletType === 0) {
-          doSearchData(inputVal.searchText);
-        } else if (walletType === 1) {
-          doSearch(inputVal.searchText);
+      setTimeout(() => {
+        fiatsFormatAmount();
+        if (isSearch) {
+          if (walletType === 0) {
+            doSearchData(inputVal.searchText);
+          } else if (walletType === 1) {
+            doSearch(inputVal.searchText);
+          }
         }
-      }
+      }, 100)
     }
-  }, [fiatsData, currencyCode, showType, fiatDisplayData, ranges, userSetting?.setting]);
+  }, [fiatsData, currencyCode, showType, fiatDisplayData, ranges]);
 
   //nft 数据整理
   const nftFormatAmount = () => {
@@ -957,14 +959,17 @@ function Wallet() {
     if (!mounted.current) {
       mounted.current = true;
     } else {
-      nftFormatAmount();
-      if (isSearch) {
-        if (walletType === 0) {
-          doSearchData(inputVal.searchText);
-        } else if (walletType === 1) {
-          doSearch(inputVal.searchText);
+      setTimeout(() => {
+        nftFormatAmount();
+        if (isSearch) {
+          if (walletType === 0) {
+            doSearchData(inputVal.searchText);
+          } else if (walletType === 1) {
+            doSearch(inputVal.searchText);
+          }
         }
-      }
+      }, 100)
+
     }
   }, [nfts, showType, nftDisplayData, nftBalance]);
   const initWalletData = () => {
@@ -1000,7 +1005,9 @@ function Wallet() {
   };
   useEffect(() => {
     setPhoneTab('account');
-    initWalletData();
+    setTimeout(() => {
+      initWalletData()
+    }, 500)
   }, []);
 
 
