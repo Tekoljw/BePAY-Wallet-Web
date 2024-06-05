@@ -407,7 +407,7 @@ function Record() {
                                 <div className='py-20' style={{ borderBottom: "solid 1px #646F83" }}>
                                     <div className='flex justify-between '>
                                         <div className='flex'>
-                                            <div className='recordListZi'>{typeList.find(v => { return v.id == (transferItem.type).label })}</div>
+                                            <div className='recordListZi'>{typeList.find(v => { return v.id == (transferItem.type) }).label}</div>
                                             <div className='recordListZi ml-10'>{transferItem.symbol}</div>
                                         </div>
                                         <div className='recordListZi2'>{transferItem.amount}</div>
