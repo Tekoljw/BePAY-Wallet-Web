@@ -51,21 +51,17 @@ function HomeSidebarContent(props) {
 
     const [activeMenu, setMenuTab] = useState('');
 
+    const config = useSelector(selectConfig);
+    const kycInfo = config.kycInfo || {};
+
     const tabClick = (tab) => {
         history.push(tab === 'wallet' ? '/wallet/home' : `/wallet/home/${tab}`);
         setMenuTab(tab)
     };
 
-    const config = useSelector(selectConfig);
-    const kycInfo = config.kycInfo || {};
-
-
-    useEffect(() => {
-        setTab(window.localStorage.getItem('phoneTab'))
-    }, [window.localStorage.getItem('phoneTab')]);
-
-
-
+    const changePhoneTab = (tab) => {
+        window.localStorage.setItem('phoneTab', tab);
+    }
 
     useEffect(() => {
         if (config) {
@@ -79,9 +75,9 @@ function HomeSidebarContent(props) {
 
     useEffect(() => {
         if (isMobileMedia) {
-            setTab(props.tab !== 'home' ? props.tab : 'wallet');
+            changePhoneTab(props.tab !== 'home' ? props.tab : 'wallet');
         } else {
-            setTab(props.tab !== 'home' ? props.tab : 'deposite');
+            changePhoneTab(props.tab !== 'home' ? props.tab : 'deposite');
         }
 
         dispatch(getMenuList()).then(res => {
@@ -199,7 +195,7 @@ function HomeSidebarContent(props) {
                             )
                         }
                         onClick={(ev) => {
-                            setTab('card');
+                            changePhoneTab('card');
                             history.push('/wallet/home/card');
                         }}
                     >
@@ -394,7 +390,7 @@ function HomeSidebarContent(props) {
                             )
                         }
                         onClick={(ev) => {
-                            setTab('security');
+                            changePhoneTab('security');
                             history.push('/wallet/home/security');
                         }}
                     >
@@ -437,7 +433,7 @@ function HomeSidebarContent(props) {
                             )
                         }
                         onClick={(ev) => {
-                            setTab('re-tied-phone');
+                            changePhoneTab('re-tied-phone');
                             history.push('/re-tied-phone');
                         }}
                     >
@@ -456,7 +452,7 @@ function HomeSidebarContent(props) {
                             )
                         }
                         onClick={(ev) => {
-                            setTab('reset-pass');
+                            changePhoneTab('reset-pass');
                             history.push('/reset-pass');
                         }}
                     >
