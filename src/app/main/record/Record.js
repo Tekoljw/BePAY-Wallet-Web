@@ -27,6 +27,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { borderRadius } from '@mui/system';
 import {setPhoneTab, getNowTime} from "../../util/tools/function";
+import FuseLoading from "@fuse/core/FuseLoading";
 
 const container = {
     show: {
@@ -92,6 +93,8 @@ function Record() {
     ];
 
     const [timeItem, setTimeItem] = React.useState(1);
+
+    const [isLoading, setIsLoading] = React.useState(true);
     const columns = [
         { field: 'type', label: t('home_record_19'), minWidth: 100, align: 'left', format: (value) => { return typeList.find(v => { return v.id == value }).label } },
         { field: 'symbol', label: t('home_record_8'), minWidth: 100, align: 'center' },
@@ -110,12 +113,17 @@ function Record() {
 
     const handleTransferRecord = (pageParam) => {
         if (type) {
+            setIsLoading(true)
             dispatch(transferRecords({
                 logType: type,
                 month: timeItem,
                 page: pageParam ?? page,
                 limit: rowsPerPage
             })).then((res) => {
+                setTimeout(() => {
+                    setIsLoading(false)
+                }, 500)
+
                 let result = res.payload
                 if (result?.records?.length > 0) {
                     setTransferList([ ...transferList, ...result?.records])
@@ -139,7 +147,6 @@ function Record() {
     useEffect(() => {
         handleTransferRecord()
     }, [type, timeItem]);
-
 
     const [moreBtnShow, setMoreBtnShow] = React.useState(false);
 
@@ -403,100 +410,110 @@ function Record() {
                             <div className='noDataImgTxt text-22'>{t('home_record_12')}</div></div>}
                     </Paper> */}
 
+                    {isLoading ? (
+                        <FuseLoading />
+                    ) : (
+                        <div className='px-12'
+                             style={{width: '100%', borderRadius: "1rem", backgroundColor: '#1E293B'}}>
 
-                    <div className='px-12' style={{ width: '100%', borderRadius: "1rem", backgroundColor: '#1E293B'}}>
-
-                        {transferList?.length > 0 ? (transferList?.map((transferItem, index) => {
-                            return (
-                                <div key={transferItem.id} className='py-20' style={{ borderBottom: index != (transferList.length - 1) ? "solid 1px #646F83" : '' }}>
-                                    <div className='flex justify-between '>
-                                        <div className='flex'>
-                                            <div className='recordListZi'>{typeList.find(v => { return v.id == (transferItem.type) }).label}</div>
-                                            <div className='recordListZi ml-10'>{transferItem.symbol}</div>
+                            {transferList?.length > 0 ? (transferList?.map((transferItem, index) => {
+                                return (
+                                    <div key={transferItem.id} className='py-20'
+                                         style={{borderBottom: index != (transferList.length - 1) ? "solid 1px #646F83" : ''}}>
+                                        <div className='flex justify-between '>
+                                            <div className='flex'>
+                                                <div className='recordListZi'>{typeList.find(v => {
+                                                    return v.id == (transferItem.type)
+                                                }).label}</div>
+                                                <div className='recordListZi ml-10'>{transferItem.symbol}</div>
+                                            </div>
+                                            <div className='recordListZi2'>{transferItem.amount}</div>
                                         </div>
-                                        <div className='recordListZi2'>{transferItem.amount}</div>
+                                        <div className='recordListSmallZi'>balance <span>{transferItem.balance}</span>
+                                        </div>
+                                        <div
+                                            className='recordListSmallZi'>{getNowTime(transferItem.createTime * 1000)}</div>
                                     </div>
-                                    <div className='recordListSmallZi'>balance <span>{transferItem.balance}</span></div>
-                                    <div className='recordListSmallZi'>{getNowTime(transferItem.createTime * 1000)}</div>
+                                )
+                            })) : (
+                                <div className="mt-12 no-data-container" style={{height: 'calc(100vh - 24rem)'}}>
+                                    <img className='noDataImg' src='wallet/assets/images/logo/xc.png'></img>
+                                    <div className='noDataImgTxt text-22'>{t('home_record_12')}</div>
                                 </div>
-                            )
-                        })) : (
-                            <div className="mt-12 no-data-container" style={{ height: 'calc(100vh - 24rem)' }}>
-                                <img className='noDataImg' src='wallet/assets/images/logo/xc.png'></img>
-                                <div className='noDataImgTxt text-22'>{t('home_record_12')}</div>
-                            </div>
-                        )}
+                            )}
 
 
-                        {
-                            type === 4 && < div >
-                                <div className='py-20' style={{ borderBottom: "solid 1px #646F83" }}>
-                                    <div className='flex justify-between '>
-                                        <div className='recordListZi recordMaxW'>Hangzhou Taobao Network Co., Ltd</div>
-                                        <div className='recordListZi2'>-4000.00</div>
+                            {
+                                type === 4 && < div>
+                                    <div className='py-20' style={{borderBottom: "solid 1px #646F83"}}>
+                                        <div className='flex justify-between '>
+                                            <div className='recordListZi recordMaxW'>Hangzhou Taobao Network Co., Ltd</div>
+                                            <div className='recordListZi2'>-4000.00</div>
+                                        </div>
+                                        <div className='recordListSmallZi'><span>5874 5489 3654 7451</span></div>
+                                        <div className='recordListSmallZi'>05-22 14:32:18</div>
                                     </div>
-                                    <div className='recordListSmallZi'><span>5874 5489 3654 7451</span></div>
-                                    <div className='recordListSmallZi'>05-22 14:32:18</div>
-                                </div>
 
-                                <div className='py-20' style={{ borderBottom: "solid 1px #646F83" }}>
-                                    <div className='flex justify-between '>
-                                        <div className='recordListZi recordMaxW'>Shanghai Metro Transportation</div>
-                                        <div className='recordListZi2'>-3000.00</div>
+                                    <div className='py-20' style={{borderBottom: "solid 1px #646F83"}}>
+                                        <div className='flex justify-between '>
+                                            <div className='recordListZi recordMaxW'>Shanghai Metro Transportation</div>
+                                            <div className='recordListZi2'>-3000.00</div>
+                                        </div>
+                                        <div className='recordListSmallZi'><span>5874 5489 3654 7451</span></div>
+                                        <div className='recordListSmallZi'>05-22 14:32:18</div>
                                     </div>
-                                    <div className='recordListSmallZi'><span>5874 5489 3654 7451</span></div>
-                                    <div className='recordListSmallZi'>05-22 14:32:18</div>
-                                </div>
 
-                                <div className='py-20' style={{ borderBottom: "solid 1px #646F83" }}>
-                                    <div className='flex justify-between '>
-                                        <div className='recordListZi recordMaxW'>Cool and trendy play</div>
-                                        <div className='recordListZi2'>-100.00</div>
+                                    <div className='py-20' style={{borderBottom: "solid 1px #646F83"}}>
+                                        <div className='flex justify-between '>
+                                            <div className='recordListZi recordMaxW'>Cool and trendy play</div>
+                                            <div className='recordListZi2'>-100.00</div>
+                                        </div>
+                                        <div className='recordListSmallZi'><span>5874 5489 3654 7451</span></div>
+                                        <div className='recordListSmallZi'>05-22 14:32:18</div>
                                     </div>
-                                    <div className='recordListSmallZi'><span>5874 5489 3654 7451</span></div>
-                                    <div className='recordListSmallZi'>05-22 14:32:18</div>
-                                </div>
 
-                                <div className='py-20' style={{ borderBottom: "solid 1px #646F83" }}>
-                                    <div className='flex justify-between '>
-                                        <div className='recordListZi recordMaxW'>Yonghui Supermarket</div>
-                                        <div className='recordListZi2'>-300.00</div>
+                                    <div className='py-20' style={{borderBottom: "solid 1px #646F83"}}>
+                                        <div className='flex justify-between '>
+                                            <div className='recordListZi recordMaxW'>Yonghui Supermarket</div>
+                                            <div className='recordListZi2'>-300.00</div>
+                                        </div>
+                                        <div className='recordListSmallZi'><span>5874 5489 3654 7451</span></div>
+                                        <div className='recordListSmallZi'>05-22 14:32:18</div>
                                     </div>
-                                    <div className='recordListSmallZi'><span>5874 5489 3654 7451</span></div>
-                                    <div className='recordListSmallZi'>05-22 14:32:18</div>
-                                </div>
 
-                                <div className='py-20' style={{ borderBottom: "solid 1px #646F83" }}>
-                                    <div className='flex justify-between '>
-                                        <div className='recordListZi recordMaxW'>Snack Supermarket</div>
-                                        <div className='recordListZi2'>-520.15</div>
+                                    <div className='py-20' style={{borderBottom: "solid 1px #646F83"}}>
+                                        <div className='flex justify-between '>
+                                            <div className='recordListZi recordMaxW'>Snack Supermarket</div>
+                                            <div className='recordListZi2'>-520.15</div>
+                                        </div>
+                                        <div className='recordListSmallZi'><span>5874 5489 3654 7451</span></div>
+                                        <div className='recordListSmallZi'>05-22 14:32:18</div>
                                     </div>
-                                    <div className='recordListSmallZi'><span>5874 5489 3654 7451</span></div>
-                                    <div className='recordListSmallZi'>05-22 14:32:18</div>
                                 </div>
-                            </div>
-                        }
-                        {
-                            moreBtnShow && <LoadingButton
-                                disabled={false}
-                                className='px-48 btnColorTitleBig loadingBtnSty recordMoreBtn'
-                                color="secondary"
-                                loading={false}
-                                variant="contained"
-                                onClick={() => {
-                                    handleTransferRecord(page + 1)
-                                }}
-                            >
-                                More
-                            </LoadingButton>
-                        }
-                    </div>
+                            }
+                            {
+                                moreBtnShow && <LoadingButton
+                                    disabled={false}
+                                    className='px-48 btnColorTitleBig loadingBtnSty recordMoreBtn'
+                                    color="secondary"
+                                    loading={false}
+                                    variant="contained"
+                                    onClick={() => {
+                                        handleTransferRecord(page + 1)
+                                    }}
+                                >
+                                    More
+                                </LoadingButton>
+                            }
+                        </div>
+                    )}
+
                 </Box>
 
             </motion.div>
 
 
-        </div >
+        </div>
     )
 }
 
