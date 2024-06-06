@@ -25,7 +25,7 @@ import { tokenTransfer } from "../../store/user/userThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { selectConfig } from "../../store/config";
-import {arrayLookup, getNowTime, getOpenAppId, getOpenAppIndex, setPhoneTab} from "../../util/tools/function";
+import { arrayLookup, getNowTime, getOpenAppId, getOpenAppIndex, setPhoneTab } from "../../util/tools/function";
 import { openScan, closeScan } from "../../util/tools/scanqrcode";
 import { getWithDrawConfig, WalletConfigDefineMap, evalTokenTransferFee, cryptoWithdrawFee, getWithdrawHistoryAddress, delWithdrawHistoryAddress, getWithdrawTransferStats } from "app/store/wallet/walletThunk";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
@@ -40,6 +40,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Fiat from "./components/Fiat";
 import Nft from "./components/Nft";
+import SendTips from "../send-tips/SendTips";
 import { useTranslation } from "react-i18next";
 import LoadingButton from "@mui/lab/LoadingButton";
 
@@ -496,7 +497,7 @@ function Withdraw(props) {
 
     const [tabValue, setTabValue] = useState(0);
     const [ranges, setRanges] = useState([
-        t('home_deposite_1'), t('home_deposite_2')
+        t('home_deposite_1'), t('home_deposite_2'), t('menu_9')
         // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
     ]);
     const [cryptoSelect, setCryptoSelect] = useState(0);
@@ -535,7 +536,7 @@ function Withdraw(props) {
                 if (currencyType) {
                     if (currencyType == 1) {
                         tmpRanges = [
-                            t('home_deposite_1'), t('home_deposite_2')
+                            t('home_deposite_1'), t('home_deposite_2'), t('menu_9')
                             // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
                         ];
                         tmpCryptoSelect = 0;
@@ -543,7 +544,7 @@ function Withdraw(props) {
                     } else {
                         console.log('存在.......');
                         var tmpRanges = [
-                            t('home_deposite_2'), t('home_deposite_1')
+                            t('home_deposite_2'), t('home_deposite_1'), t('menu_9')
                             // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
                         ];
                         var tmpCryptoSelect = 1;
@@ -555,7 +556,7 @@ function Withdraw(props) {
                 }
                 else if (userData.profile?.loginType !== "unknown") {
                     var tmpRanges = [
-                        t('home_deposite_2'), t('home_deposite_1')
+                        t('home_deposite_2'), t('home_deposite_1'), t('menu_9')
                         // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
                     ];
                     var tmpCryptoSelect = 1;
@@ -563,7 +564,7 @@ function Withdraw(props) {
                     if (userData.profile.wallet?.Crypto < userData.profile.wallet?.Fiat) {
                     } else if (userData.profile.wallet?.Crypto > userData.profile.wallet?.Fiat) {
                         tmpRanges = [
-                            t('home_deposite_1'), t('home_deposite_2')
+                            t('home_deposite_1'), t('home_deposite_2'), t('menu_9')
                             // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
                         ];
                         tmpCryptoSelect = 0;
@@ -571,7 +572,7 @@ function Withdraw(props) {
                     } else {
                         if (userData.profile?.loginType === "web3_wallet") {
                             tmpRanges = [
-                                t('home_deposite_1'), t('home_deposite_2')
+                                t('home_deposite_1'), t('home_deposite_2'), t('menu_9')
                                 // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
                             ];
                             tmpCryptoSelect = 0;
@@ -605,7 +606,7 @@ function Withdraw(props) {
                         textColor="inherit"
                         variant="scrollable"
                         scrollButtons={false}
-                        className="min-h-40 wallet-show-type wallet-show-type-tab ml-16 mr-12 "
+                        className="min-h-40 wallet-show-type wallet-show-type-tab"
                         classes={{ indicator: 'flex justify-center bg-transparent w-full h-full min-h-32' }}
                         TabIndicatorProps={{
                             children: (
@@ -624,7 +625,7 @@ function Withdraw(props) {
                                 key={key}
                                 label={label}
                                 sx={{
-                                    color: '#FFFFFF', height: '3.5rem', width: '16.8rem'
+                                    color: '#FFFFFF', height: '3.5rem', width: '33.33%'
                                     // color: '#FFFFFF', height: '3.5rem', width: '10.8rem'
                                 }}
                             />
@@ -1016,7 +1017,8 @@ function Withdraw(props) {
                 </div>}
 
                 {tabValue === fiatSelect && <Fiat />}
-                {tabValue === 2 && <Nft />}
+                {/* {tabValue === 2 && <Nft />} */}
+                {tabValue === 2 &&  <SendTips />}
 
                 {/*打开粘贴板*/}
                 {/* <BootstrapDialog

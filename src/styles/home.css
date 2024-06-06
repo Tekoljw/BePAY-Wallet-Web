@@ -873,6 +873,24 @@ input[type='number'] {
     transition: all 0.25s;
 }
 
+.bianJiBiZi {
+    height: 2.2rem;
+    line-height: 2.2rem;
+    color: #6f788b;
+}
+
+.bianJiBiImg {
+    width: 2.2rem;
+    height: 2.2rem;
+    margin-left: 1rem;
+}
+
+.bianJiBiImg2 {
+    width: 1.8rem;
+    height: 1.8rem;
+    margin: auto 0.5rem auto 0rem;
+}
+
 .touchnGoListDi {
     background: #1E293B;
     transition: background 0.5s;
@@ -972,6 +990,38 @@ input[type='number'] {
     margin: 1.2rem auto 0rem auto;
     background-color: '#1E293B';
 }
+
+.addressBigW {
+    width: 100%;
+    height: 3.8rem;
+    padding: 0rem 1rem 0rem 1rem;
+}
+
+.addressW {
+    width: 90%;
+    padding: 1rem;
+    background-color: #0F172A;
+    border-radius: 6px;
+}
+
+.addressZi {
+    font-size: 1.2rem;
+    height: 2.2rem;
+    line-height: 2.2rem;
+}
+
+.addressZi2 {
+    height: 2.2rem;
+    line-height: 2.2rem;
+}
+
+.qrCodeImg {
+    width: 2.8rem;
+    height: 2.8rem;
+}
+
+
+
 
 .recordSelectHeight {
     height: 50px;

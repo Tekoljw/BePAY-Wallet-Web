@@ -25,7 +25,7 @@ import '../../../styles/home.css';
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
 import { selectConfig } from "../../store/config";
-import {arrayLookup, getOpenAppId, getOpenAppIndex, setPhoneTab} from "../../util/tools/function";
+import { arrayLookup, getOpenAppId, getOpenAppIndex, setPhoneTab } from "../../util/tools/function";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { foxSendTransaction, manualCryptoNotify } from "../../store/transfer/transferThunk";
 import {
@@ -922,7 +922,7 @@ function Deposite() {
                             label={label}
                             sx={{
                                 // color: '#FFFFFF', height: '3.5rem', width: '16.8rem'
-                                color: '#FFFFFF', height: '3.2rem', width: '10.8rem'
+                                color: '#FFFFFF', height: '3.2rem', width: '50%'
                             }}
                         />
                     ))}
@@ -972,7 +972,7 @@ function Deposite() {
                             border: 'none'
                         }}
                     >
-                        <Typography className="text-16 px-16 my-12" style={{ marginBottom: '0.5rem' }}>{t('home_deposite_4')}</Typography>
+                        <Typography className="text-16 px-16 my-12 " style={{ marginBottom: '0.5rem' }}>{t('home_deposite_4')}</Typography>
                         <div className="flex px-16" style={{ flexWrap: 'wrap', paddingLeft: '0.7rem', paddingRight: '0.7rem' }}>
                             {networkData[symbol]?.length > 0 && networkData[symbol]?.map((item, index) => {
                                 return (
@@ -1194,19 +1194,101 @@ function Deposite() {
                                     </>
                                 ) : (//没有钱包地址
                                     <>
-                                        <Box
-                                            className="mx-10 my-32"
-                                            sx={{
-                                                backgroundColor: '#0F172A',
-                                                borderRadius: '8px'
-                                            }}
-                                        >
-                                            <Typography className="text-14 px-16 my-12" style={{ margin: '0.8rem 0' }}>
-                                                <span style={{ color: '#FCE100' }}>⚠</span>
-                                                {t('home_deposite_14')}
-                                            </Typography>
-                                        </Box>
-                                        <div className='flex justify-content-center' style={{ width: "100%", overflow: "hidden" }}>
+                                        <div className='ml-10 mt-10 mb-16 text-16'>USDT Deposite Address(TRX)</div>
+
+                                        <div className='mb-16'>
+                                            <div>
+                                                <div className='flex ml-10'>
+                                                    <div className='bianJiBiZi'>地址1</div>
+                                                    <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
+                                                </div>
+                                            </div>
+                                            <div className='addressBigW flex justify-between items-center mt-10'>
+                                                <div className="addressW flex justify-between">
+                                                    <div className='addressZi'>XC415fuXUVAKCm5RdGKcffYL1iYxywKX9</div>
+                                                    <img className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"></img>
+                                                </div>
+                                                <img className='qrCodeImg' src="wallet/assets/images/deposite/newQrCode.png"></img>
+                                            </div>
+                                        </div>
+
+                                        <div className='mb-16'>
+                                            <div>
+                                                <div className='flex ml-10'>
+                                                    <div className='bianJiBiZi'>地址2</div>
+                                                    <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
+                                                </div>
+                                            </div>
+                                            <div className='addressBigW flex justify-between items-center mt-10'>
+                                                <div className="addressW flex justify-between">
+                                                    <div className='addressZi'>XC415fuXUVAKCm5RdGKcffYL1iYxywKX9</div>
+                                                    <img className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"></img>
+                                                </div>
+                                                <img className='qrCodeImg' src="wallet/assets/images/deposite/newQrCode.png"></img>
+                                            </div>
+                                        </div>
+
+                                        <div className='mb-16'>
+                                            <div>
+                                                <div className='flex ml-10'>
+                                                    <div className='bianJiBiZi'>地址3</div>
+                                                    <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
+                                                </div>
+                                            </div>
+                                            <div className='addressBigW flex justify-between items-center mt-10'>
+                                                <div className="addressW flex justify-between">
+                                                    <div className='addressZi'>XC415fuXUVAKCm5RdGKcffYL1iYxywKX9</div>
+                                                    <img className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"></img>
+                                                </div>
+                                                <img className='qrCodeImg' src="wallet/assets/images/deposite/newQrCode.png"></img>
+                                            </div>
+                                        </div>
+
+                                        <div className='mb-16'>
+                                            <div>
+                                                <div className='flex ml-10'>
+                                                    <div className='bianJiBiZi'>地址4</div>
+                                                    <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
+                                                </div>
+                                            </div>
+                                            <div className='addressBigW flex justify-between items-center mt-10'>
+                                                <div className="addressW flex justify-between">
+                                                    <div className='addressZi'>XC415fuXUVAKCm5RdGKcffYL1iYxywKX9</div>
+                                                    <img className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"></img>
+                                                </div>
+                                                <img className='qrCodeImg' src="wallet/assets/images/deposite/newQrCode.png"></img>
+                                            </div>
+                                        </div>
+
+
+                                        <div className='mb-16'>
+                                            <div>
+                                                <div className='flex ml-10'>
+                                                    <div className='bianJiBiZi'>地址5</div>
+                                                    <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
+                                                </div>
+                                            </div>
+                                            <div className='addressBigW flex justify-between items-center mt-10'>
+                                                <div className="addressW flex justify-between">
+                                                    <div className='addressZi2 flex'>
+                                                        <img className='bianJiBiImg2' src="wallet/assets/images/card/jiaHao.png"></img>
+                                                        <div className='text-16 addressZi2'>创建地址</div>
+                                                    </div>
+                                                </div>
+                                                <img className='qrCodeImg' src="wallet/assets/images/deposite/newQrCode.png"></img>
+                                            </div>
+                                        </div>
+
+
+
+
+
+
+
+
+
+
+                                        {/* <div className='flex justify-content-center' style={{ width: "100%", overflow: "hidden" }}>
                                             <LoadingButton className="px-48 text-lg btnColorTitleBig"
                                                 size="large"
                                                 color="secondary"
@@ -1226,9 +1308,12 @@ function Deposite() {
                                                     <span className='login-way-name'>{t('home_deposite_13')}</span>
                                                 </div>
                                             </LoadingButton>
-                                        </div>
+                                        </div> */}
+
+
                                     </>
                                 )}
+
                         <BootstrapDialog
                             onClose={() => { setTransferDialogState(false); }}
                             aria-labelledby="customized-dialog-title"

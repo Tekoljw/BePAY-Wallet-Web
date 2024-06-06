@@ -535,7 +535,7 @@ function Fiat(props) {
                                         </FormControl>
 
                                         <div onClick={() => { setOpenWithdrawLog(true) }} className="flex items-center justify-content-center cursor-pointer">
-                                            <img style={{ width: "24px", height: "24px" }} src="assets/images/withdraw/info.png" alt="" />
+                                            <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
                                         </div>
                                     </div>
 
@@ -556,10 +556,9 @@ function Fiat(props) {
                                             />
                                         </FormControl>
                                         <div onClick={() => { setOpenWithdrawLog(true) }} className="flex items-center justify-content-center cursor-pointer">
-                                            <img style={{ width: "24px", height: "24px" }} src="assets/images/withdraw/info.png" alt="" />
+                                            <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
                                         </div>
                                     </div>
-
                                 </div>}
 
                                 {payoutList[currencyCode]?.length > 0 && <>

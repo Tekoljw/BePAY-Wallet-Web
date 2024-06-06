@@ -448,7 +448,7 @@ function SendTips(props) {
                                                 setOpenChangeCurrency(true);
                                             }}
                                             className="flex items-center justify-content-center cursor-pointer">
-                                            <img src="wallet/assets/images/withdraw/code.png" alt="" />
+                                            <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/code.png" alt="" />
                                         </div>
                                     </>}
                                     <div
