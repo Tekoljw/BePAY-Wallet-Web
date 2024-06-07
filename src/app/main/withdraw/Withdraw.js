@@ -309,7 +309,7 @@ function Withdraw(props) {
                 setOpenChangeCurrency(false);
             }
         }, false, (err) => {
-            // console.log(`error错误: ${err}`);
+            console.log(`error错误: ${err}`);
             dispatch(showMessage({ message: t('error_2'), code: 2 }));
             setOpenChangeCurrency(false);
             closeScan();

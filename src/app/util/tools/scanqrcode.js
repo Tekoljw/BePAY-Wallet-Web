@@ -18,10 +18,11 @@ export const openScan = ( lpfnCallback, config, errCallback ) => {
 
     config = config || defaultConfig;
 
+
     if( !html5QrCodeObj ) {
         html5QrCodeObj = new Html5Qrcode( config.divIdName || defaultConfig.divIdName );
     }
-
+    console.log(html5QrCodeObj, 'html5QrCodeObj');
     // This method will trigger user permissions
     Html5Qrcode.getCameras().then(devices => {
         /**
@@ -48,7 +49,7 @@ export const openScan = ( lpfnCallback, config, errCallback ) => {
                 (errorMessage) => {
                     // parse error, ideally ignore it. For example:
                     // console.log(`QR Code no longer in front of camera.`);
-                    console.log(errorMessage); 
+                    console.log(errorMessage);
                 }
             ).catch((err) => {
                 // Start failed, handle it. For example,
@@ -58,6 +59,7 @@ export const openScan = ( lpfnCallback, config, errCallback ) => {
         }
     }).catch(err => {
         // handle err
+        console.log(err, 'err')
     });
 }
 
