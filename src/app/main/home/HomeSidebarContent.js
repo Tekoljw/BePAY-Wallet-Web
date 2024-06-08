@@ -57,6 +57,7 @@ function HomeSidebarContent(props) {
     const tabClick = (tab) => {
         history.push(tab === 'wallet' ? '/wallet/home' : `/wallet/home/${tab}`);
         setMenuTab(tab)
+        changePhoneTab(tab);
     };
 
     const changePhoneTab = (tab) => {
@@ -195,8 +196,6 @@ function HomeSidebarContent(props) {
                             )
                         }
                         onClick={(ev) => {
-                            changePhoneTab('card');
-                            history.push('/wallet/home/card');
                             tabClick('card');
                         }}
                     >
@@ -391,8 +390,8 @@ function HomeSidebarContent(props) {
                             )
                         }
                         onClick={(ev) => {
-                            changePhoneTab('security');
-                            history.push('/wallet/home/security');
+                            tabClick('security')
+                            // history.push('/wallet/home/security');
                         }}
                     >
                         <div className='iconWz'>

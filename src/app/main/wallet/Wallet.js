@@ -162,7 +162,8 @@ function Wallet() {
   const fiatsData = userData.fiat || [];
   const paymentFiat = config.payment?.currency;
   const [ranges, setRanges] = useState([
-    'Token', t('home_deposite_2'), t('home_deposite_3')
+    // 'Token', t('home_deposite_2'), t('home_deposite_3')
+    'Token', t('home_deposite_2')
   ]);
   const [userSetting, setUserSetting] = useState({});
   const [isOpenEye, setIsOpenEye] = useState(false);
@@ -281,7 +282,7 @@ function Wallet() {
   const [inputVal, setInputVal] = useState({
     searchText: "",
   });
-  let currencyCode = userData.currencyCode || "USD";
+  let currencyCode = userData.currencyCode || "VND";
   let currencyRate =
     arrayLookup(
       config.payment.currency,
@@ -666,7 +667,8 @@ function Wallet() {
     arrayLookup(
       config.payment.currency,
       "currencyCode",
-      "USD",
+      // "USD",
+      "VND",
       "exchangeRate"
     ) || 0;
 
@@ -1022,7 +1024,8 @@ function Wallet() {
       arrayLookup(
         config.payment.currency,
         "currencyCode",
-        "USD",
+        // "USD",
+        "VND",
         "exchangeRate"
       ) || 0;
 
