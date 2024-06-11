@@ -55,7 +55,7 @@ const App = () => {
     const mainTheme = useSelector(selectMainTheme);
     const token = useSelector(selectUserData).token;
     const userRole = (token.length > 0 ? token : localStorage.getItem(`Authorization-${openAppId}-${openIndex}`)) ? 'home': '';
-    const lang = getUrlParam('lang')==='undefined'?'en':getUrlParam('lang');
+    const lang = (getUrlParam('lang') ?? 'en') === 'undefined' ? 'en' : getUrlParam('lang');
 
 
     useEffect(() => {

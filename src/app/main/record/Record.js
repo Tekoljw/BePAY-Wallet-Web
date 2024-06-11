@@ -420,8 +420,8 @@ function Record() {
 
                             {transferList?.length > 0 ? (transferList?.map((transferItem, index) => {
                                 return (
-                                    <div key={transferItem.id} className='py-10'
-                                        style={{ borderBottom: index != (transferList.length - 1) ? "solid 1px #33435d" : '' }}>
+                                    <div key={transferItem.id ?? index} className='py-10'
+                                         style={{borderBottom: index != (transferList.length - 1) ? "solid 1px #33435d" : ''}}>
                                         <div className='flex justify-between '>
                                             <div className='flex'>
                                                 <div className='recordListZi'>{typeList.find(v => {

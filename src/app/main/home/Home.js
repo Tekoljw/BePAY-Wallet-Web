@@ -60,17 +60,19 @@ function HomePage(props) {
     // 滑动滑块
     const changeSlider = (phoneTab) => {
         const slide = document.querySelector('.slide');
-        if (phoneTab === 'deposite') {
-            slide.style.transform = `translateX(${1 * 100}%)`;
-            slide.style.backgroundColor = "#2C3640";
-        } else if (phoneTab === 'withdraw') {
-            slide.style.transform = `translateX(${2 * 100}%)`;
-            slide.style.backgroundColor = "#2C3640";
-        } else if (phoneTab === 'wallet') {
-            slide.style.transform = `translateX(${0 * 100}%)`;
-            slide.style.backgroundColor = "#2C3640";
-        } else {
-            slide.style.background = "#171F29";
+        if (slide) {
+            if (phoneTab === 'deposite') {
+                slide.style.transform = `translateX(${1 * 100}%)`;
+                slide.style.backgroundColor = "#2C3640";
+            } else if (phoneTab === 'withdraw') {
+                slide.style.transform = `translateX(${2 * 100}%)`;
+                slide.style.backgroundColor = "#2C3640";
+            } else if (phoneTab === 'wallet') {
+                slide.style.transform = `translateX(${0 * 100}%)`;
+                slide.style.backgroundColor = "#2C3640";
+            } else {
+                slide.style.background = "#171F29";
+            }
         }
     }
     //改变手机分页
