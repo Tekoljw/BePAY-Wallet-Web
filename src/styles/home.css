@@ -272,40 +272,136 @@ input[type='number'] {
 }
 
 .PINSty {
-    width: calc(100% - 3rem);
+    width: 100%;
     background-color: #1E293B;
-    border-radius: 1rem;
+    border-radius: 1rem 1rem 0rem 0rem;
     position: fixed;
-    left: 1.5rem;
-    padding: 3rem;
+    left: 0rem;
 }
 
 .PINTitle2 {
     width: 100%;
+    font-size: 1.8rem;
+    padding-left: 2.5rem;
     text-align: center;
-    font-weight: 600;
     margin-bottom: 2rem;
 }
 
 .closePinBtn {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
 }
 
 .PINTitle {
     width: 100%;
+    font-size: 1.8rem;
     text-align: center;
-    padding-bottom: 0.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.inputNumSty {
+    border-radius: 0.5rem;
+    padding: 0rem 0.6rem 0rem 0.6rem;
+}
+
+.inputBackDi {
+    background-color: #151C2A;
+}
+
+.pinWindow {
+    padding: 3rem;
 }
 
 .PINTitle3 {
-    width: 100%;
     text-align: center;
-    padding-bottom: 0.5rem;
-    font-size: 1.8rem;
+    font-size: 2.4rem;
     font-weight: 600;
-    padding-bottom: 2rem;
+    margin-left: 1rem;
+    height: 3.6rem;
+    line-height: 3.6rem;
+}
+
+.PINTitle4 {
+    text-align: center;
+    font-size: 2.4rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+    height: 3.6rem;
+    line-height: 3.6rem;
+}
+
+.jianPanSty {
+    width: 100%;
+}
+
+
+.jianPanBtn {
+    width: 25%;
+    text-align: center;
+    height: 5rem;
+    line-height: 5rem;
+    font-size: 2.8rem;
+}
+
+.jianPanBtImgDiv {
+    width: 25%;
+    height: 5rem;
+    font-size: 2.8rem;
+}
+
+.jianPanBtn1 {
+    width: 33.33%;
+    text-align: center;
+    height: 5rem;
+    line-height: 5rem;
+    font-size: 2.8rem;
     border-bottom: 1px solid #2C3950;
+}
+
+
+.jianPanBtn2 {
+    width: 66.66%;
+    text-align: center;
+    height: 5rem;
+    line-height: 5rem;
+    font-size: 2.8rem;
+}
+
+.jianPanBtnImg {
+    width: 3rem;
+    height: 3rem;
+    margin: auto;
+}
+
+.jianPanBtn3 {
+    text-align: center;
+    height: 15rem;
+    line-height: 15rem;
+    width: 24.9%;
+    font-size: 1.6rem;
+}
+
+.jianPanBtn4 {
+    width: 33.33%;
+    text-align: center;
+    height: 5rem;
+    line-height: 5rem;
+    font-size: 2.8rem;
+}
+
+.borderBottom {
+    border-bottom: 1px solid #2C3950;
+}
+
+.borderRight {
+    border-right: 1px solid #2C3950;
+}
+
+
+.MoneyWithdraw {
+    width: 3rem;
+    height: 3rem;
+    margin-top: 0.2rem;
 }
 
 .PinNum {
@@ -319,34 +415,34 @@ input[type='number'] {
 
 
 .PinMoveAni {
-    bottom: -35%;
+    bottom: -60%;
     animation: testMove3 0.4s ease-in-out;
     animation-fill-mode: forwards;
 }
 
 @keyframes testMove3 {
     from {
-        bottom: -35%;
+        bottom: -60%;
     }
 
     to {
-        bottom: 8%;
+        bottom: 0%;
     }
 }
 
 .PinMoveOut {
-    bottom: 8%;
+    bottom: 0%;
     animation: testMove4 0.4s ease-in-out;
     animation-fill-mode: forwards;
 }
 
 @keyframes testMove4 {
     from {
-        bottom: 8%;
+        bottom: 0%;
     }
 
     to {
-        bottom: -35%;
+        bottom: -60%;
     }
 }
 

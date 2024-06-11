@@ -211,7 +211,6 @@ function Withdraw(props) {
         setTimeout(() => {
             setOpenPinWindow(false);
         }, 400);
-
     };
 
 
@@ -521,6 +520,10 @@ function Withdraw(props) {
     }, [symbol, amountTab]);
 
     const [tabValue, setTabValue] = useState(0);
+
+    const [textSelect, setTextSelect] = useState(false);
+
+
     const [ranges, setRanges] = useState([
         t('home_deposite_1'), t('home_deposite_2')
         // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
@@ -1210,23 +1213,60 @@ function Withdraw(props) {
                 className="dialog-container"
             >
                 <div id="PINSty" className="PINSty">
-                    <div className='flex'>
-                        <div className='PINTitle2'>请输入PIN码</div>
-                        <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
-                            closePinFunc();
-                        }} />
-                    </div>
-                    <div className='PINTitle'>向（用户1384）转账</div>
-                    <div className='PINTitle3'>USDT 50.0000</div>
-                    <div className='flex justify-between'>
-                        <div className='PinNum'></div>
-                        <div className='PinNum'></div>
-                        <div className='PinNum'></div>
-                        <div className='PinNum'></div>
-                        <div className='PinNum'></div>
-                        <div className='PinNum'></div>
+                    <div className='pinWindow'>
+                        <div className='flex'>
+                            <div className='PINTitle2'>请输入PIN码</div>
+                            <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                                closePinFunc();
+                            }} />
+                        </div>
+                        <div className='PINTitle'>向（用户1384）转账</div>
+                        <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
+                            <img className='MoneyWithdraw' src="wallet/assets/images/withdraw/USDT.png"></img>
+                            <div className='PINTitle3'>USDT</div>
+                            <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")} >50.00</div>
+                        </div>
+                        <div className='flex justify-between mt-10'>
+                            <div className='PinNum'></div>
+                            <div className='PinNum'></div>
+                            <div className='PinNum'></div>
+                            <div className='PinNum'></div>
+                            <div className='PinNum'></div>
+                            <div className='PinNum'></div>
+                        </div>
                     </div>
 
+                    <div className='jianPanSty'>
+                        <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                            <div className='jianPanBtn borderRight borderBottom'>1</div>
+                            <div className='jianPanBtn borderRight borderBottom'>2</div>
+                            <div className='jianPanBtn borderRight borderBottom'>3</div>
+                            <div className='jianPanBtImgDiv flex items-center borderBottom'>
+                                <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img>
+                            </div>
+                        </div>
+                        <div className='flex' style={{ width: "100%" }}>
+                            <div style={{ width: "75.1%" }}>
+                                <div className='flex'>
+                                    <div className='jianPanBtn1 borderRight'>4</div>
+                                    <div className='jianPanBtn1 borderRight'>5</div>
+                                    <div className='jianPanBtn1 borderRight'>6</div>
+                                </div>
+                                <div className='flex'>
+                                    <div className='jianPanBtn1 borderRight'>7</div>
+                                    <div className='jianPanBtn1 borderRight'>8</div>
+                                    <div className='jianPanBtn1 borderRight'>9</div>
+                                </div>
+                                <div className='flex'>
+                                    <div className='jianPanBtn2 borderRight'>0</div>
+                                    <div className='jianPanBtn4 borderRight'>.</div>
+                                </div>
+                            </div>
+                            <div className='jianPanBtn3'>完成</div>
+                        </div>
+                    </div>
+                    <div>
+                    </div>
                 </div>
             </BootstrapDialog>
 
