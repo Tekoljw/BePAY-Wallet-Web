@@ -170,6 +170,11 @@ function Withdraw(props) {
         }
     };
 
+    const [inputIDVal, setInputIDVal] = useState("UserID");
+    const handleChangeInputVal2 = (event) => (event) => {
+        setInputIDVal(event.target.value);
+    };
+
     const changeAddress = (prop, value) => {
         setInputVal({ ...inputVal, [prop]: value });
     };
@@ -189,6 +194,26 @@ function Withdraw(props) {
     const symbols = config.symbols;
     const mounted = useRef();
     const hasAuthGoogle = useSelector(selectUserData).userInfo?.hasAuthGoogle
+    const [smallTabValue, setSmallTabValue] = useState(0);
+
+    const [openPinWindow, setOpenPinWindow] = useState(false);
+    const [movePinWindow, setMovePinWindow] = useState(false);
+
+    const openPinFunc = () => {
+        setTimeout(() => {
+            document.getElementById('PINSty').classList.add('PinMoveAni');
+        }, 0);
+    };
+
+    const closePinFunc = () => {
+        document.getElementById('PINSty').classList.remove('PinMoveAni');
+        document.getElementById('PINSty').classList.add('PinMoveOut');
+        setTimeout(() => {
+            setOpenPinWindow(false);
+        }, 400);
+
+    };
+
 
     function ismore(inputVal) {
         if (Number(inputVal) > Number(arrayLookup(symbolWallet, 'symbol', symbol, 'balance'))) {
@@ -497,7 +522,7 @@ function Withdraw(props) {
 
     const [tabValue, setTabValue] = useState(0);
     const [ranges, setRanges] = useState([
-        t('home_deposite_1'), t('home_deposite_2'), t('menu_9')
+        t('home_deposite_1'), t('home_deposite_2')
         // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
     ]);
     const [cryptoSelect, setCryptoSelect] = useState(0);
@@ -536,7 +561,7 @@ function Withdraw(props) {
                 if (currencyType) {
                     if (currencyType == 1) {
                         tmpRanges = [
-                            t('home_deposite_1'), t('home_deposite_2'), t('menu_9')
+                            t('home_deposite_1'), t('home_deposite_2')
                             // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
                         ];
                         tmpCryptoSelect = 0;
@@ -544,7 +569,7 @@ function Withdraw(props) {
                     } else {
                         console.log('存在.......');
                         var tmpRanges = [
-                            t('home_deposite_2'), t('home_deposite_1'), t('menu_9')
+                            t('home_deposite_2'), t('home_deposite_1')
                             // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
                         ];
                         var tmpCryptoSelect = 1;
@@ -556,7 +581,7 @@ function Withdraw(props) {
                 }
                 else if (userData.profile?.loginType !== "unknown") {
                     var tmpRanges = [
-                        t('home_deposite_2'), t('home_deposite_1'), t('menu_9')
+                        t('home_deposite_2'), t('home_deposite_1')
                         // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
                     ];
                     var tmpCryptoSelect = 1;
@@ -564,7 +589,7 @@ function Withdraw(props) {
                     if (userData.profile.wallet?.Crypto < userData.profile.wallet?.Fiat) {
                     } else if (userData.profile.wallet?.Crypto > userData.profile.wallet?.Fiat) {
                         tmpRanges = [
-                            t('home_deposite_1'), t('home_deposite_2'), t('menu_9')
+                            t('home_deposite_1'), t('home_deposite_2')
                             // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
                         ];
                         tmpCryptoSelect = 0;
@@ -572,7 +597,7 @@ function Withdraw(props) {
                     } else {
                         if (userData.profile?.loginType === "web3_wallet") {
                             tmpRanges = [
-                                t('home_deposite_1'), t('home_deposite_2'), t('menu_9')
+                                t('home_deposite_1'), t('home_deposite_2')
                                 // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
                             ];
                             tmpCryptoSelect = 0;
@@ -587,6 +612,7 @@ function Withdraw(props) {
         })
 
     }, [userData.profile]);
+
 
     return (
         <div>
@@ -625,7 +651,7 @@ function Withdraw(props) {
                                 key={key}
                                 label={label}
                                 sx={{
-                                    color: '#FFFFFF', height: '3.5rem', width: '33.33%'
+                                    color: '#FFFFFF', height: '3.5rem', width: '50%'
                                     // color: '#FFFFFF', height: '3.5rem', width: '10.8rem'
                                 }}
                             />
@@ -639,7 +665,7 @@ function Withdraw(props) {
                         variants={container}
                         initial="hidden"
                         animate="show"
-                        style={{ padding: '0 1.5rem 2rem 1.5rem' }}
+                        style={{ padding: '0 1.5rem 1.4rem 1.5rem' }}
                     >
                         <Box
                             className="w-full rounded-16 border flex flex-col "
@@ -673,7 +699,7 @@ function Withdraw(props) {
                                 border: 'none'
                             }}
                         >
-                            <Typography className="text-16 px-16 my-12" style={{ marginBottom: '0.5rem', marginTop: '10px' }}>{t('home_withdraw_1')}</Typography>
+                            <Typography className="text-16 px-10 my-12" style={{ marginBottom: '0.5rem', marginTop: '10px' }}>{t('home_withdraw_1')}</Typography>
                             <div className="flex px-16" style={{ flexWrap: 'wrap', paddingLeft: '0.7rem', paddingRight: '0.7rem' }}>
                                 {networkData[symbol]?.map((item, index) => {
                                     return (
@@ -696,8 +722,7 @@ function Withdraw(props) {
                                             <img style={{ width: '2rem', borderRadius: '50%' }} src={item.avatar} alt="" />
                                             <div className="px-12"
                                                 style={{
-                                                    paddingLeft: '0.4rem',
-                                                    paddingRight: '0.4rem'
+                                                    paddingLeft: '0.4rem', paddingRight: '0.4rem'
                                                 }}
                                             >
                                                 <Typography className={clsx("text-14 font-medium", networkId === item.id && 'color-ffffff')}>{item.symbol}</Typography>
@@ -708,154 +733,258 @@ function Withdraw(props) {
                                 })}
                             </div>
                             <div className="py-16" style={{ paddingTop: 0 }}>
-                                <div className="flex p-16">
-                                    <Typography className="text-16 cursor-pointer withdraw-tab-active">{t('home_sendTips_1')}</Typography>
-                                </div>
-
-                                <div className="px-16">
-                                    <div className="flex items-center justify-between">
-                                        <FormControl sx={{ width: isMobileMedia ? '77%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
-                                            <OutlinedInput
-                                                id="outlined-adornment-address send-tips-container-address"
-                                                value={inputVal.address}
-                                                onChange={handleChangeInputVal('address')}
-                                                aria-describedby="outlined-weight-helper-text"
-                                                inputProps={{
-                                                    'aria-label': 'address',
-                                                }}
+                                <Tabs
+                                    component={motion.div}
+                                    variants={item}
+                                    value={smallTabValue}
+                                    onChange={(ev, value) => setSmallTabValue(value)}
+                                    indicatorColor="secondary"
+                                    textColor="inherit"
+                                    variant="scrollable"
+                                    scrollButtons={false}
+                                    className="min-h-32"
+                                    style={{ padding: '0 0', margin: '0.2rem 0rem 1.4rem 1rem', borderColor: 'transparent', backgroundColor: '#1E293B', width: 'auto', borderRadius: '0px', height: '30px' }}
+                                    classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
+                                    TabIndicatorProps={{
+                                        children: (
+                                            <Box
+                                                sx={{ bgcolor: 'text.disabled' }}
+                                                className="w-full h-full rounded-full huaKuaBgColorCard"
                                             />
-                                            <div className='paste-btn' onClick={() => {
-                                                const clipPromise = navigator.clipboard.readText();
-                                                clipPromise.then(clipText => {
-                                                    changeAddress('address', clipText)
-                                                })
-                                            }}>{t('home_withdraw_11')}</div>
-                                        </FormControl>
-                                        {
-                                            isMobileMedia &&
-                                            <div className="flex items-center justify-content-center"
+                                        ),
+                                    }}
+                                    sx={{
+                                        padding: '1rem 1rem',
+                                    }}
+                                >
+                                    {Object.entries(["External", 'Inside']).map(([key, label]) => (
+                                        <Tab
+                                            className="text-16 font-semibold min-h-32 min-w-60 mx4 px-12 txtColorTitle opacity-100 zindex"
+                                            disableRipple
+                                            key={key}
+                                            label={label}
+                                            sx={{
+                                                color: '#FFFFFF', height: '32px', width: 'auto', marginRight: "1rem"
+                                            }}
+                                        />
+                                    ))}
+                                </Tabs>
+
+                                {
+                                    smallTabValue === 0 && <div className="px-10 ">
+                                        <div className="flex items-center justify-between">
+                                            <FormControl sx={{ width: isMobileMedia ? '77%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
+                                                <OutlinedInput
+                                                    id="outlined-adornment-address send-tips-container-address"
+                                                    value={inputVal.address}
+                                                    onChange={handleChangeInputVal('address')}
+                                                    aria-describedby="outlined-weight-helper-text"
+                                                    inputProps={{
+                                                        'aria-label': 'address',
+                                                    }}
+                                                />
+                                                <div className='paste-btn' onClick={() => {
+                                                    const clipPromise = navigator.clipboard.readText();
+                                                    clipPromise.then(clipText => {
+                                                        changeAddress('address', clipText)
+                                                    })
+                                                }}>{t('home_withdraw_11')}</div>
+                                            </FormControl>
+                                            {
+                                                isMobileMedia &&
+                                                <div className="flex items-center justify-content-center"
+                                                    onClick={() => {
+                                                        setOpenChangeCurrency(true);
+                                                    }}
+                                                >
+                                                    <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/code.png" alt="" />
+                                                </div>
+                                            }
+
+                                            <div onClick={() => { setOpenWithdrawLog(true) }} className="flex items-center justify-content-center">
+                                                <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
+                                            </div>
+                                        </div>
+
+                                        <Typography className="text-16 cursor-pointer mt-16">
+                                            {t('home_withdraw_3')}
+                                        </Typography>
+                                        <div className="flex items-center py-16 justify-between" style={{}}>
+                                            <FormControl sx={{ width: '68%', borderColor: '#94A3B8' }} variant="outlined">
+                                                <TextField
+                                                    error={ismore(inputVal.amount)}
+                                                    helperText={ismore(inputVal.amount) ? t('home_deposite_28') : ''}
+                                                    step="0.000001"
+                                                    id="outlined-adornment-address send-tips-container-amount"
+                                                    value={inputVal.amount}
+                                                    onChange={handleChangeInputVal('amount')}
+                                                    endAdornment={<InputAdornment position="end">
+                                                        <Typography className="text-16 font-medium cursor-pointer color-2DD4BF">
+                                                            {t('home_withdraw_5')}
+                                                        </Typography>
+                                                    </InputAdornment>}
+                                                    aria-describedby="outlined-weight-helper-text"
+                                                    inputProps={{
+                                                        'aria-label': 'amount',
+                                                    }}
+                                                    type="number"
+                                                    FormHelperTextProps={{ className: "form-helper-text" }}
+                                                />
+                                            </FormControl>
+                                            <div
+                                                className={clsx('mx-8 withdraw-input-item-right py-16 cursor-pointer text-center touchnGoListDi amount-tab-item', amountTab === 'HIGHER' && 'withdraw-input-item-right-active')}
                                                 onClick={() => {
-                                                    setOpenChangeCurrency(true);
+                                                    setAmountTab('HIGHER')
                                                 }}
                                             >
-                                                <img src="wallet/assets/images/withdraw/code.png" alt="" />
+                                                {t('home_withdraw_12')}
                                             </div>
-                                        }
-
-                                        <div onClick={() => { setOpenWithdrawLog(true) }} className="flex items-center justify-content-center">
-                                            <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
-                                        </div>
-                                    </div>
-
-                                    <Typography className="text-16 cursor-pointer mt-16">
-                                        {t('home_withdraw_3')}
-                                    </Typography>
-                                    <div className="flex items-center py-16 justify-between" style={{ marginRight: '-1rem' }}>
-                                        <FormControl sx={{ width: '70%', borderColor: '#94A3B8' }} variant="outlined">
-                                            {/* <OutlinedInput
-                                                id="outlined-adornment-address send-tips-container-amount"
-                                                value={inputVal.amount}
-                                                onChange={handleChangeInputVal('amount')}
-                                                endAdornment={<InputAdornment position="end">
-                                                    <Typography className="text-16 font-medium cursor-pointer color-2DD4BF">
-                                                        {t('home_withdraw_5')}
-                                                    </Typography>
-                                                </InputAdornment>}
-                                                aria-describedby="outlined-weight-helper-text"
-                                                inputProps={{
-                                                    'aria-label': 'amount',
+                                            <div
+                                                className={clsx('mx-8 withdraw-input-item-right py-16 cursor-pointer text-center touchnGoListDi amount-tab-item', amountTab === 'LOW' && 'withdraw-input-item-right-active')}
+                                                onClick={() => {
+                                                    setAmountTab('LOW')
                                                 }}
-                                                type="number"
-                                            /> */}
-                                            <TextField
-                                                error={ismore(inputVal.amount)}
-                                                helperText={ismore(inputVal.amount) ? t('home_deposite_28') : ''}
-                                                step="0.000001"
-                                                id="outlined-adornment-address send-tips-container-amount"
-                                                value={inputVal.amount}
-                                                onChange={handleChangeInputVal('amount')}
-                                                endAdornment={<InputAdornment position="end">
-                                                    <Typography className="text-16 font-medium cursor-pointer color-2DD4BF">
-                                                        {t('home_withdraw_5')}
-                                                    </Typography>
-                                                </InputAdornment>}
-                                                aria-describedby="outlined-weight-helper-text"
-                                                inputProps={{
-                                                    'aria-label': 'amount',
+                                            >
+                                                {t('home_withdraw_13')}
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center justify-between my-16" style={{ marginTop: 0 }}>
+                                            <Typography className="text-16 cursor-pointer ">
+                                                <p style={{ fontSize: '1.3rem' }}> {t('home_withdraw_7')}: {fee}  {symbol}</p>
+                                            </Typography>
+                                            <Typography
+                                                className="text-16 cursor-pointer color-2DD4BF"
+                                                onClick={() => {
+                                                    if (!bAppendFee) {
+                                                        setBAppendFee(true);
+                                                        changeAddress('amount', Number(inputVal.amount) + Number(fee));
+                                                    } else {
+                                                        setBAppendFee(false);
+                                                        changeAddress('amount', Number(inputVal.amount) - Number(fee));
+                                                    }
+                                                    evalFee(symbol, networkId, amountTab)
                                                 }}
-                                                type="number"
-                                                FormHelperTextProps={{ className: "form-helper-text" }}
-                                            />
-                                        </FormControl>
-                                        <div
-                                            className={clsx('mx-8 withdraw-input-item-right py-16 cursor-pointer text-center touchnGoListDi amount-tab-item', amountTab === 'HIGHER' && 'withdraw-input-item-right-active')}
-                                            onClick={() => {
-                                                setAmountTab('HIGHER')
-                                            }}
-                                        >
-                                            {t('home_withdraw_12')}
+                                            >
+                                                <p style={{ fontSize: '1.3rem' }}>{t('home_withdraw_8')}</p>
+                                            </Typography>
                                         </div>
-                                        <div
-                                            className={clsx('mx-8 withdraw-input-item-right py-16 cursor-pointer text-center touchnGoListDi amount-tab-item', amountTab === 'LOW' && 'withdraw-input-item-right-active')}
-                                            onClick={() => {
-                                                setAmountTab('LOW')
+
+                                        <Box
+                                            className="py-8"
+                                            sx={{
+                                                backgroundColor: '#0F172A',
+                                                borderRadius: '8px'
                                             }}
                                         >
-                                            {t('home_withdraw_13')}
+                                            <Typography className="text-14 px-16 ">
+                                                <span style={{ color: '#FCE100' }}>⚠</span> {t('home_withdraw_15')}{TransactionFee}  {symbol}{t('home_withdraw_16')}{t('home_withdraw_17')}
+                                            </Typography>
+                                        </Box>
+
+                                        <LoadingButton
+                                            disabled={ismore(inputVal.amount)}
+                                            className={clsx('px-48  m-28 btnColorTitleBig loadingBtnSty')}
+                                            color="secondary"
+                                            loading={openLoad}
+                                            variant="contained"
+                                            sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
+                                            style={{ width: '24rem', height: '4rem', fontSize: "20px", margin: '1rem auto 2.5rem', display: 'block', lineHeight: "inherit", padding: "0px" }}
+                                            onClick={() => {
+
+                                                handleSubmit()
+                                            }}
+                                        >
+                                            {t('home_withdraw_10')}
+                                        </LoadingButton>
+                                    </div>
+                                }
+
+                                {
+                                    smallTabValue === 1 && <div className="px-10 ">
+                                        <div className="flex items-center justify-between ">
+                                            <FormControl sx={{ width: isMobileMedia ? '77%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
+                                                <OutlinedInput
+                                                    id="outlined-adornment-address send-tips-container-address"
+                                                    value={inputIDVal}
+                                                    onChange={handleChangeInputVal2}
+                                                    aria-describedby="outlined-weight-helper-text"
+                                                />
+                                                <div className='paste-btn' onClick={() => {
+                                                    const clipPromise = navigator.clipboard.readText();
+                                                    clipPromise.then(clipText => {
+                                                        changeAddress('address', clipText)
+                                                    })
+                                                }}>{t('home_withdraw_11')}</div>
+                                            </FormControl>
+                                            {
+                                                isMobileMedia &&
+                                                <div className="flex items-center justify-content-center"
+                                                    onClick={() => {
+                                                        setOpenChangeCurrency(true);
+                                                    }}
+                                                >
+                                                    <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/code.png" alt="" />
+                                                </div>
+                                            }
+
+                                            <div onClick={() => { setOpenWithdrawLog(true) }} className="flex items-center justify-content-center">
+                                                <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="flex items-center justify-between my-16" style={{ marginTop: 0 }}>
-                                        <Typography className="text-16 cursor-pointer ">
-                                            <p style={{ fontSize: '1.3rem' }}> {t('home_withdraw_7')}: {fee}  {symbol}</p>
+
+                                        <Typography className="text-16 cursor-pointer mt-16" >
+                                            {t('home_withdraw_3')}
                                         </Typography>
-                                        <Typography
-                                            className="text-16 cursor-pointer color-2DD4BF"
+                                        <div className="flex items-center py-12 justify-between" style={{}}>
+                                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
+                                                <TextField
+                                                    error={ismore(inputVal.amount)}
+                                                    helperText={ismore(inputVal.amount) ? t('home_deposite_28') : ''}
+                                                    step="0.000001"
+                                                    id="outlined-adornment-address send-tips-container-amount"
+                                                    value={inputVal.amount}
+                                                    onChange={handleChangeInputVal('amount')}
+                                                    endAdornment={<InputAdornment position="end">
+                                                        <Typography className="text-16 font-medium cursor-pointer color-2DD4BF">
+                                                            {t('home_withdraw_5')}
+                                                        </Typography>
+                                                    </InputAdornment>}
+                                                    aria-describedby="outlined-weight-helper-text"
+                                                    inputProps={{
+                                                        'aria-label': 'amount',
+                                                    }}
+                                                    type="number"
+                                                    FormHelperTextProps={{ className: "form-helper-text" }}
+                                                />
+                                            </FormControl>
+                                        </div>
+
+                                        <div className="flex items-center justify-content-start " style={{}}>
+                                            <Checkbox defaultChecked />
+                                            <Typography style={{ fontSize: '1.4rem' }}>
+                                                {t('home_sendTips_8')}
+                                            </Typography>
+                                        </div>
+
+                                        <LoadingButton
+                                            disabled={openPinWindow}
+                                            className={clsx('px-48  m-28 btnColorTitleBig loadingBtnSty')}
+                                            color="secondary"
+                                            loading={openPinWindow}
+                                            variant="contained"
+                                            sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
+                                            style={{ width: '24rem', height: '4rem', fontSize: "20px", margin: '1rem auto 2.5rem', display: 'block', lineHeight: "inherit", padding: "0px" }}
                                             onClick={() => {
-                                                if (!bAppendFee) {
-                                                    setBAppendFee(true);
-                                                    changeAddress('amount', Number(inputVal.amount) + Number(fee));
-                                                } else {
-                                                    setBAppendFee(false);
-                                                    changeAddress('amount', Number(inputVal.amount) - Number(fee));
-                                                }
-                                                evalFee(symbol, networkId, amountTab)
+                                                setOpenPinWindow(true)
+                                                openPinFunc()
                                             }}
                                         >
-                                            <p style={{ fontSize: '1.3rem' }}>{t('home_withdraw_8')}</p>
-                                        </Typography>
+                                            {t('home_withdraw_10')}
+                                        </LoadingButton>
                                     </div>
+                                }
 
-                                    <Box
-                                        className="py-8"
-                                        sx={{
-                                            backgroundColor: '#0F172A',
-                                            borderRadius: '8px'
-                                        }}
-                                    >
-                                        <Typography className="text-14 px-16 ">
-                                            <span style={{ color: '#FCE100' }}>⚠</span> {t('home_withdraw_15')}{TransactionFee}  {symbol}{t('home_withdraw_16')}{t('home_withdraw_17')}
-                                        </Typography>
-                                    </Box>
-
-                                </div>
                             </div>
-
-                            {/* 提币动画演示 */}
-                            <LoadingButton
-                                disabled={ismore(inputVal.amount)}
-                                className={clsx('px-48  m-28 btnColorTitleBig loadingBtnSty')}
-                                color="secondary"
-                                loading={openLoad}
-                                variant="contained"
-                                sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
-                                style={{ width: '24rem', height: '4rem', fontSize: "20px", margin: '1rem auto 2.5rem', display: 'block', lineHeight: "inherit", padding: "0px" }}
-                                onClick={() => {
-
-                                    handleSubmit()
-                                }}
-                            >
-                                {t('home_withdraw_10')}
-                            </LoadingButton>
 
                         </Box>
                     </motion.div>
@@ -943,8 +1072,6 @@ function Withdraw(props) {
                         </DialogContent>
                     </BootstrapDialog>
 
-
-
                     {/*提虚拟币界面样式*/}
                     <BootstrapDialog
                         onClose={() => { setOpenTiBi(false); }}
@@ -1005,20 +1132,10 @@ function Withdraw(props) {
                         </DialogContent>
                     </BootstrapDialog>
 
-
-
-
-
-
-
-
-
-
                 </div>}
 
                 {tabValue === fiatSelect && <Fiat />}
                 {/* {tabValue === 2 && <Nft />} */}
-                {tabValue === 2 &&  <SendTips />}
 
                 {/*打开粘贴板*/}
                 {/* <BootstrapDialog
@@ -1081,8 +1198,38 @@ function Withdraw(props) {
                         </div>
                     </DialogContent>
                 </BootstrapDialog> */}
-
             </div>
+
+
+            <BootstrapDialog
+                onClose={() => {
+                    closePinFunc();
+                }}
+                aria-labelledby="customized-dialog-title"
+                open={openPinWindow}
+                className="dialog-container"
+            >
+                <div id="PINSty" className="PINSty">
+                    <div className='flex'>
+                        <div className='PINTitle2'>请输入PIN码</div>
+                        <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                            closePinFunc();
+                        }} />
+                    </div>
+                    <div className='PINTitle'>向（用户1384）转账</div>
+                    <div className='PINTitle3'>USDT 50.0000</div>
+                    <div className='flex justify-between'>
+                        <div className='PinNum'></div>
+                        <div className='PinNum'></div>
+                        <div className='PinNum'></div>
+                        <div className='PinNum'></div>
+                        <div className='PinNum'></div>
+                        <div className='PinNum'></div>
+                    </div>
+
+                </div>
+            </BootstrapDialog>
+
         </div>
     )
 }

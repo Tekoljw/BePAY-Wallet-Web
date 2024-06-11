@@ -271,6 +271,85 @@ input[type='number'] {
     /* Just for visual demonstration */
 }
 
+.PINSty {
+    width: calc(100% - 3rem);
+    background-color: #1E293B;
+    border-radius: 1rem;
+    position: fixed;
+    left: 1.5rem;
+    padding: 3rem;
+}
+
+.PINTitle2 {
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+.closePinBtn {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.PINTitle {
+    width: 100%;
+    text-align: center;
+    padding-bottom: 0.5rem;
+}
+
+.PINTitle3 {
+    width: 100%;
+    text-align: center;
+    padding-bottom: 0.5rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #2C3950;
+}
+
+.PinNum {
+    margin-top: 2.5rem;
+    background-color: #151C2A;
+    width: 12%;
+    aspect-ratio: 1/1;
+    border-radius: 0.5rem;
+    max-width: 10rem;
+}
+
+
+.PinMoveAni {
+    bottom: -35%;
+    animation: testMove3 0.4s ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes testMove3 {
+    from {
+        bottom: -35%;
+    }
+
+    to {
+        bottom: 8%;
+    }
+}
+
+.PinMoveOut {
+    bottom: 8%;
+    animation: testMove4 0.4s ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes testMove4 {
+    from {
+        bottom: 8%;
+    }
+
+    to {
+        bottom: -35%;
+    }
+}
+
 .shrink {
     animation: shrink 0.6s forwards;
     /* 1秒动画，结束后保持最终状态 */
@@ -592,6 +671,18 @@ input[type='number'] {
     overflow: hidden;
 }
 
+.guoDuDongPin {
+    transition: all 1s;
+}
+
+.pinJin {
+    bottom: 2%;
+}
+
+.pinOut {
+    bottom: -35%;
+}
+
 .cardIconW {
     margin-top: 0.25rem;
     width: 2.5rem;
@@ -884,9 +975,12 @@ input[type='number'] {
     line-height: 2.2rem;
     color: #6f788b;
     max-width: 30rem;
-    white-space: nowrap; /* 禁止换行 */
-    overflow: hidden; /* 隐藏超出部分 */
-    text-overflow: ellipsis; /* 超出部分用省略号显示 */
+    white-space: nowrap;
+    /* 禁止换行 */
+    overflow: hidden;
+    /* 隐藏超出部分 */
+    text-overflow: ellipsis;
+    /* 超出部分用省略号显示 */
 }
 
 .bianJiBiImg {
@@ -1050,9 +1144,9 @@ input[type='number'] {
 
 .recordListZi {
     color: #ffffff;
-    font-size: 1.6rem;
-    height: 3rem;
-    line-height: 3rem;
+    font-size: 1.4rem;
+    height: 2.4rem;
+    line-height: 2.4rem;
 }
 
 .recordMaxW {
@@ -1067,15 +1161,15 @@ input[type='number'] {
 }
 
 .recordListSmallZi {
-    height: 2.6rem;
-    line-height: 2.6rem;
+    height: 2.4rem;
+    line-height: 2.4rem;
 }
 
 .recordListZi2 {
     color: #ffffff;
-    font-size: 2.3rem;
-    height: 3rem;
-    line-height: 3rem;
+    font-size: 1.8rem;
+    height: 2.4rem;
+    line-height: 2.4rem;
 }
 
 .wallet-show-type .muiltr-heg063-MuiTabs-flexContainer {

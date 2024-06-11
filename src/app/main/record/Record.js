@@ -26,7 +26,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { borderRadius } from '@mui/system';
-import {setPhoneTab, getNowTime} from "../../util/tools/function";
+import { setPhoneTab, getNowTime } from "../../util/tools/function";
 import FuseLoading from "@fuse/core/FuseLoading";
 
 const container = {
@@ -126,7 +126,7 @@ function Record() {
 
                 let result = res.payload
                 if (result?.records?.length > 0) {
-                    setTransferList([ ...transferList, ...result?.records])
+                    setTransferList([...transferList, ...result?.records])
                     setPage(result.current)
 
                     if (result.current === result.pages) {
@@ -411,15 +411,17 @@ function Record() {
                     </Paper> */}
 
                     {isLoading ? (
-                        <FuseLoading />
+                        <div className='flex' style={{ height: "85vh" }}>
+                            <FuseLoading />
+                        </div>
                     ) : (
                         <div className='px-12'
-                             style={{width: '100%', borderRadius: "1rem", backgroundColor: '#1E293B'}}>
+                            style={{ width: '100%', borderRadius: "1rem", backgroundColor: '#1E293B' }}>
 
                             {transferList?.length > 0 ? (transferList?.map((transferItem, index) => {
                                 return (
-                                    <div key={transferItem.id} className='py-20'
-                                         style={{borderBottom: index != (transferList.length - 1) ? "solid 1px #646F83" : ''}}>
+                                    <div key={transferItem.id} className='py-10'
+                                        style={{ borderBottom: index != (transferList.length - 1) ? "solid 1px #33435d" : '' }}>
                                         <div className='flex justify-between '>
                                             <div className='flex'>
                                                 <div className='recordListZi'>{typeList.find(v => {
@@ -436,61 +438,12 @@ function Record() {
                                     </div>
                                 )
                             })) : (
-                                <div className="mt-12 no-data-container" style={{height: 'calc(100vh - 24rem)'}}>
+                                <div className="mt-12 no-data-container" style={{ height: 'calc(100vh - 24rem)' }}>
                                     <img className='noDataImg' src='wallet/assets/images/logo/xc.png'></img>
                                     <div className='noDataImgTxt text-22'>{t('home_record_12')}</div>
                                 </div>
                             )}
 
-
-                            {
-                                type === 4 && < div>
-                                    <div className='py-20' style={{borderBottom: "solid 1px #646F83"}}>
-                                        <div className='flex justify-between '>
-                                            <div className='recordListZi recordMaxW'>Hangzhou Taobao Network Co., Ltd</div>
-                                            <div className='recordListZi2'>-4000.00</div>
-                                        </div>
-                                        <div className='recordListSmallZi'><span>5874 5489 3654 7451</span></div>
-                                        <div className='recordListSmallZi'>05-22 14:32:18</div>
-                                    </div>
-
-                                    <div className='py-20' style={{borderBottom: "solid 1px #646F83"}}>
-                                        <div className='flex justify-between '>
-                                            <div className='recordListZi recordMaxW'>Shanghai Metro Transportation</div>
-                                            <div className='recordListZi2'>-3000.00</div>
-                                        </div>
-                                        <div className='recordListSmallZi'><span>5874 5489 3654 7451</span></div>
-                                        <div className='recordListSmallZi'>05-22 14:32:18</div>
-                                    </div>
-
-                                    <div className='py-20' style={{borderBottom: "solid 1px #646F83"}}>
-                                        <div className='flex justify-between '>
-                                            <div className='recordListZi recordMaxW'>Cool and trendy play</div>
-                                            <div className='recordListZi2'>-100.00</div>
-                                        </div>
-                                        <div className='recordListSmallZi'><span>5874 5489 3654 7451</span></div>
-                                        <div className='recordListSmallZi'>05-22 14:32:18</div>
-                                    </div>
-
-                                    <div className='py-20' style={{borderBottom: "solid 1px #646F83"}}>
-                                        <div className='flex justify-between '>
-                                            <div className='recordListZi recordMaxW'>Yonghui Supermarket</div>
-                                            <div className='recordListZi2'>-300.00</div>
-                                        </div>
-                                        <div className='recordListSmallZi'><span>5874 5489 3654 7451</span></div>
-                                        <div className='recordListSmallZi'>05-22 14:32:18</div>
-                                    </div>
-
-                                    <div className='py-20' style={{borderBottom: "solid 1px #646F83"}}>
-                                        <div className='flex justify-between '>
-                                            <div className='recordListZi recordMaxW'>Snack Supermarket</div>
-                                            <div className='recordListZi2'>-520.15</div>
-                                        </div>
-                                        <div className='recordListSmallZi'><span>5874 5489 3654 7451</span></div>
-                                        <div className='recordListSmallZi'>05-22 14:32:18</div>
-                                    </div>
-                                </div>
-                            }
                             {
                                 moreBtnShow && <LoadingButton
                                     disabled={false}

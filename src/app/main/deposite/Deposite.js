@@ -1500,7 +1500,7 @@ function Deposite() {
                                             value={index}
                                         >
                                             <div
-                                                className="flex items-center py-4 flex-grow"
+                                                className="flex items-center py-2 flex-grow"
                                                 style={{ width: '100%' }}
                                             >
                                                 <div className="flex items-center">

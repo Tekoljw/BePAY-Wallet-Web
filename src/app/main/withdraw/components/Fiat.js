@@ -157,11 +157,11 @@ function Fiat(props) {
     const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || 'USD');
     const [fee, setFee] = useState(0);
     const [fiatsSelected, setFiatsSelected] = useState(0);
-    const [ bankId, setBankId ] = useState(0);
-    const [ bankList, setBankList ] = useState({});
+    const [bankId, setBankId] = useState(0);
+    const [bankList, setBankList] = useState({});
 
-    const [ entryType, setEntryType ] = useState(0);
-    const [ payoutList, setPayoutList ] = useState({});
+    const [entryType, setEntryType] = useState(0);
+    const [payoutList, setPayoutList] = useState({});
     // select切换
     const handleChangeFiats = (event) => {
         setFiatsSelected(event.target.value);
@@ -350,8 +350,8 @@ function Fiat(props) {
                     variants={container}
                     initial="hidden"
                     animate="show"
-                    className="mb-24"
-                    style={{ padding: '0 1.5rem 0 1.5rem' }}
+                    className=""
+                    style={{ padding: '0 1.5rem 0 1.5rem', marginBottom: "1.4rem" }}
                 >
                     <Box
                         className="w-full rounded-16 border flex flex-col select-fieldset-noborder"
@@ -399,7 +399,7 @@ function Fiat(props) {
                                             value={index}
                                         >
                                             <div
-                                                className="flex items-center py-4 flex-grow"
+                                                className="flex items-center py-2 flex-grow"
                                                 style={{ width: '100%' }}
                                             >
                                                 <div className="flex items-center">
