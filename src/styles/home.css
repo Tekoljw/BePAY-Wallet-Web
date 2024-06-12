@@ -308,6 +308,10 @@ input[type='number'] {
     background-color: #151C2A;
 }
 
+.pinJianPanColor1 {
+    background-color: #374252 !important;
+}
+
 .pinWindow {
     padding: 3rem;
 }
@@ -358,6 +362,14 @@ input[type='number'] {
     border-bottom: 1px solid #2C3950;
 }
 
+.jianPanNumBtn {
+    width: 33.33%;
+    text-align: center;
+    height: 5.2rem;
+    line-height: 5.2rem;
+    font-size: 2.8rem;
+}
+
 
 .jianPanBtn2 {
     width: 66.66%;
@@ -371,7 +383,9 @@ input[type='number'] {
     width: 3rem;
     height: 3rem;
     margin: auto;
+    pointer-events: none;
 }
+
 
 .jianPanBtn3 {
     text-align: center;
@@ -397,6 +411,11 @@ input[type='number'] {
     border-right: 1px solid #2C3950;
 }
 
+.color-box {
+    background-color: #1E293B;
+    transition: background-color 0.3s;
+}
+
 
 .MoneyWithdraw {
     width: 3rem;
@@ -416,7 +435,7 @@ input[type='number'] {
 
 .PinMoveAni {
     bottom: -60%;
-    animation: testMove3 0.4s ease-in-out;
+    animation: testMove3 0.3s ease-in-out;
     animation-fill-mode: forwards;
 }
 
@@ -432,7 +451,7 @@ input[type='number'] {
 
 .PinMoveOut {
     bottom: 0%;
-    animation: testMove4 0.4s ease-in-out;
+    animation: testMove4 0.3s ease-in-out;
     animation-fill-mode: forwards;
 }
 
@@ -834,8 +853,6 @@ input[type='number'] {
     background-color: rgba(0, 0, 0, 0.6);
 }
 
-
-
 .kaBeiZi {
     font-size: 1.8rem;
     background-color: rgba(0, 0, 0, 0);
@@ -843,6 +860,34 @@ input[type='number'] {
     width: 35%;
 }
 
+
+.errorPinDi {
+    background-color: #1E293B;
+}
+
+.errorPinZi {
+    width: 100%;
+    font-size: 2rem;
+    text-align: center;
+    padding: 3rem;
+    min-height: 13rem;
+}
+
+.errorRightLine {
+    border-right: 1px solid #2C3950;
+}
+
+.errorPinLine {
+    border-bottom: 1px solid #2C3950;
+}
+
+.errorPinBtn {
+    width: 50%;
+    height: 6rem;
+    line-height: 6rem;
+    text-align: center;
+    font-size: 1.8rem;
+}
 
 .wallet-top-item {
     width: 50%;
@@ -2253,7 +2298,7 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
 
 
     .dialog-container .muiltr-1loik7f-MuiPaper-root-MuiDialog-paper {
-        max-width: 360px;
+        max-width: calc(100% - 3rem);
     }
 
     .dialog-select-fiat-item {

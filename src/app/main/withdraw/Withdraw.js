@@ -43,6 +43,7 @@ import Nft from "./components/Nft";
 import SendTips from "../send-tips/SendTips";
 import { useTranslation } from "react-i18next";
 import LoadingButton from "@mui/lab/LoadingButton";
+import history from '@history';
 
 const container = {
     show: {
@@ -198,6 +199,11 @@ function Withdraw(props) {
 
     const [openPinWindow, setOpenPinWindow] = useState(false);
     const [movePinWindow, setMovePinWindow] = useState(false);
+    const [createPinWindow, setCreatePinWindow] = useState(false);
+    const [openPinErr, setOpenPinErr] = useState(false);
+    const changePhoneTab = (tab) => {
+        window.localStorage.setItem('phoneTab', tab);
+    }
 
     const openPinFunc = () => {
         setTimeout(() => {
@@ -210,8 +216,23 @@ function Withdraw(props) {
         document.getElementById('PINSty').classList.add('PinMoveOut');
         setTimeout(() => {
             setOpenPinWindow(false);
-        }, 400);
+        }, 300);
     };
+
+    const openCreatePinFunc = () => {
+        setTimeout(() => {
+            document.getElementById('CreateSty').classList.add('PinMoveAni');
+        }, 0);
+    };
+
+    const closeCreatePinFunc = () => {
+        document.getElementById('CreateSty').classList.remove('PinMoveAni');
+        document.getElementById('CreateSty').classList.add('PinMoveOut');
+        setTimeout(() => {
+            setCreatePinWindow(false)
+        }, 300);
+    };
+
 
 
     function ismore(inputVal) {
@@ -520,16 +541,25 @@ function Withdraw(props) {
     }, [symbol, amountTab]);
 
     const [tabValue, setTabValue] = useState(0);
-
     const [textSelect, setTextSelect] = useState(false);
-
-
     const [ranges, setRanges] = useState([
         t('home_deposite_1'), t('home_deposite_2')
         // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
     ]);
     const [cryptoSelect, setCryptoSelect] = useState(0);
     const [fiatSelect, setFiatSelect] = useState(1);
+
+
+    const changeToBlack = (target) => {
+        document.getElementById(target.target.id).classList.add('pinJianPanColor1');
+    };
+
+    const changeToWhite = (target) => {
+        document.getElementById(target.target.id).classList.remove('pinJianPanColor1');
+    };
+
+
+
     const getSettingSymbol = async () => {
         return {}
         var openAppId = getOpenAppId();
@@ -978,8 +1008,10 @@ function Withdraw(props) {
                                             sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
                                             style={{ width: '24rem', height: '4rem', fontSize: "20px", margin: '1rem auto 2.5rem', display: 'block', lineHeight: "inherit", padding: "0px" }}
                                             onClick={() => {
-                                                setOpenPinWindow(true)
-                                                openPinFunc()
+                                                // setOpenPinWindow(true)
+                                                // openPinFunc()
+                                                setCreatePinWindow(true)
+                                                openCreatePinFunc()
                                             }}
                                         >
                                             {t('home_withdraw_10')}
@@ -1138,6 +1170,7 @@ function Withdraw(props) {
                 </div>}
 
                 {tabValue === fiatSelect && <Fiat />}
+
                 {/* {tabValue === 2 && <Nft />} */}
 
                 {/*打开粘贴板*/}
@@ -1201,6 +1234,8 @@ function Withdraw(props) {
                         </div>
                     </DialogContent>
                 </BootstrapDialog> */}
+
+
             </div>
 
 
@@ -1270,6 +1305,119 @@ function Withdraw(props) {
                 </div>
             </BootstrapDialog>
 
+            <BootstrapDialog
+                onClose={() => {
+                    closeCreatePinFunc();
+                }}
+                aria-labelledby="customized-dialog-title"
+                open={createPinWindow}
+                className="dialog-container"
+            >
+                <div id="CreateSty" className="PINSty">
+                    <div className='pinWindow'>
+                        <div className='flex'>
+                            <div className='PINTitle2'>创建PIN码</div>
+                            <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                                closeCreatePinFunc();
+                            }} />
+                        </div>
+                        <div className='PINTitle'>输入用于支付的6位数字密码</div>
+                        <div className='flex justify-between mt-32 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
+                            <div className='PinNum'></div>
+                            <div className='PinNum'></div>
+                            <div className='PinNum'></div>
+                            <div className='PinNum'></div>
+                            <div className='PinNum'></div>
+                            <div className='PinNum'></div>
+                        </div>
+                    </div>
+
+                    <div className='jianPanSty'>
+                        <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                            <div id="createPin1" className='jianPanNumBtn borderRight borderBottom color-box'
+                                onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    setOpenPinErr(true);
+                                    closeCreatePinFunc();
+                                }}
+                            >1</div>
+                            <div id="createPin2" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                            >2</div>
+                            <div id="createPin3" className='jianPanNumBtn  borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}>3</div>
+                        </div>
+                        <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                            <div id="createPin4" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}>4</div>
+                            <div id="createPin5" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}>5</div>
+                            <div id="createPin6" className='jianPanNumBtn  borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}>6</div>
+                        </div>
+                        <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                            <div id="createPin7" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}>7</div>
+                            <div id="createPin8" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}>8</div>
+                            <div id="createPin9" className='jianPanNumBtn borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}>9</div>
+                        </div>
+                        <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                            <div className='jianPanNumBtn borderRight '></div>
+                            <div id="createPin0" className='jianPanNumBtn borderRight color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}>0</div>
+                            <div id="createPinx" className='jianPanNumBtn flex items-center color-box'
+                                onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite} > <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img></div>
+                        </div>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+            </BootstrapDialog>
+
+            {/*打开错误提示*/}
+            <BootstrapDialog
+                onClose={() => {
+                    setOpenPinErr(false)
+                    setCreatePinWindow(true)
+                    openCreatePinFunc()
+                }}
+                aria-labelledby="customized-dialog-title"
+                open={openPinErr}
+                className="dialog-container"
+            >
+                <div className='errorPinDi'>
+                    <div className='errorPinZi flex items-center  justify-content-center'>支付密码错误请重试</div>
+                    <div className='errorPinLine'></div>
+                    <div className='flex justify-between'>
+                        <div className='errorPinBtn errorRightLine' onClick={() => {
+                            changePhoneTab('security');
+                            history.push('/wallet/home/security')
+                        }}>忘记密码</div>
+                        <div className='errorPinBtn' style={{ color: "#81A39F" }}
+                            onClick={() => {
+                                setOpenPinErr(false)
+                                setCreatePinWindow(true)
+                                openCreatePinFunc()
+                            }}
+                        >重试</div>
+                    </div>
+                </div>
+            </BootstrapDialog>
         </div>
     )
 }
