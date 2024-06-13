@@ -22,7 +22,7 @@ import { tokenTransfer } from "../../store/user/userThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { selectConfig } from "../../store/config";
-import {arrayLookup, setPhoneTab} from "../../util/tools/function";
+import { arrayLookup, setPhoneTab } from "../../util/tools/function";
 import { openScan, closeScan } from "../../util/tools/scanqrcode";
 import { getWithDrawConfig, WalletConfigDefineMap, evalTokenTransferFee, getWithdrawHistoryAddress, getWithdrawTransferStats } from "app/store/wallet/walletThunk";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
@@ -42,6 +42,7 @@ import RetiedEmail from "../login/RetiedEmail";
 import RetiedPhone from "../login/RetiedPhone";
 import ResetPass from "../login/ResetPass";
 import Kyc from "../kyc/Kyc";
+import ResetPin from "../login/ResetPin";
 
 const container = {
     show: {
@@ -99,10 +100,10 @@ function Security(props) {
 
     const userData = useSelector(selectUserData);
     const [tabValue, setTabValue] = useState(0);
-    const [ranges, setRanges] = useState([t('menu_12'), t('menu_13'), t('menu_14'), t('menu_15'), t('menu_16')]);
+    const [ranges, setRanges] = useState([t('menu_12'), t('menu_13'), t('menu_14'), t('menu_15'), t('menu_16'), "Edit PIN"]);
     useEffect(() => {
-            setPhoneTab('security');
-    },[]);
+        setPhoneTab('security');
+    }, []);
 
     return (
         <div>
@@ -150,6 +151,7 @@ function Security(props) {
                 {tabValue === 2 && <RetiedPhone />}
                 {tabValue === 3 && <ResetPass />}
                 {tabValue === 4 && <Kyc />}
+                {tabValue === 5 && <ResetPin />}
             </div>
         </div>
     )

@@ -250,24 +250,24 @@ function HomeSidebarContent(props) {
                     {/*    <ListItemText className="truncate font16" primary={t('menu_5')} disableTypography />*/}
                     {/*</StyledListItem>}*/}
 
-                    {/*{hideMenu.indexOf('borrow') === -1 && <StyledListItem*/}
-                    {/*    button*/}
-                    {/*    className={*/}
-                    {/*        clsx(*/}
-                    {/*            '',*/}
-                    {/*            activeMenu === 'borrow' && 'active'*/}
-                    {/*        )*/}
-                    {/*    }*/}
-                    {/*    onClick={(ev) => {*/}
-                    {/*        tabClick('borrow');*/}
-                    {/*    }}*/}
-                    {/*>*/}
-                    {/*    <div className='iconWz'>*/}
-                    {/*        <img className='menu-icon ' src='wallet/assets/images/menu/icon-borrow.png' alt='icon' />*/}
-                    {/*        <img className='menu-icon  active' src='wallet/assets/images/menu/icon-borrow-active.png' alt='icon' />*/}
-                    {/*    </div>*/}
-                    {/*    <ListItemText className="truncate font16" primary={t('menu_6')} disableTypography />*/}
-                    {/*</StyledListItem>}*/}
+                    {hideMenu.indexOf('borrow') === -1 && <StyledListItem
+                        button
+                        className={
+                            clsx(
+                                '',
+                                activeMenu === 'borrow' && 'active'
+                            )
+                        }
+                        onClick={(ev) => {
+                            tabClick('borrow');
+                        }}
+                    >
+                        <div className='iconWz'>
+                            <img className='menu-icon ' src='wallet/assets/images/menu/icon-borrow.png' alt='icon' />
+                            <img className='menu-icon  active' src='wallet/assets/images/menu/icon-borrow-active.png' alt='icon' />
+                        </div>
+                        <ListItemText className="truncate font16" primary={t('menu_6')} disableTypography />
+                    </StyledListItem>}
 
                     {/*{hideMenu.indexOf('c2c') === -1 && <StyledListItem*/}
                     {/*    button*/}
@@ -290,26 +290,26 @@ function HomeSidebarContent(props) {
                     {/*    <ListItemText className="truncate" primary={t('menu_7')} disableTypography />*/}
                     {/*</StyledListItem>}*/}
 
-                    {/*{hideMenu.indexOf('pools') === -1 && <StyledListItem*/}
-                    {/*    button*/}
-                    {/*    className={*/}
-                    {/*        clsx(*/}
-                    {/*            '',*/}
-                    {/*            activeMenu === 'pools' && 'active'*/}
-                    {/*        )*/}
-                    {/*    }*/}
-                    {/*    onClick={(ev) => {*/}
-                    {/*        tabClick('pools');*/}
-                    {/*    }}*/}
-                    {/*>*/}
-                    {/*    <div className='iconWz'>*/}
-                    {/*        <img className='menu-icon ' src='wallet/assets/images/menu/icon-pools.png' alt='icon' />*/}
-                    {/*        <img className='menu-icon  active' src='wallet/assets/images/menu/icon-pools-active.png' alt='icon' />*/}
-                    {/*    </div>*/}
-                    {/*    <ListItemText className="truncate font16" primary={t('menu_8')} disableTypography />*/}
-                    {/*</StyledListItem>}*/}
+                    {hideMenu.indexOf('pools') === -1 && <StyledListItem
+                        button
+                        className={
+                            clsx(
+                                '',
+                                activeMenu === 'pools' && 'active'
+                            )
+                        }
+                        onClick={(ev) => {
+                            tabClick('pools');
+                        }}
+                    >
+                        <div className='iconWz'>
+                            <img className='menu-icon ' src='wallet/assets/images/menu/icon-pools.png' alt='icon' />
+                            <img className='menu-icon  active' src='wallet/assets/images/menu/icon-pools-active.png' alt='icon' />
+                        </div>
+                        <ListItemText className="truncate font16" primary={t('menu_8')} disableTypography />
+                    </StyledListItem>}
 
-                    {hideMenu.indexOf('sendTips') === -1 && <StyledListItem
+                    {/* {hideMenu.indexOf('sendTips') === -1 && <StyledListItem
                         button
                         className={
                             clsx(
@@ -321,15 +321,12 @@ function HomeSidebarContent(props) {
                             tabClick('sendTips');
                         }}
                     >
-                        {/* <FuseSvgIcon className="list-item-icon" color="disabled">
-                            material-twotone:launch
-                        </FuseSvgIcon> */}
                         <div className='iconWz'>
                             <img className='menu-icon ' src='wallet/assets/images/menu/sendTips.png' alt='icon' />
                             <img className='menu-icon  active' src='wallet/assets/images/menu/sendTips-active.png' alt='icon' />
                         </div>
                         <ListItemText className="truncate font16" primary={t('menu_9')} disableTypography />
-                    </StyledListItem>}
+                    </StyledListItem>} */}
 
                     {hideMenu.indexOf('record') === -1 && <StyledListItem
                         button

@@ -228,7 +228,7 @@ function Pool() {
                         </Box>
                     )
                 })}
-                <ComingSoon />
+                {/* <ComingSoon /> */}
             </motion.div>
         </div>
     )

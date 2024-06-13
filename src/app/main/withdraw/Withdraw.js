@@ -44,6 +44,11 @@ import SendTips from "../send-tips/SendTips";
 import { useTranslation } from "react-i18next";
 import LoadingButton from "@mui/lab/LoadingButton";
 import history from '@history';
+import { Controller, useForm } from 'react-hook-form';
+import Paper from '@mui/material/Paper';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import InputLabel from "@mui/material/InputLabel/InputLabel";
 
 const container = {
     show: {
@@ -171,6 +176,7 @@ function Withdraw(props) {
         }
     };
 
+
     const [inputIDVal, setInputIDVal] = useState("UserID");
     const handleChangeInputVal2 = (event) => (event) => {
         setInputIDVal(event.target.value);
@@ -196,11 +202,14 @@ function Withdraw(props) {
     const mounted = useRef();
     const hasAuthGoogle = useSelector(selectUserData).userInfo?.hasAuthGoogle
     const [smallTabValue, setSmallTabValue] = useState(0);
+    const [resetTabValue, setResetTabValue] = useState(0);
 
     const [openPinWindow, setOpenPinWindow] = useState(false);
     const [movePinWindow, setMovePinWindow] = useState(false);
     const [createPinWindow, setCreatePinWindow] = useState(false);
     const [openPinErr, setOpenPinErr] = useState(false);
+    const [openPasteWindow, setOpenPasteWindow] = useState(false);
+    const [openResetWindow, setOpenResetWindow] = useState(false);
     const changePhoneTab = (tab) => {
         window.localStorage.setItem('phoneTab', tab);
     }
@@ -211,11 +220,31 @@ function Withdraw(props) {
         }, 0);
     };
 
+    const openPasteFunc = () => {
+        setTimeout(() => {
+            document.getElementById('PasteSty').classList.add('PinMoveAni');
+        }, 0);
+    };
+
+    const openResetFunc = () => {
+        setTimeout(() => {
+            document.getElementById('ResetSty').classList.add('PinMoveAni');
+        }, 0);
+    };
+
     const closePinFunc = () => {
         document.getElementById('PINSty').classList.remove('PinMoveAni');
         document.getElementById('PINSty').classList.add('PinMoveOut');
         setTimeout(() => {
             setOpenPinWindow(false);
+        }, 300);
+    };
+
+    const closePasteFunc = () => {
+        document.getElementById('PasteSty').classList.remove('PinMoveAni');
+        document.getElementById('PasteSty').classList.add('PinMoveOut');
+        setTimeout(() => {
+            setOpenPasteWindow(false);
         }, 300);
     };
 
@@ -233,7 +262,26 @@ function Withdraw(props) {
         }, 300);
     };
 
+    const closeResetPinFunc = () => {
+        document.getElementById('ResetSty').classList.remove('PinMoveAni');
+        document.getElementById('ResetSty').classList.add('PinMoveOut');
+        setTimeout(() => {
+            setOpenResetWindow(false)
+        }, 300);
+    };
 
+    const [time, setTime] = useState(null);
+
+    async function sendCode() {
+        const data = {
+            codeType: 11,
+            email: control._formValues.email,
+        };
+        const sendRes = await dispatch(sendEmail(data));
+        if (sendRes.payload) {
+            setTime(60)
+        }
+    }
 
     function ismore(inputVal) {
         if (Number(inputVal) > Number(arrayLookup(symbolWallet, 'symbol', symbol, 'balance'))) {
@@ -241,6 +289,16 @@ function Withdraw(props) {
             return true
         } else return false
     }
+
+    const schema = yup.object().shape({
+        smsCode: yup.string().required('You must enter a smsCode'),
+        password: yup
+            .string()
+            .required('Please enter your password.')
+            // .min(6, 'Password is too short - should be 6 chars minimum.')
+            .min(6, t("signUp_8"))
+            .max(16, 'Password is too long - should be 16 chars maximum.'),
+    });
 
     const handleSubmit = () => {
         var amount = inputVal.amount;
@@ -435,6 +493,13 @@ function Withdraw(props) {
 
     const loginType = window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType;
 
+
+    const defaultValues = {
+        email: '',
+        smsCode: '',
+        password: '',
+    };
+
     const symbolsFormatAmount = () => {
         let currencyRate = arrayLookup(config.payment.currency, 'currencyCode', currencyCode, 'exchangeRate') || 0;
         let displayData = [];
@@ -558,6 +623,14 @@ function Withdraw(props) {
         document.getElementById(target.target.id).classList.remove('pinJianPanColor1');
     };
 
+
+    const { control, formState, handleSubmit1, reset } = useForm({
+        mode: 'onChange',
+        defaultValues,
+        resolver: yupResolver(schema),
+    });
+
+    const { isValid, dirtyFields, errors } = formState;
 
 
     const getSettingSymbol = async () => {
@@ -806,7 +879,7 @@ function Withdraw(props) {
                                 {
                                     smallTabValue === 0 && <div className="px-10 ">
                                         <div className="flex items-center justify-between">
-                                            <FormControl sx={{ width: isMobileMedia ? '77%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
+                                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
                                                 <OutlinedInput
                                                     id="outlined-adornment-address send-tips-container-address"
                                                     value={inputVal.address}
@@ -816,27 +889,25 @@ function Withdraw(props) {
                                                         'aria-label': 'address',
                                                     }}
                                                 />
-                                                <div className='paste-btn' onClick={() => {
-                                                    const clipPromise = navigator.clipboard.readText();
-                                                    clipPromise.then(clipText => {
-                                                        changeAddress('address', clipText)
-                                                    })
-                                                }}>{t('home_withdraw_11')}</div>
+                                                <div className='flex pasteSty  items-center'>
+                                                    <div className='paste-btn' onClick={() => {
+                                                        const clipPromise = navigator.clipboard.readText();
+                                                        clipPromise.then(clipText => {
+                                                            changeAddress('address', clipText)
+                                                        })
+                                                    }}>{t('home_withdraw_11')}</div>
+                                                    <img className='pasteJianTou' src="wallet/assets/images/withdraw/pasteJianTou.png" alt="" onClick={() => {
+                                                        setOpenPasteWindow(true)
+                                                        openPasteFunc()
+                                                    }} />
+                                                </div>
                                             </FormControl>
                                             {
                                                 isMobileMedia &&
-                                                <div className="flex items-center justify-content-center"
-                                                    onClick={() => {
-                                                        setOpenChangeCurrency(true);
-                                                    }}
-                                                >
-                                                    <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/code.png" alt="" />
-                                                </div>
+                                                <img className='shaoMiaoIcon' src="wallet/assets/images/withdraw/code.png" alt="" onClick={() => {
+                                                    setOpenChangeCurrency(true);
+                                                }} />
                                             }
-
-                                            <div onClick={() => { setOpenWithdrawLog(true) }} className="flex items-center justify-content-center">
-                                                <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
-                                            </div>
                                         </div>
 
                                         <Typography className="text-16 cursor-pointer mt-16">
@@ -903,7 +974,7 @@ function Withdraw(props) {
                                         </div>
 
                                         <Box
-                                            className="py-8"
+                                            className="py-8 mb-20"
                                             sx={{
                                                 backgroundColor: '#0F172A',
                                                 borderRadius: '8px'
@@ -924,7 +995,6 @@ function Withdraw(props) {
                                             style={{ width: '24rem', height: '4rem', fontSize: "20px", margin: '1rem auto 2.5rem', display: 'block', lineHeight: "inherit", padding: "0px" }}
                                             onClick={() => {
 
-                                                handleSubmit()
                                             }}
                                         >
                                             {t('home_withdraw_10')}
@@ -935,34 +1005,30 @@ function Withdraw(props) {
                                 {
                                     smallTabValue === 1 && <div className="px-10 ">
                                         <div className="flex items-center justify-between ">
-                                            <FormControl sx={{ width: isMobileMedia ? '77%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
+                                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
                                                 <OutlinedInput
                                                     id="outlined-adornment-address send-tips-container-address"
                                                     value={inputIDVal}
                                                     onChange={handleChangeInputVal2}
                                                     aria-describedby="outlined-weight-helper-text"
                                                 />
-                                                <div className='paste-btn' onClick={() => {
-                                                    const clipPromise = navigator.clipboard.readText();
-                                                    clipPromise.then(clipText => {
-                                                        changeAddress('address', clipText)
-                                                    })
-                                                }}>{t('home_withdraw_11')}</div>
+                                                <div className='flex pasteSty  items-center'>
+                                                    <div className='paste-btn' onClick={() => {
+                                                        const clipPromise = navigator.clipboard.readText();
+                                                        clipPromise.then(clipText => {
+                                                            changeAddress('address', clipText)
+                                                        })
+                                                    }}>{t('home_withdraw_11')}</div>
+                                                    <img className='pasteJianTou' src="wallet/assets/images/withdraw/pasteJianTou.png" alt="" onClick={() => {
+                                                    }} />
+                                                </div>
                                             </FormControl>
                                             {
                                                 isMobileMedia &&
-                                                <div className="flex items-center justify-content-center"
-                                                    onClick={() => {
-                                                        setOpenChangeCurrency(true);
-                                                    }}
-                                                >
-                                                    <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/code.png" alt="" />
-                                                </div>
+                                                <img className='shaoMiaoIcon' src="wallet/assets/images/withdraw/code.png" alt="" onClick={() => {
+                                                    setOpenChangeCurrency(true);
+                                                }} />
                                             }
-
-                                            <div onClick={() => { setOpenWithdrawLog(true) }} className="flex items-center justify-content-center">
-                                                <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
-                                            </div>
                                         </div>
 
                                         <Typography className="text-16 cursor-pointer mt-16" >
@@ -1405,8 +1471,9 @@ function Withdraw(props) {
                     <div className='errorPinLine'></div>
                     <div className='flex justify-between'>
                         <div className='errorPinBtn errorRightLine' onClick={() => {
-                            changePhoneTab('security');
-                            history.push('/wallet/home/security')
+                            setOpenResetWindow(true)
+                            setOpenPinErr(false)
+                            openResetFunc()
                         }}>忘记密码</div>
                         <div className='errorPinBtn' style={{ color: "#81A39F" }}
                             onClick={() => {
@@ -1416,6 +1483,269 @@ function Withdraw(props) {
                             }}
                         >重试</div>
                     </div>
+                </div>
+            </BootstrapDialog>
+
+
+            <BootstrapDialog
+                onClose={() => {
+                    closePasteFunc();
+                }}
+                aria-labelledby="customized-dialog-title"
+                open={openPasteWindow}
+                className="dialog-container"
+            >
+                <div id="PasteSty" className="PasteSty">
+                    <div className='pasteWindow'>
+                        <div className='flex'>
+                            <div className='PINTitle2'>历史转账地址</div>
+                            <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                                closePasteFunc();
+                            }} />
+                        </div>
+                    </div>
+
+                    <div className='pasteW'>
+                        <div className='pasteDiZhi'>
+                            <div className='flex'>
+                                <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
+                                <div className='bianJiBiZi'> 历史地址1 </div>
+                            </div>
+                            <div className='pasteDi'>kxdfadsdedoinxi2002ddfgoem2zdfuijhyhgdzs</div>
+                        </div>
+
+                        <div className='pasteDiZhi'>
+                            <div className='flex'>
+                                <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
+                                <div className='bianJiBiZi'> 历史地址2 </div>
+                            </div>
+                            <div className='pasteDi'>axdfadsdedoinxi2002ddfgoem2zdfuijhyhg11d</div>
+                        </div>
+
+                        <div className='pasteDiZhi'>
+                            <div className='flex'>
+                                <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
+                                <div className='bianJiBiZi'> 历史地址3 </div>
+                            </div>
+                            <div className='pasteDi'>bxdfadsdedoinxi2002ddfgoem2zdfuijhyhdh5</div>
+                        </div>
+
+                        <div className='pasteDiZhi'>
+                            <div className='flex'>
+                                <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
+                                <div className='bianJiBiZi'> 历史地址4 </div>
+                            </div>
+                            <div className='pasteDi'>ihffadsdedoinxi2002ddfgoem2zdfuijhyhgedy</div>
+                        </div>
+
+                        <div className='pasteDiZhi'>
+                            <div className='flex'>
+                                <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
+                                <div className='bianJiBiZi'> 历史地址5 </div>
+                            </div>
+                            <div className='pasteDi'>efjhfadsdedoinxi2002ddfgoem2zdfuijhyhiga</div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </BootstrapDialog>
+
+
+            <BootstrapDialog
+                onClose={() => {
+                    closeResetPinFunc();
+                }}
+                aria-labelledby="customized-dialog-title"
+                open={openResetWindow}
+                className="dialog-container"
+            >
+                <div id="ResetSty" className="PasteSty">
+                    <div className='pasteWindow'>
+                        <div className='flex'>
+                            <div className='PINTitle2'>重置PIN码</div>
+                            <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                                closeResetPinFunc();
+                            }} />
+                        </div>
+                    </div>
+
+                    <Tabs
+                        component={motion.div}
+                        variants={item}
+                        value={resetTabValue}
+                        onChange={(ev, value) => setResetTabValue(value)}
+                        indicatorColor="secondary"
+                        textColor="inherit"
+                        variant="scrollable"
+                        scrollButtons={false}
+                        className="min-h-32"
+                        style={{ padding: '0 0', margin: '0rem 0rem 1.5rem 1.5rem', borderColor: 'transparent', backgroundColor: '#1E293B', width: 'auto', borderRadius: '0px', height: '30px' }}
+                        classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
+                        TabIndicatorProps={{
+                            children: (
+                                <Box
+                                    sx={{ bgcolor: 'text.disabled' }}
+                                    className="w-full h-full rounded-full huaKuaBgColorCard"
+                                />
+                            ),
+                        }}
+                        sx={{
+                            padding: '1rem 1rem',
+                        }}
+                    >
+                        {Object.entries(["Email", 'Phone']).map(([key, label]) => (
+                            <Tab
+                                className="text-16 font-semibold min-h-32 min-w-60 mx4 px-12 txtColorTitle opacity-100 zindex"
+                                disableRipple
+                                key={key}
+                                label={label}
+                                sx={{
+                                    color: '#FFFFFF', height: '32px', width: 'auto', marginRight: "1rem"
+                                }}
+                            />
+                        ))}
+                    </Tabs>
+
+                    {resetTabValue === 0 && <div className='pasteW'>
+                        <Paper
+                            className="w-full tongYongChuang2 flex justify-content-center "
+                        >
+                            <div className="w-full  mx-auto sm:mx-0">
+                                <div className="flex items-baseline mt-2 font-medium">
+                                    <Typography>{t('re_tied_email_2')}</Typography>
+                                </div>
+
+                                <form
+                                    name="registerForm"
+                                    noValidate
+                                    className="flex flex-col justify-center w-full mt-32"
+                                // onSubmit={handleSubmit(onSubmit)}
+                                >
+                                    <Controller
+                                        name="email"
+                                        control={control}
+                                        render={({ field }) => (
+                                            <FormControl variant="outlined" className="mb-24">
+                                                <InputLabel
+                                                    style={{
+                                                        color: !!errors.email && '#f44336'
+                                                    }}
+                                                >{t('signIn_5')}*</InputLabel>
+                                                <OutlinedInput
+                                                    {...field}
+                                                    label={t('signIn_5')}
+                                                    type="text"
+                                                    variant="outlined"
+                                                    required
+                                                    fullWidth
+                                                    error={!!errors.email}
+                                                    endAdornment={
+                                                        <InputAdornment position="end">
+                                                            {time <= 0 && <IconButton
+                                                                aria-label="toggle password visibility"
+                                                                onClick={sendCode}
+                                                                // onMouseDown={handleMouseDownPassword}
+                                                                edge="end"
+                                                                sx={{
+                                                                    fontSize: '1.4rem',
+                                                                    borderRadius: '5px'
+                                                                }}
+                                                            >
+                                                                {t('forgot_3')}
+                                                            </IconButton>}
+
+                                                            {time > 0 &&
+                                                                <div>
+                                                                    {time} s
+                                                                </div>
+                                                            }
+                                                        </InputAdornment>
+                                                    }
+                                                />
+                                                {!!errors.email &&
+                                                    <div
+                                                        style={{
+                                                            fontSize: '1.2rem',
+                                                            color: '#f44336',
+                                                            fontWeight: 400,
+                                                            lineHeight: 1.66,
+                                                            textAlign: 'left',
+                                                            marginTop: '3px',
+                                                            marginRight: '14px',
+                                                            marginBottom: 0,
+                                                            marginLeft: '14px',
+                                                        }}
+                                                    >
+                                                        {errors?.email?.message}
+                                                    </div>
+                                                }
+                                            </FormControl>
+                                        )}
+                                    />
+
+                                    <Controller
+                                        name="smsCode"
+                                        control={control}
+                                        render={({ field }) => (
+                                            <TextField
+                                                {...field}
+                                                className="mb-24"
+                                                label={t('signIn_8')}
+                                                type="number"
+                                                error={!!errors.smsCode}
+                                                helperText={errors?.smsCode?.message}
+                                                variant="outlined"
+                                                required
+                                                fullWidth
+                                            />
+                                        )}
+                                    />
+
+                                    <Controller
+                                        name="password"
+                                        control={control}
+                                        render={({ field }) => (
+                                            <TextField
+                                                {...field}
+                                                className="mb-24"
+                                                label={t('signIn_9')}
+                                                type="password"
+                                                error={!!errors.password}
+                                                helperText={errors?.password?.message}
+                                                variant="outlined"
+                                                required
+                                                fullWidth
+                                            />
+                                        )}
+                                    />
+
+                                    <div className="py-20">
+                                    </div>
+
+                                    <Button
+                                        variant="contained"
+                                        color="secondary"
+                                        className=" w-full mt-24"
+                                        aria-label="Register"
+                                        disabled={_.isEmpty(dirtyFields) || !isValid}
+                                        type="submit"
+                                        size="large"
+                                    >
+                                        Reset
+                                    </Button>
+                                </form>
+                            </div>
+                        </Paper>
+                    </div>
+                    }
+
+                    {resetTabValue === 1 && <div className='pasteW'>
+
+                    </div>
+                    }
+
+
                 </div>
             </BootstrapDialog>
         </div>

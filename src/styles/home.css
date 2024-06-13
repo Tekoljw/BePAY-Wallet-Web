@@ -279,6 +279,14 @@ input[type='number'] {
     left: 0rem;
 }
 
+.PasteSty {
+    width: 100%;
+    background-color: #1E293B;
+    border-radius: 1rem 1rem 0rem 0rem;
+    position: fixed;
+    left: 0rem;
+}
+
 .PINTitle2 {
     width: 100%;
     font-size: 1.8rem;
@@ -316,6 +324,16 @@ input[type='number'] {
     padding: 3rem;
 }
 
+.pasteWindow {
+    padding: 3rem 1.5rem 0rem 1.5rem;
+}
+
+.tongYongChuang2 {
+    width: 100%;
+    background-color: #1E293B !important;
+}
+
+
 .PINTitle3 {
     text-align: center;
     font-size: 2.4rem;
@@ -324,6 +342,7 @@ input[type='number'] {
     height: 3.6rem;
     line-height: 3.6rem;
 }
+
 
 .PINTitle4 {
     text-align: center;
@@ -407,6 +426,19 @@ input[type='number'] {
     border-bottom: 1px solid #2C3950;
 }
 
+.pasteJianTou {
+    width: 2.6rem;
+    height: 2.6rem;
+    margin: 0 0.5rem;
+}
+
+.pasteSty {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0%;
+}
+
 .borderRight {
     border-right: 1px solid #2C3950;
 }
@@ -430,6 +462,13 @@ input[type='number'] {
     aspect-ratio: 1/1;
     border-radius: 0.5rem;
     max-width: 10rem;
+}
+
+.shaoMiaoIcon {
+    margin-left: 1rem;
+    width: 12%;
+    aspect-ratio: 100 / 100;
+
 }
 
 
@@ -531,6 +570,29 @@ input[type='number'] {
     margin: 0 auto;
     aspect-ratio: 716 / 416;
 }
+
+
+.pasteW {
+    width: calc(100% - 3rem);
+    margin: 0 auto;
+    height: 44rem;
+    overflow-y: auto;
+}
+
+.pasteDi {
+    margin-top: 0.5rem;
+    background-color: #0F172A;
+    height: 3.6rem;
+    line-height: 3.6rem;
+    border-radius: 0.5rem;
+    padding: 0 1rem;
+    font-size: 1.2rem;
+}
+
+.pasteDiZhi {
+    margin-bottom: 2rem;
+}
+
 
 .walletBalanceZi {
     height: 2.4rem;
@@ -1637,7 +1699,7 @@ input#outlined-adornment-address\ outlined-adornment-address-wallet-input-meta {
 }
 
 input#outlined-adornment-address\ send-tips-container-address {
-    padding: 0 5.9rem 0 1rem;
+    padding: 0 7.6rem 0 1rem;
     height: 5rem;
     box-sizing: border-box;
     font-size: 1.4rem;
@@ -1673,14 +1735,13 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
 }
 
 .paste-btn {
-    color: #2DD4BF;
-    position: absolute;
-    font-size: 1.6rem;
+    color: #94A3B8;
+    font-size: 1.4rem;
     right: 0.8rem;
-    top: 50%;
-    transform: translateY(-50%);
     cursor: pointer;
 }
+
+
 
 .amount-tab-item {
     width: 4rem;
