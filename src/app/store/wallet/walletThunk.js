@@ -154,6 +154,27 @@ export const getWalletAddress = createAsyncThunk(
     }
 );
 
+// 获取钱包地址
+export const getAddressListDesc = createAsyncThunk(
+    'wallet/getAddressListDesc',
+    async (settings, { dispatch, getState }) => {
+
+        settings = settings || {};
+        let data = {
+            addressDesc: settings.addressDesc,
+            address: settings.address,
+            networkId: settings.networkId,
+            symbol: settings.symbol,
+        };
+
+        const resultData = await React.$api("wallet.addOrQueryAddressDesc", data);
+        if (resultData.errno === 0) {
+            return resultData.data;
+        }
+        dispatch(showMessage({ message: t('error_39'), code: 2 }));
+    }
+);
+
 // 判断是否获取过
 export const checkWalletAddress = createAsyncThunk(
     'wallet/checkWalletAddress',
@@ -419,3 +440,37 @@ export const nftWithdraw = createAsyncThunk(
     }
 );
 
+// 创建PIN
+export const createPin = createAsyncThunk(
+    'pin/setPaymentPassword',
+    async (settings, { dispatch, getState }) => {
+        let data = {
+            codeType: 12,
+            paymentPassword: settings.paymentPassword ?? ''
+        }
+
+        const resultData = await React.$api("security.setPaymentPassword", data);
+        if (resultData.errno === 0) {
+            return true
+        } else {
+            dispatch(showMessage({ message: t('error_22'), code: 2 }));
+        }
+    }
+);
+
+// 验证PIN
+export const verifyPin = createAsyncThunk(
+    'pin/verifyPaymentPassword',
+    async (settings, { dispatch, getState }) => {
+        let data = {
+            paymentPassword: settings.paymentPassword ?? ''
+        }
+
+        const resultData = await React.$api("security.verifyPaymentPassword", data);
+        if (resultData.errno === 0) {
+            return resultData.data
+        } else {
+            return false
+        }
+    }
+);

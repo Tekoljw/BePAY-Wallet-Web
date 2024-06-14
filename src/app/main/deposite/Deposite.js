@@ -31,6 +31,7 @@ import { foxSendTransaction, manualCryptoNotify } from "../../store/transfer/tra
 import {
     getWalletAddressConfig,
     getWalletAddress,
+    getAddressListDesc,
     WalletConfigDefineMap,
     checkWalletAddress,
     getNftConfig,
@@ -366,6 +367,19 @@ function Deposite() {
         // }
     };
 
+    // 获取地址列表
+    const getWalletAddressList = () => {
+        dispatch(getAddressListDesc({
+            networkId: networkId,
+            symbol: symbol,
+        })).then((res) => {
+            let result = res.payload
+            if (result) {
+                setWalletAddressList([...result])
+            }
+        })
+    }
+
     const backLoading = () => {
         setTimeout(() => setOpenLoad(false), 10000);
     };
@@ -394,10 +408,12 @@ function Deposite() {
             setWalletAddress(value.payload.data);
             setIsGetWalletAddress(true);
 
-            setWalletAddressList([...walletAddressList, {
-                address: value.payload.data,
-                show: false
-            }])
+            if (value.payload.data?.address) {
+                setWalletAddressList([...walletAddressList, {
+                    address: value.payload.data?.address ?? '',
+                }])
+            }
+
         });
     };
 
@@ -488,6 +504,7 @@ function Deposite() {
 
     useEffect(() => {
         symbolsFormatAmount(symbol, networkId)
+        getWalletAddressList()
     }, [symbol, networkId])
 
     const symbolsFormatAmount = (a, b) => {
@@ -598,14 +615,6 @@ function Deposite() {
 
     const handleChangeNetWork = (tmpNetwordId) => {
         let address = (addressData[symbol] && addressData[symbol][tmpNetwordId]) || ''
-        if (address) {
-            setWalletAddressList([{
-                address,
-                show: false
-            }])
-        } else {
-            setWalletAddressList([]);
-        }
         setSelectWalletAddressIndex(null)
         setIsGetWalletAddress(addressData[symbol] && addressData[symbol][tmpNetwordId]);
         setWalletAddress(address);
@@ -1042,7 +1051,7 @@ function Deposite() {
                                         <div>
                                             <div className='flex ml-10'>
                                                 <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
-                                                <div className='bianJiBiZi'>地址1</div>
+                                                <div className='bianJiBiZi'>{addressItem.addressDesc}</div>
                                             </div>
                                         </div>
                                         <div className='addressBigW flex justify-between mt-10'>
@@ -1076,25 +1085,20 @@ function Deposite() {
                                 )
                             })}
 
-                            <div className='mb-16'>
-                                <div>
-                                    <div className='flex ml-10'>
-                                        <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
-                                        <div className='bianJiBiZi'>地址5</div>
-                                    </div>
-                                </div>
-
-                                <div className='addressBigW flex justify-between mt-10' onClick={() => {
-                                    handleWalletAddress()
-                                }}>
-                                    <div className="addressW flex justify-between">
-                                        <div className='addressZi2 flex'>
-                                            <img className='bianJiBiImg2' src="wallet/assets/images/card/jiaHao.png"></img>
-                                            <div className='addressZi2'>创建地址</div>
+                            {walletAddressList.length < 10 && (
+                                <div className='mb-16'>
+                                    <div className='addressBigW flex justify-between mt-10' onClick={() => {
+                                        handleWalletAddress(networkId)
+                                    }}>
+                                        <div className="addressW flex justify-between">
+                                            <div className='addressZi2 flex'>
+                                                <img className='bianJiBiImg2' src="wallet/assets/images/card/jiaHao.png"></img>
+                                                <div className='addressZi2'>创建地址</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            )}
 
                             {/* <div className='flex justify-content-center' style={{ width: "100%", overflow: "hidden" }}>
                                             <LoadingButton className="px-48 text-lg btnColorTitleBig"

@@ -27,7 +27,7 @@ import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { selectConfig } from "../../store/config";
 import { arrayLookup, getNowTime, getOpenAppId, getOpenAppIndex, setPhoneTab } from "../../util/tools/function";
 import { openScan, closeScan } from "../../util/tools/scanqrcode";
-import { getWithDrawConfig, WalletConfigDefineMap, evalTokenTransferFee, cryptoWithdrawFee, getWithdrawHistoryAddress, delWithdrawHistoryAddress, getWithdrawTransferStats } from "app/store/wallet/walletThunk";
+import { getWithDrawConfig, WalletConfigDefineMap, evalTokenTransferFee, cryptoWithdrawFee, getWithdrawHistoryAddress, delWithdrawHistoryAddress, getWithdrawTransferStats, createPin, verifyPin } from "app/store/wallet/walletThunk";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
 import Dialog from "@mui/material/Dialog/Dialog";
 import OtpPass from "../otpPass/OtpPass";
@@ -260,11 +260,12 @@ function Withdraw(props) {
         setTimeout(() => {
             setCreatePinWindow(false)
         }, 300);
+        setPin('');
     };
 
     const closeResetPinFunc = () => {
-        document.getElementById('ResetSty').classList.remove('PinMoveAni');
-        document.getElementById('ResetSty').classList.add('PinMoveOut');
+        document.getElementById('ResetSty')?.classList.remove('PinMoveAni');
+        document.getElementById('ResetSty')?.classList.add('PinMoveOut');
         setTimeout(() => {
             setOpenResetWindow(false)
         }, 300);
@@ -659,6 +660,103 @@ function Withdraw(props) {
         return res;
     };
 
+    const [ pin, setPin ] = useState('');
+    const [ hasPin, setHasPin ] = useState(false)
+    // 判断是否绑定了PIN
+    const isBindPin = () => {
+        if (hasPin) {
+            if (inputVal.amount <= 0) {
+                setTextSelect(true)
+            } else {
+                setTextSelect(false)
+            }
+            openInputPin()
+            return true
+        }
+        openCreatePin()
+        return false
+    }
+
+    // 创建PIN Page
+    const openCreatePin = () => {
+        setPin('')
+        setCreatePinWindow(true)
+        openCreatePinFunc()
+    }
+
+    // 输入PIN Page
+    const openInputPin = () => {
+        setPin('')
+        setOpenPinWindow(true)
+        openPinFunc()
+    }
+
+    // PIN错误 Tips
+    const errPin = () => {
+        setOpenPinErr(true);
+    }
+
+    // 修改Amount
+    const editAmount = (text) => {
+        let tmpText = inputVal.amount.toString()
+        if (tmpText == 0) {
+            tmpText = ''
+        }
+        if (text === -1) {
+            tmpText = tmpText.slice(0, -1)
+        } else if (text === '.') {
+            if (!tmpText.includes(text)) {
+                tmpText = tmpText + text
+            }
+        } else {
+            tmpText = tmpText + text
+        }
+
+        setInputVal({ ...inputVal, amount: tmpText == 0 ? '' : tmpText });
+        console.log(tmpText, 'tmpText')
+    }
+
+    // 输入Pin
+    const handleDoPin = (text) => {
+        if (textSelect) {
+            editAmount(text)
+            return
+        }
+        let tmpPin = pin
+        if (text === -1) {
+            tmpPin = tmpPin.slice(0, -1)
+        } else {
+            tmpPin = tmpPin + text
+        }
+
+        setPin(tmpPin)
+        if (tmpPin.length === 6) {
+            if (hasPin) { // 验证pin
+                dispatch(verifyPin({
+                    paymentPassword: tmpPin
+                })).then((res) => {
+                    let result = res.payload
+                    if (!result.paymentPasswordSuccess) {
+                        errPin()
+                    } else {
+
+                    }
+                })
+            } else { // 创建pin
+                dispatch(createPin({
+                    paymentPassword: tmpPin
+                })).then((res) => {
+                    if (res.payload) {
+                        setHasPin(true)
+                        closeCreatePinFunc()
+                    }
+                })
+            }
+        }
+
+
+    }
+
     useEffect(() => {
         getSettingSymbol().then((res) => {
             var currencyType = res.data?.data?.setting?.currencyType
@@ -716,6 +814,8 @@ function Withdraw(props) {
                 }
             }
         })
+
+        setHasPin(userData.profile?.user?.hasSetPaymentPassword ?? false)
 
     }, [userData.profile]);
 
@@ -1074,10 +1174,7 @@ function Withdraw(props) {
                                             sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
                                             style={{ width: '24rem', height: '4rem', fontSize: "20px", margin: '1rem auto 2.5rem', display: 'block', lineHeight: "inherit", padding: "0px" }}
                                             onClick={() => {
-                                                // setOpenPinWindow(true)
-                                                // openPinFunc()
-                                                setCreatePinWindow(true)
-                                                openCreatePinFunc()
+                                                isBindPin()
                                             }}
                                         >
                                             {t('home_withdraw_10')}
@@ -1325,45 +1422,45 @@ function Withdraw(props) {
                         <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
                             <img className='MoneyWithdraw' src="wallet/assets/images/withdraw/USDT.png"></img>
                             <div className='PINTitle3'>USDT</div>
-                            <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")} >50.00</div>
+                            <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")} onClick={() => {setTextSelect(!textSelect)}}>{inputVal.amount}</div>
                         </div>
                         <div className='flex justify-between mt-10'>
-                            <div className='PinNum'></div>
-                            <div className='PinNum'></div>
-                            <div className='PinNum'></div>
-                            <div className='PinNum'></div>
-                            <div className='PinNum'></div>
-                            <div className='PinNum'></div>
+                            <div className='PinNum'>{pin[0] ?? ''}</div>
+                            <div className='PinNum'>{pin[1] ?? ''}</div>
+                            <div className='PinNum'>{pin[2] ?? ''}</div>
+                            <div className='PinNum'>{pin[3] ?? ''}</div>
+                            <div className='PinNum'>{pin[4] ?? ''}</div>
+                            <div className='PinNum'>{pin[5] ?? ''}</div>
                         </div>
                     </div>
 
                     <div className='jianPanSty'>
                         <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
-                            <div className='jianPanBtn borderRight borderBottom'>1</div>
-                            <div className='jianPanBtn borderRight borderBottom'>2</div>
-                            <div className='jianPanBtn borderRight borderBottom'>3</div>
-                            <div className='jianPanBtImgDiv flex items-center borderBottom'>
+                            <div className='jianPanBtn borderRight borderBottom' onClick={() => {handleDoPin(1)}}>1</div>
+                            <div className='jianPanBtn borderRight borderBottom' onClick={() => {handleDoPin(2)}}>2</div>
+                            <div className='jianPanBtn borderRight borderBottom' onClick={() => {handleDoPin(3)}}>3</div>
+                            <div className='jianPanBtImgDiv flex items-center borderBottom' onClick={() => {handleDoPin(-1)}}>
                                 <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img>
                             </div>
                         </div>
                         <div className='flex' style={{ width: "100%" }}>
                             <div style={{ width: "75.1%" }}>
                                 <div className='flex'>
-                                    <div className='jianPanBtn1 borderRight'>4</div>
-                                    <div className='jianPanBtn1 borderRight'>5</div>
-                                    <div className='jianPanBtn1 borderRight'>6</div>
+                                    <div className='jianPanBtn1 borderRight' onClick={() => {handleDoPin(4)}}>4</div>
+                                    <div className='jianPanBtn1 borderRight' onClick={() => {handleDoPin(5)}}>5</div>
+                                    <div className='jianPanBtn1 borderRight' onClick={() => {handleDoPin(6)}}>6</div>
                                 </div>
                                 <div className='flex'>
-                                    <div className='jianPanBtn1 borderRight'>7</div>
-                                    <div className='jianPanBtn1 borderRight'>8</div>
-                                    <div className='jianPanBtn1 borderRight'>9</div>
+                                    <div className='jianPanBtn1 borderRight' onClick={() => {handleDoPin(7)}}>7</div>
+                                    <div className='jianPanBtn1 borderRight' onClick={() => {handleDoPin(8)}}>8</div>
+                                    <div className='jianPanBtn1 borderRight' onClick={() => {handleDoPin(9)}}>9</div>
                                 </div>
                                 <div className='flex'>
-                                    <div className='jianPanBtn2 borderRight'>0</div>
-                                    <div className='jianPanBtn4 borderRight'>.</div>
+                                    <div className='jianPanBtn2 borderRight' onClick={() => {handleDoPin(0)}}>0</div>
+                                    <div className='jianPanBtn4 borderRight' onClick={() => {handleDoPin('.')}}>.</div>
                                 </div>
                             </div>
-                            <div className='jianPanBtn3'>完成</div>
+                            <div className='jianPanBtn3' onClick={() => {setTextSelect(false)}}>完成</div>
                         </div>
                     </div>
                     <div>
@@ -1389,12 +1486,12 @@ function Withdraw(props) {
                         </div>
                         <div className='PINTitle'>输入用于支付的6位数字密码</div>
                         <div className='flex justify-between mt-32 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
-                            <div className='PinNum'></div>
-                            <div className='PinNum'></div>
-                            <div className='PinNum'></div>
-                            <div className='PinNum'></div>
-                            <div className='PinNum'></div>
-                            <div className='PinNum'></div>
+                            <div className='PinNum'>{pin[0] ?? ''}</div>
+                            <div className='PinNum'>{pin[1] ?? ''}</div>
+                            <div className='PinNum'>{pin[2] ?? ''}</div>
+                            <div className='PinNum'>{pin[3] ?? ''}</div>
+                            <div className='PinNum'>{pin[4] ?? ''}</div>
+                            <div className='PinNum'>{pin[5] ?? ''}</div>
                         </div>
                     </div>
 
@@ -1405,49 +1502,87 @@ function Withdraw(props) {
                                 onTouchEnd={changeToWhite}
                                 onTouchCancel={changeToWhite}
                                 onClick={() => {
-                                    setOpenPinErr(true);
-                                    closeCreatePinFunc();
+                                    handleDoPin(1)
                                 }}
                             >1</div>
                             <div id="createPin2" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
                                 onTouchEnd={changeToWhite}
                                 onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(2)
+                                }}
                             >2</div>
                             <div id="createPin3" className='jianPanNumBtn  borderBottom color-box' onTouchStart={changeToBlack}
                                 onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}>3</div>
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(3)
+                                }}
+                            >3</div>
                         </div>
                         <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
                             <div id="createPin4" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
                                 onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}>4</div>
+                                onTouchCancel={changeToWhite}
+                                 onClick={() => {
+                                     handleDoPin(4)
+                                 }}
+                            >4</div>
                             <div id="createPin5" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
                                 onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}>5</div>
+                                onTouchCancel={changeToWhite}
+                                 onClick={() => {
+                                     handleDoPin(5)
+                                 }}
+                            >5</div>
                             <div id="createPin6" className='jianPanNumBtn  borderBottom color-box' onTouchStart={changeToBlack}
                                 onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}>6</div>
+                                onTouchCancel={changeToWhite}
+                                 onClick={() => {
+                                     handleDoPin(6)
+                                 }}
+                            >6</div>
                         </div>
                         <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
                             <div id="createPin7" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
                                 onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}>7</div>
+                                onTouchCancel={changeToWhite}
+                                 onClick={() => {
+                                     handleDoPin(7)
+                                 }}
+                            >7</div>
                             <div id="createPin8" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
                                 onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}>8</div>
+                                onTouchCancel={changeToWhite}
+                                 onClick={() => {
+                                     handleDoPin(8)
+                                 }}
+                            >8</div>
                             <div id="createPin9" className='jianPanNumBtn borderBottom color-box' onTouchStart={changeToBlack}
                                 onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}>9</div>
+                                onTouchCancel={changeToWhite}
+                                 onClick={() => {
+                                     handleDoPin(9)
+                                 }}
+                            >9</div>
                         </div>
                         <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
                             <div className='jianPanNumBtn borderRight '></div>
                             <div id="createPin0" className='jianPanNumBtn borderRight color-box' onTouchStart={changeToBlack}
                                 onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}>0</div>
+                                onTouchCancel={changeToWhite}
+                                 onClick={() => {
+                                     handleDoPin(0)
+                                 }}
+                            >0</div>
                             <div id="createPinx" className='jianPanNumBtn flex items-center color-box'
                                 onTouchStart={changeToBlack}
                                 onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite} > <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img></div>
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(-1)
+                                }}
+                            > <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img></div>
                         </div>
                     </div>
                     <div>
@@ -1478,8 +1613,6 @@ function Withdraw(props) {
                         <div className='errorPinBtn' style={{ color: "#81A39F" }}
                             onClick={() => {
                                 setOpenPinErr(false)
-                                setCreatePinWindow(true)
-                                openCreatePinFunc()
                             }}
                         >重试</div>
                     </div>
@@ -1495,7 +1628,7 @@ function Withdraw(props) {
                 open={openPasteWindow}
                 className="dialog-container"
             >
-                <div id="PasteSty" className="PasteSty">
+                <div id="PasteSty" className={clsx("PasteSty", !openPasteWindow && 'PinMoveOut', openPasteWindow && 'PinMoveAni')}>
                     <div className='pasteWindow'>
                         <div className='flex'>
                             <div className='PINTitle2'>历史转账地址</div>

@@ -186,6 +186,14 @@ export default {
         setKey: {
             url: "/security/session/setKey",
             method: "post",
+        },
+        setPaymentPassword: {
+            url: "/security/payPassword/setPaymentPassword",
+            method: "post",
+        },
+        verifyPaymentPassword: {
+            url: "/security/payPassword/verifyPaymentPassword",
+            method: "post",
         }
     },
 
@@ -409,6 +417,10 @@ export default {
         },
         getWalletAddress: {
             url: "/wallet/getWalletAddress",
+            method: "post",
+        },
+        addOrQueryAddressDesc: {
+            url: "/wallet/addOrQueryAddressDesc",
             method: "post",
         },
         checkWalletAddress: {
