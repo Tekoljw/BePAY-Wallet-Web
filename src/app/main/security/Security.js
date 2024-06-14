@@ -43,6 +43,8 @@ import RetiedPhone from "../login/RetiedPhone";
 import ResetPass from "../login/ResetPass";
 import Kyc from "../kyc/Kyc";
 import ResetPin from "../login/ResetPin";
+import { useParams } from 'react-router-dom';
+import history from "@history";
 
 const container = {
     show: {
@@ -98,8 +100,10 @@ const item = {
 function Security(props) {
     const { t } = useTranslation('mainPage');
 
+    const tabValueParam = history.location.state?.tabValue ?? 0
+    const resetTabValueParam = history.location.state?.resetTabValueParam ?? 0
     const userData = useSelector(selectUserData);
-    const [tabValue, setTabValue] = useState(0);
+    const [tabValue, setTabValue] = useState(tabValueParam);
     const [ranges, setRanges] = useState([t('menu_12'), t('menu_13'), t('menu_14'), t('menu_15'), t('menu_16'), "PIN"]);
     useEffect(() => {
         setPhoneTab('security');
@@ -151,7 +155,7 @@ function Security(props) {
                 {tabValue === 2 && <RetiedPhone />}
                 {tabValue === 3 && <ResetPass />}
                 {tabValue === 4 && <Kyc />}
-                {tabValue === 5 && <ResetPin />}
+                {tabValue === 5 && <ResetPin resetTabValueParam={resetTabValueParam} />}
             </div>
         </div>
     )

@@ -1606,9 +1606,7 @@ function Withdraw(props) {
                     <div className='errorPinLine'></div>
                     <div className='flex justify-between'>
                         <div className='errorPinBtn errorRightLine' onClick={() => {
-                            setOpenResetWindow(true)
-                            setOpenPinErr(false)
-                            openResetFunc()
+                            history.push('/wallet/home/security', { tabValue: 5, resetTabValueParam: 1 })
                         }}>忘记密码</div>
                         <div className='errorPinBtn' style={{ color: "#81A39F" }}
                             onClick={() => {
