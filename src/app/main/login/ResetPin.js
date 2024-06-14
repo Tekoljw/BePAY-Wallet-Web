@@ -49,7 +49,8 @@ const item = {
 
 
 
-function ResetPin() {
+function ResetPin(props) {
+    const resetTabValueParam = props?.resetTabValueParam ?? 0
     const { t } = useTranslation('mainPage');
     const schema = yup.object().shape({
         oldPassword: yup
@@ -70,7 +71,7 @@ function ResetPin() {
     });
 
     const { isValid, dirtyFields, errors } = formState;
-    const [resetTabValue, setResetTabValue] = useState(0);
+    const [resetTabValue, setResetTabValue] = useState(resetTabValueParam);
     const [selectId, setSelectId] = useState(0);
     const dispatch = useDispatch();
     const [time, setTime] = useState(null);
