@@ -209,7 +209,7 @@ function Withdraw(props) {
     const [createPinWindow, setCreatePinWindow] = useState(false);
     const [openPinErr, setOpenPinErr] = useState(false);
     const [openPasteWindow, setOpenPasteWindow] = useState(false);
-    const [openResetWindow, setOpenResetWindow] = useState(false);
+
     const changePhoneTab = (tab) => {
         window.localStorage.setItem('phoneTab', tab);
     }
@@ -223,12 +223,6 @@ function Withdraw(props) {
     const openPasteFunc = () => {
         setTimeout(() => {
             document.getElementById('PasteSty').classList.add('PinMoveAni');
-        }, 0);
-    };
-
-    const openResetFunc = () => {
-        setTimeout(() => {
-            document.getElementById('ResetSty').classList.add('PinMoveAni');
         }, 0);
     };
 
@@ -263,13 +257,6 @@ function Withdraw(props) {
         setPin('');
     };
 
-    const closeResetPinFunc = () => {
-        document.getElementById('ResetSty')?.classList.remove('PinMoveAni');
-        document.getElementById('ResetSty')?.classList.add('PinMoveOut');
-        setTimeout(() => {
-            setOpenResetWindow(false)
-        }, 300);
-    };
 
     const [time, setTime] = useState(null);
 
@@ -694,6 +681,7 @@ function Withdraw(props) {
     // PIN错误 Tips
     const errPin = () => {
         setOpenPinErr(true);
+        setOpenPinWindow(false);
     }
 
     // 修改Amount
@@ -1425,12 +1413,12 @@ function Withdraw(props) {
                             <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")} onClick={() => { setTextSelect(!textSelect) }}>{inputVal.amount}</div>
                         </div>
                         <div className='flex justify-between mt-10'>
-                            <div className='PinNum'><div style={{ color: "#64799d" }}>{pin[0] ? '●' : ''}</div></div>
-                            <div className='PinNum'><div style={{ color: "#64799d" }}>{pin[1] ? '●' : ''}</div></div>
-                            <div className='PinNum'><div style={{ color: "#64799d" }}>{pin[2] ? '●' : ''}</div></div>
-                            <div className='PinNum'><div style={{ color: "#64799d" }}>{pin[3] ? '●' : ''}</div></div>
-                            <div className='PinNum'><div style={{ color: "#64799d" }}>{pin[4] ? '●' : ''}</div></div>
-                            <div className='PinNum'><div style={{ color: "#64799d" }}>{pin[5] ? '●' : ''}</div></div>
+                            <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[0] ? '●' : ''}</div></div>
+                            <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[1] ? '●' : ''}</div></div>
+                            <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[2] ? '●' : ''}</div></div>
+                            <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[3] ? '●' : ''}</div></div>
+                            <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[4] ? '●' : ''}</div></div>
+                            <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[5] ? '●' : ''}</div></div>
                         </div>
                     </div>
 
@@ -1486,8 +1474,11 @@ function Withdraw(props) {
                         </div>
                         <div className='PINTitle'>输入用于支付的6位数字密码</div>
                         <div className='flex justify-between mt-32 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
-                            <div className='PinNum'>{pin[0] ?? ''}</div>
-                            <div className='PinNum'>{pin[1] ?? ''}</div>
+                            <div className='PinNum color-box'
+                                onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}>{pin[0] ?? ''}</div>
+                            <div className='PinNum' >{pin[1] ?? ''}</div>
                             <div className='PinNum'>{pin[2] ?? ''}</div>
                             <div className='PinNum'>{pin[3] ?? ''}</div>
                             <div className='PinNum'>{pin[4] ?? ''}</div>
@@ -1606,13 +1597,12 @@ function Withdraw(props) {
                     <div className='errorPinLine'></div>
                     <div className='flex justify-between'>
                         <div className='errorPinBtn errorRightLine' onClick={() => {
-                            setOpenResetWindow(true)
                             setOpenPinErr(false)
-                            openResetFunc()
                         }}>忘记密码</div>
                         <div className='errorPinBtn' style={{ color: "#81A39F" }}
                             onClick={() => {
                                 setOpenPinErr(false)
+                                openInputPin()
                             }}
                         >重试</div>
                     </div>
@@ -1684,203 +1674,6 @@ function Withdraw(props) {
                 </div>
             </BootstrapDialog>
 
-
-            <BootstrapDialog
-                onClose={() => {
-                    closeResetPinFunc();
-                }}
-                aria-labelledby="customized-dialog-title"
-                open={openResetWindow}
-                className="dialog-container"
-            >
-                <div id="ResetSty" className="PasteSty">
-                    <div className='pasteWindow'>
-                        <div className='flex'>
-                            <div className='PINTitle2'>重置PIN码</div>
-                            <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
-                                closeResetPinFunc();
-                            }} />
-                        </div>
-                    </div>
-
-                    <Tabs
-                        component={motion.div}
-                        variants={item}
-                        value={resetTabValue}
-                        onChange={(ev, value) => setResetTabValue(value)}
-                        indicatorColor="secondary"
-                        textColor="inherit"
-                        variant="scrollable"
-                        scrollButtons={false}
-                        className="min-h-32"
-                        style={{ padding: '0 0', margin: '0rem 0rem 1.5rem 1.5rem', borderColor: 'transparent', backgroundColor: '#1E293B', width: 'auto', borderRadius: '0px', height: '30px' }}
-                        classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
-                        TabIndicatorProps={{
-                            children: (
-                                <Box
-                                    sx={{ bgcolor: 'text.disabled' }}
-                                    className="w-full h-full rounded-full huaKuaBgColorCard"
-                                />
-                            ),
-                        }}
-                        sx={{
-                            padding: '1rem 1rem',
-                        }}
-                    >
-                        {Object.entries(["Email", 'Phone']).map(([key, label]) => (
-                            <Tab
-                                className="text-16 font-semibold min-h-32 min-w-60 mx4 px-12 txtColorTitle opacity-100 zindex"
-                                disableRipple
-                                key={key}
-                                label={label}
-                                sx={{
-                                    color: '#FFFFFF', height: '32px', width: 'auto', marginRight: "1rem"
-                                }}
-                            />
-                        ))}
-                    </Tabs>
-
-                    {resetTabValue === 0 && <div className='pasteW'>
-                        <Paper
-                            className="w-full tongYongChuang2 flex justify-content-center "
-                        >
-                            <div className="w-full  mx-auto sm:mx-0">
-                                <div className="flex items-baseline mt-2 font-medium">
-                                    <Typography>{t('re_tied_email_2')}</Typography>
-                                </div>
-
-                                <form
-                                    name="registerForm"
-                                    noValidate
-                                    className="flex flex-col justify-center w-full mt-32"
-                                // onSubmit={handleSubmit(onSubmit)}
-                                >
-                                    <Controller
-                                        name="email"
-                                        control={control}
-                                        render={({ field }) => (
-                                            <FormControl variant="outlined" className="mb-24">
-                                                <InputLabel
-                                                    style={{
-                                                        color: !!errors.email && '#f44336'
-                                                    }}
-                                                >{t('signIn_5')}*</InputLabel>
-                                                <OutlinedInput
-                                                    {...field}
-                                                    label={t('signIn_5')}
-                                                    type="text"
-                                                    variant="outlined"
-                                                    required
-                                                    fullWidth
-                                                    error={!!errors.email}
-                                                    endAdornment={
-                                                        <InputAdornment position="end">
-                                                            {time <= 0 && <IconButton
-                                                                aria-label="toggle password visibility"
-                                                                onClick={sendCode}
-                                                                // onMouseDown={handleMouseDownPassword}
-                                                                edge="end"
-                                                                sx={{
-                                                                    fontSize: '1.4rem',
-                                                                    borderRadius: '5px'
-                                                                }}
-                                                            >
-                                                                {t('forgot_3')}
-                                                            </IconButton>}
-
-                                                            {time > 0 &&
-                                                                <div>
-                                                                    {time} s
-                                                                </div>
-                                                            }
-                                                        </InputAdornment>
-                                                    }
-                                                />
-                                                {!!errors.email &&
-                                                    <div
-                                                        style={{
-                                                            fontSize: '1.2rem',
-                                                            color: '#f44336',
-                                                            fontWeight: 400,
-                                                            lineHeight: 1.66,
-                                                            textAlign: 'left',
-                                                            marginTop: '3px',
-                                                            marginRight: '14px',
-                                                            marginBottom: 0,
-                                                            marginLeft: '14px',
-                                                        }}
-                                                    >
-                                                        {errors?.email?.message}
-                                                    </div>
-                                                }
-                                            </FormControl>
-                                        )}
-                                    />
-
-                                    <Controller
-                                        name="smsCode"
-                                        control={control}
-                                        render={({ field }) => (
-                                            <TextField
-                                                {...field}
-                                                className="mb-24"
-                                                label={t('signIn_8')}
-                                                type="number"
-                                                error={!!errors.smsCode}
-                                                helperText={errors?.smsCode?.message}
-                                                variant="outlined"
-                                                required
-                                                fullWidth
-                                            />
-                                        )}
-                                    />
-
-                                    <Controller
-                                        name="password"
-                                        control={control}
-                                        render={({ field }) => (
-                                            <TextField
-                                                {...field}
-                                                className="mb-24"
-                                                label={t('signIn_9')}
-                                                type="password"
-                                                error={!!errors.password}
-                                                helperText={errors?.password?.message}
-                                                variant="outlined"
-                                                required
-                                                fullWidth
-                                            />
-                                        )}
-                                    />
-
-                                    <div className="py-20">
-                                    </div>
-
-                                    <Button
-                                        variant="contained"
-                                        color="secondary"
-                                        className=" w-full mt-24"
-                                        aria-label="Register"
-                                        disabled={_.isEmpty(dirtyFields) || !isValid}
-                                        type="submit"
-                                        size="large"
-                                    >
-                                        Reset
-                                    </Button>
-                                </form>
-                            </div>
-                        </Paper>
-                    </div>
-                    }
-
-                    {resetTabValue === 1 && <div className='pasteW'>
-
-                    </div>
-                    }
-
-
-                </div>
-            </BootstrapDialog>
         </div>
     )
 }
