@@ -660,8 +660,8 @@ function Withdraw(props) {
         return res;
     };
 
-    const [ pin, setPin ] = useState('');
-    const [ hasPin, setHasPin ] = useState(false)
+    const [pin, setPin] = useState('');
+    const [hasPin, setHasPin] = useState(false)
     // 判断是否绑定了PIN
     const isBindPin = () => {
         if (hasPin) {
@@ -1422,45 +1422,45 @@ function Withdraw(props) {
                         <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
                             <img className='MoneyWithdraw' src="wallet/assets/images/withdraw/USDT.png"></img>
                             <div className='PINTitle3'>USDT</div>
-                            <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")} onClick={() => {setTextSelect(!textSelect)}}>{inputVal.amount}</div>
+                            <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")} onClick={() => { setTextSelect(!textSelect) }}>{inputVal.amount}</div>
                         </div>
                         <div className='flex justify-between mt-10'>
-                            <div className='PinNum'>{pin[0] ?? ''}</div>
-                            <div className='PinNum'>{pin[1] ?? ''}</div>
-                            <div className='PinNum'>{pin[2] ?? ''}</div>
-                            <div className='PinNum'>{pin[3] ?? ''}</div>
-                            <div className='PinNum'>{pin[4] ?? ''}</div>
-                            <div className='PinNum'>{pin[5] ?? ''}</div>
+                            <div className='PinNum'><div style={{ color: "#64799d" }}>{pin[0] ? '●' : ''}</div></div>
+                            <div className='PinNum'><div style={{ color: "#64799d" }}>{pin[1] ? '●' : ''}</div></div>
+                            <div className='PinNum'><div style={{ color: "#64799d" }}>{pin[2] ? '●' : ''}</div></div>
+                            <div className='PinNum'><div style={{ color: "#64799d" }}>{pin[3] ? '●' : ''}</div></div>
+                            <div className='PinNum'><div style={{ color: "#64799d" }}>{pin[4] ? '●' : ''}</div></div>
+                            <div className='PinNum'><div style={{ color: "#64799d" }}>{pin[5] ? '●' : ''}</div></div>
                         </div>
                     </div>
 
                     <div className='jianPanSty'>
                         <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
-                            <div className='jianPanBtn borderRight borderBottom' onClick={() => {handleDoPin(1)}}>1</div>
-                            <div className='jianPanBtn borderRight borderBottom' onClick={() => {handleDoPin(2)}}>2</div>
-                            <div className='jianPanBtn borderRight borderBottom' onClick={() => {handleDoPin(3)}}>3</div>
-                            <div className='jianPanBtImgDiv flex items-center borderBottom' onClick={() => {handleDoPin(-1)}}>
+                            <div className='jianPanBtn borderRight borderBottom' onClick={() => { handleDoPin(1) }}>1</div>
+                            <div className='jianPanBtn borderRight borderBottom' onClick={() => { handleDoPin(2) }}>2</div>
+                            <div className='jianPanBtn borderRight borderBottom' onClick={() => { handleDoPin(3) }}>3</div>
+                            <div className='jianPanBtImgDiv flex items-center borderBottom' onClick={() => { handleDoPin(-1) }}>
                                 <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img>
                             </div>
                         </div>
                         <div className='flex' style={{ width: "100%" }}>
                             <div style={{ width: "75.1%" }}>
                                 <div className='flex'>
-                                    <div className='jianPanBtn1 borderRight' onClick={() => {handleDoPin(4)}}>4</div>
-                                    <div className='jianPanBtn1 borderRight' onClick={() => {handleDoPin(5)}}>5</div>
-                                    <div className='jianPanBtn1 borderRight' onClick={() => {handleDoPin(6)}}>6</div>
+                                    <div className='jianPanBtn1 borderRight' onClick={() => { handleDoPin(4) }}>4</div>
+                                    <div className='jianPanBtn1 borderRight' onClick={() => { handleDoPin(5) }}>5</div>
+                                    <div className='jianPanBtn1 borderRight' onClick={() => { handleDoPin(6) }}>6</div>
                                 </div>
                                 <div className='flex'>
-                                    <div className='jianPanBtn1 borderRight' onClick={() => {handleDoPin(7)}}>7</div>
-                                    <div className='jianPanBtn1 borderRight' onClick={() => {handleDoPin(8)}}>8</div>
-                                    <div className='jianPanBtn1 borderRight' onClick={() => {handleDoPin(9)}}>9</div>
+                                    <div className='jianPanBtn1 borderRight' onClick={() => { handleDoPin(7) }}>7</div>
+                                    <div className='jianPanBtn1 borderRight' onClick={() => { handleDoPin(8) }}>8</div>
+                                    <div className='jianPanBtn1 borderRight' onClick={() => { handleDoPin(9) }}>9</div>
                                 </div>
                                 <div className='flex'>
-                                    <div className='jianPanBtn2 borderRight' onClick={() => {handleDoPin(0)}}>0</div>
-                                    <div className='jianPanBtn4 borderRight' onClick={() => {handleDoPin('.')}}>.</div>
+                                    <div className='jianPanBtn2 borderRight' onClick={() => { handleDoPin(0) }}>0</div>
+                                    <div className='jianPanBtn4 borderRight' onClick={() => { handleDoPin('.') }}>.</div>
                                 </div>
                             </div>
-                            <div className='jianPanBtn3' onClick={() => {setTextSelect(false)}}>完成</div>
+                            <div className='jianPanBtn3' onClick={() => { setTextSelect(false) }}>完成</div>
                         </div>
                     </div>
                     <div>
@@ -1524,46 +1524,46 @@ function Withdraw(props) {
                             <div id="createPin4" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
                                 onTouchEnd={changeToWhite}
                                 onTouchCancel={changeToWhite}
-                                 onClick={() => {
-                                     handleDoPin(4)
-                                 }}
+                                onClick={() => {
+                                    handleDoPin(4)
+                                }}
                             >4</div>
                             <div id="createPin5" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
                                 onTouchEnd={changeToWhite}
                                 onTouchCancel={changeToWhite}
-                                 onClick={() => {
-                                     handleDoPin(5)
-                                 }}
+                                onClick={() => {
+                                    handleDoPin(5)
+                                }}
                             >5</div>
                             <div id="createPin6" className='jianPanNumBtn  borderBottom color-box' onTouchStart={changeToBlack}
                                 onTouchEnd={changeToWhite}
                                 onTouchCancel={changeToWhite}
-                                 onClick={() => {
-                                     handleDoPin(6)
-                                 }}
+                                onClick={() => {
+                                    handleDoPin(6)
+                                }}
                             >6</div>
                         </div>
                         <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
                             <div id="createPin7" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
                                 onTouchEnd={changeToWhite}
                                 onTouchCancel={changeToWhite}
-                                 onClick={() => {
-                                     handleDoPin(7)
-                                 }}
+                                onClick={() => {
+                                    handleDoPin(7)
+                                }}
                             >7</div>
                             <div id="createPin8" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
                                 onTouchEnd={changeToWhite}
                                 onTouchCancel={changeToWhite}
-                                 onClick={() => {
-                                     handleDoPin(8)
-                                 }}
+                                onClick={() => {
+                                    handleDoPin(8)
+                                }}
                             >8</div>
                             <div id="createPin9" className='jianPanNumBtn borderBottom color-box' onTouchStart={changeToBlack}
                                 onTouchEnd={changeToWhite}
                                 onTouchCancel={changeToWhite}
-                                 onClick={() => {
-                                     handleDoPin(9)
-                                 }}
+                                onClick={() => {
+                                    handleDoPin(9)
+                                }}
                             >9</div>
                         </div>
                         <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
@@ -1571,9 +1571,9 @@ function Withdraw(props) {
                             <div id="createPin0" className='jianPanNumBtn borderRight color-box' onTouchStart={changeToBlack}
                                 onTouchEnd={changeToWhite}
                                 onTouchCancel={changeToWhite}
-                                 onClick={() => {
-                                     handleDoPin(0)
-                                 }}
+                                onClick={() => {
+                                    handleDoPin(0)
+                                }}
                             >0</div>
                             <div id="createPinx" className='jianPanNumBtn flex items-center color-box'
                                 onTouchStart={changeToBlack}

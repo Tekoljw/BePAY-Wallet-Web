@@ -110,6 +110,11 @@
     border: 2px solid #2DD4BF !important;
 }
 
+.activePinZi {
+    border: 1px solid #2DD4BF !important;
+    color: #ffffff !important;
+}
+
 .color-ffffff {
     color: #ffffff;
 }
@@ -333,6 +338,11 @@ input[type='number'] {
     background-color: #1E293B !important;
 }
 
+.tongYongChuang3 {
+    width: 100%;
+    background-color: #0E1421 !important;
+}
+
 
 .PINTitle3 {
     text-align: center;
@@ -462,6 +472,10 @@ input[type='number'] {
     aspect-ratio: 1/1;
     border-radius: 0.5rem;
     max-width: 10rem;
+    font-size: 2.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .shaoMiaoIcon {
@@ -591,6 +605,15 @@ input[type='number'] {
 
 .pasteDiZhi {
     margin-bottom: 2rem;
+}
+
+.selectPin {
+    display: inline-block;
+    margin: 1rem 1.5rem 0rem 0rem;
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+    border: 1px solid #374252;
+    color: #94A3B8;
 }
 
 
@@ -1248,6 +1271,12 @@ input[type='number'] {
 .huaKuaBgColorCard {
     border-radius: 0px !important;
     background: #1E293B;
+    border-bottom: 1px solid #12C1A2;
+}
+
+.pinKuaBgColorCard {
+    border-radius: 0px !important;
+    background: #0E1421;
     border-bottom: 1px solid #12C1A2;
 }
 

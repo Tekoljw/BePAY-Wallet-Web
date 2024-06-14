@@ -100,7 +100,7 @@ function Security(props) {
 
     const userData = useSelector(selectUserData);
     const [tabValue, setTabValue] = useState(0);
-    const [ranges, setRanges] = useState([t('menu_12'), t('menu_13'), t('menu_14'), t('menu_15'), t('menu_16'), "Edit PIN"]);
+    const [ranges, setRanges] = useState([t('menu_12'), t('menu_13'), t('menu_14'), t('menu_15'), t('menu_16'), "PIN"]);
     useEffect(() => {
         setPhoneTab('security');
     }, []);
