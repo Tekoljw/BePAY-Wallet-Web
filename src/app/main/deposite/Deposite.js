@@ -930,29 +930,29 @@ function Deposite() {
                     textColor="inherit"
                     variant="scrollable"
                     scrollButtons={false}
-                    className="min-h-36 wallet-show-type wallet-show-type-tab"
-                    classes={{ indicator: 'flex justify-center bg-transparent w-full h-full min-h-36 ' }}
+                    className="tongYongDingBtn"
+                    style={{ width: '50%!import' }}
+                    classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
                     TabIndicatorProps={{
                         children: (
                             <Box
+                                sx={{ bgcolor: 'text.disabled' }}
                                 className="w-full h-full rounded-full  huaKuaBgColor0"
                             />
                         ),
                     }}
                     sx={{
-                        padding: '1rem 1.2rem',
-                        flex: 1,
+                        margin: "1rem 1.2rem",
                     }}
                 >
                     {Object.entries(ranges)?.map(([key, label]) => (
                         <Tab
-                            className="text-14 font-semibold min-w-64 wallet-tab-item txtColorTitle zindex opacity-100"
+                            className="text-14 font-semibold min-h-36 min-w-64 mx4 px-12 opacity1 txtColorTitle zindex"
                             disableRipple
                             key={key}
                             label={label}
                             sx={{
-                                // color: '#FFFFFF', height: '3.5rem', width: '16.8rem'
-                                color: '#FFFFFF', height: '3.2rem', width: '50%'
+                                color: '#FFFFFF', height: '3.6rem', width: '50%'
                             }}
                         />
                     ))}
@@ -1002,7 +1002,7 @@ function Deposite() {
                             border: 'none'
                         }}
                     >
-                        <Typography className="text-16 px-16 my-12 " style={{ marginBottom: '0.5rem' }}>{t('home_deposite_4')}</Typography>
+                        <Typography className="text-16 px-10 my-12 " style={{ marginBottom: '0.5rem' }}>{t('home_deposite_4')}</Typography>
                         <div className="flex px-16" style={{ flexWrap: 'wrap', paddingLeft: '0.7rem', paddingRight: '0.7rem' }}>
                             {networkData[symbol]?.length > 0 && networkData[symbol]?.map((item, index) => {
                                 return (
@@ -1041,10 +1041,23 @@ function Deposite() {
                             })}
                         </div>
 
+                        <div className='text-16 ml-10 mt-10 mb-6'>Inside UserID</div>
+                        <div className='addressBigW flex justify-between mt-10'>
+                            <div className="addressW   guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
+                                <div className="addressW2 flex justify-between guoDuDongHua">
+                                    <div className='idZi guoDuDongHua' >35985475</div>
+                                    <img className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"></img>
+                                </div>
+                                <img className='testQrCodeImg' src="wallet/assets/images/deposite/testCode.png"></img>
+                            </div>
+                            <img className='qrCodeImg' src="wallet/assets/images/deposite/newQrCode.png" onClick={() => {
+                                setShowQRcode(!showQRcode);
+                            }} ></img>
+                        </div>
 
+                        <div className='text-16 ml-10 mt-16 mb-16'>External Address</div>
                         {/* 新地址 */}
                         <>
-                            <div className='ml-10 mt-10 mb-16 text-16'>USDT Deposite Address(TRX)</div>
                             {walletAddressList.map((addressItem, index) => {
                                 return (
                                     <div className='mb-16' key={index}>
@@ -1055,7 +1068,7 @@ function Deposite() {
                                             </div>
                                         </div>
                                         <div className='addressBigW flex justify-between mt-10'>
-                                            <div className="addressW  guoDuDongHua" style={{ height: selectWalletAddressIndex == index ? "22rem" : '4.2rem' }}>
+                                            <div className="addressW   guoDuDongHua" style={{ height: selectWalletAddressIndex == index ? "22rem" : '4.2rem' }}>
                                                 <div className="addressW2 flex justify-between guoDuDongHua">
                                                     <div className='addressZi'>{addressItem.address}</div>
                                                     <img className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"></img>
@@ -1066,12 +1079,11 @@ function Deposite() {
                                                         padding: '10px',
                                                         borderRadius: '8px',
                                                         background: '#ffffff',
-                                                        margin: '10px auto',
+                                                        margin: '2.6rem auto 1rem auto',
                                                     }}
                                                     size={138}
                                                     value={addressItem.address}
                                                 />
-                                                {/*<img className='testQrCodeImg' src="wallet/assets/images/deposite/testCode.png"></img>*/}
                                             </div>
                                             <img className='qrCodeImg' src="wallet/assets/images/deposite/newQrCode.png" onClick={() => {
                                                 if (selectWalletAddressIndex === index) {
@@ -1099,29 +1111,6 @@ function Deposite() {
                                     </div>
                                 </div>
                             )}
-
-                            {/* <div className='flex justify-content-center' style={{ width: "100%", overflow: "hidden" }}>
-                                            <LoadingButton className="px-48 text-lg btnColorTitleBig"
-                                                size="large"
-                                                color="secondary"
-                                                variant="contained"
-                                                loading={cryptoOpenLoad}
-                                                sx={{ backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1rem' }}
-                                                onClick={async () => {
-                                                    setCryptoOpenLoad(true);
-                                                    getWalletAddressClick(networkId);
-                                                }}
-                                                style={{ width: "28rem" }}
-                                            >
-                                                <div className='flex justify-content-center' style={{ width: "280px", overflow: "hidden" }}>
-                                                    {!cryptoOpenLoad && <img className='login-way-img button-noreduce'
-                                                        src="wallet/assets/images/menu/icon-wallet-active.png"
-                                                        alt="" />}
-                                                    <span className='login-way-name'>{t('home_deposite_13')}</span>
-                                                </div>
-                                            </LoadingButton>
-                                        </div> */}
-
 
                         </>
 
@@ -1180,33 +1169,33 @@ function Deposite() {
                                                         //     // console.log(transferFormData,'money...');
 
                                                         // }}
-                                                          onClick={async () => {
+                                                        onClick={async () => {
 
 
-                                                              if (decentralized != 1 && userData.profile?.loginType != "unkown") {
-                                                                  // 跳转到 /account 页面
-                                                                  history.push('/wallet/account');
-                                                              } else {
+                                                            if (decentralized != 1 && userData.profile?.loginType != "unkown") {
+                                                                // 跳转到 /account 页面
+                                                                history.push('/wallet/account');
+                                                            } else {
 
-                                                                  // 保留原有的 onClick 逻辑
-                                                                  let balanceRes = await dispatch(getDecenterWalletBalance({
-                                                                      address: arrayLookup(symbolWallet, 'symbol', symbol, 'address'),
-                                                                      decimals: arrayLookup(symbolWallet, 'symbol', symbol, 'decimals'),
-                                                                      type: arrayLookup(symbolWallet, 'symbol', symbol, 'type'),
-                                                                      networkChainId: arrayLookup(networks, 'id', networkId, 'chainId'),
-                                                                  }));
-                                                                  let balance = balanceRes.payload || 0;
-                                                                  // if (balance == 0) {
-                                                                  //     return;
-                                                                  // }
-                                                                  handleChangeTransferVal2('amount', balance);
-                                                                  setTransferDialogState(true);
-                                                                  console.log(balance, 'balance..222.');
-                                                                  setbalanceAll(balance.toFixed(6));
-                                                                  setInputValue(balance.toFixed(6));
-                                                                  handleChangeTransferVal2('amount', balance);
-                                                              }
-                                                          }}
+                                                                // 保留原有的 onClick 逻辑
+                                                                let balanceRes = await dispatch(getDecenterWalletBalance({
+                                                                    address: arrayLookup(symbolWallet, 'symbol', symbol, 'address'),
+                                                                    decimals: arrayLookup(symbolWallet, 'symbol', symbol, 'decimals'),
+                                                                    type: arrayLookup(symbolWallet, 'symbol', symbol, 'type'),
+                                                                    networkChainId: arrayLookup(networks, 'id', networkId, 'chainId'),
+                                                                }));
+                                                                let balance = balanceRes.payload || 0;
+                                                                // if (balance == 0) {
+                                                                //     return;
+                                                                // }
+                                                                handleChangeTransferVal2('amount', balance);
+                                                                setTransferDialogState(true);
+                                                                console.log(balance, 'balance..222.');
+                                                                setbalanceAll(balance.toFixed(6));
+                                                                setInputValue(balance.toFixed(6));
+                                                                handleChangeTransferVal2('amount', balance);
+                                                            }
+                                                        }}
                                                     >
                                                         <div className='flex justify-content-center' style={{ width: "180px", overflow: "hidden" }}>
                                                             {/* <img className='login-way-img'
@@ -1214,42 +1203,42 @@ function Deposite() {
                                                 src={
                                                     (decentralized != 1 || userData.profile?.loginType != 1) ? `/wallet/assets/images/menu/icon-wallet-active.png` : `${walletImage}`} alt="" /> */}
                                                             <img className='login-way-img button-noreduce'
-                                                                 src={
-                                                                     (() => {
-                                                                         switch (walletloginname) {
-                                                                             case 'BitKeep':
-                                                                                 return '/wallet/assets/images/login/icon-right-14.png';
-                                                                             case 'MetaMask':
-                                                                                 return '/wallet/assets/images/login/icon-right-1.png';
-                                                                             case 'WalletConnect':
-                                                                                 return '/wallet/assets/images/login/icon-right-5.png';
-                                                                             case 'coinbase':
-                                                                                 return '/wallet/assets/images/login/icon-right-10.png';
-                                                                             case 'TrustWallet':
-                                                                                 return '/wallet/assets/images/login/icon-right-12.png';
-                                                                             case 'Coinbase':
-                                                                                 return '/wallet/assets/images/login/icon-right-4.png';
-                                                                             case 'Polygon':
-                                                                                 return '/wallet/assets/images/login/icon-right-13.png';
-                                                                             case 'Bitski':
-                                                                                 return '/wallet/assets/images/login/icon-right-15.png';
-                                                                             case 'CLedger':
-                                                                                 return '/wallet/assets/images/login/icon-right-16.png';
-                                                                             case 'Binance Smart':
-                                                                                 return '/wallet/assets/images/login/icon-right-17.png';
-                                                                             case 'value2':
-                                                                                 return '';
-                                                                             default:
-                                                                                 return '/wallet/assets/images/menu/icon-wallet-active.png ';
-                                                                         }
-                                                                     })()
-                                                                 }
-                                                                 alt=""
+                                                                src={
+                                                                    (() => {
+                                                                        switch (walletloginname) {
+                                                                            case 'BitKeep':
+                                                                                return '/wallet/assets/images/login/icon-right-14.png';
+                                                                            case 'MetaMask':
+                                                                                return '/wallet/assets/images/login/icon-right-1.png';
+                                                                            case 'WalletConnect':
+                                                                                return '/wallet/assets/images/login/icon-right-5.png';
+                                                                            case 'coinbase':
+                                                                                return '/wallet/assets/images/login/icon-right-10.png';
+                                                                            case 'TrustWallet':
+                                                                                return '/wallet/assets/images/login/icon-right-12.png';
+                                                                            case 'Coinbase':
+                                                                                return '/wallet/assets/images/login/icon-right-4.png';
+                                                                            case 'Polygon':
+                                                                                return '/wallet/assets/images/login/icon-right-13.png';
+                                                                            case 'Bitski':
+                                                                                return '/wallet/assets/images/login/icon-right-15.png';
+                                                                            case 'CLedger':
+                                                                                return '/wallet/assets/images/login/icon-right-16.png';
+                                                                            case 'Binance Smart':
+                                                                                return '/wallet/assets/images/login/icon-right-17.png';
+                                                                            case 'value2':
+                                                                                return '';
+                                                                            default:
+                                                                                return '/wallet/assets/images/menu/icon-wallet-active.png ';
+                                                                        }
+                                                                    })()
+                                                                }
+                                                                alt=""
                                                             />
                                                             <span className='login-way-name'>
-                                                            {(decentralized != -1 && userData.profile?.loginType === "web3_wallet") ? t('home_deposite_12') : t('home_deposite_10')}
+                                                                {(decentralized != -1 && userData.profile?.loginType === "web3_wallet") ? t('home_deposite_12') : t('home_deposite_10')}
 
-                                                        </span>
+                                                            </span>
                                                         </div>
                                                     </div>)
                                                 }
@@ -1319,9 +1308,9 @@ function Deposite() {
                                                             </div>
                                                         </div>
                                                         <div className='addressBigW flex justify-between mt-10'>
-                                                            <div className="addressW  guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
+                                                            <div className="addressW flex justify-between  guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
                                                                 <div className="addressW2 flex justify-between guoDuDongHua">
-                                                                    <div className='addressZi'>{addressItem}</div>
+                                                                    <div className='addressZi testRed'>{addressItem}</div>
                                                                     <img className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"></img>
                                                                 </div>
                                                                 <img className='testQrCodeImg' src="wallet/assets/images/deposite/testCode.png"></img>

@@ -216,7 +216,7 @@ function Buy(props) {
                     textColor="inherit"
                     variant="scrollable"
                     scrollButtons={false}
-                    className="-mx-4 min-h-35"
+                    className="mx-4 min-h-36"
                     style={{padding: '0 0', margin: '1rem 2.4rem 0.4rem', borderColor: 'transparent', backgroundColor: '#374252', width: '21.6rem', borderRadius: '20px', height: '3.2rem'}}
                     classes={{ indicator: 'flex justify-center bg-transparent w-full h-full ' }}
                     TabIndicatorProps={{
@@ -234,12 +234,12 @@ function Buy(props) {
                 >
                     {Object.entries(ranges).map(([key, label]) => (
                         <Tab
-                            className="text-14 font-semibold min-h-32 min-w-64 mx4 px-12 opacity1 txtColorTitle zindex"
+                            className="text-14 font-semibold min-h-36 min-w-64 mx4 px-12 opacity1 txtColorTitle zindex"
                             disableRipple
                             key={key}
                             label={label}
                             sx={{
-                                color: '#FFFFFF', height: '3.2rem', width: '10.8rem'
+                                color: '#FFFFFF', height: '3.6rem', width: '10.8rem'
                             }}
                         />
                     ))}

@@ -718,6 +718,14 @@ input[type='number'] {
     background-position: center;
 }
 
+.tongYongDingBtn {
+    min-height: 3.6rem;
+    margin: 1.2rem 1.5rem 1.4rem 1.5rem;
+    background-color: #374252;
+    border-radius: 2rem;
+    height: 3.6rem
+}
+
 .openingFee {
     color: #46DFB7;
     height: 3.6rem;
@@ -1212,7 +1220,6 @@ input[type='number'] {
 .bianJiBiImg {
     width: 2.2rem;
     height: 2.2rem;
-    margin-right: 1rem;
 }
 
 .bianJiBiImg2 {
@@ -1344,6 +1351,12 @@ input[type='number'] {
 }
 
 .addressZi {
+    font-size: 1.2rem;
+    height: 2.2rem;
+    line-height: 2.2rem;
+}
+
+.idZi {
     font-size: 1.2rem;
     height: 2.2rem;
     line-height: 2.2rem;
