@@ -122,29 +122,31 @@ function Security(props) {
                         value={tabValue}
                         onChange={(ev, value) => setTabValue(value)}
                         textColor="inherit"
+                        indicatorColor="secondary"
                         variant="scrollable"
-                        scrollButtons
-                        className="min-h-40 wallet-show-type wallet-show-type-tab ml-16 mr-12"
-                        classes={{ indicator: 'flex justify-center bg-transparent w-full h-full min-h-32' }}
+                        scrollButtons={false}
+                        className="tongYongDingBtn"
+                        style={{ minWidth: '28%!import' }}
+                        classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
                         TabIndicatorProps={{
                             children: (
-                                <Box className="w-full h-full rounded-full  huaKuaBgColor0" />
+                                <Box
+                                    sx={{ bgcolor: 'text.disabled' }}
+                                    className="w-full h-full rounded-full  huaKuaBgColor0" />
                             ),
                         }}
                         sx={{
-                            [`& .${tabsClasses.scrollButtons}`]: {
-                                '&.Mui-disabled': { opacity: 0.3 },
-                            },
+                            margin: "1rem 1.2rem",
                         }}
                     >
                         {Object.entries(ranges).map(([key, label]) => (
                             <Tab
-                                className="text-14 font-semibold  wallet-tab-item txtColorTitle zindex opacity-100 "
+                                className="text-14 font-semibold min-h-36 min-w-64 mx4 px-12 opacity1 txtColorTitle zindex"
                                 disableRipple
                                 key={key}
                                 label={label}
                                 style={{
-                                    height: '3.5rem', overflow: "hidden"
+                                    color: '#FFFFFF', height: '3.6rem', minWidth: '28%'
                                 }}
                             />
                         ))}

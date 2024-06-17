@@ -39,8 +39,8 @@ const locale = {
     menu_10: 'Record',
     menu_11: 'Marketplace',
     menu_12: 'Enable 2FA',
-    menu_13: 'Re-tied Email',
-    menu_14: 'Re-tied Phone',
+    menu_13: 'Edit Email',
+    menu_14: 'Edit Phone',
     menu_15: 'Edit Pass',
     menu_16: 'KYC',
     menu_17: 'Security',
@@ -285,15 +285,15 @@ const locale = {
     errorMsg_3:'Password is too simple',
     
 
-    re_tied_email_1: 'Re-tied your Email',
+    re_tied_email_1: 'Edit your Email',
     re_tied_email_2: 'Create a new email for your account',
     re_tied_email_3: 'Return to ',
     re_tied_email_4: 'Home',
-    re_tied_email_5: 'Re-tied your Email',
+    re_tied_email_5: 'Edit your Email',
 
-    re_tied_phone_1: 'Re-tied your Phone',
+    re_tied_phone_1: 'Edit your Phone',
     re_tied_phone_2: 'Create a new phone for your account',
-    re_tied_phone_3: 'Re-tied your Phone',
+    re_tied_phone_3: 'Edit your Phone',
 
     reset_pass_1: 'Reset your password',
     reset_pass_2: 'Reset your password',

@@ -93,6 +93,9 @@ function Record() {
     ];
 
     const [timeItem, setTimeItem] = React.useState(1);
+    const [kaPianItem, setKaPianItem] = React.useState(1);
+    const [selectCardID, setSelectCardID] = React.useState(0);
+
 
     const [isLoading, setIsLoading] = React.useState(true);
     const columns = [
@@ -155,6 +158,7 @@ function Record() {
         setPage(0);
         setTransferList([]);
         setType(event.target.value);
+        setSelectCardID(event.target.value)
     };
 
     const handleChange2 = (event) => {
@@ -162,6 +166,13 @@ function Record() {
         setPage(0);
         setTransferList([]);
         setTimeItem(event.target.value);
+    };
+
+    const handleChange3 = (event) => {
+        setMoreBtnShow(false)
+        setPage(0);
+        setTransferList([]);
+        setKaPianItem(event.target.value);
     };
 
     return (
@@ -269,7 +280,6 @@ function Record() {
                 animate="show"
                 className="select-fieldset-noborder recordPx  flex justify-between"
             >
-
                 <FormControl sx={{
                     m: 1,
                     width: "58%",
@@ -307,7 +317,6 @@ function Record() {
                         })}
                     </Select>
                 </FormControl>
-
 
                 <FormControl sx={{
                     m: 1,
@@ -355,6 +364,50 @@ function Record() {
                 </FormControl>
             </motion.div>
 
+            {selectCardID === 18 && <motion.div
+                variants={container}
+                initial="hidden"
+                animate="show"
+                className="select-fieldset-noborder recordPx  flex justify-between"
+            >
+                <FormControl sx={{
+                    m: 1,
+                    width: "100%",
+                    margin: 0,
+                    border: 'none',
+                    borderRadius: '10px!important',
+                    backgroundColor: '#1E293B!important',
+                    '&:before': {
+                        display: 'none',
+                    },
+                    '&:first-of-type': {},
+                    '&:last-of-type': {
+                        marginBottom: 0,
+                    }
+                }}
+                >
+                    <Select
+                        value={kaPianItem}
+                        onChange={handleChange3}
+                        displayEmpty
+                        className="recordSelectHeight"
+                        MenuProps={{
+                            PaperProps: {
+                                style: {
+                                    maxHeight: 600,
+                                    overflow: "hidden",
+                                    border: 'none',
+                                },
+                            },
+                        }}
+                    >
+                        <MenuItem value={1} className='text-16'>全部卡片</MenuItem>
+                        <MenuItem value={2} className='text-16'>6584 2458 7848 7542<span style={{ color: "#94A3B8", marginLeft: "1rem" }}>VISA</span></MenuItem>
+                        <MenuItem value={3} className='text-16'>3354 6857 9584 8848<span style={{ color: "#94A3B8", marginLeft: "1rem" }}>MASTER</span></MenuItem>
+                    </Select>
+                </FormControl>
+            </motion.div>
+            }
 
             <motion.div
                 variants={container}
@@ -421,7 +474,7 @@ function Record() {
                             {transferList?.length > 0 ? (transferList?.map((transferItem, index) => {
                                 return (
                                     <div key={transferItem.id ?? index} className='py-10'
-                                         style={{borderBottom: index != (transferList.length - 1) ? "solid 1px #33435d" : ''}}>
+                                        style={{ borderBottom: index != (transferList.length - 1) ? "solid 1px #33435d" : '' }}>
                                         <div className='flex justify-between '>
                                             <div className='flex'>
                                                 <div className='recordListZi'>{typeList.find(v => {

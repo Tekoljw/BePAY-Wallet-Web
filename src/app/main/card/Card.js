@@ -20,8 +20,8 @@ import { selectUserData } from "../../store/user";
 import { tokenTransfer } from "../../store/user/userThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
-import {selectConfig, setSwapConfig} from "../../store/config";
-import {arrayLookup, setPhoneTab} from "../../util/tools/function";
+import { selectConfig, setSwapConfig } from "../../store/config";
+import { arrayLookup, setPhoneTab } from "../../util/tools/function";
 import { openScan, closeScan } from "../../util/tools/scanqrcode";
 import { getWithDrawConfig, WalletConfigDefineMap, evalTokenTransferFee, getWithdrawHistoryAddress, getWithdrawTransferStats } from "app/store/wallet/walletThunk";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
@@ -42,9 +42,47 @@ import history from '@history';
 import AccordionActions from '@mui/material/AccordionActions';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { margin } from '@mui/system';
-import {getSwapConfig} from "app/store/swap/swapThunk";
+import { getSwapConfig } from "app/store/swap/swapThunk";
 
 
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+    '& .MuiDialogContent-root': {
+        padding: theme.spacing(2),
+    },
+    '& .MuiDialogActions-root': {
+        padding: theme.spacing(1),
+    },
+}));
+
+// export interface DialogTitleProps {
+//     id: string;
+//     children?: React.ReactNode;
+//     onClose: () => void;
+// }
+
+// function BootstrapDialogTitle(props: DialogTitleProps) {
+//     const { children, onClose, ...other } = props;
+//     return (
+//         <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+//             {children}
+//             {onClose ? (
+//                 <IconButton
+//                     aria-label="close"
+//                     onClick={onClose}
+//                     sx={{
+//                         position: 'absolute',
+//                         right: 8,
+//                         top: 8,
+//                         color: (theme) => theme.palette.grey[500],
+//                     }}
+//                 >
+//                     <CloseIcon />
+//                 </IconButton>
+//             ) : null}
+//         </DialogTitle>
+//     );
+// }
 
 const container = {
     show: {
@@ -75,6 +113,7 @@ function Card(props) {
     const [openCardBtnShow, setOpenCardBtnShow] = useState(false);
     const [openAnimateHuanKa, setOpenAnimateHuanKa] = useState(false);
     const [isOpenEye, setIsOpenEye] = useState(false);
+    const [openRecordWindow, setOpenRecordWindow] = useState(false);
 
     const changePhoneTab = (tab) => {
         window.localStorage.setItem('phoneTab', tab);
@@ -128,6 +167,22 @@ function Card(props) {
     useEffect(() => {
         setPhoneTab('card');
     }, []);
+
+
+
+    const closeRecordFunc = () => {
+        document.getElementById('openRecord').classList.remove('PinMoveAni');
+        document.getElementById('openRecord').classList.add('PinMoveOut');
+        setTimeout(() => {
+            openRecordWindow(false)
+        }, 300);
+    };
+
+    const openRecordFunc = () => {
+        setTimeout(() => {
+            document.getElementById('openRecord').classList.add('PinMoveAni');
+        }, 0);
+    };
 
     return (
         <div className='' style={{ position: "relative" }}>
@@ -227,13 +282,15 @@ function Card(props) {
                                         <div className="zhangDanXiangQinZi" onClick={() => {
                                             changePhoneTab('record');
                                             history.push('/wallet/home/record')
+                                            // setOpenRecordWindow(true)
+                                            // openRecordFunc()
                                         }} >账单详情</div>
                                     </div>
 
                                     <div className=" flex items-conter px-16" style={{ width: "100%", marginTop: "1.5rem", justifyContent: "space-between" }}>
                                         <div className="flex" style={{ width: "70%" }}>
                                             <img className="cardImg mt-3" src="/wallet/assets/images/withdraw/usd.png" onClick={() => {
-                                               
+
                                             }}></img>
                                             {
                                                 isOpenEye ? <div className="eyeGongNengZi" style={{ color: "#ffffff" }}>{(userData.profile.wallet?.Crypto + userData.profile.wallet?.Fiat).toFixed(2) ?? '0.00'}</div>
@@ -273,7 +330,7 @@ function Card(props) {
                                         >
                                             {Object.entries(['虚拟卡', '实体卡']).map(([key, label]) => (
                                                 <Tab
-                                                    className="text-16 font-semibold min-h-32 min-w-64 mx4 px-12 txtColorTitle opacity-100 zindex"
+                                                    className="text-14 font-semibold min-h-32 min-w-64 mx4 px-12 txtColorTitle opacity-100 zindex"
                                                     disableRipple
                                                     key={key}
                                                     label={label}
@@ -336,7 +393,13 @@ function Card(props) {
                                                                 id="panel1-header"
                                                                 className='gongNengTan2'
                                                             >
-                                                                设置
+                                                                <div className='flex justify-between w-full'>
+                                                                    <div className='flex'>
+                                                                        <div className=''>余额</div>
+                                                                        <div className='ml-8 yuEZi'>$50.00</div>
+                                                                    </div>
+                                                                    <div className='cardDepositeDi'>充值</div>
+                                                                </div>
                                                             </AccordionSummary>
 
                                                             <AccordionDetails className='gongNengTan3'>
@@ -345,33 +408,33 @@ function Card(props) {
                                                                         setOpenAnimateModal(true);
                                                                     }} >
                                                                         <img className='gongNengTuBiao' src="wallet/assets/images/menu/guaShi.png"></img>
-                                                                        <div className='gongNengZiW mt-10 text-16'>一键冻结</div>
+                                                                        <div className='gongNengZiW mt-4 text-14'>一键冻结</div>
                                                                     </div>
                                                                     <div className='gongNengLanW' onClick={() => {
                                                                         setOpenAnimateHuanKa(true);
                                                                     }}>
                                                                         <img className='gongNengTuBiao' src="wallet/assets/images/menu/gengHuanKaPian.png"></img>
-                                                                        <div className='gongNengZiW mt-10 text-16'>更换卡片</div>
+                                                                        <div className='gongNengZiW mt-4 text-14'>更换卡片</div>
                                                                     </div>
 
                                                                     <div className='gongNengLanW'>
                                                                         <img className='gongNengTuBiao' src="wallet/assets/images/menu/miMaGuanLi.png"></img>
-                                                                        <div className='gongNengZiW mt-10 text-16'>密码管理</div>
+                                                                        <div className='gongNengZiW mt-4 text-14'>密码管理</div>
                                                                     </div>
                                                                 </div>
 
                                                                 <div className='mt-24 flex justify-center'>
                                                                     <div className='gongNengLanW'>
                                                                         <img className='gongNengTuBiao' src="wallet/assets/images/menu/daE.png"></img>
-                                                                        <div className='gongNengZiW mt-10 text-16'>大额预约</div>
+                                                                        <div className='gongNengZiW mt-4 text-14'>大额预约</div>
                                                                     </div>
                                                                     <div className='gongNengLanW'>
                                                                         <img className='gongNengTuBiao' src="wallet/assets/images/menu/bangDing.png"></img>
-                                                                        <div className='gongNengZiW mt-10 text-16'>解除订阅</div>
+                                                                        <div className='gongNengZiW mt-4 text-14'>解除订阅</div>
                                                                     </div>
                                                                     <div className='gongNengLanW'>
                                                                         <img className='gongNengTuBiao' src="wallet/assets/images/menu/atm.png"></img>
-                                                                        <div className='gongNengZiW mt-10 text-16'>ATM/POS</div>
+                                                                        <div className='gongNengZiW mt-4 text-14'>ATM/POS</div>
                                                                     </div>
                                                                 </div>
 
@@ -446,7 +509,7 @@ function Card(props) {
                                     >
                                         {Object.entries(['虚拟卡', '实体卡']).map(([key, label]) => (
                                             <Tab
-                                                className="text-16 font-semibold min-h-32 min-w-64 mx4 px-12 txtColorTitle opacity-100 zindex"
+                                                className="text-14 font-semibold min-h-32 min-w-64 mx4 px-12 txtColorTitle opacity-100 zindex"
                                                 disableRipple
                                                 key={key}
                                                 label={label}
@@ -859,6 +922,36 @@ function Card(props) {
                     </LoadingButton>
                 </div>
             </AnimateModal>
+
+
+            {/* <BootstrapDialog
+                onClose={() => {
+                    closeRecordFunc();
+                }}
+                aria-labelledby="customized-dialog-title"
+                open={openRecordWindow}
+                className="dialog-container"
+            >
+                <div id="openRecord" className="PINSty">
+                    <div className='pinWindow'>
+                        <div className='flex'>
+                            <div className='PINTitleSelectCardZi'>选择查询的卡片</div>
+                            <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                                closeRecordFunc();
+                            }} />
+                        </div>
+                        <div className='flex mt-20 justify-between'>
+                            <div className='flex'>
+                                <img className='cardSelectIcon' src="wallet/assets/images/card/all.png"></img>
+                                <div className='cardSelectZi'>全部卡片</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                    </div>
+                </div>
+            </BootstrapDialog> */}
 
         </div>
     )

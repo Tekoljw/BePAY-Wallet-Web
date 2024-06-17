@@ -300,6 +300,13 @@ input[type='number'] {
     margin-bottom: 2rem;
 }
 
+.PINTitleSelectCardZi {
+    width: 100%;
+    font-size: 1.8rem;
+    padding-left: 2.5rem;
+    text-align: center;
+}
+
 .closePinBtn {
     width: 2.5rem;
     height: 2.5rem;
@@ -485,6 +492,17 @@ input[type='number'] {
 
 }
 
+.cardSelectIcon {
+    width: 3rem;
+    height: 3rem;
+}
+
+.cardSelectZi {
+    height: 3rem;
+    line-height: 3rem;
+    font-size: 1.6rem;
+    margin-left: 1rem;
+}
 
 .PinMoveAni {
     bottom: -60%;
@@ -671,8 +689,19 @@ input[type='number'] {
 .gongNengTan2 {
     background: linear-gradient(to bottom, #1E293B, #374252);
     border-radius: 1rem !important;
-    padding-top: 0.4rem;
-    font-size: 1.6rem;
+    padding: 0.4rem 1rem 0rem 1rem !important;
+    font-size: 1.4rem;
+}
+
+
+.yuEZi {
+    font-size: 1.4rem;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.huiZiColor {
+    color: #94A3B8;
 }
 
 .gongNengTan2 .muiltr-19hn6xk-MuiAccordionSummary-expandIconWrapper .muiltr-hgpioi-MuiSvgIcon-root {
@@ -682,7 +711,7 @@ input[type='number'] {
 .gongNengTan3 {
     background-color: #364151;
     border-radius: 0rem 0rem 1rem 1rem;
-    padding: 0rem 0.5rem 2.5rem 0.5rem;
+    padding: 0rem 0.5rem 2rem 0.5rem;
 }
 
 .sticky {
@@ -693,6 +722,12 @@ input[type='number'] {
     /* 距离视口顶部的距离 */
 }
 
+
+.cardDepositeDi {
+    margin-right: 0.6rem;
+    color: #14C2A3;
+    text-decoration: underline;
+}
 
 .gongNengZi {
     font-size: 2rem;
@@ -722,6 +757,14 @@ input[type='number'] {
     min-height: 3.6rem;
     margin: 1.2rem 1.5rem 1.4rem 1.5rem;
     background-color: #374252;
+    border-radius: 2rem;
+    height: 3.6rem
+}
+
+.tongYongDingBtn1 {
+    min-height: 3.6rem;
+    margin: 1.2rem 1.5rem 1.4rem 1.5rem;
+    background-color: #101828;
     border-radius: 2rem;
     height: 3.6rem
 }
@@ -921,7 +964,7 @@ input[type='number'] {
     width: 84%;
     margin: 0 auto;
     height: 22%;
-    font-size: 170%;
+    font-size: 160%;
 }
 
 .cardBeiMian {
@@ -937,7 +980,7 @@ input[type='number'] {
 }
 
 .cardZhuangTai {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     color: #ffc600;
     text-align: center;
     height: 4rem;
@@ -1265,6 +1308,10 @@ input[type='number'] {
 
 .huaKuaBgColor0 {
     background: #1E293A;
+}
+
+.huaKuaBgColor2 {
+    background: #304156;
 }
 
 .huaKuaBgColor1 {
@@ -1615,8 +1662,8 @@ input[type='number'] {
 }
 
 .wallet-tab-item {
-    height: 3.6rem;
-    line-height: 1rem;
+    height: 3.6rem !important;
+    line-height: 3.6rem !important;
     display: block;
 }
 

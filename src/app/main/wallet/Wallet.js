@@ -9,7 +9,7 @@ import history from "@history";
 import { useSelector, useDispatch } from "react-redux";
 import { selectConfig } from "../../store/config";
 import { selectUserData } from "../../store/user";
-import {arrayLookup, getOpenAppId, getOpenAppIndex, getUrlParam, setPhoneTab} from "../../util/tools/function";
+import { arrayLookup, getOpenAppId, getOpenAppIndex, getUrlParam, setPhoneTab } from "../../util/tools/function";
 import { updateCurrency, updateWalletDisplay } from "../../store/user";
 import { showMessage } from "app/store/fuse/messageSlice";
 import { centerGetNftList } from '../../store/wallet/walletThunk';
@@ -1790,29 +1790,32 @@ function Wallet() {
                         }}
                         indicatorColor="secondary"
                         textColor="inherit"
-                        variant="fullWidth"
+                        variant="scrollable"
                         scrollButtons={false}
-                        className="min-h-40 wallet-show-type wallet-show-type-tab ml-16 mr-12 wallet-show-type-radios"
-                        classes={{
-                          indicator:
-                            "flex justify-between bg-transparent w-full h-full",
-                        }}
+                        className="tongYongDingBtn1"
+                        style={{ width: '50%!import' }}
+                        classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
                         TabIndicatorProps={{
                           children: (
-                            <Box className="w-full h-full rounded-full huaKuaBgColor" />
+                            <Box
+                              sx={{ bgcolor: 'text.disabled' }}
+                              className="w-full h-full rounded-full  huaKuaBgColor2"
+                            />
                           ),
                         }}
                         sx={{
-                          // padding: '1rem 1.2rem',
-                          flex: 1,
+                          margin: "1rem 1.2rem",
                         }}
                       >
                         {Object.entries(ranges).map(([key, label]) => (
                           <Tab
-                            className="text-14 font-semibold min-w-64 wallet-tab-item txtColorTitle zindex opacity-100"
+                            className="text-14 font-semibold min-h-36 min-w-64 mx4 px-12 opacity1 txtColorTitle zindex"
                             disableRipple
                             key={key}
                             label={label}
+                            sx={{
+                              color: '#FFFFFF', height: '3.6rem', width: '50%'
+                            }}
                           />
                         ))}
                       </Tabs>

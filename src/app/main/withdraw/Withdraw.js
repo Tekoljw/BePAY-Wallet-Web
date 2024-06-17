@@ -825,28 +825,29 @@ function Withdraw(props) {
                         indicatorColor="secondary"
                         textColor="inherit"
                         variant="scrollable"
-                        scrollButtons={false}
-                        className="min-h-40 wallet-show-type wallet-show-type-tab"
-                        classes={{ indicator: 'flex justify-center bg-transparent w-full h-full min-h-32' }}
+                        className="tongYongDingBtn"
+                        style={{ width: '50%!import' }}
+                        classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
                         TabIndicatorProps={{
                             children: (
-                                <Box className="w-full h-full rounded-full  huaKuaBgColor0" />
+                                <Box
+                                    sx={{ bgcolor: 'text.disabled' }}
+                                    className="w-full h-full rounded-full  huaKuaBgColor0"
+                                />
                             ),
                         }}
                         sx={{
-                            padding: '1rem 1.2rem',
-                            flex: 1,
+                            margin: "1rem 1.2rem",
                         }}
                     >
                         {Object.entries(ranges).map(([key, label]) => (
                             <Tab
-                                className="text-14 font-semibold min-w-64 wallet-tab-item txtColorTitle zindex opacity-100"
+                                className="text-14 font-semibold min-h-36 min-w-64 mx4 px-12 opacity1 txtColorTitle zindex"
                                 disableRipple
                                 key={key}
                                 label={label}
                                 sx={{
-                                    color: '#FFFFFF', height: '3.5rem', width: '50%'
-                                    // color: '#FFFFFF', height: '3.5rem', width: '10.8rem'
+                                    color: '#FFFFFF', height: '3.6rem', width: '50%'
                                 }}
                             />
                         ))}
