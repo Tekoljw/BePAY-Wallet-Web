@@ -1346,6 +1346,13 @@ input[type='number'] {
     border-radius: 6px;
 }
 
+.userIdW {
+    width: 90%;
+    padding: 1rem;
+    background-color: #0F172A;
+    border-radius: 6px;
+}
+
 .addressW2 {
     width: 100%;
 }
@@ -1357,9 +1364,10 @@ input[type='number'] {
 }
 
 .idZi {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     height: 2.2rem;
     line-height: 2.2rem;
+    color: #14C2A3;
 }
 
 .addressZi2 {

@@ -1043,7 +1043,7 @@ function Deposite() {
 
                         <div className='text-16 ml-10 mt-10 mb-6'>Inside UserID</div>
                         <div className='addressBigW flex justify-between mt-10'>
-                            <div className="addressW   guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
+                            <div className="userIdW   guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
                                 <div className="addressW2 flex justify-between guoDuDongHua">
                                     <div className='idZi guoDuDongHua' >35985475</div>
                                     <img className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"></img>
@@ -1055,7 +1055,7 @@ function Deposite() {
                             }} ></img>
                         </div>
 
-                        <div className='text-16 ml-10 mt-16 mb-16'>External Address</div>
+                        <div className='text-16 ml-10 mt-20 mb-16'>External Address</div>
                         {/* 新地址 */}
                         <>
                             {walletAddressList.map((addressItem, index) => {
