@@ -336,6 +336,10 @@ input[type='number'] {
     padding: 3rem;
 }
 
+.pinWindow2 {
+    padding: 1.5rem;
+}
+
 .pasteWindow {
     padding: 3rem 1.5rem 0rem 1.5rem;
 }
@@ -398,6 +402,10 @@ input[type='number'] {
     border-bottom: 1px solid #2C3950;
 }
 
+.aaa {
+    background-color: #374252 !important;
+}
+
 .jianPanNumBtn {
     width: 33.33%;
     text-align: center;
@@ -454,6 +462,10 @@ input[type='number'] {
     top: 50%;
     transform: translateY(-50%);
     right: 0%;
+}
+
+.xianTop {
+    border-top: 1px solid #2C3950;
 }
 
 .borderRight {
@@ -665,7 +677,15 @@ input[type='number'] {
 }
 
 .gongNengLanW {
-    width: 33.33%;
+    width: 25%;
+}
+
+.InsideW {
+    padding: 0.5rem 0rem 2rem 0rem;
+    background-color: #1E293B;
+    width: calc(100% - 3rem);
+    margin: 0 auto 1.5rem auto;
+    border-radius: 1rem;
 }
 
 .gongNengTuBiao {

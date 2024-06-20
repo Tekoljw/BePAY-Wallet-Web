@@ -989,6 +989,28 @@ function Deposite() {
                     variants={container}
                     initial="hidden"
                     animate="show"
+                    className="InsideW"
+                >
+                    <div className='text-16 ml-10 mt-10 mb-6'>Inside UserID</div>
+                    <div className='addressBigW flex justify-between mt-10'>
+                        <div className="userIdW   guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
+                            <div className="addressW2 flex justify-between guoDuDongHua">
+                                <div className='idZi guoDuDongHua' >35985475</div>
+                                <img className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"></img>
+                            </div>
+                            <img className='testQrCodeImg' src="wallet/assets/images/deposite/testCode.png"></img>
+                        </div>
+                        <img className='qrCodeImg' src="wallet/assets/images/deposite/newQrCode.png" onClick={() => {
+                            setShowQRcode(!showQRcode);
+                        }} ></img>
+                    </div>
+                    <div className='px-10 mt-12'><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8", fontSize: "1.3rem" }}>0 transaction fee, received in seconds!</span></div>
+                </motion.div>
+
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
                     className="p-24 mb-24"
                     style={{ padding: '0 1.5rem 1.5rem 1.5rem' }}
                 >
@@ -1003,7 +1025,8 @@ function Deposite() {
                         }}
                     >
                         <Typography className="text-16 px-10 my-12 " style={{ marginBottom: '0.5rem' }}>{t('home_deposite_4')}</Typography>
-                        <div className="flex px-16" style={{ flexWrap: 'wrap', paddingLeft: '0.7rem', paddingRight: '0.7rem' }}>
+
+                        <div className="flex " style={{ flexWrap: 'wrap' }}>
                             {networkData[symbol]?.length > 0 && networkData[symbol]?.map((item, index) => {
                                 return (
                                     <div
@@ -1013,12 +1036,12 @@ function Deposite() {
                                             handleChangeNetWork(item.id)
                                             // getWalletAddressClick(item.id);
                                         }}
-                                        className={clsx('flex items-center px-8 rounded-8 border cursor-pointer deposite-token', networkId === item.id && 'active-border')}
+                                        className={clsx('flex items-center rounded-8 border cursor-pointer deposite-token', networkId === item.id && 'active-border')}
                                         key={index}
                                         style={{
-                                            margin: '.8rem 1%',
+                                            margin: '1rem 0rem 1.4rem 0.6rem',
                                             paddingLeft: '0.2rem',
-                                            paddingRight: '0.2rem',
+                                            paddingRight: '0rem',
                                             borderRadius: '0.5rem'
                                         }}
                                     >
@@ -1041,21 +1064,7 @@ function Deposite() {
                             })}
                         </div>
 
-                        <div className='text-16 ml-10 mt-10 mb-6'>Inside UserID</div>
-                        <div className='addressBigW flex justify-between mt-10'>
-                            <div className="userIdW   guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
-                                <div className="addressW2 flex justify-between guoDuDongHua">
-                                    <div className='idZi guoDuDongHua' >35985475</div>
-                                    <img className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"></img>
-                                </div>
-                                <img className='testQrCodeImg' src="wallet/assets/images/deposite/testCode.png"></img>
-                            </div>
-                            <img className='qrCodeImg' src="wallet/assets/images/deposite/newQrCode.png" onClick={() => {
-                                setShowQRcode(!showQRcode);
-                            }} ></img>
-                        </div>
-
-                        <div className='text-16 ml-10 mt-20 mb-16'>External Address</div>
+                        <div className='text-16 ml-10 mt-16 mb-16'>External Address</div>
                         {/* 新地址 */}
                         <>
                             {walletAddressList.map((addressItem, index) => {

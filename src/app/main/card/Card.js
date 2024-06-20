@@ -55,34 +55,34 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     },
 }));
 
-// export interface DialogTitleProps {
-//     id: string;
-//     children?: React.ReactNode;
-//     onClose: () => void;
-// }
+export interface DialogTitleProps {
+    id: string;
+    children?: React.ReactNode;
+    onClose: () => void;
+}
 
-// function BootstrapDialogTitle(props: DialogTitleProps) {
-//     const { children, onClose, ...other } = props;
-//     return (
-//         <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-//             {children}
-//             {onClose ? (
-//                 <IconButton
-//                     aria-label="close"
-//                     onClick={onClose}
-//                     sx={{
-//                         position: 'absolute',
-//                         right: 8,
-//                         top: 8,
-//                         color: (theme) => theme.palette.grey[500],
-//                     }}
-//                 >
-//                     <CloseIcon />
-//                 </IconButton>
-//             ) : null}
-//         </DialogTitle>
-//     );
-// }
+function BootstrapDialogTitle(props: DialogTitleProps) {
+    const { children, onClose, ...other } = props;
+    return (
+        <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+            {children}
+            {onClose ? (
+                <IconButton
+                    aria-label="close"
+                    onClick={onClose}
+                    sx={{
+                        position: 'absolute',
+                        right: 8,
+                        top: 8,
+                        color: (theme) => theme.palette.grey[500],
+                    }}
+                >
+                    <CloseIcon />
+                </IconButton>
+            ) : null}
+        </DialogTitle>
+    );
+}
 
 const container = {
     show: {
@@ -114,6 +114,12 @@ function Card(props) {
     const [openAnimateHuanKa, setOpenAnimateHuanKa] = useState(false);
     const [isOpenEye, setIsOpenEye] = useState(false);
     const [openRecordWindow, setOpenRecordWindow] = useState(false);
+
+    const [symbol, setSymbol] = useState('');
+    const walletData = useSelector(selectUserData).wallet;
+    const config = useSelector(selectConfig);
+    const symbols = config.symbols;
+    const [symbolWallet, setSymbolWallet] = useState([]);
 
     const changePhoneTab = (tab) => {
         window.localStorage.setItem('phoneTab', tab);
@@ -174,7 +180,7 @@ function Card(props) {
         document.getElementById('openRecord').classList.remove('PinMoveAni');
         document.getElementById('openRecord').classList.add('PinMoveOut');
         setTimeout(() => {
-            openRecordWindow(false)
+            setOpenRecordWindow(false)
         }, 300);
     };
 
@@ -183,6 +189,95 @@ function Card(props) {
             document.getElementById('openRecord').classList.add('PinMoveAni');
         }, 0);
     };
+
+    const changeToBlack = (target) => {
+        document.getElementById(target.target.id).classList.add('pinJianPanColor1');
+    };
+
+    const changeToWhite = (target) => {
+        document.getElementById(target.target.id).classList.remove('pinJianPanColor1');
+    };
+
+    // 输入数字
+    const handleDoPin = (text) => {
+
+    }
+
+    const sortUseAge = (a, b) => {
+        const prioritizedSymbolsFirst = ['eUSDT', 'USDT', 'BGT', 'eBGT'];
+        const prioritizedSymbolsSecond = ['USDT', 'USDC', 'DAI', 'BUSD', 'TUSD', 'PAX', 'GUSD', 'USDD'];
+
+        // 检查币种是否属于优先展示的币种
+        const isPrioritizedAFirst = prioritizedSymbolsFirst.includes(a.symbol);
+        const isPrioritizedBFirst = prioritizedSymbolsFirst.includes(b.symbol);
+        const isPrioritizedASecond = prioritizedSymbolsSecond.includes(a.symbol);
+        const isPrioritizedBSecond = prioritizedSymbolsSecond.includes(b.symbol);
+
+        // 获取币种 a 和币种 b 的 dollarFiat 值
+        const dollarFiatA = parseFloat(a.dollarFiat);
+        const dollarFiatB = parseFloat(b.dollarFiat);
+
+        if (isPrioritizedAFirst && isPrioritizedBFirst) {
+            // 如果两个币种都属于第一组优先展示的币种，则比较它们的 dollarFiat 值进行排序
+            return dollarFiatB - dollarFiatA;
+        } else if (isPrioritizedAFirst) {
+            // 如果只有 a 是第一组优先展示的币种，则将 a 排在前面
+            return -1;
+        } else if (isPrioritizedBFirst) {
+            // 如果只有 b 是第一组优先展示的币种，则将 b 排在前面
+            return 1;
+        } else if (isPrioritizedASecond && isPrioritizedBSecond) {
+            // 如果两个币种都属于第二组优先展示的币种，则比较它们的 dollarFiat 值进行排序
+            return dollarFiatB - dollarFiatA;
+        } else if (isPrioritizedASecond) {
+            // 如果只有 a 是第二组优先展示的币种，则将 a 排在前面
+            // return -1;
+            if (dollarFiatB == dollarFiatA) {
+                return -1
+            }
+            return dollarFiatB - dollarFiatA;
+        } else if (isPrioritizedBSecond) {
+            // 如果只有 b 是第二组优先展示的币种，则将 b 排在前面
+            // return 1;
+            if (dollarFiatB == dollarFiatA) {
+                return -1
+            }
+            return dollarFiatB - dollarFiatA;
+        } else {
+            // 如果两个币种都不属于优先展示的币种，则保持原有顺序
+            // return 0;
+            return dollarFiatB - dollarFiatA;
+        }
+    };
+
+
+    // 初始化数据
+    const initSymbol = () => {
+        let tmpSymbol = [];
+        let tmpSymbolWallet = [];
+        for (let i = 0; i < symbols.length; i++) {
+            if (tmpSymbol.indexOf(symbols[i].symbol) == -1 && symbols[i].symbol != 'eUSDT' && symbols[i].symbol != 'eBGT') {
+                tmpSymbol.push(symbols[i].symbol)
+                tmpSymbolWallet.push({
+                    avatar: symbols[i].avatar,
+                    balance: arrayLookup(walletData.inner, 'symbol', symbols[i].symbol, 'balance') || 0,
+                    symbol: symbols[i].symbol,
+                    tradeLock: arrayLookup(walletData.inner, 'symbol', symbols[i].symbol, 'tradeLock') || 0,
+                    withdrawLock: arrayLookup(walletData.inner, 'symbol', symbols[i].symbol, 'withdrawLock') || 0
+                })
+            }
+        }
+        tmpSymbolWallet.sort(sortUseAge)
+        setSymbolWallet(tmpSymbolWallet)
+    }
+
+    useEffect(() => {
+        if (symbols) {
+            initSymbol()
+        }
+    }, [symbols]);
+
+
 
     return (
         <div className='' style={{ position: "relative" }}>
@@ -282,8 +377,6 @@ function Card(props) {
                                         <div className="zhangDanXiangQinZi" onClick={() => {
                                             changePhoneTab('record');
                                             history.push('/wallet/home/record')
-                                            // setOpenRecordWindow(true)
-                                            // openRecordFunc()
                                         }} >账单详情</div>
                                     </div>
 
@@ -385,7 +478,7 @@ function Card(props) {
                                                         </div>
                                                     </div>
 
-                                                    <div className='cardGongNengMyDi'>
+                                                    <div className='cardGongNengMyDi ' style={{ position: "relative" }}>
                                                         <Accordion className='gongNengTan1'>
                                                             <AccordionSummary
                                                                 expandIcon={<ExpandMoreIcon />}
@@ -398,7 +491,8 @@ function Card(props) {
                                                                         <div className=''>余额</div>
                                                                         <div className='ml-8 yuEZi'>$50.00</div>
                                                                     </div>
-                                                                    <div className='cardDepositeDi'>充值</div>
+                                                                    <div className='cardDepositeDi'
+                                                                    >充值</div>
                                                                 </div>
                                                             </AccordionSummary>
 
@@ -408,21 +502,26 @@ function Card(props) {
                                                                         setOpenAnimateModal(true);
                                                                     }} >
                                                                         <img className='gongNengTuBiao' src="wallet/assets/images/menu/guaShi.png"></img>
-                                                                        <div className='gongNengZiW mt-4 text-14'>一键冻结</div>
+                                                                        <div className='gongNengZiW mt-4 text-14'>冻结</div>
                                                                     </div>
                                                                     <div className='gongNengLanW' onClick={() => {
                                                                         setOpenAnimateHuanKa(true);
                                                                     }}>
                                                                         <img className='gongNengTuBiao' src="wallet/assets/images/menu/gengHuanKaPian.png"></img>
-                                                                        <div className='gongNengZiW mt-4 text-14'>更换卡片</div>
+                                                                        <div className='gongNengZiW mt-4 text-14'>换卡</div>
                                                                     </div>
 
                                                                     <div className='gongNengLanW'>
                                                                         <img className='gongNengTuBiao' src="wallet/assets/images/menu/miMaGuanLi.png"></img>
-                                                                        <div className='gongNengZiW mt-4 text-14'>密码管理</div>
+                                                                        <div className='gongNengZiW mt-4 text-14'>密码</div>
+                                                                    </div>
+
+                                                                    <div className='gongNengLanW'>
+                                                                        <img className='gongNengTuBiao' src="wallet/assets/images/menu/bangDing.png"></img>
+                                                                        <div className='gongNengZiW mt-4 text-14'>订阅</div>
                                                                     </div>
                                                                 </div>
-
+                                                                {/* 
                                                                 <div className='mt-24 flex justify-center'>
                                                                     <div className='gongNengLanW'>
                                                                         <img className='gongNengTuBiao' src="wallet/assets/images/menu/daE.png"></img>
@@ -436,10 +535,14 @@ function Card(props) {
                                                                         <img className='gongNengTuBiao' src="wallet/assets/images/menu/atm.png"></img>
                                                                         <div className='gongNengZiW mt-4 text-14'>ATM/POS</div>
                                                                     </div>
-                                                                </div>
+                                                                </div> */}
 
                                                             </AccordionDetails>
                                                         </Accordion>
+                                                        <div className='h-40 w-40  mr-40' style={{ position: "absolute", top: "12%", right: "0%" }} onClick={() => {
+                                                            setOpenRecordWindow(true)
+                                                            openRecordFunc()
+                                                        }}></div>
                                                     </div>
                                                 </motion.div>
 
@@ -781,7 +884,6 @@ function Card(props) {
                 </motion.div>
             </div>}
 
-
             {/* {openMyCard && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }}>
                 <motion.div
                     variants={container}
@@ -924,7 +1026,7 @@ function Card(props) {
             </AnimateModal>
 
 
-            {/* <BootstrapDialog
+            <BootstrapDialog
                 onClose={() => {
                     closeRecordFunc();
                 }}
@@ -933,27 +1035,162 @@ function Card(props) {
                 className="dialog-container"
             >
                 <div id="openRecord" className="PINSty">
-                    <div className='pinWindow'>
+                    <div className='pinWindow2'>
                         <div className='flex'>
-                            <div className='PINTitleSelectCardZi'>选择查询的卡片</div>
+                            <div className='PINTitleSelectCardZi'>卡片充值</div>
                             <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                 closeRecordFunc();
                             }} />
                         </div>
-                        <div className='flex mt-20 justify-between'>
-                            <div className='flex'>
-                                <img className='cardSelectIcon' src="wallet/assets/images/card/all.png"></img>
-                                <div className='cardSelectZi'>全部卡片</div>
+                        <div className='flex mt-20 justify-between' style={{ borderBottom: "1px solid #2C3950" }}>
+                            <div className='text-18'>卡内余额</div>
+                            <div className='flex pb-32'>
+                                <div className='text-18'>USDT</div>
+                                <div className='text-18 ml-10'>100.000000</div>
                             </div>
+                        </div>
+
+                        <Box
+                            className="w-full rounded-16 border flex flex-col mt-32"
+                            sx={{
+                                backgroundColor: '#374252!important',
+                                border: 'none'
+                            }}
+                        >
+                            {symbolWallet.length > 0 && <StyledAccordionSelect
+                                symbol={symbolWallet}
+                                currencyCode="USD"
+                                setSymbol={setSymbol}
+                                formControlSx={{ backgroundColor: '#374252!important' }}
+                            />}
+                        </Box>
+
+                        <div className='flex justify-between mt-12'>
+                            <div className='flex'>
+                                <div className='' style={{ color: "#94A3B8" }}>账户总资产</div>
+                                <div className='ml-10'>$5000.00</div>
+                            </div>
+                            <div className='' style={{ color: "#2DD4BF", textDecoration: "underline" }} onClick={() => {
+                                changePhoneTab('swap');
+                                history.push('/wallet/home/swap')
+                            }} >兑换USDT</div>
+                        </div>
+
+                        <div className='w-full h-44 mt-24' style={{ position: "relative" }}>
+                            <div className='w-full h-44 border' style={{ borderRadius: "0.5rem", backgroundColor: "#151C2A", position: "absolute", top: "0%", right: "0%" }}>
+                            </div>
+                            <div className='text-16' style={{ position: "absolute", top: "0%", left: "4%", width: "82%", height: "4.4rem", lineHeight: "4.4rem" }}>0</div>
+                            <div style={{ position: "absolute", top: "0%", right: "4%", height: "4.4rem", lineHeight: "4.4rem" }}>Max</div>
+                        </div>
+
+                        <div className='flex justify-between mt-16'>
+                            <div className='flex'>
+                                <div className='' style={{ color: "#94A3B8" }}>手续费</div>
+                                <div className='ml-10'>0.000000 USDT</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className='jianPanSty mt-12'>
+
+                        <div className='flex xianTop'>
+                            <div id="createPin1" className='jianPanNumBtn borderRight color-box'
+                                onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(1)
+                                }}
+                            >1</div>
+                            <div id="createPin2" className='jianPanNumBtn borderRight color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(2)
+                                }}
+                            >2</div>
+                            <div id="createPin3" className='jianPanNumBtn color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(3)
+                                }}
+                            >3</div>
+                        </div>
+
+                        <div className='flex xianTop'>
+                            <div id="createPin4" className='jianPanNumBtn borderRight   color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(4)
+                                }}
+                            >4</div>
+                            <div id="createPin5" className='jianPanNumBtn borderRight   color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(5)
+                                }}
+                            >5</div>
+                            <div id="createPin6" className='jianPanNumBtn    color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(6)
+                                }}
+                            >6</div>
+                        </div>
+
+                        <div className='flex xianTop'>
+                            <div id="createPin7" className='jianPanNumBtn borderRight  color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(7)
+                                }}
+                            >7</div>
+                            <div id="createPin8" className='jianPanNumBtn borderRight  color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(8)
+                                }}
+                            >8</div>
+                            <div id="createPin9" className='jianPanNumBtn  color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(9)
+                                }}
+                            >9</div>
+                        </div>
+
+                        <div className='flex xianTop'>
+                            <div className='jianPanNumBtn borderRight '></div>
+                            <div id="createPin0" className='jianPanNumBtn borderRight color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(0)
+                                }}
+                            >0</div>
+                            <div id="createPinx" className='jianPanNumBtn flex items-center color-box'
+                                onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(-1)
+                                }}
+                            > <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img></div>
                         </div>
                     </div>
 
                     <div>
                     </div>
                 </div>
-            </BootstrapDialog> */}
-
-        </div>
+            </BootstrapDialog >
+        </div >
     )
 }
 

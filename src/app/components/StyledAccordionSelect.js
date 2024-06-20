@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import { styled } from '@mui/material/styles';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import { selectConfig } from "../store/config";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import FormControl from "@mui/material/FormControl";
@@ -42,13 +42,13 @@ const item = {
     show: { opacity: 1, y: 0 },
 };
 
-function StyledAccordionSelect (props) {
+function StyledAccordionSelect(props) {
     const currencyCode = props.currencyCode ?? '';
     const symbol = props.symbol ?? [];
     const isSetAmount = props.isSetAmount ?? false;
     const isExpand = props.expand ?? false;
-    const test = props.test;
-
+    const formControlSx = props.formControlSx ?? {};
+    
     const config = useSelector(selectConfig);
     const [selected, setSelected] = useState(0);
     const [inputVal, setInputVal] = useState({
@@ -64,7 +64,7 @@ function StyledAccordionSelect (props) {
         setExpanded(_expanded ? panel : false);
     };
 
-    const handleChangeInputVal= (prop) => (event) => {
+    const handleChangeInputVal = (prop) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
         if (isSetAmount && props.setAmount) {
             props.setAmount(event.target.value)
@@ -101,15 +101,15 @@ function StyledAccordionSelect (props) {
     const handleChange = (event) => {
         setSelected(event.target.value);
     };
-        // function remove(symbol,item){
-        //     var newarr = [];
-        //     for(var i=0;i<symbol.length;i++){
-        //         if(arr[i] != item){
-        //             newarr.push(symbol[i]);
-        //         }
-        //     }
-        //     return newarr;
-        // }
+    // function remove(symbol,item){
+    //     var newarr = [];
+    //     for(var i=0;i<symbol.length;i++){
+    //         if(arr[i] != item){
+    //             newarr.push(symbol[i]);
+    //         }
+    //     }
+    //     return newarr;
+    // }
     return (
         <motion.div
             variants={container}
@@ -123,14 +123,16 @@ function StyledAccordionSelect (props) {
                 margin: 0,
                 border: 'none',
                 borderRadius: '8px!important',
-                backgroundColor: '#1E293B!important',
+                backgroundColor: '#1E293B',
                 '&:before': {
                     display: 'none',
                 },
                 '&:first-of-type': {},
                 '&:last-of-type': {
                     marginBottom: 0,
-                } }}
+                },
+                ...formControlSx
+            }}
             >
                 <Select
                     value={selected}
@@ -150,7 +152,7 @@ function StyledAccordionSelect (props) {
                 >
                     {symbol.map((row, index) => {
                         return (
-                           
+
                             <MenuItem
                                 key={index}
                                 value={index}
@@ -158,22 +160,22 @@ function StyledAccordionSelect (props) {
                                 <div
                                     key={index}
                                     className="flex items-center py-4 flex-grow"
-                                    style={{width: '100%'}}
+                                    style={{ width: '100%' }}
                                 >
                                     <div className="flex items-center">
                                         <img style={{
                                             width: '3rem',
                                             borderRadius: '50%'
-                                        }} src={row.avatar} alt=""/>
+                                        }} src={row.avatar} alt="" />
                                         <div className="px-12 font-medium">
                                             <Typography className="text-18 font-medium">{row.symbol}</Typography>
-                                            <Typography className="text-14" style={{color: '#94A3B8'}}>{row.symbol}</Typography>
+                                            <Typography className="text-14" style={{ color: '#94A3B8' }}>{row.symbol}</Typography>
                                         </div>
                                     </div>
-                                    <div style={{marginLeft: 'auto'}}>
-                                        <div className="px-12 font-medium" style={{textAlign: 'right'}}>
+                                    <div style={{ marginLeft: 'auto' }}>
+                                        <div className="px-12 font-medium" style={{ textAlign: 'right' }}>
                                             <Typography className="text-18 font-medium">{row.balance}</Typography>
-                                            {currencyCode && <Typography className="text-14" style={{color: '#94A3B8'}}>{currenyBalance(row.symbol, row.balance)}</Typography>}
+                                            {currencyCode && <Typography className="text-14" style={{ color: '#94A3B8' }}>{currenyBalance(row.symbol, row.balance)}</Typography>}
 
                                         </div>
                                     </div>
