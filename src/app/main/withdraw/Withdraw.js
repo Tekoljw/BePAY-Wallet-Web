@@ -21,7 +21,7 @@ import { useNavigate } from 'react-router-dom';
 import '../../../styles/home.css';
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
-import { tokenTransfer } from "../../store/user/userThunk";
+import {sendTips, tokenTransfer} from "../../store/user/userThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { selectConfig } from "../../store/config";
@@ -177,8 +177,8 @@ function Withdraw(props) {
     };
 
 
-    const [inputIDVal, setInputIDVal] = useState("UserID");
-    const handleChangeInputVal2 = (event) => (event) => {
+    const [inputIDVal, setInputIDVal] = useState(0);
+    const handleChangeInputVal2 = (event) => {
         setInputIDVal(event.target.value);
     };
 
@@ -348,6 +348,55 @@ function Withdraw(props) {
             }
 
         });
+    };
+
+    const handleSendTipsSubmit = () => {
+        if (inputVal.amount <= 0) {
+            return
+        }
+
+        closePinFunc()
+
+        const rate = arrayLookup(symbols, 'symbol', symbol, 'rate');
+        let conversionAmount = rate * inputVal.amount;
+        if (conversionAmount >= transferState.limitSingle && googleCode.length < 6) {
+            if (!hasAuthGoogle) {
+                navigate('/home/security');
+                return;
+            }
+            setOpenGoogleCode(true);
+            return
+        }
+
+        if (transferState.daily >= transferState.limitDaily && googleCode.length < 6) {
+            if (!hasAuthGoogle) {
+                navigate('/home/security');
+                return;
+            }
+            setOpenGoogleCode(true);
+            return
+        }
+
+        if (transferState.month >= transferState.limitMonth && googleCode.length < 6) {
+            if (!hasAuthGoogle) {
+                navigate('/home/security');
+                return;
+            }
+            setOpenGoogleCode(true);
+            return
+        }
+
+        let data = {
+            userId: inputIDVal,
+            amount: inputVal.amount,
+            symbol: symbol,
+            checkCode: googleCode
+        };
+
+        dispatch(sendTips(data));
+        setTimeout(() => {
+            setGoogleCode('');
+        }, 500)
     };
     const handleCopyText = (text) => {
         var input1 = document.createElement('input');
@@ -1083,7 +1132,7 @@ function Withdraw(props) {
                                             sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
                                             style={{ width: '24rem', height: '4rem', fontSize: "20px", margin: '1rem auto 2.5rem', display: 'block', lineHeight: "inherit", padding: "0px" }}
                                             onClick={() => {
-
+                                                handleSubmit()
                                             }}
                                         >
                                             {t('home_withdraw_10')}
@@ -1105,7 +1154,7 @@ function Withdraw(props) {
                                                     <div className='paste-btn' onClick={() => {
                                                         const clipPromise = navigator.clipboard.readText();
                                                         clipPromise.then(clipText => {
-                                                            changeAddress('address', clipText)
+                                                            setInputIDVal(clipText)
                                                         })
                                                     }}>{t('home_withdraw_11')}</div>
                                                     <img className='pasteJianTou' src="wallet/assets/images/withdraw/pasteJianTou.png" alt="" onClick={() => {
@@ -1407,7 +1456,7 @@ function Withdraw(props) {
                                 closePinFunc();
                             }} />
                         </div>
-                        <div className='PINTitle'>向（用户1384）转账</div>
+                        <div className='PINTitle'>向（用户{inputIDVal}）转账</div>
                         <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
                             <img className='MoneyWithdraw' src="wallet/assets/images/withdraw/USDT.png"></img>
                             <div className='PINTitle3'>USDT</div>
@@ -1449,7 +1498,7 @@ function Withdraw(props) {
                                     <div className='jianPanBtn4 borderRight' onClick={() => { handleDoPin('.') }}>.</div>
                                 </div>
                             </div>
-                            <div className='jianPanBtn3' onClick={() => { setTextSelect(false) }}>完成</div>
+                            <div className='jianPanBtn3' onClick={() => { handleSendTipsSubmit() }}>完成</div>
                         </div>
                     </div>
                     <div>
@@ -1631,45 +1680,19 @@ function Withdraw(props) {
                     </div>
 
                     <div className='pasteW'>
-                        <div className='pasteDiZhi'>
-                            <div className='flex'>
-                                <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
-                                <div className='bianJiBiZi'> 历史地址1 </div>
-                            </div>
-                            <div className='pasteDi'>kxdfadsdedoinxi2002ddfgoem2zdfuijhyhgdzs</div>
-                        </div>
-
-                        <div className='pasteDiZhi'>
-                            <div className='flex'>
-                                <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
-                                <div className='bianJiBiZi'> 历史地址2 </div>
-                            </div>
-                            <div className='pasteDi'>axdfadsdedoinxi2002ddfgoem2zdfuijhyhg11d</div>
-                        </div>
-
-                        <div className='pasteDiZhi'>
-                            <div className='flex'>
-                                <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
-                                <div className='bianJiBiZi'> 历史地址3 </div>
-                            </div>
-                            <div className='pasteDi'>bxdfadsdedoinxi2002ddfgoem2zdfuijhyhdh5</div>
-                        </div>
-
-                        <div className='pasteDiZhi'>
-                            <div className='flex'>
-                                <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
-                                <div className='bianJiBiZi'> 历史地址4 </div>
-                            </div>
-                            <div className='pasteDi'>ihffadsdedoinxi2002ddfgoem2zdfuijhyhgedy</div>
-                        </div>
-
-                        <div className='pasteDiZhi'>
-                            <div className='flex'>
-                                <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
-                                <div className='bianJiBiZi'> 历史地址5 </div>
-                            </div>
-                            <div className='pasteDi'>efjhfadsdedoinxi2002ddfgoem2zdfuijhyhiga</div>
-                        </div>
+                        {
+                            historyAddress.map((item, index) => {
+                                return (
+                                    <div className='pasteDiZhi'>
+                                        <div className='flex'>
+                                            <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
+                                            <div className='bianJiBiZi'> 历史地址1 </div>
+                                        </div>
+                                        <div className='pasteDi'>{item}</div>
+                                    </div>
+                                )
+                            })
+                        }
 
                     </div>
 

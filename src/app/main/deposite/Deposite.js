@@ -25,7 +25,7 @@ import '../../../styles/home.css';
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
 import { selectConfig } from "../../store/config";
-import { arrayLookup, getOpenAppId, getOpenAppIndex, setPhoneTab } from "../../util/tools/function";
+import { arrayLookup, getOpenAppId, getOpenAppIndex, setPhoneTab, handleCopyText } from "../../util/tools/function";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { foxSendTransaction, manualCryptoNotify } from "../../store/transfer/transferThunk";
 import {
@@ -57,8 +57,6 @@ import { useStatStyles } from '@chakra-ui/react';
 import history from '@history';
 import { local } from 'web3modal';
 import LoadingButton from "@mui/lab/LoadingButton";
-
-
 
 
 const marks = [
@@ -169,17 +167,6 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
         padding: theme.spacing(1),
     },
 }));
-const handleCopyText = (text) => {
-    var input = document.createElement('input');
-    document.body.appendChild(input);
-    input.setAttribute('value', text);
-    input.select();
-    document.execCommand("copy"); // 执行浏览器复制命令
-    if (document.execCommand('copy')) {
-        document.execCommand('copy');
-    }
-    document.body.removeChild(input);
-};
 
 const nftNetwork = [
     { network: "BSC", walletName: "BSC", protol: "BSC", url: 'wallet/assets/images/deposite/btc.png', 'desc': 'BSC', 'desc2': 'BSC-2' },
@@ -375,7 +362,11 @@ function Deposite() {
         })).then((res) => {
             let result = res.payload
             if (result) {
-                setWalletAddressList([...result])
+                let tmpList = []
+                result.map(async (item) => {
+                    tmpList.push({ ...item, disabled: true})
+                })
+                setWalletAddressList(tmpList)
             }
         })
     }
@@ -592,6 +583,30 @@ function Deposite() {
         let balance = arrayLookup(arr, 'symbol', symbol, 'balance') || 0;
         return balance.toFixed(6)
     };
+
+    const handleEditAddressDesc = (currentIndex, editData) => {
+        let tmpList = []
+        walletAddressList.map(async (item, index) => {
+            if (index === currentIndex) {
+                tmpList.push({
+                    ...item, ...editData
+                })
+
+                if (editData.disabled === true) {
+                    dispatch(getAddressListDesc({
+                        addressDesc: item.addressDesc,
+                        address: item.address,
+                        networkId: networkId,
+                        symbol: symbol,
+                    }))
+                }
+            } else {
+                tmpList.push({ ...item })
+            }
+        })
+
+        setWalletAddressList(tmpList)
+    }
 
     const tidyWalletData = () => {
         symbolsFormatAmount();
@@ -995,10 +1010,21 @@ function Deposite() {
                     <div className='addressBigW flex justify-between mt-10'>
                         <div className="userIdW   guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
                             <div className="addressW2 flex justify-between guoDuDongHua">
-                                <div className='idZi guoDuDongHua' >35985475</div>
-                                <img className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"></img>
+                                <div className='idZi guoDuDongHua' >{userData?.profile?.user?.id}</div>
+                                <img onClick={() => { handleCopyText(userData?.profile?.user?.id) }} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"></img>
                             </div>
-                            <img className='testQrCodeImg' src="wallet/assets/images/deposite/testCode.png"></img>
+                            <QRCode
+                                className='testQrCodeImg'
+                                style={{
+                                    padding: '10px',
+                                    borderRadius: '8px',
+                                    background: '#ffffff',
+                                    margin: '2.6rem auto 1rem auto',
+                                }}
+                                size={138}
+                                value={userData?.profile?.user?.id}
+                            />
+                            {/*<img className='testQrCodeImg' src="wallet/assets/images/deposite/testCode.png"></img>*/}
                         </div>
                         <img className='qrCodeImg' src="wallet/assets/images/deposite/newQrCode.png" onClick={() => {
                             setShowQRcode(!showQRcode);
@@ -1072,15 +1098,34 @@ function Deposite() {
                                     <div className='mb-16' key={index}>
                                         <div>
                                             <div className='flex ml-10'>
-                                                <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
-                                                <div className='bianJiBiZi'>{addressItem.addressDesc}</div>
+                                                <img onClick={() => {
+                                                    handleEditAddressDesc(index, {disabled: !addressItem.disabled})
+                                                }} className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
+                                                <OutlinedInput
+                                                    disabled={addressItem.disabled}
+                                                    id="outlined-adornment-weight "
+                                                    value={addressItem.addressDesc}
+                                                    aria-describedby="outlined-weight-helper-text "
+                                                    inputProps={{
+                                                        'aria-label': 'weight',
+                                                    }}
+                                                    onChange={(event) => {
+                                                        handleEditAddressDesc(index, {addressDesc: event.target.value})
+                                                    }}
+                                                />
                                             </div>
                                         </div>
                                         <div className='addressBigW flex justify-between mt-10'>
                                             <div className="addressW   guoDuDongHua" style={{ height: selectWalletAddressIndex == index ? "22rem" : '4.2rem' }}>
                                                 <div className="addressW2 flex justify-between guoDuDongHua">
                                                     <div className='addressZi'>{addressItem.address}</div>
-                                                    <img className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"></img>
+                                                    <img
+                                                        onClick={() => {
+                                                            handleCopyText(addressItem.address)
+                                                        }}
+                                                        className='bianJiBiImg'
+                                                        src="wallet/assets/images/deposite/newCopy.png"
+                                                    />
                                                 </div>
                                                 <QRCode
                                                     className='testQrCodeImg'

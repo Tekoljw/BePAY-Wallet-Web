@@ -9,7 +9,7 @@ import * as yup from 'yup';
 import _ from '@lodash';
 import Paper from '@mui/material/Paper';
 import { useDispatch } from 'react-redux';
-import { resetPass } from '../../store/user/userThunk';
+import { resetPass, editPin } from '../../store/user/userThunk';
 import { useTranslation } from "react-i18next";
 import { showMessage } from 'app/store/fuse/messageSlice';
 import Tabs from '@mui/material/Tabs';
@@ -24,6 +24,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import Autocomplete from "@mui/material/Autocomplete/Autocomplete";
 import phoneCode from "../../../phone/phoneCode";
+import { createPin } from "app/store/wallet/walletThunk";
 
 const container = {
     show: {
@@ -37,6 +38,8 @@ const defaultValues = {
     oldPassword: '',
     password: '',
     passwordConfirm: '',
+    paymentPassword: '',
+    codeType: 13
 };
 
 
@@ -88,6 +91,14 @@ function ResetPin(props) {
 
     async function onSubmit() {
         await dispatch(resetPass(control._formValues));
+    }
+
+    const handleEditPin = async () => {
+        await dispatch(editPin(control._formValues));
+    }
+
+    const resetPin = async () => {
+        await dispatch(createPin(control._formValues))
     }
 
     return (
@@ -143,7 +154,7 @@ function ResetPin(props) {
                     name="registerForm"
                     noValidate
                     className="flex flex-col justify-center w-full mt-32"
-                // onSubmit={handleSubmit(onSubmit)}
+                    onSubmit={handleSubmit(handleEditPin)}
                 >
                     <Controller
                         name="oldPassword"
@@ -206,6 +217,9 @@ function ResetPin(props) {
                         disabled={_.isEmpty(dirtyFields) || !isValid}
                         type="submit"
                         size="large"
+                        onClick={() => {
+                            handleEditPin()
+                        }}
                     >
                         Reset your PIN Code
                     </Button>
@@ -374,7 +388,7 @@ function ResetPin(props) {
                                                 name="registerForm"
                                                 noValidate
                                                 className="flex flex-col justify-center w-full mt-32"
-                                                onSubmit={handleSubmit(onSubmit)}
+                                                onSubmit={handleSubmit(resetPin)}
                                             >
                                                 <Controller
                                                     name="nationCode"

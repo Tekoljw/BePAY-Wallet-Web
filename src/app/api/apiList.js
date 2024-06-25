@@ -194,6 +194,10 @@ export default {
         verifyPaymentPassword: {
             url: "/security/payPassword/verifyPaymentPassword",
             method: "post",
+        },
+        updatePaymentPassword: {
+            url: "/security/payPassword/updatePaymentPassword",
+            method: "post",
         }
     },
 

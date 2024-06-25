@@ -416,6 +416,23 @@ export const resetPass = createAsyncThunk(
     }
 );
 
+export const editPin = createAsyncThunk(
+    'user/editPin',
+    async (settings, { dispatch, getState }) => {
+        let data = {
+            oldPaymentPassword: settings.oldPassword,
+            newPaymentPassword: settings.password,
+            codeType: settings.codeType
+        };
+        const userResetPassData = await React.$api("security.updatePaymentPassword", data);
+        if (userResetPassData.errno === 0) {
+            dispatch(showMessage({ message: 'success', code: 1 }));
+        } else {
+            dispatch(showMessage({ message: t('error_34'), code: 2 }));
+        }
+    }
+);
+
 // 修改手机
 export const changePhone = createAsyncThunk(
     'user/changePhone',
@@ -925,7 +942,7 @@ export const sendTips = createAsyncThunk(
         if (sendTipsRes.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
         } else {
-            dispatch(showMessage({ message: t('error_36'), code: 2 }));
+            dispatch(showMessage({ message: sendTipsRes.errmsg, code: 2 }));
         }
     }
 );
