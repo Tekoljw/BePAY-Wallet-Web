@@ -68,15 +68,15 @@
 }
 
 .animate-enter-active .modalOverlay {
-  opacity: 0.5;
+  opacity: 0.75;
 }
 
 .animate-enter-done .modalOverlay {
-  opacity: 0.5;
+  opacity: 0.75;
 }
 
 .animate-exit .modalOverlay {
-  opacity: 0.5;
+  opacity: 0.75;
 }
 
 .animate-exit-active .modalOverlay {

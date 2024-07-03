@@ -364,7 +364,7 @@ function Deposite() {
             if (result) {
                 let tmpList = []
                 result.map(async (item) => {
-                    tmpList.push({ ...item, disabled: true})
+                    tmpList.push({ ...item, disabled: true })
                 })
                 setWalletAddressList(tmpList)
             }
@@ -1099,18 +1099,21 @@ function Deposite() {
                                         <div>
                                             <div className='flex ml-10'>
                                                 <img onClick={() => {
-                                                    handleEditAddressDesc(index, {disabled: !addressItem.disabled})
+                                                    handleEditAddressDesc(index, { disabled: !addressItem.disabled })
                                                 }} className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
                                                 <OutlinedInput
-                                                    disabled={addressItem.disabled}
-                                                    id="outlined-adornment-weight "
-                                                    value={addressItem.addressDesc}
-                                                    aria-describedby="outlined-weight-helper-text "
-                                                    inputProps={{
-                                                        'aria-label': 'weight',
+                                                    className='diZhiShuRu'
+                                                    sx={{
+                                                        padding: '0rem',
+                                                        '& .MuiOutlinedInput-notchedOutline': {
+                                                            border: 'none',
+                                                        },
                                                     }}
+                                                    disabled={addressItem.disabled}
+                                                    value={addressItem.addressDesc}
+                                                    inputProps={{ 'aria-label': 'weight' }}
                                                     onChange={(event) => {
-                                                        handleEditAddressDesc(index, {addressDesc: event.target.value})
+                                                        handleEditAddressDesc(index, { addressDesc: event.target.value })
                                                     }}
                                                 />
                                             </div>

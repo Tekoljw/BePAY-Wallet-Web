@@ -21,7 +21,7 @@ import { useNavigate } from 'react-router-dom';
 import '../../../styles/home.css';
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
-import {sendTips, tokenTransfer} from "../../store/user/userThunk";
+import { sendTips, tokenTransfer } from "../../store/user/userThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { selectConfig } from "../../store/config";
@@ -175,7 +175,15 @@ function Withdraw(props) {
             evalFee2(networkId, symbol, event.target.value);
         }
     };
+    const [showGuangBiao, setShowGuangBiao] = useState(false);
 
+    const changeToBlack = (target) => {
+        document.getElementById(target.target.id).classList.add('pinJianPanColor1');
+    };
+
+    const changeToWhite = (target) => {
+        document.getElementById(target.target.id).classList.remove('pinJianPanColor1');
+    };
 
     const [inputIDVal, setInputIDVal] = useState(0);
     const handleChangeInputVal2 = (event) => {
@@ -650,15 +658,6 @@ function Withdraw(props) {
     ]);
     const [cryptoSelect, setCryptoSelect] = useState(0);
     const [fiatSelect, setFiatSelect] = useState(1);
-
-
-    const changeToBlack = (target) => {
-        document.getElementById(target.target.id).classList.add('pinJianPanColor1');
-    };
-
-    const changeToWhite = (target) => {
-        document.getElementById(target.target.id).classList.remove('pinJianPanColor1');
-    };
 
 
     const { control, formState, handleSubmit1, reset } = useForm({
@@ -1460,7 +1459,9 @@ function Withdraw(props) {
                         <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
                             <img className='MoneyWithdraw' src="wallet/assets/images/withdraw/USDT.png"></img>
                             <div className='PINTitle3'>USDT</div>
-                            <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")} onClick={() => { setTextSelect(!textSelect) }}>{inputVal.amount}</div>
+                            <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")} onClick={() => { setTextSelect(!textSelect) }}>
+                                {inputVal.amount} <span className={clsx("guangBiao", showGuangBiao && 'guangBiaoNo')} >︱</span>
+                            </div>
                         </div>
                         <div className='flex justify-between mt-10'>
                             <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[0] ? '●' : ''}</div></div>
@@ -1474,31 +1475,83 @@ function Withdraw(props) {
 
                     <div className='jianPanSty'>
                         <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
-                            <div className='jianPanBtn borderRight borderBottom' onClick={() => { handleDoPin(1) }}>1</div>
-                            <div className='jianPanBtn borderRight borderBottom' onClick={() => { handleDoPin(2) }}>2</div>
-                            <div className='jianPanBtn borderRight borderBottom' onClick={() => { handleDoPin(3) }}>3</div>
-                            <div className='jianPanBtImgDiv flex items-center borderBottom' onClick={() => { handleDoPin(-1) }}>
+                            <div id="zhuanZhang1" className='jianPanBtn borderRight borderBottom color-box'
+                                onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => { handleDoPin(1) }}>1</div>
+                            <div id="zhuanZhang2" className='jianPanBtn borderRight borderBottom color-box'
+                                onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => { handleDoPin(2) }}>2</div>
+                            <div id="zhuanZhang3" className='jianPanBtn borderRight borderBottom'
+                                onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => { handleDoPin(3) }}>3</div>
+                            <div id="zhuanZhangImg" className='jianPanBtImgDiv flex items-center borderBottom'
+                                onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => { handleDoPin(-1) }}>
                                 <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img>
                             </div>
                         </div>
                         <div className='flex' style={{ width: "100%" }}>
                             <div style={{ width: "75.1%" }}>
                                 <div className='flex'>
-                                    <div className='jianPanBtn1 borderRight' onClick={() => { handleDoPin(4) }}>4</div>
-                                    <div className='jianPanBtn1 borderRight' onClick={() => { handleDoPin(5) }}>5</div>
-                                    <div className='jianPanBtn1 borderRight' onClick={() => { handleDoPin(6) }}>6</div>
+                                    <div id="zhuanZhang4" className='jianPanBtn1 borderRight'
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => { handleDoPin(4) }}>4</div>
+                                    <div id="zhuanZhang5" className='jianPanBtn1 borderRight'
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => { handleDoPin(5) }}>5</div>
+                                    <div id="zhuanZhang6" className='jianPanBtn1 borderRight'
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => { handleDoPin(6) }}>6</div>
                                 </div>
                                 <div className='flex'>
-                                    <div className='jianPanBtn1 borderRight' onClick={() => { handleDoPin(7) }}>7</div>
-                                    <div className='jianPanBtn1 borderRight' onClick={() => { handleDoPin(8) }}>8</div>
-                                    <div className='jianPanBtn1 borderRight' onClick={() => { handleDoPin(9) }}>9</div>
+                                    <div id="zhuanZhang7" className='jianPanBtn1 borderRight'
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => { handleDoPin(7) }}>7</div>
+                                    <div id="zhuanZhang8" className='jianPanBtn1 borderRight'
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => { handleDoPin(8) }}>8</div>
+                                    <div id="zhuanZhang9" className='jianPanBtn1 borderRight'
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => { handleDoPin(9) }}>9</div>
                                 </div>
                                 <div className='flex'>
-                                    <div className='jianPanBtn2 borderRight' onClick={() => { handleDoPin(0) }}>0</div>
-                                    <div className='jianPanBtn4 borderRight' onClick={() => { handleDoPin('.') }}>.</div>
+                                    <div id="zhuanZhang0" className='jianPanBtn2 borderRight'
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => { handleDoPin(0) }}>0</div>
+                                    <div id="zhuanZhangDian" className='jianPanBtn4 borderRight'
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => { handleDoPin('.') }}>.</div>
                                 </div>
                             </div>
-                            <div className='jianPanBtn3' onClick={() => { handleSendTipsSubmit() }}>完成</div>
+                            <div id='zhuanZhangWanCheng' className='jianPanBtn3'
+                                onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => { handleSendTipsSubmit() }}>完成</div>
                         </div>
                     </div>
                     <div>
@@ -1625,8 +1678,6 @@ function Withdraw(props) {
                                 }}
                             > <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img></div>
                         </div>
-                    </div>
-                    <div>
                     </div>
                 </div>
             </BootstrapDialog>
