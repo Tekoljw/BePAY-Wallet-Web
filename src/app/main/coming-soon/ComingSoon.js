@@ -2,7 +2,7 @@ function ComingSoon() {
     return (
         <div
             style={{
-                padding: "0 2rem 0 1.5rem",
+                padding: "0 1.5rem 0 1.5rem",
                 height: "calc(100vh - 3rem)",
                 overflow: "hidden",
                 borderRadius: "0.5rem"

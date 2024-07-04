@@ -538,7 +538,6 @@ function Withdraw(props) {
 
     const loginType = window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType;
 
-
     const defaultValues = {
         email: '',
         smsCode: '',
@@ -668,7 +667,6 @@ function Withdraw(props) {
 
     const { isValid, dirtyFields, errors } = formState;
 
-
     const getSettingSymbol = async () => {
         return {}
         var openAppId = getOpenAppId();
@@ -789,8 +787,6 @@ function Withdraw(props) {
                 })
             }
         }
-
-
     }
 
     useEffect(() => {
@@ -1129,7 +1125,7 @@ function Withdraw(props) {
                                             loading={openLoad}
                                             variant="contained"
                                             sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
-                                            style={{ width: '24rem', height: '4rem', fontSize: "20px", margin: '1rem auto 2.5rem', display: 'block', lineHeight: "inherit", padding: "0px" }}
+                                            style={{ width: '100%', height: '4rem', fontSize: "20px", margin: '3rem auto 1rem auto', display: 'block', lineHeight: "inherit", padding: "0px" }}
                                             onClick={() => {
                                                 handleSubmit()
                                             }}
@@ -1171,7 +1167,7 @@ function Withdraw(props) {
                                         <Typography className="text-16 cursor-pointer mt-16" >
                                             {t('home_withdraw_3')}
                                         </Typography>
-                                        <div className="flex items-center py-12 justify-between" style={{}}>
+                                        <div className="flex items-center justify-between" style={{paddingTop:"1.6rem",paddingBottom:"0.5rem"}}>
                                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
                                                 <TextField
                                                     error={ismore(inputVal.amount)}
@@ -1209,7 +1205,7 @@ function Withdraw(props) {
                                             loading={openPinWindow}
                                             variant="contained"
                                             sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
-                                            style={{ width: '24rem', height: '4rem', fontSize: "20px", margin: '1rem auto 2.5rem', display: 'block', lineHeight: "inherit", padding: "0px" }}
+                                            style={{ width: '100%', height: '4rem', fontSize: "20px", margin: '1.4rem auto 1rem auto', display: 'block', lineHeight: "inherit", padding: "0px" }}
                                             onClick={() => {
                                                 isBindPin()
                                             }}

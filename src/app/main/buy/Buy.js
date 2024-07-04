@@ -15,16 +15,16 @@ import domain from '../../api/Domain';
 
 import '../../../styles/home.css';
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
-import {useSelector, useDispatch} from "react-redux";
-import {selectUserData} from "../../store/user";
-import {selectConfig} from "../../store/config";
-import {arrayLookup, setPhoneTab} from "../../util/tools/function";
+import { useSelector, useDispatch } from "react-redux";
+import { selectUserData } from "../../store/user";
+import { selectConfig } from "../../store/config";
+import { arrayLookup, setPhoneTab } from "../../util/tools/function";
 import Button from "@mui/material/Button";
 import { getFaTPayCryptoTarget, getFaTPayPaymentOption, getLegendTradingCryptoTarget, getLegendTradingPaymentOption } from "../../store/payment/paymentThunk";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 const container = {
     show: {
@@ -70,13 +70,13 @@ function Buy(props) {
     const config = useSelector(selectConfig);
     const currencys = useSelector(selectConfig).payment.currency || [];
     const symbols = useSelector(selectConfig).symbols || [];
-    const [ fiats, setFiats ] = useState([]);
-    const [ fiatsSelected, setFiatsSelected ] = useState(0);
-    const [ currencyCode, setCurrencyCode ] = useState('USD');
-    const [ currencyBalance, setCurrencyBalance ] = useState(0);
-    const [ payType, setPayType ] = useState('LegendTrading');
-    const [ symbolWallet, setSymbolWallet ] = useState([]);
-    const [ symbol, setSymbol ] = useState('');
+    const [fiats, setFiats] = useState([]);
+    const [fiatsSelected, setFiatsSelected] = useState(0);
+    const [currencyCode, setCurrencyCode] = useState('USD');
+    const [currencyBalance, setCurrencyBalance] = useState(0);
+    const [payType, setPayType] = useState('LegendTrading');
+    const [symbolWallet, setSymbolWallet] = useState([]);
+    const [symbol, setSymbol] = useState('');
 
     const walletData = useSelector(selectUserData).wallet;
     const getCryptoTarget = async () => {
@@ -99,7 +99,7 @@ function Buy(props) {
         let allSymbols = [];
         let paymentOption = {};
         if (payType === 'LegendTrading') {
-            await Promise.all([getCryptoTarget(),getPaymentOption()]).then((resArr) => {
+            await Promise.all([getCryptoTarget(), getPaymentOption()]).then((resArr) => {
                 let cryptoTarget = resArr[0];
                 cryptoTarget.payload.data.forEach((symbol, index) => {
                     allSymbols.push(symbol.cryptoCurrency);
@@ -112,7 +112,7 @@ function Buy(props) {
         } else if (payType === 'FaTPay') {
             // var cryptoTarget = await dispatch(getFaTPayCryptoTarget());
             // var paymentOption = await dispatch(getFaTPayPaymentOption());
-            await Promise.all([getFaTPayTarget(),getFaTPayOption()]).then((resArr)=> {
+            await Promise.all([getFaTPayTarget(), getFaTPayOption()]).then((resArr) => {
                 let cryptoTarget = resArr[0];
                 paymentOption = resArr[1];
                 cryptoTarget.payload.data.forEach((symbol, index) => {
@@ -205,7 +205,7 @@ function Buy(props) {
                 variants={container}
                 initial="hidden"
                 animate="show"
-                className='mt-12'
+                className='mt-16'
             >
                 <Tabs
                     component={motion.div}
@@ -215,10 +215,9 @@ function Buy(props) {
                     indicatorColor="secondary"
                     textColor="inherit"
                     variant="scrollable"
-                    scrollButtons={false}
-                    className="mx-4 min-h-36"
-                    style={{padding: '0 0', margin: '1rem 2.4rem 0.4rem', borderColor: 'transparent', backgroundColor: '#374252', width: '21.6rem', borderRadius: '20px', height: '3.2rem'}}
-                    classes={{ indicator: 'flex justify-center bg-transparent w-full h-full ' }}
+                    className="tongYongDingBtn"
+                    style={{ width: '50%!import' }}
+                    classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
                     TabIndicatorProps={{
                         children: (
                             <Box
@@ -228,8 +227,7 @@ function Buy(props) {
                         ),
                     }}
                     sx={{
-                        padding: '1rem 1.2rem',
-                        width: 'auto'
+                        margin: '1rem 1.2rem',
                     }}
                 >
                     {Object.entries(ranges).map(([key, label]) => (
@@ -239,7 +237,7 @@ function Buy(props) {
                             key={key}
                             label={label}
                             sx={{
-                                color: '#FFFFFF', height: '3.6rem', width: '10.8rem'
+                                color: '#FFFFFF', height: '3.6rem', width: '50%'
                             }}
                         />
                     ))}
@@ -251,7 +249,8 @@ function Buy(props) {
                     variants={container}
                     initial="hidden"
                     animate="show"
-                    className="p-24"
+                    className=""
+                    style={{ padding: "1.2rem 1.5rem 1.5rem 1.5rem" }}
                 >
                     <Typography className="text-20 font-medium mb-16">
                         {tabValue === 0 && <>
@@ -304,7 +303,8 @@ function Buy(props) {
                             '&:first-of-type': {},
                             '&:last-of-type': {
                                 marginBottom: 0,
-                            } }}
+                            }
+                        }}
                         >
                             <Select
                                 value={fiatsSelected}
@@ -331,13 +331,13 @@ function Buy(props) {
                                             <div
                                                 key={index}
                                                 className="flex items-center py-4 flex-grow"
-                                                style={{width: '100%'}}
+                                                style={{ width: '100%' }}
                                             >
                                                 <div className="flex items-center">
                                                     <img style={{
                                                         width: '3rem',
                                                         borderRadius: '8px'
-                                                    }} src={arrayLookup(currencys, 'currencyCode', row.currencyCode, 'avatar')} alt=""/>
+                                                    }} src={arrayLookup(currencys, 'currencyCode', row.currencyCode, 'avatar')} alt="" />
                                                     <div className="px-12 font-medium">
                                                         <Typography className="text-20 font-medium">{row.currencyCode}</Typography>
                                                     </div>
@@ -372,12 +372,10 @@ function Buy(props) {
                         {/*            <div style={{marginLeft: 'auto'}}>*/}
                         {/*                <div className="px-12 font-medium" style={{textAlign: 'right'}}>*/}
                         {/*                    /!*<Typography className="text-16 font-medium">{currencyBalance}</Typography>*!/*/}
-
                         {/*                </div>*/}
                         {/*            </div>*/}
                         {/*        </div>*/}
                         {/*    </AccordionSummary>*/}
-
                         {/*    <AccordionDetails>*/}
                         {/*        <div*/}
                         {/*            style={{*/}
@@ -405,18 +403,17 @@ function Buy(props) {
                         {/*                )*/}
                         {/*            })}*/}
                         {/*        </div>*/}
-
                         {/*    </AccordionDetails>*/}
                         {/*</StyledAccordion>*/}
                     </Box>
 
-                    <Typography className="text-20 font-medium my-16" style={{marginTop: '2rem'}}>{t('home_buy_4')}</Typography>
+                    <Typography className="text-20 font-medium my-16" >{t('home_buy_4')}</Typography>
 
                     <Box
-                        className={clsx("w-full rounded-8  flex flex-col my-20 cursor-pointer", payType === 'LegendTrading' && 'buy-pay-type-acitve')}
+                        className={clsx("w-full rounded-8  flex flex-col my-16 cursor-pointer", payType === 'LegendTrading' && 'buy-pay-type-acitve')}
                         sx={{
                             backgroundColor: '#1E293B',
-                            border:"1px solid #1E293B"
+                            border: "1px solid #1E293B"
                         }}
                         onClick={() => {
                             setPayType('LegendTrading');
@@ -433,23 +430,23 @@ function Buy(props) {
                             expanded={expanded === 2}
                             onChange={toggleAccordion(2)}
                         >
-                            <div className="flex items-center flex-grow buy-pay-type " style={{width: '100%', padding: '1.6rem 1.2rem'}}>
+                            <div className="flex items-center flex-grow buy-pay-type " style={{ width: '100%', padding: '1.6rem 1.2rem' }}>
                                 <div className="flex items-center">
-                                    <div  style={{
+                                    <div style={{
                                         width: '30px',
                                         borderRadius: '5px',
                                     }}>
-                                        <img className='border-r-10' src="wallet/assets/images/buy/LegendTrading.png" alt=""/>
+                                        <img className='border-r-10' src="wallet/assets/images/buy/LegendTrading.png" alt="" />
                                     </div>
                                     <div className="px-12 font-medium">
                                         <Typography className="text-20 font-medium">LegendTrading</Typography>
                                     </div>
                                 </div>
-                                <div style={{marginLeft: 'auto'}}>
-                                    <div className="px-12 font-medium flex justify-content-center items-center" style={{textAlign: 'right'}}>
-                                        <div className="mx-4"><img src="wallet/assets/images/buy/visa.png" alt=""/></div>
-                                        <div className="mx-4"><img src="wallet/assets/images/buy/jh.png" alt=""/></div>
-                                        <div className="mx-4"><img src="wallet/assets/images/buy/jcb.png" alt=""/></div>
+                                <div style={{ marginLeft: 'auto' }}>
+                                    <div className="px-12 font-medium flex justify-content-center items-center" style={{ textAlign: 'right' }}>
+                                        <div className="mx-4"><img src="wallet/assets/images/buy/visa.png" alt="" /></div>
+                                        <div className="mx-4"><img src="wallet/assets/images/buy/jh.png" alt="" /></div>
+                                        <div className="mx-4"><img src="wallet/assets/images/buy/jcb.png" alt="" /></div>
                                     </div>
                                 </div>
                             </div>
@@ -460,7 +457,7 @@ function Buy(props) {
                             className={clsx("w-full rounded-8  flex flex-col my-20 cursor-pointer", payType === 'FaTPay' && 'buy-pay-type-acitve')}
                             sx={{
                                 backgroundColor: '#1E293B',
-                                border:"1px solid #1E293B"
+                                border: "1px solid #1E293B"
                             }}
                             onClick={() => {
                                 setPayType('FaTPay');
@@ -477,24 +474,24 @@ function Buy(props) {
                                 expanded={expanded === 2}
                                 onChange={toggleAccordion(2)}
                             >
-                                <div className="flex items-center flex-grow buy-pay-type" style={{width: '100%', padding: '1.6rem 1.2rem'}}>
+                                <div className="flex items-center flex-grow buy-pay-type" style={{ width: '100%', padding: '1.6rem 1.2rem' }}>
                                     <div className="flex items-center">
-                                        <div  style={{
+                                        <div style={{
                                             width: '30px',
                                             borderRadius: '5px',
 
                                         }}>
-                                            <img className='border-r-10' src="wallet/assets/images/buy/FaTPay.png" alt=""/>
+                                            <img className='border-r-10' src="wallet/assets/images/buy/FaTPay.png" alt="" />
                                         </div>
                                         <div className="px-12 font-medium">
                                             <Typography className="text-20 font-medium">FaTPay</Typography>
                                         </div>
                                     </div>
-                                    <div style={{marginLeft: 'auto'}}>
-                                        <div className="px-12 font-medium flex justify-content-center items-center" style={{textAlign: 'right'}}>
-                                            <div className="mx-4"><img src="wallet/assets/images/buy/visa.png" alt=""/></div>
-                                            <div className="mx-4"><img src="wallet/assets/images/buy/jh.png" alt=""/></div>
-                                            <div className="mx-4"><img src="wallet/assets/images/buy/jcb.png" alt=""/></div>
+                                    <div style={{ marginLeft: 'auto' }}>
+                                        <div className="px-12 font-medium flex justify-content-center items-center" style={{ textAlign: 'right' }}>
+                                            <div className="mx-4"><img src="wallet/assets/images/buy/visa.png" alt="" /></div>
+                                            <div className="mx-4"><img src="wallet/assets/images/buy/jh.png" alt="" /></div>
+                                            <div className="mx-4"><img src="wallet/assets/images/buy/jcb.png" alt="" /></div>
                                         </div>
                                     </div>
                                 </div>
@@ -508,14 +505,14 @@ function Buy(props) {
                             borderRadius: '8px'
                         }}
                     >
-                        <Typography className="text-14 my-16" style={{magin: '2.6rem 0 2.6rem 2rem', color: '#94a3b8'}}>
-                            <span style={{color: '#fce100'}}>⚠</span>
+                        <Typography className="text-14 my-20" style={{ magin: '2.6rem 0 2.6rem 2rem', color: '#94a3b8' }}>
+                            <span style={{ color: '#fce100' }}>⚠ </span>
                             {t('home_buy_5')}
                         </Typography>
                     </Box>
 
                     <Button
-                        style={{width: '24rem', height: '4rem', margin: '0 auto', display: 'block', fontSize: '2rem', lineHeight: 'initial'}}
+                        style={{ width: '100%', height: '4rem', margin: '0 auto', display: 'block', fontSize: '2rem', lineHeight: 'initial' }}
                         className='m-28 px-48 text-lg btnColorTitleBig text-20'
                         color="secondary"
                         variant="contained"

@@ -1473,13 +1473,13 @@ input[type='number'] {
 .touchnGoListDi {
     background: #1E293B;
     transition: background 0.5s;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .touchnGoListDi:hover {
     background: #0F172A;
     transition: background 0.5s;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .deposite-token {
