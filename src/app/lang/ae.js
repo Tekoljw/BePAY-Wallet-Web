@@ -362,6 +362,11 @@ const locale = {
     error_40: "",
     error_41: "",
 
+    card_1: "فاتورة",
+    card_2: "بطاقة ائتمان",
+    card_3: "استلام",
+    card_4: "انسحاب",
+    card_5:"شراء"
 };
 
 export default locale;

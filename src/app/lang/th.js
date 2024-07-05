@@ -358,6 +358,11 @@ const locale = {
     error_39: "",
     error_40: "",
     error_41: "",
+    card_1: "บิล",
+    card_2: "บัตรเครดิต",
+    card_3: "รับ",
+    card_4: "การถอนตัว",
+    card_5:"ซื้อ"
 };
 
 export default locale;

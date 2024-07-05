@@ -359,6 +359,11 @@ const locale = {
     error_39: "",
     error_40: "",
     error_41: "",
+    card_1: "帳單",
+    card_2: "我的卡片",
+    card_3: "接收",
+    card_4: "出款",
+    card_5:"購買"
 };
 
 export default locale;

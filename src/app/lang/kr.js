@@ -362,7 +362,11 @@ const locale = {
     error_39: "",
     error_40: "",
     error_41: "",
-
+    card_1: "청구서",
+    card_2: "신용카드",
+    card_3: "받다",
+    card_4: "철수",
+    card_5:"구매"
 };
 
 export default locale

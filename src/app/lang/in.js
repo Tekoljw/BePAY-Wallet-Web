@@ -357,7 +357,11 @@ const locale = {
     error_39: "",
     error_40: "",
     error_41: "",
-
+    card_1: "बिल",
+    card_2: "क्रेडिट कार्ड",
+    card_3: "प्राप्त करना",
+    card_4: "निकासी",
+    card_5:"खरीदना"
     };
 
 export default locale;

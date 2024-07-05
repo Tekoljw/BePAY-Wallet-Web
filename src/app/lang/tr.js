@@ -358,6 +358,11 @@ const locale = {
     error_39: "",
     error_40: "",
     error_41: "",
+    card_1: "fatura",
+    card_2: "kredi kartı",
+    card_3: "almak",
+    card_4: "geri çekilme",
+    card_5:"satın almak"
     };
     
 export default locale;

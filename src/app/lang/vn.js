@@ -350,6 +350,11 @@ const locale = {
     error_39: "",
     error_40: "",
     error_41: "",
+    card_1: "hóa đơn",
+    card_2: "thẻ tín dụng",
+    card_3: "nhận",
+    card_4: "rút lui",
+    card_5:"mua"
     };
 
 export default locale;

@@ -19,7 +19,7 @@ import {
     googleQrText,
     verifyGAuth
 } from '../../store/user/userThunk';
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 
 const container = {
@@ -75,7 +75,8 @@ function Enable2FA() {
                 variants={container}
                 initial="hidden"
                 animate="show"
-                className="px-24 pb-24"
+                className="pb-24"
+                style={{ paddingInline: "1.5rem" }}
             >
                 {/*1*/}
                 <Box
@@ -83,7 +84,7 @@ function Enable2FA() {
                     component={motion.div}
                     variants={item}
                 >
-                    <Typography className="text-20 px-16 font-medium" style={{ marginBottom: '0.9rem', paddingLeft: 0 }}>{t('home_2fa_1')}</Typography>
+                    <Typography className="text-20 px-16 font-medium" style={{ marginBottom: '1rem', paddingLeft: 0 }}>{t('home_2fa_1')}</Typography>
                 </Box>
                 <Box
                     className="w-full rounded-16 border flex flex-col color-76819B border-r-5"
@@ -114,7 +115,7 @@ function Enable2FA() {
                     component={motion.div}
                     variants={item}
                 >
-                    <Typography className="text-20 px-16 font-medium" style={{ marginBottom: '0.9rem', paddingLeft: 0 }}>{t('home_2fa_5')}</Typography>
+                    <Typography className="text-20 px-16 font-medium" style={{ marginBottom: '1rem', paddingLeft: 0 }}>{t('home_2fa_5')}</Typography>
                 </Box>
                 <Box
                     className="w-full rounded-16 border flex flex-col color-76819B border-r-5"
@@ -138,10 +139,10 @@ function Enable2FA() {
                             size={138}
                         />
                     </div>
-                    <Typography className="text-16 px-16 my-12 text-center">
+                    <Typography className="text-16 px-16 my-10 text-center">
                         {t('home_2fa_7')}
                     </Typography>
-                    <div className="px-16 mb-12 fa-input-conatiner">
+                    <div className="px-10 mb-0 fa-input-conatiner ">
                         <FormControl sx={{ width: '100%' }} variant="outlined">
                             <OutlinedInput
                                 disabled={true}
@@ -176,10 +177,10 @@ function Enable2FA() {
                     component={motion.div}
                     variants={item}
                 >
-                    <Typography className="text-20 px-16 font-medium" style={{ marginBottom: '0.9rem', paddingLeft: 0 }}>{t('home_2fa_9')}</Typography>
+                    <Typography className="text-20 px-16 font-medium" style={{ marginBottom: '1rem', paddingLeft: 0 }}>{t('home_2fa_9')}</Typography>
                 </Box>
                 <Box
-                    className="w-full rounded-16 border flex flex-col border-r-5"
+                    className="w-full rounded-16 border mb-20 flex flex-col border-r-5"
                     sx={{
                         backgroundColor: '#1E293B',
                         border: 'none'
@@ -188,14 +189,14 @@ function Enable2FA() {
                     variants={item}
                 >
                     <Typography className="text-16 px-16 my-16 font-medium text-center pad-l-r-10 margin-t-b-10" style={{ color: '#94a3b8' }}>{t('home_2fa_10')}</Typography>
-                    <OtpPass  googleTextKey={googleText.key} setGoogleCode={setGoogleCode} />
-                    <div className="my-16 flex items-center justify-content-center">
+                    <OtpPass googleTextKey={googleText.key} setGoogleCode={setGoogleCode} />
+                    <div className="mb-16 mt-4 flex items-center justify-content-center">
                         <Button
                             className="px-48 text-lg btnColorTitleBig"
                             size="large"
                             color="secondary"
                             variant="contained"
-                            sx={{ backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1rem' }}
+                            sx={{ width: "100%", backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1rem' }}
                             onClick={() => { handleSubmit() }}
                         >
                             {t('home_2fa_11')}

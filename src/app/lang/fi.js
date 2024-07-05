@@ -359,11 +359,11 @@ const locale = {
     error_39: "",
     error_40: "",
     error_41: "",
-
-
-
-
-
+    card_1: "lasku",
+    card_2: "luottokortti",
+    card_3: "vastaanottaa",
+    card_4: "vetäytyminen",
+    card_5:"ostaa"
     };
     
 export default locale;

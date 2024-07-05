@@ -1605,7 +1605,7 @@ function Wallet() {
                 <div className="zhangDanXiangQinZi" onClick={() => {
                   changePhoneTab("record");
                   history.push('/wallet/home/record')
-                }} >账单详情</div>
+                }} >{t("card_1")}</div>
               </div>
 
               <div className=" flex items-conter px-16" style={{ width: "100%", marginTop: "1.5rem", justifyContent: "space-between" }}>
@@ -1638,7 +1638,7 @@ function Wallet() {
               history.push('/wallet/home/deposite')
             }}>
               <img className="accountGoneNengImg" src="/wallet/assets/images/menu/deposite-active2.png"></img>
-              <div className="accountGoneNengZi">Recive</div>
+              <div className="accountGoneNengZi">{t("card_3")}</div>
             </div>
 
             <div className="accountGongNengDi" onClick={() => {
@@ -1646,7 +1646,7 @@ function Wallet() {
               history.push('/wallet/home/withdraw')
             }}>
               <img className="accountGoneNengImg" src="/wallet/assets/images/menu/withdraw-active2.png"></img>
-              <div className="accountGoneNengZi">Send</div>
+              <div className="accountGoneNengZi">{t("card_4")}</div>
             </div>
 
             <div className="accountGongNengDi" onClick={() => {
@@ -1654,7 +1654,7 @@ function Wallet() {
               history.push('/wallet/home/swap')
             }}>
               <img className="accountGoneNengImg" src="/wallet/assets/images/menu/swap-active2.png"></img>
-              <div className="accountGoneNengZi">Swap</div>
+              <div className="accountGoneNengZi">{t("menu_5")}</div>
             </div>
 
             <div className="accountGongNengDi" onClick={() => {
@@ -1662,7 +1662,7 @@ function Wallet() {
               history.push('/wallet/home/buyCrypto')
             }}>
               <img className="accountGoneNengImg" src="/wallet/assets/images/menu/buyCrypto-active2.png"></img>
-              <div className="accountGoneNengZi">Buy</div>
+              <div className="accountGoneNengZi">{t("card_5")}</div>
             </div>
           </motion.div>
           }
@@ -1882,10 +1882,10 @@ function Wallet() {
                                   )}
                                   key={index}
                                 >
-                                  <div className="flex px-8 items-center">
+                                  <div className="flex px-10 items-center">
                                     <img
                                       style={{ borderRadius: "50%" }}
-                                      className="mx-4"
+                                      className="mr-4"
                                       width="24"
                                       src={row.avatar}
                                       alt=""
@@ -1893,12 +1893,12 @@ function Wallet() {
                                     {row.symbol}
                                   </div>
                                   {isFait && (
-                                    <div className="px-8">
+                                    <div className="px-10">
                                       {row.currencyAmount}
                                     </div>
                                   )}
                                   {!isFait && (
-                                    <div className="px-8">{row.balance}</div>
+                                    <div className="px-10">{row.balance}</div>
                                   )}
                                 </div>
                               )
@@ -1913,10 +1913,10 @@ function Wallet() {
                                 )}
                                 key={index}
                               >
-                                <div className="flex px-8 items-center">
+                                <div className="flex px-10 items-center">
                                   <img
                                     style={{ borderRadius: "50%" }}
-                                    className="mx-4"
+                                    className="mr-4"
                                     width="24"
                                     src={row.avatar}
                                     alt=""
@@ -1924,12 +1924,12 @@ function Wallet() {
                                   {row.symbol}
                                 </div>
                                 {isFait && (
-                                  <div className="px-8">
+                                  <div className="px-10">
                                     {row.currencyAmount}
                                   </div>
                                 )}
                                 {!isFait && (
-                                  <div className="px-8">{row.balance}</div>
+                                  <div className="px-10">{row.balance}</div>
                                 )}
                               </div>
                             );
@@ -1969,17 +1969,17 @@ function Wallet() {
                                 }}
                                 key={index}
                               >
-                                <div className="flex px-8 items-center">
-                                  <img style={{ borderRadius: '50%' }} className="mx-4" width="24" src={row.avatar} alt="" />
+                                <div className="flex px-10 items-center">
+                                  <img style={{ borderRadius: '50%' }} className="mr-4" width="24" src={row.avatar} alt="" />
                                   {row.symbol}
                                 </div>
                                 {isFait && (
-                                  <div className="px-8">
+                                  <div className="px-10">
                                     {row.currencyAmount}
                                   </div>
                                 )}
                                 {!isFait && (
-                                  <div className="px-8">{row.balance}</div>
+                                  <div className="px-10">{row.balance}</div>
                                 )}
                               </motion.div>
                             )
@@ -1997,10 +1997,10 @@ function Wallet() {
                               }}
                               key={index}
                             >
-                              <div className="flex px-8 items-center">
+                              <div className="flex px-10 items-center">
                                 <img
                                   style={{ borderRadius: "50%" }}
-                                  className="mx-4"
+                                  className="mr-4"
                                   width="24"
                                   src={row.avatar}
                                   alt=""
@@ -2008,10 +2008,10 @@ function Wallet() {
                                 {row.symbol}
                               </div>
                               {isFait && (
-                                <div className="px-8">{row.currencyAmount}</div>
+                                <div className="px-10">{row.currencyAmount}</div>
                               )}
                               {!isFait && (
-                                <div className="px-8">{row.balance}</div>
+                                <div className="px-10">{row.balance}</div>
                               )}
                             </motion.div>
                           );
@@ -2027,7 +2027,7 @@ function Wallet() {
                     variants={container}
                     initial="hidden"
                     animate="show"
-                    className="mt-8 px-24 pb-8 "
+                    className="mt-8 px-0 pb-8 "
                   >
                     {searchFiats.map((row, index) => {
                       if (hideSmall) {
@@ -2044,17 +2044,17 @@ function Wallet() {
                               }}
                               key={index}
                             >
-                              <div className="flex px-8 items-center">
+                              <div className="flex px-10 items-center">
                                 <img
                                   style={{ borderRadius: "5px" }}
-                                  className="mx-4"
+                                  className="mr-4"
                                   width="24"
                                   src={row.avatar}
                                   alt=""
                                 />
                                 {row.currencyCode}
                               </div>
-                              <div className="px-8">{row.balance}</div>
+                              <div className="px-10">{row.balance}</div>
                             </motion.div>
                           )
                         );
@@ -2071,17 +2071,17 @@ function Wallet() {
                             }}
                             key={index}
                           >
-                            <div className="flex px-8 items-center">
+                            <div className="flex px-10 items-center">
                               <img
                                 style={{ borderRadius: "5px" }}
-                                className="mx-4"
+                                className="mr-4"
                                 width="24"
                                 src={row.avatar}
                                 alt=""
                               />
                               {row.currencyCode}
                             </div>
-                            <div className="px-8">{row.balance}</div>
+                            <div className="px-10">{row.balance}</div>
                           </motion.div>
                         );
                       }
@@ -2110,7 +2110,7 @@ function Wallet() {
                               <div className="flex px-8 items-center">
                                 <img
                                   style={{ borderRadius: "50%" }}
-                                  className="mx-4"
+                                  className="mr-4"
                                   width="24"
                                   src={row.avatar}
                                   alt=""
@@ -2135,7 +2135,7 @@ function Wallet() {
                             <div className="flex px-8 items-center">
                               <img
                                 style={{ borderRadius: "50%" }}
-                                className="mx-4"
+                                className="mr-4"
                                 width="24"
                                 src={row.avatar}
                                 alt=""
@@ -2179,7 +2179,7 @@ function Wallet() {
                             >
                               <img
                                 style={{ borderRadius: "50%" }}
-                                className="mx-4"
+                                className="mr-4"
                                 width="24"
                                 src={row.avatar}
                                 alt=""
@@ -2213,19 +2213,19 @@ function Wallet() {
                             key={index}
                           >
                             <div
-                              className="flex px-8 items-center"
+                              className="flex px-10 items-center"
                               style={{ width: "15rem" }}
                             >
                               <img
                                 style={{ borderRadius: "50%" }}
-                                className="mx-4"
+                                className="mr-4"
                                 width="24"
                                 src={row.avatar}
                                 alt=""
                               />
                               {row.currencyCode}
                             </div>
-                            <div className="px-8">{row.balance}</div>
+                            <div className="px-10">{row.balance}</div>
                             <div>
                               <Switch
                                 checked={row.isShow}
@@ -2256,17 +2256,17 @@ function Wallet() {
                                   width: "24px",
                                   height: "24px",
                                 }}
-                                className="mx-4"
+                                className="mr-4"
                                 src={row.avatar}
                                 alt=""
                               />
                               {row.name}
                             </div>
                             {isFait && (
-                              <div className="px-8">{row.currencyAmount}</div>
+                              <div className="px-10">{row.currencyAmount}</div>
                             )}
                             {!isFait && (
-                              <div className="px-8">{row.balance}</div>
+                              <div className="px-10">{row.balance}</div>
                             )}
                             <div>
                               <Switch
@@ -2298,12 +2298,12 @@ function Wallet() {
                         key={index}
                       >
                         <div
-                          className="flex px-8 items-center"
+                          className="flex px-10 items-center"
                           style={{ width: "10rem" }}
                         >
                           <img
                             style={{ borderRadius: "50%" }}
-                            className="mx-4"
+                            className="mr-4"
                             width="24"
                             src={row.avatar}
                             alt=""
@@ -2313,7 +2313,7 @@ function Wallet() {
                         {isFait && (
                           <div className="px-8">{row.currencyAmount}</div>
                         )}
-                        {!isFait && <div className="px-8">{row.balance}</div>}
+                        {!isFait && <div className="px-10">{row.balance}</div>}
                         <div
                           style={{
                             width: "14rem",
@@ -2350,19 +2350,19 @@ function Wallet() {
                         key={index}
                       >
                         <div
-                          className="flex px-8 items-center"
+                          className="flex px-10 items-center"
                           style={{ width: "10rem" }}
                         >
                           <img
                             style={{ borderRadius: "50%" }}
-                            className="mx-4"
+                            className="mr-4"
                             width="24"
                             src={row.avatar}
                             alt=""
                           />
                           {row.currencyCode}
                         </div>
-                        <div className="px-8">{row.balance}</div>
+                        <div className="px-10">{row.balance}</div>
                         <div
                           style={{
                             width: "14rem",
@@ -2413,7 +2413,7 @@ function Wallet() {
                               width: "24px",
                               height: "24px",
                             }}
-                            className="mx-4"
+                            className="mr-4"
                             src={row.avatar}
                             alt=""
                           />
@@ -2458,7 +2458,7 @@ function Wallet() {
                         key={index}
                       >
                         <div
-                          className="flex px-8 items-center"
+                          className="flex px-10 items-center"
                           style={{ width: "15rem" }}
                         >
                           <img
@@ -2467,16 +2467,16 @@ function Wallet() {
                               width: "24px",
                               height: "24px",
                             }}
-                            className="mx-4"
+                            className="mr-4"
                             src={row.avatar}
                             alt=""
                           />
                           {row.symbol}
                         </div>
                         {isFait && (
-                          <div className="px-8">{row.currencyAmount}</div>
+                          <div className="px-10">{row.currencyAmount}</div>
                         )}
-                        {!isFait && <div className="px-8">{row.balance}</div>}
+                        {!isFait && <div className="px-10">{row.balance}</div>}
                         <div>
                           <Switch
                             checked={row.isShow}
@@ -2693,7 +2693,7 @@ function Wallet() {
                   border: "none",
                 }}
               >
-                <div className="mt-8 px-15">
+                <div className="mt-8 px-10">
                   <div
                     className="flex justify-between items-center my-4 "
                     style={{ height: "2rem" }}

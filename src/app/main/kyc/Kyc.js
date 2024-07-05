@@ -383,7 +383,7 @@ function Kyc(props) {
                     initial="hidden"
                     animate="show"
                     className="tongYongChuang "
-                    style={{ margin: "0px auto " }}
+                    style={{ margin: "20px auto " }}
                 >
                     {/* <div style={{ color: '#ffffff', display: 'flex' }} onClick={() => {history.push('/wallet/home');;}} className="items-center my-8">
                         <FuseSvgIcon className="text-48" size={16} color="action">heroicons-outline:chevron-left</FuseSvgIcon>
@@ -416,7 +416,7 @@ function Kyc(props) {
                         <Box
                             component={motion.div}
                             variants={item}
-                            className="w-full rounded-16 border flex flex-col "
+                            className="w-full rounded-16 border mb-28 flex flex-col "
                             sx={{
                                 border: 'none'
                             }}
@@ -1038,27 +1038,29 @@ function Kyc(props) {
                                 {/*        </div>*/}
                                 {/*    )*/}
                                 {/*})}*/}
-                                <Button
-                                    disabled={!isCanSave()}
-                                    className="px-48 text-lg mb-24 btnColorTitleBig button-reset"
-                                    color="secondary"
-                                    variant="contained"
-                                    style={{ marginBottom: '2.4rem' }}
-                                    onClick={() => { onSave() }}
-                                >
-                                    {t('kyc_22')}
-                                </Button>
+                                <div className='flex justify-between'>
+                                    <Button
+                                        disabled={!isCanSave()}
+                                        className="text-lg mb-24 btnColorTitleBig button-reset2"
+                                        color="secondary"
+                                        variant="contained"
+                                        style={{ marginBottom: '2.4rem', fontSize: "1.6rem", width: "47%" }}
+                                        onClick={() => { onSave() }}
+                                    >
+                                        {t('kyc_22')}
+                                    </Button>
 
-                                <Button
-                                    disabled={!isCanSumbit()}
-                                    className="px-48 text-lg mb-24 btnColorTitleBig button-reset"
-                                    color="secondary"
-                                    variant="contained"
-                                    style={{ marginBottom: '2.4rem' }}
-                                    onClick={() => { onSubmit() }}
-                                >
-                                    {t('kyc_23')}
-                                </Button>
+                                    <Button
+                                        disabled={!isCanSumbit()}
+                                        className="text-lg mb-24 btnColorTitleBig button-reset2"
+                                        color="secondary"
+                                        variant="contained"
+                                        style={{ marginBottom: '2.4rem', fontSize: "1.6rem", width: "47%" }}
+                                        onClick={() => { onSubmit() }}
+                                    >
+                                        {t('kyc_23')}
+                                    </Button>
+                                </div>
                             </>}
 
                             {isNeedAudit() === false && <>

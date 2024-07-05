@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "../../../styles/home.css";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
-import {arrayLookup, setPhoneTab} from "../../util/tools/function";
+import { arrayLookup, setPhoneTab } from "../../util/tools/function";
 import { selectConfig, setSwapConfig } from "app/store/config";
 import { selectUserData } from "app/store/user";
 import { getCryptoDisplay } from "app/store/wallet/walletThunk";
@@ -216,20 +216,20 @@ function Swap() {
     let resultSymbolData = [];
 
     data.forEach((item, index) => {
-        // 兑换成USDT的汇率
-        let symbolRate = arrayLookup(symbolsData, "symbol", item, "rate") || arrayLookup(fiatsData, "currencyCode", item, "exchangeRate") || 0;
-        var balance = getUserMoney(item);
-        resultSymbolData.push({
-          avatar: arrayLookup(symbolsData, "symbol", item, "avatar") || arrayLookup(fiatsData, "currencyCode", item, "avatar") || "",
-          symbol: item,
-          balance: balance, // 余额
-          dollarFiat: (balance * symbolRate * dollarCurrencyRate).toFixed(2), // 换算成美元
-          currencyAmount: (balance * symbolRate * currencyRate).toFixed(2), // 换算成当前选择法币
-          tradeLock:
-            arrayLookup(walletData.inner, "symbol", item, "tradeLock") || 0,
-          withdrawLock:
-            arrayLookup(walletData.inner, "symbol", item, "withdrawLock") || 0,
-        });
+      // 兑换成USDT的汇率
+      let symbolRate = arrayLookup(symbolsData, "symbol", item, "rate") || arrayLookup(fiatsData, "currencyCode", item, "exchangeRate") || 0;
+      var balance = getUserMoney(item);
+      resultSymbolData.push({
+        avatar: arrayLookup(symbolsData, "symbol", item, "avatar") || arrayLookup(fiatsData, "currencyCode", item, "avatar") || "",
+        symbol: item,
+        balance: balance, // 余额
+        dollarFiat: (balance * symbolRate * dollarCurrencyRate).toFixed(2), // 换算成美元
+        currencyAmount: (balance * symbolRate * currencyRate).toFixed(2), // 换算成当前选择法币
+        tradeLock:
+          arrayLookup(walletData.inner, "symbol", item, "tradeLock") || 0,
+        withdrawLock:
+          arrayLookup(walletData.inner, "symbol", item, "withdrawLock") || 0,
+      });
     });
     return resultSymbolData
   }
@@ -260,21 +260,21 @@ function Swap() {
     Object.keys(data)?.forEach((item, index) => {
       let resultSymbolData = [];
       data[item].forEach((item, index) => {
-          // 兑换成USDT的汇率
-          let symbolRate = arrayLookup(symbolsData, "symbol", item.quote_coin, "rate") || arrayLookup(fiatsData, "currencyCode", item.quote_coin, "exchangeRate") || 0;
-          var balance = getUserMoney(item.quote_coin);
+        // 兑换成USDT的汇率
+        let symbolRate = arrayLookup(symbolsData, "symbol", item.quote_coin, "rate") || arrayLookup(fiatsData, "currencyCode", item.quote_coin, "exchangeRate") || 0;
+        var balance = getUserMoney(item.quote_coin);
 
-          resultSymbolData.push({
-            avatar: arrayLookup(symbolsData, "symbol", item.quote_coin, "avatar") || arrayLookup(fiatsData, "currencyCode", item.quote_coin, "avatar") || "",
-            symbol: item.quote_coin,
-            balance: balance, // 余额
-            dollarFiat: (balance * symbolRate * dollarCurrencyRate).toFixed(2), // 换算成美元
-            currencyAmount: (balance * symbolRate * currencyRate).toFixed(2), // 换算成当前选择法币
-            tradeLock:
-              arrayLookup(walletData.inner, "symbol", item.quote_coin, "tradeLock") || 0,
-            withdrawLock:
-              arrayLookup(walletData.inner, "symbol", item.quote_coin, "withdrawLock") || 0,
-          });
+        resultSymbolData.push({
+          avatar: arrayLookup(symbolsData, "symbol", item.quote_coin, "avatar") || arrayLookup(fiatsData, "currencyCode", item.quote_coin, "avatar") || "",
+          symbol: item.quote_coin,
+          balance: balance, // 余额
+          dollarFiat: (balance * symbolRate * dollarCurrencyRate).toFixed(2), // 换算成美元
+          currencyAmount: (balance * symbolRate * currencyRate).toFixed(2), // 换算成当前选择法币
+          tradeLock:
+            arrayLookup(walletData.inner, "symbol", item.quote_coin, "tradeLock") || 0,
+          withdrawLock:
+            arrayLookup(walletData.inner, "symbol", item.quote_coin, "withdrawLock") || 0,
+        });
       });
 
       resultSymbolDataFormat[item] = resultSymbolData;
@@ -429,11 +429,11 @@ function Swap() {
   const onSubmit = () => {
     if (arrayLookup(symbolsData, "symbol", symbol, "symbol")) {
       dispatch(
-          getSwapPrice({
-            srcSymbol: symbol,
-            dstSymbol: formatSymbol,
-            amount: inputVal.amount,
-          })
+        getSwapPrice({
+          srcSymbol: symbol,
+          dstSymbol: formatSymbol,
+          amount: inputVal.amount,
+        })
       ).then((res) => {
         let result = res.payload;
         console.log(result, 'result')
@@ -447,25 +447,25 @@ function Swap() {
           }
           setPriceData(result.data);
           dispatch(
-              getSwapCrypto({
-                srcSymbol: symbol,
-                dstSymbol: formatSymbol,
-                amount: inputVal.amount,
-                priceId: result.data.price_id ?? '',
-                qtyBase: qty_base,
-                qtyQuote: qty_quote,
-                price: result.data.price ?? 0,
-              })
+            getSwapCrypto({
+              srcSymbol: symbol,
+              dstSymbol: formatSymbol,
+              amount: inputVal.amount,
+              priceId: result.data.price_id ?? '',
+              qtyBase: qty_base,
+              qtyQuote: qty_quote,
+              price: result.data.price ?? 0,
+            })
           );
         }
       });
     } else {
       dispatch(
-          getSwapFiat({
-            srcSymbol: symbol,
-            dstSymbol: formatSymbol,
-            amount: inputVal.amount,
-          })
+        getSwapFiat({
+          srcSymbol: symbol,
+          dstSymbol: formatSymbol,
+          amount: inputVal.amount,
+        })
       );
     }
 
@@ -501,10 +501,10 @@ function Swap() {
   }, [symbol]);
 
   return (
-    <div  className='mt-12'>
+    <div className='mt-12'>
       <div
         className="flex justify-center items-center wallet-top radius999"
-        style={{ marginBottom: "16px" }}
+        style={{ marginBottom: "12px" }}
       >
         <Tabs
           component={motion.div}
@@ -643,8 +643,8 @@ function Swap() {
           variants={container}
           initial="hidden"
           animate="show"
-          className="p-24 swap-container"
-          style={{ paddingTop: 0, paddingBottom: 0 }}
+          className="swap-container"
+          style={{ paddingInline: "1.5rem " }}
         >
           <div
             className="mb-16 flex items-center justify-between color-76819B"
@@ -745,7 +745,7 @@ function Swap() {
 
           <Typography
             className="text-20 font-medium my-16 color-76819B"
-            style={{ position: "relative", top: "0.8rem" }}
+            style={{ position: "relative", top: "0.1rem" }}
           >
             {t("home_withdraw_3")}{" "}
           </Typography>
@@ -852,7 +852,7 @@ function Swap() {
 
           <Box component={motion.div} variants={item}>
             <Button
-              style={{ width: "63%", margin: "2.9rem auto", display: "block" }}
+              style={{ width: "100%", margin: "2.9rem auto", display: "block" }}
               disabled={ismore(inputVal.amount)}
               className="m-28 px-48 text-lg btnColorTitleBig"
               color="secondary"
@@ -864,8 +864,6 @@ function Swap() {
             >
               {t("home_wallet_21")}
             </Button>
-
-
           </Box>
         </motion.div>
       )}

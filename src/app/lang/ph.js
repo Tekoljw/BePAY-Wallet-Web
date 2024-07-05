@@ -361,6 +361,11 @@ const locale = {
     error_39: "",
     error_40: "",
     error_41: "",
+    card_1: "singil",
+    card_2: "credit card",
+    card_3: "tumanggap",
+    card_4: "pag-alis",
+    card_5:"bumili"
 }
 
 export default locale;

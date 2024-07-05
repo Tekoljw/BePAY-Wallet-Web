@@ -360,7 +360,11 @@ const locale = {
     error_39: "",
     error_40: "",
     error_41: "",
-
+    card_1: "பில்",
+    card_2: "கடன் அட்டை",
+    card_3: "பெற",
+    card_4: "திரும்பப் பெறுதல்",
+    card_5:"வாங்க"
 };
 
 export default locale;

@@ -358,6 +358,11 @@ const locale = {
     error_39: "",
     error_40: "",
     error_41: "",
+    card_1: "счёт",
+    card_2: "кредитная карта",
+    card_3: "получать",
+    card_4: "вывод",
+    card_5:"купить"
 };
 
 export default locale;

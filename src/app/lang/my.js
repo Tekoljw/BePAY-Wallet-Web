@@ -360,6 +360,11 @@ const locale = {
     error_39: "",
     error_40: "",
     error_41: "",
+    card_1: "bil",
+    card_2: "kad kredit",
+    card_3: "menerima",
+    card_4: "pengeluaran",
+    card_5:"membeli"
 };
 
 export default locale;

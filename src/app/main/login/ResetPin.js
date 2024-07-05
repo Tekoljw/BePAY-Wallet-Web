@@ -209,6 +209,14 @@ function ResetPin(props) {
                             />
                         )}
                     />
+
+                    <div className="flex flex-col sm:flex-row items-center">
+                        {t('re_tied_email_3')}
+                        <a href='/wallet/home' className="text-md font-medium">
+                            {t('re_tied_email_4')}
+                        </a>
+                    </div>
+
                     <Button
                         variant="contained"
                         color="secondary"
@@ -354,8 +362,11 @@ function ResetPin(props) {
                                                         />
                                                     )}
                                                 />
-
-                                                <div className="py-20">
+                                                <div className="flex flex-col sm:flex-row items-center">
+                                                    {t('re_tied_email_3')}
+                                                    <a href='/wallet/home' className="text-md font-medium">
+                                                        {t('re_tied_email_4')}
+                                                    </a>
                                                 </div>
 
                                                 <Button
@@ -535,6 +546,13 @@ function ResetPin(props) {
                                                         />
                                                     )}
                                                 />
+
+                                                <div className="flex flex-col sm:flex-row items-center">
+                                                    {t('re_tied_email_3')}
+                                                    <a href='/wallet/home' className="text-md font-medium">
+                                                        {t('re_tied_email_4')}
+                                                    </a>
+                                                </div>
 
                                                 <Button
                                                     variant="contained"

@@ -840,7 +840,10 @@ function Card(props) {
                                                     </div>
                                                     <div className='flex justify-between items-center mt-8'>
                                                         <div className='openingFee'>开卡费用 18USD</div>
-                                                        <div className='openCardBtn'>立即申请</div>
+                                                        <div className='openCardBtn' onClick={() => {
+                                                            setOpenXiangQing(true);
+                                                            myFunction;
+                                                        }}>立即申请</div>
                                                     </div>
                                                 </div>
                                             </motion.div>
@@ -868,7 +871,10 @@ function Card(props) {
                                                     </div>
                                                     <div className='flex justify-between items-center mt-8'>
                                                         <div className='openingFee'>开卡费用 18USD</div>
-                                                        <div className='openCardBtn'>立即申请</div>
+                                                        <div className='openCardBtn' onClick={() => {
+                                                            setOpenXiangQing(true);
+                                                            myFunction;
+                                                        }}>立即申请</div>
                                                     </div>
                                                 </div>
                                             </motion.div>

@@ -211,20 +211,29 @@
     position: absolute;
 }
 
+.flexZuo {
+    justify-content: flex-start;
+}
+
 .pinInput {
     box-sizing: border-box;
     padding: 0;
     outline: none;
     background-color: #0F172A;
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     margin: 10px 10px 20px;
     text-align: center;
-    border-radius: 12px;
+    border-radius: 5px;
     font-size: 25px;
     font-weight: 500;
     caret-color: transparent;
     text-shadow: 0 0 0 #000;
+}
+
+.focus {
+    border-color: #797979;
+    border-width: 0px;
 }
 
 .loadingBtnSty span {
@@ -233,10 +242,7 @@
     color: #fff;
 }
 
-.focus {
-    border-color: #797979;
-    border-width: 1px;
-}
+
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -2247,6 +2253,14 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     width: 24rem;
     height: 4rem;
     margin: 0 auto 1rem;
+    display: block;
+    font-size: 2rem;
+    line-height: initial;
+}
+
+.button-reset2 {
+    width: 24rem;
+    height: 4rem;
     display: block;
     font-size: 2rem;
     line-height: initial;

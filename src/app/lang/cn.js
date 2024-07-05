@@ -361,7 +361,11 @@ const locale = {
     error_40: "已经获取过地址",
     error_41: "当前链错误",
 
-
+    card_1: "账单详情",
+    card_2: "我的卡片",
+    card_3: "收款",
+    card_4: "出款",
+    card_5:"购买"
 };
 
 export default locale;

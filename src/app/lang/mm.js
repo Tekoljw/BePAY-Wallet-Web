@@ -358,8 +358,11 @@ const locale = {
     error_39: "",
     error_40: "",
     error_41: "",
-    
-
+    card_1: "ဘောက်ချာ",
+    card_2: "ခရက်ဒစ်ကဒ်",
+    card_3: "လက်ခံရရှိသည်",
+    card_4: "ဆုတ်ခွာခြင်း",
+    card_5:"ဝယ်ယူ"
 };
 
 export default locale;

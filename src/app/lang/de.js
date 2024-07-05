@@ -363,7 +363,11 @@ const locale = {
     error_39: "",
     error_40: "",
     error_41: "",
-
+    card_1: "Rechnung",
+    card_2: "Kreditkarte",
+    card_3: "erhalten",
+    card_4: "Rückzug",
+    card_5:"kaufen"
 };
 
 export default locale;

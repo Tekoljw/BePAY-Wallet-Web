@@ -360,6 +360,11 @@ const locale = {
     error_39: "",
     error_40: "",
     error_41: "",
+    card_1: "請求書",
+    card_2: "クレジットカード",
+    card_3: "受け取る",
+    card_4: "引き出し",
+    card_5:"購入"
 };
 
 export default locale;
