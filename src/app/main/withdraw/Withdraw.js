@@ -156,7 +156,7 @@ function Withdraw(props) {
     const dispatch = useDispatch();
     const [inputVal, setInputVal] = useState({
         address: '',
-        amount: 0.00,
+        amount: '',
         showAmount: 0.00,
     });
     const [withdrawConfig, setWithdrawConfig] = useState({});
@@ -359,7 +359,16 @@ function Withdraw(props) {
     };
 
     const handleSendTipsSubmit = () => {
+        if (textSelect) {
+            setTextSelect(false)
+            setShowGuangBiao(false)
+        }
+
         if (inputVal.amount <= 0) {
+            return
+        }
+
+        if (pin.length < 6) {
             return
         }
 
@@ -369,7 +378,11 @@ function Withdraw(props) {
         let conversionAmount = rate * inputVal.amount;
         if (conversionAmount >= transferState.limitSingle && googleCode.length < 6) {
             if (!hasAuthGoogle) {
-                navigate('/home/security');
+                dispatch(showMessage({ message: '请绑定Google Authenticator', code: 2 }));
+                setTimeout(() => {
+                    navigate('/home/security');
+                }, 1000)
+
                 return;
             }
             setOpenGoogleCode(true);
@@ -378,7 +391,10 @@ function Withdraw(props) {
 
         if (transferState.daily >= transferState.limitDaily && googleCode.length < 6) {
             if (!hasAuthGoogle) {
-                navigate('/home/security');
+                dispatch(showMessage({ message: '请绑定Google Authenticator', code: 2 }));
+                setTimeout(() => {
+                    navigate('/home/security');
+                }, 1000)
                 return;
             }
             setOpenGoogleCode(true);
@@ -700,8 +716,10 @@ function Withdraw(props) {
         if (hasPin) {
             if (inputVal.amount <= 0) {
                 setTextSelect(true)
+                setShowGuangBiao(true)
             } else {
                 setTextSelect(false)
+                setShowGuangBiao(false)
             }
             openInputPin()
             return true
@@ -747,7 +765,6 @@ function Withdraw(props) {
         }
 
         setInputVal({ ...inputVal, amount: tmpText == 0 ? '' : tmpText });
-        console.log(tmpText, 'tmpText')
     }
 
     // 输入Pin
@@ -1153,6 +1170,7 @@ function Withdraw(props) {
                                                         })
                                                     }}>{t('home_withdraw_11')}</div>
                                                     <img className='pasteJianTou' src="wallet/assets/images/withdraw/pasteJianTou.png" alt="" onClick={() => {
+                                                        setOpenPasteWindow(true)
                                                     }} />
                                                 </div>
                                             </FormControl>
@@ -1210,7 +1228,7 @@ function Withdraw(props) {
                                                 isBindPin()
                                             }}
                                         >
-                                            {t('home_withdraw_10')}
+                                            {t('home_withdraw_10')}123123
                                         </LoadingButton>
                                     </div>
                                 }
@@ -1456,7 +1474,7 @@ function Withdraw(props) {
                             <img className='MoneyWithdraw' src="wallet/assets/images/withdraw/USDT.png"></img>
                             <div className='PINTitle3'>USDT</div>
                             <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")} onClick={() => { setTextSelect(!textSelect) }}>
-                                {inputVal.amount} <span className={clsx("guangBiao", showGuangBiao && 'guangBiaoNo')} >︱</span>
+                                {inputVal.amount} <span className={clsx("guangBiao", !showGuangBiao && 'guangBiaoNo')} >︱</span>
                             </div>
                         </div>
                         <div className='flex justify-between mt-10'>
@@ -1547,7 +1565,9 @@ function Withdraw(props) {
                                 onTouchStart={changeToBlack}
                                 onTouchEnd={changeToWhite}
                                 onTouchCancel={changeToWhite}
-                                onClick={() => { handleSendTipsSubmit() }}>完成</div>
+                                onClick={() => {
+                                    handleSendTipsSubmit()
+                                }}>完成</div>
                         </div>
                     </div>
                     <div>

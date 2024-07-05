@@ -56,13 +56,16 @@ function HomeSidebarContent(props) {
 
     const tabClick = (tab) => {
         history.push(tab === 'wallet' ? '/wallet/home' : `/wallet/home/${tab}`);
-        setMenuTab(tab)
         changePhoneTab(tab);
     };
 
     const changePhoneTab = (tab) => {
         window.localStorage.setItem('phoneTab', tab);
     }
+
+    useEffect(() => {
+        setMenuTab(window.localStorage.getItem('phoneTab'))
+    }, [window.localStorage.getItem('phoneTab')])
 
     useEffect(() => {
         if (config) {

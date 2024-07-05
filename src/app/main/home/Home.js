@@ -89,6 +89,7 @@ function HomePage(props) {
                 history.push('/wallet/home/wallet')
                 changeSlider('wallet')
             }
+            window.localStorage.setItem('phoneTab', changeTab);
         }
     }
 

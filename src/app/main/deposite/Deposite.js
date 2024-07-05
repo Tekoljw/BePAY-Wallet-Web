@@ -496,6 +496,7 @@ function Deposite() {
     useEffect(() => {
         symbolsFormatAmount(symbol, networkId)
         getWalletAddressList()
+        console.log(networkData, 'tmpNetworkId ==>')
     }, [symbol, networkId])
 
     const symbolsFormatAmount = (a, b) => {
