@@ -85,7 +85,7 @@ function RetiedEmail() {
             className="flex flex-col flex-auto items-center sm:justify-center min-w-0 "
         >
             <Paper
-                className="w-full tongYongChuang flex justify-content-center "
+                className="w-full tongYongChuang4 flex justify-content-center "
             >
                 <div className="w-full  mx-auto sm:mx-0">
                     <div className="flex items-baseline mt-2 font-medium">

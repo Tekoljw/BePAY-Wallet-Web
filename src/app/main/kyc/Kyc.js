@@ -382,7 +382,7 @@ function Kyc(props) {
                     variants={container}
                     initial="hidden"
                     animate="show"
-                    className="tongYongChuang "
+                    className="tongYongChuang4"
                     style={{ margin: "20px auto " }}
                 >
                     {/* <div style={{ color: '#ffffff', display: 'flex' }} onClick={() => {history.push('/wallet/home');;}} className="items-center my-8">

@@ -97,7 +97,7 @@ function RetiedPhone() {
             className="flex flex-col flex-auto items-center sm:justify-center min-w-0"
         >
             <Paper
-                className="w-full tongYongChuang flex justify-content-center"
+                className="w-full tongYongChuang4 flex justify-content-center"
                 style={{
                     background: "#1e293b"
                 }}

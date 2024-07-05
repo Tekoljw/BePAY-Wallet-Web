@@ -383,6 +383,11 @@ input[type='number'] {
     background-color: #0E1421 !important;
 }
 
+.tongYongChuang4 {
+    width: calc(100% - 3rem);
+    background-color: #0E1421 !important;
+}
+
 
 .PINTitle3 {
     text-align: center;
@@ -2613,6 +2618,7 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     width: 100%;
     background-color: #0E1421 !important;
 }
+
 
 .form-helper-text {
     background-color: rgb(32, 41, 58) !important;
