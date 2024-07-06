@@ -106,7 +106,7 @@ function ResetPin(props) {
             className="flex flex-col flex-auto items-center sm:justify-center min-w-0 "
         >
             <div
-                className="tongYongChuang"
+                className="tongYongChuang4"
                 style={{
                     background: "#1e293b"
                 }}
