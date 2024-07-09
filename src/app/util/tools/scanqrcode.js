@@ -18,7 +18,6 @@ export const openScan = ( lpfnCallback, config, errCallback ) => {
 
     config = config || defaultConfig;
 
-
     if( !html5QrCodeObj ) {
         html5QrCodeObj = new Html5Qrcode( config.divIdName || defaultConfig.divIdName );
     }
@@ -32,11 +31,12 @@ export const openScan = ( lpfnCallback, config, errCallback ) => {
         if (devices && devices.length) {
             const cameraId = devices[0].id;
             console.log('cameraId===>', cameraId)
+            console.log('cameraLabel===>', devices[0].label)
             // .. use this to start scanning.
             // If you want to prefer back camera
             html5QrCodeObj.start(
-                // { facingMode: config.facingMode || defaultConfig.facingMode },
-                cameraId,
+                { facingMode: config.facingMode || defaultConfig.facingMode },
+                // cameraId, 暂时不使用摄像头id
                 // config,
                 {
                     fps: config.fps,                                    // 摄像头识别帧率
