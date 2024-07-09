@@ -380,7 +380,7 @@ function Withdraw(props) {
             if (!hasAuthGoogle) {
                 dispatch(showMessage({ message: '请绑定Google Authenticator', code: 2 }));
                 setTimeout(() => {
-                    navigate('/home/security');
+                    // navigate('/home/security');
                 }, 1000)
 
                 return;
@@ -393,7 +393,7 @@ function Withdraw(props) {
             if (!hasAuthGoogle) {
                 dispatch(showMessage({ message: '请绑定Google Authenticator', code: 2 }));
                 setTimeout(() => {
-                    navigate('/home/security');
+                    // navigate('/home/security');
                 }, 1000)
                 return;
             }
@@ -403,7 +403,10 @@ function Withdraw(props) {
 
         if (transferState.month >= transferState.limitMonth && googleCode.length < 6) {
             if (!hasAuthGoogle) {
-                navigate('/home/security');
+                dispatch(showMessage({ message: '请绑定Google Authenticator', code: 2 }));
+                setTimeout(() => {
+                    // navigate('/home/security');
+                }, 1000)
                 return;
             }
             setOpenGoogleCode(true);
@@ -1228,7 +1231,7 @@ function Withdraw(props) {
                                                 isBindPin()
                                             }}
                                         >
-                                            {t('home_withdraw_10')}123123
+                                            {t('home_withdraw_10')}
                                         </LoadingButton>
                                     </div>
                                 }
@@ -1473,7 +1476,7 @@ function Withdraw(props) {
                         <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
                             <img className='MoneyWithdraw' src="wallet/assets/images/withdraw/USDT.png"></img>
                             <div className='PINTitle3'>USDT</div>
-                            <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")} onClick={() => { setTextSelect(!textSelect) }}>
+                            <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")} onClick={() => { setTextSelect(!textSelect); setShowGuangBiao(true) }}>
                                 {inputVal.amount} <span className={clsx("guangBiao", !showGuangBiao && 'guangBiaoNo')} >︱</span>
                             </div>
                         </div>

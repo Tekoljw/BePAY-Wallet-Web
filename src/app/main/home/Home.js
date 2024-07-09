@@ -136,12 +136,12 @@ function HomePage(props) {
     }, []);
 
     useEffect(() => {
+        // console.log(currentPhoneTab,'currentPhoneTab ===> ')
         currentPhoneTab = window.localStorage.getItem('phoneTab');
         if(!currentPhoneTab){
             changePhoneTab('wallet');
         } else {
-            console.log(currentPhoneTab,'currentPhoneTab')
-            changeSlider(currentPhoneTab)
+            changePhoneTab(currentPhoneTab);
         }
     }, [window.localStorage.getItem('phoneTab')])
 
