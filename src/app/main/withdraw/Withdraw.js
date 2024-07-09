@@ -380,7 +380,7 @@ function Withdraw(props) {
             if (!hasAuthGoogle) {
                 dispatch(showMessage({ message: '请绑定Google Authenticator', code: 2 }));
                 setTimeout(() => {
-                    navigate('/home/security');
+                    // navigate('/home/security');
                 }, 1000)
 
                 return;
@@ -393,7 +393,7 @@ function Withdraw(props) {
             if (!hasAuthGoogle) {
                 dispatch(showMessage({ message: '请绑定Google Authenticator', code: 2 }));
                 setTimeout(() => {
-                    navigate('/home/security');
+                    // navigate('/home/security');
                 }, 1000)
                 return;
             }
@@ -403,7 +403,10 @@ function Withdraw(props) {
 
         if (transferState.month >= transferState.limitMonth && googleCode.length < 6) {
             if (!hasAuthGoogle) {
-                navigate('/home/security');
+                dispatch(showMessage({ message: '请绑定Google Authenticator', code: 2 }));
+                setTimeout(() => {
+                    // navigate('/home/security');
+                }, 1000)
                 return;
             }
             setOpenGoogleCode(true);
