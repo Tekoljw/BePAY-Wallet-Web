@@ -404,8 +404,10 @@ input[type='number'] {
 }
 
 .guangBiaoNo {
-    color: #151C2A;
+    color: #1E293B;
+    animation: fadeZi2 1s infinite;
 }
+
 
 @keyframes fadeZi {
     0% {
@@ -414,6 +416,20 @@ input[type='number'] {
 
     50% {
         opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeZi2 {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0;
     }
 
     100% {

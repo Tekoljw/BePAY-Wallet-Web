@@ -1185,7 +1185,7 @@ function Withdraw(props) {
                                         <Typography className="text-16 cursor-pointer mt-16" >
                                             {t('home_withdraw_3')}
                                         </Typography>
-                                        <div className="flex items-center justify-between" style={{paddingTop:"1.6rem",paddingBottom:"0.5rem"}}>
+                                        <div className="flex items-center justify-between" style={{ paddingTop: "1.6rem", paddingBottom: "0.5rem" }}>
                                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
                                                 <TextField
                                                     error={ismore(inputVal.amount)}
@@ -1228,7 +1228,7 @@ function Withdraw(props) {
                                                 isBindPin()
                                             }}
                                         >
-                                            {t('home_withdraw_10')}123123
+                                            {t('home_withdraw_10')}
                                         </LoadingButton>
                                     </div>
                                 }
@@ -1473,8 +1473,11 @@ function Withdraw(props) {
                         <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
                             <img className='MoneyWithdraw' src="wallet/assets/images/withdraw/USDT.png"></img>
                             <div className='PINTitle3'>USDT</div>
-                            <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")} onClick={() => { setTextSelect(!textSelect) }}>
-                                {inputVal.amount} <span className={clsx("guangBiao", !showGuangBiao && 'guangBiaoNo')} >︱</span>
+                            <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")} onClick={() => { 
+                                setTextSelect(!textSelect)
+                                setShowGuangBiao(true)
+                                 }}>
+                                {inputVal.amount} <span className={clsx("", !showGuangBiao ? 'guangBiaoNo' : 'guangBiao')} >︱</span>
                             </div>
                         </div>
                         <div className='flex justify-between mt-10'>
