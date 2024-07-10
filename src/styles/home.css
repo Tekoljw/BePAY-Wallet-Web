@@ -474,8 +474,44 @@ input[type='number'] {
     border-bottom: 1px solid #2C3950;
 }
 
+.my-three-js-canvas {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.console-container {
+    width: auto;
+    height: 22rem;
+    font-weight: bold;
+    font-size: 28px;
+    text-align: center;
+    color: white;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  .console-underscore {
+    display: inline-block;
+    top: 0px;
+    left: 0px;
+  }
+
+  .hiddenDz {
+  opacity: 0;
+}
+
+
+
 .aaa {
     background-color: #374252 !important;
+}
+
+.loginBg {
+    background-color: rgba(14, 20, 33, 0) !important;
 }
 
 .jianPanNumBtn {

@@ -1,93 +1,61 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
+import utils from '../../util/tools/utils';
+import { useEffect } from "react";
 
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-    '& .MuiDialogContent-root': {
-        padding: theme.spacing(2),
-    },
-    '& .MuiDialogActions-root': {
-        padding: theme.spacing(1),
-    },
-}));
 
-export interface DialogTitleProps {
-    id: string;
-    children?: React.ReactNode;
-    onClose: () => void;
-}
 
-function BootstrapDialogTitle(props: DialogTitleProps) {
-    const { children, onClose, ...other } = props;
+export default function test() {
+    useEffect(() => {
+        try {
+            utils.consoleText(['Safe and convenient crypto assets', 'Crypto assets and fiat currency conversion', 'Global distribution VISA & Master', 'Idle funds make profit for you'], 'qddzj', ['#31D4CA', '#5AF4BE', '#069FC9', '#14C2A3', '#5AF4BE'])
+            utils.appendScript('https://static-scource.funibet.com/funibox/js/three.min.js', true)
+            utils.appendScript('https://static-scource.funibet.com/funibox/js/TweenMax.min.js', true)
+            setTimeout(() => {
+                utils.appendScript('https://static-scource.funibet.com/funibox/js/cc.js', true)
+            }, 100);
+            return () => {
+                utils.removeScript('https://static-scource.funibet.com/funibox/js/three.min.js')
+                utils.removeScript('https://static-scource.funibet.com/funibox/js/TweenMax.min.js')
+                utils.removeScript('https://static-scource.funibet.com/funibox/js/cc.js')
+                // document.getElementById("my-three-js-canvas").remove()
+            }
+        } catch (e) {
+            console.log(e)
+        }
+
+    }, []);
 
     return (
-        <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-            {children}
-            {onClose ? (
-                <IconButton
-                    aria-label="close"
-                    onClick={onClose}
-                    sx={{
-                        position: 'absolute',
-                        right: 8,
-                        top: 8,
-                        color: (theme) => theme.palette.grey[500],
-                    }}
+        <div id="kkqd" class="">
+            <div style={{ position: "relative", zIndex: "1", marginTop: "40%", width: "100%" }}>
+                <div className='flex' style={{ width: "100%", justifyContent: "center" }} >
+                    <img style={{ width: "80%" }} src="/wallet/assets/images/logo/qdLogo.png" />
+                </div>
+                <div className='text-28 px-32' style={{ width: "100%", textAlign: "center", color: "#ffffff", fontWeight: "bold", marginTop: "30%" }} >
+                    Global Encrypted Digital Bank
+                </div>
+                <div class='console-container mt-40 px-28'><span id='qddzj'></span><div class='console-underscore' id='console'>&#95;</div></div>
+                <div
+                    className='flex justify-between px-32'
+                    style={{}}
                 >
-                    <CloseIcon />
-                </IconButton>
-            ) : null}
-        </DialogTitle>
-    );
-}
-
-export default function CustomizedDialogs() {
-    const [open, setOpen] = React.useState(false);
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    return (
-        <div>
-            <Button variant="outlined" onClick={handleClickOpen}>
-                Open dialog
-            </Button>
-            <BootstrapDialog
-                onClose={handleClose}
-                aria-labelledby="customized-dialog-title"
-                open={open}
-            >
-                <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    Modal title
-                </BootstrapDialogTitle>
-                <DialogContent dividers>
-                    <Typography gutterBottom>
-                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                        dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                        consectetur ac, vestibulum at eros.
-                    </Typography>
-                    <Typography gutterBottom>
-                        Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-                        Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-                    </Typography>
-                    <Typography gutterBottom>
-                        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
-                        magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
-                        ullamcorper nulla non metus auctor fringilla.
-                    </Typography>
-                </DialogContent>
-            </BootstrapDialog>
+                    <div
+                        style={{ backgroundColor: "#14C2A3", fontWeight: "600", color: "#ffffff", width: "44%", borderRadius: "0.6rem", height: "4rem", lineHeight: "4rem", textAlign: "center" }}
+                    >
+                        Sign
+                    </div>
+                    <div
+                        style={{ backgroundColor: "#14C2A3", fontWeight: "600", color: "#ffffff", width: "44%", borderRadius: "0.6rem", height: "4rem", lineHeight: "4rem", textAlign: "center" }}
+                    >
+                        Login</div>
+                </div>
+                <div
+                    className='flex justify-end px-32 mt-48'
+                >
+                    <img style={{ width: "24%" }} src="/wallet/assets/images/login/master.png" />
+                    <img className='ml-16' style={{ width: "24%" }} src="/wallet/assets/images/login/visa.png" />
+                </div>
+            </div>
         </div>
     );
 }
