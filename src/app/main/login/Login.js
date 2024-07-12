@@ -57,7 +57,7 @@ import { GoogleLogin } from "react-google-login";
 import utils from '../../util/tools/utils';
 import { loginTelegram } from "../../util/tools/loginFunction";
 import { getIPExtendInfo } from "app/store/config/configThunk";
-
+import history from "@history";
 
 const Root = styled(FusePageCarded)(({ theme }) => ({
     '& .FusePageCarded-header': {},
