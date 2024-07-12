@@ -124,6 +124,7 @@ function Card(props) {
     const [openApplyWindow, setOpenApplyWindow] = useState(false);
     const [openPassWordWindow, setOpenPassWordWindow] = useState(false);
     const [openBindWindow, setOpenBindWindow] = useState(false);
+    const [openJiHuoWindow, setOpenJiHuoWindow] = useState(false);
     const [applyOver, setApplyOver] = useState(false);
     const [symbol, setSymbol] = useState('');
     const walletData = useSelector(selectUserData).wallet;
@@ -218,6 +219,14 @@ function Card(props) {
         }, 300);
     };
 
+    const closesJiHuoFunc = () => {
+        document.getElementById('openJiHuo').classList.remove('PinMoveAni');
+        document.getElementById('openJiHuo').classList.add('PinMoveOut');
+        setTimeout(() => {
+            setOpenJiHuoWindow(false)
+        }, 300);
+    };
+
     const openRecordFunc = () => {
         setTimeout(() => {
             document.getElementById('openRecord').classList.add('PinMoveAni');
@@ -242,6 +251,12 @@ function Card(props) {
     const openBindFunc = () => {
         setTimeout(() => {
             document.getElementById('openBind').classList.add('PinMoveAni');
+        }, 0);
+    };
+
+    const openJiHuoFunc = () => {
+        setTimeout(() => {
+            document.getElementById('openJiHuo').classList.add('PinMoveAni');
         }, 0);
     };
 
@@ -766,14 +781,18 @@ function Card(props) {
                                                 </div>
                                                 <div className='cardNameInFoDi px-12'>
                                                     <div className='flex justify-between'>
-                                                        <div style={{ fontWeight: "bold" }}>VISA卡</div>
                                                         <div className='kaPianInfo' onClick={() => {
                                                             setOpenXiangQing(true);
                                                             myFunction;
                                                         }}   >卡片详情</div>
+                                                        <div className='openingFee' style={{}}>开卡费用 1USD</div>
                                                     </div>
-                                                    <div className='flex justify-between items-center mt-8'>
-                                                        <div className='openingFee'>开卡费用 18USD</div>
+                                                    <div className='flex justify-between items-center mt-10'>
+                                                        <div className='openCardBtn' onClick={() => {
+                                                            setOpenXiangQing(true);
+                                                            myFunction;
+                                                        }}   >激活卡片</div>
+
                                                         <div className='openCardBtn' onClick={() => {
                                                             setOpenXiangQing(true);
                                                             myFunction;
@@ -798,18 +817,22 @@ function Card(props) {
                                                 </div>
                                                 <div className='cardNameInFoDi px-12'>
                                                     <div className='flex justify-between'>
-                                                        <div style={{ fontWeight: "bold" }}>MASTER卡</div>
                                                         <div className='kaPianInfo' onClick={() => {
                                                             setOpenXiangQing(true);
                                                             myFunction;
-                                                        }}  >卡片详情</div>
+                                                        }}   >卡片详情</div>
+                                                        <div className='openingFee' style={{}}>开卡费用 1USD</div>
                                                     </div>
-                                                    <div className='flex justify-between items-center mt-8'>
-                                                        <div className='openingFee'>开卡费用 18USD</div>
+                                                    <div className='flex justify-between items-center mt-10'>
                                                         <div className='openCardBtn' onClick={() => {
                                                             setOpenXiangQing(true);
                                                             myFunction;
-                                                        }}  >立即申请</div>
+                                                        }}   >激活卡片</div>
+
+                                                        <div className='openCardBtn' onClick={() => {
+                                                            setOpenXiangQing(true);
+                                                            myFunction;
+                                                        }}   >立即申请</div>
                                                     </div>
                                                 </div>
                                             </motion.div>
@@ -832,18 +855,22 @@ function Card(props) {
                                                 </div>
                                                 <div className='cardNameInFoDi px-12'>
                                                     <div className='flex justify-between'>
-                                                        <div style={{ fontWeight: "bold" }}>MASTER卡</div>
                                                         <div className='kaPianInfo' onClick={() => {
                                                             setOpenXiangQing(true);
                                                             myFunction;
-                                                        }}  >卡片详情</div>
+                                                        }}   >卡片详情</div>
+                                                        <div className='openingFee' style={{}}>开卡费用 1USD</div>
                                                     </div>
-                                                    <div className='flex justify-between items-center mt-8'>
-                                                        <div className='openingFee'>开卡费用 18USD</div>
+                                                    <div className='flex justify-between items-center mt-10'>
                                                         <div className='openCardBtn' onClick={() => {
                                                             setOpenXiangQing(true);
                                                             myFunction;
-                                                        }}>立即申请</div>
+                                                        }}   >激活卡片</div>
+
+                                                        <div className='openCardBtn' onClick={() => {
+                                                            setOpenXiangQing(true);
+                                                            myFunction;
+                                                        }}   >立即申请</div>
                                                     </div>
                                                 </div>
                                             </motion.div>
@@ -863,18 +890,22 @@ function Card(props) {
                                                 </div>
                                                 <div className='cardNameInFoDi px-12'>
                                                     <div className='flex justify-between'>
-                                                        <div style={{ fontWeight: "bold" }}>VISA卡</div>
                                                         <div className='kaPianInfo' onClick={() => {
                                                             setOpenXiangQing(true);
                                                             myFunction;
-                                                        }}  >卡片详情</div>
+                                                        }}   >卡片详情</div>
+                                                        <div className='openingFee' style={{}}>开卡费用 1USD</div>
                                                     </div>
-                                                    <div className='flex justify-between items-center mt-8'>
-                                                        <div className='openingFee'>开卡费用 18USD</div>
+                                                    <div className='flex justify-between items-center mt-10'>
                                                         <div className='openCardBtn' onClick={() => {
                                                             setOpenXiangQing(true);
                                                             myFunction;
-                                                        }}>立即申请</div>
+                                                        }}   >激活卡片</div>
+
+                                                        <div className='openCardBtn' onClick={() => {
+                                                            setOpenXiangQing(true);
+                                                            myFunction;
+                                                        }}   >立即申请</div>
                                                     </div>
                                                 </div>
                                             </motion.div>
@@ -1586,6 +1617,79 @@ function Card(props) {
                         </div>
 
                         <div className='jieChuBind flex justify-between'>
+                            <div className='flex'>
+                                <img className='payImg' src="wallet/assets/images/card/pay4.png" />
+                                <div>
+                                    <div>WeChat Pay</div>
+                                    <div>2022/03/25开通</div>
+                                </div>
+                            </div>
+                            <div className='payButtom'>
+                                解除
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </BootstrapDialog >
+
+
+            <BootstrapDialog
+                onClose={() => {
+                    closesJiHuoFunc();
+                }}
+                aria-labelledby="customized-dialog-title"
+                open={openJiHuoWindow}
+                className="dialog-container"
+            >
+                <div id="openJiHuo" className="PINSty pb-32">
+                    <div className='pinWindow3'>
+                        <div className='flex'>
+                            <div className='PINTitleSelectCardZi'>取消订阅</div>
+                            <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                                closesJiHuoFunc();
+                            }} />
+                        </div>
+
+                        <div className='jieChuJiHuo flex justify-between'>
+                            <div className='flex'>
+                                <img className='payImg' src="wallet/assets/images/card/pay1.png" />
+                                <div>
+                                    <div>GooglePay</div>
+                                    <div>2021/08/25开通</div>
+                                </div>
+                            </div>
+                            <div className='payButtom'>
+                                解除
+                            </div>
+                        </div>
+
+                        <div className='jieChuJiHuo flex justify-between'>
+                            <div className='flex'>
+                                <img className='payImg' src="wallet/assets/images/card/pay2.png" />
+                                <div>
+                                    <div>ApplePay</div>
+                                    <div>2021/06/12开通</div>
+                                </div>
+                            </div>
+                            <div className='payButtom'>
+                                解除
+                            </div>
+                        </div>
+
+                        <div className='jieChuJiHuo flex justify-between'>
+                            <div className='flex'>
+                                <img className='payImg' src="wallet/assets/images/card/pay3.png" />
+                                <div>
+                                    <div>AliPay</div>
+                                    <div>2020/08/11开通</div>
+                                </div>
+                            </div>
+                            <div className='payButtom'>
+                                解除
+                            </div>
+                        </div>
+
+                        <div className='jieChuJiHuo flex justify-between'>
                             <div className='flex'>
                                 <img className='payImg' src="wallet/assets/images/card/pay4.png" />
                                 <div>

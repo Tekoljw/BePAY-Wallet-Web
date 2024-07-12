@@ -484,9 +484,9 @@ input[type='number'] {
 
 .console-container {
     width: auto;
-    height: 22rem;
+    height: 18rem;
     font-weight: bold;
-    font-size: 28px;
+    font-size: 20px;
     text-align: center;
     color: white;
     top: 0;
@@ -1027,9 +1027,6 @@ input[type='number'] {
 
 .openingFee {
     color: #46DFB7;
-    height: 3.6rem;
-    line-height: 3.6rem;
-    text-align: center;
 }
 
 .openCardBtn {
@@ -2337,6 +2334,7 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     height: 100%;
     max-height: 100%;
     overflow: hidden;
+    border-radius: 0px;
 }
 
 .scan-dialog-content .MuiDialogContent-root {
@@ -2790,7 +2788,7 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     }
 
     .muiltr-153eyq5-MuiModal-root-MuiDialog-root .MuiDialogContent-root {
-        padding: 10px;
+        padding: 0px;
     }
 
     .dialog-select-network-item {
