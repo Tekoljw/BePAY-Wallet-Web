@@ -130,6 +130,7 @@ function Card(props) {
     const config = useSelector(selectConfig);
     const symbols = config.symbols;
     const [symbolWallet, setSymbolWallet] = useState([]);
+    const [cardExpandedStatus, setCardExpandedStatus] = useState(false);
 
     const changePhoneTab = (tab) => {
         window.localStorage.setItem('phoneTab', tab);
@@ -570,7 +571,7 @@ function Card(props) {
                                                     </div>
 
                                                     <div className='cardGongNengMyDi' style={{ position: "relative" }}>
-                                                        <Accordion className='gongNengTan1'>
+                                                        <Accordion className='gongNengTan1' expanded={cardExpandedStatus}>
                                                             <AccordionSummary
                                                                 expandIcon={<ExpandMoreIcon />}
                                                                 aria-controls="panel1-content"
