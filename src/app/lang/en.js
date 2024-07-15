@@ -366,8 +366,9 @@ const locale = {
     card_2: "Credit Card",
     card_3: "Recive",
     card_4: "Send",
-    card_5:"Buy"
-
+    card_5:"Buy",
+    card_100:"Card number too short - should be 9 chars minimum",
+    card_101:"Check code too short - should be 6 chars minimum"
 };
 
 export default locale;

@@ -532,7 +532,7 @@ input[type='number'] {
 .smallYuanDian {
     width: 0.2rem;
     height: 0.2rem;
-    background-color: #2EEAC9;
+    background-color: #ffffff;
     border-radius: 999px;
 }
 
@@ -754,7 +754,7 @@ input[type='number'] {
     }
 
     to {
-        bottom: -60%;
+        bottom: -70%;
     }
 }
 
@@ -2510,6 +2510,7 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
 .pinWindow2 .muiltr-1qeo8sv-MuiFormHelperText-root.Mui-error {
     background-color: #1E293B !important;
 }
+
 
 .TanHaoCard {
     width: 2.2rem;

@@ -7,7 +7,7 @@ import { useEffect } from "react";
 export default function test() {
     useEffect(() => {
         try {
-            utils.consoleText(['Safe and convenient crypto assets', 'Crypto assets and fiat currency conversion', 'Global distribution VISA & Master', 'Idle funds make profit for you'], 'qddzj', ['#31D4CA', '#5AF4BE', '#069FC9', '#14C2A3', '#5AF4BE'])
+            utils.consoleText(['Safe & Fast manage crypto assets', 'Crypto & Fiat swap in anytime', 'VISA & Master crypto bank card', 'Current interest up to 5%', 'Mining governance tokens'], 'qddzj', ['#31D4CA', '#5AF4BE', '#069FC9', '#14C2A3', '#5AF4BE', '#5AF4BE'])
             utils.appendScript('https://static-scource.funibet.com/funibox/js/three.min.js', true)
             utils.appendScript('https://static-scource.funibet.com/funibox/js/TweenMax.min.js', true)
             setTimeout(() => {
@@ -31,7 +31,7 @@ export default function test() {
                     <img style={{ width: "60%" }} src="/wallet/assets/images/logo/qdLogo.png" />
                 </div>
                 <div className='text-24 px-32' style={{ width: "100%", textAlign: "center", color: "#ffffff", fontWeight: "bold", marginTop: "25%" }} >
-                    Global Encrypted Digital Bank
+                    Global Crypto Bank
                 </div>
                 <div class='console-container mt-40 px-28'><span id='qddzj'></span><div class='console-underscore' id='console'>&#95;</div></div>
                 <div

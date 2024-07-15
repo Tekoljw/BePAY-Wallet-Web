@@ -115,7 +115,6 @@ function Card(props) {
     const [kaBeiButton2, setKaBeiButton2] = useState(true);
     const [fanZhuan, setFanZhuan] = useState(false);
     const [openXiangQing, setOpenXiangQing] = useState(false);
-    const [openMyCard, setOpenMyCard] = useState(false);
     const [openAnimateModal, setOpenAnimateModal] = useState(false);
     const [openCardBtnShow, setOpenCardBtnShow] = useState(false);
     const [openAnimateHuanKa, setOpenAnimateHuanKa] = useState(false);
@@ -139,10 +138,6 @@ function Card(props) {
     const handleImgClick = (e, action) => {
         e.stopPropagation(); // 阻止事件冒泡
         action(); // 执行传入的动作函数
-    };
-
-    const kaPianGongNeng = () => {
-        // setOpenMyCard(true);
     };
 
     const myFunction = () => {
@@ -272,6 +267,8 @@ function Card(props) {
 
     const defaultValues = {
         oldPassword: '',
+        cardNumber: '',
+        checkCode: '',
         password: '',
         passwordConfirm: '',
     };
@@ -289,6 +286,15 @@ function Card(props) {
             .max(16, 'Password is too long - should be 16 chars maximum.')
             // .min(6, 'Password is too short - should be 6 chars minimum.'),
             .min(6, t("signUp_8")),
+        cardNumber: yup
+            .string()
+            .required(t("card_100"))
+            .min(9, t("card_100")),
+        checkCode: yup
+            .string()
+            .required(t("card_101"))
+            .min(6, t("card_101")),
+
         passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
     });
 
@@ -659,6 +665,49 @@ function Card(props) {
                                                 </motion.div>
 
 
+
+                                                <motion.div variants={item}
+                                                    initial="hidden"
+                                                    animate="show"
+                                                    className='cardJianGe'
+                                                >
+                                                    <div className="responsive-div">
+                                                        <div className="responsive-div-content card5Bg cardZhiDi" >
+                                                            <div className='cardNumber'>2489 8794 8894 7845</div>
+                                                            <div className='cardBeiMian'>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className='mt-10'>
+                                                        <div style={{ position: "relative", height: "1.2rem", width: "90%", margin: "0 auto" }}>
+                                                            <div className='borderYuan' style={{ position: "absolute" }}>
+                                                                <div className='jinDuDi' ></div>
+                                                            </div>
+                                                            <div className='borderYuan' style={{ position: "absolute" }}>
+                                                                <div className={clsx("jinDuDi1")} style={{ width: "33.33%" }}></div>
+                                                            </div>
+                                                            <div style={{ position: "absolute", width: "100%", height: "0.6rem" }}>
+                                                                <div className='flex justify-between items-center ' style={{ width: "100%", height: "0.6rem", padding: "0rem 0rem" }}>
+                                                                    <div className='smallYuanDian'></div>
+                                                                    <div className='smallYuanDian'></div>
+                                                                    <div className='smallYuanDian'></div>
+                                                                    <div className='smallYuanDian'></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div style={{ width: "95%", margin: "0rem auto" }}>
+                                                            <div className='flex justify-between items-center ' style={{ width: "100%" }}>
+                                                                <div className=''>申请</div>
+                                                                <div className='jinDuZi'>审核</div>
+                                                                <div className=''>寄送</div>
+                                                                <div className=''>激活</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </motion.div>
+
+
                                                 <motion.div variants={item}
                                                     initial="hidden"
                                                     animate="show"
@@ -701,8 +750,12 @@ function Card(props) {
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                 </motion.div>
+
+
+
+
+
                                             </div>
 
                                         }
@@ -789,8 +842,8 @@ function Card(props) {
                                                     </div>
                                                     <div className='flex justify-between items-center mt-10'>
                                                         <div className='openCardBtn' onClick={() => {
-                                                            setOpenXiangQing(true);
-                                                            myFunction;
+                                                            setOpenJiHuoWindow(true);
+                                                            openJiHuoFunc()
                                                         }}   >激活卡片</div>
 
                                                         <div className='openCardBtn' onClick={() => {
@@ -1054,38 +1107,6 @@ function Card(props) {
                     </motion.div>
                 </motion.div>
             </div>}
-
-            {/* {openMyCard && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }}>
-                <motion.div
-                    variants={container}
-                    initial="hidden"
-                    animate="show"
-                    className='mt-12'
-                >
-                    <div className='flex' onClick={() => {
-                        setOpenMyCard(false);
-                    }}   >
-                        <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>返回</span>
-                    </div>
-
-                    <motion.div variants={item} className='flex mt-20'>
-                        <div className='quanYiDi' style={{ padding: "1.5rem" }}>
-                            <div className='mt-10'>
-                                <div className='text-16' style={{ fontWeight: "600" }}>卡片信息</div>
-                            </div>
-                            <div className='flex justify-between mt-10'>
-                                <div className='text-18'>VISA Card</div>
-                                <div className='text-16'>卡片信息</div>
-                            </div>
-
-                        </div>
-                    </motion.div>
-                    <motion.div variants={item} className='flex mt-20'>
-                    </motion.div>
-                    <div className='flex mt-10 ' style={{ height: "5rem" }}>
-                    </div>
-                </motion.div>
-            </div>} */}
 
 
             <AnimateModal
@@ -1642,65 +1663,73 @@ function Card(props) {
                 className="dialog-container"
             >
                 <div id="openJiHuo" className="PINSty pb-32">
-                    <div className='pinWindow3'>
+                    <div className='pinWindow2'>
                         <div className='flex'>
-                            <div className='PINTitleSelectCardZi'>取消订阅</div>
+                            <div className='PINTitleSelectCardZi'>卡片激活</div>
                             <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                 closesJiHuoFunc();
                             }} />
                         </div>
 
-                        <div className='jieChuJiHuo flex justify-between'>
-                            <div className='flex'>
-                                <img className='payImg' src="wallet/assets/images/card/pay1.png" />
-                                <div>
-                                    <div>GooglePay</div>
-                                    <div>2021/08/25开通</div>
-                                </div>
-                            </div>
-                            <div className='payButtom'>
-                                解除
-                            </div>
+                        <div className='flex mt-40 justify-between pb-32' style={{ borderBottom: "1px solid #2C3950" }}>
+                            <div className='text-14'>如果您已经提前拥有了卡片，请输入您的卡片号码进行绑定激活。</div>
                         </div>
 
-                        <div className='jieChuJiHuo flex justify-between'>
-                            <div className='flex'>
-                                <img className='payImg' src="wallet/assets/images/card/pay2.png" />
-                                <div>
-                                    <div>ApplePay</div>
-                                    <div>2021/06/12开通</div>
-                                </div>
-                            </div>
-                            <div className='payButtom'>
-                                解除
-                            </div>
+                        <div className='flex mt-20 justify-between pb-20' >
+                            <div className='text-16'>卡片号码</div>
                         </div>
 
-                        <div className='jieChuJiHuo flex justify-between'>
-                            <div className='flex'>
-                                <img className='payImg' src="wallet/assets/images/card/pay3.png" />
-                                <div>
-                                    <div>AliPay</div>
-                                    <div>2020/08/11开通</div>
-                                </div>
-                            </div>
-                            <div className='payButtom'>
-                                解除
-                            </div>
-                        </div>
+                        <Controller
+                            name="cardNumber"
+                            control={control}
+                            render={({ field }) => (
+                                <TextField
+                                    {...field}
+                                    className="mb-36"
+                                    label="卡片号码"
+                                    type="number"
+                                    error={!!errors.cardNumber}
+                                    helperText={errors?.cardNumber?.message}
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                />
+                            )}
+                        />
 
-                        <div className='jieChuJiHuo flex justify-between'>
-                            <div className='flex'>
-                                <img className='payImg' src="wallet/assets/images/card/pay4.png" />
-                                <div>
-                                    <div>WeChat Pay</div>
-                                    <div>2022/03/25开通</div>
-                                </div>
-                            </div>
-                            <div className='payButtom'>
-                                解除
-                            </div>
-                        </div>
+                        <Controller
+                            name="checkCode"
+                            control={control}
+                            render={({ field }) => (
+                                <TextField
+                                    {...field}
+                                    disabled={true}
+                                    className="mb-36"
+                                    label="校验码"
+                                    type="number"
+                                    error={!!errors.checkCode}
+                                    helperText={errors?.checkCode?.message}
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                />
+                            )}
+                        />
+
+                        <LoadingButton
+                            disabled={false}
+                            className="boxCardBtn3 mt-48"
+                            color="secondary"
+                            loading={false}
+                            variant="contained"
+                            onClick={() => {
+                                setOpenJiHuoWindow(false)
+                                closesJiHuoFunc();
+                            }}
+                        >
+                            提交
+                        </LoadingButton>
+
                     </div>
                 </div>
             </BootstrapDialog >
