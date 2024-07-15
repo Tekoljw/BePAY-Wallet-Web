@@ -116,9 +116,9 @@ function Kyc(props) {
     });
 
     const [approveData, setApproveData] = useState({
-        nationCode: '',
-        phone: '',
-        email: '',
+        nationCode: user.profile?.nation ?? '',
+        phone: user.profile?.phone ?? '',
+        email: user.profile?.user?.email ?? '',
         password: '',
         code: ''
     });
@@ -262,8 +262,6 @@ function Kyc(props) {
         return false;
     };
 
-
-    console.log(inputVal, 'inputval......')
     const isCanSave = (bShowMsg) => {
         if (isAlreadySumbit()) return false;
         // if (typeof inputVal.birthDate === 'object') {
@@ -349,6 +347,12 @@ function Kyc(props) {
             }
         };
     }, []);
+
+    useEffect(() => {
+        if (user.profile?.nation) {
+            handleChangeApproveDataVal('nationCode', user.profile?.nation)
+        }
+    }, [user.profile])
 
     return (
         <>

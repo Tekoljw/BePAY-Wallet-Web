@@ -1,11 +1,13 @@
 import * as React from 'react';
 import utils from '../../util/tools/utils';
 import { useEffect } from "react";
+import history from "@history";
 
 
 
 export default function test() {
     useEffect(() => {
+        // window.localStorage.setItem('redirectGuide', true);
         try {
             utils.consoleText(['Safe & Fast manage crypto assets', 'Crypto & Fiat swap in anytime', 'VISA & Master crypto bank card', 'Current interest up to 5%', 'Mining governance tokens'], 'qddzj', ['#31D4CA', '#5AF4BE', '#069FC9', '#14C2A3', '#5AF4BE', '#5AF4BE'])
             utils.appendScript('https://static-scource.funibet.com/funibox/js/three.min.js', true)
@@ -45,11 +47,17 @@ export default function test() {
                     style={{}}
                 >
                     <div
+                        onClick={() => {
+                            history.push("/wallet/sign-up" + window.location.search);
+                        }}
                         style={{ backgroundColor: "#14C2A3", fontWeight: "600", color: "#ffffff", width: "44%", borderRadius: "0.6rem", height: "4rem", lineHeight: "4rem", textAlign: "center" }}
                     >
                         Sign
                     </div>
                     <div
+                        onClick={() => {
+                            history.push("/wallet/login" + window.location.search);
+                        }}
                         style={{ backgroundColor: "#14C2A3", fontWeight: "600", color: "#ffffff", width: "44%", borderRadius: "0.6rem", height: "4rem", lineHeight: "4rem", textAlign: "center" }}
                     >
                         Login</div>

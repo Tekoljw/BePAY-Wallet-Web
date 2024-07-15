@@ -74,6 +74,7 @@ function HomePage(props) {
                 slide.style.background = "#171F29";
             }
         }
+        setLeftSidebarOpen(false)
     }
     //改变手机分页
     const changePhoneTab = (changeTab) => {
@@ -88,6 +89,8 @@ function HomePage(props) {
             } else if (changeTab === 'wallet') {
                 history.push('/wallet/home/wallet')
                 changeSlider('wallet')
+            } else {
+                changeSlider(changeTab)
             }
             window.localStorage.setItem('phoneTab', changeTab);
         }
