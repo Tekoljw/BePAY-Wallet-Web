@@ -131,6 +131,8 @@ function Card(props) {
     const symbols = config.symbols;
     const [symbolWallet, setSymbolWallet] = useState([]);
     const [cardExpandedStatus, setCardExpandedStatus] = useState(false);
+    const [openZhiFu, setOpenZhiFu] = useState(false);
+    const [openChongZhi, setOpenChongZhi] = useState(false);
 
     const changePhoneTab = (tab) => {
         window.localStorage.setItem('phoneTab', tab);
@@ -558,7 +560,6 @@ function Card(props) {
                                                         <div className="responsive-div creditcard" id="responsive-div">
                                                             <div className={clsx("", fanZhuan && "xiaoShi")}>
                                                                 <div className="responsive-div-content card4Bg cardZhiDi" onClick={() => {
-                                                                    kaPianGongNeng();
                                                                 }}  >
                                                                     <div className={clsx("cardNumber", kaBeiButton && "xiaoShi")}> <span id="cardNumberOne" >3449 7794 2794 9831</span> </div>
                                                                     <div className='cardBeiMian'>
@@ -575,7 +576,6 @@ function Card(props) {
 
                                                             <div className={clsx("", !fanZhuan && "xiaoShi")} >
                                                                 <div className="responsive-div-content card41Bg cardZhiDi flipped2" onClick={() => {
-                                                                    kaPianGongNeng();
                                                                 }}  >
                                                                     <div className='cardBeiMian flipped2'>
                                                                         <div className={clsx("", kaBeiButton2 && "xiaoShi")}>
@@ -592,7 +592,7 @@ function Card(props) {
                                                     </div>
 
                                                     <div className='cardGongNengMyDi' style={{ position: "relative" }}>
-                                                        <Accordion className='gongNengTan1' expanded={cardExpandedStatus}>
+                                                        <Accordion className='gongNengTan1' >
                                                             <AccordionSummary
                                                                 expandIcon={<ExpandMoreIcon />}
                                                                 aria-controls="panel1-content"
@@ -605,7 +605,7 @@ function Card(props) {
                                                                         <div className='ml-8 yuEZi'>$50.00</div>
                                                                     </div>
                                                                     <div className='cardDepositeDi'
-                                                                    >充值</div>
+                                                                    >划转</div>
                                                                 </div>
                                                             </AccordionSummary>
 
@@ -678,36 +678,56 @@ function Card(props) {
                                                             <div className='cardBeiMian'>
                                                             </div>
                                                         </div>
+
+                                                        <div className='cardErrorBg'>
+
+                                                            <div className='flex justify-center mt-16' style={{ width: "100%" }}>
+                                                                <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
+                                                                <div className='TanHaoCardZi'>
+                                                                    审核失败
+                                                                </div>
+                                                            </div>
+                                                            <div className='cardErrorZi'>您填写的地址有误请重新修改！</div>
+
+                                                            <div className='cardErrorBtn txtColorTitleSmall' onClick={() => {
+                                                                changePhoneTab('security');
+                                                                history.push('/wallet/home/security', { tabValue: 4 })
+                                                            }} >
+                                                                重新提交
+                                                            </div>
+                                                        </div>
                                                     </div>
 
+
                                                     <div className='mt-10'>
-                                                        <div style={{ position: "relative", height: "1.2rem", width: "90%", margin: "0 auto" }}>
+                                                        <div style={{ position: "relative", height: "1.2rem", width: "100%", margin: "0 auto" }}>
                                                             <div className='borderYuan' style={{ position: "absolute" }}>
                                                                 <div className='jinDuDi' ></div>
                                                             </div>
                                                             <div className='borderYuan' style={{ position: "absolute" }}>
-                                                                <div className={clsx("jinDuDi1")} style={{ width: "33.33%" }}></div>
+                                                                <div className={clsx("jinDuDi1Red")} style={{ width: "25%" }}></div>
                                                             </div>
                                                             <div style={{ position: "absolute", width: "100%", height: "0.6rem" }}>
                                                                 <div className='flex justify-between items-center ' style={{ width: "100%", height: "0.6rem", padding: "0rem 0rem" }}>
                                                                     <div className='smallYuanDian'></div>
+                                                                    <div className='smallYuanDianErrorBig'></div>
                                                                     <div className='smallYuanDian'></div>
                                                                     <div className='smallYuanDian'></div>
                                                                     <div className='smallYuanDian'></div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div style={{ width: "95%", margin: "0rem auto" }}>
+                                                        <div style={{ width: "100%", margin: "0rem auto" }}>
                                                             <div className='flex justify-between items-center ' style={{ width: "100%" }}>
                                                                 <div className=''>申请</div>
-                                                                <div className='jinDuZi'>审核</div>
+                                                                <div className='jinDuZiError'>审核</div>
                                                                 <div className=''>寄送</div>
                                                                 <div className=''>激活</div>
+                                                                <div className=''>成功</div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </motion.div>
-
 
                                                 <motion.div variants={item}
                                                     initial="hidden"
@@ -715,7 +735,7 @@ function Card(props) {
                                                     className='cardJianGe'
                                                 >
                                                     <div className="responsive-div">
-                                                        <div className="responsive-div-content card5Bg cardZhiDi" >
+                                                        <div className="responsive-div-content card2Bg cardZhiDi" >
                                                             <div className='cardZhuangTaiDi'>
                                                                 <div className='cardZhuangTai'>审核中</div>
                                                             </div>
@@ -726,28 +746,30 @@ function Card(props) {
                                                     </div>
 
                                                     <div className='mt-10'>
-                                                        <div style={{ position: "relative", height: "1.2rem", width: "90%", margin: "0 auto" }}>
+                                                        <div style={{ position: "relative", height: "1.2rem", width: "100%", margin: "0 auto" }}>
                                                             <div className='borderYuan' style={{ position: "absolute" }}>
                                                                 <div className='jinDuDi' ></div>
                                                             </div>
                                                             <div className='borderYuan' style={{ position: "absolute" }}>
-                                                                <div className={clsx("jinDuDi1")} style={{ width: "33.33%" }}></div>
+                                                                <div className={clsx("jinDuDi1")} style={{ width: "25%" }}></div>
                                                             </div>
                                                             <div style={{ position: "absolute", width: "100%", height: "0.6rem" }}>
                                                                 <div className='flex justify-between items-center ' style={{ width: "100%", height: "0.6rem", padding: "0rem 0rem" }}>
                                                                     <div className='smallYuanDian'></div>
+                                                                    <div className='smallYuanDianBig yuanDianAni'></div>
                                                                     <div className='smallYuanDian'></div>
                                                                     <div className='smallYuanDian'></div>
                                                                     <div className='smallYuanDian'></div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div style={{ width: "95%", margin: "0rem auto" }}>
+                                                        <div style={{ width: "100%", margin: "0rem auto" }}>
                                                             <div className='flex justify-between items-center ' style={{ width: "100%" }}>
                                                                 <div className=''>申请</div>
                                                                 <div className='jinDuZi'>审核</div>
                                                                 <div className=''>寄送</div>
                                                                 <div className=''>激活</div>
+                                                                <div className=''>成功</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1069,6 +1091,16 @@ function Card(props) {
                                 <div>除新加坡与中国大陆外均可</div>
                             </div>
 
+                            <div className='flex justify-between mt-10 '>
+                                <div className='quanYiHuiZi'>申请地区限制</div>
+                                <div>中国大陆无法申请</div>
+                            </div>
+
+                            <div className='flex justify-between mt-10 '>
+                                <div className='quanYiHuiZi'>消费地区限制</div>
+                                <div>中国大陆无法消费</div>
+                            </div>
+
                             <div className='flex justify-between mt-10'>
                                 <div className='quanYiHuiZi'>提交资料</div>
                                 <div>护照、联系方式、账单地址、个人照片</div>
@@ -1086,7 +1118,7 @@ function Card(props) {
                         </div>
                     </motion.div>
 
-                    <motion.div variants={item} className='flex mt-10  '>
+                    <motion.div variants={item} className='flex mt-10 '>
                         <LoadingButton
                             disabled={false}
                             className={clsx('px-48  m-28 btnColorTitleBig loadingBtnSty')}
@@ -1096,9 +1128,9 @@ function Card(props) {
                             sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
                             style={{ width: '24rem', height: '4rem', fontSize: "20px", margin: '1rem auto 2.5rem', display: 'block', lineHeight: "inherit", padding: "0px" }}
                             onClick={() => {
-                                // setOpenXiangQing(false)
-                                setOpenApplyWindow(true)
-                                openApplyFunc()
+                                // setOpenApplyWindow(true)
+                                // openApplyFunc()
+                                setOpenChongZhi(true)
                             }}
                         >
                             提交申请
@@ -1247,7 +1279,7 @@ function Card(props) {
                 <div id="openRecord" className="PINSty">
                     <div className='pinWindow2'>
                         <div className='flex'>
-                            <div className='PINTitleSelectCardZi'>卡片充值</div>
+                            <div className='PINTitleSelectCardZi'>划转金额</div>
                             <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                 closeRecordFunc();
                             }} />
@@ -1301,98 +1333,87 @@ function Card(props) {
                         </div>
                     </div>
 
-                    <div className='jianPanSty mt-12'>
-
-                        <div className='flex xianTop'>
-                            <div id="createPin1" className='jianPanNumBtn borderRight color-box'
+                    <div className='jianPanSty'>
+                        <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                            <div id="zhuanZhang1" className='jianPanBtn borderRight borderBottom color-box'
+                                onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => { handleDoPin(1) }}>1</div>
+                            <div id="zhuanZhang2" className='jianPanBtn borderRight borderBottom color-box'
+                                onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => { handleDoPin(2) }}>2</div>
+                            <div id="zhuanZhang3" className='jianPanBtn borderRight borderBottom'
+                                onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => { handleDoPin(3) }}>3</div>
+                            <div id="zhuanZhangImg" className='jianPanBtImgDiv flex items-center borderBottom'
+                                onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => { handleDoPin(-1) }}>
+                                <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img>
+                            </div>
+                        </div>
+                        <div className='flex' style={{ width: "100%" }}>
+                            <div style={{ width: "75.1%" }}>
+                                <div className='flex'>
+                                    <div id="zhuanZhang4" className='jianPanBtn1 borderRight'
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => { handleDoPin(4) }}>4</div>
+                                    <div id="zhuanZhang5" className='jianPanBtn1 borderRight'
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => { handleDoPin(5) }}>5</div>
+                                    <div id="zhuanZhang6" className='jianPanBtn1 borderRight'
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => { handleDoPin(6) }}>6</div>
+                                </div>
+                                <div className='flex'>
+                                    <div id="zhuanZhang7" className='jianPanBtn1 borderRight'
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => { handleDoPin(7) }}>7</div>
+                                    <div id="zhuanZhang8" className='jianPanBtn1 borderRight'
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => { handleDoPin(8) }}>8</div>
+                                    <div id="zhuanZhang9" className='jianPanBtn1 borderRight'
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => { handleDoPin(9) }}>9</div>
+                                </div>
+                                <div className='flex'>
+                                    <div id="zhuanZhang0" className='jianPanBtn2 borderRight'
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => { handleDoPin(0) }}>0</div>
+                                    <div id="zhuanZhangDian" className='jianPanBtn4 borderRight'
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => { handleDoPin('.') }}>.</div>
+                                </div>
+                            </div>
+                            <div id='zhuanZhangWanCheng' className='jianPanBtn3'
                                 onTouchStart={changeToBlack}
                                 onTouchEnd={changeToWhite}
                                 onTouchCancel={changeToWhite}
                                 onClick={() => {
-                                    handleDoPin(1)
-                                }}
-                            >1</div>
-                            <div id="createPin2" className='jianPanNumBtn borderRight color-box' onTouchStart={changeToBlack}
-                                onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}
-                                onClick={() => {
-                                    handleDoPin(2)
-                                }}
-                            >2</div>
-                            <div id="createPin3" className='jianPanNumBtn color-box' onTouchStart={changeToBlack}
-                                onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}
-                                onClick={() => {
-                                    handleDoPin(3)
-                                }}
-                            >3</div>
-                        </div>
-
-                        <div className='flex xianTop'>
-                            <div id="createPin4" className='jianPanNumBtn borderRight   color-box' onTouchStart={changeToBlack}
-                                onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}
-                                onClick={() => {
-                                    handleDoPin(4)
-                                }}
-                            >4</div>
-                            <div id="createPin5" className='jianPanNumBtn borderRight   color-box' onTouchStart={changeToBlack}
-                                onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}
-                                onClick={() => {
-                                    handleDoPin(5)
-                                }}
-                            >5</div>
-                            <div id="createPin6" className='jianPanNumBtn    color-box' onTouchStart={changeToBlack}
-                                onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}
-                                onClick={() => {
-                                    handleDoPin(6)
-                                }}
-                            >6</div>
-                        </div>
-
-                        <div className='flex xianTop'>
-                            <div id="createPin7" className='jianPanNumBtn borderRight  color-box' onTouchStart={changeToBlack}
-                                onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}
-                                onClick={() => {
-                                    handleDoPin(7)
-                                }}
-                            >7</div>
-                            <div id="createPin8" className='jianPanNumBtn borderRight  color-box' onTouchStart={changeToBlack}
-                                onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}
-                                onClick={() => {
-                                    handleDoPin(8)
-                                }}
-                            >8</div>
-                            <div id="createPin9" className='jianPanNumBtn  color-box' onTouchStart={changeToBlack}
-                                onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}
-                                onClick={() => {
-                                    handleDoPin(9)
-                                }}
-                            >9</div>
-                        </div>
-
-                        <div className='flex xianTop'>
-                            <div className='jianPanNumBtn borderRight '></div>
-                            <div id="createPin0" className='jianPanNumBtn borderRight color-box' onTouchStart={changeToBlack}
-                                onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}
-                                onClick={() => {
-                                    handleDoPin(0)
-                                }}
-                            >0</div>
-                            <div id="createPinx" className='jianPanNumBtn flex items-center color-box'
-                                onTouchStart={changeToBlack}
-                                onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}
-                                onClick={() => {
-                                    handleDoPin(-1)
-                                }}
-                            > <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img></div>
+                                    setOpenZhiFu(true)
+                                }}>完成</div>
                         </div>
                     </div>
 
@@ -1735,7 +1756,112 @@ function Card(props) {
                 </div>
             </BootstrapDialog >
 
-        </div >
+
+            <AnimateModal
+                className="faBiDiCard tanChuanDiSe"
+                open={openZhiFu}
+                onClose={() => setOpenZhiFu(false)}
+            >
+                <div className='flex justify-center' style={{ width: "100%" }}>
+                    <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
+                    <div className='TanHaoCardZi'>
+                        余额不足
+                    </div>
+                </div>
+
+                <Box
+                    className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard"
+                    sx={{
+                        backgroundColor: "#2C394D",
+                        padding: "1.5rem",
+                        overflow: "hidden",
+                        margin: "1rem auto 0rem auto"
+                    }}
+                >
+                    <div className="dialog-select-fiat danChuangTxt">
+                        您的划转额度超出余额,请修改划转额度或充值！
+                    </div>
+                </Box>
+
+                <div className='flex mt-12 mb-28 px-15 justify-between' >
+                    <LoadingButton
+                        disabled={false}
+                        className="boxCardBtn"
+                        color="secondary"
+                        variant="contained"
+                        onClick={() => {
+                            setOpenZhiFu(false)
+                        }}
+                    >
+                        修改
+                    </LoadingButton>
+
+                    <LoadingButton
+                        disabled={false}
+                        className="boxCardBtn"
+                        color="secondary"
+                        loading={false}
+                        variant="contained"
+                        onClick={() => {
+                            setOpenZhiFu(false)
+                            setOpenRecordWindow(false)
+                            changePhoneTab('deposite');
+                            history.push('/wallet/home/deposite')
+                        }}
+                    >
+                        充值
+                    </LoadingButton>
+                </div>
+            </AnimateModal>
+
+
+            <AnimateModal
+                className="faBiDiCard tanChuanDiSe"
+                open={openChongZhi}
+                onClose={() => setOpenChongZhi(false)}
+            >
+                <div className='flex justify-center' style={{ width: "100%" }}>
+                    <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
+                    <div className='TanHaoCardZi'>
+                        余额不足
+                    </div>
+                </div>
+
+                <Box
+                    className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard"
+                    sx={{
+                        backgroundColor: "#2C394D",
+                        padding: "1.5rem",
+                        overflow: "hidden",
+                        margin: "1rem auto 0rem auto"
+                    }}
+                >
+                    <div className="dialog-select-fiat danChuangTxt">
+                        您的钱包余额不足无法支付开卡费用,请前往充值！
+                    </div>
+                </Box>
+
+                <div className='flex mt-12 mb-28 px-15 justify-center' >
+                    <LoadingButton
+                        disabled={false}
+                        className="boxCardBtn"
+                        color="secondary"
+                        loading={false}
+                        variant="contained"
+                        onClick={() => {
+                            setOpenChongZhi(false)
+                            setOpenXiangQing(false)
+                            changePhoneTab('deposite');
+                            history.push('/wallet/home/deposite')
+                        }}
+                    >
+                        充值
+                    </LoadingButton>
+                </div>
+            </AnimateModal>
+
+
+        </div>
     )
 }
 

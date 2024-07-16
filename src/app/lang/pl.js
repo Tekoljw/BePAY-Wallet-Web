@@ -365,7 +365,19 @@ const locale = {
     card_2: "karta kredytowa",
     card_3: "otrzymać",
     card_4: "wycofanie",
-    card_5:"kupić"
+    card_5:"kupić",
+    card_6:"Utwórz adres",
+    card_7:"Wewnętrzny identyfikator użytkownika",
+    card_8:"zewnętrzny adres",
+
+
+
+
+
+
+
+
+
 };
 
 export default locale;

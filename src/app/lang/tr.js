@@ -362,7 +362,23 @@ const locale = {
     card_2: "kredi kartı",
     card_3: "almak",
     card_4: "geri çekilme",
-    card_5:"satın almak"
+    card_5:"satın almak",
+    card_6:"Adres oluştur",
+    card_7:"Dahili Kullanıcı Kimliği",
+    card_8:"dış adres",
+
+
+
+
+
+
+
+
+
+
+
+
+
     };
     
 export default locale;

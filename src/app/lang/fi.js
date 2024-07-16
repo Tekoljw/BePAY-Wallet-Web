@@ -363,7 +363,17 @@ const locale = {
     card_2: "luottokortti",
     card_3: "vastaanottaa",
     card_4: "vetäytyminen",
-    card_5:"ostaa"
+    card_5:"ostaa",
+    card_6:"Luo osoite",
+    card_7:"Sisäinen käyttäjätunnus",
+    card_8:"ulkoinen osoite",
+
+
+
+
+
+
+
     };
     
 export default locale;

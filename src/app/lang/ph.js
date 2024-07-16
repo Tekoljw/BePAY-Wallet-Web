@@ -365,7 +365,20 @@ const locale = {
     card_2: "credit card",
     card_3: "tumanggap",
     card_4: "pag-alis",
-    card_5:"bumili"
+    card_5:"bumili",
+    card_6:"Lumikha ng address",
+    card_7:"Panloob na User ID",
+    card_8:"panlabas na address",
+
+
+
+
+
+
+
+
+
+
 }
 
 export default locale;

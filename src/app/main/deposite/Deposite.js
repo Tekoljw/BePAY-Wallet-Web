@@ -1007,7 +1007,7 @@ function Deposite() {
                     animate="show"
                     className="InsideW"
                 >
-                    <div className='text-16 ml-10 mt-10 mb-6'>Inside UserID</div>
+                    <div className='text-16 ml-10 mt-10 mb-6'>{t('card_7')}</div>
                     <div className='addressBigW flex justify-between mt-10'>
                         <div className="userIdW   guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
                             <div className="addressW2 flex justify-between guoDuDongHua">
@@ -1091,7 +1091,7 @@ function Deposite() {
                             })}
                         </div>
 
-                        <div className='text-16 ml-10 mt-16 mb-16'>External Address</div>
+                        <div className='text-16 ml-10 mt-16 mb-16'>{t('card_8')}</div>
                         {/* 新地址 */}
                         <>
                             {walletAddressList.map((addressItem, index) => {
@@ -1163,7 +1163,7 @@ function Deposite() {
                                         <div className="addressW flex justify-between">
                                             <div className='addressZi2 flex'>
                                                 <img className='bianJiBiImg2' src="wallet/assets/images/card/jiaHao.png"></img>
-                                                <div className='addressZi2'>创建地址</div>
+                                                <div className='addressZi2'>{t('card_6')}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -1395,7 +1395,7 @@ function Deposite() {
                                                     <div className="addressW flex justify-between">
                                                         <div className='addressZi2 flex'>
                                                             <img className='bianJiBiImg2' src="wallet/assets/images/card/jiaHao.png"></img>
-                                                            <div className='addressZi2'>创建地址</div>
+                                                            <div className='addressZi2'>{t('card_6')}</div>
                                                         </div>
                                                     </div>
                                                 </div>

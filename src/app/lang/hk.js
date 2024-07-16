@@ -363,7 +363,19 @@ const locale = {
     card_2: "我的卡片",
     card_3: "接收",
     card_4: "出款",
-    card_5:"購買"
+    card_5:"購買",
+    card_6:"創建地址",
+    card_7:"內部用戶ID",
+    card_8:"外部地址",
+
+
+
+
+
+
+
+
+
 };
 
 export default locale;

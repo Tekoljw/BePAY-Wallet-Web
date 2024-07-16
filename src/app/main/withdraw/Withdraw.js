@@ -1016,7 +1016,7 @@ function Withdraw(props) {
                                         padding: '1rem 1rem',
                                     }}
                                 >
-                                    {Object.entries(["External", 'Inside']).map(([key, label]) => (
+                                    {Object.entries([t('card_8'), t('card_7')]).map(([key, label]) => (
                                         <Tab
                                             className="text-16 font-semibold min-h-32 min-w-60 mx4 px-12 txtColorTitle opacity-100 zindex"
                                             disableRipple

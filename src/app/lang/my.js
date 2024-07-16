@@ -364,7 +364,19 @@ const locale = {
     card_2: "kad kredit",
     card_3: "menerima",
     card_4: "pengeluaran",
-    card_5:"membeli"
+    card_5:"membeli",
+    card_6:"Buat alamat",
+    card_7:"ID Pengguna Dalaman",
+    card_8:"alamat luaran",
+
+
+
+
+
+
+
+
+
 };
 
 export default locale;

@@ -366,7 +366,20 @@ const locale = {
     card_2: "신용카드",
     card_3: "받다",
     card_4: "철수",
-    card_5:"구매"
+    card_5:"구매",
+    card_6:"주소 생성",
+    card_7:"내부 사용자 ID",
+    card_8:"외부 주소",
+
+
+
+
+
+
+
+
+
+
 };
 
 export default locale

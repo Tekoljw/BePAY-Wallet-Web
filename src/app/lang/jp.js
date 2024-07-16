@@ -364,7 +364,18 @@ const locale = {
     card_2: "クレジットカード",
     card_3: "受け取る",
     card_4: "引き出し",
-    card_5:"購入"
+    card_5:"購入",
+    card_6:"住所を作成する",
+    card_7:"内部ユーザーID",
+    card_8:"外部アドレス",
+
+
+
+
+
+
+
+
 };
 
 export default locale;

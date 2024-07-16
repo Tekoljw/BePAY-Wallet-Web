@@ -366,8 +366,12 @@ const locale = {
     card_3: "收款",
     card_4: "出款",
     card_5:"购买",
+    card_6:"创建地址",
+    card_7:"内部用户ID",
     card_100:"卡号数字太短 - 至少需要9位数字",
-    card_101:"校验码数字太短 - 至少需要6位数字"
+    card_101:"校验码数字太短 - 至少需要6位数字",
+    card_8:"外部地址",
+    
 };
 
 export default locale;

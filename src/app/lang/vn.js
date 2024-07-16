@@ -354,7 +354,18 @@ const locale = {
     card_2: "thẻ tín dụng",
     card_3: "nhận",
     card_4: "rút lui",
-    card_5:"mua"
+    card_5:"mua",
+    card_6:"Tạo địa chỉ",
+    card_7:"ID người dùng nội bộ",
+    card_8:"địa chỉ ngoài",
+
+
+
+
+
+
+
+
     };
 
 export default locale;
