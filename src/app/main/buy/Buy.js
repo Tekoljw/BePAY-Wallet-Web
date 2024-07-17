@@ -436,7 +436,7 @@ function Buy(props) {
                                         width: '30px',
                                         borderRadius: '5px',
                                     }}>
-                                        <img className='border-r-10' src="wallet/assets/images/buy/LegendTrading.png" alt="" />
+                                        <img className='border-r-10' src="wallet/assets/images/buy/startPay.png" alt="" />
                                     </div>
                                     <div className="px-12 font-medium">
                                         <Typography className="text-20 font-medium">LegendTrading</Typography>
