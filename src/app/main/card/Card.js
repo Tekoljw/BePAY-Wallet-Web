@@ -1118,7 +1118,20 @@ function Card(props) {
                         </div>
                     </motion.div>
 
-                    <motion.div variants={item} className='flex mt-10 '>
+                    <motion.div variants={item} className='flex mt-20'>
+                        <div className='quanYiDi' style={{ padding: "1.5rem" }}>
+                            <div className='mt-10 flex'>
+                                <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
+                                <div className='text-16'>使用提示</div>
+                            </div>
+        
+                            <div className='flex justify-start mt-10'>
+                                <div className='quanYiHuiZi pb-8'>使用卡片进行刷卡消费或取款前，请尽可能确保卡内有足够余额。否则，如果余额不足，导致刷卡或取款失败，VISA/Master系统仍然会收取您的手续费。</div>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    <motion.div variants={item} className='flex mt-16' style={{paddingInline:"1.5rem" }} >
                         <LoadingButton
                             disabled={false}
                             className={clsx('px-48  m-28 btnColorTitleBig loadingBtnSty')}
@@ -1126,7 +1139,7 @@ function Card(props) {
                             loading={false}
                             variant="contained"
                             sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
-                            style={{ width: '24rem', height: '4rem', fontSize: "20px", margin: '1rem auto 2.5rem', display: 'block', lineHeight: "inherit", padding: "0px" }}
+                            style={{ width: '100%', height: '4rem', fontSize: "18px", margin: '1rem auto 2.8rem', display: 'block', lineHeight: "inherit"}}
                             onClick={() => {
                                 // setOpenApplyWindow(true)
                                 // openApplyFunc()
@@ -1247,7 +1260,6 @@ function Card(props) {
                         变更
                     </LoadingButton>
 
-
                     <LoadingButton
                         disabled={false}
                         className="boxCardBtn"
@@ -1259,6 +1271,9 @@ function Card(props) {
                             setTimeout(() => {
                                 setOpenAnimateHuanKa(false);
                                 setOpenCardBtnShow(false);
+                                setTabValue(1);
+                                setOpenXiangQing(true);
+                                myFunction;
                             }, 1500);
                         }}
                     >

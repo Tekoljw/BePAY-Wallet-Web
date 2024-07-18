@@ -1766,7 +1766,6 @@ function Withdraw(props) {
                                 )
                             })
                         }
-
                     </div>
 
                 </div>
