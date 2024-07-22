@@ -50,7 +50,7 @@ service.interceptors.response.use(
                     localStorage.removeItem(`Authorization-${openAppId}-${openIndex}`);
                     if (isMobile()) {
                         if (window.location.pathname !== '/wallet/sign-up' && window.location.pathname !== '/wallet/login') {
-                            history.push("/wallet/test" + window.location.search);
+                            history.push("/wallet/start" + window.location.search);
                         } else if (window.location.pathname === '/wallet/login') {
                             console.log(window.location.pathname, 'window.location.pathname')
                         }
