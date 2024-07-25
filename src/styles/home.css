@@ -298,6 +298,52 @@ input[type='number'] {
     left: 0rem;
 }
 
+.qianDaoSty {
+    background: linear-gradient(to right, #151E30, #136939);
+    width: 50%;
+    border-radius: 0.6rem;
+    height: 5.2rem;
+    margin-right: 0.7rem;
+}
+
+.zhuanPanSty {
+    background: linear-gradient(to right, #151E30, #A640BD);
+    width: 50%;
+    border-radius: 0.6rem;
+    height: 5.2rem;
+    margin-left: 0.7rem;
+}
+
+.zhuanPanDongHua0 {
+    width: 5.2rem;
+    height: 5.2rem;
+    top: 0%;
+    left: 0%;
+    bottom: 0%;
+    right: 0%;
+}
+
+.zhuanPanDongHua {
+    width: 5.2rem;
+    height: 5.2rem;
+    top: 0%;
+    left: 0%;
+    bottom: 0%;
+    right: 0%;
+    animation: rotateX 3s linear infinite;
+}
+
+@keyframes rotateX {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
 .PINTitle2 {
     width: 100%;
     font-size: 1.8rem;
@@ -1483,6 +1529,72 @@ input[type='number'] {
 .cardImg {
     width: 24px;
     height: 24px;
+}
+
+.naoZhongImg {
+    width: 20px;
+    height: 20px;
+}
+
+.naoZhongZi {
+    height: 20px;
+    line-height: 20px;
+    color: #9a9a9a;
+}
+
+.lanDi {
+    background-image: url("../../public/assets/images/earn/lanDi.png");
+    width: 100%;
+    height: 165px;
+    background-size: cover;
+    border-radius: 1rem;
+    padding: 1.4rem 1rem 1.4rem 1rem;
+}
+
+
+.huangDi {
+    background-image: url("../../public/assets/images/earn/huangDi.png");
+    width: 100%;
+    height: 165px;
+    background-size: cover;
+    border-radius: 1rem;
+    padding: 1.4rem 1rem 1.4rem 1rem;
+}
+
+.logoCC {
+    height: 22px;
+    width: auto;
+}
+
+.logoCC2 {
+    height: 22px;
+    width: 197px;
+}
+
+.lanDiZi {
+    width: 66%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.huangDiZi {
+    width: 66%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.earnYouTu {
+    width: 34%;
+    max-width: 114px;
+    aspect-ratio: 187 / 162;
+}
+
+.earnYouTu2 {
+    width: 34%;
+    max-width: 114px;
+    aspect-ratio: 177 / 171;
 }
 
 .cardSty {

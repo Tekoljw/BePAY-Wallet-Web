@@ -11,7 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import Wallet from '../wallet/Wallet';
 import Deposite from '../deposite/Deposite';
 import Withdraw from "../withdraw/Withdraw";
-import SendTips from "../send-tips/SendTips";
+import Earn from "../earn/Earn";
 import Buy from "../buy/Buy";
 import Swap from "../swap/Swap";
 import Security from "../security/Security";
@@ -197,7 +197,7 @@ function HomePage(props) {
                                 <Route path="swap" element={<Swap />} />
                                 <Route path="borrow" element={<Borrow />} />
                                 <Route path="pools" element={<Pool />} />
-                                <Route path="sendTips" element={<SendTips tab='funi' />} />
+                                <Route path="earn" element={<Earn />} />
                                 <Route path="c2c" element={<ComingSoon />} />
                                 <Route path="nft" element={<ComingSoon />} />
                                 <Route path="record" element={<Record />} />

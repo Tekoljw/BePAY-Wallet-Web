@@ -293,7 +293,7 @@ function HomeSidebarContent(props) {
                     {/*    <ListItemText className="truncate" primary={t('menu_7')} disableTypography />*/}
                     {/*</StyledListItem>}*/}
 
-                    {hideMenu.indexOf('pools') === -1 && <StyledListItem
+                    {/* {hideMenu.indexOf('pools') === -1 && <StyledListItem
                         button
                         className={
                             clsx(
@@ -310,26 +310,26 @@ function HomeSidebarContent(props) {
                             <img className='menu-icon  active' src='wallet/assets/images/menu/icon-pools-active.png' alt='icon' />
                         </div>
                         <ListItemText className="truncate font16" primary={t('menu_8')} disableTypography />
-                    </StyledListItem>}
+                    </StyledListItem>} */}
 
-                    {/* {hideMenu.indexOf('sendTips') === -1 && <StyledListItem
+                    {hideMenu.indexOf('earn') === -1 && <StyledListItem
                         button
                         className={
                             clsx(
                                 '',
-                                activeMenu === 'sendTips' && 'active'
+                                activeMenu === 'earn' && 'active'
                             )
                         }
                         onClick={(ev) => {
-                            tabClick('sendTips');
+                            tabClick('earn');
                         }}
                     >
                         <div className='iconWz'>
-                            <img className='menu-icon ' src='wallet/assets/images/menu/sendTips.png' alt='icon' />
-                            <img className='menu-icon  active' src='wallet/assets/images/menu/sendTips-active.png' alt='icon' />
+                            <img className='menu-icon ' src='wallet/assets/images/menu/icon-pools.png' alt='icon' />
+                            <img className='menu-icon  active' src='wallet/assets/images/menu/icon-pools-active.png' alt='icon' />
                         </div>
-                        <ListItemText className="truncate font16" primary={t('menu_9')} disableTypography />
-                    </StyledListItem>} */}
+                        <ListItemText className="truncate font16" primary={t('home_pools_1')} disableTypography />
+                    </StyledListItem>}
 
                     {hideMenu.indexOf('record') === -1 && <StyledListItem
                         button

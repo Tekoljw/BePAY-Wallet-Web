@@ -109,8 +109,8 @@ const HomeConfig = {
                     element: lazy(() => import('../pool/Pool')),
                 },
                 {
-                    path: 'sendTips',
-                    element: lazy(() => import('../send-tips/SendTips')),
+                    path: 'earn',
+                    element: lazy(() => import('../earn/Earn')),
                 },
                 {
                     path: 'c2c',
