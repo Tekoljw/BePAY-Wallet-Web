@@ -159,6 +159,39 @@ export const getFaTPayCryptoTarget = createAsyncThunk(
     }
 );
 
+// 获取StarPay的法币支付参数
+export const getStarPayPaymentOption = createAsyncThunk(
+    '/payment/StarPay/paymentOption',
+    async (settings, { dispatch, getState }) => {
+        const paymentOption = await React.$api("payment.StarPay.paymentOption");
+        // 直接返回处理
+        return paymentOption;
+    }
+);
+
+// 获取StarPay的加密货币支付参数
+export const getStarPayCryptoTarget = createAsyncThunk(
+    '/payment/StarPay/cryptoTarget',
+    async (settings, { dispatch, getState }) => {
+        const cryptoTarget = await React.$api("payment.StarPay.cryptoTarget");
+        // 直接返回处理
+        return cryptoTarget;
+    }
+);
+
+export const getStarPayConfig = createAsyncThunk(
+    '/payment/StarPay/config',
+    async (settings, { dispatch, getState }) => {
+        const result = await React.$api("payment.StarPay.config", settings);
+        if (result.errno === 0) {
+            return result.data
+        } else {
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            return false
+        }
+    }
+);
+
 // 法币提现
 export const makeWithdrawOrder = createAsyncThunk(
     'payment/makeWithdrawOrder',
