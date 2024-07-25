@@ -372,6 +372,24 @@ export default {
             },
         },
 
+        StarPay : {
+            config: {
+                url: "/payment/StarPay/config",
+                method: "post",
+                json: true,
+            },
+
+            paymentOption: {
+                url: "/payment/StarPay/fiatPaymentOptions",
+                method: "post",
+            },
+
+            cryptoTarget: {
+                url: "/payment/StarPay/fiatCryptoTarget",
+                method: "post",
+            },
+        },
+
         manualCryptoNotify: {
             url: "/payment/manualCryptoNotify",
             method: "post",

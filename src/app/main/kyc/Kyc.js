@@ -1060,7 +1060,7 @@ function Kyc(props) {
                                         color="secondary"
                                         variant="contained"
                                         style={{ marginBottom: '2.4rem', fontSize: "1.6rem", width: "47%" }}
-                                        onClick={() => { onSubmit() }}
+                                        // onClick={() => { onSubmit() }}
                                     >
                                         {t('kyc_23')}
                                     </Button>

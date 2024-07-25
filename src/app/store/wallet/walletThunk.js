@@ -407,10 +407,10 @@ export const centerGetNftList = createAsyncThunk(
     'nft/centerGetNftList',
     async (settings, { dispatch, getState }) => {
 
-        const resultData = await React.$api("nft.centerGetNftList");
-        if (resultData.errno === 0) {
-            return resultData.data;
-        }
+        // const resultData = await React.$api("nft.centerGetNftList");
+        // if (resultData.errno === 0) {
+        //     return resultData.data;
+        // }
     }
 );
 
