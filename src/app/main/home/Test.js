@@ -157,8 +157,8 @@ function Test() {
                         <div className='flex justify-between pt-4'>
                             <div className='huangDiZi '>
                                 <img className='logoCC2 mb-4' src="wallet/assets/images/earn/logo2.png" />
-                                <div><span style={{ color: "#A4A4A4" }}>瓜分</span><span style={{ marginLeft: "10px", color: "#FFC600", fontWeight: "bold", fontSize: "24px" }}>1000,000,000</span></div>
-                                <div><span style={{ color: "#1BB9FF", fontWeight: "bold", fontSize: "24px" }}>BFT</span><span style={{ marginLeft: "10px", color: "#ffffff", fontWeight: "bold", fontSize: "14px" }}>BeingFi Token</span></div>
+                                <div><span style={{ marginLeft: "10px", color: "#FFC600", fontWeight: "bold", fontSize: "24px" }}>交易合约送现货</span></div>
+                                <div><span style={{ marginLeft: "10px", color: "#ffffff", fontWeight: "bold", fontSize: "14px" }}>所有交易手续费100%补偿</span><span style={{ marginLeft: "10px", color: "#ffffff", fontWeight: "bold", fontSize: "14px" }}>所有交易手续费100%补偿</span></div>
                             </div>
                             <img className='earnYouTu2' src="wallet/assets/images/earn/bi2.png" />
                         </div>

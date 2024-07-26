@@ -1561,6 +1561,16 @@ input[type='number'] {
     padding: 1.4rem 1rem 1.4rem 1rem;
 }
 
+.lvEarnDi {
+    background-image: url("../../public/assets/images/earn/wg.png");
+    width: 100%;
+    height: 165px;
+    background-size: cover;
+    border-radius: 1rem;
+    padding: 1.4rem 1rem 1.4rem 1rem;
+    border: 1px solid #14C2A3;
+}
+
 .logoCC {
     height: 22px;
     width: auto;
@@ -1569,6 +1579,13 @@ input[type='number'] {
 .logoCC2 {
     height: 22px;
     width: 197px;
+}
+
+.tuoYuanDi {
+    display: inline-block;
+    background-color: #E49E17;
+    border-radius: 20rem;
+    padding: 0px 5px 0px 5px;
 }
 
 .lanDiZi {
@@ -1710,6 +1727,37 @@ input[type='number'] {
     /* 隐藏超出部分 */
     text-overflow: ellipsis;
     /* 超出部分用省略号显示 */
+}
+
+.yaoQingZiDi {
+    margin-left: 1rem;
+    height: 30px;
+    display: flex;
+    align-items: flex-end;
+    margin-right: 0.5rem;
+}
+
+.liBaoDiImg {
+    width: 28px;
+    height: 28px;
+}
+
+.yaoQingZiDi2 {
+    font-size: 14px;
+    height: 24px;
+    line-height: 24px;
+}
+
+.yaoQingEarnZi {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.earnHuiZi{
+    color: #A4A4A4;
+    font-size: 12px;
+    font-weight: 700;
 }
 
 .bianJiBiImg {
