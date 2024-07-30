@@ -2,10 +2,17 @@ import * as React from 'react';
 import utils from '../../util/tools/utils';
 import { useEffect } from "react";
 import history from "@history";
+import {selectUserData} from "app/store/user";
+import { useDispatch, useSelector } from "react-redux";
+import {useState} from "react";
 
 
 
 export default function test() {
+    const userData = useSelector(selectUserData);
+    const [isTelegram, setIsTelegram] = useState(false);
+    const loginType = window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType;
+
     useEffect(() => {
         // window.localStorage.setItem('redirectGuide', true);
         try {
@@ -14,7 +21,7 @@ export default function test() {
             utils.appendScript('https://static-scource.funibet.com/funibox/js/TweenMax.min.js', true)
             setTimeout(() => {
                 utils.appendScript('https://static-scource.funibet.com/funibox/js/cc.js', true)
-            }, 100);
+            }, 300);
             return () => {
                 utils.removeScript('https://static-scource.funibet.com/funibox/js/three.min.js')
                 utils.removeScript('https://static-scource.funibet.com/funibox/js/TweenMax.min.js')
@@ -25,6 +32,12 @@ export default function test() {
             console.log(e)
         }
     }, []);
+
+    useEffect(() => {
+        if (loginType === "telegram_web_app") {
+            setIsTelegram(true);
+        }
+    }, [loginType]);
 
     return (
         <div id="kkqd" class="">
@@ -42,26 +55,42 @@ export default function test() {
                     <img className='mr-16' style={{ width: "20%" }} src="/wallet/assets/images/login/master.png" />
                     <img className='ml-16' style={{ width: "20%" }} src="/wallet/assets/images/login/visa.png" />
                 </div>
-                <div
-                    className='flex justify-between px-32 mt-60'
-                    style={{}}
-                >
+                {isTelegram ? (
                     <div
-                        onClick={() => {
-                            history.push("/wallet/sign-up" + window.location.search);
-                        }}
-                        style={{ backgroundColor: "#14C2A3", fontWeight: "600", color: "#ffffff", width: "44%", borderRadius: "0.6rem", height: "4rem", lineHeight: "4rem", textAlign: "center" }}
+                        className='flex justify-between px-32 mt-60'
+                        style={{}}
                     >
-                        Sign
+                        <div
+                            onClick={() => {
+                                history.push("/wallet/home/wallet" + window.location.search);
+                            }}
+                            style={{ backgroundColor: "#14C2A3", fontWeight: "600", color: "#ffffff", width: "44%", borderRadius: "0.6rem", height: "4rem", lineHeight: "4rem", textAlign: "center" }}
+                        >
+                            Home
+                        </div>
                     </div>
+                ) : (
                     <div
-                        onClick={() => {
-                            history.push("/wallet/login" + window.location.search);
-                        }}
-                        style={{ backgroundColor: "#14C2A3", fontWeight: "600", color: "#ffffff", width: "44%", borderRadius: "0.6rem", height: "4rem", lineHeight: "4rem", textAlign: "center" }}
+                        className='flex justify-between px-32 mt-60'
+                        style={{}}
                     >
-                        Login</div>
-                </div>
+                        <div
+                            onClick={() => {
+                                history.push("/wallet/sign-up" + window.location.search);
+                            }}
+                            style={{ backgroundColor: "#14C2A3", fontWeight: "600", color: "#ffffff", width: "44%", borderRadius: "0.6rem", height: "4rem", lineHeight: "4rem", textAlign: "center" }}
+                        >
+                            Sign
+                        </div>
+                        <div
+                            onClick={() => {
+                                history.push("/wallet/login" + window.location.search);
+                            }}
+                            style={{ backgroundColor: "#14C2A3", fontWeight: "600", color: "#ffffff", width: "44%", borderRadius: "0.6rem", height: "4rem", lineHeight: "4rem", textAlign: "center" }}
+                        >
+                            Login</div>
+                    </div>
+                )}
             </div>
         </div>
     );
