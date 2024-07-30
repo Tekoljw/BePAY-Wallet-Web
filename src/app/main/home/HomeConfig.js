@@ -1,6 +1,7 @@
 import { lazy } from 'react';
 import Home from './Home';
 import Test from './Test';
+import Start from './Start';
 import TransferBgt from './TransferBgt';
 import MintNft from '../nft/MintNft';
 import NftPool from '../nft/NftPool';
@@ -108,8 +109,8 @@ const HomeConfig = {
                     element: lazy(() => import('../pool/Pool')),
                 },
                 {
-                    path: 'sendTips',
-                    element: lazy(() => import('../send-tips/SendTips')),
+                    path: 'earn',
+                    element: lazy(() => import('../earn/Earn')),
                 },
                 {
                     path: 'c2c',
@@ -138,6 +139,10 @@ const HomeConfig = {
         {
             path: 'test',
             element: <Test />,
+        },
+        {
+            path: 'start',
+            element: <Start />,
         },
         {
             path: 'transferbgt',

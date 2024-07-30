@@ -1,97 +1,175 @@
-import * as React from 'react';
-import utils from '../../util/tools/utils';
-import { useEffect } from "react";
-import history from "@history";
-import {selectUserData} from "app/store/user";
-import { useDispatch, useSelector } from "react-redux";
-import {useState} from "react";
+import withReducer from 'app/store/withReducer';
+import { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUserData } from "../../store/user";
+import _ from '@lodash';
+import { motion } from 'framer-motion';
+import reducer from './store';
+import { getWidgets, selectWidgets } from './store/widgetsSlice';
+import VisitorsOverviewWidget from './widgets/VisitorsOverviewWidget';
+import ConversionsWidget from './widgets/ConversionsWidget';
+import ImpressionsWidget from './widgets/ImpressionsWidget';
+import VisitsWidget from './widgets/VisitsWidget';
+import '../../../styles/home.css';
+import { useTranslation } from "react-i18next";
+import { styled } from '@mui/material/styles';
+import Dialog from "@mui/material/Dialog/Dialog";
 
 
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+    '& .MuiDialogContent-root': {
+        padding: theme.spacing(2),
+    },
+    '& .MuiDialogActions-root': {
+        padding: theme.spacing(1),
+    },
+}));
 
-export default function test() {
+const container = {
+    show: {
+        transition: {
+            staggerChildren: 0.05,
+        },
+    },
+};
+
+const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 },
+};
+
+
+function Test() {
+    const dispatch = useDispatch();
+    const widgets = useSelector(selectWidgets);
     const userData = useSelector(selectUserData);
-    const [isTelegram, setIsTelegram] = useState(false);
-    const loginType = window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType;
+    const { t } = useTranslation('mainPage');
 
     useEffect(() => {
-        // window.localStorage.setItem('redirectGuide', true);
-        try {
-            utils.consoleText(['Safe & Fast manage crypto assets', 'Crypto & Fiat swap in anytime', 'VISA & Master crypto bank card', 'Current interest up to 5%', 'Mining governance tokens'], 'qddzj', ['#31D4CA', '#5AF4BE', '#069FC9', '#14C2A3', '#5AF4BE', '#5AF4BE'])
-            utils.appendScript('https://static-scource.funibet.com/funibox/js/three.min.js', true)
-            utils.appendScript('https://static-scource.funibet.com/funibox/js/TweenMax.min.js', true)
-            setTimeout(() => {
-                utils.appendScript('https://static-scource.funibet.com/funibox/js/cc.js', true)
-            }, 300);
-            return () => {
-                utils.removeScript('https://static-scource.funibet.com/funibox/js/three.min.js')
-                utils.removeScript('https://static-scource.funibet.com/funibox/js/TweenMax.min.js')
-                utils.removeScript('https://static-scource.funibet.com/funibox/js/cc.js')
-                // document.getElementById("my-three-js-canvas").remove()
-            }
-        } catch (e) {
-            console.log(e)
-        }
-    }, []);
-
-    useEffect(() => {
-        if (loginType === "telegram_web_app") {
-            setIsTelegram(true);
-        }
-    }, [loginType]);
+        dispatch(getWidgets());
+    }, [dispatch]);
 
     return (
-        <div id="kkqd" class="">
-            <div style={{ position: "relative", zIndex: "1", marginTop: "40%", width: "100%" }}>
-                <div className='flex' style={{ width: "100%", justifyContent: "center" }} >
-                    <img style={{ width: "60%" }} src="/wallet/assets/images/logo/qdLogo.png" />
-                </div>
-                <div className='text-24 px-32' style={{ width: "100%", textAlign: "center", color: "#ffffff", fontWeight: "bold", marginTop: "25%" }} >
-                    Global Crypto Bank
-                </div>
-                <div class='console-container mt-40 px-28'><span id='qddzj'></span><div class='console-underscore' id='console'>&#95;</div></div>
-                <div
-                    className='flex justify-center'
+
+        <div className='' style={{ position: "relative" }}>
+            <div style={{ position: "absolute", width: "100%" }}>
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
+                    className='mt-12'
+                    style={{ paddingInline: "1.5rem" }}
                 >
-                    <img className='mr-16' style={{ width: "20%" }} src="/wallet/assets/images/login/master.png" />
-                    <img className='ml-16' style={{ width: "20%" }} src="/wallet/assets/images/login/visa.png" />
-                </div>
-                {isTelegram ? (
-                    <div
-                        className='flex justify-between px-32 mt-60'
-                        style={{}}
-                    >
-                        <div
-                            onClick={() => {
-                                history.push("/wallet/home/wallet" + window.location.search);
-                            }}
-                            style={{ backgroundColor: "#14C2A3", fontWeight: "600", color: "#ffffff", width: "44%", borderRadius: "0.6rem", height: "4rem", lineHeight: "4rem", textAlign: "center" }}
-                        >
-                            Home
+                    <div className='text-16'>新手福利</div>
+                    <div className='flex mt-12'>
+                        <div className='qianDaoSty flex justify-between px-10'>
+                            <div className='mt-6'>
+                                <div>Check In</div>
+                                <div style={{ color: "#9a9a9a" }}>bonus</div>
+                            </div>
+                            <img src="wallet/assets/images/earn/qianDao.png" />
+                        </div>
+
+                        <div className='zhuanPanSty flex justify-between px-10'>
+                            <div className='mt-6'>
+                                <div>Spin</div>
+                                <div style={{ color: "#9a9a9a" }}>bonus</div>
+                            </div>
+                            <div className='' style={{ position: "relative", width: "5.2rem", height: "5.2rem" }}>
+                                <img className='zhuanPanDongHua0' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan3.png" />
+                                <img className='zhuanPanDongHua' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan2.png" />
+                                <img className='zhuanPanDongHua0' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan1.png" />
+                            </div>
                         </div>
                     </div>
-                ) : (
-                    <div
-                        className='flex justify-between px-32 mt-60'
-                        style={{}}
-                    >
-                        <div
-                            onClick={() => {
-                                history.push("/wallet/sign-up" + window.location.search);
-                            }}
-                            style={{ backgroundColor: "#14C2A3", fontWeight: "600", color: "#ffffff", width: "44%", borderRadius: "0.6rem", height: "4rem", lineHeight: "4rem", textAlign: "center" }}
-                        >
-                            Sign
-                        </div>
-                        <div
-                            onClick={() => {
-                                history.push("/wallet/login" + window.location.search);
-                            }}
-                            style={{ backgroundColor: "#14C2A3", fontWeight: "600", color: "#ffffff", width: "44%", borderRadius: "0.6rem", height: "4rem", lineHeight: "4rem", textAlign: "center" }}
-                        >
-                            Login</div>
+                    <div className='flex mt-16 justify-center'>
+                        <img className='naoZhongImg' src="wallet/assets/images/earn/naoZhong.png" />  <div className='naoZhongZi ml-10'>活动结束</div> <div className='ml-10 naoZhongZi' >23:48:36</div>
                     </div>
-                )}
+                </motion.div>
+
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
+                    className='mt-16'
+                    style={{ paddingInline: "1.5rem" }}
+                >
+                    <div className='text-16'>活期利息</div>
+
+                </motion.div>
+
+                {useMemo(() => {
+                    return (
+                        !_.isEmpty(widgets) && (
+                            <motion.div
+                                className="w-full  "
+                                variants={container}
+                                initial="hidden"
+                                animate="show"
+                                style={{ padding: "1.5rem", backgroundColor: "#0E1421" }}
+                            >
+                                {/* <motion.div variants={item} className="sm:col-span-2 lg:col-span-3">
+                                    <VisitorsOverviewWidget />
+                                </motion.div> */}
+
+                                <motion.div variants={item} className="">
+                                    <ImpressionsWidget />
+                                </motion.div>
+
+                                {/* <motion.div variants={item} className="sm:col-span-2 lg:col-span-1 ">
+                                    <VisitsWidget />
+                                </motion.div> */}
+                            </motion.div>
+                        )
+                    );
+                }, [widgets])}
+
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
+                    className='mt-8'
+                    style={{ paddingInline: "1.5rem" }}
+                >
+                    <div className='text-16'>百万空投</div>
+                    <div className='lanDi mt-16'>
+                        <img className='logoCC' src="wallet/assets/images/earn/logo1.png" />
+                        <div className='flex mt-16  justify-between'>
+                            <div className='lanDiZi pb-10 pb-10'>
+                                <div><span style={{ color: "#A4A4A4" }}>瓜分</span><span style={{ marginLeft: "10px", color: "#FFC600", fontWeight: "bold", fontSize: "24px" }}>1000,000,000</span></div>
+                                <div><span style={{ color: "#1BB9FF", fontWeight: "bold", fontSize: "24px" }}>BFT</span><span style={{ marginLeft: "10px", color: "#ffffff", fontWeight: "bold", fontSize: "14px" }}>BeingFi Token</span></div>
+                            </div>
+                            <img className='earnYouTu ' src="wallet/assets/images/earn/bi1.png" />
+
+                        </div>
+                    </div>
+                </motion.div>
+
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
+                    className='mt-20'
+                    style={{ paddingInline: "1.5rem" }}
+                >
+                    <div className='text-16'>合约交易挖矿</div>
+                    <div className='huangDi mt-16'>
+                        <div className='flex justify-between pt-4'>
+                            <div className='huangDiZi '>
+                                <img className='logoCC2 mb-4' src="wallet/assets/images/earn/logo2.png" />
+                                <div><span style={{ marginLeft: "10px", color: "#FFC600", fontWeight: "bold", fontSize: "24px" }}>交易合约送现货</span></div>
+                                <div><span style={{ marginLeft: "10px", color: "#ffffff", fontWeight: "bold", fontSize: "14px" }}>所有交易手续费100%补偿</span><span style={{ marginLeft: "10px", color: "#ffffff", fontWeight: "bold", fontSize: "14px" }}>所有交易手续费100%补偿</span></div>
+                            </div>
+                            <img className='earnYouTu2' src="wallet/assets/images/earn/bi2.png" />
+                        </div>
+                    </div>
+                </motion.div>
+
             </div>
         </div>
+
+
     );
 }
+
+export default withReducer('analyticsDashboardApp', reducer)(Test);

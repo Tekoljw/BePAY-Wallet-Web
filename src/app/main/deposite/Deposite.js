@@ -997,7 +997,6 @@ function Deposite() {
                             isExpand={true}
 
                         />}
-
                     </Box>
                 </motion.div>
 
@@ -1007,7 +1006,6 @@ function Deposite() {
                     animate="show"
                     className="InsideW"
                 >
-                    12312312
                     <div className='text-16 ml-10 mt-10 mb-6'>{t('card_7')}</div>
                     <div className='addressBigW flex justify-between mt-10'>
                         <div className="userIdW   guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
@@ -1143,7 +1141,7 @@ function Deposite() {
                                                     size={138}
                                                     value={addressItem.address}
                                                     imageSettings={{ // 二维码中间的logo图片
-                                                        src: 'wallet/assets/images/deposite/newQrCode.png',
+                                                        src: 'wallet/assets/images/logo/logoNew.png',
                                                         height: 30,
                                                         width: 30,
                                                         excavate: true, // 中间图片所在的位置是否镂空
