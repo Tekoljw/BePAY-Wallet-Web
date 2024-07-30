@@ -7,7 +7,6 @@ import { selectUserData } from "../../store/user";
 import { arrayLookup, setPhoneTab } from "../../util/tools/function";
 import Dialog from "@mui/material/Dialog/Dialog";
 import { useTranslation } from "react-i18next";
-
 import withReducer from 'app/store/withReducer';
 import _ from '@lodash';
 import reducer from './store';
@@ -16,7 +15,8 @@ import VisitorsOverviewWidget from './widgets/VisitorsOverviewWidget';
 import ConversionsWidget from './widgets/ConversionsWidget';
 import ImpressionsWidget from './widgets/ImpressionsWidget';
 import VisitsWidget from './widgets/VisitsWidget';
-
+import AnimateModal from "../../components/FuniModal";
+import Typography from '@mui/material/Typography';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -43,6 +43,8 @@ const item = {
 function Earn(props) {
     const { t } = useTranslation('mainPage');
     const userData = useSelector(selectUserData);
+    const [openCheckIn, setOpenCheckIn] = useState(false);
+
 
 
     useEffect(() => {
@@ -67,29 +69,33 @@ function Earn(props) {
                     style={{ paddingInline: "1.5rem" }}
                 >
                     <div className='text-16'>新手福利</div>
-                    <div className='flex mt-12'>
-                        <div className='qianDaoSty flex justify-between px-10'>
-                            <div className='mt-6'>
-                                <div>Check In</div>
-                                <div style={{ color: "#9a9a9a" }}>bonus</div>
+                    <div className='newBlocak'>
+                        <div className='flex mt-12'>
+                            <div className='qianDaoSty flex justify-between px-10' onClick={() => {
+                                setOpenCheckIn(true)
+                            }}>
+                                <div className='mt-6'>
+                                    <div>Check In</div>
+                                    <div style={{ color: "#9a9a9a" }}>bonus</div>
+                                </div>
+                                <img src="wallet/assets/images/earn/qianDao.png" />
                             </div>
-                            <img src="wallet/assets/images/earn/qianDao.png" />
-                        </div>
 
-                        <div className='zhuanPanSty flex justify-between px-10'>
-                            <div className='mt-6'>
-                                <div>Spin</div>
-                                <div style={{ color: "#9a9a9a" }}>bonus</div>
-                            </div>
-                            <div className='' style={{ position: "relative", width: "5.2rem", height: "5.2rem" }}>
-                                <img className='zhuanPanDongHua0' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan3.png" />
-                                <img className='zhuanPanDongHua' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan2.png" />
-                                <img className='zhuanPanDongHua0' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan1.png" />
+                            <div className='zhuanPanSty flex justify-between px-10'>
+                                <div className='mt-6'>
+                                    <div>Spin</div>
+                                    <div style={{ color: "#9a9a9a" }}>bonus</div>
+                                </div>
+                                <div className='' style={{ position: "relative", width: "5.2rem", height: "5.2rem" }}>
+                                    <img className='zhuanPanDongHua0' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan3.png" />
+                                    <img className='zhuanPanDongHua' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan2.png" />
+                                    <img className='zhuanPanDongHua0' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan1.png" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className='flex mt-16 justify-center'>
-                        <img className='naoZhongImg' src="wallet/assets/images/earn/naoZhong.png" />  <div className='naoZhongZi ml-10'>活动结束</div> <div className='ml-10 naoZhongZi' >23:48:36</div>
+                        <div className='flex mt-16 justify-center'>
+                            <img className='naoZhongImg' src="wallet/assets/images/earn/naoZhong.png" />  <div className='naoZhongZi ml-10'>活动结束</div> <div className='ml-10 naoZhongZi' >23:48:36</div>
+                        </div>
                     </div>
                 </motion.div>
 
@@ -227,6 +233,531 @@ function Earn(props) {
                 <div style={{ marginBottom: "50px" }}></div>
 
             </div>
+
+            <AnimateModal
+                className="checkInDi"
+                closeClass="closeBtnCheckIn"
+                open={openCheckIn}
+                onClose={() => setOpenCheckIn(false)}
+            >
+                <div>
+                    <Typography className="textAlignRight">
+                        <span
+                            style={{ display: "block", color: "#FFD569" }}
+                            className=" checkInTitleMt  text-align titleTxt"
+                        >
+                            CheckIn
+                            {/* {t("home_CheckinBouns")} */}
+                        </span>
+                    </Typography>
+                    <motion.div variants={container} initial="hidden" animate="show">
+                        <motion.div
+                            variants={item}
+                            className="text-16  text-align checkInTxtmtMiaoShu"
+                        >
+                            Check in every week accumulatively and get corresponding rewards.
+                            {/* {t("home_Checkineveryweek")} */}
+                        </motion.div>
+                        <motion.div
+                            variants={item}
+                            style={{
+                                position: "relative",
+                                paddingTop: "15%",
+                                marginLeft: "5%",
+                            }}
+                        >
+                            <div
+                                className="borderRadius "
+                                style={{
+                                    width: "90%",
+                                    height: "12px",
+                                    backgroundColor: "#0F1520",
+                                    position: "absolute",
+                                }}
+                            >
+                                <div
+                                    className="borderRadius"
+                                    style={{
+                                        width: 14.3 * 1 + "%",
+                                        height: "13px",
+                                        backgroundColor: "#EA9B13",
+                                        position: "absolute",
+                                    }}
+                                >
+                                </div>
+                            </div>
+                            <motion.div
+                                variants={container}
+                                initial="hidden"
+                                animate="show"
+                                className="flex"
+                                style={{ position: "absolute", top: "14%", left: "22%" }}
+                            >
+                                <motion.div
+                                    variants={item}
+                                    className="width-85 align-item text-align"
+                                >
+                                    <div className="text-14" style={{ color: "#FFD569" }}>
+                                        3Day
+                                    </div>
+                                    <img
+                                        src="wallet/assets/images/earn/jinBi2.png"
+                                        style={{ width: "64px" }}
+                                    />
+                                    <div className="text-14" style={{ color: "#ffffff" }}>
+                                        {100 / 100 || 0}U
+                                    </div>
+                                </motion.div>
+                                <motion.div
+                                    variants={item}
+                                    className="width-85 align-item text-align"
+                                    style={{ marginLeft: "3%" }}
+                                >
+                                    <div className="text-14" style={{ color: "#FFD569" }}>
+                                        5Day
+                                    </div>
+                                    <img
+                                        src="wallet/assets/images/earn/jinBi3.png"
+                                        style={{ width: "64px" }}
+                                    />
+                                    <div className="text-14" style={{ color: "#ffffff" }}>
+                                        {200 / 100 || 0}U
+                                    </div>
+                                </motion.div>
+                                <motion.div
+                                    variants={item}
+                                    className="width-85 align-item text-align"
+                                    style={{ marginLeft: "3%" }}
+                                >
+                                    <div className="text-14" style={{ color: "#FFD569" }}>
+                                        7Day
+                                    </div>
+                                    <img
+                                        src="wallet/assets/images/earn/jinBi3.png"
+                                        style={{ width: "64px" }}
+                                    />
+                                    <div className="text-14" style={{ color: "#ffffff" }}>
+                                        {200 / 100 || 0}U
+                                    </div>
+                                </motion.div>
+                            </motion.div>
+                        </motion.div>
+
+                        <div className="flex px-2" style={{ marginTop: "20%" }}>
+                            <motion.div
+                                variants={item}
+                                className="align-item text-align  btnPointer  mx-4"
+                                style={{ position: "relative", width: "23%" }}
+                                onClick={() => { }}
+                            >
+                                <img
+                                    className="positionAb"
+                                    style={{ top: "0px", left: "0px" }}
+                                    src="wallet/assets/images/earn/phoneQianDao1.png"
+                                />
+                                <div
+                                    className="positionAb text-14 marginJuZhong"
+                                    style={{
+                                        paddingTop: "8%",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    Sunday
+                                    {/* {t("home_Sunday")} */}
+                                </div>
+                                <img
+                                    className="positionAb marginJuZhong"
+                                    style={{ top: "24px", left: "8px", width: "80%" }}
+                                    src="wallet/assets/images/earn/jinBi1.png"
+                                />
+                                <div
+                                    className="positionAb text-14"
+                                    style={{
+                                        top: "92px",
+                                        left: "0px",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    {200 / 100 || 0}U
+                                </div>
+                                {1 <= 2 && (
+                                    <img
+                                        className="positionAb"
+                                        style={{ top: "0px", left: "0px" }}
+                                        src="wallet/assets/images/earn/checkOver1.png"
+                                    />
+                                )}
+                                {!false &&
+                                    1 == 0 + 1 && (
+                                        <img
+                                            className="positionAb"
+                                            style={{ top: "0px", left: "0px" }}
+                                            src="wallet/assets/images/earn/checkOver_1.png"
+                                            onClick={() => {
+
+                                            }}
+                                        />
+                                    )}
+                            </motion.div>
+
+                            <motion.div
+                                variants={item}
+                                className="align-item text-align  btnPointer txtBrightness mx-4"
+                                style={{ position: "relative", width: "23%" }}
+                                onClick={() => { }}
+                            >
+                                <img
+                                    className="positionAb"
+                                    style={{ top: "0px", left: "0px" }}
+                                    src="wallet/assets/images/earn/phoneQianDao1.png"
+                                />
+                                <div
+                                    className="positionAb text-14 marginJuZhong "
+                                    style={{
+                                        paddingTop: "8%",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    Monday
+                                    {/* {t("home_Monday")} */}
+                                </div>
+                                <img
+                                    className="positionAb marginJuZhong"
+                                    style={{ top: "24px", left: "8px", width: "80%" }}
+                                    src="wallet/assets/images/earn/jinBi1.png"
+                                />
+                                <div
+                                    className="positionAb text-14"
+                                    style={{
+                                        top: "92px",
+                                        left: "0px",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    {100 / 100 || 0}U
+                                </div>
+                                {2 <= 1 && (
+                                    <img
+                                        className="positionAb"
+                                        style={{ top: "0px", left: "0px" }}
+                                        src="wallet/assets/images/earn/checkOver1.png"
+                                    />
+                                )}
+                                {!false &&
+                                    2 == 1 + 0 && (
+                                        <img
+                                            className="positionAb"
+                                            style={{ top: "0px", left: "0px" }}
+                                            src="wallet/assets/images/earn/checkOver_1.png"
+                                            onClick={() => {
+
+                                            }}
+                                        />
+                                    )}
+                            </motion.div>
+
+                            <motion.div
+                                variants={item}
+                                className="align-item text-align  btnPointer txtBrightness mx-4"
+                                style={{ position: "relative", width: "23%" }}
+                                onClick={() => { }}
+                            >
+                                <img
+                                    className="positionAb"
+                                    style={{ top: "0px", left: "0px" }}
+                                    src="wallet/assets/images/earn/phoneQianDao1.png"
+                                />
+                                <div
+                                    className="positionAb text-14 marginJuZhong "
+                                    style={{
+                                        paddingTop: "8%",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    Tuesday
+                                    {/* {t("home_Tuesday")} */}
+                                </div>
+                                <img
+                                    className="positionAb marginJuZhong"
+                                    style={{ top: "24px", left: "8px", width: "80%" }}
+                                    src="wallet/assets/images/earn/jinBi2.png"
+                                />
+                                <div
+                                    className="positionAb text-14"
+                                    style={{
+                                        top: "92px",
+                                        left: "0px",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    {200 / 100 || 0}U
+                                </div>
+                                {3 <= 2 && (
+                                    <img
+                                        className="positionAb"
+                                        style={{ top: "0px", left: "0px" }}
+                                        src="wallet/assets/images/earn/checkOver1.png"
+                                    />
+                                )}
+                                {!false &&
+                                    3 == 1 + 1 && (
+                                        <img
+                                            className="positionAb"
+                                            style={{ top: "0px", left: "0px" }}
+                                            src="wallet/assets/images/earn/checkOver_1.png"
+                                            onClick={() => {
+
+                                            }}
+                                        />
+                                    )}
+                            </motion.div>
+
+                            <motion.div
+                                variants={item}
+                                className=" align-item text-align  btnPointer txtBrightness mx-4"
+                                style={{ position: "relative", width: "23%" }}
+                                onClick={() => { }}
+                            >
+                                <img
+                                    className="positionAb"
+                                    style={{ top: "0px", left: "0px" }}
+                                    src="wallet/assets/images/earn/phoneQianDao1.png"
+                                />
+                                <div
+                                    className="positionAb text-14 marginJuZhong "
+                                    style={{
+                                        paddingTop: "8%",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    Wednesday
+                                    {/* {t("home_Wednesday")} */}
+                                </div>
+                                <img
+                                    className="positionAb marginJuZhong"
+                                    style={{ top: "24px", left: "8px", width: "80%" }}
+                                    src="wallet/assets/images/earn/jinBi2.png"
+                                />
+                                <div
+                                    className="positionAb text-14"
+                                    style={{
+                                        top: "92px",
+                                        left: "0px",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    {200 / 100 || 0}U
+                                </div>
+                                {4 <= 3 && (
+                                    <img
+                                        className="positionAb"
+                                        style={{ top: "0px", left: "0px" }}
+                                        src="wallet/assets/images/earn/checkOver1.png"
+                                    />
+                                )}
+                                {!false &&
+                                    4 == 3 + 0 && (
+                                        <img
+                                            className="positionAb"
+                                            style={{ top: "0px", left: "0px" }}
+                                            src="wallet/assets/images/earn/checkOver_1.png"
+                                            onClick={() => {
+
+                                            }}
+                                        />
+                                    )}
+                            </motion.div>
+                        </div>
+
+                        <div
+                            className="flex px-2 justifyContent"
+                            style={{ marginTop: "40%" }}
+                        >
+                            <motion.div
+                                variants={item}
+                                className=" align-item text-align  btnPointer txtBrightness mx-4"
+                                style={{ position: "relative", width: "23%" }}
+                                onClick={() => { }}
+                            >
+                                <img
+                                    className="positionAb"
+                                    style={{ top: "0px", left: "0px" }}
+                                    src="wallet/assets/images/earn/phoneQianDao1.png"
+                                />
+                                <div
+                                    className="positionAb text-14 marginJuZhong"
+                                    style={{
+                                        paddingTop: "8%",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    Thursday
+                                    {/* {t("home_Thursday")} */}
+                                </div>
+                                <img
+                                    className="positionAb marginJuZhong"
+                                    style={{ top: "24px", left: "8px", width: "80%" }}
+                                    src="wallet/assets/images/earn/jinBi3.png"
+                                />
+                                <div
+                                    className="positionAb text-14"
+                                    style={{
+                                        top: "92px",
+                                        left: "0px",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    {100 / 100 || 0}U
+                                </div>
+                                {5 <= 4 && (
+                                    <img
+                                        className="positionAb"
+                                        style={{ top: "0px", left: "0px" }}
+                                        src="wallet/assets/images/earn/checkOver1.png"
+                                    />
+                                )}
+                                {!false &&
+                                    5 == 3 + 1 && (
+                                        <img
+                                            className="positionAb"
+                                            style={{ top: "0px", left: "0px" }}
+                                            src="wallet/assets/images/earn/checkOver_1.png"
+                                            onClick={() => {
+
+                                            }}
+                                        />
+                                    )}
+                            </motion.div>
+
+                            <motion.div
+                                variants={item}
+                                className=" align-item text-align  btnPointer txtBrightness mx-4"
+                                style={{ position: "relative", width: "23%" }}
+                                onClick={() => { }}
+                            >
+                                <img
+                                    className="positionAb"
+                                    style={{ top: "0px", left: "0px" }}
+                                    src="wallet/assets/images/earn/phoneQianDao1.png"
+                                />
+                                <div
+                                    className="positionAb text-14 marginJuZhong "
+                                    style={{
+                                        paddingTop: "8%",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    Friday
+                                    {/* {t("home_Friday")} */}
+                                </div>
+                                <img
+                                    className="positionAb marginJuZhong"
+                                    style={{ top: "24px", left: "8px", width: "80%" }}
+                                    src="wallet/assets/images/earn/jinBi3.png"
+                                />
+                                <div
+                                    className="positionAb text-14"
+                                    style={{
+                                        top: "92px",
+                                        left: "0px",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    {200 / 100 || 0}U
+                                </div>
+                                {6 <= 4 && (
+                                    <img
+                                        className="positionAb"
+                                        style={{ top: "0px", left: "0px" }}
+                                        src="wallet/assets/images/earn/checkOver1.png"
+                                    />
+                                )}
+                                {!false &&
+                                    6 == 4 + 1 && (
+                                        <img
+                                            className="positionAb"
+                                            style={{ top: "0px", left: "0px" }}
+                                            src="wallet/assets/images/earn/checkOver_1.png"
+                                            onClick={() => {
+
+                                            }}
+                                        />
+                                    )}
+                            </motion.div>
+
+                            <motion.div
+                                variants={item}
+                                className=" align-item text-align  btnPointer txtBrightness mx-4"
+                                style={{ position: "relative", width: "23%" }}
+                                onClick={() => { }}
+                            >
+                                <img
+                                    className="positionAb"
+                                    style={{ top: "0px", left: "0px" }}
+                                    src="wallet/assets/images/earn/phoneQianDao1.png"
+                                />
+                                <div
+                                    className="positionAb text-14 marginJuZhong "
+                                    style={{
+                                        paddingTop: "8%",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    Saturday
+                                    {/* {t("home_Saturday")} */}
+                                </div>
+                                <img
+                                    className="positionAb marginJuZhong"
+                                    style={{ top: "24px", left: "8px", width: "80%" }}
+                                    src="wallet/assets/images/earn/jinBi4.png"
+                                />
+                                <div
+                                    className="positionAb text-14"
+                                    style={{
+                                        top: "92px",
+                                        left: "0px",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    {200 / 100 || 0}U
+                                </div>
+                                {7 <= 4 && (
+                                    <img
+                                        className="positionAb"
+                                        style={{ top: "0px", left: "0px" }}
+                                        src="wallet/assets/images/earn/checkOver1.png "
+                                    />
+                                )}
+                                {!false &&
+                                    7 == 4 + 1 && (
+                                        <img
+                                            className="positionAb"
+                                            style={{ top: "0px", left: "0px" }}
+                                            src="wallet/assets/images/earn/checkOver_1.png"
+                                            onClick={() => {
+
+                                            }}
+                                        />
+                                    )}
+                            </motion.div>
+                        </div>
+                    </motion.div>
+                </div>
+            </AnimateModal>
         </div>
     )
 }

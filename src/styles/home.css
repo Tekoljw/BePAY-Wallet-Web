@@ -299,15 +299,24 @@ input[type='number'] {
 }
 
 .qianDaoSty {
-    background: linear-gradient(to right, #151E30, #136939);
+    background: linear-gradient(to right, #1E293B, #136939);
     width: 50%;
     border-radius: 0.6rem;
     height: 5.2rem;
     margin-right: 0.7rem;
 }
 
+.newBlocak {
+    margin-top: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 1.2rem;
+    padding-inline: 1rem;
+    background-color: #1E293B;
+    border-radius: 1rem;
+}
+
 .zhuanPanSty {
-    background: linear-gradient(to right, #151E30, #A640BD);
+    background: linear-gradient(to right, #1E293B, #A640BD);
     width: 50%;
     border-radius: 0.6rem;
     height: 5.2rem;
@@ -1754,7 +1763,7 @@ input[type='number'] {
     margin-bottom: 1rem;
 }
 
-.earnHuiZi{
+.earnHuiZi {
     color: #A4A4A4;
     font-size: 12px;
     font-weight: 700;
@@ -2776,6 +2785,10 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     margin-top: 0.2rem;
 }
 
+.checkInDi .animate-close-btn {
+    margin-top: 3.5rem;
+}
+
 .faBiBoxDi {
     width: 380px;
 }
@@ -2973,9 +2986,88 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     margin-right: -10px;
 }
 
+.checkInDi {
+    background-image: url("../../public/assets/images/earn/checkInDi.png");
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0) !important;
+    background-size: 100% auto;
+    width: 747px;
+    height: 439px;
+}
 
+.closeBtnCheckIn {
+    margin-top: 5rem;
+}
+
+.textAlignRight {
+    text-align: right;
+}
+
+.checkInTitleMt {
+    padding-top: 5px;
+    font-size: 20px;
+}
+
+.text-align {
+    text-align: center;
+}
+
+.checkInTxtmtMiaoShu {
+    font-size: 15px;
+    padding-top: 7%;
+    width: 96%;
+    margin: 0px auto;
+    color: #AF57E8;
+}
+
+.borderRadius {
+    border-radius: 999px;
+}
+
+.width-85 {
+    width: 85px;
+}
+
+.btnPointer {
+    cursor: pointer;
+}
+
+.marginJuZhong {
+    margin: 0px auto;
+}
+
+.align-item {
+    align-items: center;
+}
+
+.txtBrightness {
+    transition: all 0.25s;
+    filter: brightness(1);
+}
+
+.txtBrightness:hover {
+    transition: all 0.25s;
+    filter: brightness(1.3);
+}
+
+.justifyContent {
+    justify-content: center;
+    flex-wrap: wrap;
+}
 
 @media screen and (min-width: 0px) and (max-width: 750px) {
+    .closeBtnCheckIn {
+        margin-top: 9%;
+    }
+
+    .checkInDi {
+        background-image: url("../../public/assets/images/earn/phoneQianDao.png");
+        background-repeat: no-repeat;
+        background-size: 100% auto;
+        width: 96%;
+        height: 582px;
+    }
+
 
     .diBanColor {
         background-color: #0E1421 !important;
