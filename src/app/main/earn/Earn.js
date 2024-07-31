@@ -17,6 +17,7 @@ import ImpressionsWidget from './widgets/ImpressionsWidget';
 import VisitsWidget from './widgets/VisitsWidget';
 import AnimateModal from "../../components/FuniModal";
 import Typography from '@mui/material/Typography';
+import Spin from "../spin/Spin";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -44,7 +45,8 @@ function Earn(props) {
     const { t } = useTranslation('mainPage');
     const userData = useSelector(selectUserData);
     const [openCheckIn, setOpenCheckIn] = useState(false);
-
+    const [openSpin, setOpenSpin] = useState(false);
+    
 
 
     useEffect(() => {
@@ -81,7 +83,9 @@ function Earn(props) {
                                 <img src="wallet/assets/images/earn/qianDao.png" />
                             </div>
 
-                            <div className='zhuanPanSty flex justify-between px-10'>
+                            <div className='zhuanPanSty flex justify-between px-10' onClick={() => {
+                                setOpenSpin(true)
+                            }}>
                                 <div className='mt-6'>
                                     <div>Spin</div>
                                     <div style={{ color: "#9a9a9a" }}>bonus</div>
@@ -758,6 +762,18 @@ function Earn(props) {
                     </motion.div>
                 </div>
             </AnimateModal>
+
+
+            <AnimateModal
+                className="spinDi"
+                closeClass="closeBtnspin"
+                open={openSpin}
+                onClose={() => setOpenSpin(false)}
+            >
+                <Spin />
+            </AnimateModal>
+
+
         </div>
     )
 }
