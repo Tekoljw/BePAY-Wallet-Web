@@ -21,7 +21,7 @@ function Spin(props) {
   const [turnConfig, setTurnConfig] = useState([]);
   const [turnRecord, setTurnRecord] = useState({});
   const [offOn, setOffOn] = useState(false);
-  const [userTurnTimes, setUserTurnTime] = useState(0);
+  const [userTurnTimes, setUserTurnTime] = useState(1);
   const [spinRewardBalance, setSpinRewardBalance] = useState({
     balance: 0,
     symbol: "USDT",
@@ -81,17 +81,9 @@ function Spin(props) {
   //   });
   // };
 
-  // 转盘
 
-  const handleGetTurnConfig = () => {
-    dispatch(getTurnConfig()).then((res) => {
-      let result = res.payload;
-      setTurnConfig(result);
-    });
-  };
 
   // 转盘记录
-
   // const handleGetTurnRecord = () => {
   //   dispatch(getTurnRecord()).then((res) => {
   //     let result = res.payload;
@@ -144,6 +136,7 @@ function Spin(props) {
     // 可以直接打开奖励这两行
     // setPopAward(true);
     // return
+
     if (userTurnTimes <= 0) {
       return false;
     }
@@ -162,9 +155,9 @@ function Spin(props) {
 
     // 测试数据
 
-    // let doTurnResult = {
-    //     ItemID: 5
-    // };
+    let doTurnResult = {
+        ItemID: 5
+    };
 
     var oTurntable = document.getElementById("spin");
     var cat = 22.5; //总共12个扇形区域，每个区域约30度
@@ -295,164 +288,10 @@ function Spin(props) {
         style={{ height: "100%", width: "100%", maxWidth: "360px" }}
       >
         <div
-          className="positionAb promotion-list1 activityMoveLeft "
-          style={{
-            top: "28px",
-            bottom: "0px",
-            left: "0px",
-            right: "0px",
-            margin: "0 auto",
-            backgroundColor: "#191A1B",
-            width: "340px",
-            height: "60px",
-            borderRadius: "8px",
-          }}
-        >
-          <div
-            onClick={() => {
-              setVipActive(0);
-            }}
-            className={clsx(
-              "imgHidden btnPointer txtBrightness",
-              vipActive === 0 && "spinbtn1Color"
-            )}
-            style={{ width: "60px", height: "60px", borderRadius: "5px" }}
-          >
-            <div
-              className={clsx(
-                "positionAb vipZiRota viptxtColorHui fontBold",
-                vipActive === 0 && "sigin-txt-yellow"
-              )}
-              style={{
-                top: "4px",
-                right: "0px",
-                bottom: "0px",
-                left: "9px",
-                textAlign: "center",
-              }}
-            >
-              VIP0
-            </div>
-            <div
-              className="positionAb"
-              style={{ top: "20px", right: "0px", bottom: "0px", left: "22px" }}
-            >
-              <img
-                className=""
-                src="wallet/assets/images/nav/smallZhuanPan1.png"
-              />
-            </div>
-          </div>
-
-          <div
-            onClick={() => {
-
-            }}
-            className={clsx(
-              "borderRadius-5 imgHidden btnPointer txtBrightness",
-              vipActive === 1 && "spinbtn2Color"
-            )}
-            style={{ width: "60px", height: "60px" }}
-          >
-            <div
-              className={clsx(
-                "positionAb vipZiRota viptxtColorHui fontBold",
-                vipActive === 1 && "sigin-txt-yellow"
-              )}
-              style={{
-                top: "4px",
-                right: "0px",
-                bottom: "0px",
-                left: "9px",
-                textAlign: "center",
-              }}
-            >
-              VIP1
-            </div>
-            <div
-              className="positionAb"
-              style={{ top: "20px", right: "0px", bottom: "0px", left: "22px" }}
-            >
-              <img
-                className=""
-                src="wallet/assets/images/nav/smallZhuanPan1.png"
-              />
-            </div>
-          </div>
-
-          <div
-            onClick={() => {
-
-            }}
-            className={clsx(
-              "borderRadius-5 imgHidden btnPointer txtBrightness",
-              vipActive === 2 && "spinbtn3Color"
-            )}
-            style={{ width: "60px", height: "60px" }}
-          >
-            <div
-              className={clsx(
-                "positionAb vipZiRota viptxtColorHui fontBold",
-                vipActive === 2 && "sigin-txt-yellow"
-              )}
-              style={{
-                top: "4px",
-                right: "0px",
-                bottom: "0px",
-                left: "9px",
-                textAlign: "center",
-              }}
-            >
-              VIP{vipLevel + 2}
-            </div>
-            <div
-              className="positionAb"
-              style={{ top: "20px", right: "0px", bottom: "0px", left: "22px" }}
-            >
-              <img
-                className=""
-                src={
-                  vipActive === 2
-                    ? "wallet/assets/images/nav/smallZhuanPan1.png"
-                    : "wallet/assets/images/nav/smallZhuanPan2.png"
-                }
-              />
-            </div>
-          </div>
-
-          <div
-            className="spinbtn1Color borderRadius-5"
-            style={{
-              width: "154px",
-              height: "60px",
-              paddingTop: "8px",
-              backgroundColor: "#ffc600",
-            }}
-          >
-            <div
-              className="text-align spinbtn1textColor"
-              style={{
-                width: "142px",
-                height: "31px",
-                backgroundImage: "url('https://scource-static.funibet.com/funibet/images/nav/diPan7.png')",
-                margin: "0 auto",
-              }}
-            >
-              VIP3
-            </div>
-            <div
-              className="text-align txtColor"
-            >
-              {/* {t("home_Bonusincreased")} */}
-              10%
-            </div>
-          </div>
-        </div>
-        <div
           className="spinDi2 positionAb spinZhuanPanFangDa"
           style={{
             backgroundImage: "url('https://scource-static.funibet.com/funibet/images/nav/diPan2.png')",
-            top: "100px",
+            top: "30px",
             bottom: "0px",
             left: "0px",
             right: "0px",
@@ -463,7 +302,7 @@ function Spin(props) {
           id="spin"
           className="spinDi1 positionAb spinZhuanPanFangDa"
           style={{
-            top: "122px",
+            top: "52px",
             bottom: "0px",
             left: "0px",
             right: "0px",
@@ -747,22 +586,20 @@ function Spin(props) {
 
         <div
           className="positionAb spinZhuanPanFangDa"
-          style={{ top: "100px", bottom: "0px", left: "160px", right: "0px" }}
+          style={{ top: "30px", bottom: "0px", left: "160px", right: "0px" }}
         >
           <img className="" src={vipImgList[vipActive].turnPointerImg}></img>
         </div>
 
         <img
           className="spinDi3 positionAb btnPointer spinZhuanPanFangDa"
-          style={{ top: "229px", bottom: "0px", left: "130px", right: "0px" }}
+          style={{ top: "159px", bottom: "0px", left: "130px", right: "0px" }}
           src="wallet/assets/images/nav/zhiZhen.png"
         ></img>
         <img
           className={clsx(
-            "spinZhuanBtnImgX positionAb Zindex txtBrightness btnPointer ",
-            vipActive !== 0 && "displayNone"
-          )}
-          style={{ top: "232px", bottom: "0px", left: "128px", right: "0px" }}
+            "spinZhuanBtnImgX positionAb Zindex txtBrightness btnPointer ")}
+          style={{ top: "159px", bottom: "0px", left: "128px", right: "0px",zIndex:"9999" }}
           onClick={() => {
             spinRata();
           }}
@@ -771,7 +608,7 @@ function Spin(props) {
         <img
           className="spinDi7 positionAb activityMoveRight"
           style={{
-            top: "414px",
+            top: "344px",
             bottom: "0px",
             left: "0px",
             right: "0px",
@@ -784,7 +621,7 @@ function Spin(props) {
         <div
           className="spinDi4 positionAb spinZhuanPanFangDa"
           style={{
-            top: "100px",
+            top: "30px",
             bottom: "0px",
             left: "0px",
             right: "0px",
@@ -796,7 +633,7 @@ function Spin(props) {
         <div
           className="spinDi4 positionAb spinZhuanPanFangDa"
           style={{
-            top: "100px",
+            top: "30px",
             bottom: "0px",
             left: "0px",
             right: "0px",
@@ -811,7 +648,7 @@ function Spin(props) {
             <motion.div
               variants={item}
               className="mt-4 "
-              style={{ paddingTop: "485px" }}
+              style={{ paddingTop: "415px" }}
             >
               {vipActive === 0 ? (
                 <div className="containerSpinBtn  align-item flex justifyContent">
@@ -920,7 +757,7 @@ function Spin(props) {
                       0
                     </span>
                     &nbsp;
-                    <span style={{ color: "#ffffff" }}>eUSDT</span> <br />
+                    <span style={{ color: "#ffffff" }}>USDT</span> <br />
                     <span
                       style={{
                         fontSize: "16px",
@@ -939,7 +776,7 @@ function Spin(props) {
         )}
       </Box>
 
-      {/* <AwardPop
+      <AwardPop
         open={popAward}
         onClose={() => {
           setPopAward(false);
@@ -947,10 +784,11 @@ function Spin(props) {
           oTurntable.style.transition = "all 0s";
           oTurntable.style.transform = "rotate(0deg)";
         }}
-        symbol={spinRewardBalance.symbol}
-        symbolImg={`assets/images/symbol/${spinRewardBalance.symbol}.png`}
-        balance={spinRewardBalance.balance}
-      /> */}
+        symbol={1}
+        symbolImg={"wallet/assets/images/symbol/USD.png"}
+        balance={1.00}
+      />
+      
     </>
   );
 }
