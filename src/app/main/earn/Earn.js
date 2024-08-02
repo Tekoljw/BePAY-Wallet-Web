@@ -46,7 +46,8 @@ function Earn(props) {
     const userData = useSelector(selectUserData);
     const [openCheckIn, setOpenCheckIn] = useState(false);
     const [openSpin, setOpenSpin] = useState(false);
-    
+    const [openKXian, setOpenKXian] = useState(false);
+    const [openKongTou, setOpenKongTou] = useState(false);
 
 
     useEffect(() => {
@@ -124,17 +125,11 @@ function Earn(props) {
                                 animate="show"
                                 style={{ padding: "1.5rem", backgroundColor: "#0E1421" }}
                             >
-                                {/* <motion.div variants={item} className="sm:col-span-2 lg:col-span-3">
-                                    <VisitorsOverviewWidget />
-                                </motion.div> */}
-
-                                <motion.div variants={item} className="">
+                                <motion.div variants={item} className="" onClick={() => {
+                                    setOpenKXian(true)
+                                }}>
                                     <ImpressionsWidget />
                                 </motion.div>
-
-                                {/* <motion.div variants={item} className="sm:col-span-2 lg:col-span-1 ">
-                                    <VisitsWidget />
-                                </motion.div> */}
                             </motion.div>
                         )
                     );
@@ -148,7 +143,9 @@ function Earn(props) {
                     style={{ paddingInline: "1.5rem" }}
                 >
                     <div className='text-16'>百万空投</div>
-                    <div className='lanDi mt-16'>
+                    <div className='lanDi mt-16' onClick={() => {
+                        setOpenKongTou(true)
+                    }}>
                         <img className='logoCC' src="wallet/assets/images/earn/logo1.png" />
                         <div className='flex mt-16  justify-between'>
                             <div className='lanDiZi pb-10 pb-10'>
@@ -156,7 +153,6 @@ function Earn(props) {
                                 <div><span style={{ color: "#1BB9FF", fontWeight: "bold", fontSize: "24px" }}>BFT</span><span style={{ marginLeft: "10px", color: "#ffffff", fontWeight: "bold", fontSize: "14px" }}>BeingFi Token</span></div>
                             </div>
                             <img className='earnYouTu ' src="wallet/assets/images/earn/bi1.png" />
-
                         </div>
                     </div>
                 </motion.div>
@@ -774,6 +770,88 @@ function Earn(props) {
             </AnimateModal>
 
 
+            <AnimateModal
+                className="kXianDi"
+                closeClass="closeBtnspin"
+                open={openKXian}
+                onClose={() => setOpenKXian(false)}
+            >
+                <motion.div variants={item} className="px-15 pt-32">
+                    <div className='flex justifyContent'>
+                        <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/card/usd.png"></img>
+                        <div className='text-16 ml-6'>钱包资产总计USD</div>
+                    </div>
+                    <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "center", color: "#00FF96" }}>10000.00</div>
+                    <div className='flex  justify-between mt-12'>
+                        <div>
+                            <div style={{ textAlign: "center" }}>昨日收益(USDT)</div>
+                            <div className='mt-6' style={{ textAlign: "center" }}>100.00</div>
+                        </div>
+
+                        <div>
+                            <div style={{ textAlign: "center" }}>累计收益(USDT)</div>
+                            <div className='mt-6' style={{ textAlign: "center" }}>100.00</div>
+                        </div>
+
+                        <div>
+                            <div style={{ textAlign: "center" }}>24小时年华</div>
+                            <div className='mt-6' style={{ textAlign: "center" }}>5.26%</div>
+                        </div>
+                    </div>
+                    <VisitorsOverviewWidget />
+                    <div className='txtBrightness text-16 px-15' style={{ margin: "30px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}> 立即入金 </div>
+                </motion.div>
+            </AnimateModal>
+
+
+            <AnimateModal
+                className="kongTouDi"
+                closeClass="closeBtnspin"
+                open={openKongTou}
+                onClose={() => setOpenKongTou(false)}
+            >
+                <motion.div variants={item} className="px-15 pt-28">
+                    <div className='text-18' style={{ textAlign: "center", fontWeight: "700" }}>空投活动规则</div>
+                    <div className='mt-10' style={{ textAlign: "center" }}>
+                        所有BeingFi加密银行用户瓜分总计<span className='text-20' style={{ color: "#1BB9FF", fontWeight: "700" }}>30%</span>BFT
+                    </div>
+                    <div className='' style={{ textAlign: "center" }}>
+                        每天释放总奖池 <span className='text-20' style={{ color: "#00FF96", fontWeight: "700" }} >1%</span>
+                    </div>
+
+                    <motion.div variants={item} className="mt-16">
+                        <VisitsWidget />
+                    </motion.div>
+
+                    <div className='pt-10 pb-12 mt-20' style={{ backgroundColor: "#191A1B", borderRadius: "10px", border: "4px solid #151617" }}>
+                        <div className='text-16' style={{ textAlign: "center" }}>收益计算公式</div>
+                        <div className='text-12 mt-12' style={{ textAlign: "center", color: "#FFC600" }}>您的收益=账户总资产/平台所有用户总资产*释放总奖励</div>
+                    </div>
+
+                    <div className='flex justifyContent mt-20'>
+                        <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/card/usd.png"></img>
+                        <div className='text-16 ml-6'>钱包资产总计USD</div>
+                    </div>
+                    <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "center", color: "#00FF96" }}>10000.00</div>
+                    <div className='flex  justify-between mt-12'>
+                        <div>
+                            <div style={{ textAlign: "center" }}>昨日收益(USDT)</div>
+                            <div className='mt-6' style={{ textAlign: "center" }}>100.00</div>
+                        </div>
+
+                        <div>
+                            <div style={{ textAlign: "center" }}>累计收益(USDT)</div>
+                            <div className='mt-6' style={{ textAlign: "center" }}>100.00</div>
+                        </div>
+
+                        <div>
+                            <div style={{ textAlign: "center" }}>24小时年华</div>
+                            <div className='mt-6' style={{ textAlign: "center" }}>5.26%</div>
+                        </div>
+                    </div>
+                    <div className='txtBrightness text-16 px-15' style={{ margin: "30px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}> 立即入金 </div>
+                </motion.div>
+            </AnimateModal>
         </div>
     )
 }
