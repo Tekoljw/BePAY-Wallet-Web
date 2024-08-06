@@ -36,7 +36,6 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     },
 }));
 
-
 const container = {
     show: {
         transition: {

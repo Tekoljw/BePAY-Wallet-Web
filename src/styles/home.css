@@ -2817,8 +2817,6 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
 }
 
 
-
-
 .phone-bottom .nav {
     color: #14C2A3;
     display: flex;
@@ -2987,12 +2985,12 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
 }
 
 .checkInDi {
-    background-image: url("../../public/assets/images/earn/checkInDi.png");
+    background-image: url("../../public/assets/images/earn/phoneQianDao.png");
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0) !important;
     background-size: 100% auto;
-    width: 747px;
-    height: 439px;
+    max-width: 398px;
+    height: 582px;
 }
 
 .closeBtnCheckIn {
@@ -3055,7 +3053,749 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     flex-wrap: wrap;
 }
 
+.closeBtnspin {
+    margin-top: 0px;
+    z-index: 999;
+}
+
+.spinDi .animate-close-btn {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.spinDi {
+    background-image: url("../../public/assets/images/nav/diPan3.jpg");
+    max-width: 400px;
+    width: 100%;
+    height: 620px;
+    border-radius: 10px;
+}
+
+.kXianDi2 {
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url("../../public/assets/images/nav/diPan3.jpg");
+    width: 100%;
+    height: 510px;
+    border-radius: 15px 15px 0px 0px;
+    position: fixed;
+    left: 0%;
+    bottom: 0%;
+}
+
+.kongTouTitle {
+    width: calc(100% - 25px);
+    text-align: center;
+    font-weight: 700;
+}
+
+.kongTouDi {
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url("../../public/assets/images/nav/diPan3.jpg");
+    width: 100%;
+    height: 640px;
+    border-radius: 15px 15px 0px 0px;
+
+    position: fixed;
+    left: 0%;
+    bottom: 0%;
+}
+
+.waKuangDi {
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url("../../public/assets/images/nav/diPan3.jpg");
+    width: 100%;
+    height: 580px;
+    border-radius: 15px 15px 0px 0px;
+    position: fixed;
+    left: 0%;
+    bottom: 0%;
+}
+
+.imgHidden {
+    overflow: hidden;
+    position: relative;
+    transition: all 0.2s;
+    transform: scale(1);
+}
+
+.imgHidden:hover .imgMohu {
+    position: absolute;
+    transition: all 0.2s;
+    transform: scale(1.1);
+}
+
+.promotion-list1 {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.vipZiRota {
+    transform: rotate(-45deg);
+}
+
+.viptxtColorHui {
+    color: #6e6e6e;
+}
+
+.fontBold {
+    font-weight: bold;
+}
+
+.sigin-txt-yellow {
+    color: #FFCC00 !important;
+}
+
+.borderRadius-5 {
+    border-radius: 5px;
+}
+
+.spinbtn3Color {
+    background-color: #9856F5;
+}
+
+.spinbtn1Color {
+    background-color: #653120;
+}
+
+.spinbtn1textColor {
+    color: #653120;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.txtColor {
+    color: #ffffff;
+}
+
+.width-100 {
+    width: 100px;
+}
+
+
+.rotate22-5 {
+    transform: rotate(22.5deg);
+}
+
+.rotate30 {
+    transform: rotate(30deg);
+}
+
+.rotate45 {
+    transform: rotate(45deg);
+}
+
+.rotate60 {
+    transform: rotate(60deg);
+}
+
+.rotate67-5 {
+    transform: rotate(67.5deg);
+}
+
+.rotate90 {
+    transform: rotate(90deg);
+}
+
+.rotate112-5 {
+    transform: rotate(112.5deg);
+}
+
+.rotate120 {
+    transform: rotate(120deg);
+}
+
+.rotate135 {
+    transform: rotate(135deg);
+}
+
+.rotate150 {
+    transform: rotate(150deg);
+}
+
+.rotate157-5 {
+    transform: rotate(157.5deg);
+}
+
+.rotate180 {
+    transform: rotate(180deg);
+}
+
+.rotate202-5 {
+    transform: rotate(202.5deg);
+}
+
+.rotate210 {
+    transform: rotate(210deg);
+}
+
+.rotate225 {
+    transform: rotate(225deg);
+}
+
+.rotate240 {
+    transform: rotate(240deg);
+}
+
+.rotate247-5 {
+    transform: rotate(247.5deg);
+}
+
+.rotate270 {
+    transform: rotate(270deg);
+}
+
+.rotate292-5 {
+    transform: rotate(292.5deg);
+}
+
+.rotate300 {
+    transform: rotate(300deg);
+}
+
+.rotate315 {
+    transform: rotate(315deg);
+}
+
+.rotate337-5 {
+    transform: rotate(337.5deg);
+}
+
+.rotate360 {
+    transform: rotate(360deg);
+}
+
+.rotate330 {
+    transform: rotate(330deg);
+}
+
+.spinIconShadow {
+    box-shadow: 2px 2px 2px #202020;
+}
+
+.height-28 {
+    height: 28px;
+}
+
+.spinDi1 {
+    background-image: url("https://scource-static.funibet.com/funibet/images/nav/diPan1.png");
+    background-repeat: no-repeat;
+    width: 308px;
+    height: 308px;
+    max-width: 308px;
+    max-height: 308px;
+}
+
+.spinDi2 {
+    width: 354px;
+    height: 352px;
+    max-width: 354px;
+    max-height: 352px;
+}
+
+.spinDi3 {
+    width: 99px;
+    height: 102px;
+}
+
+.spinDi4 {
+    width: 360px;
+    height: 332px;
+    max-width: 360px;
+    max-height: 332px;
+}
+
+.spinDi10 {
+    width: 98%;
+    height: 84px;
+    margin: 0px auto;
+}
+
+.spinDi7 {
+    width: 360px;
+    height: 106px;
+}
+
+.spinDi8 {
+    max-width: 400px;
+    width: 100px;
+    height: 370px;
+    margin-top: 20px;
+    background-color: #2C394D !important;
+}
+
+.spinTanChuang {
+    background-color: #2C394D !important;
+}
+
+.spin-bottom {
+    height: 84px;
+    box-sizing: border-box;
+    background: #151617;
+    border-radius: 8px;
+}
+
+.spin-bonus {
+    width: 49.5%;
+    height: 100%;
+    background: #191A1B;
+    border-radius: 8px;
+    color: #6C7075;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.spin-record {
+    overflow: hidden;
+}
+
+.spin-vip {
+    width: 98%;
+    height: 86px;
+    padding: 4px 4px 4px 4px;
+}
+
+.font-weight500 {
+    font-weight: 500;
+}
+
+.spin-vip-img {
+    width: 44px;
+}
+
+.spin-vip-text {
+    font-size: 14px;
+}
+
+.spin-vip-2 {
+    width: 100%;
+    height: 22px;
+    font-size: 14px;
+    margin-top: 15px;
+    line-height: 22px;
+}
+
+.spin-vip-3 {
+    font-size: 14px;
+    margin-top: 6px;
+}
+
+#spin {
+    transition: all 4s;
+}
+
+.sanImg {
+    animation: gradient 1.3s linear infinite;
+}
+
+.sanImg1 {
+    animation: gradient1 1.3s linear infinite;
+}
+
+.index4bigImg {
+    animation: indexImgTouMing2 0.2s linear;
+    animation-fill-mode: forwards;
+}
+
+.index4bigImg:hover {
+    animation: indexImgTouMing 0.2s linear;
+    animation-fill-mode: forwards;
+}
+
+.spinZhuanBtnImg {
+    animation: suoFang 2s ease-in-out infinite;
+    opacity: 0;
+}
+
+.spinZhuanBtnImgX {
+    animation: suoFang 2s ease-in-out infinite;
+    animation-delay: 0.3s;
+    opacity: 0;
+}
+
+.spinZhuanReBtn {
+    animation: zpFangDa 0.4s cubic-bezier(.62, -0.14, .62, 1.25);
+    animation-fill-mode: forwards;
+}
+
+@keyframes suoFang {
+    0% {
+        opacity: 1;
+        transform: scale(0.95) rotate(0deg);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.05) rotate(5deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(0.95) rotate(0deg);
+    }
+}
+
+.spinZhuanBtnImg2 {
+    animation: suoFang2 2s ease-in-out infinite;
+}
+
+@keyframes suoFang2 {
+    0% {
+        transform: scale(1.05) rotate(5deg);
+    }
+
+    50% {
+        transform: scale(0.95) rotate(0deg);
+    }
+
+    100% {
+        transform: scale(1.05) rotate(5deg);
+    }
+}
+
+@keyframes zpFangDa {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes indexImgTouMing {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes indexImgTouMing2 {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes gradient {
+    0% {
+        opacity: 0;
+    }
+
+    6% {
+        opacity: 0.125;
+    }
+
+    12% {
+        opacity: 0.25;
+    }
+
+    18% {
+        opacity: 0.375;
+    }
+
+    25% {
+        opacity: 0.5;
+    }
+
+    31% {
+        opacity: 0.625;
+    }
+
+    37% {
+        opacity: 0.75;
+    }
+
+    43% {
+        opacity: 0.875;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    56% {
+        opacity: 0.875;
+    }
+
+    62% {
+        opacity: 0.75;
+    }
+
+    68% {
+        opacity: 0.625;
+    }
+
+    75% {
+        opacity: 0.5;
+    }
+
+    81% {
+        opacity: 0.375;
+    }
+
+    87% {
+        opacity: 0.25;
+    }
+
+    93% {
+        opacity: 0.125;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes gradient1 {
+
+    0% {
+        opacity: 1;
+    }
+
+    6% {
+        opacity: 0.875;
+    }
+
+    12% {
+        opacity: 0.75;
+    }
+
+    18% {
+        opacity: 0.625;
+    }
+
+    25% {
+        opacity: 0.5;
+    }
+
+    31% {
+        opacity: 0.375;
+    }
+
+    37% {
+        opacity: 0.25;
+    }
+
+    43% {
+        opacity: 0.125;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    56% {
+        opacity: 0.125;
+    }
+
+    62% {
+        opacity: 0.25;
+    }
+
+    68% {
+        opacity: 0.375;
+    }
+
+    75% {
+        opacity: 0.5;
+    }
+
+    81% {
+        opacity: 0.625;
+    }
+
+    87% {
+        opacity: 0.75;
+    }
+
+    93% {
+        opacity: 0.875;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.spinIconShadow {
+    box-shadow: 2px 2px 2px #202020;
+}
+
+.spinDi5 {
+    background-image: url("https://scource-static.funibet.com/funibet/images/nav/san2.png");
+    width: 472px;
+    height: 500px;
+}
+
+.spinDi6 {
+    background-image: url("https://scource-static.funibet.com/funibet/images/nav/san2.png");
+    width: 472px;
+    height: 500px;
+}
+
+.containerSpinBtn {
+    width: 340px;
+    height: 80px;
+    margin: 8px auto 8px auto;
+    font-size: 48px;
+}
+
+.containerSpinBtn .btn {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 50px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.containerSpinBtn .btn a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 15px 15px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    padding: 10px;
+    letter-spacing: 1px;
+    text-decoration: none !important;
+    overflow: hidden;
+    color: #fff;
+    font-weight: 400px;
+    z-index: 1;
+    transition: 0.5s;
+    backdrop-filter: blur(15px);
+}
+
+.containerSpinBtn .btn:hover a {
+    letter-spacing: 3px;
+}
+
+.spin-a-rata-disable:hover {
+    letter-spacing: 1px !important;
+}
+
+.containerSpinBtn .btn .spin-a-rata-disable::before {
+    content: none !important;
+}
+
+.containerSpinBtn .btn a::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0.15), transparent);
+    transform: skewX(45deg) translate(0);
+    transition: 0.5s;
+    filter: blur(0px);
+}
+
+.containerSpinBtn .btn:hover a::before {
+    transform: skewX(45deg) translate(200px);
+}
+
+.containerSpinBtn .btn-disable::before {
+    content: none !important;
+}
+
+.containerSpinBtn .btn-disable::after {
+    content: none !important;
+}
+
+.containerSpinBtn .btn::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+    bottom: -5px;
+    width: 30px;
+    height: 10px;
+    background: #f00;
+    border-radius: 10px;
+    transition: 0.5s;
+    transition-delay: 0.5;
+}
+
+.containerSpinBtn .btn:hover::before
+
+/*lightup button*/
+    {
+    bottom: 0;
+    height: 50%;
+    width: 80%;
+    border-radius: 30px;
+}
+
+
+.containerSpinBtn .btn::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+    top: -5px;
+    width: 30px;
+    height: 10px;
+    background: #f00;
+    border-radius: 10px;
+    transition: 0.5s;
+    transition-delay: 0.5;
+}
+
+.containerSpinBtn .btn:hover::after
+
+/*lightup button*/
+    {
+    top: 0;
+    height: 50%;
+    width: 80%;
+    border-radius: 30px;
+}
+
+.containerSpinBtn .btn:nth-child(1)::before,
+/*chnage 1*/
+.containerSpinBtn .btn:nth-child(1)::after {
+    background: #14C2A3;
+    box-shadow: 0 0 5px #14C2A3, 0 0 15px #14C2A3, 0 0 30px #14C2A3, 0 0 60px #14C2A3;
+}
+
+.VipBgDiColor {
+    background-color: #080808;
+}
+
+.colorGameListTitle {
+    color: #B9BBC0;
+}
+
+
 @media screen and (min-width: 0px) and (max-width: 750px) {
+    .spinDi8 {
+        max-width: 360px;
+        width: 360px;
+    }
+
     .closeBtnCheckIn {
         margin-top: 9%;
     }

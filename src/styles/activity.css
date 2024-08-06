@@ -1,0 +1,1102 @@
+.activityMoveLeft {
+    margin-left: 10px;
+    animation: activityMove1 0.4s ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes activityMove1 {
+    from {
+        margin-left: -360px;
+    }
+
+    to {
+        margin-left: 10px;
+    }
+}
+
+.activityMoveRight {
+    margin-left: 10px;
+    animation: activityMove2 0.4s ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes activityMove2 {
+    from {
+        margin-left: 360px;
+    }
+
+    to {
+        margin-left: 10px;
+    }
+}
+
+.spinZhuanPanFangDa {
+    opacity: 0;
+    animation: activityZpFangDa 0.4s cubic-bezier(.62, -0.14, .62, 1.25);
+    animation-delay: 0.2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes activityZpFangDa {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.activityMoveLeftZero {
+    margin-left: 0px;
+    animation: activityMove3 0.4s ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes activityMove3 {
+    from {
+        margin-left: -360px;
+    }
+
+    to {
+        margin-left: 0px;
+    }
+}
+
+.activityMoveRightZero {
+    margin-left: 43px;
+    animation: activityMove4 0.4s ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes activityMove4 {
+    from {
+        margin-left: 360px;
+    }
+
+    to {
+        margin-left: 43px;
+    }
+}
+
+.activityMoveLeftShare {
+    left: 20px;
+    animation: activityMove5 0.4s ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes activityMove5 {
+    from {
+        left: -340px;
+    }
+
+    to {
+        left: 20px;
+    }
+}
+
+.activityMoveLeftBind {
+    left: -340px;
+    animation: activityMove6 0.4s ease-in-out;
+    animation-delay: 0.1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes activityMove6 {
+    from {
+        left: -340px;
+    }
+
+    to {
+        left: 39px;
+    }
+}
+
+.activityMoveLeftDeposit {
+    left: 360px;
+    animation: activityMove7 0.4s ease-in-out;
+    animation-delay: 0.35s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes activityMove7 {
+    from {
+        left: 360px;
+    }
+
+    to {
+        left: 114px;
+    }
+}
+
+.activityMoveRightDeposit {
+    left: -300px;
+    animation: activityMove8 0.4s ease-in-out;
+    animation-delay: 0.35s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes activityMove8 {
+    from {
+        left: -300px;
+    }
+
+    to {
+        left: 39px;
+    }
+}
+
+
+.activityMoveBanner1_1 {
+    animation: moveBanner1_1 2s linear infinite;
+    animation-delay: 0.2s;
+    width: 93px !important;
+    height: 98px;
+}
+
+@keyframes moveBanner1_1 {
+
+    0% {
+        left: 996px;
+        top: 0px;
+        transform: scale(1.1);
+    }
+
+    25% {
+        left: 986px;
+        top: 10px;
+        transform: scale(1.05);
+    }
+
+    50% {
+        left: 976px;
+        top: 20px;
+        transform: scale(1);
+    }
+
+    75% {
+        left: 986px;
+        top: 10px;
+        transform: scale(1.05);
+    }
+
+    100% {
+        left: 996px;
+        top: 0px;
+        transform: scale(1.1);
+    }
+}
+
+.activityMoveBanner1_2 {
+    animation: moveBanner1_2 2s linear infinite;
+    animation-delay: 0s;
+    width: 83px !important;
+    height: 86px;
+    top: 100px;
+}
+
+@keyframes moveBanner1_2 {
+
+    0% {
+        left: 1067px;
+    }
+
+    25% {
+        left: 1057px;
+    }
+
+    50% {
+        left: 1047px;
+    }
+
+    75% {
+        left: 1057px;
+    }
+
+    100% {
+        left: 1067px;
+    }
+
+}
+
+.activityMoveBanner1_3 {
+    animation: moveBanner1_3 2s linear infinite;
+    animation-delay: 0.2s;
+    width: 101px !important;
+    height: 101px;
+}
+
+@keyframes moveBanner1_3 {
+
+    0% {
+        left: 1000px;
+        top: 240px;
+        transform: scale(1.1);
+    }
+
+    25% {
+        left: 1010px;
+        top: 250px;
+        transform: scale(1.05);
+    }
+
+    50% {
+        left: 1020px;
+        top: 260px;
+        transform: scale(1);
+    }
+
+    75% {
+        left: 1010px;
+        top: 250px;
+        transform: scale(1.05);
+    }
+
+    100% {
+        left: 1000px;
+        top: 240px;
+        transform: scale(1.1);
+    }
+}
+
+.activityMoveBanner1_4 {
+    animation: moveBanner1_4 2s linear infinite;
+    animation-delay: 0s;
+    width: 149px !important;
+    height: 139px,
+}
+
+@keyframes moveBanner1_4 {
+
+    0% {
+        left: 440px;
+    }
+
+    25% {
+        left: 450px;
+    }
+
+    50% {
+        left: 460px;
+    }
+
+    75% {
+        left: 450px;
+    }
+
+    100% {
+        left: 440px;
+    }
+}
+
+
+.activityMoveBanner1_5 {
+    animation: moveBanner1_5 2s linear infinite;
+    animation-delay: 0.2s;
+    width: 110px !important;
+    height: 115px;
+}
+
+@keyframes moveBanner1_5 {
+    0% {
+        left: 540px;
+        top: 240px;
+        transform: scale(1.1);
+    }
+
+    25% {
+        left: 530px;
+        top: 250px;
+        transform: scale(1.05);
+    }
+
+    50% {
+        left: 520px;
+        top: 260px;
+        transform: scale(1);
+    }
+
+    75% {
+        left: 530px;
+        top: 250px;
+        transform: scale(1.05);
+    }
+
+    100% {
+        left: 540px;
+        top: 240px;
+        transform: scale(1.1);
+    }
+}
+
+.activityMoveBanner1_6 {
+    animation: moveBanner1_6 2s linear infinite;
+    animation-delay: 0.2s;
+    width: 85px !important;
+    height: 89px;
+}
+
+@keyframes moveBanner1_6 {
+
+    0% {
+        left: 600px;
+        top: 120px;
+        transform: scale(1.1);
+    }
+
+    25% {
+        left: 600px;
+        top: 110px;
+        transform: scale(1.05);
+    }
+
+    50% {
+        left: 600px;
+        top: 100px;
+        transform: scale(1);
+    }
+
+    75% {
+        left: 600px;
+        top: 110px;
+        transform: scale(1.05);
+    }
+
+    100% {
+        left: 600px;
+        top: 120px;
+        transform: scale(1.1);
+    }
+}
+
+.loadingBtnSty span {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+
+.activityMoveBanner3_1 {
+    width: 29px !important;
+    height: 43px;
+    animation: moveBanner3_1 2s linear infinite;
+    animation-delay: 0s;
+    left: 501px;
+    top: 229px;
+}
+
+@keyframes moveBanner3_1 {
+
+    0% {
+        top: 229px;
+    }
+
+    25% {
+        top: 239px;
+    }
+
+    50% {
+        top: 249px;
+    }
+
+    75% {
+        top: 239px;
+    }
+
+    100% {
+        top: 229px;
+    }
+}
+
+.activityMoveBanner3_2 {
+    width: 121px !important;
+    height: 150px;
+    animation: moveBanner3_2 2s linear infinite;
+    animation-delay: 0s;
+    left: 456px;
+    top: 49px;
+}
+
+@keyframes moveBanner3_2 {
+    0% {
+        top: 49px;
+    }
+
+    25% {
+        top: 39px;
+    }
+
+    50% {
+        top: 29px;
+    }
+
+    75% {
+        top: 39px;
+    }
+
+    100% {
+        top: 49px;
+    }
+}
+
+.activityMoveBanner3_3 {
+    width: 79px !important;
+    height: 77px;
+    animation: moveBanner3_3 2s linear infinite;
+    animation-delay: 0s;
+    left: 600px;
+    top: 186px;
+}
+
+@keyframes moveBanner3_3 {
+    0% {
+        top: 186px;
+    }
+
+    25% {
+        top: 196px;
+    }
+
+    50% {
+        top: 206px;
+    }
+
+    75% {
+        top: 196px;
+    }
+
+    100% {
+        top: 186px;
+    }
+}
+
+
+.activityMoveBanner3_4 {
+    width: 98px !important;
+    height: 144px;
+    animation: moveBanner3_4 2s linear infinite;
+    animation-delay: 0s;
+    left: 725px;
+    top: 161px;
+}
+
+@keyframes moveBanner3_4 {
+    0% {
+        top: 161px;
+    }
+
+    25% {
+        top: 151px;
+    }
+
+    50% {
+        top: 141px;
+    }
+
+    75% {
+        top: 151px;
+    }
+
+    100% {
+        top: 161px;
+    }
+}
+
+
+.activityMoveBanner3_5 {
+    width: 162px !important;
+    height: 97px;
+    animation: moveBanner3_5 2s linear infinite;
+    animation-delay: 0.2s;
+    left: 600px;
+    top: 37px;
+}
+
+@keyframes moveBanner3_5 {
+    0% {
+        top: 37px;
+    }
+
+    25% {
+        top: 27px;
+    }
+
+    50% {
+        top: 17px;
+    }
+
+    75% {
+        top: 27px;
+    }
+
+    100% {
+        top: 37px;
+    }
+}
+
+.activityMoveBanner3_6 {
+    width: 40px !important;
+    height: 40px;
+    animation: moveBanner3_6 2s linear infinite;
+    animation-delay: 0.2s;
+    left: 757px;
+    top: 37px;
+}
+
+@keyframes moveBanner3_6 {
+    0% {
+        top: 37px;
+    }
+
+    25% {
+        top: 47px;
+    }
+
+    50% {
+        top: 57px;
+    }
+
+    75% {
+        top: 47px;
+    }
+
+    100% {
+        top: 37px;
+    }
+}
+
+.activityMoveBanner3_7 {
+    width: 80px !important;
+    height: 68px;
+    animation: moveBanner3_7 2s linear infinite;
+    animation-delay: 0.2s;
+    left: 1088px;
+    top: 11px;
+}
+
+@keyframes moveBanner3_7 {
+    0% {
+        top: 11px;
+    }
+
+    25% {
+        top: 21px;
+    }
+
+    50% {
+        top: 31px;
+    }
+
+    75% {
+        top: 21px;
+    }
+
+    100% {
+        top: 11px;
+    }
+}
+
+
+@media screen and (min-width: 0px) and (max-width: 750px) {
+
+    .activityMoveBanner1_1 {
+        animation: moveBanner1_1 2s linear infinite;
+        animation-delay: 0.2s;
+        width: 57px !important;
+        height: 60px;
+        left: 280px;
+        top: 0px;
+    }
+
+    @keyframes moveBanner1_1 {
+        0% {
+            top: 0px;
+            transform: scale(1.1);
+        }
+
+        25% {
+            top: 10px;
+            transform: scale(1.05);
+        }
+
+        50% {
+            top: 20px;
+            transform: scale(1);
+        }
+
+        75% {
+            top: 10px;
+            transform: scale(1.05);
+        }
+
+        100% {
+            top: 0px;
+            transform: scale(1.1);
+        }
+    }
+
+
+    .activityMoveBanner1_2 {
+        animation: moveBanner1_2 2s linear infinite;
+        animation-delay: 0s;
+        width: 48px !important;
+        height: 50px;
+        top: 85px;
+    }
+
+    @keyframes moveBanner1_2 {
+
+        0% {
+            left: 270px;
+        }
+
+        25% {
+            left: 280px;
+        }
+
+
+        50% {
+            left: 290px;
+        }
+
+        75% {
+            left: 280px;
+        }
+
+        100% {
+            left: 270px;
+        }
+    }
+
+    .activityMoveBanner1_3 {
+        animation: moveBanner1_3 2s linear infinite;
+        animation-delay: 0.2s;
+        width: 60px !important;
+        height: 60px;
+        top: 140px;
+    }
+
+    @keyframes moveBanner1_3 {
+        0% {
+            left: 260px;
+            top: 140px;
+            transform: scale(1.1);
+        }
+
+        25% {
+            left: 270px;
+            top: 150px;
+            transform: scale(1.05);
+        }
+
+        50% {
+            left: 280px;
+            top: 160px;
+            transform: scale(1);
+        }
+
+        75% {
+            left: 270px;
+            top: 150px;
+            transform: scale(1.05);
+        }
+
+        100% {
+            left: 260px;
+            top: 140px;
+            transform: scale(1.1);
+        }
+    }
+
+    .activityMoveBanner1_4 {
+        animation: moveBanner1_4 2s linear infinite;
+        animation-delay: 0s;
+        width: 60px !important;
+        height: 60px;
+        left: 20px;
+        top: 20px;
+    }
+
+    @keyframes moveBanner1_4 {
+
+        0% {
+            left: 20px;
+        }
+
+        25% {
+            left: 30px;
+        }
+
+        50% {
+            left: 40px;
+        }
+
+        75% {
+            left: 30px;
+        }
+
+        100% {
+            left: 20px;
+        }
+    }
+
+
+    .activityMoveBanner1_5 {
+        animation: moveBanner1_5 2s linear infinite;
+        animation-delay: 0.2s;
+        width: 60px !important;
+        height: 62px;
+        left: 40px;
+        top: 60px;
+    }
+
+    @keyframes moveBanner1_5 {
+        0% {
+            left: 40px;
+            top: 80px;
+            transform: scale(1.1);
+        }
+
+        25% {
+            left: 30px;
+            top: 90px;
+            transform: scale(1.05);
+        }
+
+        50% {
+            left: 20px;
+            top: 100px;
+            transform: scale(1);
+        }
+
+        75% {
+            left: 30px;
+            top: 90px;
+            transform: scale(1.05);
+        }
+
+        100% {
+            left: 40px;
+            top: 80px;
+            transform: scale(1.1);
+        }
+    }
+
+    .activityMoveBanner1_6 {
+        animation: moveBanner1_6 2s linear infinite;
+        animation-delay: 0.2s;
+        width: 60px !important;
+        height: 64px;
+        left: 100px;
+        top: 80px;
+    }
+
+    @keyframes moveBanner1_6 {
+
+        0% {
+            top: 80px;
+            transform: scale(1.1);
+        }
+
+        25% {
+            top: 70px;
+            transform: scale(1.05);
+        }
+
+        50% {
+            top: 60px;
+            transform: scale(1);
+        }
+
+        75% {
+            top: 70px;
+            transform: scale(1.05);
+        }
+
+        100% {
+            top: 80px;
+            transform: scale(1.1);
+        }
+    }
+
+    .activityMoveBanner3_1 {
+        width: 20px !important;
+        height: 30px;
+        animation: moveBanner3_1 2s linear infinite;
+        animation-delay: 0s;
+        left: 0px;
+        top: 0px;
+    }
+
+    @keyframes moveBanner3_1 {
+
+        0% {
+            top: 0px;
+        }
+
+        25% {
+            top: 10px;
+        }
+
+        50% {
+            top: 20px;
+        }
+
+        75% {
+            top: 10px;
+        }
+
+        100% {
+            top: 0px;
+        }
+    }
+
+    .activityMoveBanner3_2 {
+        width: 56px !important;
+        height: 70px;
+        animation: moveBanner3_2 2s linear infinite;
+        animation-delay: 0s;
+        left: 284px;
+        top: 49px;
+    }
+
+    @keyframes moveBanner3_2 {
+        0% {
+            top: 59px;
+        }
+
+        25% {
+            top: 49px;
+        }
+
+        50% {
+            top: 39px;
+        }
+
+        75% {
+            top: 49px;
+        }
+
+        100% {
+            top: 59px;
+        }
+    }
+
+    .activityMoveBanner3_3 {
+        width: 65px !important;
+        height: 67px;
+        animation: moveBanner3_3 2s linear infinite;
+        animation-delay: 0s;
+        left: 50px;
+        top: 136px;
+    }
+
+    @keyframes moveBanner3_3 {
+        0% {
+            top: 136px;
+        }
+
+        25% {
+            top: 146px;
+        }
+
+        50% {
+            top: 156px;
+        }
+
+        75% {
+            top: 146px;
+        }
+
+        100% {
+            top: 136px;
+        }
+    }
+
+
+    .activityMoveBanner3_4 {
+        width: 68px !important;
+        height: 100px;
+        animation: moveBanner3_4 2s linear infinite;
+        animation-delay: 0s;
+        left: 125px;
+        top: 111px;
+    }
+
+    @keyframes moveBanner3_4 {
+        0% {
+            top: 111px;
+        }
+
+        25% {
+            top: 101px;
+        }
+
+        50% {
+            top: 91px;
+        }
+
+        75% {
+            top: 101px;
+        }
+
+        100% {
+            top: 111px;
+        }
+    }
+
+
+    .activityMoveBanner3_5 {
+        width: 100px !important;
+        height: 60px;
+        animation: moveBanner3_5 2s linear infinite;
+        animation-delay: 0.2s;
+        left: 40px;
+        top: 37px;
+    }
+
+    @keyframes moveBanner3_5 {
+        0% {
+            top: 37px;
+        }
+
+        25% {
+            top: 27px;
+        }
+
+        50% {
+            top: 17px;
+        }
+
+        75% {
+            top: 27px;
+        }
+
+        100% {
+            top: 37px;
+        }
+    }
+
+    .activityMoveBanner3_6 {
+        width: 30px !important;
+        height: 30px;
+        animation: moveBanner3_6 2s linear infinite;
+        animation-delay: 0.2s;
+        left: 207px;
+        top: 27px;
+    }
+
+    @keyframes moveBanner3_6 {
+        0% {
+            top: 37px;
+        }
+
+        25% {
+            top: 47px;
+        }
+
+        50% {
+            top: 57px;
+        }
+
+        75% {
+            top: 47px;
+        }
+
+        100% {
+            top: 37px;
+        }
+    }
+
+    .activityMoveBanner3_7 {
+        width: 40px !important;
+        height: 34px;
+        animation: moveBanner3_7 2s linear infinite;
+        animation-delay: 0.2s;
+        left: 288px;
+        top: 11px;
+    }
+
+    @keyframes moveBanner3_7 {
+        0% {
+            top: 11px;
+        }
+
+        25% {
+            top: 21px;
+        }
+
+        50% {
+            top: 31px;
+        }
+
+        75% {
+            top: 21px;
+        }
+
+        100% {
+            top: 11px;
+        }
+    }
+
+    .activityMoveSound_1 {
+        margin-left: 20px;
+        animation: moveSound_1 1.5s linear infinite;
+    }
+
+    @keyframes moveSound_1 {
+        0% {
+            margin-left: 20px;
+        }
+
+        25% {
+            margin-left: 25px;
+        }
+
+        50% {
+            margin-left: 30px;
+        }
+
+        75% {
+            margin-left: 25px;
+        }
+
+        100% {
+            margin-left: 20px;
+        }
+    }
+
+    .activityMoveSound_2 {
+        opacity: 1;
+        animation: moveSound_2 1s linear infinite;
+    }
+
+    @keyframes moveSound_2 {
+        0% {
+            opacity: 1;
+        }
+
+        25% {
+            opacity: 0.5;
+        }
+
+        50% {
+            opacity: 0;
+        }
+
+        75% {
+            opacity: 0.5;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+
+
+
+
+
+}

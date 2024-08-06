@@ -121,48 +121,8 @@ function VisitorsOverviewWidget() {
 
   return (
     <ThemeProvider theme={contrastTheme}>
-      <Root className="sm:col-span-2 lg:col-span-3 dark flex flex-col flex-auto shadow rounded-2xl overflow-hidden">
-        <div className="flex items-center justify-between mt-40 ml-40 mr-24 sm:mr-40">
-          <div className="flex flex-col">
-            <Typography className="mr-16 text-2xl md:text-3xl font-semibold tracking-tight leading-7">
-              Visitors Overview
-            </Typography>
-            <Typography className="font-medium" color="text.secondary">
-              Number of unique visitors
-            </Typography>
-          </div>
-          <div className="mt-12 sm:mt-0 sm:ml-8">
-            <Tabs
-              value={tabValue}
-              onChange={(ev, value) => setTabValue(value)}
-              indicatorColor="secondary"
-              textColor="inherit"
-              variant="scrollable"
-              scrollButtons={false}
-              className="-mx-4 min-h-40"
-              classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
-              TabIndicatorProps={{
-                children: (
-                  <Box
-                    sx={{ bgcolor: 'text.disabled' }}
-                    className="w-full h-full rounded-full opacity-20"
-                  />
-                ),
-              }}
-            >
-              {Object.entries(ranges).map(([key, label]) => (
-                <Tab
-                  className="text-14 font-semibold min-h-40 min-w-64 mx-4 px-12"
-                  disableRipple
-                  key={key}
-                  label={label}
-                />
-              ))}
-            </Tabs>
-          </div>
-        </div>
-
-        <div className="flex flex-col flex-auto h-320">
+      <Root className="sm:col-span-2 lg:col-span-3 dark flex flex-col flex-auto shadow  overflow-hidden mt-20" style={{ borderRadius: "10px" }}>
+        <div className="flex flex-col flex-auto" style={{ height: "190px" }}>
           <ReactApexChart
             options={chartOptions}
             series={series[currentRange]}
