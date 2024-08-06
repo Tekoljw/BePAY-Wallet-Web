@@ -601,6 +601,45 @@ export default {
             url: "/nft/queryContractResult",
             method: "post",
         },
+    },
+
+    credit: {
+        config: {
+            url: "/credit/config",
+            method: "post",
+        },
+        getUserCreditCard: {
+            url: "/credit/getUserCreditCard",
+            method: "post",
+        },
+        applyCreditCard: {
+            url: "/credit/applyCreditCard",
+            method: "post",
+        },
+        confirmCardholderIdentity: {
+            url: "/credit/confirmCardholderIdentity",
+            method: "post",
+        },
+        creditActive: {
+            url: "/credit/creditActive",
+            method: "post",
+        },
+        creditCardFiatDeposit: {
+            url: "/credit/creditCardFiatDeposit",
+            method: "post",
+        },
+        creditCardCryptoDeposit: {
+            url: "/credit/creditCardCryptoDeposit",
+            method: "post",
+        },
+        creditCardFiatWithdraw: {
+            url: "/credit/creditCardFiatWithdraw",
+            method: "post",
+        },
+        creditCardCryptoWithdraw: {
+            url: "/credit/creditCardCryptoWithdraw",
+            method: "post",
+        },
     }
 
 };

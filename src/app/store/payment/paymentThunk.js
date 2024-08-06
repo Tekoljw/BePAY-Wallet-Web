@@ -259,3 +259,46 @@ export const payoutPayWays = createAsyncThunk(
         }
     }
 );
+
+// 信用卡分类
+export const getCreditConfig = createAsyncThunk(
+    'credit/creditConfig',
+    async (settings, { dispatch, getState }) => {
+        const result = await React.$api("credit.config");
+        if (result.errno === 0) {
+            return result.data
+        } else {
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+        }
+    }
+);
+
+// 申请信用卡
+export const applyCreditCard = createAsyncThunk(
+    'credit/applyCreditCard',
+    async (settings, { dispatch, getState }) => {
+        const result = await React.$api("credit.applyCreditCard", settings);
+        if (result.errno === 0) {
+            if (result.data.status === 'success') {
+                dispatch(showMessage({ message: result.errmsg, code: 1 }));
+            } else {
+                dispatch(showMessage({ message: result.data.msg, code: 2 }));
+            }
+        } else {
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+        }
+    }
+);
+
+// 获取信用卡列表
+export const getUserCreditCard = createAsyncThunk(
+    'credit/getUserCreditCard',
+    async (settings, { dispatch, getState }) => {
+        const result = await React.$api("credit.getUserCreditCard");
+        if (result.errno === 0) {
+            return result.data
+        } else {
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+        }
+    }
+);

@@ -62,36 +62,6 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     },
 }));
 
-export interface DialogTitleProps {
-    id: string;
-    children?: React.ReactNode;
-    onClose: () => void;
-}
-
-function BootstrapDialogTitle(props: DialogTitleProps) {
-    const { children, onClose, ...other } = props;
-
-    return (
-        <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-            {children}
-            {onClose ? (
-                <IconButton
-                    aria-label="close"
-                    onClick={onClose}
-                    sx={{
-                        position: 'absolute',
-                        right: 8,
-                        top: 8,
-                        color: (theme) => theme.palette.grey[500],
-                    }}
-                >
-                    <CloseIcon />
-                </IconButton>
-            ) : null}
-        </DialogTitle>
-    );
-}
-
 const item = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0 },
