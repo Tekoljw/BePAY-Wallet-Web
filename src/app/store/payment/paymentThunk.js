@@ -302,3 +302,16 @@ export const getUserCreditCard = createAsyncThunk(
         }
     }
 );
+
+// 信用卡转入（crypto）
+export const creditCardCryptoDeposit = createAsyncThunk(
+    'credit/creditCardCryptoDeposit',
+    async (settings, { dispatch, getState }) => {
+        const result = await React.$api("credit.creditCardCryptoDeposit", settings);
+        if (result.errno === 0) {
+            return result.data
+        } else {
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+        }
+    }
+);

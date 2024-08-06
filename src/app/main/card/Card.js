@@ -24,7 +24,14 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
-import {applyCreditCard, getCreditConfig, getUserCreditCard} from "app/store/payment/paymentThunk";
+import {
+    applyCreditCard,
+    creditCardCryptoDeposit,
+    getCreditConfig,
+    getUserCreditCard
+} from "app/store/payment/paymentThunk";
+import {createPin, verifyPin} from "app/store/wallet/walletThunk";
+import {showMessage} from "app/store/fuse/messageSlice";
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -258,11 +265,6 @@ function Card(props) {
 
     const { isValid, dirtyFields, errors } = formState;
 
-    // 输入数字
-    const handleDoPin = (text) => {
-
-    }
-
     const sortUseAge = (a, b) => {
         const prioritizedSymbolsFirst = ['eUSDT', 'USDT', 'BGT', 'eBGT'];
         const prioritizedSymbolsSecond = ['USDT', 'USDC', 'DAI', 'BUSD', 'TUSD', 'PAX', 'GUSD', 'USDD'];
@@ -316,15 +318,17 @@ function Card(props) {
         let tmpSymbol = [];
         let tmpSymbolWallet = [];
         for (let i = 0; i < symbols.length; i++) {
-            if (tmpSymbol.indexOf(symbols[i].symbol) == -1 && symbols[i].symbol != 'eUSDT' && symbols[i].symbol != 'eBGT') {
-                tmpSymbol.push(symbols[i].symbol)
-                tmpSymbolWallet.push({
-                    avatar: symbols[i].avatar,
-                    balance: arrayLookup(walletData.inner, 'symbol', symbols[i].symbol, 'balance') || 0,
-                    symbol: symbols[i].symbol,
-                    tradeLock: arrayLookup(walletData.inner, 'symbol', symbols[i].symbol, 'tradeLock') || 0,
-                    withdrawLock: arrayLookup(walletData.inner, 'symbol', symbols[i].symbol, 'withdrawLock') || 0
-                })
+            if (symbols[i].symbol == 'USDT') {
+                if (tmpSymbol.indexOf(symbols[i].symbol) == -1 && symbols[i].symbol != 'eUSDT' && symbols[i].symbol != 'eBGT') {
+                    tmpSymbol.push(symbols[i].symbol)
+                    tmpSymbolWallet.push({
+                        avatar: symbols[i].avatar,
+                        balance: arrayLookup(walletData.inner, 'symbol', symbols[i].symbol, 'balance') || 0,
+                        symbol: symbols[i].symbol,
+                        tradeLock: arrayLookup(walletData.inner, 'symbol', symbols[i].symbol, 'tradeLock') || 0,
+                        withdrawLock: arrayLookup(walletData.inner, 'symbol', symbols[i].symbol, 'withdrawLock') || 0
+                    })
+                }
             }
         }
         tmpSymbolWallet.sort(sortUseAge)
@@ -352,6 +356,10 @@ function Card(props) {
     const [ cardConfigID, setCardConfigID ] = useState(0);
 
     const [ cardList, setCardList ] = useState({2: [], 3: []});
+    const [ cardListObj, setCardListObj ] = useState({});
+    const [ cardID, setCardID ] = useState(0);
+    const [ transferMoney, setTransferMoney ] = useState(0);
+    const [ transferFee, setTransferFee ] = useState(0);
     //获取Config
     const getCardConfig = () => {
         dispatch(getCreditConfig()).then((res) => {
@@ -390,21 +398,72 @@ function Card(props) {
         dispatch(getUserCreditCard()).then((res) => {
             let result = res.payload
             let tmpCardList = {2: [], 3: []}
+            let tmpCardListObj = {}
             result.map((item) => {
                 if (item.creditType === 2) {
                     tmpCardList[2].push(item)
                 } else if (item.creditType === 3) {
                     tmpCardList[3].push(item)
                 }
+
+                tmpCardListObj[item.id] = item
             })
             setCardList(tmpCardList)
+            setCardListObj(tmpCardListObj)
+            console.log(tmpCardListObj, 'tmpCardListObj')
         })
+    }
+
+    // 信用卡转入(crypto)
+    const handleTransferInCrypto = () => {
+        dispatch(creditCardCryptoDeposit({
+            userCreditId: cardID,
+            creditType: cardListObj[cardID].creditType,
+            symbol: symbol,
+            chain: 'trc',
+            amount: transferMoney,
+        })).then((res) => {
+            let result = res.payload
+            dispatch(showMessage({ message: result.msg, code: 2 }));
+            if (result.status === 'success') {
+                closeRecordFunc()
+                setTransferMoney(0)
+                setCardID(0)
+            }
+        })
+    }
+
+    // 输入金额
+    const handleDoMoney = (text) => {
+        let tmpText = transferMoney.toString()
+        if (tmpText == 0) {
+            tmpText = ''
+        }
+        if (text === -1) {
+            tmpText = tmpText.slice(0, -1)
+        } else if (text === '.') {
+            if (!tmpText.includes(text)) {
+                tmpText = tmpText + text
+            }
+        } else {
+            tmpText = tmpText + text
+        }
+
+        setTransferMoney(tmpText == 0 ? '' : tmpText);
     }
 
     useEffect(() => {
         getCardConfig()
         getCardList()
     }, []);
+
+    useEffect(() => {
+        if (cardID) {
+            let tmpTransferFee = 0
+            tmpTransferFee = Number(transferMoney) * Number(cardConfigList[cardConfigID].creditRate) + Number(cardConfigList[cardConfigID].basicFee)
+            setTransferFee(tmpTransferFee)
+        }
+    }, [transferMoney])
 
 
 
@@ -600,6 +659,7 @@ function Card(props) {
                                                                             <div className='cardBeiMian flipped2'>
                                                                                 <div className={clsx("", kaBeiButton2 && "xiaoShi")}>
                                                                                     <div className='kaBeiZi flex flipped2'>
+                                                                                        {cardItem.userCreditKey}
                                                                                         <img id="cardIconWTwo"
                                                                                              onClick={(e) => handleImgClick(e, FanKaBei)}
                                                                                              className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id="zhangDanZiTwo" className='zhangDanZi'>正面</span>
@@ -622,9 +682,10 @@ function Card(props) {
                                                                         <div className='flex justify-between w-full'>
                                                                             <div className='flex'>
                                                                                 <div className=''>余额</div>
-                                                                                <div className='ml-8 yuEZi'>$50.00</div>
+                                                                                <div className='ml-8 yuEZi'>${cardItem.amount ?? '0.00'}</div>
                                                                             </div>
-                                                                            <div className='cardDepositeDi'
+                                                                            <div
+                                                                                className='cardDepositeDi'
                                                                             >划转</div>
                                                                         </div>
                                                                     </AccordionSummary>
@@ -680,6 +741,8 @@ function Card(props) {
                                                                 </Accordion>
                                                                 <div className='h-40 w-40  mr-40' style={{ position: "absolute", top: "12%", right: "0%" }} onClick={() => {
                                                                     setOpenRecordWindow(true)
+                                                                    setCardID(cardItem.id)
+                                                                    setCardConfigID(cardItem.creditConfigId)
                                                                     openRecordFunc()
                                                                 }}></div>
                                                             </div>
@@ -811,6 +874,126 @@ function Card(props) {
                                         }
                                         {
                                             smallTabValue === 1 && <div>
+                                                {cardList[3].map((cardItem) => {
+                                                    return (
+                                                        <motion.div
+                                                            key={cardItem.id}
+                                                            variants={item}
+                                                            initial="hidden"
+                                                            animate="show"
+                                                            className='cardJianGe'
+                                                        >
+                                                            <div className='flex justify-center container' style={{ position: "relative" }}>
+                                                                <div className="responsive-div creditcard" id="responsive-div">
+                                                                    <div className={clsx("", fanZhuan && "xiaoShi")}>
+                                                                        <div className="responsive-div-content card4Bg cardZhiDi" onClick={() => {
+                                                                        }}  >
+                                                                            <div className={clsx("cardNumber", kaBeiButton && "xiaoShi")}> <span id="cardNumberOne" >{cardItem.userCreditNo}</span> </div>
+                                                                            <div className='cardBeiMian'>
+                                                                                <div className={clsx("", kaBeiButton && "xiaoShi")}>
+                                                                                    <div className='kaBeiZi flex'>
+                                                                                        <img id="cardIconWOne"
+                                                                                             onClick={(e) => handleImgClick(e, FanKa)}
+                                                                                             className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id="zhangDanZiOne" className='zhangDanZi'>背面</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div className={clsx("", !fanZhuan && "xiaoShi")} >
+                                                                        <div className="responsive-div-content card41Bg cardZhiDi flipped2" onClick={() => {
+                                                                        }}  >
+                                                                            <div className='cardBeiMian flipped2'>
+                                                                                <div className={clsx("", kaBeiButton2 && "xiaoShi")}>
+                                                                                    <div className='kaBeiZi flex flipped2'>
+                                                                                        <img id="cardIconWTwo"
+                                                                                             onClick={(e) => handleImgClick(e, FanKaBei)}
+                                                                                             className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id="zhangDanZiTwo" className='zhangDanZi'>正面</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div className='cardGongNengMyDi' style={{ position: "relative" }}>
+                                                                <Accordion className='gongNengTan1' >
+                                                                    <AccordionSummary
+                                                                        expandIcon={<ExpandMoreIcon />}
+                                                                        aria-controls="panel1-content"
+                                                                        id="panel1-header"
+                                                                        className='gongNengTan2'
+                                                                    >
+                                                                        <div className='flex justify-between w-full'>
+                                                                            <div className='flex'>
+                                                                                <div className=''>余额</div>
+                                                                                <div className='ml-8 yuEZi'>$50.00</div>
+                                                                            </div>
+                                                                            <div className='cardDepositeDi'
+                                                                            >划转</div>
+                                                                        </div>
+                                                                    </AccordionSummary>
+
+                                                                    <AccordionDetails className='gongNengTan3'>
+                                                                        <div className='flex justify-center'>
+                                                                            <div className='gongNengLanW' onClick={() => {
+                                                                                setOpenAnimateModal(true);
+                                                                            }} >
+                                                                                <img className='gongNengTuBiao' src="wallet/assets/images/menu/guaShi.png"></img>
+                                                                                <div className='gongNengZiW mt-4 text-14'>冻结</div>
+                                                                            </div>
+                                                                            <div className='gongNengLanW' onClick={() => {
+                                                                                setOpenAnimateHuanKa(true);
+                                                                            }}>
+                                                                                <img className='gongNengTuBiao' src="wallet/assets/images/menu/gengHuanKaPian.png"></img>
+                                                                                <div className='gongNengZiW mt-4 text-14'>换卡</div>
+                                                                            </div>
+
+                                                                            <div className='gongNengLanW' onClick={() => {
+                                                                                setOpenPassWordWindow(true)
+                                                                                openPassWordFunc()
+                                                                            }}>
+                                                                                <img className='gongNengTuBiao' src="wallet/assets/images/menu/miMaGuanLi.png"></img>
+                                                                                <div className='gongNengZiW mt-4 text-14'>密码</div>
+                                                                            </div>
+
+                                                                            <div className='gongNengLanW' onClick={() => {
+                                                                                setOpenBindWindow(true)
+                                                                                openBindFunc()
+                                                                            }}>
+                                                                                <img className='gongNengTuBiao' src="wallet/assets/images/menu/bangDing.png"></img>
+                                                                                <div className='gongNengZiW mt-4 text-14'>订阅</div>
+                                                                            </div>
+                                                                        </div>
+                                                                        {/*
+                                                                <div className='mt-24 flex justify-center'>
+                                                                    <div className='gongNengLanW'>
+                                                                        <img className='gongNengTuBiao' src="wallet/assets/images/menu/daE.png"></img>
+                                                                        <div className='gongNengZiW mt-4 text-14'>大额预约</div>
+                                                                    </div>
+                                                                    <div className='gongNengLanW'>
+                                                                        <img className='gongNengTuBiao' src="wallet/assets/images/menu/bangDing.png"></img>
+                                                                        <div className='gongNengZiW mt-4 text-14'>解除订阅</div>
+                                                                    </div>
+                                                                    <div className='gongNengLanW'>
+                                                                        <img className='gongNengTuBiao' src="wallet/assets/images/menu/atm.png"></img>
+                                                                        <div className='gongNengZiW mt-4 text-14'>ATM/POS</div>
+                                                                    </div>
+                                                                </div> */}
+
+                                                                    </AccordionDetails>
+                                                                </Accordion>
+                                                                <div className='h-40 w-40  mr-40' style={{ position: "absolute", top: "12%", right: "0%" }} onClick={() => {
+                                                                    setOpenRecordWindow(true)
+                                                                    openRecordFunc()
+                                                                }}></div>
+                                                            </div>
+                                                        </motion.div>
+                                                    )
+                                                })}
+
                                                 <div className='tianJiaKaPian flex items-center pl-16' onClick={() => {
                                                     setTabValue(1);
                                                 }}>
@@ -1302,7 +1485,7 @@ function Card(props) {
                         <div className='flex justify-between mt-12'>
                             <div className='flex'>
                                 <div className='' style={{ color: "#94A3B8" }}>账户总资产</div>
-                                <div className='ml-10'>$5000.00</div>
+                                <div className='ml-10'>${(userData.profile.wallet?.Crypto + userData.profile.wallet?.Fiat).toFixed(2) ?? '0.00'}</div>
                             </div>
                             <div className='' style={{ color: "#2DD4BF", textDecoration: "underline" }} onClick={() => {
                                 changePhoneTab('swap');
@@ -1313,14 +1496,14 @@ function Card(props) {
                         <div className='w-full h-44 mt-24' style={{ position: "relative" }}>
                             <div className='w-full h-44 border' style={{ borderRadius: "0.5rem", backgroundColor: "#151C2A", position: "absolute", top: "0%", right: "0%" }}>
                             </div>
-                            <div className='text-16' style={{ position: "absolute", top: "0%", left: "4%", width: "82%", height: "4.4rem", lineHeight: "4.4rem" }}>0</div>
+                            <div className='text-16' style={{ position: "absolute", top: "0%", left: "4%", width: "82%", height: "4.4rem", lineHeight: "4.4rem" }}>{transferMoney}</div>
                             <div style={{ position: "absolute", top: "0%", right: "4%", height: "4.4rem", lineHeight: "4.4rem" }}>Max</div>
                         </div>
 
                         <div className='flex justify-between mt-16'>
                             <div className='flex'>
                                 <div className='' style={{ color: "#94A3B8" }}>手续费</div>
-                                <div className='ml-10'>0.000000 USDT</div>
+                                <div className='ml-10'>{transferFee.toFixed(2)} USDT</div>
                             </div>
                         </div>
                     </div>
@@ -1331,22 +1514,22 @@ function Card(props) {
                                 onTouchStart={changeToBlack}
                                 onTouchEnd={changeToWhite}
                                 onTouchCancel={changeToWhite}
-                                onClick={() => { handleDoPin(1) }}>1</div>
+                                onClick={() => { handleDoMoney(1) }}>1</div>
                             <div id="zhuanZhang2" className='jianPanBtn borderRight borderBottom color-box'
                                 onTouchStart={changeToBlack}
                                 onTouchEnd={changeToWhite}
                                 onTouchCancel={changeToWhite}
-                                onClick={() => { handleDoPin(2) }}>2</div>
+                                onClick={() => { handleDoMoney(2) }}>2</div>
                             <div id="zhuanZhang3" className='jianPanBtn borderRight borderBottom'
                                 onTouchStart={changeToBlack}
                                 onTouchEnd={changeToWhite}
                                 onTouchCancel={changeToWhite}
-                                onClick={() => { handleDoPin(3) }}>3</div>
+                                onClick={() => { handleDoMoney(3) }}>3</div>
                             <div id="zhuanZhangImg" className='jianPanBtImgDiv flex items-center borderBottom'
                                 onTouchStart={changeToBlack}
                                 onTouchEnd={changeToWhite}
                                 onTouchCancel={changeToWhite}
-                                onClick={() => { handleDoPin(-1) }}>
+                                onClick={() => { handleDoMoney(-1) }}>
                                 <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img>
                             </div>
                         </div>
@@ -1357,46 +1540,46 @@ function Card(props) {
                                         onTouchStart={changeToBlack}
                                         onTouchEnd={changeToWhite}
                                         onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoPin(4) }}>4</div>
+                                        onClick={() => { handleDoMoney(4) }}>4</div>
                                     <div id="zhuanZhang5" className='jianPanBtn1 borderRight'
                                         onTouchStart={changeToBlack}
                                         onTouchEnd={changeToWhite}
                                         onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoPin(5) }}>5</div>
+                                        onClick={() => { handleDoMoney(5) }}>5</div>
                                     <div id="zhuanZhang6" className='jianPanBtn1 borderRight'
                                         onTouchStart={changeToBlack}
                                         onTouchEnd={changeToWhite}
                                         onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoPin(6) }}>6</div>
+                                        onClick={() => { handleDoMoney(6) }}>6</div>
                                 </div>
                                 <div className='flex'>
                                     <div id="zhuanZhang7" className='jianPanBtn1 borderRight'
                                         onTouchStart={changeToBlack}
                                         onTouchEnd={changeToWhite}
                                         onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoPin(7) }}>7</div>
+                                        onClick={() => { handleDoMoney(7) }}>7</div>
                                     <div id="zhuanZhang8" className='jianPanBtn1 borderRight'
                                         onTouchStart={changeToBlack}
                                         onTouchEnd={changeToWhite}
                                         onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoPin(8) }}>8</div>
+                                        onClick={() => { handleDoMoney(8) }}>8</div>
                                     <div id="zhuanZhang9" className='jianPanBtn1 borderRight'
                                         onTouchStart={changeToBlack}
                                         onTouchEnd={changeToWhite}
                                         onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoPin(9) }}>9</div>
+                                        onClick={() => { handleDoMoney(9) }}>9</div>
                                 </div>
                                 <div className='flex'>
                                     <div id="zhuanZhang0" className='jianPanBtn2 borderRight'
                                         onTouchStart={changeToBlack}
                                         onTouchEnd={changeToWhite}
                                         onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoPin(0) }}>0</div>
+                                        onClick={() => { handleDoMoney(0) }}>0</div>
                                     <div id="zhuanZhangDian" className='jianPanBtn4 borderRight'
                                         onTouchStart={changeToBlack}
                                         onTouchEnd={changeToWhite}
                                         onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoPin('.') }}>.</div>
+                                        onClick={() => { handleDoMoney('.') }}>.</div>
                                 </div>
                             </div>
                             <div id='zhuanZhangWanCheng' className='jianPanBtn3'
@@ -1404,7 +1587,8 @@ function Card(props) {
                                 onTouchEnd={changeToWhite}
                                 onTouchCancel={changeToWhite}
                                 onClick={() => {
-                                    setOpenZhiFu(true)
+                                    handleTransferInCrypto()
+                                    // setOpenZhiFu(true)
                                 }}>完成</div>
                         </div>
                     </div>
