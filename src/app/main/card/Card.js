@@ -64,7 +64,6 @@ export interface DialogTitleProps {
     onClose: () => void;
 }
 
-
 function BootstrapDialogTitle(props: DialogTitleProps) {
     const { children, onClose, ...other } = props;
     return (

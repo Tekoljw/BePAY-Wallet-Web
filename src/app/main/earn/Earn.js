@@ -48,6 +48,7 @@ function Earn(props) {
     const [openSpin, setOpenSpin] = useState(false);
     const [openKXian, setOpenKXian] = useState(false);
     const [openKongTou, setOpenKongTou] = useState(false);
+    const [openWaKuang, setOpenWaKuang] = useState(false);
 
 
     useEffect(() => {
@@ -60,6 +61,52 @@ function Earn(props) {
     useEffect(() => {
         dispatch(getWidgets());
     }, [dispatch]);
+
+
+    const openKXianFunc = () => {
+        setTimeout(() => {
+            document.getElementById('openKXian').classList.add('PinMoveAni');
+        }, 0);
+    };
+
+    const closesKXianFunc = () => {
+        document.getElementById('openKXian').classList.remove('PinMoveAni');
+        document.getElementById('openKXian').classList.add('PinMoveOut');
+        setTimeout(() => {
+            setOpenKXian(false)
+        }, 300);
+    };
+
+
+    const openKongTouFunc = () => {
+        setTimeout(() => {
+            document.getElementById('openKongTou').classList.add('PinMoveAni');
+        }, 0);
+    };
+
+    const closesKongTouFunc = () => {
+        document.getElementById('openKongTou').classList.remove('PinMoveAni');
+        document.getElementById('openKongTou').classList.add('PinMoveOut');
+        setTimeout(() => {
+            setOpenKongTou(false)
+        }, 300);
+    };
+
+
+    const openWaKuangFunc = () => {
+        setTimeout(() => {
+            document.getElementById('openWaKuang').classList.add('PinMoveAni');
+        }, 0);
+    };
+
+    const closesWaKuangFunc = () => {
+        document.getElementById('openWaKuang').classList.remove('PinMoveAni');
+        document.getElementById('openWaKuang').classList.add('PinMoveOut');
+        setTimeout(() => {
+            setOpenWaKuang(false)
+        }, 300);
+    };
+
 
     return (
         <div className=''>
@@ -126,7 +173,8 @@ function Earn(props) {
                                 style={{ padding: "1.5rem", backgroundColor: "#0E1421" }}
                             >
                                 <motion.div variants={item} className="" onClick={() => {
-                                    setOpenKXian(true)
+                                    setOpenKXian(true);
+                                    openKXianFunc();
                                 }}>
                                     <ImpressionsWidget />
                                 </motion.div>
@@ -145,6 +193,7 @@ function Earn(props) {
                     <div className='text-16'>百万空投</div>
                     <div className='lanDi mt-16' onClick={() => {
                         setOpenKongTou(true)
+                        openKongTouFunc();
                     }}>
                         <img className='logoCC' src="wallet/assets/images/earn/logo1.png" />
                         <div className='flex mt-16  justify-between'>
@@ -165,7 +214,10 @@ function Earn(props) {
                     style={{ paddingInline: "1.5rem" }}
                 >
                     <div className='text-16'>合约交易挖矿</div>
-                    <div className='huangDi mt-16'>
+                    <div className='huangDi mt-16' onClick={() => {
+                        setOpenWaKuang(true)
+                        openWaKuangFunc();
+                    }}>
                         <div className='flex justify-between pt-4'>
                             <div className='huangDiZi '>
                                 <img className='logoCC2 mb-4' src="wallet/assets/images/earn/logo2.png" />
@@ -770,13 +822,17 @@ function Earn(props) {
             </AnimateModal>
 
 
-            <AnimateModal
-                className="kXianDi"
-                closeClass="closeBtnspin"
-                open={openKXian}
+            <BootstrapDialog
                 onClose={() => setOpenKXian(false)}
+                open={openKXian}
+                closeClass="closeBtnspin"
             >
-                <motion.div variants={item} className="px-15 pt-32">
+                <div id="openKXian" className="px-15 kXianDi2">
+                    <div className='flex mt-10' style={{ justifyContent: "end" }}>
+                        <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                            closesKXianFunc();
+                        }} ></img>
+                    </div>
                     <div className='flex justifyContent'>
                         <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/card/usd.png"></img>
                         <div className='text-16 ml-6'>钱包资产总计USD</div>
@@ -797,22 +853,27 @@ function Earn(props) {
                             <div style={{ textAlign: "center" }}>24小时年华</div>
                             <div className='mt-6' style={{ textAlign: "center" }}>5.26%</div>
                         </div>
+
                     </div>
                     <VisitorsOverviewWidget />
-                    <div className='txtBrightness text-16 px-15' style={{ margin: "30px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}> 立即入金 </div>
-                </motion.div>
-            </AnimateModal>
+                    <div className='txtBrightness text-16 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}> 立即入金 </div>
+                </div>
+            </BootstrapDialog>
 
 
-            <AnimateModal
-                className="kongTouDi"
+            <BootstrapDialog
                 closeClass="closeBtnspin"
                 open={openKongTou}
                 onClose={() => setOpenKongTou(false)}
             >
-                <motion.div variants={item} className="px-15 pt-28">
-                    <div className='text-18' style={{ textAlign: "center", fontWeight: "700" }}>空投活动规则</div>
-                    <div className='mt-10' style={{ textAlign: "center" }}>
+                <div id='openKongTou' className="px-15 pt-10 kongTouDi">
+                    <div className='flex mt-10' style={{ justifyContent: "space-between", width: "100%" }}>
+                        <div className='text-18 kongTouTitle'>空投活动规则</div>
+                        <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                            closesKongTouFunc();
+                        }} ></img>
+                    </div>
+                    <div className='mt-16' style={{ textAlign: "center" }}>
                         所有BeingFi加密银行用户瓜分总计<span className='text-20' style={{ color: "#1BB9FF", fontWeight: "700" }}>30%</span>BFT
                     </div>
                     <div className='' style={{ textAlign: "center" }}>
@@ -823,7 +884,7 @@ function Earn(props) {
                         <VisitsWidget />
                     </motion.div>
 
-                    <div className='pt-10 pb-12 mt-20' style={{ backgroundColor: "#191A1B", borderRadius: "10px", border: "4px solid #151617" }}>
+                    <div className='pt-10 pb-12 mt-24' style={{ backgroundColor: "#191A1B", borderRadius: "10px", border: "4px solid #151617" }}>
                         <div className='text-16' style={{ textAlign: "center" }}>收益计算公式</div>
                         <div className='text-12 mt-12' style={{ textAlign: "center", color: "#FFC600" }}>您的收益=账户总资产/平台所有用户总资产*释放总奖励</div>
                     </div>
@@ -849,9 +910,58 @@ function Earn(props) {
                             <div className='mt-6' style={{ textAlign: "center" }}>5.26%</div>
                         </div>
                     </div>
-                    <div className='txtBrightness text-16 px-15' style={{ margin: "30px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}> 立即入金 </div>
-                </motion.div>
-            </AnimateModal>
+                    <div className='txtBrightness text-16 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}> 立即入金 </div>
+                </div>
+            </BootstrapDialog>
+
+
+            <BootstrapDialog
+                closeClass="closeBtnspin"
+                open={openWaKuang}
+                onClose={() => setOpenWaKuang(false)}
+            >
+                <div id='openWaKuang' className="px-15 pt-10 waKuangDi">
+                    <div className='flex mt-10' style={{ justifyContent: "space-between", width: "100%" }}>
+                        <div className='text-18 kongTouTitle'>合约交易挖矿</div>
+                        <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                            closesWaKuangFunc();
+                        }} ></img>
+                    </div>
+                    <div className='mt-20' style={{ textAlign: "left" }}>
+                        规则介绍: <span className='text-12' style={{ color: "#A4A4A4" }}>前往交易所Top.one对BFT合约的进行多空交易，所有交易损失，不论是投资亏损，还是手续费损失，您都将以前市场价获得100%等值的BFT现货赠送作为补偿。</span>
+                    </div>
+
+                    <motion.div variants={item} className="mt-28">
+                        <VisitsWidget />
+                    </motion.div>
+
+                    <div className='flex  mt-32'>
+                        <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/card/usd.png"></img>
+                        <div className='text-14 ml-6' style={{ height: "24px", lineHeight: "24px" }}>总收益(BFT)</div>
+                    </div>
+                    <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "left", color: "#00FF96" }}>10000.00 <span style={{ fontSize: "14px", color: "#ffffff" }}> ≈ 1000 USD</span></div>
+                    <div className='flex  justify-between mt-20'>
+                        <div>
+                            <div style={{ textAlign: "center" }}>今日收益(BFT)</div>
+                            <div className='mt-6' style={{ textAlign: "center" }}>100.00</div>
+                        </div>
+
+                        <div>
+                            <div style={{ textAlign: "center" }}>昨日收益(BFT)</div>
+                            <div className='mt-6' style={{ textAlign: "center" }}>100.00</div>
+                        </div>
+
+                        <div>
+                            <div style={{ textAlign: "center" }}>昨日总交易量</div>
+                            <div className='mt-6' style={{ textAlign: "center" }}>100.00</div>
+                        </div>
+                    </div>
+                    <div className='txtBrightness text-16 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}> 前往TOP.ONE开始交易 </div>
+                </div>
+            </BootstrapDialog>
+
+
+
         </div>
     )
 }

@@ -3074,18 +3074,44 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     border-radius: 10px;
 }
 
-.kXianDi {
+.kXianDi2 {
+    background-color: rgba(0, 0, 0, 0);
     background-image: url("../../public/assets/images/nav/diPan3.jpg");
-    width: 360px;
-    height: 490px;
-    border-radius: 10px;
+    width: 100%;
+    height: 510px;
+    border-radius: 15px 15px 0px 0px;
+    position: fixed;
+    left: 0%;
+    bottom: 0%;
+}
+
+.kongTouTitle {
+    width: calc(100% - 25px);
+    text-align: center;
+    font-weight: 700;
 }
 
 .kongTouDi {
+    background-color: rgba(0, 0, 0, 0);
     background-image: url("../../public/assets/images/nav/diPan3.jpg");
-    width: 360px;
-    height: 625px;
-    border-radius: 10px;
+    width: 100%;
+    height: 640px;
+    border-radius: 15px 15px 0px 0px;
+
+    position: fixed;
+    left: 0%;
+    bottom: 0%;
+}
+
+.waKuangDi {
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url("../../public/assets/images/nav/diPan3.jpg");
+    width: 100%;
+    height: 580px;
+    border-radius: 15px 15px 0px 0px;
+    position: fixed;
+    left: 0%;
+    bottom: 0%;
 }
 
 .imgHidden {
