@@ -18,6 +18,8 @@ import VisitsWidget from './widgets/VisitsWidget';
 import AnimateModal from "../../components/FuniModal";
 import Typography from '@mui/material/Typography';
 import Spin from "../spin/Spin";
+import OutlinedInput from '@mui/material/OutlinedInput';
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -49,7 +51,12 @@ function Earn(props) {
     const [openKXian, setOpenKXian] = useState(false);
     const [openKongTou, setOpenKongTou] = useState(false);
     const [openWaKuang, setOpenWaKuang] = useState(false);
-
+    const [openBind, setOpenBind] = useState(false);
+    const [openYaoQing, setOpenYaoQing] = useState(false);
+    const [inputIDVal, setInputIDVal] = useState(0);
+    const handleChangeInputVal2 = (event) => {
+        setInputIDVal(event.target.value);
+    };
 
     useEffect(() => {
         setPhoneTab('card');
@@ -82,6 +89,20 @@ function Earn(props) {
         setTimeout(() => {
             document.getElementById('openKongTou').classList.add('PinMoveAni');
         }, 0);
+    };
+
+    const openBindFunc = () => {
+        setTimeout(() => {
+            document.getElementById('openBind').classList.add('PinMoveAni');
+        }, 0);
+    };
+
+    const closesBindFunc = () => {
+        document.getElementById('openBind').classList.remove('PinMoveAni');
+        document.getElementById('openBind').classList.add('PinMoveOut');
+        setTimeout(() => {
+            setOpenBind(false)
+        }, 300);
     };
 
     const closesKongTouFunc = () => {
@@ -192,8 +213,9 @@ function Earn(props) {
                 >
                     <div className='text-16'>百万空投</div>
                     <div className='lanDi mt-16' onClick={() => {
-                        setOpenKongTou(true)
-                        openKongTouFunc();
+                        // setOpenKongTou(true)
+                        // openKongTouFunc();
+                        setOpenYaoQing(true)
                     }}>
                         <img className='logoCC' src="wallet/assets/images/earn/logo1.png" />
                         <div className='flex mt-16  justify-between'>
@@ -243,7 +265,10 @@ function Earn(props) {
                     style={{ paddingInline: "1.5rem" }}
                 >
                     <div className='text-16'>邀请奖励</div>
-                    <div className='lvEarnDi mt-16'>
+                    <div className='lvEarnDi mt-16' onClick={() => {
+                        setOpenBind(true)
+                        openBindFunc();
+                    }}>
                         <div className='flex justify-start pt-4'>
                             <img className='liBaoDiImg' src="wallet/assets/images/earn/giftIcon.png" />
                             <div className='yaoQingZiDi'>
@@ -821,7 +846,6 @@ function Earn(props) {
                 <Spin />
             </AnimateModal>
 
-
             <BootstrapDialog
                 onClose={() => setOpenKXian(false)}
                 open={openKXian}
@@ -853,13 +877,11 @@ function Earn(props) {
                             <div style={{ textAlign: "center" }}>24小时年华</div>
                             <div className='mt-6' style={{ textAlign: "center" }}>5.26%</div>
                         </div>
-
                     </div>
                     <VisitorsOverviewWidget />
                     <div className='txtBrightness text-16 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}> 立即入金 </div>
                 </div>
             </BootstrapDialog>
-
 
             <BootstrapDialog
                 closeClass="closeBtnspin"
@@ -914,7 +936,6 @@ function Earn(props) {
                 </div>
             </BootstrapDialog>
 
-
             <BootstrapDialog
                 closeClass="closeBtnspin"
                 open={openWaKuang}
@@ -927,8 +948,8 @@ function Earn(props) {
                             closesWaKuangFunc();
                         }} ></img>
                     </div>
-                    <div className='mt-20' style={{ textAlign: "left" }}>
-                        规则介绍: <span className='text-12' style={{ color: "#A4A4A4" }}>前往交易所Top.one对BFT合约的进行多空交易，所有交易损失，不论是投资亏损，还是手续费损失，您都将以前市场价获得100%等值的BFT现货赠送作为补偿。</span>
+                    <div className='mt-20 text-12' style={{ textAlign: "left", color: "#A4A4A4" }}>
+                        前往交易所Top.one对BFT合约的进行多空交易，所有交易损失，不论是投资亏损，还是手续费损失，您都将以前市场价获得100%等值的BFT现货赠送作为补偿。
                     </div>
 
                     <motion.div variants={item} className="mt-28">
@@ -960,7 +981,63 @@ function Earn(props) {
                 </div>
             </BootstrapDialog>
 
+            <BootstrapDialog
+                closeClass="closeBtnspin"
+                open={openBind}
+                onClose={() => setOpenBind(false)}
+            >
+                <div id='openBind' className="px-15 pt-10 bindDi">
+                    <div className='flex mt-10' style={{ justifyContent: "space-between", width: "100%" }}>
+                        <div className='text-18 kongTouTitle'>开通BeingFi卡片</div>
+                        <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                            closesBindFunc();
+                        }} ></img>
+                    </div>
+                    <div className='mt-28' style={{ textAlign: "center" }}>
+                        先开通BeingFi加密银行卡才可参与该活动!
+                    </div>
 
+                    <img className='cardEarnTips mt-28' src="wallet/assets/images/card/card1.png"></img>
+
+                    <div className='txtBrightness text-16 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>立即开通</div>
+                </div>
+            </BootstrapDialog>
+
+
+            <AnimateModal
+                className="yaoQingDi"
+                closeClass="closeBtnspin"
+                open={openYaoQing}
+                onClose={() => setOpenYaoQing(false)}
+            >
+                <div className='flex mt-20' style={{ justifyContent: "space-between", width: "100%" }}>
+                    <div className='text-18 yaoQingTitle'>绑定邀请码</div>
+                </div>
+                <div className='mt-20' style={{ width: "100%", textAlign: "center" }}>
+                    该活动仅对受邀请的用户开放！
+                </div>
+                <OutlinedInput
+                    id="outlined-adornment-address send-tips-container-address"
+                    value={inputIDVal}
+                    onChange={handleChangeInputVal2}
+                    aria-describedby="outlined-weight-helper-text"
+                    className='inputYaoQing'
+                />
+
+                <LoadingButton className="text-lg btnColorTitleBig inputYaoQingBtan"
+                    size="large"
+                    color="secondary"
+                    variant="contained"
+                    loading={false}
+                    sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
+                    onClick={async () => {
+                    }}
+                >
+                    立即绑定
+                </LoadingButton>
+
+
+            </AnimateModal>
 
         </div>
     )

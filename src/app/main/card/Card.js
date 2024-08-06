@@ -30,8 +30,8 @@ import {
     getCreditConfig,
     getUserCreditCard
 } from "app/store/payment/paymentThunk";
-import {createPin, verifyPin} from "app/store/wallet/walletThunk";
-import {showMessage} from "app/store/fuse/messageSlice";
+import { createPin, verifyPin } from "app/store/wallet/walletThunk";
+import { showMessage } from "app/store/fuse/messageSlice";
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -351,21 +351,23 @@ function Card(props) {
     // !# card逻辑 #!
 
     const dispatch = useDispatch();
-    const [ cardConfig, setCardConfig ] = useState({2: [], 3: []})
-    const [ cardConfigList, setCardConfigList ] = useState({});
-    const [ cardConfigID, setCardConfigID ] = useState(0);
+    const [cardConfig, setCardConfig] = useState({ 2: [], 3: [] })
+    const [cardConfigList, setCardConfigList] = useState({});
+    const [cardConfigID, setCardConfigID] = useState(0);
 
-    const [ cardList, setCardList ] = useState({2: [], 3: []});
-    const [ cardListObj, setCardListObj ] = useState({});
-    const [ cardID, setCardID ] = useState(0);
-    const [ transferMoney, setTransferMoney ] = useState(0);
-    const [ transferFee, setTransferFee ] = useState(0);
+    const [cardList, setCardList] = useState({ 2: [], 3: [] });
+    const [cardListObj, setCardListObj] = useState({});
+    const [cardID, setCardID] = useState(0);
+    const [transferMoney, setTransferMoney] = useState(0);
+    const [transferFee, setTransferFee] = useState(0);
+
+    const [isLoadingBtn, setIsLoadingBtn] = useState(false);
     //获取Config
     const getCardConfig = () => {
         dispatch(getCreditConfig()).then((res) => {
             let result = res.payload
 
-            let tmpConfig = {2: [], 3: []}
+            let tmpConfig = { 2: [], 3: [] }
             let tmpConfigList = {}
             result.map((item) => {
                 if (item.state === 1) {
@@ -385,11 +387,13 @@ function Card(props) {
 
     // 申请卡
     const applyCard = () => {
+        setIsLoadingBtn(true)
         dispatch(applyCreditCard({
             creditType: cardConfigList[cardConfigID].creditType,
             quotaAmount: 1
         })).then((res) => {
             let result = res.payload
+            setIsLoadingBtn(false)
         })
     }
 
@@ -397,7 +401,7 @@ function Card(props) {
     const getCardList = () => {
         dispatch(getUserCreditCard()).then((res) => {
             let result = res.payload
-            let tmpCardList = {2: [], 3: []}
+            let tmpCardList = { 2: [], 3: [] }
             let tmpCardListObj = {}
             result.map((item) => {
                 if (item.creditType === 2) {
@@ -645,8 +649,8 @@ function Card(props) {
                                                                                 <div className={clsx("", kaBeiButton && "xiaoShi")}>
                                                                                     <div className='kaBeiZi flex'>
                                                                                         <img id="cardIconWOne"
-                                                                                             onClick={(e) => handleImgClick(e, FanKa)}
-                                                                                             className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id="zhangDanZiOne" className='zhangDanZi'>背面</span>
+                                                                                            onClick={(e) => handleImgClick(e, FanKa)}
+                                                                                            className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id="zhangDanZiOne" className='zhangDanZi'>背面</span>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -656,13 +660,13 @@ function Card(props) {
                                                                     <div className={clsx("", !fanZhuan && "xiaoShi")} >
                                                                         <div className="responsive-div-content card41Bg cardZhiDi flipped2" onClick={() => {
                                                                         }}  >
-                                                                            <div className='cardBeiMian flipped2'>
+                                                                            <div className='cardAnQuanMa '>{cardItem.userCreditKey}</div>
+                                                                            <div className='cardBeiMian flipped2 '>
                                                                                 <div className={clsx("", kaBeiButton2 && "xiaoShi")}>
                                                                                     <div className='kaBeiZi flex flipped2'>
-                                                                                        {cardItem.userCreditKey}
                                                                                         <img id="cardIconWTwo"
-                                                                                             onClick={(e) => handleImgClick(e, FanKaBei)}
-                                                                                             className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id="zhangDanZiTwo" className='zhangDanZi'>正面</span>
+                                                                                            onClick={(e) => handleImgClick(e, FanKaBei)}
+                                                                                            className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id="zhangDanZiTwo" className='zhangDanZi'>正面</span>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -893,8 +897,8 @@ function Card(props) {
                                                                                 <div className={clsx("", kaBeiButton && "xiaoShi")}>
                                                                                     <div className='kaBeiZi flex'>
                                                                                         <img id="cardIconWOne"
-                                                                                             onClick={(e) => handleImgClick(e, FanKa)}
-                                                                                             className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id="zhangDanZiOne" className='zhangDanZi'>背面</span>
+                                                                                            onClick={(e) => handleImgClick(e, FanKa)}
+                                                                                            className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id="zhangDanZiOne" className='zhangDanZi'>背面</span>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -908,8 +912,8 @@ function Card(props) {
                                                                                 <div className={clsx("", kaBeiButton2 && "xiaoShi")}>
                                                                                     <div className='kaBeiZi flex flipped2'>
                                                                                         <img id="cardIconWTwo"
-                                                                                             onClick={(e) => handleImgClick(e, FanKaBei)}
-                                                                                             className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id="zhangDanZiTwo" className='zhangDanZi'>正面</span>
+                                                                                            onClick={(e) => handleImgClick(e, FanKaBei)}
+                                                                                            className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id="zhangDanZiTwo" className='zhangDanZi'>正面</span>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1071,19 +1075,19 @@ function Card(props) {
                                                             </div>
                                                         </div>
                                                         <div className='cardNameInFoDi px-12'>
+
                                                             <div className='flex justify-between'>
+                                                                <div className='kaPianInfoLeiXing' onClick={() => {
+                                                                }} >VISA卡</div>
                                                                 <div className='kaPianInfo' onClick={() => {
                                                                     setOpenXiangQing(true);
                                                                     setCardConfigID(configItem.configId);
                                                                     myFunction;
                                                                 }}   >卡片详情</div>
-                                                                <div className='openingFee' style={{}}>开卡费用 1USD</div>
                                                             </div>
+
                                                             <div className='flex justify-between items-center mt-10'>
-                                                                {/*<div className='openCardBtn' onClick={() => {*/}
-                                                                {/*    setOpenJiHuoWindow(true);*/}
-                                                                {/*    openJiHuoFunc()*/}
-                                                                {/*}}   >激活卡片</div>*/}
+                                                                <div className='openingFee' style={{}}>开卡费用 1USD</div>
 
                                                                 <div className='openCardBtn' onClick={() => {
                                                                     setOpenXiangQing(true);
@@ -1091,6 +1095,7 @@ function Card(props) {
                                                                     myFunction;
                                                                 }}   >立即申请</div>
                                                             </div>
+
                                                         </div>
                                                     </motion.div>
                                                 )
@@ -1119,19 +1124,18 @@ function Card(props) {
                                                         </div>
                                                         <div className='cardNameInFoDi px-12'>
                                                             <div className='flex justify-between'>
+                                                                <div className='kaPianInfoLeiXing' onClick={() => {
+                                                                }} >VISA卡</div>
                                                                 <div className='kaPianInfo' onClick={() => {
                                                                     setOpenXiangQing(true);
                                                                     setCardConfigID(configItem.configId);
                                                                     myFunction;
                                                                 }}   >卡片详情</div>
-                                                                <div className='openingFee' style={{}}>开卡费用 1USD</div>
                                                             </div>
-                                                            <div className='flex justify-between items-center mt-10'>
-                                                                {/*<div className='openCardBtn' onClick={() => {*/}
-                                                                {/*    setOpenJiHuoWindow(true);*/}
-                                                                {/*    openJiHuoFunc()*/}
-                                                                {/*}}   >激活卡片</div>*/}
 
+                                                            <div className='flex justify-between items-center mt-10'>
+                                                                <div className='openingFee' style={{}}>开卡费用 1USD</div>
+                                                                
                                                                 <div className='openCardBtn' onClick={() => {
                                                                     setOpenXiangQing(true);
                                                                     setCardConfigID(configItem.configId);
@@ -1283,22 +1287,22 @@ function Card(props) {
                                 <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                                 <div className='text-16'>使用提示</div>
                             </div>
-        
+
                             <div className='flex justify-start mt-10'>
                                 <div className='quanYiHuiZi pb-8'>使用卡片进行刷卡消费或取款前，请尽可能确保卡内有足够余额。否则，如果余额不足，导致刷卡或取款失败，VISA/Master系统仍然会收取您的手续费。</div>
                             </div>
                         </div>
                     </motion.div>
 
-                    <motion.div variants={item} className='flex mt-16' style={{paddingInline:"1.5rem" }} >
+                    <motion.div variants={item} className='flex mt-16' style={{ paddingInline: "1.5rem" }} >
                         <LoadingButton
                             disabled={false}
                             className={clsx('px-48  m-28 btnColorTitleBig loadingBtnSty')}
                             color="secondary"
-                            loading={false}
+                            loading={isLoadingBtn}
                             variant="contained"
                             sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
-                            style={{ width: '100%', height: '4rem', fontSize: "18px", margin: '1rem auto 2.8rem', display: 'block', lineHeight: "inherit"}}
+                            style={{ width: '100%', height: '4rem', fontSize: "18px", margin: '1rem auto 2.8rem', display: 'block', lineHeight: "inherit" }}
                             onClick={() => {
                                 // setOpenApplyWindow(true)
                                 // openApplyFunc()
