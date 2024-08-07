@@ -63,6 +63,7 @@ function Card(props) {
     const userData = useSelector(selectUserData);
     const [tabValue, setTabValue] = useState(0);
     const [ranges, setRanges] = useState([t('我的卡片'), t('申请卡片')]);
+    const [huaZhuanRanges, setHuaZhuanRanges] = useState([t('转入'), t('转出')]);
     const [smallTabValue, setSmallTabValue] = useState(0);
     const [kaBeiButton, setKaBeiButton] = useState(false);
     const [kaBeiButton2, setKaBeiButton2] = useState(true);
@@ -86,6 +87,7 @@ function Card(props) {
     const [cardExpandedStatus, setCardExpandedStatus] = useState(false);
     const [openZhiFu, setOpenZhiFu] = useState(false);
     const [openChongZhi, setOpenChongZhi] = useState(false);
+    const [huaZhuanValue, setHuaZhuanValue] = useState(0);
 
     const changePhoneTab = (tab) => {
         window.localStorage.setItem('phoneTab', tab);
@@ -1135,7 +1137,7 @@ function Card(props) {
 
                                                             <div className='flex justify-between items-center mt-10'>
                                                                 <div className='openingFee' style={{}}>开卡费用 1USD</div>
-                                                                
+
                                                                 <div className='openCardBtn' onClick={() => {
                                                                     setOpenXiangQing(true);
                                                                     setCardConfigID(configItem.configId);
@@ -1463,6 +1465,45 @@ function Card(props) {
                                 closeRecordFunc();
                             }} />
                         </div>
+
+
+
+                        <Tabs
+                            value={huaZhuanValue}
+                            onChange={(ev, value) => setHuaZhuanValue(value)}
+                            indicatorColor="secondary"
+                            textColor="inherit"
+                            variant="scrollable"
+                            scrollButtons={false}
+                            className="tongYongDingBtn3"
+                            style={{ width: '50%!import' }}
+                            classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
+                            TabIndicatorProps={{
+                                children: (
+                                    <Box
+                                        sx={{ bgcolor: 'text.disabled' }}
+                                        className="w-full h-full rounded-full  huaKuaBgColor2"
+                                    />
+                                ),
+                            }}
+                            sx={{
+                                margin: "1rem 1.2rem",
+                            }}
+                        >
+                            {Object.entries(huaZhuanRanges).map(([key, label]) => (
+                                <Tab
+                                    className="text-14 font-semibold min-h-36 min-w-64 mx4 px-12 opacity1 txtColorTitle zindex"
+                                    disableRipple
+                                    key={key}
+                                    label={label}
+                                    sx={{
+                                        color: '#FFFFFF', height: '3.6rem', width: '50%'
+                                    }}
+                                />
+                            ))}
+                        </Tabs>
+
+
                         <div className='flex mt-20 justify-between' style={{ borderBottom: "1px solid #2C3950" }}>
                             <div className='text-18'>卡内余额</div>
                             <div className='flex pb-32'>
@@ -1491,10 +1532,10 @@ function Card(props) {
                                 <div className='' style={{ color: "#94A3B8" }}>账户总资产</div>
                                 <div className='ml-10'>${(userData.profile.wallet?.Crypto + userData.profile.wallet?.Fiat).toFixed(2) ?? '0.00'}</div>
                             </div>
-                            <div className='' style={{ color: "#2DD4BF", textDecoration: "underline" }} onClick={() => {
+                            {huaZhuanValue == 0 && <div className='' style={{ color: "#2DD4BF", textDecoration: "underline" }} onClick={() => {
                                 changePhoneTab('swap');
                                 history.push('/wallet/home/swap')
-                            }} >兑换USDT</div>
+                            }} >兑换USDT</div>}
                         </div>
 
                         <div className='w-full h-44 mt-24' style={{ position: "relative" }}>
