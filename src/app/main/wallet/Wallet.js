@@ -996,14 +996,16 @@ function Wallet() {
       // setWalletDisplayData(result.data);
       // console.timeEnd('keyxxxx')
     });
-    dispatch(getNftConfig()).then((res) => {
-      let result = res.payload;
-      setNfts(result?.data);
-    });
-    dispatch(centerGetNftList()).then((res) => {
-      let result = res.payload;
-      setNftBalance(result?.inner);
-    })
+
+    // 获取nft数据
+    // dispatch(getNftConfig()).then((res) => {
+    //   let result = res.payload;
+    //   setNfts(result?.data);
+    // });
+    // dispatch(centerGetNftList()).then((res) => {
+    //   let result = res.payload;
+    //   setNftBalance(result?.inner);
+    // })
   };
   useEffect(() => {
     setPhoneTab('wallet');

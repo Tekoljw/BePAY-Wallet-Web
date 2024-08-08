@@ -27,6 +27,7 @@ import TextField from '@mui/material/TextField';
 import {
     applyCreditCard,
     creditCardCryptoDeposit,
+    creditCardCryptoWithdraw,
     getCreditConfig,
     getUserCreditCard
 } from "app/store/payment/paymentThunk";
@@ -369,21 +370,23 @@ function Card(props) {
         dispatch(getCreditConfig()).then((res) => {
             let result = res.payload
 
-            let tmpConfig = { 2: [], 3: [] }
-            let tmpConfigList = {}
-            result.map((item) => {
-                if (item.state === 1) {
-                    if (item.creditType === 2) {
-                        tmpConfig[2].push(item)
-                    } else if (item.creditType === 3) {
-                        tmpConfig[3].push(item)
-                    }
+            if (result) {
+                let tmpConfig = { 2: [], 3: [] }
+                let tmpConfigList = {}
+                result.map((item) => {
+                    if (item.state === 1) {
+                        if (item.creditType === 2) {
+                            tmpConfig[2].push(item)
+                        } else if (item.creditType === 3) {
+                            tmpConfig[3].push(item)
+                        }
 
-                    tmpConfigList[item.configId] = item
-                }
-            })
-            setCardConfig(tmpConfig)
-            setCardConfigList(tmpConfigList)
+                        tmpConfigList[item.configId] = item
+                    }
+                })
+                setCardConfig(tmpConfig)
+                setCardConfigList(tmpConfigList)
+            }
         })
     }
 
@@ -405,24 +408,36 @@ function Card(props) {
             let result = res.payload
             let tmpCardList = { 2: [], 3: [] }
             let tmpCardListObj = {}
-            result.map((item) => {
-                if (item.creditType === 2) {
-                    tmpCardList[2].push(item)
-                } else if (item.creditType === 3) {
-                    tmpCardList[3].push(item)
-                }
+            if (result) {
+                result.map((item) => {
+                    if (item.creditType === 2) {
+                        tmpCardList[2].push(item)
+                    } else if (item.creditType === 3) {
+                        tmpCardList[3].push(item)
+                    }
 
-                tmpCardListObj[item.id] = item
-            })
-            setCardList(tmpCardList)
-            setCardListObj(tmpCardListObj)
-            console.log(tmpCardListObj, 'tmpCardListObj')
+                    tmpCardListObj[item.id] = item
+                })
+                setCardList(tmpCardList)
+                setCardListObj(tmpCardListObj)
+            }
         })
     }
 
-    // 信用卡转入(crypto)
-    const handleTransferInCrypto = () => {
-        dispatch(creditCardCryptoDeposit({
+    /*
+    * 信用卡划转(crypto)
+    *
+    * oprate 默认1 转入 / 0 转出
+    * */
+    const doTransferCrypto = (oprate = 1) => {
+        let doFun
+        if (oprate === 1) {
+            doFun = creditCardCryptoDeposit
+        } else {
+            doFun = creditCardCryptoWithdraw
+        }
+
+        dispatch(doFun({
             userCreditId: cardID,
             creditType: cardListObj[cardID].creditType,
             symbol: symbol,
@@ -430,13 +445,23 @@ function Card(props) {
             amount: transferMoney,
         })).then((res) => {
             let result = res.payload
-            dispatch(showMessage({ message: result.msg, code: 2 }));
-            if (result.status === 'success') {
-                closeRecordFunc()
-                setTransferMoney(0)
-                setCardID(0)
+            if (result) {
+                dispatch(showMessage({ message: result.msg, code: 2 }));
+                if (result.status === 'success') {
+                    closeRecordFunc()
+                    setTransferMoney(0)
+                    setCardID(0)
+                }
             }
         })
+    }
+
+    const handleTransferCrypto = () => {
+        if (huaZhuanValue === 0) {
+            doTransferCrypto()
+        } else {
+            doTransferCrypto(0)
+        }
     }
 
     // 输入金额
@@ -475,7 +500,7 @@ function Card(props) {
 
 
     return (
-        <div className='' style={{ position: "relative" }}>
+        <div style={{ position: "relative" }}>
             <div style={{ position: "absolute", width: "100%" }}>
                 <motion.div
                     variants={container}
@@ -1508,7 +1533,7 @@ function Card(props) {
                             <div className='text-18'>卡内余额</div>
                             <div className='flex pb-32'>
                                 <div className='text-18'>USDT</div>
-                                <div className='text-18 ml-10'>100.000000</div>
+                                <div className='text-18 ml-10'>{cardListObj[cardID]?.amount.toFixed(2) ?? '0.00'}</div>
                             </div>
                         </div>
 
@@ -1632,7 +1657,7 @@ function Card(props) {
                                 onTouchEnd={changeToWhite}
                                 onTouchCancel={changeToWhite}
                                 onClick={() => {
-                                    handleTransferInCrypto()
+                                    handleTransferCrypto()
                                     // setOpenZhiFu(true)
                                 }}>完成</div>
                         </div>

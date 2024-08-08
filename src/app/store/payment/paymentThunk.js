@@ -315,3 +315,17 @@ export const creditCardCryptoDeposit = createAsyncThunk(
         }
     }
 );
+
+// 信用卡转出（crypto）
+export const creditCardCryptoWithdraw = createAsyncThunk(
+    'credit/creditCardCryptoWithdraw',
+    async (settings, { dispatch, getState }) => {
+        const result = await React.$api("credit.creditCardCryptoWithdraw", settings);
+        if (result.errno === 0) {
+            return result.data
+        } else {
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+        }
+    }
+);
+

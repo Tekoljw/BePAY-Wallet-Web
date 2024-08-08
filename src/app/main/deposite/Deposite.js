@@ -308,6 +308,7 @@ function Deposite() {
     const handleChangeFiats = (event) => {
         setFiatsSelected(event.target.value);
         setCurrencyCode(fiats[event.target.value].currencyCode);
+        setWeight('');
     };
     //设置图片地址
     const toRegWallet = (regWalletParam) => {
@@ -1748,7 +1749,13 @@ function Deposite() {
                                                     disabled={false}
                                                     id="outlined-adornment-weight send-tips-container-amount"
                                                     value={weight}
-                                                    endAdornment={<InputAdornment position="end">MAX</InputAdornment>}
+                                                    endAdornment={
+                                                        <InputAdornment
+                                                            position="end"
+                                                            onClick={() => {
+                                                                setWeight(bankItem.maxValue)
+                                                            }}
+                                                        >MAX</InputAdornment>}
                                                     aria-describedby="outlined-weight-helper-text"
                                                     inputProps={{
                                                         'aria-label': 'weight',
@@ -1761,7 +1768,7 @@ function Deposite() {
                                                             setWeight('')
                                                             return
                                                         }
-                                                        if (event.target.value < bankItem.maxValue) {
+                                                        if (event.target.value <= bankItem.maxValue) {
                                                             setWeight(event.target.value);
                                                         }
                                                     }}

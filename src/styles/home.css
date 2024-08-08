@@ -38,8 +38,8 @@
 }
 
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 4px;
+    height: 4px;
 }
 
 ::-webkit-scrollbar-button,
@@ -61,7 +61,7 @@
 ::-webkit-scrollbar-thumb,
 ::-webkit-scrollbar-thumb:vertical {
     margin-right: 10px;
-    background-color: #686C75;
+    background-color: #474A51;
     border-radius: 10px;
 }
 
@@ -3874,6 +3874,10 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
 
     .diBanColor {
         background-color: #0E1421 !important;
+    }
+
+    .diBanColor .FusePageCarded-contentWrapper {
+        overflow: hidden !important;
     }
 
     .dialog-withdraw-text {
