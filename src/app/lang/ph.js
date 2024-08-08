@@ -371,7 +371,7 @@ const locale = {
     card_8:"panlabas na address",
     card_9: "Mag-apply ng card.",
     card_10: "Balanseng nasa wallet",
-    card_11: "Detalye ng bill.",
+    card_11: "Impormasyon ng Card",
     card_12: "Virtual na card.",
     card_13: "Physical na card.",
     card_14: "Harap.",

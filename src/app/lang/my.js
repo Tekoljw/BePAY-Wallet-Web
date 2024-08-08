@@ -370,7 +370,7 @@ const locale = {
     card_8:"alamat luaran",
     card_9: "Memohon kad.",
     card_10: "Baki dompet.",
-    card_11: "Perincian bil.",
+    card_11: "Maklumat Kad",
     card_12: "Kad maya.",
     card_13: "Kad fizikal.",
     card_14: "Muka depan",

@@ -371,7 +371,7 @@ const locale = {
     card_8:"zewnętrzny adres",
     card_9: "Aplikacja o kartę",
     card_10: "Saldo portfela",
-    card_11: "Szczegóły rachunku",
+    card_11: "Informacje o karcie",
     card_12: "Karta wirtualna",
     card_13: "Karta fizyczna",
     card_14: "Przód karty",

@@ -368,7 +368,7 @@ const locale = {
     card_8:"dış adres",
     card_9: "Kart başvurusu.",
     card_10: "Cüzdan bakiyesi.",
-    card_11: "Fatura detayları.",
+    card_11: "Kart Bilgileri",
     card_12: "Sanal kart.",
     card_13: "Fiziksel kart.",
     card_14: "Ön yüz.",

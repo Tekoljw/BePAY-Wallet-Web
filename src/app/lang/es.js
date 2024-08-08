@@ -370,7 +370,7 @@ const locale = {
     card_8:"dirección externa",
     card_9: "Solicitar tarjeta",
     card_10: "Saldo del monedero",
-    card_11: "Detalles de la factura",
+    card_11: "Información de la tarjeta",
     card_12: "Tarjeta virtual",
     card_13: "Tarjeta física",
     card_14: "Anverso",

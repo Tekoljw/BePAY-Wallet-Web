@@ -369,7 +369,7 @@ const locale = {
     card_8:"ulkoinen osoite",
     card_9: "Hakea korttia.",
     card_10: "Lompakon saldo.",
-    card_11: "Laskun tiedot",
+    card_11: "Korttitiedot",
     card_12: "virtuaalikortti",
     card_13: "fyysinen kortti",
     card_14: "etuosa",

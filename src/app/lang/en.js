@@ -375,7 +375,7 @@ const locale = {
     card_8:"External Address",
     card_9: "Apply for a card.",
     card_10: "Wallet balance",
-    card_11: "Bill details",
+    card_11: "Card Information",
     card_12: "Virtual card",
     card_13: "Physical card",
     card_14: "Front side",

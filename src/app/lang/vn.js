@@ -360,7 +360,7 @@ const locale = {
     card_8:"địa chỉ ngoài",
     card_9: "Yêu cầu thẻ",
     card_10: "Số dư ví",
-    card_11: "Chi tiết hóa đơn",
+    card_11: "Thông tin thẻ",
     card_12: "Thẻ ảo",
     card_13: "Thẻ vật lý",
     card_14: "Mặt trước",

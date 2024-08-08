@@ -373,7 +373,7 @@ const locale = {
     card_8:"externe Adresse",
     card_9: "Karte beantragen",
     card_10: "Kontostand",
-    card_11: "Rechnungsdetails",
+    card_11: "Karteninformationen",
     card_12: "virtuelle Karte",
     card_13: "physische Karte",
     card_14: "positiv",
