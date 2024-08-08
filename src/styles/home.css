@@ -1136,6 +1136,13 @@ input[type='number'] {
 
 .openingFee {
     color: #46DFB7;
+    text-decoration: underline;
+}
+
+.changeBiCard {
+    border-radius: 50px;
+    background-color: #1E293A;
+    padding: 5px 8px 5px 8px;
 }
 
 .openCardBtn {
@@ -2792,6 +2799,12 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     margin-right: 1rem;
 }
 
+.TanHaoCard2 {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 1rem;
+}
+
 .TanHaoCardZi {
     font-size: 1.6rem;
 }
@@ -3876,9 +3889,9 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
         background-color: #0E1421 !important;
     }
 
-    .diBanColor .FusePageCarded-contentWrapper {
+    /* .diBanColor .FusePageCarded-contentWrapper {
         overflow: hidden !important;
-    }
+    } */
 
     .dialog-withdraw-text {
         width: 24rem;

@@ -24,6 +24,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import {
     applyCreditCard,
     creditCardCryptoDeposit,
@@ -33,6 +34,7 @@ import {
 } from "app/store/payment/paymentThunk";
 import { createPin, verifyPin } from "app/store/wallet/walletThunk";
 import { showMessage } from "app/store/fuse/messageSlice";
+import { borderBottom } from '@mui/system';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -89,6 +91,7 @@ function Card(props) {
     const [openZhiFu, setOpenZhiFu] = useState(false);
     const [openChongZhi, setOpenChongZhi] = useState(false);
     const [huaZhuanValue, setHuaZhuanValue] = useState(0);
+    const [openChangeBi, setOpenChangeBi] = useState(false);
 
     const changePhoneTab = (tab) => {
         window.localStorage.setItem('phoneTab', tab);
@@ -1105,7 +1108,7 @@ function Card(props) {
 
                                                             <div className='flex justify-between'>
                                                                 <div className='kaPianInfoLeiXing' onClick={() => {
-                                                                }} >VISA</div>
+                                                                }} >VISA Card</div>
                                                                 <div className='kaPianInfo' onClick={() => {
                                                                     setOpenXiangQing(true);
                                                                     setCardConfigID(configItem.configId);
@@ -1114,7 +1117,10 @@ function Card(props) {
                                                             </div>
 
                                                             <div className='flex justify-between items-center mt-10'>
-                                                                <div className='openingFee' style={{}}>{t('card_33')} 1USD</div>
+                                                                <div className='openingFee' onClick={() => {
+                                                                    setOpenChangeBi(true)
+                                                                }}
+                                                                >{t('card_33')} 1USD</div>
 
                                                                 <div className='openCardBtn' onClick={() => {
                                                                     setOpenXiangQing(true);
@@ -1161,7 +1167,10 @@ function Card(props) {
                                                             </div>
 
                                                             <div className='flex justify-between items-center mt-10'>
-                                                                <div className='openingFee' style={{}}>{t('card_33')} 1USD</div>
+                                                                <div className='openingFee' onClick={() => {
+                                                                    setOpenChangeBi(true)
+                                                                }}
+                                                                >{t('card_33')} 1USD</div>
 
                                                                 <div className='openCardBtn' onClick={() => {
                                                                     setOpenXiangQing(true);
@@ -1340,7 +1349,7 @@ function Card(props) {
                 <div className='flex justify-center' style={{ width: "100%" }}>
                     <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                     <div className='TanHaoCardZi'>
-                    {t('card_31')}
+                        {t('card_31')}
                     </div>
                 </div>
 
@@ -1354,7 +1363,7 @@ function Card(props) {
                     }}
                 >
                     <div className="dialog-select-fiat danChuangTxt">
-                    {t('card_75')}
+                        {t('card_75')}
                     </div>
                 </Box>
 
@@ -1387,7 +1396,7 @@ function Card(props) {
                             setOpenAnimateModal(false)
                         }}
                     >
-                         {t('home_pools_15')}
+                        {t('home_pools_15')}
                     </LoadingButton>
                 </div>
             </AnimateModal>
@@ -1403,7 +1412,7 @@ function Card(props) {
                 <div className='flex justify-center' style={{ width: "100%" }}>
                     <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                     <div className='TanHaoCardZi'>
-                    {t('card_32')}
+                        {t('card_32')}
                     </div>
                 </div>
 
@@ -1454,7 +1463,7 @@ function Card(props) {
                             }, 1500);
                         }}
                     >
-                         {t('card_77')}
+                        {t('card_77')}
                     </LoadingButton>
                 </div>
             </AnimateModal>
@@ -1858,7 +1867,7 @@ function Card(props) {
                                 </div>
                             </div>
                             <div className='payButtom'>
-                            {t('card_83')}
+                                {t('card_83')}
                             </div>
                         </div>
 
@@ -1871,7 +1880,7 @@ function Card(props) {
                                 </div>
                             </div>
                             <div className='payButtom'>
-                            {t('card_83')}
+                                {t('card_83')}
                             </div>
                         </div>
 
@@ -1884,7 +1893,7 @@ function Card(props) {
                                 </div>
                             </div>
                             <div className='payButtom'>
-                            {t('card_83')}
+                                {t('card_83')}
                             </div>
                         </div>
 
@@ -1897,7 +1906,7 @@ function Card(props) {
                                 </div>
                             </div>
                             <div className='payButtom'>
-                            {t('card_83')}
+                                {t('card_83')}
                             </div>
                         </div>
                     </div>
@@ -1994,7 +2003,7 @@ function Card(props) {
                 <div className='flex justify-center' style={{ width: "100%" }}>
                     <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                     <div className='TanHaoCardZi'>
-                    {t('card_61')}
+                        {t('card_61')}
                     </div>
                 </div>
 
@@ -2008,7 +2017,7 @@ function Card(props) {
                     }}
                 >
                     <div className="dialog-select-fiat danChuangTxt">
-                    {t('card_88')}
+                        {t('card_88')}
                     </div>
                 </Box>
 
@@ -2052,7 +2061,7 @@ function Card(props) {
                 <div className='flex justify-center' style={{ width: "100%" }}>
                     <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                     <div className='TanHaoCardZi'>
-                    {t('card_61')}
+                        {t('card_61')}
                     </div>
                 </div>
 
@@ -2066,7 +2075,7 @@ function Card(props) {
                     }}
                 >
                     <div className="dialog-select-fiat danChuangTxt">
-                    {t('card_62')}
+                        {t('card_62')}
                     </div>
                 </Box>
 
@@ -2088,6 +2097,96 @@ function Card(props) {
                     </LoadingButton>
                 </div>
             </AnimateModal>
+
+
+
+            <AnimateModal
+                className="faBiDiCard tanChuanDiSe"
+                open={openChangeBi}
+                onClose={() => setOpenChangeBi(false)}
+            >
+                <div className='flex justify-center' style={{ width: "100%" }}>
+                    <div className='TanHaoCardZi'>
+                        更改币种
+                    </div>
+                </div>
+
+                <Box
+                    className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard"
+                    sx={{
+                        backgroundColor: "#2C394D",
+                        padding: "1rem 0rem 0.5rem 0rem",
+                        overflow: "hidden",
+                        margin: "1rem auto 0rem auto"
+                    }}
+                >
+                    <div className="dialog-select-fiat danChuangTxt">
+                        请选择一个币种来支付本次申请卡片的费用。
+                    </div>
+                </Box>
+
+                <div className='mb-24' style={{ borderBottom: "1px solid #374252" }}></div>
+
+                <div>
+                    <div className='flex mb-16  justify-between' >
+                        <div className='flex justify-between  changeBiCard' >
+                            <img src="wallet/assets/images/symbol/USDT.png" className='TanHaoCard2' />
+                            <div style={{ height: "20px", lineHeight: "20px" }}>USDT</div>
+                        </div>
+                        <div className='flex justify-between  changeBiCard' >
+                            <img src="wallet/assets/images/symbol/USDT.png" className='TanHaoCard2' />
+                            <div style={{ height: "20px", lineHeight: "20px" }}>USDT</div>
+                        </div>
+
+                        <div className='flex justify-between changeBiCard' >
+                            <img src="wallet/assets/images/symbol/USDT.png" className='TanHaoCard2' />
+                            <div style={{ height: "20px", lineHeight: "20px" }}>USDT</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div className='flex mb-16  justify-between' >
+                        <div className='flex justify-between  changeBiCard' >
+                            <img src="wallet/assets/images/symbol/USDT.png" className='TanHaoCard2' />
+                            <div style={{ height: "20px", lineHeight: "20px" }}>USDT</div>
+                        </div>
+                        <div className='flex justify-between  changeBiCard' >
+                            <img src="wallet/assets/images/symbol/USDT.png" className='TanHaoCard2' />
+                            <div style={{ height: "20px", lineHeight: "20px" }}>USDT</div>
+                        </div>
+
+                        <div className='flex justify-between changeBiCard' >
+                            <img src="wallet/assets/images/symbol/USDT.png" className='TanHaoCard2' />
+                            <div style={{ height: "20px", lineHeight: "20px" }}>USDT</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div className='flex mb-16  justify-between' >
+                        <div className='flex justify-between  changeBiCard' >
+                            <img src="wallet/assets/images/symbol/USDT.png" className='TanHaoCard2' />
+                            <div style={{ height: "20px", lineHeight: "20px" }}>USDT</div>
+                        </div>
+                        <div className='flex justify-between  changeBiCard' >
+                            <img src="wallet/assets/images/symbol/USDT.png" className='TanHaoCard2' />
+                            <div style={{ height: "20px", lineHeight: "20px" }}>USDT</div>
+                        </div>
+
+                        <div className='flex justify-between changeBiCard' >
+                            <img src="wallet/assets/images/symbol/USDT.png" className='TanHaoCard2' />
+                            <div style={{ height: "20px", lineHeight: "20px" }}>USDT</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className='mb-10'></div>
+            </AnimateModal>
+
+
+
+
 
 
         </div>
