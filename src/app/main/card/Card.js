@@ -368,6 +368,7 @@ function Card(props) {
     const [transferFee, setTransferFee] = useState(0);
 
     const [isLoadingBtn, setIsLoadingBtn] = useState(false);
+    const [applyFeeSymbol, setApplyFeeSymbol] = useState('USDT');
     //获取Config
     const getCardConfig = () => {
         dispatch(getCreditConfig()).then((res) => {
@@ -398,7 +399,10 @@ function Card(props) {
         setIsLoadingBtn(true)
         dispatch(applyCreditCard({
             creditType: cardConfigList[cardConfigID].creditType,
-            quotaAmount: 1
+            quotaAmount: 1,
+            applyFeeSymbol: applyFeeSymbol,
+            cardBin: cardConfigList[cardConfigID].cardBin,
+            applyDesc: 'card applyDesc'
         })).then((res) => {
             let result = res.payload
             setIsLoadingBtn(false)
@@ -2129,64 +2133,23 @@ function Card(props) {
 
                 <div>
                     <div className='flex mb-16  justify-between' >
-                        <div className='flex justify-between  changeBiCard' >
-                            <img src="wallet/assets/images/symbol/USDT.png" className='TanHaoCard2' />
-                            <div style={{ height: "20px", lineHeight: "20px" }}>USDT</div>
-                        </div>
-                        <div className='flex justify-between  changeBiCard' >
-                            <img src="wallet/assets/images/symbol/USDT.png" className='TanHaoCard2' />
-                            <div style={{ height: "20px", lineHeight: "20px" }}>USDT</div>
-                        </div>
+                        {symbols.map((symbolItem) => {
+                            return (
+                                <div className='flex justify-between  changeBiCard' onClick={() => {
+                                    setApplyFeeSymbol(symbolItem.symbol)
+                                    setOpenChangeBi(false)
+                                }}>
+                                    <img src={symbolItem.avatar} className='TanHaoCard2'/>
+                                    <div style={{height: "20px", lineHeight: "20px"}}>{symbolItem.symbol}</div>
+                                </div>
+                            )
+                        })}
 
-                        <div className='flex justify-between changeBiCard' >
-                            <img src="wallet/assets/images/symbol/USDT.png" className='TanHaoCard2' />
-                            <div style={{ height: "20px", lineHeight: "20px" }}>USDT</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <div className='flex mb-16  justify-between' >
-                        <div className='flex justify-between  changeBiCard' >
-                            <img src="wallet/assets/images/symbol/USDT.png" className='TanHaoCard2' />
-                            <div style={{ height: "20px", lineHeight: "20px" }}>USDT</div>
-                        </div>
-                        <div className='flex justify-between  changeBiCard' >
-                            <img src="wallet/assets/images/symbol/USDT.png" className='TanHaoCard2' />
-                            <div style={{ height: "20px", lineHeight: "20px" }}>USDT</div>
-                        </div>
-
-                        <div className='flex justify-between changeBiCard' >
-                            <img src="wallet/assets/images/symbol/USDT.png" className='TanHaoCard2' />
-                            <div style={{ height: "20px", lineHeight: "20px" }}>USDT</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <div className='flex mb-16  justify-between' >
-                        <div className='flex justify-between  changeBiCard' >
-                            <img src="wallet/assets/images/symbol/USDT.png" className='TanHaoCard2' />
-                            <div style={{ height: "20px", lineHeight: "20px" }}>USDT</div>
-                        </div>
-                        <div className='flex justify-between  changeBiCard' >
-                            <img src="wallet/assets/images/symbol/USDT.png" className='TanHaoCard2' />
-                            <div style={{ height: "20px", lineHeight: "20px" }}>USDT</div>
-                        </div>
-
-                        <div className='flex justify-between changeBiCard' >
-                            <img src="wallet/assets/images/symbol/USDT.png" className='TanHaoCard2' />
-                            <div style={{ height: "20px", lineHeight: "20px" }}>USDT</div>
-                        </div>
                     </div>
                 </div>
 
                 <div className='mb-10'></div>
             </AnimateModal>
-
-
-
-
 
 
         </div>
