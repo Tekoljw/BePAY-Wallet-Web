@@ -1761,9 +1761,6 @@ function Deposite() {
                                                         'aria-label': 'weight',
                                                     }}
                                                     onChange={(event) => {
-                                                        console.log(bankItem.minValue)
-                                                        console.log(bankItem.maxValue)
-                                                        console.log(event.target.value)
                                                         if (event.target.value === '') {
                                                             setWeight('')
                                                             return
