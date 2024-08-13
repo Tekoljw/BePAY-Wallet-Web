@@ -373,7 +373,7 @@ function Deposite() {
     }
 
     const backLoading = () => {
-        setTimeout(() => setOpenLoad(false), 10000);
+        setTimeout(() => setOpenLoad(false), 1000);
     };
 
 
@@ -460,6 +460,8 @@ function Deposite() {
                 dispatch(showMessage({ message: t('error_5'), code: 2 }));
             }
         }
+
+        setTimeout(() => setOpenLoad(false), 500);
     };
 
     // 切换到nft页面，自动获取nft钱包地址
@@ -928,6 +930,25 @@ function Deposite() {
             setFiatDisplayData(result?.data);
         });
     }, []);
+
+
+
+    // 格式化金额
+    const formatAmount = (amount) => {
+        if (amount >= 1000000000) {
+            return (amount / 1000000000) + 'B';
+        } else if (amount >= 100000000) {
+            return (amount / 100000000) + 'E';
+        } else if (amount >= 1000000) {
+            return (amount / 1000000) + 'M';
+        } else if (amount >= 1000) {
+            return (amount / 1000) + 'K';
+        }
+
+        return amount
+    }
+
+
 
     return (
         <div>
@@ -1735,7 +1756,7 @@ function Deposite() {
                                             </div>
                                             <div style={{ marginLeft: 'auto' }}>
                                                 <div className="px-12 font-medium" style={{ textAlign: 'right' }}>
-                                                    <Typography className="text-14" style={{ color: '#94A3B8' }}>{t('home_deposite_18')}:{bankItem.minValue} - {bankItem.maxValue}</Typography>
+                                                    <Typography className="text-14" style={{ color: '#94A3B8' }}>{t('home_deposite_18')}:{formatAmount(bankItem.minValue)} - {formatAmount(bankItem.maxValue)}</Typography>
                                                 </div>
                                             </div>
                                         </div>
@@ -1794,7 +1815,6 @@ function Deposite() {
                                                     onClick={() => {
                                                         setOpenLoad(true);
                                                         fiatRecharge(bankItem.id);
-                                                        backLoading();
                                                     }}
                                                 >
                                                     {t('home_borrow_8')}
