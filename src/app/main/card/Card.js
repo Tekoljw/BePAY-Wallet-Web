@@ -337,7 +337,9 @@ function Card(props) {
     // 初始化数据
     const initSymbol = () => {
         let tmpSymbol = [];
+        let tmpSymbol2 = [];
         let tmpSymbolWallet = [];
+        let tmpSymbolWallet2 = [];
         for (let i = 0; i < symbols.length; i++) {
             if (symbols[i].symbol == 'USDT') {
                 if (tmpSymbol.indexOf(symbols[i].symbol) == -1 && symbols[i].symbol != 'eUSDT' && symbols[i].symbol != 'eBGT') {
@@ -351,9 +353,22 @@ function Card(props) {
                     })
                 }
             }
+
+            if (tmpSymbol2.indexOf(symbols[i].symbol) == -1 && symbols[i].symbol != 'eUSDT' && symbols[i].symbol != 'eBGT') {
+                tmpSymbol2.push(symbols[i].symbol)
+                tmpSymbolWallet2.push({
+                    avatar: symbols[i].avatar,
+                    balance: arrayLookup(walletData.inner, 'symbol', symbols[i].symbol, 'balance') || 0,
+                    symbol: symbols[i].symbol,
+                    tradeLock: arrayLookup(walletData.inner, 'symbol', symbols[i].symbol, 'tradeLock') || 0,
+                    withdrawLock: arrayLookup(walletData.inner, 'symbol', symbols[i].symbol, 'withdrawLock') || 0
+                })
+            }
         }
         tmpSymbolWallet.sort(sortUseAge)
+        tmpSymbolWallet2.sort(sortUseAge)
         setSymbolWallet(tmpSymbolWallet)
+        setSymbolList(tmpSymbolWallet2)
     }
 
     useEffect(() => {
@@ -383,6 +398,7 @@ function Card(props) {
     const [transferFee, setTransferFee] = useState(0);
 
     const [isLoadingBtn, setIsLoadingBtn] = useState(false);
+    const [symbolList, setSymbolList] = useState([]);
     const [applyFeeSymbol, setApplyFeeSymbol] = useState('USDT');
     //获取Config
     const getCardConfig = () => {
@@ -2146,10 +2162,10 @@ function Card(props) {
                                 border: 'none'
                             }}
                         >
-                            {symbolWallet.length > 0 && <StyledAccordionSelect
-                                symbol={symbolWallet}
+                            {symbolList.length > 0 && <StyledAccordionSelect
+                                symbol={symbolList}
                                 currencyCode="USD"
-                                setSymbol={setSymbol}
+                                setSymbol={setApplyFeeSymbol}
                                 formControlSx={{ backgroundColor: '#374252!important' }}
                             />}
                         </Box>
@@ -2170,7 +2186,7 @@ function Card(props) {
                             loading={false}
                             variant="contained"
                             onClick={() => {
-
+                                applyCard()
                             }}
                         >
                             提交申请
