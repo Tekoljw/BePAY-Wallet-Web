@@ -437,6 +437,11 @@ function Card(props) {
         })).then((res) => {
             let result = res.payload
             setIsLoadingBtn(false)
+            setOpenXiangQing(false);
+            setTabValue(0);
+            closeChangeBi();
+            getCardList();
+            myFunction();
         })
     }
 
