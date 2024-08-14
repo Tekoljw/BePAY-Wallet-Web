@@ -780,6 +780,11 @@ input[type='number'] {
     align-items: center;
 }
 
+.changeBiHuangHang {
+    flex-wrap: wrap;
+    width: 100%;
+}
+
 .shaoMiaoIcon {
     margin-left: 1rem;
     width: 12%;
@@ -1136,13 +1141,19 @@ input[type='number'] {
 
 .openingFee {
     color: #46DFB7;
-    text-decoration: underline;
 }
 
 .changeBiCard {
     border-radius: 50px;
     background-color: #1E293A;
     padding: 5px 8px 5px 8px;
+    width: 30%;
+    margin-right: 5%;
+    margin-bottom: 1rem;
+}
+
+.changeBiCard:nth-child(3n) {
+    margin-right: 0%;
 }
 
 .openCardBtn {

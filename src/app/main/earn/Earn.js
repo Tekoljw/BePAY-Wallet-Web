@@ -213,9 +213,9 @@ function Earn(props) {
                 >
                     <div className='text-16'>百万空投</div>
                     <div className='lanDi mt-16' onClick={() => {
-                        // setOpenKongTou(true)
-                        // openKongTouFunc();
-                        setOpenYaoQing(true)
+                        setOpenKongTou(true)
+                        openKongTouFunc();
+                        // setOpenYaoQing(true)
                     }}>
                         <img className='logoCC' src="wallet/assets/images/earn/logo1.png" />
                         <div className='flex mt-16  justify-between'>

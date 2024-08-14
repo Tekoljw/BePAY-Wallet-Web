@@ -184,6 +184,21 @@ function Card(props) {
         }, 300);
     };
 
+    const closeChangeBi = () => {
+        document.getElementById('openChangeBi').classList.remove('PinMoveAni');
+        document.getElementById('openChangeBi').classList.add('PinMoveOut');
+        setTimeout(() => {
+            setOpenChangeBi(false)
+        }, 300);
+    };
+
+    const openChangeBiFunc = () => {
+        setOpenChangeBi(true);
+        setTimeout(() => {
+            document.getElementById('openChangeBi').classList.add('PinMoveAni');
+        }, 0);
+    };
+
     const openRecordFunc = () => {
         setTimeout(() => {
             document.getElementById('openRecord').classList.add('PinMoveAni');
@@ -1121,10 +1136,7 @@ function Card(props) {
                                                             </div>
 
                                                             <div className='flex justify-between items-center mt-10'>
-                                                                <div className='openingFee' onClick={() => {
-                                                                    setOpenChangeBi(true)
-                                                                }}
-                                                                >{t('card_33')} 1USD</div>
+                                                                <div className='openingFee' >{t('card_33')} 1USD</div>
 
                                                                 <div className='openCardBtn' onClick={() => {
                                                                     setOpenXiangQing(true);
@@ -1171,10 +1183,7 @@ function Card(props) {
                                                             </div>
 
                                                             <div className='flex justify-between items-center mt-10'>
-                                                                <div className='openingFee' onClick={() => {
-                                                                    setOpenChangeBi(true)
-                                                                }}
-                                                                >{t('card_33')} 1USD</div>
+                                                                <div className='openingFee'>{t('card_33')} 1USD</div>
 
                                                                 <div className='openCardBtn' onClick={() => {
                                                                     setOpenXiangQing(true);
@@ -1333,7 +1342,8 @@ function Card(props) {
                                 // setOpenApplyWindow(true)
                                 // openApplyFunc()
                                 // setOpenChongZhi(true)
-                                applyCard()
+                                // applyCard()
+                                openChangeBiFunc()
                             }}
                         >
                             {t('card_36')}
@@ -2104,52 +2114,72 @@ function Card(props) {
 
 
 
-            <AnimateModal
-                className="faBiDiCard tanChuanDiSe"
+            <BootstrapDialog
                 open={openChangeBi}
-                onClose={() => setOpenChangeBi(false)}
+                onClose={() => closeChangeBi()}
+                aria-labelledby="customized-dialog-title"
+                className="dialog-container"
             >
-                <div className='flex justify-center' style={{ width: "100%" }}>
-                    <div className='TanHaoCardZi'>
-                        更改币种
+                <div id="openChangeBi" className="PINSty">
+                    <div className='pinWindow2'>
+                        <div className='flex'>
+                            <div className='PINTitleSelectCardZi'>申请信息</div>
+                            <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                                closeChangeBi();
+                            }} />
+                        </div>
+
+                        <div className='flex mt-20 justify-between' style={{ borderBottom: "1px solid #2C3950" }}>
+                            <div className='text-16'>开卡费用</div>
+                            <div className='flex pb-20'>
+                                <div className='text-16'>USDT</div>
+                                <div className='text-16 ml-10'>1.00</div>
+                            </div>
+                        </div>
+
+                        <div className='mt-24' style={{ color: "#94A3B8" }}>选择支付的币种</div>
+
+                        <Box
+                            className="w-full rounded-16 border flex flex-col mt-24"
+                            sx={{
+                                backgroundColor: '#374252!important',
+                                border: 'none'
+                            }}
+                        >
+                            {symbolWallet.length > 0 && <StyledAccordionSelect
+                                symbol={symbolWallet}
+                                currencyCode="USD"
+                                setSymbol={setSymbol}
+                                formControlSx={{ backgroundColor: '#374252!important' }}
+                            />}
+                        </Box>
+
+                        <div className='my-24' style={{ borderBottom: "1px solid #2C3950" }}></div>
+
+                        <div className='flex justify-between mt-12'>
+                            <div className='' style={{ color: "#94A3B8" }}>卡片邮寄地址</div>
+                            <div className='' style={{ color: "#2DD4BF", textDecoration: "underline" }} onClick={() => {
+                            }} >修改地址</div>
+                        </div>
+                        <div className='mt-20' style={{ marginBottom: "6rem" }}>中华人民共和国香港特别行政区中环皇后大道中银大厦123号901室</div>
+
+                        <LoadingButton
+                            disabled={false}
+                            className="boxCardBtn3 mb-12"
+                            color="secondary"
+                            loading={false}
+                            variant="contained"
+                            onClick={() => {
+
+                            }}
+                        >
+                            提交申请
+                        </LoadingButton>
+
                     </div>
+
                 </div>
-
-                <Box
-                    className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard"
-                    sx={{
-                        backgroundColor: "#2C394D",
-                        padding: "1rem 0rem 0.5rem 0rem",
-                        overflow: "hidden",
-                        margin: "1rem auto 0rem auto"
-                    }}
-                >
-                    <div className="dialog-select-fiat danChuangTxt">
-                        请选择一个币种来支付本次申请卡片的费用。
-                    </div>
-                </Box>
-
-                <div className='mb-24' style={{ borderBottom: "1px solid #374252" }}></div>
-
-                <div>
-                    <div className='flex mb-16  justify-between' >
-                        {symbols.map((symbolItem) => {
-                            return (
-                                <div className='flex justify-between  changeBiCard' onClick={() => {
-                                    setApplyFeeSymbol(symbolItem.symbol)
-                                    setOpenChangeBi(false)
-                                }}>
-                                    <img src={symbolItem.avatar} className='TanHaoCard2'/>
-                                    <div style={{height: "20px", lineHeight: "20px"}}>{symbolItem.symbol}</div>
-                                </div>
-                            )
-                        })}
-
-                    </div>
-                </div>
-
-                <div className='mb-10'></div>
-            </AnimateModal>
+            </BootstrapDialog>
 
 
         </div>
