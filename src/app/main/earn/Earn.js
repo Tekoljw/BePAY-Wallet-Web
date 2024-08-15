@@ -139,15 +139,15 @@ function Earn(props) {
                     className='mt-12'
                     style={{ paddingInline: "1.5rem" }}
                 >
-                    <div className='text-16'>新手福利</div>
+                    <div className='text-16'>{t('card_113')}</div>
                     <div className='newBlocak'>
                         <div className='flex mt-12'>
                             <div className='qianDaoSty flex justify-between px-10' onClick={() => {
                                 setOpenCheckIn(true)
                             }}>
                                 <div className='mt-6'>
-                                    <div>Check In</div>
-                                    <div style={{ color: "#9a9a9a" }}>bonus</div>
+                                    <div>{t('card_172')}</div>
+                                    <div style={{ color: "#9a9a9a" }}>{t('card_115')}</div>
                                 </div>
                                 <img src="wallet/assets/images/earn/qianDao.png" />
                             </div>
@@ -156,8 +156,8 @@ function Earn(props) {
                                 setOpenSpin(true)
                             }}>
                                 <div className='mt-6'>
-                                    <div>Spin</div>
-                                    <div style={{ color: "#9a9a9a" }}>bonus</div>
+                                    <div>{t('card_114')}</div>
+                                    <div style={{ color: "#9a9a9a" }}>{t('card_115')}</div>
                                 </div>
                                 <div className='' style={{ position: "relative", width: "5.2rem", height: "5.2rem" }}>
                                     <img className='zhuanPanDongHua0' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan3.png" />
@@ -167,7 +167,7 @@ function Earn(props) {
                             </div>
                         </div>
                         <div className='flex mt-16 justify-center'>
-                            <img className='naoZhongImg' src="wallet/assets/images/earn/naoZhong.png" />  <div className='naoZhongZi ml-10'>活动结束</div> <div className='ml-10 naoZhongZi' >23:48:36</div>
+                            <img className='naoZhongImg' src="wallet/assets/images/earn/naoZhong.png" />  <div className='naoZhongZi ml-10'>{t('card_116')}</div> <div className='ml-10 naoZhongZi' >23:48:36</div>
                         </div>
                     </div>
                 </motion.div>
@@ -179,7 +179,7 @@ function Earn(props) {
                     className='mt-16'
                     style={{ paddingInline: "1.5rem" }}
                 >
-                    <div className='text-16'>活期利息</div>
+                    <div className='text-16'>{t('card_117')}</div>
 
                 </motion.div>
 
@@ -211,7 +211,7 @@ function Earn(props) {
                     className='mt-8'
                     style={{ paddingInline: "1.5rem" }}
                 >
-                    <div className='text-16'>百万空投</div>
+                    <div className='text-16'>{t('card_118')}</div>
                     <div className='lanDi mt-16' onClick={() => {
                         setOpenKongTou(true)
                         openKongTouFunc();
@@ -220,7 +220,7 @@ function Earn(props) {
                         <img className='logoCC' src="wallet/assets/images/earn/logo1.png" />
                         <div className='flex mt-16  justify-between'>
                             <div className='lanDiZi pb-10 pb-10'>
-                                <div><span style={{ color: "#A4A4A4" }}>瓜分</span><span style={{ marginLeft: "10px", color: "#FFC600", fontWeight: "bold", fontSize: "29px" }}>1000,000,000</span></div>
+                                <div><span style={{ color: "#A4A4A4" }}>{t('card_119')}</span><span style={{ marginLeft: "10px", color: "#FFC600", fontWeight: "bold", fontSize: "29px" }}>1000,000,000</span></div>
                                 <div><span style={{ color: "#1BB9FF", fontWeight: "bold", fontSize: "24px" }}>BFT</span><span style={{ marginLeft: "10px", color: "#ffffff", fontWeight: "bold", fontSize: "14px" }}>BeingFi Token</span></div>
                             </div>
                             <img className='earnYouTu ' src="wallet/assets/images/earn/bi1.png" />
@@ -235,7 +235,7 @@ function Earn(props) {
                     className='mt-20'
                     style={{ paddingInline: "1.5rem" }}
                 >
-                    <div className='text-16'>合约交易挖矿</div>
+                    <div className='text-16'>{t('card_120')}</div>
                     <div className='huangDi mt-16' onClick={() => {
                         setOpenWaKuang(true)
                         openWaKuangFunc();
@@ -245,12 +245,12 @@ function Earn(props) {
                                 <img className='logoCC2 mb-4' src="wallet/assets/images/earn/logo2.png" />
                                 <div style={{ display: "inline-block" }}>
                                     <div className='tuoYuanDi'>
-                                        <div className='' style={{ marginLeft: "10px", color: "#ffffff", fontSize: "20px", display: "inline-block" }}>交易合约</div>
-                                        <div className='' style={{ marginRight: "10px", color: "#8200d4", fontSize: "20px", display: "inline-block" }}>送现货</div>
+                                        <div className='' style={{ marginLeft: "10px", color: "#ffffff", fontSize: "20px", display: "inline-block" }}>{t('card_121')}</div>
+                                        <div className='' style={{ marginRight: "10px", color: "#8200d4", fontSize: "20px", display: "inline-block" }}>{t('card_122')}</div>
                                     </div>
                                 </div>
-                                <div><span style={{ color: "#ffffff", fontWeight: "bold", fontSize: "14px" }}>所有交易手续费</span><span style={{ color: "#FFC600", fontWeight: "bold", fontSize: "29px" }}>100%</span>
-                                    <span style={{ color: "#ffffff", fontWeight: "bold", fontSize: "14px" }}>补偿</span></div>
+                                <div><span style={{ color: "#ffffff", fontWeight: "bold", fontSize: "14px" }}>{t('card_123')}</span><span style={{ color: "#FFC600", fontWeight: "bold", fontSize: "29px" }}>100%</span>
+                                    <span style={{ color: "#ffffff", fontWeight: "bold", fontSize: "14px" }}>{t('card_124')}</span></div>
                             </div>
                             <img className='earnYouTu2 mt-16' src="wallet/assets/images/earn/bi2.png" />
                         </div>
@@ -264,7 +264,7 @@ function Earn(props) {
                     className='mt-20'
                     style={{ paddingInline: "1.5rem" }}
                 >
-                    <div className='text-16'>邀请奖励</div>
+                    <div className='text-16'>{t('card_125')}</div>
                     <div className='lvEarnDi mt-16' onClick={() => {
                         setOpenBind(true)
                         openBindFunc();
@@ -272,33 +272,33 @@ function Earn(props) {
                         <div className='flex justify-start pt-4'>
                             <img className='liBaoDiImg' src="wallet/assets/images/earn/giftIcon.png" />
                             <div className='yaoQingZiDi'>
-                                <div className='yaoQingZiDi2'>邀请好友加入</div>
+                                <div className='yaoQingZiDi2'>{t('card_126')}</div>
                             </div>
-                            <div style={{ fontSize: "20px", color: "#00FF96", fontWeight: "bold" }}>获得现金奖励！</div>
+                            <div style={{ fontSize: "20px", color: "#00FF96", fontWeight: "bold" }}>{t('card_127')}</div>
                         </div>
 
                         <div className='flex justify-between mt-20'>
                             <div className='' style={{ width: "25%" }}>
                                 <div className='yaoQingEarnZi' style={{ textAlign: "left" }}>500.00</div>
-                                <div className='earnHuiZi' style={{ textAlign: "left" }}>总收益</div>
+                                <div className='earnHuiZi' style={{ textAlign: "left" }}>{t('card_128')}</div>
                                 <div className='earnHuiZi' style={{ textAlign: "left" }}>USDT</div>
                             </div>
 
                             <div className='' style={{ width: "25%", color: "#FF9000" }}>
                                 <div className='yaoQingEarnZi' style={{ textAlign: "center" }}>30.00</div>
-                                <div className='earnHuiZi' style={{ textAlign: "center" }}>今日收益</div>
+                                <div className='earnHuiZi' style={{ textAlign: "center" }}>{t('card_129')}</div>
                                 <div className='earnHuiZi' style={{ textAlign: "center" }}>USDT</div>
                             </div>
 
                             <div className='' style={{ width: "25%", color: "#02A7F0" }}>
                                 <div className='yaoQingEarnZi' style={{ textAlign: "center" }}>200.00</div>
-                                <div className='earnHuiZi' style={{ textAlign: "center" }}>总收益</div>
+                                <div className='earnHuiZi' style={{ textAlign: "center" }}>{t('card_128')}</div>
                                 <div className='earnHuiZi' style={{ textAlign: "center" }}>BFT</div>
                             </div>
 
                             <div className='' style={{ width: "25%", color: "#00FF47" }}>
                                 <div className='yaoQingEarnZi' style={{ textAlign: "right" }}>100.00</div>
-                                <div className='earnHuiZi' style={{ textAlign: "right" }}>今日收益</div>
+                                <div className='earnHuiZi' style={{ textAlign: "right" }}>{t('card_129')}</div>
                                 <div className='earnHuiZi' style={{ textAlign: "right" }}>BFT</div>
                             </div>
                         </div>
@@ -323,8 +323,7 @@ function Earn(props) {
                             style={{ display: "block", color: "#FFD569" }}
                             className=" checkInTitleMt  text-align titleTxt"
                         >
-                            CheckIn
-                            {/* {t("home_CheckinBouns")} */}
+                         {t('card_172')}
                         </span>
                     </Typography>
                     <motion.div variants={container} initial="hidden" animate="show">
@@ -332,8 +331,7 @@ function Earn(props) {
                             variants={item}
                             className="text-16  text-align checkInTxtmtMiaoShu"
                         >
-                            Check in every week accumulatively and get corresponding rewards.
-                            {/* {t("home_Checkineveryweek")} */}
+                            {t('card_132')}
                         </motion.div>
                         <motion.div
                             variants={item}
@@ -375,7 +373,7 @@ function Earn(props) {
                                     className="width-85 align-item text-align"
                                 >
                                     <div className="text-14" style={{ color: "#FFD569" }}>
-                                        3Day
+                                        3{t('card_103')}
                                     </div>
                                     <img
                                         src="wallet/assets/images/earn/jinBi2.png"
@@ -391,7 +389,7 @@ function Earn(props) {
                                     style={{ marginLeft: "3%" }}
                                 >
                                     <div className="text-14" style={{ color: "#FFD569" }}>
-                                        5Day
+                                        5{t('card_103')}
                                     </div>
                                     <img
                                         src="wallet/assets/images/earn/jinBi3.png"
@@ -407,7 +405,7 @@ function Earn(props) {
                                     style={{ marginLeft: "3%" }}
                                 >
                                     <div className="text-14" style={{ color: "#FFD569" }}>
-                                        7Day
+                                        7{t('card_103')}
                                     </div>
                                     <img
                                         src="wallet/assets/images/earn/jinBi3.png"
@@ -440,8 +438,7 @@ function Earn(props) {
                                         color: "#ffffff",
                                     }}
                                 >
-                                    Sunday
-                                    {/* {t("home_Sunday")} */}
+                                    {t('card_139')}
                                 </div>
                                 <img
                                     className="positionAb marginJuZhong"
@@ -498,8 +495,7 @@ function Earn(props) {
                                         color: "#ffffff",
                                     }}
                                 >
-                                    Monday
-                                    {/* {t("home_Monday")} */}
+                                    {t('card_133')}
                                 </div>
                                 <img
                                     className="positionAb marginJuZhong"
@@ -556,8 +552,7 @@ function Earn(props) {
                                         color: "#ffffff",
                                     }}
                                 >
-                                    Tuesday
-                                    {/* {t("home_Tuesday")} */}
+                                    {t('card_134')}
                                 </div>
                                 <img
                                     className="positionAb marginJuZhong"
@@ -614,8 +609,7 @@ function Earn(props) {
                                         color: "#ffffff",
                                     }}
                                 >
-                                    Wednesday
-                                    {/* {t("home_Wednesday")} */}
+                                    {t('card_135')}
                                 </div>
                                 <img
                                     className="positionAb marginJuZhong"
@@ -677,8 +671,7 @@ function Earn(props) {
                                         color: "#ffffff",
                                     }}
                                 >
-                                    Thursday
-                                    {/* {t("home_Thursday")} */}
+                                    {t('card_136')}
                                 </div>
                                 <img
                                     className="positionAb marginJuZhong"
@@ -735,8 +728,7 @@ function Earn(props) {
                                         color: "#ffffff",
                                     }}
                                 >
-                                    Friday
-                                    {/* {t("home_Friday")} */}
+                                    {t('card_137')}
                                 </div>
                                 <img
                                     className="positionAb marginJuZhong"
@@ -793,8 +785,7 @@ function Earn(props) {
                                         color: "#ffffff",
                                     }}
                                 >
-                                    Saturday
-                                    {/* {t("home_Saturday")} */}
+                                    {t('card_137')}
                                 </div>
                                 <img
                                     className="positionAb marginJuZhong"
@@ -859,27 +850,27 @@ function Earn(props) {
                     </div>
                     <div className='flex justifyContent'>
                         <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/card/usd.png"></img>
-                        <div className='text-16 ml-6'>钱包资产总计USD</div>
+                        <div className='text-16 ml-6'>{t('card_152')}USD</div>
                     </div>
                     <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "center", color: "#00FF96" }}>10000.00</div>
                     <div className='flex  justify-between mt-12'>
                         <div>
-                            <div style={{ textAlign: "center" }}>昨日收益(USDT)</div>
+                            <div style={{ textAlign: "center" }}>{t('card_153')}(USDT)</div>
                             <div className='mt-6' style={{ textAlign: "center" }}>100.00</div>
                         </div>
 
                         <div>
-                            <div style={{ textAlign: "center" }}>累计收益(USDT)</div>
+                            <div style={{ textAlign: "center" }}>{t('card_154')}(USDT)</div>
                             <div className='mt-6' style={{ textAlign: "center" }}>100.00</div>
                         </div>
 
                         <div>
-                            <div style={{ textAlign: "center" }}>24小时年华</div>
+                            <div style={{ textAlign: "center" }}>{t('card_155')}</div>
                             <div className='mt-6' style={{ textAlign: "center" }}>5.26%</div>
                         </div>
                     </div>
                     <VisitorsOverviewWidget />
-                    <div className='txtBrightness text-16 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}> 立即入金 </div>
+                    <div className='txtBrightness text-16 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>{t('card_156')}</div>
                 </div>
             </BootstrapDialog>
 
@@ -890,16 +881,16 @@ function Earn(props) {
             >
                 <div id='openKongTou' className="px-15 pt-10 kongTouDi">
                     <div className='flex mt-10' style={{ justifyContent: "space-between", width: "100%" }}>
-                        <div className='text-18 kongTouTitle'>空投活动规则</div>
+                        <div className='text-18 kongTouTitle'>{t('card_157')}</div>
                         <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                             closesKongTouFunc();
                         }} ></img>
                     </div>
                     <div className='mt-16' style={{ textAlign: "center" }}>
-                        所有BeingFi加密银行用户瓜分总计<span className='text-20' style={{ color: "#1BB9FF", fontWeight: "700" }}>30%</span>BFT
+                    {t('card_158')}<span className='text-20' style={{ color: "#1BB9FF", fontWeight: "700" }}>30%</span>BFT
                     </div>
                     <div className='' style={{ textAlign: "center" }}>
-                        每天释放总奖池 <span className='text-20' style={{ color: "#00FF96", fontWeight: "700" }} >1%</span>
+                    {t('card_159')}<span className='text-20' style={{ color: "#00FF96", fontWeight: "700" }} >1%</span>
                     </div>
 
                     <motion.div variants={item} className="mt-16">
@@ -907,32 +898,32 @@ function Earn(props) {
                     </motion.div>
 
                     <div className='pt-10 pb-12 mt-24' style={{ backgroundColor: "#191A1B", borderRadius: "10px", border: "4px solid #151617" }}>
-                        <div className='text-16' style={{ textAlign: "center" }}>收益计算公式</div>
-                        <div className='text-12 mt-12' style={{ textAlign: "center", color: "#FFC600" }}>您的收益=账户总资产/平台所有用户总资产*释放总奖励</div>
+                        <div className='text-16' style={{ textAlign: "center" }}>{t('card_160')}</div>
+                        <div className='text-12 mt-12' style={{ textAlign: "center", color: "#FFC600" }}>{t('card_161')}</div>
                     </div>
 
                     <div className='flex justifyContent mt-20'>
                         <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/card/usd.png"></img>
-                        <div className='text-16 ml-6'>钱包资产总计USD</div>
+                        <div className='text-16 ml-6'>{t('card_152')}USD</div>
                     </div>
                     <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "center", color: "#00FF96" }}>10000.00</div>
                     <div className='flex  justify-between mt-12'>
                         <div>
-                            <div style={{ textAlign: "center" }}>昨日收益(USDT)</div>
+                            <div style={{ textAlign: "center" }}>{t('card_153')}(USDT)</div>
                             <div className='mt-6' style={{ textAlign: "center" }}>100.00</div>
                         </div>
 
                         <div>
-                            <div style={{ textAlign: "center" }}>累计收益(USDT)</div>
+                            <div style={{ textAlign: "center" }}>{t('card_154')}(USDT)</div>
                             <div className='mt-6' style={{ textAlign: "center" }}>100.00</div>
                         </div>
 
                         <div>
-                            <div style={{ textAlign: "center" }}>24小时年华</div>
+                            <div style={{ textAlign: "center" }}>{t('card_155')}</div>
                             <div className='mt-6' style={{ textAlign: "center" }}>5.26%</div>
                         </div>
                     </div>
-                    <div className='txtBrightness text-16 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}> 立即入金 </div>
+                    <div className='txtBrightness text-16 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>{t('card_156')}</div>
                 </div>
             </BootstrapDialog>
 
@@ -943,13 +934,13 @@ function Earn(props) {
             >
                 <div id='openWaKuang' className="px-15 pt-10 waKuangDi">
                     <div className='flex mt-10' style={{ justifyContent: "space-between", width: "100%" }}>
-                        <div className='text-18 kongTouTitle'>合约交易挖矿</div>
+                        <div className='text-18 kongTouTitle'>{t('card_120')}</div>
                         <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                             closesWaKuangFunc();
                         }} ></img>
                     </div>
                     <div className='mt-20 text-12' style={{ textAlign: "left", color: "#A4A4A4" }}>
-                        前往交易所Top.one对BFT合约的进行多空交易，所有交易损失，不论是投资亏损，还是手续费损失，您都将以前市场价获得100%等值的BFT现货赠送作为补偿。
+                    {t('card_162')}
                     </div>
 
                     <motion.div variants={item} className="mt-28">
@@ -958,26 +949,26 @@ function Earn(props) {
 
                     <div className='flex  mt-32'>
                         <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/card/usd.png"></img>
-                        <div className='text-14 ml-6' style={{ height: "24px", lineHeight: "24px" }}>总收益(BFT)</div>
+                        <div className='text-14 ml-6' style={{ height: "24px", lineHeight: "24px" }}>{t('card_128')}(BFT)</div>
                     </div>
                     <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "left", color: "#00FF96" }}>10000.00 <span style={{ fontSize: "14px", color: "#ffffff" }}> ≈ 1000 USD</span></div>
                     <div className='flex  justify-between mt-20'>
                         <div>
-                            <div style={{ textAlign: "center" }}>今日收益(BFT)</div>
+                            <div style={{ textAlign: "center" }}>{t('card_129')}(BFT)</div>
                             <div className='mt-6' style={{ textAlign: "center" }}>100.00</div>
                         </div>
 
                         <div>
-                            <div style={{ textAlign: "center" }}>昨日收益(BFT)</div>
+                            <div style={{ textAlign: "center" }}>{t('card_153')}(BFT)</div>
                             <div className='mt-6' style={{ textAlign: "center" }}>100.00</div>
                         </div>
 
                         <div>
-                            <div style={{ textAlign: "center" }}>昨日总交易量</div>
+                            <div style={{ textAlign: "center" }}>{t('card_173')}</div>
                             <div className='mt-6' style={{ textAlign: "center" }}>100.00</div>
                         </div>
                     </div>
-                    <div className='txtBrightness text-16 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}> 前往TOP.ONE开始交易 </div>
+                    <div className='txtBrightness text-16 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>{t('card_130')}</div>
                 </div>
             </BootstrapDialog>
 
@@ -988,18 +979,18 @@ function Earn(props) {
             >
                 <div id='openBind' className="px-15 pt-10 bindDi">
                     <div className='flex mt-10' style={{ justifyContent: "space-between", width: "100%" }}>
-                        <div className='text-18 kongTouTitle'>开通BeingFi卡片</div>
+                        <div className='text-18 kongTouTitle'>{t('card_131')}</div>
                         <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                             closesBindFunc();
                         }} ></img>
                     </div>
                     <div className='mt-28' style={{ textAlign: "center" }}>
-                        先开通BeingFi加密银行卡才可参与该活动!
+                    {t('card_163')}
                     </div>
 
                     <img className='cardEarnTips mt-28' src="wallet/assets/images/card/card1.png"></img>
 
-                    <div className='txtBrightness text-16 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>立即开通</div>
+                    <div className='txtBrightness text-16 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>{t('card_164')}</div>
                 </div>
             </BootstrapDialog>
 
@@ -1011,10 +1002,10 @@ function Earn(props) {
                 onClose={() => setOpenYaoQing(false)}
             >
                 <div className='flex mt-20' style={{ justifyContent: "space-between", width: "100%" }}>
-                    <div className='text-18 yaoQingTitle'>绑定邀请码</div>
+                    <div className='text-18 yaoQingTitle'>{t('card_165')}</div>
                 </div>
                 <div className='mt-20' style={{ width: "100%", textAlign: "center" }}>
-                    该活动仅对受邀请的用户开放！
+                {t('card_166')}
                 </div>
                 <OutlinedInput
                     id="outlined-adornment-address send-tips-container-address"
@@ -1033,7 +1024,7 @@ function Earn(props) {
                     onClick={async () => {
                     }}
                 >
-                    立即绑定
+                    {t('card_167')}
                 </LoadingButton>
 
 

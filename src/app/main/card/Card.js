@@ -275,9 +275,6 @@ function Card(props) {
         passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
     });
 
-
-
-
     const { control, formState, handleSubmit, reset } = useForm({
         mode: 'onChange',
         defaultValues,
@@ -635,7 +632,7 @@ function Card(props) {
                                                         setIsOpenEye(!isOpenEye);
                                                     }}></img>
                                             }
-                                            <div className="ml-8 walletBalanceZi" style={{ color: "#84A59F" }} >Wallet Balance</div>
+                                            <div className="ml-8 walletBalanceZi" style={{ color: "#84A59F" }} >{t('card_10')}</div>
                                         </div>
                                         <div className="zhangDanXiangQinZi" onClick={() => {
                                             changePhoneTab('record');
@@ -1276,7 +1273,7 @@ function Card(props) {
 
                             <div className='flex justify-between mt-10 mb-10'>
                                 <div className='quanYiHuiZi'>{t('card_43')}</div>
-                                <div> 1000,000 USD/天</div>
+                                <div> 1000,000 USD/<span>{t('card_103')}</span></div>
                             </div>
                         </div>
                     </motion.div>
@@ -1288,7 +1285,7 @@ function Card(props) {
                             </div>
 
                             <div className='flex justify-between mt-10'>
-                                <div className='quanYiHuiZi'>年费</div>
+                                <div className='quanYiHuiZi'>{t('card_104')}</div>
                                 <div>0 USD </div>
                             </div>
 
@@ -1301,7 +1298,7 @@ function Card(props) {
 
                             <div className='flex justify-between mt-10 '>
                                 <div className='quanYiHuiZi'>{t('card_39')}</div>
-                                <div>预付卡</div>
+                                <div>{t('card_105')}</div>
                             </div>
 
 
@@ -1341,11 +1338,11 @@ function Card(props) {
                         <div className='quanYiDi' style={{ padding: "1.5rem" }}>
                             <div className='mt-10 flex'>
                                 <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
-                                <div className='text-16'>使用提示</div>
+                                <div className='text-16'>{t('card_106')}</div>
                             </div>
 
                             <div className='flex justify-start mt-10'>
-                                <div className='quanYiHuiZi pb-8'>使用卡片进行刷卡消费或取款前，请尽可能确保卡内有足够余额。否则，如果余额不足，导致刷卡或取款失败，VISA/Master系统仍然会收取您的手续费。</div>
+                                <div className='quanYiHuiZi pb-8'>{t('card_107')}</div>
                             </div>
                         </div>
                     </motion.div>
@@ -1461,7 +1458,7 @@ function Card(props) {
                     }}
                 >
                     <div className="dialog-select-fiat danChuangTxt">
-                        将卡号5487 3254 1474 6658的卡片进行更换，是否沿用旧卡片的申请信息？
+                    {t('card_108')}
                     </div>
                 </Box>
 
@@ -2144,21 +2141,21 @@ function Card(props) {
                 <div id="openChangeBi" className="PINSty">
                     <div className='pinWindow2'>
                         <div className='flex'>
-                            <div className='PINTitleSelectCardZi'>申请信息</div>
+                            <div className='PINTitleSelectCardZi'>{t('card_109')}</div>
                             <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                 closeChangeBi();
                             }} />
                         </div>
 
                         <div className='flex mt-20 justify-between' style={{ borderBottom: "1px solid #2C3950" }}>
-                            <div className='text-16'>开卡费用</div>
+                            <div className='text-16'>{t('card_33')}</div>
                             <div className='flex pb-20'>
                                 <div className='text-16'>USDT</div>
                                 <div className='text-16 ml-10'>1.00</div>
                             </div>
                         </div>
 
-                        <div className='mt-24' style={{ color: "#94A3B8" }}>选择支付的币种</div>
+                        <div className='mt-24' style={{ color: "#94A3B8" }}>{t('card_110')}</div>
 
                         <Box
                             className="w-full rounded-16 border flex flex-col mt-24"
@@ -2178,9 +2175,9 @@ function Card(props) {
                         <div className='my-24' style={{ borderBottom: "1px solid #2C3950" }}></div>
 
                         <div className='flex justify-between mt-12'>
-                            <div className='' style={{ color: "#94A3B8" }}>卡片邮寄地址</div>
+                            <div className='' style={{ color: "#94A3B8" }}>{t('card_111')}</div>
                             <div className='' style={{ color: "#2DD4BF", textDecoration: "underline" }} onClick={() => {
-                            }} >修改地址</div>
+                            }} >{t('card_112')}</div>
                         </div>
                         <div className='mt-20' style={{ marginBottom: "6rem" }}>中华人民共和国香港特别行政区中环皇后大道中银大厦123号901室</div>
 
@@ -2194,7 +2191,7 @@ function Card(props) {
                                 applyCard()
                             }}
                         >
-                            提交申请
+                            {t('card_3')}
                         </LoadingButton>
 
                     </div>

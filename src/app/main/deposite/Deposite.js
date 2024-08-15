@@ -1028,11 +1028,10 @@ function Deposite() {
                     animate="show"
                     className="InsideW"
                 >
-                    <div className='text-16 ml-10 mt-10 mb-6'>{t('card_7')}</div>
                     <div className='addressBigW flex justify-between mt-10'>
                         <div className="userIdW   guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
                             <div className="addressW2 flex justify-between guoDuDongHua">
-                                <div className='idZi guoDuDongHua' >{userData?.profile?.user?.id}</div>
+                                <div className='idZi guoDuDongHua' > <span style={{ color:"#ffffff",marginRight:"10px"}}>{t('card_7')}</span>  {userData?.profile?.user?.id}</div>
                                 <img onClick={() => { handleCopyText(userData?.profile?.user?.id) }} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"></img>
                             </div>
                             <QRCode

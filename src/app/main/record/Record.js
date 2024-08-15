@@ -348,18 +348,18 @@ function Record() {
                             },
                         }}
                     >
-                        <MenuItem value={1} className='text-16'>January</MenuItem>
-                        <MenuItem value={2} className='text-16'>February</MenuItem>
-                        <MenuItem value={3} className='text-16'>March</MenuItem>
-                        <MenuItem value={4} className='text-16'>April</MenuItem>
-                        <MenuItem value={5} className='text-16'>May</MenuItem>
-                        <MenuItem value={6} className='text-16'>June</MenuItem>
-                        <MenuItem value={7} className='text-16'>July</MenuItem>
-                        <MenuItem value={8} className='text-16'>August</MenuItem>
-                        <MenuItem value={9} className='text-16'>September</MenuItem>
-                        <MenuItem value={10} className='text-16'>October</MenuItem>
-                        <MenuItem value={11} className='text-16'>November</MenuItem>
-                        <MenuItem value={12} className='text-16'>December</MenuItem>
+                        <MenuItem value={1} className='text-16'>{t('card_140')}</MenuItem>
+                        <MenuItem value={2} className='text-16'>{t('card_141')}</MenuItem>
+                        <MenuItem value={3} className='text-16'>{t('card_142')}</MenuItem>
+                        <MenuItem value={4} className='text-16'>{t('card_143')}</MenuItem>
+                        <MenuItem value={5} className='text-16'>{t('card_144')}</MenuItem>
+                        <MenuItem value={6} className='text-16'>{t('card_145')}</MenuItem>
+                        <MenuItem value={7} className='text-16'>{t('card_146')}</MenuItem>
+                        <MenuItem value={8} className='text-16'>{t('card_147')}</MenuItem>
+                        <MenuItem value={9} className='text-16'>{t('card_148')}</MenuItem>
+                        <MenuItem value={10} className='text-16'>{t('card_149')}</MenuItem>
+                        <MenuItem value={11} className='text-16'>{t('card_150')}</MenuItem>
+                        <MenuItem value={12} className='text-16'>{t('card_151')}</MenuItem>
                     </Select>
                 </FormControl>
             </motion.div>
@@ -401,7 +401,7 @@ function Record() {
                             },
                         }}
                     >
-                        <MenuItem value={1} className='text-16'>全部卡片</MenuItem>
+                        <MenuItem value={1} className='text-16'>{t('card_169')}</MenuItem>
                         <MenuItem value={2} className='text-16'>6584 2458 7848 7542<span style={{ color: "#94A3B8", marginLeft: "1rem" }}>VISA</span></MenuItem>
                         <MenuItem value={3} className='text-16'>3354 6857 9584 8848<span style={{ color: "#94A3B8", marginLeft: "1rem" }}>MASTER</span></MenuItem>
                     </Select>
@@ -484,7 +484,7 @@ function Record() {
                                             </div>
                                             <div className='recordListZi2'>{transferItem.amount}</div>
                                         </div>
-                                        <div className='recordListSmallZi'>balance <span>{transferItem.balance}</span>
+                                        <div className='recordListSmallZi'>{t('home_deposite_24')} <span>{transferItem.balance}</span>
                                         </div>
                                         <div
                                             className='recordListSmallZi'>{getNowTime(transferItem.createTime * 1000)}</div>
@@ -508,7 +508,7 @@ function Record() {
                                         handleTransferRecord(page + 1)
                                     }}
                                 >
-                                    More
+                                    {t('card_169')}
                                 </LoadingButton>
                             }
                         </div>
