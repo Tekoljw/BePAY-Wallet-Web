@@ -275,7 +275,7 @@ function HomePage(props) {
                             }}>
                                 <img class="material-icons md-18" width="24px" src={currentPhoneTab === 'wallet' ? 'wallet/assets/images/menu/icon-wallet-active2.png' : 'wallet/assets/images/menu/icon-wallet-active.png'} alt="" />
                                 {/* <i class="material-icons md-18">signal_cellular_alt</i> */}
-                                <span class="nav-text">Account</span>
+                                <span class="nav-text">{t('home_withdraw_27')}</span>
                             </div>
                             <div className={clsx("nav-link", currentPhoneTab === 'deposite' && 'active')} data-index="1" onClick={() => {
                                 changePhoneTab('deposite')
@@ -283,7 +283,7 @@ function HomePage(props) {
                             }}>
                                 {/* {changePhoneTab('deposit')} */}
                                 <img class="material-icons md-18" width="24px" src={currentPhoneTab === 'deposite' ? 'wallet/assets/images/menu/deposite-active2.png' : 'wallet/assets/images/menu/deposite-active.png'} alt="" />
-                                <span class="nav-text">Deposit</span>
+                                <span class="nav-text">{t('card_3')}</span>
                             </div>
                             <div className={clsx("nav-link", currentPhoneTab === 'withdraw' && 'active')} data-index="2" onClick={() => {
                                 changePhoneTab('withdraw')
@@ -291,7 +291,7 @@ function HomePage(props) {
                             }}>
                                 {/* {changePhoneTab('withdraw')} */}
                                 <img class="material-icons md-18" width="24px" src={currentPhoneTab === 'withdraw' ? 'wallet/assets/images/menu/withdraw-active2.png' : 'wallet/assets/images/menu/withdraw-active.png'} alt="" />
-                                <span class="nav-text">Withdraw</span>
+                                <span class="nav-text">{t('card_4')}</span>
                             </div>
                         </nav>
                     </div>

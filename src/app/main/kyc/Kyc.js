@@ -1222,7 +1222,7 @@ function Kyc(props) {
                         </div>
 
                         <Button
-                            className="px-48 text-lg my-12 btnColorTitleBig mt-24 button-reset"
+                            className="px-48 text-lg my-12 btnColorTitleBig mt-24 button-reset3"
                             color="secondary"
                             variant="contained"
                             onClick={() => { onSubmitEmail() }}
@@ -1382,7 +1382,7 @@ function Kyc(props) {
 
 
                         <Button
-                            className="px-48 text-lg my-12 btnColorTitleBig mt-24 button-reset"
+                            className="px-48 text-lg my-12 btnColorTitleBig mt-24 button-reset3"
                             color="secondary"
                             variant="contained"
                             onClick={() => { onSubmitPhone() }}

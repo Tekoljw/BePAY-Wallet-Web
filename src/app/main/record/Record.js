@@ -89,7 +89,7 @@ function Record() {
         { id: 15, label: t('home_record_18') },
         // { id: 16, label: 'TRANSFER_TO_GAME' },
         // { id: 17, label: 'TRANSFER_FROM_GAME' },
-        { id: 18, label: 'Card' },
+        { id: 18, label: t('menu_18')},
     ];
 
     const [timeItem, setTimeItem] = React.useState(1);

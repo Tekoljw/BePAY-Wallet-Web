@@ -2607,6 +2607,15 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     line-height: initial;
 }
 
+.button-reset3 {
+    width: 100%;
+    height: 4rem;
+    margin: 0 auto 1rem;
+    display: block;
+    font-size: 1.8rem;
+    line-height: initial;
+}
+
 .kyc-file-box {
     width: 10.2rem;
     height: 10.2rem;

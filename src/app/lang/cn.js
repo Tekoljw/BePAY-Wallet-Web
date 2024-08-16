@@ -174,7 +174,7 @@ const locale = {
     home_withdraw_24: '粘贴',
     home_withdraw_25: '金额',
     home_withdraw_26: '选择我的',
-    home_withdraw_27: "账号",
+    home_withdraw_27: "账户",
     home_withdraw_28: "账号类型",
     home_withdraw_29: "CPF账号",
 
@@ -318,6 +318,10 @@ const locale = {
     Kyc_39: "居住证",
     Kyc_40: "您已完成KYC实名认证",
 
+
+
+
+
     error_0: "登录失败",
     error_1: "操作失败",
     error_2: "获取数据失败",
@@ -400,7 +404,7 @@ const locale = {
     card_37: "卡片权益",
     card_38: "卡片币种",
     card_39: "卡片类型",
-    card_40: "",
+    card_40: "开卡费",
     card_41: "快递费",
     card_42: "根据距离估算",
     card_43: "消费上限",
