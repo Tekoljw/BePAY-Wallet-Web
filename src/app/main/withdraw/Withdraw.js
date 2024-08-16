@@ -1351,7 +1351,7 @@ function Withdraw(props) {
                         <div id="GoogleCodeSty" className="PINSty">
                             <div className='pinWindow'>
                                 <div className='flex'>
-                                    <div className='PINTitle2'>输入google code</div>
+                                    <div className='PINTitle2'>Google Code</div>
                                     <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                         closeGoogleCodeFunc()
                                     }} />
@@ -1618,12 +1618,12 @@ function Withdraw(props) {
                 <div id="PINSty" className="PINSty">
                     <div className='pinWindow'>
                         <div className='flex'>
-                            <div className='PINTitle2'>请输入PIN码</div>
+                            <div className='PINTitle2'>{t('card_65')}</div>
                             <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                 closePinFunc();
                             }} />
                         </div>
-                        <div className='PINTitle'>向（用户{inputIDVal}）转账</div>
+                        <div className='PINTitle'>{t('home_wallet_14')}（用户{inputIDVal}）{t('transfer_1')}</div>
                         <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
                             <img className='MoneyWithdraw' src="wallet/assets/images/withdraw/USDT.png"></img>
                             <div className='PINTitle3'>USDT</div>
@@ -1724,7 +1724,7 @@ function Withdraw(props) {
                                 onTouchCancel={changeToWhite}
                                 onClick={() => {
                                     handleSendTipsSubmit()
-                                }}>完成</div>
+                                }}>{t('card_30')}</div>
                         </div>
                     </div>
                     <div>
@@ -1743,12 +1743,12 @@ function Withdraw(props) {
                 <div id="CreateSty" className="PINSty">
                     <div className='pinWindow'>
                         <div className='flex'>
-                            <div className='PINTitle2'>创建PIN码</div>
+                            <div className='PINTitle2'>{t('card_68')}</div>
                             <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                 closeCreatePinFunc();
                             }} />
                         </div>
-                        <div className='PINTitle'>输入用于支付的6位数字密码</div>
+                        <div className='PINTitle'>{t('card_69')}</div>
                         <div className='flex justify-between mt-32 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
                             <div className='PinNum color-box'
                                 onTouchStart={changeToBlack}
@@ -1867,19 +1867,19 @@ function Withdraw(props) {
                 className="dialog-container"
             >
                 <div className='errorPinDi'>
-                    <div className='errorPinZi flex items-center  justify-content-center'>支付密码错误请重试</div>
+                    <div className='errorPinZi flex items-center  justify-content-center'>{t('card_70')}</div>
                     <div className='errorPinLine'></div>
                     <div className='flex justify-between'>
                         <div className='errorPinBtn errorRightLine' onClick={() => {
                             setOpenPinErr(false)
                             history.push('/wallet/home/security', { tabValue: 5, resetTabValueParam: 1 })
-                        }}>忘记密码</div>
+                        }}>{t('card_71')}</div>
                         <div className='errorPinBtn' style={{ color: "#81A39F" }}
                             onClick={() => {
                                 setOpenPinErr(false)
                                 openInputPin()
                             }}
-                        >重试</div>
+                        >{t('card_72')}</div>
                     </div>
                 </div>
             </BootstrapDialog>
@@ -1896,7 +1896,7 @@ function Withdraw(props) {
                 <div id="PasteSty" className={clsx("PasteSty", !openPasteWindow && 'PinMoveOut', openPasteWindow && 'PinMoveAni')}>
                     <div className='pasteWindow'>
                         <div className='flex'>
-                            <div className='PINTitle2'>历史转账地址</div>
+                            <div className='PINTitle2'>{t('card_73')}</div>
                             <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                 closePasteFunc();
                             }} />
@@ -1910,7 +1910,7 @@ function Withdraw(props) {
                                     <div className='pasteDiZhi'>
                                         <div className='flex'>
                                             <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
-                                            <div className='bianJiBiZi'> 历史地址1 </div>
+                                            <div className='bianJiBiZi'>{t('card_74')}</div>
                                         </div>
                                         <div className='pasteDi'>{item}</div>
                                     </div>
