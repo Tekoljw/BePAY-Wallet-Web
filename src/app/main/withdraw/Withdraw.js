@@ -233,11 +233,26 @@ function Withdraw(props) {
         }, 0);
     };
 
+    const openGoogleCodeFunc = () => {
+        setOpenGoogleCode(true);
+        setTimeout(() => {
+            document.getElementById('GoogleCodeSty').classList.add('PinMoveAni');
+        }, 0);
+    };
+
     const closePinFunc = () => {
         document.getElementById('PINSty').classList.remove('PinMoveAni');
         document.getElementById('PINSty').classList.add('PinMoveOut');
         setTimeout(() => {
             setOpenPinWindow(false);
+        }, 300);
+    };
+
+    const closeGoogleCodeFunc = () => {
+        document.getElementById('GoogleCodeSty').classList.remove('PinMoveAni');
+        document.getElementById('GoogleCodeSty').classList.add('PinMoveOut');
+        setTimeout(() => {
+            setOpenGoogleCode(false);
         }, 300);
     };
 
@@ -315,7 +330,7 @@ function Withdraw(props) {
                 navigate('/home/security');
                 return;
             }
-            setOpenGoogleCode(true);
+            openGoogleCodeFunc()
             return
         }
 
@@ -324,7 +339,7 @@ function Withdraw(props) {
                 navigate('/home/security');
                 return;
             }
-            setOpenGoogleCode(true);
+            openGoogleCodeFunc()
             return
         }
 
@@ -333,7 +348,7 @@ function Withdraw(props) {
                 navigate('/home/security');
                 return;
             }
-            setOpenGoogleCode(true);
+            openGoogleCodeFunc()
             return
         }
 
@@ -348,10 +363,14 @@ function Withdraw(props) {
         };
         setOpenLoad(true);
         dispatch(tokenTransfer(data)).then((res) => {
+            setOpenLoad(false);
+            let result = res.payload
             setGoogleCode('');
-            setOpenTiBi(true);
-            if (res.payload) {
-                setWithDrawOrderID(res.payload);
+            if (result) {
+                setOpenTiBi(true);
+                setWithDrawOrderID(result);
+            } else {
+                dispatch(showMessage({ message: t('error_10'), code: 2 }));
             }
 
         });
@@ -384,7 +403,7 @@ function Withdraw(props) {
 
                 return;
             }
-            setOpenGoogleCode(true);
+            openGoogleCodeFunc()
             return
         }
 
@@ -396,7 +415,7 @@ function Withdraw(props) {
                 }, 1000)
                 return;
             }
-            setOpenGoogleCode(true);
+            openGoogleCodeFunc()
             return
         }
 
@@ -408,7 +427,7 @@ function Withdraw(props) {
                 }, 1000)
                 return;
             }
-            setOpenGoogleCode(true);
+            openGoogleCodeFunc()
             return
         }
 
@@ -767,6 +786,17 @@ function Withdraw(props) {
         }
 
         setInputVal({ ...inputVal, amount: tmpText == 0 ? '' : tmpText });
+    }
+
+    const handleDoGoogleCode = (text) => {
+        let tmpCode = googleCode
+        if (text === -1) {
+            tmpCode = tmpCode.slice(0, -1)
+        } else {
+            tmpCode = tmpCode + text
+        }
+
+        setGoogleCode(tmpCode)
     }
 
     // 输入Pin
@@ -1311,17 +1341,139 @@ function Withdraw(props) {
 
                     {/*填写google验证码*/}
                     <BootstrapDialog
-                        onClose={() => { setOpenGoogleCode(false); }}
+                        onClose={() => {
+                            closeGoogleCodeFunc()
+                        }}
                         aria-labelledby="customized-dialog-title"
                         open={openGoogleCode}
+                        className="dialog-container"
                     >
-                        <DialogContent dividers>
-                            <div className="mt-8">
-                                <Typography className="text-18 px-16 my-12 font-medium">Google Code</Typography>
-                                <OtpPass setGoogleCode={setGoogleCode} />
+                        <div id="GoogleCodeSty" className="PINSty">
+                            <div className='pinWindow'>
+                                <div className='flex'>
+                                    <div className='PINTitle2'>输入google code</div>
+                                    <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                                        closeGoogleCodeFunc()
+                                    }} />
+                                </div>
+                                <div className='PINTitle'>输入6位动态密码</div>
+                                <div className='flex justify-between mt-32 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
+                                    <div className='PinNum color-box'
+                                         onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}>{googleCode[0] ?? ''}</div>
+                                    <div className='PinNum' >{googleCode[1] ?? ''}</div>
+                                    <div className='PinNum'>{googleCode[2] ?? ''}</div>
+                                    <div className='PinNum'>{googleCode[3] ?? ''}</div>
+                                    <div className='PinNum'>{googleCode[4] ?? ''}</div>
+                                    <div className='PinNum'>{googleCode[5] ?? ''}</div>
+                                </div>
                             </div>
-                        </DialogContent>
+
+                            <div className='jianPanSty'>
+                                <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                                    <div id="createPin1" className='jianPanNumBtn borderRight borderBottom color-box'
+                                         onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}
+                                         onClick={() => {
+                                             handleDoGoogleCode(1)
+                                         }}
+                                    >1</div>
+                                    <div id="createPin2" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}
+                                         onClick={() => {
+                                             handleDoGoogleCode(2)
+                                         }}
+                                    >2</div>
+                                    <div id="createPin3" className='jianPanNumBtn  borderBottom color-box' onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}
+                                         onClick={() => {
+                                             handleDoGoogleCode(3)
+                                         }}
+                                    >3</div>
+                                </div>
+                                <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                                    <div id="createPin4" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}
+                                         onClick={() => {
+                                             handleDoGoogleCode(4)
+                                         }}
+                                    >4</div>
+                                    <div id="createPin5" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}
+                                         onClick={() => {
+                                             handleDoGoogleCode(5)
+                                         }}
+                                    >5</div>
+                                    <div id="createPin6" className='jianPanNumBtn  borderBottom color-box' onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}
+                                         onClick={() => {
+                                             handleDoGoogleCode(6)
+                                         }}
+                                    >6</div>
+                                </div>
+                                <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                                    <div id="createPin7" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}
+                                         onClick={() => {
+                                             handleDoGoogleCode(7)
+                                         }}
+                                    >7</div>
+                                    <div id="createPin8" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}
+                                         onClick={() => {
+                                             handleDoGoogleCode(8)
+                                         }}
+                                    >8</div>
+                                    <div id="createPin9" className='jianPanNumBtn borderBottom color-box' onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}
+                                         onClick={() => {
+                                             handleDoGoogleCode(9)
+                                         }}
+                                    >9</div>
+                                </div>
+                                <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                                    <div className='jianPanNumBtn borderRight '></div>
+                                    <div id="createPin0" className='jianPanNumBtn borderRight color-box' onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}
+                                         onClick={() => {
+                                             handleDoGoogleCode(0)
+                                         }}
+                                    >0</div>
+                                    <div id="createPinx" className='jianPanNumBtn flex items-center color-box'
+                                         onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}
+                                         onClick={() => {
+                                             handleDoGoogleCode(-1)
+                                         }}
+                                    > <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img></div>
+                                </div>
+                            </div>
+                        </div>
                     </BootstrapDialog>
+                    {/*<BootstrapDialog*/}
+                    {/*    onClose={() => { setOpenGoogleCode(false); }}*/}
+                    {/*    aria-labelledby="customized-dialog-title"*/}
+                    {/*    open={openGoogleCode}*/}
+                    {/*>*/}
+                    {/*    <DialogContent dividers>*/}
+                    {/*        <div className="mt-8">*/}
+                    {/*            <Typography className="text-18 px-16 my-12 font-medium">Google Code</Typography>*/}
+                    {/*            <OtpPass setGoogleCode={setGoogleCode} />*/}
+                    {/*        </div>*/}
+                    {/*    </DialogContent>*/}
+                    {/*</BootstrapDialog>*/}
 
                     {/*提虚拟币界面样式*/}
                     <BootstrapDialog
