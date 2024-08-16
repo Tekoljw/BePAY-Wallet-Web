@@ -365,15 +365,13 @@ function Withdraw(props) {
         dispatch(tokenTransfer(data)).then((res) => {
             setOpenLoad(false);
             let result = res.payload
-            if (result && result?.status != 'fail') {
-                setGoogleCode('');
+            setGoogleCode('');
+            if (result) {
                 setOpenTiBi(true);
-                setWithDrawOrderID(res.payload);
-                dispatch(showMessage({ message: 'success', code: 1 }));
+                setWithDrawOrderID(result);
             } else {
                 dispatch(showMessage({ message: t('error_10'), code: 2 }));
             }
-            console.log(result, 'res')
 
         });
     };
