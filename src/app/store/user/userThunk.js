@@ -19,7 +19,10 @@ import {requestUserLoginData} from "../../util/tools/loginFunction";
 export const checkLoginState = createAsyncThunk(
     'user/checkLoginState',
     async (settings, { dispatch, getState }) => {
-        const loginState = await React.$api("user.checkLoginState");
+        let data = {
+            autoLoginUserId: getThirdPartId(),
+        };
+        const loginState = await React.$api("user.checkLoginState", data);
         if (loginState.errno === 501) { //没有登录
             const accessType = getAccessType();
             switch (accessType){

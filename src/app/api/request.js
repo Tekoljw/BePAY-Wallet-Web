@@ -18,11 +18,11 @@ service.interceptors.request.use(
             ) || ''}`;
         }
 
-        if (!config.headers['Wallet-OpenApp-Id']) {
+        if (!config.headers['Wallet-OpenApp-Id'] || config.headers['Wallet-OpenApp-Id'] !== OpenAppId) {
             config.headers['Wallet-OpenApp-Id'] = OpenAppId;
         }
 
-        if (!config.headers['Wallet-OpenApp-Index']) {
+        if (!config.headers['Wallet-OpenApp-Index'] || config.headers['Wallet-OpenApp-Index'] !== OpenAppIndex) {
             config.headers['Wallet-OpenApp-Index'] = OpenAppIndex;
         }
         return config;
