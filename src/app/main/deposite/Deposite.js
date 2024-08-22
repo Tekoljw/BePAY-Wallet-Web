@@ -1388,7 +1388,7 @@ function Deposite() {
                                                         <div>
                                                             <div className='flex ml-10'>
                                                                 <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
-                                                                <div className='bianJiBiZi'>地址1</div>
+                                                                <div className='bianJiBiZi'>Address1</div>
                                                             </div>
                                                         </div>
                                                         <div className='addressBigW flex justify-between mt-10'>
@@ -1411,7 +1411,7 @@ function Deposite() {
                                                 <div>
                                                     <div className='flex ml-10'>
                                                         <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
-                                                        <div className='bianJiBiZi'>地址5</div>
+                                                        <div className='bianJiBiZi'>Address5</div>
                                                     </div>
                                                 </div>
 

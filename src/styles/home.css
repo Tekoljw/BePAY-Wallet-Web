@@ -1047,7 +1047,8 @@ input[type='number'] {
 
 .gongNengTan1 {
     border-radius: 1rem !important;
-    background-color: #364151
+    background-color: #364151;
+    border: none;
 }
 
 .gongNengTan2 {
@@ -1057,10 +1058,34 @@ input[type='number'] {
     font-size: 1.4rem;
 }
 
+.gongNengTan10 {
+    border-radius: 1rem !important;
+    background-color: #1E293B;
+    border: none;
+}
+
+.gongNengTan20 {
+    border-radius: 1rem !important;
+    padding: 0rem 1rem 0rem 1rem !important;
+    font-size: 1.4rem;
+    border: none;
+}
+
+.gongNengTan30 {
+    border-radius: 0rem 0rem 1rem 1rem;
+}
+
 .yuEZi {
     font-size: 1.4rem;
     color: #ffffff;
     font-weight: 600;
+}
+
+.fenChengZi {}
+
+.fenChengZi2 {
+    font-size: 1.2rem;
+    color: #94a3b8;
 }
 
 .huiZiColor {
@@ -1091,6 +1116,10 @@ input[type='number'] {
     text-decoration: underline;
 }
 
+.earnDepositeDi {
+    margin-right: 0.6rem;
+}
+
 .gongNengZi {
     font-size: 2rem;
     font-weight: 600;
@@ -1105,6 +1134,10 @@ input[type='number'] {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+}
+
+.earnBg .muiltr-15v22id-MuiAccordionDetails-root {
+    padding: 1rem 1rem 1rem 1rem !important;
 }
 
 .shenQingCardDi {
@@ -1175,6 +1208,14 @@ input[type='number'] {
     border-radius: 1rem;
 }
 
+.fenChengDi {
+    background-color: #1E293B;
+    height: 60px;
+    width: 100%;
+    border-radius: 1rem;
+    border: 1px solid #374252;
+}
+
 .quanYiLv {
     color: #19D5B8;
 }
@@ -1211,6 +1252,15 @@ input[type='number'] {
     width: 100%;
     text-align: center;
     font-size: 2rem;
+}
+
+.yaoQingTitleZi {
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: bold;
 }
 
 .kaPianInfo {
@@ -1323,6 +1373,16 @@ input[type='number'] {
 .quanYiZi {
     height: 2.5rem;
     line-height: 2.5rem;
+}
+
+.bianShe1 {
+    background: linear-gradient(to right, #8770DF, #F68C9A);
+    margin: 0 auto;
+}
+
+.bianShe2 {
+    background: linear-gradient(to right, #FFF3B7, #FEB4B4);
+    margin: 0 auto;
 }
 
 .quanYiHuiZi {
@@ -3205,7 +3265,8 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
 }
 
 .cardEarnTips {
-    width: 100%;
+    width: 80%;
+    margin: 2.8rem auto 0rem auto;
     aspect-ratio: 716 / 416;
 }
 

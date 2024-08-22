@@ -1623,7 +1623,7 @@ function Withdraw(props) {
                                 closePinFunc();
                             }} />
                         </div>
-                        <div className='PINTitle'>{t('home_wallet_14')}（用户{inputIDVal}）{t('transfer_1')}</div>
+                        <div className='PINTitle'>{t('home_wallet_14')}（ {inputIDVal} ）{t('transfer_1')}</div>
                         <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
                             <img className='MoneyWithdraw' src="wallet/assets/images/withdraw/USDT.png"></img>
                             <div className='PINTitle3'>USDT</div>

@@ -20,6 +20,12 @@ import Typography from '@mui/material/Typography';
 import Spin from "../spin/Spin";
 import OutlinedInput from '@mui/material/OutlinedInput';
 import LoadingButton from "@mui/lab/LoadingButton";
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import StyledAccordionSelect from "../../components/StyledAccordionSelect";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { lineHeight } from '@mui/system';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -53,6 +59,7 @@ function Earn(props) {
     const [openWaKuang, setOpenWaKuang] = useState(false);
     const [openBind, setOpenBind] = useState(false);
     const [openYaoQing, setOpenYaoQing] = useState(false);
+    const [openXiangQing, setOpenXiangQing] = useState(false);
     const [inputIDVal, setInputIDVal] = useState(0);
     const handleChangeInputVal2 = (event) => {
         setInputIDVal(event.target.value);
@@ -92,10 +99,21 @@ function Earn(props) {
     };
 
     const openBindFunc = () => {
+        setOpenBind(true)
         setTimeout(() => {
             document.getElementById('openBind').classList.add('PinMoveAni');
         }, 0);
     };
+
+    const openXiangQingFunc = () => {
+        setOpenXiangQing(true)
+        setTimeout(() => {
+            document.getElementById('target').scrollIntoView({ behavior: 'smooth' });
+        }, 0);
+    }
+
+
+
 
     const closesBindFunc = () => {
         document.getElementById('openBind').classList.remove('PinMoveAni');
@@ -266,8 +284,8 @@ function Earn(props) {
                 >
                     <div className='text-16'>{t('card_125')}</div>
                     <div className='lvEarnDi mt-16' onClick={() => {
-                        setOpenBind(true)
-                        openBindFunc();
+                        // openBindFunc();//提示绑定界面
+                        openXiangQingFunc();
                     }}>
                         <div className='flex justify-start pt-4'>
                             <img className='liBaoDiImg' src="wallet/assets/images/earn/giftIcon.png" />
@@ -306,6 +324,114 @@ function Earn(props) {
                     </div>
                 </motion.div>
 
+                {openXiangQing && <div id="target" style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421", top: "0%" }} >
+                    <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className='mt-12'
+                    >
+                        <div className='flex' onClick={() => {
+                            setOpenXiangQing(false);
+                        }}>
+                            <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
+                        </div>
+
+                        <div className='yaoQingTitleZi'>累计邀请收益</div>
+                        <div className='my-16' style={{ textAlign: "center" }}>● 邀请好友加入，即可获得 <span style={{ color: "#00f0c5" }}>巨额奖励</span>！</div>
+
+                        <div className='flex justify-center mt-10' style={{ paddingInline: "1.5rem" }}>
+                            <div style={{ width: "50%" }}>
+                                <div className='flex justify-center mb-10'>
+                                    <img className='' style={{ width: "3rem", height: "3rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
+                                    <div className='ml-10' style={{ height: "3rem", lineHeight: "3rem", fontSize: "2.8rem" }}>400.00</div>
+                                </div>
+                                <div className='bianShe1' style={{ borderRadius: "50px", height: "0.8rem", width: "90%" }}></div>
+                            </div>
+
+                            <div style={{ width: "50%" }}>
+                                <div className='flex justify-center mb-10'>
+                                    <img className='' style={{ width: "3rem", height: "3rem" }} src="wallet/assets/images/symbol/bft.png" alt="" />
+                                    <div className='ml-10' style={{ height: "3rem", lineHeight: "3rem", fontSize: "2.8rem" }}>100.00</div>
+                                </div>
+                                <div className='bianShe2' style={{ borderRadius: "50px", height: "0.8rem", width: "90%" }}></div>
+                            </div>
+                        </div>
+
+                        <div className='mt-28' style={{ paddingInline: "1.5rem" }}>
+                            <Accordion className='gongNengTan10' style={{ border: "1px solid #374252" }}>
+                                <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon />}
+                                    aria-controls="panel1-content"
+                                    id="panel1-header"
+                                    className='gongNengTan20'
+                                >
+
+                                    <div className='flex justify-between w-full' style={{ height: "40px" }}>
+                                        <div className='flex'>
+                                            <div className='flex  align-item' style={{ height: "100%" }}>
+                                                <img className='mr-10' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/menu/card-active.png" alt="" />
+                                            </div>
+                                            <div>
+                                                <div className='ml-8 fenChengZi'>开卡费提成<br /> <p className='fenChengZi2 mt-4'>直接邀请：10人，间接邀请：235人。</p> </div>
+                                            </div>
+                                        </div>
+                                        <div className='flex earnDepositeDi'>
+                                            <div className='flex  align-item' style={{ height: "100%" }}>
+                                                <div style={{}}>1.0</div>
+                                            </div>
+                                            <div className='flex  align-item' style={{ height: "100%" }}>
+                                                <img className='ml-10 mr-6' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </AccordionSummary>
+
+                                <div className='earnBg'>
+                                    <AccordionDetails >
+                                        <div className=''>
+                                            <div className='flex' style={{ width: "100%", height: "" }}>
+                                                <div className='' style={{ width: "20%", textAlign: "center" }}></div>
+                                                <div className='' style={{ width: "20%", textAlign: "center" }}>今日</div>
+                                                <div className='' style={{ width: "20%", textAlign: "center" }}>昨日</div>
+                                                <div className='' style={{ width: "20%", textAlign: "center" }}>本月</div>
+                                                <div className='' style={{ width: "20%", textAlign: "center" }}>上月</div>
+                                            </div>
+                                            <div className='flex mt-4' style={{ width: "100%", height: "" }}>
+                                                <div className='' style={{ width: "20%", textAlign: "center" }}>提成</div>
+                                                <div className='' style={{ width: "20%", textAlign: "center" }}>0.2U</div>
+                                                <div className='' style={{ width: "20%", textAlign: "center" }}>0.3U</div>
+                                                <div className='' style={{ width: "20%", textAlign: "center" }}>1</div>
+                                                <div className='' style={{ width: "20%", textAlign: "center" }}>1</div>
+                                            </div>
+                                            <div className='flex mt-4' style={{ width: "100%", height: "" }}>
+                                                <div className='' style={{ width: "20%", textAlign: "center" }}>直接邀请</div>
+                                                <div className='' style={{ width: "20%", textAlign: "center" }}>2</div>
+                                                <div className='' style={{ width: "20%", textAlign: "center" }}>1</div>
+                                                <div className='' style={{ width: "20%", textAlign: "center" }}>10</div>
+                                                <div className='' style={{ width: "20%", textAlign: "center" }}>0</div>
+                                            </div>
+                                            <div className='flex mt-4' style={{ width: "100%", height: "" }}>
+                                                <div className='' style={{ width: "20%", textAlign: "center" }}>间接邀请</div>
+                                                <div className='' style={{ width: "20%", textAlign: "center" }}>2</div>
+                                                <div className='' style={{ width: "20%", textAlign: "center" }}>1</div>
+                                                <div className='' style={{ width: "20%", textAlign: "center" }}>10</div>
+                                                <div className='' style={{ width: "20%", textAlign: "center" }}>0</div>
+                                            </div>
+                                        </div>
+                                    </AccordionDetails>
+                                </div>
+
+                            </Accordion>
+                        </div>
+
+
+
+                        <motion.div variants={item} className='flex mt-10 ' style={{ height: "5rem" }}>
+                        </motion.div>
+
+                    </motion.div>
+                </div>}
 
                 <div style={{ marginBottom: "50px" }}></div>
 
@@ -323,7 +449,7 @@ function Earn(props) {
                             style={{ display: "block", color: "#FFD569" }}
                             className=" checkInTitleMt  text-align titleTxt"
                         >
-                         {t('card_172')}
+                            {t('card_172')}
                         </span>
                     </Typography>
                     <motion.div variants={container} initial="hidden" animate="show">
@@ -887,10 +1013,10 @@ function Earn(props) {
                         }} ></img>
                     </div>
                     <div className='mt-16' style={{ textAlign: "center" }}>
-                    {t('card_158')}<span className='text-20' style={{ color: "#1BB9FF", fontWeight: "700" }}>30%</span>BFT
+                        {t('card_158')}<span className='text-20' style={{ color: "#1BB9FF", fontWeight: "700" }}>30%</span>BFT
                     </div>
                     <div className='' style={{ textAlign: "center" }}>
-                    {t('card_159')}<span className='text-20' style={{ color: "#00FF96", fontWeight: "700" }} >1%</span>
+                        {t('card_159')}<span className='text-20' style={{ color: "#00FF96", fontWeight: "700" }} >1%</span>
                     </div>
 
                     <motion.div variants={item} className="mt-16">
@@ -940,7 +1066,7 @@ function Earn(props) {
                         }} ></img>
                     </div>
                     <div className='mt-20 text-12' style={{ textAlign: "left", color: "#A4A4A4" }}>
-                    {t('card_162')}
+                        {t('card_162')}
                     </div>
 
                     <motion.div variants={item} className="mt-28">
@@ -985,10 +1111,10 @@ function Earn(props) {
                         }} ></img>
                     </div>
                     <div className='mt-28' style={{ textAlign: "center" }}>
-                    {t('card_163')}
+                        {t('card_163')}
                     </div>
 
-                    <img className='cardEarnTips mt-28' src="wallet/assets/images/card/card1.png"></img>
+                    <img className='cardEarnTips' src="wallet/assets/images/card/card1.png"></img>
 
                     <div className='txtBrightness text-16 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>{t('card_164')}</div>
                 </div>
@@ -1005,7 +1131,7 @@ function Earn(props) {
                     <div className='text-18 yaoQingTitle'>{t('card_165')}</div>
                 </div>
                 <div className='mt-20' style={{ width: "100%", textAlign: "center" }}>
-                {t('card_166')}
+                    {t('card_166')}
                 </div>
                 <OutlinedInput
                     id="outlined-adornment-address send-tips-container-address"
@@ -1026,8 +1152,6 @@ function Earn(props) {
                 >
                     {t('card_167')}
                 </LoadingButton>
-
-
             </AnimateModal>
 
         </div>
