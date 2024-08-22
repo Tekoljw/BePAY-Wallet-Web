@@ -21,7 +21,7 @@ import { useNavigate } from 'react-router-dom';
 import '../../../styles/home.css';
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
-import { sendTips, tokenTransfer } from "../../store/user/userThunk";
+import { tokenTransfer } from "../../store/user/userThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { selectConfig } from "../../store/config";
@@ -40,7 +40,6 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Fiat from "./components/Fiat";
 import Nft from "./components/Nft";
-import SendTips from "../send-tips/SendTips";
 import { useTranslation } from "react-i18next";
 import LoadingButton from "@mui/lab/LoadingButton";
 import history from '@history';
@@ -234,11 +233,26 @@ function Withdraw(props) {
         }, 0);
     };
 
+    const openGoogleCodeFunc = () => {
+        setOpenGoogleCode(true);
+        setTimeout(() => {
+            document.getElementById('GoogleCodeSty').classList.add('PinMoveAni');
+        }, 0);
+    };
+
     const closePinFunc = () => {
         document.getElementById('PINSty').classList.remove('PinMoveAni');
         document.getElementById('PINSty').classList.add('PinMoveOut');
         setTimeout(() => {
             setOpenPinWindow(false);
+        }, 300);
+    };
+
+    const closeGoogleCodeFunc = () => {
+        document.getElementById('GoogleCodeSty').classList.remove('PinMoveAni');
+        document.getElementById('GoogleCodeSty').classList.add('PinMoveOut');
+        setTimeout(() => {
+            setOpenGoogleCode(false);
         }, 300);
     };
 
@@ -316,7 +330,7 @@ function Withdraw(props) {
                 navigate('/home/security');
                 return;
             }
-            setOpenGoogleCode(true);
+            openGoogleCodeFunc()
             return
         }
 
@@ -325,7 +339,7 @@ function Withdraw(props) {
                 navigate('/home/security');
                 return;
             }
-            setOpenGoogleCode(true);
+            openGoogleCodeFunc()
             return
         }
 
@@ -334,7 +348,7 @@ function Withdraw(props) {
                 navigate('/home/security');
                 return;
             }
-            setOpenGoogleCode(true);
+            openGoogleCodeFunc()
             return
         }
 
@@ -349,10 +363,14 @@ function Withdraw(props) {
         };
         setOpenLoad(true);
         dispatch(tokenTransfer(data)).then((res) => {
+            setOpenLoad(false);
+            let result = res.payload
             setGoogleCode('');
-            setOpenTiBi(true);
-            if (res.payload) {
-                setWithDrawOrderID(res.payload);
+            if (result) {
+                setOpenTiBi(true);
+                setWithDrawOrderID(result);
+            } else {
+                dispatch(showMessage({ message: t('error_10'), code: 2 }));
             }
 
         });
@@ -380,12 +398,12 @@ function Withdraw(props) {
             if (!hasAuthGoogle) {
                 dispatch(showMessage({ message: '请绑定Google Authenticator', code: 2 }));
                 setTimeout(() => {
-                    navigate('/home/security');
+                    // navigate('/home/security');
                 }, 1000)
 
                 return;
             }
-            setOpenGoogleCode(true);
+            openGoogleCodeFunc()
             return
         }
 
@@ -393,20 +411,23 @@ function Withdraw(props) {
             if (!hasAuthGoogle) {
                 dispatch(showMessage({ message: '请绑定Google Authenticator', code: 2 }));
                 setTimeout(() => {
-                    navigate('/home/security');
+                    // navigate('/home/security');
                 }, 1000)
                 return;
             }
-            setOpenGoogleCode(true);
+            openGoogleCodeFunc()
             return
         }
 
         if (transferState.month >= transferState.limitMonth && googleCode.length < 6) {
             if (!hasAuthGoogle) {
-                navigate('/home/security');
+                dispatch(showMessage({ message: '请绑定Google Authenticator', code: 2 }));
+                setTimeout(() => {
+                    // navigate('/home/security');
+                }, 1000)
                 return;
             }
-            setOpenGoogleCode(true);
+            openGoogleCodeFunc()
             return
         }
 
@@ -450,7 +471,7 @@ function Withdraw(props) {
             console.log('startScanQRCode');
             setTimeout(() => {
                 startScanQRCode();
-            }, 1000);
+            }, 500);
         }
     }, [openChangeCurrency]);
 
@@ -767,6 +788,17 @@ function Withdraw(props) {
         setInputVal({ ...inputVal, amount: tmpText == 0 ? '' : tmpText });
     }
 
+    const handleDoGoogleCode = (text) => {
+        let tmpCode = googleCode
+        if (text === -1) {
+            tmpCode = tmpCode.slice(0, -1)
+        } else {
+            tmpCode = tmpCode + text
+        }
+
+        setGoogleCode(tmpCode)
+    }
+
     // 输入Pin
     const handleDoPin = (text) => {
         if (textSelect) {
@@ -1013,7 +1045,7 @@ function Withdraw(props) {
                                         padding: '1rem 1rem',
                                     }}
                                 >
-                                    {Object.entries(["External", 'Inside']).map(([key, label]) => (
+                                    {Object.entries([t('card_8'), t('card_7')]).map(([key, label]) => (
                                         <Tab
                                             className="text-16 font-semibold min-h-32 min-w-60 mx4 px-12 txtColorTitle opacity-100 zindex"
                                             disableRipple
@@ -1185,7 +1217,7 @@ function Withdraw(props) {
                                         <Typography className="text-16 cursor-pointer mt-16" >
                                             {t('home_withdraw_3')}
                                         </Typography>
-                                        <div className="flex items-center justify-between" style={{paddingTop:"1.6rem",paddingBottom:"0.5rem"}}>
+                                        <div className="flex items-center justify-between" style={{ paddingTop: "1.6rem", paddingBottom: "0.5rem" }}>
                                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
                                                 <TextField
                                                     error={ismore(inputVal.amount)}
@@ -1228,7 +1260,7 @@ function Withdraw(props) {
                                                 isBindPin()
                                             }}
                                         >
-                                            {t('home_withdraw_10')}123123
+                                            {t('home_withdraw_10')}
                                         </LoadingButton>
                                     </div>
                                 }
@@ -1248,8 +1280,8 @@ function Withdraw(props) {
                         {/*    Change Currency*/}
                         {/*</BootstrapDialogTitle>*/}
                         <DialogContent dividers>
-                            <div style={{ width: '100%', height: '90vh', backgroundColor: '#181818' }}>
-                                <Typography className="text-18 px-16 my-12 font-medium flex items-center justify-between scan-code-top">
+                            <div className='' style={{ width: '100%', height: '99vh', backgroundColor: '#0F172A' }}>
+                                <Typography className="text-18 px-16 my-12 font-medium flex items-center justify-between scan-code-top" style={{ backgroundColor: '#374252' }}>
                                     <img className='scan-code-back' src="wallet/assets/images/withdraw/icon-back.png" onClick={() => { setOpenChangeCurrency(false); closeScan(); }} alt="back-button" />
                                     <span className='scan-code-title text-18'>Scan Code</span>
                                     <img className='scan-code-camera' src="wallet/assets/images/withdraw/scan-code-img.png" alt="back-button" />
@@ -1309,17 +1341,139 @@ function Withdraw(props) {
 
                     {/*填写google验证码*/}
                     <BootstrapDialog
-                        onClose={() => { setOpenGoogleCode(false); }}
+                        onClose={() => {
+                            closeGoogleCodeFunc()
+                        }}
                         aria-labelledby="customized-dialog-title"
                         open={openGoogleCode}
+                        className="dialog-container"
                     >
-                        <DialogContent dividers>
-                            <div className="mt-8">
-                                <Typography className="text-18 px-16 my-12 font-medium">Google Code</Typography>
-                                <OtpPass setGoogleCode={setGoogleCode} />
+                        <div id="GoogleCodeSty" className="PINSty">
+                            <div className='pinWindow'>
+                                <div className='flex'>
+                                    <div className='PINTitle2'>Google Code</div>
+                                    <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                                        closeGoogleCodeFunc()
+                                    }} />
+                                </div>
+                                <div className='PINTitle'>输入6位动态密码</div>
+                                <div className='flex justify-between mt-32 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
+                                    <div className='PinNum color-box'
+                                         onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}>{googleCode[0] ?? ''}</div>
+                                    <div className='PinNum' >{googleCode[1] ?? ''}</div>
+                                    <div className='PinNum'>{googleCode[2] ?? ''}</div>
+                                    <div className='PinNum'>{googleCode[3] ?? ''}</div>
+                                    <div className='PinNum'>{googleCode[4] ?? ''}</div>
+                                    <div className='PinNum'>{googleCode[5] ?? ''}</div>
+                                </div>
                             </div>
-                        </DialogContent>
+
+                            <div className='jianPanSty'>
+                                <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                                    <div id="createPin1" className='jianPanNumBtn borderRight borderBottom color-box'
+                                         onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}
+                                         onClick={() => {
+                                             handleDoGoogleCode(1)
+                                         }}
+                                    >1</div>
+                                    <div id="createPin2" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}
+                                         onClick={() => {
+                                             handleDoGoogleCode(2)
+                                         }}
+                                    >2</div>
+                                    <div id="createPin3" className='jianPanNumBtn  borderBottom color-box' onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}
+                                         onClick={() => {
+                                             handleDoGoogleCode(3)
+                                         }}
+                                    >3</div>
+                                </div>
+                                <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                                    <div id="createPin4" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}
+                                         onClick={() => {
+                                             handleDoGoogleCode(4)
+                                         }}
+                                    >4</div>
+                                    <div id="createPin5" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}
+                                         onClick={() => {
+                                             handleDoGoogleCode(5)
+                                         }}
+                                    >5</div>
+                                    <div id="createPin6" className='jianPanNumBtn  borderBottom color-box' onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}
+                                         onClick={() => {
+                                             handleDoGoogleCode(6)
+                                         }}
+                                    >6</div>
+                                </div>
+                                <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                                    <div id="createPin7" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}
+                                         onClick={() => {
+                                             handleDoGoogleCode(7)
+                                         }}
+                                    >7</div>
+                                    <div id="createPin8" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}
+                                         onClick={() => {
+                                             handleDoGoogleCode(8)
+                                         }}
+                                    >8</div>
+                                    <div id="createPin9" className='jianPanNumBtn borderBottom color-box' onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}
+                                         onClick={() => {
+                                             handleDoGoogleCode(9)
+                                         }}
+                                    >9</div>
+                                </div>
+                                <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                                    <div className='jianPanNumBtn borderRight '></div>
+                                    <div id="createPin0" className='jianPanNumBtn borderRight color-box' onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}
+                                         onClick={() => {
+                                             handleDoGoogleCode(0)
+                                         }}
+                                    >0</div>
+                                    <div id="createPinx" className='jianPanNumBtn flex items-center color-box'
+                                         onTouchStart={changeToBlack}
+                                         onTouchEnd={changeToWhite}
+                                         onTouchCancel={changeToWhite}
+                                         onClick={() => {
+                                             handleDoGoogleCode(-1)
+                                         }}
+                                    > <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img></div>
+                                </div>
+                            </div>
+                        </div>
                     </BootstrapDialog>
+                    {/*<BootstrapDialog*/}
+                    {/*    onClose={() => { setOpenGoogleCode(false); }}*/}
+                    {/*    aria-labelledby="customized-dialog-title"*/}
+                    {/*    open={openGoogleCode}*/}
+                    {/*>*/}
+                    {/*    <DialogContent dividers>*/}
+                    {/*        <div className="mt-8">*/}
+                    {/*            <Typography className="text-18 px-16 my-12 font-medium">Google Code</Typography>*/}
+                    {/*            <OtpPass setGoogleCode={setGoogleCode} />*/}
+                    {/*        </div>*/}
+                    {/*    </DialogContent>*/}
+                    {/*</BootstrapDialog>*/}
 
                     {/*提虚拟币界面样式*/}
                     <BootstrapDialog
@@ -1464,17 +1618,20 @@ function Withdraw(props) {
                 <div id="PINSty" className="PINSty">
                     <div className='pinWindow'>
                         <div className='flex'>
-                            <div className='PINTitle2'>请输入PIN码</div>
+                            <div className='PINTitle2'>{t('card_65')}</div>
                             <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                 closePinFunc();
                             }} />
                         </div>
-                        <div className='PINTitle'>向（用户{inputIDVal}）转账</div>
+                        <div className='PINTitle'>{t('home_wallet_14')}（ {inputIDVal} ）{t('transfer_1')}</div>
                         <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
                             <img className='MoneyWithdraw' src="wallet/assets/images/withdraw/USDT.png"></img>
                             <div className='PINTitle3'>USDT</div>
-                            <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")} onClick={() => { setTextSelect(!textSelect) }}>
-                                {inputVal.amount} <span className={clsx("guangBiao", !showGuangBiao && 'guangBiaoNo')} >︱</span>
+                            <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")} onClick={() => {
+                                setTextSelect(!textSelect)
+                                setShowGuangBiao(true)
+                            }}>
+                                {inputVal.amount} <span className={clsx("", !showGuangBiao ? 'guangBiaoNo' : 'guangBiao')} >︱</span>
                             </div>
                         </div>
                         <div className='flex justify-between mt-10'>
@@ -1567,7 +1724,7 @@ function Withdraw(props) {
                                 onTouchCancel={changeToWhite}
                                 onClick={() => {
                                     handleSendTipsSubmit()
-                                }}>完成</div>
+                                }}>{t('card_30')}</div>
                         </div>
                     </div>
                     <div>
@@ -1586,12 +1743,12 @@ function Withdraw(props) {
                 <div id="CreateSty" className="PINSty">
                     <div className='pinWindow'>
                         <div className='flex'>
-                            <div className='PINTitle2'>创建PIN码</div>
+                            <div className='PINTitle2'>{t('card_68')}</div>
                             <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                 closeCreatePinFunc();
                             }} />
                         </div>
-                        <div className='PINTitle'>输入用于支付的6位数字密码</div>
+                        <div className='PINTitle'>{t('card_69')}</div>
                         <div className='flex justify-between mt-32 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
                             <div className='PinNum color-box'
                                 onTouchStart={changeToBlack}
@@ -1710,19 +1867,19 @@ function Withdraw(props) {
                 className="dialog-container"
             >
                 <div className='errorPinDi'>
-                    <div className='errorPinZi flex items-center  justify-content-center'>支付密码错误请重试</div>
+                    <div className='errorPinZi flex items-center  justify-content-center'>{t('card_70')}</div>
                     <div className='errorPinLine'></div>
                     <div className='flex justify-between'>
                         <div className='errorPinBtn errorRightLine' onClick={() => {
                             setOpenPinErr(false)
                             history.push('/wallet/home/security', { tabValue: 5, resetTabValueParam: 1 })
-                        }}>忘记密码</div>
+                        }}>{t('card_71')}</div>
                         <div className='errorPinBtn' style={{ color: "#81A39F" }}
                             onClick={() => {
                                 setOpenPinErr(false)
                                 openInputPin()
                             }}
-                        >重试</div>
+                        >{t('card_72')}</div>
                     </div>
                 </div>
             </BootstrapDialog>
@@ -1739,7 +1896,7 @@ function Withdraw(props) {
                 <div id="PasteSty" className={clsx("PasteSty", !openPasteWindow && 'PinMoveOut', openPasteWindow && 'PinMoveAni')}>
                     <div className='pasteWindow'>
                         <div className='flex'>
-                            <div className='PINTitle2'>历史转账地址</div>
+                            <div className='PINTitle2'>{t('card_73')}</div>
                             <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                 closePasteFunc();
                             }} />
@@ -1753,14 +1910,13 @@ function Withdraw(props) {
                                     <div className='pasteDiZhi'>
                                         <div className='flex'>
                                             <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
-                                            <div className='bianJiBiZi'> 历史地址1 </div>
+                                            <div className='bianJiBiZi'>{t('card_74')}</div>
                                         </div>
                                         <div className='pasteDi'>{item}</div>
                                     </div>
                                 )
                             })
                         }
-
                     </div>
 
                 </div>

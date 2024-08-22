@@ -88,7 +88,7 @@ const item = {
     show: { opacity: 1, y: 0 },
 };
 
-function SendTips(props) {
+function Earn(props) {
     const navigate = useNavigate()
     const { t } = useTranslation('mainPage');
     const dispatch = useDispatch();
@@ -651,4 +651,4 @@ function SendTips(props) {
     )
 }
 
-export default SendTips;
+export default Earn;

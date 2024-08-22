@@ -308,6 +308,7 @@ function Deposite() {
     const handleChangeFiats = (event) => {
         setFiatsSelected(event.target.value);
         setCurrencyCode(fiats[event.target.value].currencyCode);
+        setWeight('');
     };
     //设置图片地址
     const toRegWallet = (regWalletParam) => {
@@ -372,7 +373,7 @@ function Deposite() {
     }
 
     const backLoading = () => {
-        setTimeout(() => setOpenLoad(false), 10000);
+        setTimeout(() => setOpenLoad(false), 1000);
     };
 
 
@@ -459,6 +460,8 @@ function Deposite() {
                 dispatch(showMessage({ message: t('error_5'), code: 2 }));
             }
         }
+
+        setTimeout(() => setOpenLoad(false), 500);
     };
 
     // 切换到nft页面，自动获取nft钱包地址
@@ -928,6 +931,25 @@ function Deposite() {
         });
     }, []);
 
+
+
+    // 格式化金额
+    const formatAmount = (amount) => {
+        if (amount >= 1000000000) {
+            return (amount / 1000000000) + 'B';
+        } else if (amount >= 100000000) {
+            return (amount / 100000000) + 'E';
+        } else if (amount >= 1000000) {
+            return (amount / 1000000) + 'M';
+        } else if (amount >= 1000) {
+            return (amount / 1000) + 'K';
+        }
+
+        return amount
+    }
+
+
+
     return (
         <div>
             {/*head*/}
@@ -997,7 +1019,6 @@ function Deposite() {
                             isExpand={true}
 
                         />}
-
                     </Box>
                 </motion.div>
 
@@ -1007,11 +1028,10 @@ function Deposite() {
                     animate="show"
                     className="InsideW"
                 >
-                    <div className='text-16 ml-10 mt-10 mb-6'>Inside UserID</div>
                     <div className='addressBigW flex justify-between mt-10'>
                         <div className="userIdW   guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
                             <div className="addressW2 flex justify-between guoDuDongHua">
-                                <div className='idZi guoDuDongHua' >{userData?.profile?.user?.id}</div>
+                                <div className='idZi guoDuDongHua' > <span style={{ color:"#ffffff",marginRight:"10px"}}>{t('card_7')}</span>  {userData?.profile?.user?.id}</div>
                                 <img onClick={() => { handleCopyText(userData?.profile?.user?.id) }} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"></img>
                             </div>
                             <QRCode
@@ -1091,7 +1111,7 @@ function Deposite() {
                             })}
                         </div>
 
-                        <div className='text-16 ml-10 mt-16 mb-16'>External Address</div>
+                        <div className='text-16 ml-10 mt-16 mb-16'>{t('card_8')}</div>
                         {/* 新地址 */}
                         <>
                             {walletAddressList.map((addressItem, index) => {
@@ -1141,6 +1161,12 @@ function Deposite() {
                                                     }}
                                                     size={138}
                                                     value={addressItem.address}
+                                                    imageSettings={{ // 二维码中间的logo图片
+                                                        src: 'wallet/assets/images/logo/logoNew.png',
+                                                        height: 30,
+                                                        width: 30,
+                                                        excavate: true, // 中间图片所在的位置是否镂空
+                                                    }}
                                                 />
                                             </div>
                                             <img className='qrCodeImg' src="wallet/assets/images/deposite/newQrCode.png" onClick={() => {
@@ -1163,7 +1189,7 @@ function Deposite() {
                                         <div className="addressW flex justify-between">
                                             <div className='addressZi2 flex'>
                                                 <img className='bianJiBiImg2' src="wallet/assets/images/card/jiaHao.png"></img>
-                                                <div className='addressZi2'>创建地址</div>
+                                                <div className='addressZi2'>{t('card_6')}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -1362,7 +1388,7 @@ function Deposite() {
                                                         <div>
                                                             <div className='flex ml-10'>
                                                                 <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
-                                                                <div className='bianJiBiZi'>地址1</div>
+                                                                <div className='bianJiBiZi'>Address1</div>
                                                             </div>
                                                         </div>
                                                         <div className='addressBigW flex justify-between mt-10'>
@@ -1385,7 +1411,7 @@ function Deposite() {
                                                 <div>
                                                     <div className='flex ml-10'>
                                                         <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
-                                                        <div className='bianJiBiZi'>地址5</div>
+                                                        <div className='bianJiBiZi'>Address5</div>
                                                     </div>
                                                 </div>
 
@@ -1395,7 +1421,7 @@ function Deposite() {
                                                     <div className="addressW flex justify-between">
                                                         <div className='addressZi2 flex'>
                                                             <img className='bianJiBiImg2' src="wallet/assets/images/card/jiaHao.png"></img>
-                                                            <div className='addressZi2'>创建地址</div>
+                                                            <div className='addressZi2'>{t('card_6')}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1729,7 +1755,7 @@ function Deposite() {
                                             </div>
                                             <div style={{ marginLeft: 'auto' }}>
                                                 <div className="px-12 font-medium" style={{ textAlign: 'right' }}>
-                                                    <Typography className="text-14" style={{ color: '#94A3B8' }}>{t('home_deposite_18')}:{bankItem.minValue} - {bankItem.maxValue}</Typography>
+                                                    <Typography className="text-14" style={{ color: '#94A3B8' }}>{t('home_deposite_18')}:{formatAmount(bankItem.minValue)} - {formatAmount(bankItem.maxValue)}</Typography>
                                                 </div>
                                             </div>
                                         </div>
@@ -1743,20 +1769,23 @@ function Deposite() {
                                                     disabled={false}
                                                     id="outlined-adornment-weight send-tips-container-amount"
                                                     value={weight}
-                                                    endAdornment={<InputAdornment position="end">MAX</InputAdornment>}
+                                                    endAdornment={
+                                                        <InputAdornment
+                                                            position="end"
+                                                            onClick={() => {
+                                                                setWeight(bankItem.maxValue)
+                                                            }}
+                                                        >MAX</InputAdornment>}
                                                     aria-describedby="outlined-weight-helper-text"
                                                     inputProps={{
                                                         'aria-label': 'weight',
                                                     }}
                                                     onChange={(event) => {
-                                                        console.log(bankItem.minValue)
-                                                        console.log(bankItem.maxValue)
-                                                        console.log(event.target.value)
                                                         if (event.target.value === '') {
                                                             setWeight('')
                                                             return
                                                         }
-                                                        if (event.target.value < bankItem.maxValue) {
+                                                        if (event.target.value <= bankItem.maxValue) {
                                                             setWeight(event.target.value);
                                                         }
                                                     }}
@@ -1785,7 +1814,6 @@ function Deposite() {
                                                     onClick={() => {
                                                         setOpenLoad(true);
                                                         fiatRecharge(bankItem.id);
-                                                        backLoading();
                                                     }}
                                                 >
                                                     {t('home_borrow_8')}

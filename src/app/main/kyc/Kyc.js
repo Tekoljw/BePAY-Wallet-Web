@@ -116,9 +116,9 @@ function Kyc(props) {
     });
 
     const [approveData, setApproveData] = useState({
-        nationCode: '',
-        phone: '',
-        email: '',
+        nationCode: user.profile?.nation ?? '',
+        phone: user.profile?.phone ?? '',
+        email: user.profile?.user?.email ?? '',
         password: '',
         code: ''
     });
@@ -262,8 +262,6 @@ function Kyc(props) {
         return false;
     };
 
-
-    console.log(inputVal, 'inputval......')
     const isCanSave = (bShowMsg) => {
         if (isAlreadySumbit()) return false;
         // if (typeof inputVal.birthDate === 'object') {
@@ -349,6 +347,12 @@ function Kyc(props) {
             }
         };
     }, []);
+
+    useEffect(() => {
+        if (user.profile?.nation) {
+            handleChangeApproveDataVal('nationCode', user.profile?.nation)
+        }
+    }, [user.profile])
 
     return (
         <>
@@ -1056,7 +1060,7 @@ function Kyc(props) {
                                         color="secondary"
                                         variant="contained"
                                         style={{ marginBottom: '2.4rem', fontSize: "1.6rem", width: "47%" }}
-                                        onClick={() => { onSubmit() }}
+                                        // onClick={() => { onSubmit() }}
                                     >
                                         {t('kyc_23')}
                                     </Button>
@@ -1218,7 +1222,7 @@ function Kyc(props) {
                         </div>
 
                         <Button
-                            className="px-48 text-lg my-12 btnColorTitleBig mt-24 button-reset"
+                            className="px-48 text-lg my-12 btnColorTitleBig mt-24 button-reset3"
                             color="secondary"
                             variant="contained"
                             onClick={() => { onSubmitEmail() }}
@@ -1378,7 +1382,7 @@ function Kyc(props) {
 
 
                         <Button
-                            className="px-48 text-lg my-12 btnColorTitleBig mt-24 button-reset"
+                            className="px-48 text-lg my-12 btnColorTitleBig mt-24 button-reset3"
                             color="secondary"
                             variant="contained"
                             onClick={() => { onSubmitPhone() }}

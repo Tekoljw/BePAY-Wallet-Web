@@ -11,7 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import Wallet from '../wallet/Wallet';
 import Deposite from '../deposite/Deposite';
 import Withdraw from "../withdraw/Withdraw";
-import SendTips from "../send-tips/SendTips";
+import Earn from "../earn/Earn";
 import Buy from "../buy/Buy";
 import Swap from "../swap/Swap";
 import Security from "../security/Security";
@@ -74,6 +74,7 @@ function HomePage(props) {
                 slide.style.background = "#171F29";
             }
         }
+        setLeftSidebarOpen(false)
     }
     //改变手机分页
     const changePhoneTab = (changeTab) => {
@@ -88,6 +89,8 @@ function HomePage(props) {
             } else if (changeTab === 'wallet') {
                 history.push('/wallet/home/wallet')
                 changeSlider('wallet')
+            } else {
+                changeSlider(changeTab)
             }
             window.localStorage.setItem('phoneTab', changeTab);
         }
@@ -136,12 +139,12 @@ function HomePage(props) {
     }, []);
 
     useEffect(() => {
+        // console.log(currentPhoneTab,'currentPhoneTab ===> ')
         currentPhoneTab = window.localStorage.getItem('phoneTab');
         if(!currentPhoneTab){
             changePhoneTab('wallet');
         } else {
-            console.log(currentPhoneTab,'currentPhoneTab')
-            changeSlider(currentPhoneTab)
+            changePhoneTab(currentPhoneTab);
         }
     }, [window.localStorage.getItem('phoneTab')])
 
@@ -194,7 +197,7 @@ function HomePage(props) {
                                 <Route path="swap" element={<Swap />} />
                                 <Route path="borrow" element={<Borrow />} />
                                 <Route path="pools" element={<Pool />} />
-                                <Route path="sendTips" element={<SendTips tab='funi' />} />
+                                <Route path="earn" element={<Earn />} />
                                 <Route path="c2c" element={<ComingSoon />} />
                                 <Route path="nft" element={<ComingSoon />} />
                                 <Route path="record" element={<Record />} />
@@ -272,7 +275,7 @@ function HomePage(props) {
                             }}>
                                 <img class="material-icons md-18" width="24px" src={currentPhoneTab === 'wallet' ? 'wallet/assets/images/menu/icon-wallet-active2.png' : 'wallet/assets/images/menu/icon-wallet-active.png'} alt="" />
                                 {/* <i class="material-icons md-18">signal_cellular_alt</i> */}
-                                <span class="nav-text">Account</span>
+                                <span class="nav-text">{t('home_withdraw_27')}</span>
                             </div>
                             <div className={clsx("nav-link", currentPhoneTab === 'deposite' && 'active')} data-index="1" onClick={() => {
                                 changePhoneTab('deposite')
@@ -280,7 +283,7 @@ function HomePage(props) {
                             }}>
                                 {/* {changePhoneTab('deposit')} */}
                                 <img class="material-icons md-18" width="24px" src={currentPhoneTab === 'deposite' ? 'wallet/assets/images/menu/deposite-active2.png' : 'wallet/assets/images/menu/deposite-active.png'} alt="" />
-                                <span class="nav-text">Deposit</span>
+                                <span class="nav-text">{t('card_3')}</span>
                             </div>
                             <div className={clsx("nav-link", currentPhoneTab === 'withdraw' && 'active')} data-index="2" onClick={() => {
                                 changePhoneTab('withdraw')
@@ -288,7 +291,7 @@ function HomePage(props) {
                             }}>
                                 {/* {changePhoneTab('withdraw')} */}
                                 <img class="material-icons md-18" width="24px" src={currentPhoneTab === 'withdraw' ? 'wallet/assets/images/menu/withdraw-active2.png' : 'wallet/assets/images/menu/withdraw-active.png'} alt="" />
-                                <span class="nav-text">Withdraw</span>
+                                <span class="nav-text">{t('card_4')}</span>
                             </div>
                         </nav>
                     </div>

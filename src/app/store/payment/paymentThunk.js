@@ -159,6 +159,39 @@ export const getFaTPayCryptoTarget = createAsyncThunk(
     }
 );
 
+// 获取StarPay的法币支付参数
+export const getStarPayPaymentOption = createAsyncThunk(
+    '/payment/StarPay/paymentOption',
+    async (settings, { dispatch, getState }) => {
+        const paymentOption = await React.$api("payment.StarPay.paymentOption");
+        // 直接返回处理
+        return paymentOption;
+    }
+);
+
+// 获取StarPay的加密货币支付参数
+export const getStarPayCryptoTarget = createAsyncThunk(
+    '/payment/StarPay/cryptoTarget',
+    async (settings, { dispatch, getState }) => {
+        const cryptoTarget = await React.$api("payment.StarPay.cryptoTarget");
+        // 直接返回处理
+        return cryptoTarget;
+    }
+);
+
+export const getStarPayConfig = createAsyncThunk(
+    '/payment/StarPay/config',
+    async (settings, { dispatch, getState }) => {
+        const result = await React.$api("payment.StarPay.config", settings);
+        if (result.errno === 0) {
+            return result.data
+        } else {
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            return false
+        }
+    }
+);
+
 // 法币提现
 export const makeWithdrawOrder = createAsyncThunk(
     'payment/makeWithdrawOrder',
@@ -226,3 +259,73 @@ export const payoutPayWays = createAsyncThunk(
         }
     }
 );
+
+// 信用卡分类
+export const getCreditConfig = createAsyncThunk(
+    'credit/creditConfig',
+    async (settings, { dispatch, getState }) => {
+        const result = await React.$api("credit.config");
+        if (result.errno === 0) {
+            return result.data
+        } else {
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+        }
+    }
+);
+
+// 申请信用卡
+export const applyCreditCard = createAsyncThunk(
+    'credit/applyCreditCard',
+    async (settings, { dispatch, getState }) => {
+        const result = await React.$api("credit.applyCreditCard", settings);
+        if (result.errno === 0) {
+            if (result.data.status === 'success') {
+                dispatch(showMessage({ message: result.errmsg, code: 1 }));
+            } else {
+                dispatch(showMessage({ message: result.data.msg, code: 2 }));
+            }
+        } else {
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+        }
+    }
+);
+
+// 获取信用卡列表
+export const getUserCreditCard = createAsyncThunk(
+    'credit/getUserCreditCard',
+    async (settings, { dispatch, getState }) => {
+        const result = await React.$api("credit.getUserCreditCard");
+        if (result.errno === 0) {
+            return result.data
+        } else {
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+        }
+    }
+);
+
+// 信用卡转入（crypto）
+export const creditCardCryptoDeposit = createAsyncThunk(
+    'credit/creditCardCryptoDeposit',
+    async (settings, { dispatch, getState }) => {
+        const result = await React.$api("credit.creditCardCryptoDeposit", settings);
+        if (result.errno === 0) {
+            return result.data
+        } else {
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+        }
+    }
+);
+
+// 信用卡转出（crypto）
+export const creditCardCryptoWithdraw = createAsyncThunk(
+    'credit/creditCardCryptoWithdraw',
+    async (settings, { dispatch, getState }) => {
+        const result = await React.$api("credit.creditCardCryptoWithdraw", settings);
+        if (result.errno === 0) {
+            return result.data
+        } else {
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+        }
+    }
+);
+

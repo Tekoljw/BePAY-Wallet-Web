@@ -372,6 +372,24 @@ export default {
             },
         },
 
+        StarPay : {
+            config: {
+                url: "/payment/StarPay/config",
+                method: "post",
+                json: true,
+            },
+
+            paymentOption: {
+                url: "/payment/StarPay/fiatPaymentOptions",
+                method: "post",
+            },
+
+            cryptoTarget: {
+                url: "/payment/StarPay/fiatCryptoTarget",
+                method: "post",
+            },
+        },
+
         manualCryptoNotify: {
             url: "/payment/manualCryptoNotify",
             method: "post",
@@ -581,6 +599,45 @@ export default {
         },
         queryContractResult: {
             url: "/nft/queryContractResult",
+            method: "post",
+        },
+    },
+
+    credit: {
+        config: {
+            url: "/credit/config",
+            method: "post",
+        },
+        getUserCreditCard: {
+            url: "/credit/getUserCreditCard",
+            method: "post",
+        },
+        applyCreditCard: {
+            url: "/credit/applyCreditCard",
+            method: "post",
+        },
+        confirmCardholderIdentity: {
+            url: "/credit/confirmCardholderIdentity",
+            method: "post",
+        },
+        creditActive: {
+            url: "/credit/creditActive",
+            method: "post",
+        },
+        creditCardFiatDeposit: {
+            url: "/credit/creditCardFiatDeposit",
+            method: "post",
+        },
+        creditCardCryptoDeposit: {
+            url: "/credit/creditCardCryptoDeposit",
+            method: "post",
+        },
+        creditCardFiatWithdraw: {
+            url: "/credit/creditCardFiatWithdraw",
+            method: "post",
+        },
+        creditCardCryptoWithdraw: {
+            url: "/credit/creditCardCryptoWithdraw",
             method: "post",
         },
     }

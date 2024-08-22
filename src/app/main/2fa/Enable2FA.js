@@ -196,7 +196,7 @@ function Enable2FA() {
                             size="large"
                             color="secondary"
                             variant="contained"
-                            sx={{ width: "100%", backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1rem' }}
+                            sx={{ width: "100%", backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1.4rem' }}
                             onClick={() => { handleSubmit() }}
                         >
                             {t('home_2fa_11')}

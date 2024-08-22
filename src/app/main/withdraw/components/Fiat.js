@@ -73,11 +73,17 @@ function Fiat(props) {
     const isMobileMedia = new MobileDetect(window.navigator.userAgent).mobile();
     const dispatch = useDispatch();
     const [inputVal, setInputVal] = useState({
-        bankName: '',
         cardName: '',
         pixId: '',
         cardNo: '',
         amount: '',
+
+        accountNo: '',
+        accountName: '',
+        bankName: '',
+        mobile: '',
+        email: '',
+        description: '',
     });
 
     const handleChangeInputVal = (prop, value) => (event) => {
@@ -111,27 +117,37 @@ function Fiat(props) {
     }
 
     const handleSubmit = () => {
+        let entryType = getEntryType(currencyCode)
+        let bankName = ''
+        if (entryType === 'MMK_TRANSFER_KBZ') {
+            bankName = 'KBZ_Pay'
+        } else if (entryType === 'MMK_TRANSFER_WAVEMONEY') {
+            bankName = 'WAVE_MONEY'
+        }
         let data = {
-            amount: inputVal.amount,
-            bankName: inputVal.bankName,
-            accountType,
-            identityInfo: inputVal.cardNo,
-            accountOwnerName: inputVal.cardName,
-            accountNo: inputVal.pixId,
             currency: currencyCode,
-            entryType: getEntryType(currencyCode),
-            bankId: getBankID(currencyCode)
+            amount: inputVal.amount,
+            entryType: entryType,
+            channelExtra: JSON.stringify({
+                accountNo: inputVal.accountNo,
+                accountName: inputVal.accountName,
+                bankcode: getBankID(currencyCode),
+                bankName: bankName,
+                mobile: '',
+                email: '',
+                description: '',
+            }),
         };
         setOpenLoad(true)
         dispatch(makeWithdrawOrder(data)).then((res) => {
+            setOpenLoad(false)
             let result = res.payload;
-            if (result === false || result.status == 'failed') {
-                dispatch(showMessage({ message: t('error_10'), code: 2 }));
-                setOpenLoad(false)
-            } else {
+            if (result && result?.status != 'fail') {
                 setOpenTiBi(true)
                 setWithdrawOrderID(result.outTradeNo);
                 dispatch(showMessage({ message: 'success', code: 1 }));
+            } else {
+                dispatch(showMessage({ message: t('error_10'), code: 2 }));
             }
         });
     };
@@ -445,65 +461,108 @@ function Fiat(props) {
                     >
                         <div className="" style={{}}>
                             <div style={{ padding: "0 1rem" }}>
-                                {
-                                    (currencyCode !== "BRL" && currencyCode !== "IDR" && currencyCode !== "MMK") && <div>
-                                        <div className="flex" style={{ padding: "16px 16px 16px 0px" }} >
-                                            <Typography className="text-16 ">{t('home_withdraw_18')} </Typography>
-                                        </div>
-                                        <div className="flex items-center justify-between">
-                                            <FormControl sx={{ width: isMobileMedia ? '100%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
-                                                <OutlinedInput
-                                                    id="outlined-adornment-address send-tips-container-address"
-                                                    value={inputVal.bankName}
-                                                    onChange={handleChangeInputVal('bankName')}
-                                                    aria-describedby="outlined-weight-helper-text"
-                                                    inputProps={{
-                                                        'aria-label': 'bankName',
-                                                    }}
-                                                    placeholder={t('home_withdraw_19')}
-                                                />
-                                            </FormControl>
-                                            <div onClick={() => { setOpenWithdrawLog(true) }} className="ml-10 flex items-center justify-content-center cursor-pointer">
-                                                <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
-                                            </div>
-                                        </div>
-
-                                        <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
-                                            <Typography className="text-16 ">{t('home_withdraw_20')} </Typography>
-                                        </div>
-                                        <div className="flex items-center justify-between">
-                                            <FormControl sx={{ width: isMobileMedia ? '100%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
-                                                <OutlinedInput
-                                                    id="outlined-adornment-address send-tips-container-address"
-                                                    value={inputVal.cardName}
-                                                    onChange={handleChangeInputVal('cardName')}
-                                                    aria-describedby="outlined-weight-helper-text"
-                                                    inputProps={{
-                                                        'aria-label': 'cardName',
-                                                    }}
-                                                    placeholder={t('home_withdraw_21')}
-                                                />
-                                            </FormControl>
-                                            <div onClick={() => { setOpenWithdrawLog(true) }} className="ml-10 flex items-center justify-content-center cursor-pointer">
-                                                <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
 
                                 {currencyCode === 'IDR' && <div>
                                     <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
-                                        <Typography className="text-16 ">{t('home_withdraw_22')}</Typography>
+                                        <Typography className="text-16 ">Account No</Typography>
                                     </div>
                                     <div className="flex items-center justify-between">
                                         <FormControl sx={{ width: isMobileMedia ? '100%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
                                             <OutlinedInput
                                                 id="outlined-adornment-address send-tips-container-address"
-                                                value={inputVal.pixId}
-                                                onChange={handleChangeInputVal('pixId')}
+                                                value={inputVal.accountNo}
+                                                onChange={handleChangeInputVal('accountNo')}
                                                 aria-describedby="outlined-weight-helper-text"
                                                 inputProps={{
-                                                    'aria-label': 'pixId',
+                                                    'aria-label': 'accountNo',
+                                                }}
+                                                placeholder={t('home_withdraw_27')}
+                                            />
+                                        </FormControl>
+
+                                        <div onClick={() => { setOpenWithdrawLog(true) }} className="ml-10 flex items-center justify-content-center cursor-pointer">
+                                            <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
+                                        </div>
+                                    </div>
+
+                                    <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
+                                        <Typography className="text-16 ">Account Name</Typography>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <FormControl sx={{ width: isMobileMedia ? '100%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
+                                            <OutlinedInput
+                                                id="outlined-adornment-address send-tips-container-address"
+                                                value={inputVal.accountName}
+                                                onChange={handleChangeInputVal('accountName')}
+                                                aria-describedby="outlined-weight-helper-text"
+                                                inputProps={{
+                                                    'aria-label': 'accountName',
+                                                }}
+                                                placeholder={t('home_withdraw_27')}
+                                            />
+                                        </FormControl>
+
+                                        <div onClick={() => { setOpenWithdrawLog(true) }} className="ml-10 flex items-center justify-content-center cursor-pointer">
+                                            <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
+                                        </div>
+                                    </div>
+
+                                    <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
+                                        <Typography className="text-16 ">Mobile</Typography>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <FormControl sx={{ width: isMobileMedia ? '100%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
+                                            <OutlinedInput
+                                                id="outlined-adornment-address send-tips-container-address"
+                                                value={inputVal.mobile}
+                                                onChange={handleChangeInputVal('mobile')}
+                                                aria-describedby="outlined-weight-helper-text"
+                                                inputProps={{
+                                                    'aria-label': 'mobile',
+                                                }}
+                                                placeholder={t('home_withdraw_27')}
+                                            />
+                                        </FormControl>
+
+                                        <div onClick={() => { setOpenWithdrawLog(true) }} className="ml-10 flex items-center justify-content-center cursor-pointer">
+                                            <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
+                                        </div>
+                                    </div>
+
+                                    <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
+                                        <Typography className="text-16 ">Email</Typography>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <FormControl sx={{ width: isMobileMedia ? '100%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
+                                            <OutlinedInput
+                                                id="outlined-adornment-address send-tips-container-address"
+                                                value={inputVal.email}
+                                                onChange={handleChangeInputVal('email')}
+                                                aria-describedby="outlined-weight-helper-text"
+                                                inputProps={{
+                                                    'aria-label': 'email',
+                                                }}
+                                                placeholder={t('home_withdraw_27')}
+                                            />
+                                        </FormControl>
+
+                                        <div onClick={() => { setOpenWithdrawLog(true) }} className="ml-10 flex items-center justify-content-center cursor-pointer">
+                                            <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
+                                        </div>
+                                    </div>
+
+                                    <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
+                                        <Typography className="text-16 ">Description</Typography>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <FormControl sx={{ width: isMobileMedia ? '100%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
+                                            <OutlinedInput
+                                                id="outlined-adornment-address send-tips-container-address"
+                                                value={inputVal.description}
+                                                onChange={handleChangeInputVal('description')}
+                                                aria-describedby="outlined-weight-helper-text"
+                                                inputProps={{
+                                                    'aria-label': 'description',
                                                 }}
                                                 placeholder={t('home_withdraw_27')}
                                             />
@@ -518,17 +577,17 @@ function Fiat(props) {
 
                                 {currencyCode === 'MMK' && <div>
                                     <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
-                                        <Typography className="text-16 ">{t('home_withdraw_22')}</Typography>
+                                        <Typography className="text-16 ">Account No</Typography>
                                     </div>
                                     <div className="flex items-center justify-between">
                                         <FormControl sx={{ width: isMobileMedia ? '100%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
                                             <OutlinedInput
                                                 id="outlined-adornment-address send-tips-container-address"
-                                                value={inputVal.pixId}
-                                                onChange={handleChangeInputVal('pixId')}
+                                                value={inputVal.accountNo}
+                                                onChange={handleChangeInputVal('accountNo')}
                                                 aria-describedby="outlined-weight-helper-text"
                                                 inputProps={{
-                                                    'aria-label': 'pixId',
+                                                    'aria-label': 'accountNo',
                                                 }}
                                                 placeholder={t('home_withdraw_27')}
                                             />
@@ -540,25 +599,28 @@ function Fiat(props) {
                                     </div>
 
                                     <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
-                                        <Typography className="text-16 ">{t('home_withdraw_20')} </Typography>
+                                        <Typography className="text-16 ">Account Name</Typography>
                                     </div>
                                     <div className="flex items-center justify-between">
                                         <FormControl sx={{ width: isMobileMedia ? '100%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
                                             <OutlinedInput
                                                 id="outlined-adornment-address send-tips-container-address"
-                                                value={inputVal.cardName}
-                                                onChange={handleChangeInputVal('cardName')}
+                                                value={inputVal.accountName}
+                                                onChange={handleChangeInputVal('accountName')}
                                                 aria-describedby="outlined-weight-helper-text"
                                                 inputProps={{
-                                                    'aria-label': 'cardName',
+                                                    'aria-label': 'accountName',
                                                 }}
-                                                placeholder={t('home_withdraw_21')}
+                                                placeholder={t('home_withdraw_27')}
                                             />
                                         </FormControl>
+
                                         <div onClick={() => { setOpenWithdrawLog(true) }} className="ml-10 flex items-center justify-content-center cursor-pointer">
                                             <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
                                         </div>
                                     </div>
+
+
                                 </div>}
 
                                 {payoutList[currencyCode]?.length > 0 && <>
@@ -881,10 +943,7 @@ function Fiat(props) {
                                 </motion.div>
                                 <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "20px", fontSize: "24px" }}>-{inputVal.amount} {currencyCode}</motion.div>
                                 <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "10px", fontSize: "16px", color: "#ffc600" }}>● {t('home_PendingReview')}</motion.div>
-                                <motion.div variants={item} className='flex justify-content-space px-20 mt-40' >
-                                    <div style={{ color: "#888B92" }}>{t('home_Bank')}</div>
-                                    <div>{inputVal.bankName}</div>
-                                </motion.div>
+
 
                                 <motion.div variants={item} className='flex justify-content-space px-20 mt-40' >
                                     <div style={{ color: "#888B92" }}>{t('home_Type')}</div>
@@ -893,12 +952,12 @@ function Fiat(props) {
 
                                 <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
                                     <div style={{ color: "#888B92" }}>{t('home_Name')}</div>
-                                    <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{inputVal.cardName}</div>
+                                    <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{inputVal.accountName}</div>
                                 </motion.div>
 
                                 <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
-                                    <div style={{ color: "#888B92" }}>{t('home_withdraw_14')}</div>
-                                    <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{inputVal.cardNo}</div>
+                                    <div style={{ color: "#888B92" }}>accountNo</div>
+                                    <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{inputVal.accountNo}</div>
                                 </motion.div>
 
                                 <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >

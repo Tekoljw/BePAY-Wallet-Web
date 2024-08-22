@@ -2,10 +2,14 @@ import axios from 'axios'
 import history from '@history'
 import {getAccessType, getOpenAppId, getOpenAppIndex} from "../util/tools/function";
 import {requestUserLoginData} from "../util/tools/loginFunction";
+import MobileDetect from 'mobile-detect';
+import useThemeMediaQuery from "../../@fuse/hooks/useThemeMediaQuery";
+import { isMobile } from "../util/tools/function";
 
 const service = axios.create({
     timeout: 50000, // request timeout
 })
+
 
 // request interceptor
 service.interceptors.request.use(
@@ -44,10 +48,18 @@ service.interceptors.response.use(
                     const openAppId = getOpenAppId();
                     const openIndex = getOpenAppIndex();
                     localStorage.removeItem(`Authorization-${openAppId}-${openIndex}`);
-                    if (window.location.pathname !== '/wallet/sign-up' && window.location.pathname !== '/wallet/login') {
-                        history.push("/wallet/login" + window.location.search);
-                    } else if (window.location.pathname === '/wallet/login') {
-                        console.log(window.location.pathname, 'window.location.pathname')
+                    if (isMobile()) {
+                        if (window.location.pathname !== '/wallet/sign-up' && window.location.pathname !== '/wallet/login') {
+                            history.push("/wallet/start" + window.location.search);
+                        } else if (window.location.pathname === '/wallet/login') {
+                            console.log(window.location.pathname, 'window.location.pathname')
+                        }
+                    } else {
+                        if (window.location.pathname !== '/wallet/sign-up' && window.location.pathname !== '/wallet/login') {
+                            history.push("/wallet/login" + window.location.search);
+                        } else if (window.location.pathname === '/wallet/login') {
+                            console.log(window.location.pathname, 'window.location.pathname')
+                        }
                     }
                 }, 500);
             }

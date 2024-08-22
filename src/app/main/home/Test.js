@@ -1,13 +1,20 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
+import withReducer from 'app/store/withReducer';
+import { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUserData } from "../../store/user";
+import _ from '@lodash';
+import { motion } from 'framer-motion';
+import reducer from './store';
+import { getWidgets, selectWidgets } from './store/widgetsSlice';
+import VisitorsOverviewWidget from './widgets/VisitorsOverviewWidget';
+import ConversionsWidget from './widgets/ConversionsWidget';
+import ImpressionsWidget from './widgets/ImpressionsWidget';
+import VisitsWidget from './widgets/VisitsWidget';
+import '../../../styles/home.css';
+import { useTranslation } from "react-i18next";
 import { styled } from '@mui/material/styles';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
+import Dialog from "@mui/material/Dialog/Dialog";
+
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -18,76 +25,151 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     },
 }));
 
-export interface DialogTitleProps {
-    id: string;
-    children?: React.ReactNode;
-    onClose: () => void;
-}
+const container = {
+    show: {
+        transition: {
+            staggerChildren: 0.05,
+        },
+    },
+};
 
-function BootstrapDialogTitle(props: DialogTitleProps) {
-    const { children, onClose, ...other } = props;
+const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 },
+};
+
+
+function Test() {
+    const dispatch = useDispatch();
+    const widgets = useSelector(selectWidgets);
+    const userData = useSelector(selectUserData);
+    const { t } = useTranslation('mainPage');
+
+    useEffect(() => {
+        dispatch(getWidgets());
+    }, [dispatch]);
 
     return (
-        <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-            {children}
-            {onClose ? (
-                <IconButton
-                    aria-label="close"
-                    onClick={onClose}
-                    sx={{
-                        position: 'absolute',
-                        right: 8,
-                        top: 8,
-                        color: (theme) => theme.palette.grey[500],
-                    }}
+
+        <div className='' style={{ position: "relative" }}>
+            <div style={{ position: "absolute", width: "100%" }}>
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
+                    className='mt-12'
+                    style={{ paddingInline: "1.5rem" }}
                 >
-                    <CloseIcon />
-                </IconButton>
-            ) : null}
-        </DialogTitle>
-    );
-}
+                    <div className='text-16'>新手福利</div>
+                    <div className='flex mt-12'>
+                        <div className='qianDaoSty flex justify-between px-10'>
+                            <div className='mt-6'>
+                                <div>Check In</div>
+                                <div style={{ color: "#9a9a9a" }}>bonus</div>
+                            </div>
+                            <img src="wallet/assets/images/earn/qianDao.png" />
+                        </div>
 
-export default function CustomizedDialogs() {
-    const [open, setOpen] = React.useState(false);
+                        <div className='zhuanPanSty flex justify-between px-10'>
+                            <div className='mt-6'>
+                                <div>Spin</div>
+                                <div style={{ color: "#9a9a9a" }}>bonus</div>
+                            </div>
+                            <div className='' style={{ position: "relative", width: "5.2rem", height: "5.2rem" }}>
+                                <img className='zhuanPanDongHua0' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan3.png" />
+                                <img className='zhuanPanDongHua' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan2.png" />
+                                <img className='zhuanPanDongHua0' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan1.png" />
+                            </div>
+                        </div>
+                    </div>
+                    <div className='flex mt-16 justify-center'>
+                        <img className='naoZhongImg' src="wallet/assets/images/earn/naoZhong.png" />  <div className='naoZhongZi ml-10'>活动结束</div> <div className='ml-10 naoZhongZi' >23:48:36</div>
+                    </div>
+                </motion.div>
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
+                    className='mt-16'
+                    style={{ paddingInline: "1.5rem" }}
+                >
+                    <div className='text-16'>活期利息</div>
 
-    return (
-        <div>
-            <Button variant="outlined" onClick={handleClickOpen}>
-                Open dialog
-            </Button>
-            <BootstrapDialog
-                onClose={handleClose}
-                aria-labelledby="customized-dialog-title"
-                open={open}
-            >
-                <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    Modal title
-                </BootstrapDialogTitle>
-                <DialogContent dividers>
-                    <Typography gutterBottom>
-                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                        dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                        consectetur ac, vestibulum at eros.
-                    </Typography>
-                    <Typography gutterBottom>
-                        Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-                        Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-                    </Typography>
-                    <Typography gutterBottom>
-                        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
-                        magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
-                        ullamcorper nulla non metus auctor fringilla.
-                    </Typography>
-                </DialogContent>
-            </BootstrapDialog>
+                </motion.div>
+
+                {useMemo(() => {
+                    return (
+                        !_.isEmpty(widgets) && (
+                            <motion.div
+                                className="w-full  "
+                                variants={container}
+                                initial="hidden"
+                                animate="show"
+                                style={{ padding: "1.5rem", backgroundColor: "#0E1421" }}
+                            >
+                                {/* <motion.div variants={item} className="sm:col-span-2 lg:col-span-3">
+                                    <VisitorsOverviewWidget />
+                                </motion.div> */}
+
+                                <motion.div variants={item} className="">
+                                    <ImpressionsWidget />
+                                </motion.div>
+
+                                {/* <motion.div variants={item} className="sm:col-span-2 lg:col-span-1 ">
+                                    <VisitsWidget />
+                                </motion.div> */}
+                            </motion.div>
+                        )
+                    );
+                }, [widgets])}
+
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
+                    className='mt-8'
+                    style={{ paddingInline: "1.5rem" }}
+                >
+                    <div className='text-16'>百万空投</div>
+                    <div className='lanDi mt-16'>
+                        <img className='logoCC' src="wallet/assets/images/earn/logo1.png" />
+                        <div className='flex mt-16  justify-between'>
+                            <div className='lanDiZi pb-10 pb-10'>
+                                <div><span style={{ color: "#A4A4A4" }}>瓜分</span><span style={{ marginLeft: "10px", color: "#FFC600", fontWeight: "bold", fontSize: "24px" }}>1000,000,000</span></div>
+                                <div><span style={{ color: "#1BB9FF", fontWeight: "bold", fontSize: "24px" }}>BFT</span><span style={{ marginLeft: "10px", color: "#ffffff", fontWeight: "bold", fontSize: "14px" }}>BeingFi Token</span></div>
+                            </div>
+                            <img className='earnYouTu ' src="wallet/assets/images/earn/bi1.png" />
+
+                        </div>
+                    </div>
+                </motion.div>
+
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
+                    className='mt-20'
+                    style={{ paddingInline: "1.5rem" }}
+                >
+                    <div className='text-16'>合约交易挖矿</div>
+                    <div className='huangDi mt-16'>
+                        <div className='flex justify-between pt-4'>
+                            <div className='huangDiZi '>
+                                <img className='logoCC2 mb-4' src="wallet/assets/images/earn/logo2.png" />
+                                <div><span style={{ marginLeft: "10px", color: "#FFC600", fontWeight: "bold", fontSize: "24px" }}>交易合约送现货</span></div>
+                                <div><span style={{ marginLeft: "10px", color: "#ffffff", fontWeight: "bold", fontSize: "14px" }}>所有交易手续费100%补偿</span><span style={{ marginLeft: "10px", color: "#ffffff", fontWeight: "bold", fontSize: "14px" }}>所有交易手续费100%补偿</span></div>
+                            </div>
+                            <img className='earnYouTu2' src="wallet/assets/images/earn/bi2.png" />
+                        </div>
+                    </div>
+                </motion.div>
+
+            </div>
         </div>
+
+
     );
 }
+
+export default withReducer('analyticsDashboardApp', reducer)(Test);

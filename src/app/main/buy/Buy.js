@@ -5,6 +5,7 @@ import Tab from '@mui/material/Tab';
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
 import Accordion from '@mui/material/Accordion';
+import OutlinedInput from '@mui/material/OutlinedInput';
 // import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 // import AccordionDetails from '@mui/material/AccordionDetails';
@@ -20,11 +21,20 @@ import { selectUserData } from "../../store/user";
 import { selectConfig } from "../../store/config";
 import { arrayLookup, setPhoneTab } from "../../util/tools/function";
 import Button from "@mui/material/Button";
-import { getFaTPayCryptoTarget, getFaTPayPaymentOption, getLegendTradingCryptoTarget, getLegendTradingPaymentOption } from "../../store/payment/paymentThunk";
+import {
+    getFaTPayCryptoTarget,
+    getFaTPayPaymentOption,
+    getLegendTradingCryptoTarget,
+    getLegendTradingPaymentOption,
+    getStarPayPaymentOption,
+    getStarPayCryptoTarget,
+    getStarPayConfig
+} from "../../store/payment/paymentThunk";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import { useTranslation } from "react-i18next";
+import {showMessage} from "app/store/fuse/messageSlice";
 
 const container = {
     show: {
@@ -66,15 +76,18 @@ function Buy(props) {
         setExpanded(_expanded ? panel : false);
     };
 
+    const [ amount, setAmount ] = useState('');
+
     const fiatsData = useSelector(selectUserData).fiat || [];
     const config = useSelector(selectConfig);
     const currencys = useSelector(selectConfig).payment.currency || [];
     const symbols = useSelector(selectConfig).symbols || [];
     const [fiats, setFiats] = useState([]);
+    const [fiatObj, setFiatObj] = useState({});
     const [fiatsSelected, setFiatsSelected] = useState(0);
     const [currencyCode, setCurrencyCode] = useState('USD');
     const [currencyBalance, setCurrencyBalance] = useState(0);
-    const [payType, setPayType] = useState('LegendTrading');
+    const [payType, setPayType] = useState('StarPay');
     const [symbolWallet, setSymbolWallet] = useState([]);
     const [symbol, setSymbol] = useState('');
 
@@ -93,6 +106,14 @@ function Buy(props) {
     }
     const getFaTPayOption = async () => {
         let res = await dispatch(getFaTPayPaymentOption());
+        return res;
+    }
+    const getStarPayTarget = async () => {
+        let res = await dispatch(getStarPayCryptoTarget());
+        return res;
+    }
+    const getStarPayOption = async () => {
+        let res = await dispatch(getStarPayPaymentOption());
         return res;
     }
     const getSdkSymbolData = async (payType) => {
@@ -122,6 +143,16 @@ function Buy(props) {
                 })
             });
 
+        } else if (payType === 'StarPay') {
+            await Promise.all([getStarPayTarget(), getStarPayOption()]).then((resArr) => {
+                let cryptoTarget = resArr[0];
+                paymentOption = resArr[1];
+                cryptoTarget.payload.data.forEach((symbol, index) => {
+                    if (allSymbols.indexOf(symbol.cryptoCurrency) === -1) {
+                        allSymbols.push(symbol.cryptoCurrency);
+                    }
+                })
+            });
         }
 
         if (allSymbols?.length > 0) {
@@ -139,14 +170,25 @@ function Buy(props) {
         }
         if (paymentOption?.payload?.data) {
             let tmpFiats = [];
+            let tmpFiatObj = {};
             for (let [key, payment] of Object.entries(paymentOption.payload.data)) {
                 tmpFiats.push({
                     currencyCode: payment.fiatCurrency,
                     balance: arrayLookup(fiatsData, 'currencyCode', payment.fiatCurrency, 'balance') || 0,
+                    minAmount: payment.paymentOptions[0]?.minAmount ?? 0,
+                    maxAmount: payment.paymentOptions[0]?.maxAmount ?? 0,
                 });
+
+                tmpFiatObj[payment.fiatCurrency] = {
+                    currencyCode: payment.fiatCurrency,
+                    balance: arrayLookup(fiatsData, 'currencyCode', payment.fiatCurrency, 'balance') || 0,
+                    minAmount: payment.paymentOptions[0]?.minAmount ?? 0,
+                    maxAmount: payment.paymentOptions[0]?.maxAmount ?? 0,
+                }
             }
             if (tmpFiats.length > 0) {
                 setFiats(tmpFiats);
+                setFiatObj(tmpFiatObj);
                 setCurrencyCode(tmpFiats[0].currencyCode);
                 setCurrencyBalance(tmpFiats[0].balance);
             }
@@ -185,6 +227,20 @@ function Buy(props) {
                 // currency: 'USD',    // 法币
                 // balance: 11         // 法币金额
             });
+        } else if (payType === 'StarPay') {
+            if (amount >= fiatObj[currencyCode]?.minAmount && amount <= fiatObj[currencyCode]?.maxAmount) {
+                dispatch(getStarPayConfig({
+                    fiatCurrency: currencyCode,
+                    amount,
+                })).then((res) => {
+                    let result = res.payload
+                    if (result.payurl) {
+                        window.open(result.payurl)
+                    }
+                });
+            } else {
+                dispatch(showMessage({ message: 'Amount error', code: 2 }));
+            }
         }
     };
 
@@ -193,6 +249,7 @@ function Buy(props) {
         setSymbol('');
         setSymbolWallet([]);
         setFiats([]);
+        setFiatObj({});
         setFiatsSelected(0);
         setCurrencyCode('USD');
         setCurrencyBalance(0);
@@ -409,60 +466,17 @@ function Buy(props) {
 
                     <Typography className="text-20 font-medium my-16" >{t('home_buy_4')}</Typography>
 
-                    <Box
-                        className={clsx("w-full rounded-8  flex flex-col my-16 cursor-pointer", payType === 'LegendTrading' && 'buy-pay-type-acitve')}
-                        sx={{
-                            backgroundColor: '#1E293B',
-                            border: "1px solid #1E293B"
-                        }}
-                        onClick={() => {
-                            setPayType('LegendTrading');
-                            initSymbolAndFiat();
-                            getSdkSymbolData('LegendTrading');
-                        }}
-                    >
-                        <StyledAccordion
-                            component={motion.div}
-                            variants={item}
-                            classes={{
-                                root: 'FaqPage-panel shadow',
-                            }}
-                            expanded={expanded === 2}
-                            onChange={toggleAccordion(2)}
-                        >
-                            <div className="flex items-center flex-grow buy-pay-type " style={{ width: '100%', padding: '1.6rem 1.2rem' }}>
-                                <div className="flex items-center">
-                                    <div style={{
-                                        width: '30px',
-                                        borderRadius: '5px',
-                                    }}>
-                                        <img className='border-r-10' src="wallet/assets/images/buy/LegendTrading.png" alt="" />
-                                    </div>
-                                    <div className="px-12 font-medium">
-                                        <Typography className="text-20 font-medium">LegendTrading</Typography>
-                                    </div>
-                                </div>
-                                <div style={{ marginLeft: 'auto' }}>
-                                    <div className="px-12 font-medium flex justify-content-center items-center" style={{ textAlign: 'right' }}>
-                                        <div className="mx-4"><img src="wallet/assets/images/buy/visa.png" alt="" /></div>
-                                        <div className="mx-4"><img src="wallet/assets/images/buy/jh.png" alt="" /></div>
-                                        <div className="mx-4"><img src="wallet/assets/images/buy/jcb.png" alt="" /></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </StyledAccordion>
-                    </Box>
                     {tabValue === 0 && <>
                         <Box
-                            className={clsx("w-full rounded-8  flex flex-col my-20 cursor-pointer", payType === 'FaTPay' && 'buy-pay-type-acitve')}
+                            className={clsx("w-full rounded-8  flex flex-col my-16 cursor-pointer", payType === 'StarPay' && 'buy-pay-type-acitve')}
                             sx={{
                                 backgroundColor: '#1E293B',
                                 border: "1px solid #1E293B"
                             }}
                             onClick={() => {
-                                setPayType('FaTPay');
+                                setPayType('StarPay');
                                 initSymbolAndFiat();
-                                getSdkSymbolData('FaTPay');
+                                getSdkSymbolData('StarPay');
                             }}
                         >
                             <StyledAccordion
@@ -474,17 +488,16 @@ function Buy(props) {
                                 expanded={expanded === 2}
                                 onChange={toggleAccordion(2)}
                             >
-                                <div className="flex items-center flex-grow buy-pay-type" style={{ width: '100%', padding: '1.6rem 1.2rem' }}>
+                                <div className="flex items-center flex-grow buy-pay-type " style={{ width: '100%', padding: '1.6rem 1.2rem' }}>
                                     <div className="flex items-center">
                                         <div style={{
                                             width: '30px',
                                             borderRadius: '5px',
-
                                         }}>
-                                            <img className='border-r-10' src="wallet/assets/images/buy/FaTPay.png" alt="" />
+                                            <img className='border-r-10' src="wallet/assets/images/buy/startPay.png" alt="" />
                                         </div>
                                         <div className="px-12 font-medium">
-                                            <Typography className="text-20 font-medium">FaTPay</Typography>
+                                            <Typography className="text-20 font-medium">StarPay</Typography>
                                         </div>
                                     </div>
                                     <div style={{ marginLeft: 'auto' }}>
@@ -497,6 +510,67 @@ function Buy(props) {
                                 </div>
                             </StyledAccordion>
                         </Box>
+
+                        {/*<Box*/}
+                        {/*    className={clsx("w-full rounded-8  flex flex-col my-20 cursor-pointer", payType === 'FaTPay' && 'buy-pay-type-acitve')}*/}
+                        {/*    sx={{*/}
+                        {/*        backgroundColor: '#1E293B',*/}
+                        {/*        border: "1px solid #1E293B"*/}
+                        {/*    }}*/}
+                        {/*    onClick={() => {*/}
+                        {/*        setPayType('FaTPay');*/}
+                        {/*        initSymbolAndFiat();*/}
+                        {/*        getSdkSymbolData('FaTPay');*/}
+                        {/*    }}*/}
+                        {/*>*/}
+                        {/*    <StyledAccordion*/}
+                        {/*        component={motion.div}*/}
+                        {/*        variants={item}*/}
+                        {/*        classes={{*/}
+                        {/*            root: 'FaqPage-panel shadow',*/}
+                        {/*        }}*/}
+                        {/*        expanded={expanded === 2}*/}
+                        {/*        onChange={toggleAccordion(2)}*/}
+                        {/*    >*/}
+                        {/*        <div className="flex items-center flex-grow buy-pay-type" style={{ width: '100%', padding: '1.6rem 1.2rem' }}>*/}
+                        {/*            <div className="flex items-center">*/}
+                        {/*                <div style={{*/}
+                        {/*                    width: '30px',*/}
+                        {/*                    borderRadius: '5px',*/}
+
+                        {/*                }}>*/}
+                        {/*                    <img className='border-r-10' src="wallet/assets/images/buy/FaTPay.png" alt="" />*/}
+                        {/*                </div>*/}
+                        {/*                <div className="px-12 font-medium">*/}
+                        {/*                    <Typography className="text-20 font-medium">FaTPay</Typography>*/}
+                        {/*                </div>*/}
+                        {/*            </div>*/}
+                        {/*            <div style={{ marginLeft: 'auto' }}>*/}
+                        {/*                <div className="px-12 font-medium flex justify-content-center items-center" style={{ textAlign: 'right' }}>*/}
+                        {/*                    <div className="mx-4"><img src="wallet/assets/images/buy/visa.png" alt="" /></div>*/}
+                        {/*                    <div className="mx-4"><img src="wallet/assets/images/buy/jh.png" alt="" /></div>*/}
+                        {/*                    <div className="mx-4"><img src="wallet/assets/images/buy/jcb.png" alt="" /></div>*/}
+                        {/*                </div>*/}
+                        {/*            </div>*/}
+                        {/*        </div>*/}
+                        {/*    </StyledAccordion>*/}
+                        {/*</Box>*/}
+
+                        {payType === 'StarPay' && <>
+                            <Typography className="text-20 font-medium my-16" >Amount</Typography>
+
+                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
+                                <OutlinedInput
+                                    id="outlined-adornment-address send-tips-container-address"
+                                    value={amount}
+                                    onChange={(event) => { setAmount(event.target.value) }}
+                                    aria-describedby="outlined-weight-helper-text"
+                                    inputProps={{
+                                        'aria-label': 'address',
+                                    }}
+                                />
+                            </FormControl>
+                        </>}
                     </>}
 
                     <Box
