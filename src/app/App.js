@@ -21,6 +21,7 @@ import {selectUserData} from "./store/user";
 import {getUrlParam} from "./util/tools/function";
 import { getKycInfo } from "app/store/payment/paymentThunk";
 import { changeLanguage } from "./store/i18nSlice";
+import {checkLoginState} from "app/store/user/userThunk";
 
 // import axios from 'axios';
 /**
@@ -74,17 +75,19 @@ const App = () => {
         if (thirdPartId) {
             window.localStorage.setItem('thirdPartId', thirdPartId)
         }
+        if (autoLoginKey) {
+            window.localStorage.setItem('autoLoginKey', autoLoginKey)
+        }
         if (accessType) {
             window.localStorage.setItem('accessType', accessType);
             switch (accessType){
                 case 1:{ //telegramWebApp
                     window.localStorage.setItem('loginType', "telegram_web_app");
+                    console.log(accessType, '请求telegramWebAppLoginApi方式登录,检查登录状态');
+                    dispatch(checkLoginState());
                     break;
                 }
             }
-        }
-        if (autoLoginKey) {
-            window.localStorage.setItem('autoLoginKey', autoLoginKey)
         }
         if (lang) {
             window.localStorage.setItem('lang', lang)
