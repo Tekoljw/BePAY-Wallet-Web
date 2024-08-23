@@ -401,7 +401,6 @@ function Card(props) {
     const getCardConfig = () => {
         dispatch(getCreditConfig()).then((res) => {
             let result = res.payload
-
             if (result) {
                 let tmpConfig = { 2: [], 3: [] }
                 let tmpConfigList = {}
@@ -1154,8 +1153,7 @@ function Card(props) {
                                                             </div>
 
                                                             <div className='flex justify-between items-center mt-10'>
-                                                                <div className='openingFee' >{t('card_33')} 1USD</div>
-
+                                                                <div className='openingFee' >{t('card_33')} {configItem.applyCreditFee} {configItem.cardSymbol} </div>
                                                                 <div className='openCardBtn' onClick={() => {
                                                                     setOpenXiangQing(true);
                                                                     setCardConfigID(configItem.configId);
@@ -1262,7 +1260,7 @@ function Card(props) {
                             <div className='flex justify-between mt-10'>
                                 <div className='quanYiHuiZi'>{t('card_33')}</div>
                                 <div className='flex'>
-                                    <div className='quanYiZi quanYiHui mr-10'>100 USD</div><div className='quanYiZi quanYiLv'>18 USD</div>
+                                    <div className='quanYiZi quanYiHui mr-10'>100 USD</div><div className='quanYiZi quanYiLv'>{cardConfigList[cardConfigID].applyCreditFee} {cardConfigList[cardConfigID].cardSymbol}</div>
                                 </div>
                             </div>
 
@@ -1458,7 +1456,7 @@ function Card(props) {
                     }}
                 >
                     <div className="dialog-select-fiat danChuangTxt">
-                    {t('card_108')}
+                        {t('card_108')}
                     </div>
                 </Box>
 
@@ -2191,7 +2189,7 @@ function Card(props) {
                                 applyCard()
                             }}
                         >
-                            {t('card_3')}
+                            {t('card_36')}
                         </LoadingButton>
 
                     </div>
