@@ -51,6 +51,7 @@ const App = () => {
     const accessType = getUrlParam('accessType') || 0;
     const thirdPartId = getUrlParam('thirdPartId') || 0;
     const autoLoginKey = getUrlParam('autoLoginKey') || 0;
+    const accessToken = getUrlParam('accessToken') || '';
     const storageKey = getUrlParam('storageKey') || '';
     const langDirection = useSelector(selectCurrentLanguageDirection);
     const mainTheme = useSelector(selectMainTheme);
@@ -77,6 +78,10 @@ const App = () => {
         }
         if (autoLoginKey) {
             window.localStorage.setItem('autoLoginKey', autoLoginKey)
+        }
+        //直接设置已经获取到的访问token
+        if(openAppId && openIndex && accessToken){
+            localStorage.setItem(`Authorization-${openAppId}-${openIndex}`, accessToken);
         }
         if (accessType) {
             window.localStorage.setItem('accessType', accessType);
