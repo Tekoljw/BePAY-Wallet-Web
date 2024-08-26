@@ -73,25 +73,6 @@ function Kyc(props) {
     const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down(isMobileMedia ? 'lg' : 'sm'));
     const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobile);
 
-    useEffect(() => {
-        setPageState(1);
-
-        if (kycInfo.init) {
-            if (!kycInfo.havePhone()) {
-                setPageState(2);
-                setTabValue(1);
-                return
-            }
-
-            if (!kycInfo.haveEmail()) {
-                setPageState(1);
-                return
-            }
-
-            setPageState(0);
-        }
-    }, [kycInfo]);
-
     const [inputVal, setInputVal] = useState({
         email: '',
         phoneCountry: '',
@@ -352,7 +333,33 @@ function Kyc(props) {
         if (user.profile?.nation) {
             handleChangeApproveDataVal('nationCode', user.profile?.nation)
         }
-    }, [user.profile])
+    }, [user.profile]);
+
+    useEffect(() => {
+        setPageState(1);
+
+        if (kycInfo.init) {
+            if (!kycInfo.havePhone()) {
+                setPageState(2);
+                setTabValue(1);
+                return
+            }
+
+            if (!kycInfo.haveEmail()) {
+                setPageState(1);
+                return
+            }
+
+            let copyData = {};
+
+            Object.keys(inputVal).map((prop, index) => {
+                copyData[prop] = kycInfo[prop];
+            });
+
+            setInputVal(copyData);
+            setPageState(0);
+        }
+    }, [kycInfo]);
 
     return (
         <>
