@@ -225,7 +225,10 @@
     console.log('openAppId', openAppId)
     if (openAppId) {
         let src = `//static-scource.funibet.com/mechart/logo/${openAppId}.png`
-        document.getElementById("logo-prefix").src = src
+        if (document.getElementById("logo-prefix")) {
+            document.getElementById("logo-prefix").src = src
+        }
+
     }
 
     window.onload = function () {
