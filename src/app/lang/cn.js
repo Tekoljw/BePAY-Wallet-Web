@@ -58,6 +58,7 @@ const locale = {
     home_2fa_10: '验证码',
     home_2fa_11: '发送',
 
+    home_record_0: '全部',
     home_record_1: '存款',
     home_record_2: '池',
     home_record_3: '服务费',

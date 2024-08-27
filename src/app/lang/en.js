@@ -58,6 +58,7 @@ const locale = {
     home_2fa_10: 'Verification code',
     home_2fa_11: 'Send',
 
+    home_record_0: 'All',
     home_record_1: 'Deposit',
     home_record_2: 'Pool',
     home_record_3: 'Service charge',
