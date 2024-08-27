@@ -113,8 +113,6 @@ function Earn(props) {
     }
 
 
-
-
     const closesBindFunc = () => {
         document.getElementById('openBind').classList.remove('PinMoveAni');
         document.getElementById('openBind').classList.add('PinMoveOut');

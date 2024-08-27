@@ -35,6 +35,7 @@ import {
 import { createPin, verifyPin } from "app/store/wallet/walletThunk";
 import { showMessage } from "app/store/fuse/messageSlice";
 import { borderBottom } from '@mui/system';
+import Kyc from "../kyc/Kyc";
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -72,6 +73,7 @@ function Card(props) {
     const [kaBeiButton2, setKaBeiButton2] = useState(true);
     const [fanZhuan, setFanZhuan] = useState(false);
     const [openXiangQing, setOpenXiangQing] = useState(false);
+    const [openKyc, setOpenKyc] = useState(false);
     const [openAnimateModal, setOpenAnimateModal] = useState(false);
     const [openCardBtnShow, setOpenCardBtnShow] = useState(false);
     const [openAnimateHuanKa, setOpenAnimateHuanKa] = useState(false);
@@ -241,6 +243,13 @@ function Card(props) {
         document.getElementById(target.target.id).classList.remove('pinJianPanColor1');
     };
 
+
+    const openKycFunc = () => {
+        setOpenKyc(true)
+        setTimeout(() => {
+            document.getElementById('topGo').scrollIntoView({ behavior: 'smooth' });
+        }, 0);
+    }
 
     const defaultValues = {
         oldPassword: '',
@@ -655,7 +664,7 @@ function Card(props) {
 
                             <div className='cardSelectBg'>
                                 <div className='cardSelectBgPadding '>
-                                    <div style={{ padding: '1rem 1.5rem 1.5rem 1.5rem' }} >
+                                    {!openKyc && <div style={{ padding: '1rem 1.5rem 1.5rem 1.5rem' }} >
                                         <Tabs
                                             component={motion.div}
                                             variants={item}
@@ -1073,6 +1082,7 @@ function Card(props) {
                                             </div>
                                         }
                                     </div>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -1371,6 +1381,25 @@ function Card(props) {
             </div>}
 
 
+            {openKyc && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
+                    className='mt-12'
+                    id="topGo"
+                >
+                    <div className='flex mb-10' onClick={() => {
+                        setOpenKyc(false);
+                        myFunction;
+                    }}   >
+                        <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
+                    </div>
+                    <Kyc />
+                    <div style={{ height: "5rem" }}></div>
+                </motion.div>
+            </div>}
+
             <AnimateModal
                 className="faBiDiCard tanChuanDiSe"
                 open={openAnimateModal}
@@ -1460,28 +1489,15 @@ function Card(props) {
                     </div>
                 </Box>
 
-                <div className='flex mt-12 mb-28 px-15 justify-between' >
-                    <LoadingButton
-                        disabled={false}
-                        className="boxCardBtn"
-                        color="secondary"
-                        loading={false}
-                        variant="contained"
-                        onClick={() => {
-                            changePhoneTab('security');
-                            history.push('/wallet/home/security', { tabValue: 4 })
-                            setOpenAnimateHuanKa(false)
-                        }}
-                    >
-                        {t('card_76')}
-                    </LoadingButton>
+                <div className='flex mt-32 mb-28 px-15 position-re' >
 
                     <LoadingButton
                         disabled={false}
-                        className="boxCardBtn"
+                        className="boxCardBtn position-ab"
                         color="secondary"
                         loading={openCardBtnShow}
                         variant="contained"
+                        style={{ bottom: "0%", left: "0%", right: "0%", margin: "0 auto" }}
                         onClick={() => {
                             setOpenCardBtnShow(true);
                             setTimeout(() => {
@@ -1495,7 +1511,14 @@ function Card(props) {
                     >
                         {t('card_77')}
                     </LoadingButton>
+
+                    <div className=' position-ab xiaHuaXian' style={{ height: "4rem", lineHeight: "4rem", bottom: "0%", right: "4%", }} onClick={() => {
+                        setOpenAnimateHuanKa(false);
+                        openKycFunc();
+                    }}>{t('card_76')}</div>
+
                 </div>
+
             </AnimateModal>
 
 
@@ -2196,8 +2219,6 @@ function Card(props) {
 
                 </div>
             </BootstrapDialog>
-
-
         </div>
     )
 }

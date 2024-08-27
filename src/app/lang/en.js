@@ -529,6 +529,8 @@ const locale = {
     card_171: "transfer out",
     card_172: "check in",
     card_173: "yesterday's total trading volume",
+    kyc_41:"Required fields cannot be empty",
+    
 };
 
 export default locale;

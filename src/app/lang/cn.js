@@ -529,6 +529,7 @@ const locale = {
     card_171: "转出",
     card_172: "签到",
     card_173: "昨日总交易量",
+    kyc_41:"此处为必填项不能为空",
 };
 
 export default locale;

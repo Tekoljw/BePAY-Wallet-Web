@@ -1269,6 +1269,15 @@ input[type='number'] {
     text-Decoration: underline;
 }
 
+.redHelpTxt {
+    margin-top: 6px;
+    color: #F44336;
+}
+
+.xiaHuaXian {
+    text-Decoration: underline;
+}
+
 .kaPianInfoLeiXing {
     text-align: left;
     min-width: 9rem;
