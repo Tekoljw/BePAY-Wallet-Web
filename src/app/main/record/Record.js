@@ -45,7 +45,7 @@ const item = {
 function Record() {
     const { t } = useTranslation('mainPage');
     const dispatch = useDispatch();
-    const [type, setType] = useState(1);
+    const [type, setType] = useState(0);
     const [page, setPage] = React.useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [transferList, setTransferList] = useState([]);
@@ -72,6 +72,7 @@ function Record() {
     // public static final int CONST_LOG_TYPE_TRANSFER_FROM_GAME          = 17;
 
     const typeList = [
+        { id: 0, label: t('home_record_0') },
         { id: 1, label: t('home_record_1') },
         // { id: 2, label: 'Pool' },
         // { id: 3, label: 'Service charge' },
@@ -92,7 +93,7 @@ function Record() {
         { id: 18, label: t('menu_18')},
     ];
 
-    const [timeItem, setTimeItem] = React.useState(1);
+    const [timeItem, setTimeItem] = React.useState( new Date().getMonth() +1 );
     const [kaPianItem, setKaPianItem] = React.useState(1);
     const [selectCardID, setSelectCardID] = React.useState(0);
 
@@ -115,7 +116,7 @@ function Record() {
     };
 
     const handleTransferRecord = (pageParam) => {
-        if (type) {
+        if (type || type === 0) {
             setIsLoading(true)
             dispatch(transferRecords({
                 logType: type,

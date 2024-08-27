@@ -58,6 +58,7 @@ const locale = {
     home_2fa_10: '验证码',
     home_2fa_11: '发送',
 
+    home_record_0: '全部',
     home_record_1: '存款',
     home_record_2: '池',
     home_record_3: '服务费',
@@ -528,6 +529,7 @@ const locale = {
     card_171: "转出",
     card_172: "签到",
     card_173: "昨日总交易量",
+    kyc_41:"此处为必填项不能为空",
 };
 
 export default locale;

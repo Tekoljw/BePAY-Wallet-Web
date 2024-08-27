@@ -17,7 +17,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { showMessage } from 'app/store/fuse/messageSlice';
 import history from '@history';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import { styled } from "@mui/material";
+import { styled, FormHelperText } from "@mui/material";
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import HomeSidebarContent from "../home/HomeSidebarContent";
@@ -72,26 +72,6 @@ function Kyc(props) {
     const isMobileMedia = new MobileDetect(window.navigator.userAgent).mobile();
     const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down(isMobileMedia ? 'lg' : 'sm'));
     const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobile);
-
-    useEffect(() => {
-        setPageState(1);
-
-        if (kycInfo.init) {
-            if (!kycInfo.havePhone()) {
-                setPageState(2);
-                setTabValue(1);
-                return
-            }
-
-            if (!kycInfo.haveEmail()) {
-                setPageState(1);
-                return
-            }
-
-            setPageState(0);
-        }
-    }, [kycInfo]);
-
     const [inputVal, setInputVal] = useState({
         email: '',
         phoneCountry: '',
@@ -114,6 +94,7 @@ function Kyc(props) {
         proofOfAddressUrl: '',
         usSsn: '',
     });
+
 
     const [approveData, setApproveData] = useState({
         nationCode: user.profile?.nation ?? '',
@@ -200,9 +181,193 @@ function Kyc(props) {
     };
 
     const [keyName, setKeyName] = useState('');
+    const [idTypeError, setIdTypeError] = useState(false);
+    const [idNoError, setIdNoError] = useState(false);
+    const [addressError, setAddressError] = useState(false);
+    const [cityError, setCityError] = useState(false);
+    const [stateError, setStateError] = useState(false);
+    const [countryError, setCountryError] = useState(false);
+    const [birthDateError, setBirthDateError] = useState(false);
+    const [firstNameError, setFirstNameError] = useState(false);
+    const [phoneNumberError, setPhoneNumberError] = useState(false);
+    const [phoneCountryError, setPhoneCountryError] = useState(false);
+    const [idFrontUrlError, setIdFrontUrlError] = useState(false);
+    const [idBackUrlError, setIdBackUrlError] = useState(false);
+    const [emailError, setEmailError] = useState(false);
 
+    //文凯改
     const handleChangeInputVal = (prop) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
+        if (inputVal.email === '') {
+            setEmailError(true);
+        } else {
+            setEmailError(false);
+        }
+    };
+
+    const handleChangeInputVal2 = (prop) => (event) => {
+        setInputVal({ ...inputVal, [prop]: event.target.value });
+        if (inputVal.phoneCountry === '') {
+            setPhoneCountryError(true);
+        } else {
+            setPhoneCountryError(false);
+        }
+    };
+
+    const handleChangeInputVal3 = (prop) => (event) => {
+        setInputVal({ ...inputVal, [prop]: event.target.value });
+        if (inputVal.phoneNumber === '') {
+            setPhoneNumberError(true);
+        } else {
+            setPhoneNumberError(false);
+        }
+    };
+
+    const handleChangeInputVal4 = (prop) => (event) => {
+        setInputVal({ ...inputVal, [prop]: event.target.value });
+        if (inputVal.firstName === '') {
+            setFirstNameError(true);
+        } else {
+            setFirstNameError(false);
+        }
+    };
+
+
+    const handleChangeInputVal8 = (prop) => (event) => {
+        setInputVal({ ...inputVal, [prop]: event.target.value });
+        if (inputVal.country === '') {
+            setCountryError(true);
+        } else {
+            setCountryError(false);
+        }
+    };
+
+
+    const handleChangeInputVal9 = (prop) => (event) => {
+        setInputVal({ ...inputVal, [prop]: event.target.value });
+        if (inputVal.state === '') {
+            setStateError(true);
+        } else {
+            setStateError(false);
+        }
+    };
+
+    const handleChangeInputVal10 = (prop) => (event) => {
+        setInputVal({ ...inputVal, [prop]: event.target.value });
+        if (inputVal.city === '') {
+            setCityError(true);
+        } else {
+            setCityError(false);
+        }
+    };
+
+
+    const handleChangeInputVal11 = (prop) => (event) => {
+        setInputVal({ ...inputVal, [prop]: event.target.value });
+        if (inputVal.address === '') {
+            setAddressError(true);
+        } else {
+            setAddressError(false);
+        }
+    };
+
+    const handleChangeInputVal14 = (prop) => (event) => {
+        setInputVal({ ...inputVal, [prop]: event.target.value });
+        if (inputVal.idNo === '') {
+            setIdNoError(true);
+        } else {
+            setIdNoError(false);
+        }
+    };
+
+    const handleChangeInputVal15 = (prop) => (event) => {
+        setInputVal({ ...inputVal, [prop]: event.target.value });
+        if (inputVal.idType === '') {
+            setIdTypeError(true);
+        } else {
+            setIdTypeError(false);
+        }
+    };
+
+
+    const handleBlur = () => {
+        if (inputVal.email === '') {
+            setEmailError(true);
+        }
+    };
+
+
+    const handleBlur2 = () => {
+        if (inputVal.phoneCountry === '') {
+            setPhoneCountryError(true);
+        }
+    };
+
+
+    const handleBlur3 = () => {
+        if (inputVal.phoneNumber === '') {
+            setPhoneNumberError(true);
+        }
+    };
+
+    const handleBlur4 = () => {
+        if (inputVal.firstName === '') {
+            setFirstNameError(true);
+        }
+    };
+
+    const handleBlur7 = () => {
+        if (inputVal.birthDate === '') {
+            setBirthDateError(true);
+        }
+    };
+
+    const handleBlur8 = () => {
+        if (inputVal.country === '') {
+            setCountryError(true);
+        }
+    };
+
+    const handleBlur9 = () => {
+        if (inputVal.state === '') {
+            setStateError(true);
+        }
+    };
+
+    const handleBlur10 = () => {
+        if (inputVal.city === '') {
+            setCityError(true);
+        }
+    };
+
+    const handleBlur11 = () => {
+        if (inputVal.address === '') {
+            setAddressError(true);
+        }
+    };
+
+    const handleBlur14 = () => {
+        if (inputVal.idNo === '') {
+            setIdNoError(true);
+        }
+    };
+
+    const handleBlur15 = () => {
+        if (inputVal.idType === '') {
+            setIdTypeError(true);
+        }
+    };
+
+    const handleBlur16 = () => {
+        if (inputVal.idFrontUrl === '') {
+            setIdFrontUrlError(true);
+        }
+    };
+
+    const handleBlur17 = () => {
+        if (inputVal.idBackUrl === '') {
+            setIdBackUrlError(true);
+        }
     };
 
     const handleChangeDate = (prop) => (newValue) => {
@@ -210,7 +375,14 @@ function Kyc(props) {
             newValue = getymd(newValue)
         }
         setInputVal({ ...inputVal, [prop]: newValue });
+        if (inputVal.birthDate === '') {
+            setBirthDateError(true);
+        } else {
+            setBirthDateError(false);
+        }
     };
+
+
 
     /**
      * js将字符串转成日期格式，返回年月日
@@ -227,6 +399,24 @@ function Kyc(props) {
             file: file
         }));
         setInputVal({ ...inputVal, [keyName]: uploadRes.payload.url });
+        if (inputVal.idFrontUrl === '') {
+            setIdFrontUrlError(true);
+        } else {
+            setIdFrontUrlError(false);
+        }
+    };
+
+
+    const uploadChange2 = async (file) => {
+        const uploadRes = await dispatch(uploadStorage({
+            file: file
+        }));
+        setInputVal({ ...inputVal, [keyName]: uploadRes.payload.url });
+        if (inputVal.idBackUrl === '') {
+            setIdBackUrlError(true);
+        } else {
+            setIdBackUrlError(false);
+        }
     };
 
     const isNeedAudit = () => {
@@ -312,13 +502,17 @@ function Kyc(props) {
             return;
         }
 
-        dispatch(updateKycInfo(inputVal)).then(
-            (value) => {
-                if (value.payload) {
-                    refreshKycInfo();
+        if (!idTypeError && !idNoError && !addressError && !cityError && !stateError && !countryError && !birthDateError && !firstNameError && !phoneNumberError && !phoneCountryError && !emailError) {
+            dispatch(updateKycInfo(inputVal)).then(
+                (value) => {
+                    if (value.payload) {
+                        refreshKycInfo();
+                    }
                 }
-            }
-        );
+            );
+        } else {
+            dispatch(showMessage({ message: "提交失败,必填项不能为空", code: 2 }));
+        }
     };
 
     const onSubmit = () => {
@@ -352,7 +546,33 @@ function Kyc(props) {
         if (user.profile?.nation) {
             handleChangeApproveDataVal('nationCode', user.profile?.nation)
         }
-    }, [user.profile])
+    }, [user.profile]);
+
+    useEffect(() => {
+        setPageState(1);
+
+        if (kycInfo.init) {
+            if (!kycInfo.havePhone()) {
+                setPageState(2);
+                setTabValue(1);
+                return
+            }
+
+            if (!kycInfo.haveEmail()) {
+                setPageState(1);
+                return
+            }
+
+            let copyData = {};
+
+            Object.keys(inputVal).map((prop, index) => {
+                copyData[prop] = kycInfo[prop];
+            });
+
+            setInputVal(copyData);
+            setPageState(0);
+        }
+    }, [kycInfo]);
 
     return (
         <>
@@ -438,7 +658,7 @@ function Kyc(props) {
                                         Email
                                     </Typography> */}
                                     <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_27')} </InputLabel>
+                                        <InputLabel id="demo-simple-select-label">{t('kyc_27')} *</InputLabel>
                                         <OutlinedInput
                                             id="outlined-adornment-address"
                                             label="Email"
@@ -449,7 +669,12 @@ function Kyc(props) {
                                             inputProps={{
                                                 'aria-label': 'email',
                                             }}
+                                            error={emailError}
+                                            onBlur={handleBlur}
                                         />
+                                        {emailError && (
+                                            <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                        )}
                                     </FormControl>
                                 </div>
 
@@ -465,18 +690,23 @@ function Kyc(props) {
                                         PhoneCountry
                                     </Typography> */}
                                     <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_2')} </InputLabel>
+                                        <InputLabel id="demo-simple-select-label">{t('kyc_2')} *</InputLabel>
                                         <OutlinedInput
                                             id="outlined-adornment-address"
                                             label="PhoneCountry"
                                             value={inputVal.phoneCountry}
-                                            onChange={handleChangeInputVal('phoneCountry')}
+                                            onChange={handleChangeInputVal2('phoneCountry')}
                                             // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
                                             aria-describedby="outlined-weight-helper-text"
                                             inputProps={{
                                                 'aria-label': 'phoneCountry',
                                             }}
+                                            error={phoneCountryError}
+                                            onBlur={handleBlur2}
                                         />
+                                        {phoneCountryError && (
+                                            <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                        )}
                                     </FormControl>
                                 </div>
 
@@ -492,18 +722,23 @@ function Kyc(props) {
                                         PhoneNumber
                                     </Typography> */}
                                     <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_3')} </InputLabel>
+                                        <InputLabel id="demo-simple-select-label">{t('kyc_3')} *</InputLabel>
                                         <OutlinedInput
                                             id="outlined-adornment-address"
                                             label="PhoneNumber"
                                             value={inputVal.phoneNumber}
-                                            onChange={handleChangeInputVal('phoneNumber')}
+                                            onChange={handleChangeInputVal3('phoneNumber')}
                                             // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
                                             aria-describedby="outlined-weight-helper-text"
                                             inputProps={{
                                                 'aria-label': 'phoneNumber',
                                             }}
+                                            error={phoneNumberError}
+                                            onBlur={handleBlur3}
                                         />
+                                        {phoneNumberError && (
+                                            <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                        )}
                                     </FormControl>
                                 </div>
 
@@ -519,18 +754,23 @@ function Kyc(props) {
                                         FirstName
                                     </Typography> */}
                                     <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_4')} </InputLabel>
+                                        <InputLabel id="demo-simple-select-label">{t('kyc_4')} *</InputLabel>
                                         <OutlinedInput
                                             id="outlined-adornment-address"
                                             label="FirstName"
                                             value={inputVal.firstName}
-                                            onChange={handleChangeInputVal('firstName')}
+                                            onChange={handleChangeInputVal4('firstName')}
                                             // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
                                             aria-describedby="outlined-weight-helper-text"
                                             inputProps={{
                                                 'aria-label': 'firstName',
                                             }}
+                                            error={firstNameError}
+                                            onBlur={handleBlur4}
                                         />
+                                        {firstNameError && (
+                                            <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                        )}
                                     </FormControl>
                                 </div>
 
@@ -605,12 +845,16 @@ function Kyc(props) {
                                         className="mb-24"
                                     >
                                         <MobileDatePicker
-                                            label="BirthDate"
+                                            label="BirthDate *"
                                             inputFormat="yyyy-MM-dd"
                                             value={inputVal.birthDate}
                                             onChange={handleChangeDate('birthDate')}
                                             renderInput={(params) => <TextField {...params} />}
+                                            onBlur={handleBlur7}
                                         />
+                                        {birthDateError && (
+                                            <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                        )}
                                     </Stack>
                                 </div>
 
@@ -626,18 +870,23 @@ function Kyc(props) {
                                         Country
                                     </Typography> */}
                                     <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_8')} </InputLabel>
+                                        <InputLabel id="demo-simple-select-label">{t('kyc_8')} *</InputLabel>
                                         <OutlinedInput
                                             id="outlined-adornment-address"
                                             label="Country"
                                             value={inputVal.country}
-                                            onChange={handleChangeInputVal('country')}
+                                            onChange={handleChangeInputVal8('country')}
                                             // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
                                             aria-describedby="outlined-weight-helper-text"
                                             inputProps={{
                                                 'aria-label': 'country',
                                             }}
+                                            error={countryError}
+                                            onBlur={handleBlur8}
                                         />
+                                        {countryError && (
+                                            <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                        )}
                                     </FormControl>
                                 </div>
 
@@ -653,18 +902,23 @@ function Kyc(props) {
                                         State
                                     </Typography> */}
                                     <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_9')} </InputLabel>
+                                        <InputLabel id="demo-simple-select-label">{t('kyc_9')} *</InputLabel>
                                         <OutlinedInput
                                             id="outlined-adornment-address"
                                             label="State"
                                             value={inputVal.state}
-                                            onChange={handleChangeInputVal('state')}
+                                            onChange={handleChangeInputVal9('state')}
                                             // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
                                             aria-describedby="outlined-weight-helper-text"
                                             inputProps={{
                                                 'aria-label': 'state',
                                             }}
+                                            error={stateError}
+                                            onBlur={handleBlur9}
                                         />
+                                        {stateError && (
+                                            <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                        )}
                                     </FormControl>
                                 </div>
 
@@ -680,18 +934,23 @@ function Kyc(props) {
                                         City
                                     </Typography> */}
                                     <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_10')}</InputLabel>
+                                        <InputLabel id="demo-simple-select-label">{t('kyc_10')} *</InputLabel>
                                         <OutlinedInput
                                             id="outlined-adornment-address"
                                             label="City"
                                             value={inputVal.city}
-                                            onChange={handleChangeInputVal('city')}
+                                            onChange={handleChangeInputVal10('city')}
                                             // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
                                             aria-describedby="outlined-weight-helper-text"
+                                            error={cityError}
+                                            onBlur={handleBlur10}
                                             inputProps={{
                                                 'aria-label': 'city',
                                             }}
                                         />
+                                        {cityError && (
+                                            <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                        )}
                                     </FormControl>
                                 </div>
 
@@ -707,18 +966,23 @@ function Kyc(props) {
                                         Address
                                     </Typography> */}
                                     <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_11')}</InputLabel>
+                                        <InputLabel id="demo-simple-select-label">{t('kyc_11')} *</InputLabel>
                                         <OutlinedInput
                                             id="outlined-adornment-address"
                                             label="Address"
                                             value={inputVal.address}
-                                            onChange={handleChangeInputVal('address')}
+                                            onChange={handleChangeInputVal11('address')}
                                             // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
                                             aria-describedby="outlined-weight-helper-text"
+                                            error={addressError}
+                                            onBlur={handleBlur11}
                                             inputProps={{
                                                 'aria-label': 'address',
                                             }}
                                         />
+                                        {addressError && (
+                                            <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                        )}
                                     </FormControl>
                                 </div>
 
@@ -788,18 +1052,22 @@ function Kyc(props) {
                                         IdNo
                                     </Typography> */}
                                     <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_14')}</InputLabel>
+                                        <InputLabel id="demo-simple-select-label">{t('kyc_14')} *</InputLabel>
                                         <OutlinedInput
                                             id="outlined-adornment-address"
                                             label="IdNo"
                                             value={inputVal.idNo}
-                                            onChange={handleChangeInputVal('idNo')}
-                                            // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
+                                            onChange={handleChangeInputVal14('idNo')}
+                                            error={idNoError}
+                                            onBlur={handleBlur14}
                                             aria-describedby="outlined-weight-helper-text"
                                             inputProps={{
                                                 'aria-label': 'idNo',
                                             }}
                                         />
+                                        {idNoError && (
+                                            <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                        )}
                                     </FormControl>
                                 </div>
 
@@ -816,19 +1084,24 @@ function Kyc(props) {
                                     </Typography> */}
 
                                     <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('Kyc_15')}</InputLabel>
+                                        <InputLabel id="demo-simple-select-label">{t('kyc_15')} *</InputLabel>
                                         <Select
                                             labelId="demo-simple-select-label"
                                             id="demo-simple-select"
                                             value={inputVal.idType}
                                             label="IdType"
-                                            onChange={handleChangeInputVal('idType')}
+                                            onChange={handleChangeInputVal15('idType')}
+                                            error={idTypeError}
+                                            onBlur={handleBlur15}
                                         >
                                             <MenuItem value={'id_card'}>{t('Kyc_36')}</MenuItem>{/*身份证*/}
                                             <MenuItem value={'passport'}>{t('Kyc_37')}</MenuItem>{/*护照*/}
                                             <MenuItem value={'dl'}>{t('Kyc_38')}</MenuItem>{/*驾照*/}
                                             <MenuItem value={'residence_permit'}>{t('Kyc_39')}</MenuItem>{/*居住证*/}
                                         </Select>
+                                        {idTypeError && (
+                                            <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                        )}
                                     </FormControl>
                                 </div>
 
@@ -859,10 +1132,14 @@ function Kyc(props) {
                                                     id="button-file"
                                                     type="file"
                                                     onChange={(e) => { uploadChange(e.target.files[0]) }}
+                                                    onBlur={handleBlur16}
                                                 />
                                             </Box>
                                         </div>
                                     </div>
+                                    {idFrontUrlError && (
+                                        <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                    )}
                                 </div>
 
                                 <div className="mb-24">
@@ -891,11 +1168,15 @@ function Kyc(props) {
                                                     className="hidden"
                                                     id="button-file"
                                                     type="file"
-                                                    onChange={(e) => { uploadChange(e.target.files[0]) }}
+                                                    onChange={(e) => { uploadChange2(e.target.files[0]) }}
+                                                    onBlur={handleBlur17}
                                                 />
                                             </Box>
                                         </div>
                                     </div>
+                                    {idBackUrlError && (
+                                        <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                    )}
                                 </div>
 
                                 <div className="mb-24">
@@ -982,7 +1263,6 @@ function Kyc(props) {
                                             label="UsSsn"
                                             value={inputVal.usSsn}
                                             onChange={handleChangeInputVal('usSsn')}
-                                            // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
                                             aria-describedby="outlined-weight-helper-text"
                                             inputProps={{
                                                 'aria-label': 'usSsn',
@@ -1048,22 +1328,23 @@ function Kyc(props) {
                                         className="text-lg mb-24 btnColorTitleBig button-reset2"
                                         color="secondary"
                                         variant="contained"
-                                        style={{ marginBottom: '2.4rem', fontSize: "1.6rem", width: "47%" }}
+                                        style={{ marginBottom: '2.4rem', fontSize: "1.6rem", width: "100%" }}
                                         onClick={() => { onSave() }}
                                     >
                                         {t('kyc_22')}
                                     </Button>
 
-                                    <Button
+                                    {/* <Button
                                         disabled={!isCanSumbit()}
                                         className="text-lg mb-24 btnColorTitleBig button-reset2"
                                         color="secondary"
                                         variant="contained"
                                         style={{ marginBottom: '2.4rem', fontSize: "1.6rem", width: "47%" }}
-                                        // onClick={() => { onSubmit() }}
+                                        onClick={() => { onSubmit() }}
                                     >
                                         {t('kyc_23')}
-                                    </Button>
+                                    </Button> */}
+
                                 </div>
                             </>}
 

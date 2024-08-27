@@ -133,9 +133,9 @@ function Fiat(props) {
                 accountName: inputVal.accountName,
                 bankcode: getBankID(currencyCode),
                 bankName: bankName,
-                mobile: '',
-                email: '',
-                description: '',
+                mobile: inputVal.mobile,
+                email: inputVal.email,
+                description: inputVal.description,
             }),
         };
         setOpenLoad(true)

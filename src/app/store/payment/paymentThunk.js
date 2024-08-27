@@ -10,9 +10,12 @@ import format from 'date-fns/format';
 export const getKycInfo = createAsyncThunk(
     '/payment/kycInfo',
     async (settings, { dispatch, getState }) => {
+        if (settings === undefined) {
+            settings = settings || {};
+        }
+        
         let unloginerror = settings.unloginerror ?? true;
         const kycData = await React.$api("payment.kycInfo");
-
         if (kycData.errno === 0) {
             // 直接返回处理
             if (kycData.data && kycData.data.birthDate != undefined) {
