@@ -1,0 +1,10 @@
+export default {
+
+    USER_TYPE_WALLET : 0,
+    USER_TYPE_MOBILE : 1,
+    USER_TYPE_EMAIL : 2,
+    USER_TYPE_FACEBOOK : 3,
+    USER_TYPE_TELEGRAM : 4,
+    USER_TYPE_GOOGLE : 5,
+    USER_TYPE_TELEGRAM_WEB_APP : 6,
+}

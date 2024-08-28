@@ -8,13 +8,9 @@ import rtlPlugin from 'stylis-plugin-rtl';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import { selectCurrentLanguageDirection } from 'app/store/i18nSlice';
-import { selectUser } from 'app/store/userSlice';
 import themeLayouts from 'app/theme-layouts/themeLayouts';
 import { selectMainTheme } from 'app/store/fuse/settingsSlice';
-import FuseAuthorization from '@fuse/core/FuseAuthorization';
-import settingsConfig from 'app/configs/settingsConfig';
 import withAppProviders from './withAppProviders';
-import { AuthProvider } from './auth/AuthContext';
 import { getNetworks, getConfig } from "app/store/config/configThunk";
 import {useEffect, useRef, useState} from "react";
 import {selectUserData} from "./store/user";
@@ -22,6 +18,7 @@ import {getUrlParam} from "./util/tools/function";
 import { getKycInfo } from "app/store/payment/paymentThunk";
 import { changeLanguage } from "./store/i18nSlice";
 import {checkLoginState} from "app/store/user/userThunk";
+import userType from './define/userType';
 
 // import axios from 'axios';
 /**

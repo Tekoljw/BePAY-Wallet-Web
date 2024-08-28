@@ -32,7 +32,6 @@ import { selectUserData } from "app/store/user";
 import { SvgIcon } from '@mui/material';
 import history from '@history';
 import { loginTelegram, requestUserLoginData } from "../../util/tools/loginFunction";
-import { checkLoginState } from "app/store/user/userThunk";
 // import FuseLoading from '@fuse/core/FuseLoading';
 import clsx from 'clsx';
 
@@ -54,7 +53,6 @@ function HomePage(props) {
     const networks = config.networks || [];
     const { pathname } = useLocation();
     const [menuShow, setMenuShow] = useState(false);
-    const loginType = window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType;
     let currentPhoneTab = window.localStorage.getItem('phoneTab') ?? 'wallet';
 
     // 滑动滑块
@@ -120,6 +118,11 @@ function HomePage(props) {
     }, [config.networks]);
 
     useEffect(() => {
+        const loginType = window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType;
+        if (loginType === "telegram_web_app") {
+            setMenuShow(true);
+            setLeftSidebarOpen(false);
+        }
         const accessType = getAccessType();
         console.log(accessType, '请求的 accessType');
         if(accessType !== "1"){
@@ -137,14 +140,6 @@ function HomePage(props) {
             changePhoneTab(currentPhoneTab);
         }
     }, [window.localStorage.getItem('phoneTab')])
-
-
-    useEffect(() => {
-        if (loginType === "telegram_web_app") {
-            setMenuShow(true);
-            setLeftSidebarOpen(false);
-        }
-    }, [loginType]);
 
     return (
         <>
