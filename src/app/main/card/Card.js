@@ -26,6 +26,7 @@ import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import {
+    getKycInfo,
     applyCreditCard,
     creditCardCryptoDeposit,
     creditCardCryptoWithdraw,
@@ -94,6 +95,7 @@ function Card(props) {
     const [openChongZhi, setOpenChongZhi] = useState(false);
     const [huaZhuanValue, setHuaZhuanValue] = useState(0);
     const [openChangeBi, setOpenChangeBi] = useState(false);
+    const [address, setAddress] = useState("");
 
     const changePhoneTab = (tab) => {
         window.localStorage.setItem('phoneTab', tab);
@@ -385,7 +387,16 @@ function Card(props) {
 
 
 
-
+    const refreshKycInfo = () => {
+        dispatch(getKycInfo()).then((value) => {
+            if (!value.payload) return;
+            console.log(value.payload.data, "kkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+            let tempAddress = value.payload.data.address;
+            if (tempAddress) {
+                setAddress(tempAddress)
+            }
+        });
+    };
 
 
 
@@ -2159,6 +2170,7 @@ function Card(props) {
                 aria-labelledby="customized-dialog-title"
                 className="dialog-container"
             >
+                {refreshKycInfo()}
                 <div id="openChangeBi" className="PINSty">
                     <div className='pinWindow2'>
                         <div className='flex'>
@@ -2171,8 +2183,8 @@ function Card(props) {
                         <div className='flex mt-20 justify-between' style={{ borderBottom: "1px solid #2C3950" }}>
                             <div className='text-16'>{t('card_33')}</div>
                             <div className='flex pb-20'>
-                                <div className='text-16'>USDT</div>
-                                <div className='text-16 ml-10'>1.00</div>
+                                <div className='text-16 ml-10'>{cardConfigList[cardConfigID]?.applyCreditFee}</div>
+                                <div className='text-16'>&nbsp;{cardConfigList[cardConfigID]?.cardSymbol}</div>
                             </div>
                         </div>
 
@@ -2198,10 +2210,11 @@ function Card(props) {
                         <div className='flex justify-between mt-12'>
                             <div className='' style={{ color: "#94A3B8" }}>{t('card_111')}</div>
                             <div className='' style={{ color: "#2DD4BF", textDecoration: "underline" }} onClick={() => {
+                                setOpenChangeBi(false);
+                                openKycFunc();
                             }} >{t('card_112')}</div>
                         </div>
-                        <div className='mt-20' style={{ marginBottom: "6rem" }}>中华人民共和国香港特别行政区中环皇后大道中银大厦123号901室</div>
-
+                        <div className='mt-20' style={{ marginBottom: "6rem" }}>{address}</div>
                         <LoadingButton
                             disabled={false}
                             className="boxCardBtn3 mb-12"

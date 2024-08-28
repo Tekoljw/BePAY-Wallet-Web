@@ -397,7 +397,7 @@ const locale = {
     card_29: "Total assets in the account",
     card_30: "Done",
     card_31: "Freeze",
-    card_32: "Change card",
+    card_32: "Change",
     card_33: "Card issuance",
     card_34: "Activate card",
     card_35: "Apply now",
