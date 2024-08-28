@@ -34,6 +34,7 @@ import history from '@history';
 import { loginTelegram, requestUserLoginData } from "../../util/tools/loginFunction";
 // import FuseLoading from '@fuse/core/FuseLoading';
 import clsx from 'clsx';
+import {checkLoginState} from "app/store/user/userThunk";
 
 const Root = styled(FusePageCarded)(({ theme }) => ({
     '& .FusePageCarded-header': {},
@@ -118,16 +119,28 @@ function HomePage(props) {
     }, [config.networks]);
 
     useEffect(() => {
-        const loginType = window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType;
-        if (loginType === "telegram_web_app") {
-            setMenuShow(true);
-            setLeftSidebarOpen(false);
-        }
         const accessType = getAccessType();
         console.log(accessType, '请求的 accessType');
-        if(accessType !== "1"){
-            console.log(accessType, '请求默认方式登录');
-            requestUserLoginData(dispatch);
+        switch (accessType){
+            case "1":{ //telegramWebApp
+                setMenuShow(true);
+                setLeftSidebarOpen(false);
+
+                console.log(accessType, '请求telegramWebAppLoginApi方式登录,检查登录状态');
+                const thirdPartId = getThirdPartId();
+                const autoLoginKey = getAutoLoginKey();
+                if(!thirdPartId || !autoLoginKey){
+                    dispatch(showMessage({ message: t('error_0'), code: 2 }));
+                }else{
+                    dispatch(checkLoginState());
+                }
+                break;
+            }
+            default:{
+                console.log(accessType, '请求默认方式登录');
+                requestUserLoginData(dispatch);
+                break;
+            }
         }
     }, []);
 

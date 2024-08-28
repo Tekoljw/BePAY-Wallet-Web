@@ -14,11 +14,12 @@ import withAppProviders from './withAppProviders';
 import { getNetworks, getConfig } from "app/store/config/configThunk";
 import {useEffect, useRef, useState} from "react";
 import {selectUserData} from "./store/user";
-import {getUrlParam} from "./util/tools/function";
+import {getAutoLoginKey, getThirdPartId, getUrlParam} from "./util/tools/function";
 import { getKycInfo } from "app/store/payment/paymentThunk";
 import { changeLanguage } from "./store/i18nSlice";
 import {checkLoginState} from "app/store/user/userThunk";
 import userType from './define/userType';
+import {requestUserLoginData} from "./util/tools/loginFunction";
 
 // import axios from 'axios';
 /**
@@ -70,32 +71,35 @@ const App = () => {
         if (openIndex) {
             window.sessionStorage.setItem('openIndex', openIndex)
         }
-        if (thirdPartId) {
-            window.localStorage.setItem('thirdPartId', thirdPartId)
+        if (lang) {
+            window.localStorage.setItem('lang', lang)
         }
-        if (autoLoginKey) {
-            window.localStorage.setItem('autoLoginKey', autoLoginKey)
-        }
-        //直接设置已经获取到的访问token
-        if(openAppId && openIndex && accessToken){
-            localStorage.setItem(`Authorization-${openAppId}-${openIndex}`, accessToken);
+        if (storageKey) {
+            window.localStorage.setItem('storageKey', storageKey)
         }
         if (accessType) {
             window.localStorage.setItem('accessType', accessType);
             switch (accessType){
                 case 1:{ //telegramWebApp
                     window.localStorage.setItem('loginType', "telegram_web_app");
-                    console.log(accessType, '请求telegramWebAppLoginApi方式登录,检查登录状态');
-                    dispatch(checkLoginState());
+                    window.localStorage.setItem('thirdPartId', thirdPartId)
+                    window.localStorage.setItem('autoLoginKey', autoLoginKey)
+                    //直接设置已经获取到的访问token
+                    if(openAppId && openIndex){
+                        localStorage.setItem(`Authorization-${openAppId}-${openIndex}`, accessToken);
+                    }
+                    break;
+                }
+                default:{
+                    if (thirdPartId) {
+                        window.localStorage.setItem('thirdPartId', thirdPartId)
+                    }
+                    if (autoLoginKey) {
+                        window.localStorage.setItem('autoLoginKey', autoLoginKey)
+                    }
                     break;
                 }
             }
-        }
-        if (lang) {
-            window.localStorage.setItem('lang', lang)
-        }
-        if (storageKey) {
-            window.localStorage.setItem('storageKey', storageKey)
         }
     }, []);
 
