@@ -148,6 +148,7 @@ const locale = {
     home_buy_7: '收入',
     home_buy_8: '立即购买',
     home_buy_9: '立即出售',
+    home_buy_10: '没有可供选择的供应商',
 
     home_withdraw_1: '选择网络',
     home_withdraw_2: '地址',

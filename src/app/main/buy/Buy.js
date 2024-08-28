@@ -147,11 +147,13 @@ function Buy(props) {
             await Promise.all([getStarPayTarget(), getStarPayOption()]).then((resArr) => {
                 let cryptoTarget = resArr[0];
                 paymentOption = resArr[1];
-                cryptoTarget.payload.data.forEach((symbol, index) => {
-                    if (allSymbols.indexOf(symbol.cryptoCurrency) === -1) {
-                        allSymbols.push(symbol.cryptoCurrency);
-                    }
-                })
+                if(cryptoTarget && cryptoTarget.payload &&  cryptoTarget.payload.data && cryptoTarget.payload.data.length >0 ){
+                    cryptoTarget.payload.data.forEach((symbol, index) => {
+                        if (allSymbols.indexOf(symbol.cryptoCurrency) === -1) {
+                            allSymbols.push(symbol.cryptoCurrency);
+                        }
+                    })
+                }
             });
         }
 
@@ -573,6 +575,10 @@ function Buy(props) {
                         </>}
                     </>}
 
+                    { tabValue === 1 && payType === 'StarPay' && <>
+                            <Typography className="text-14 font-medium my-16" >{t('home_buy_10')}</Typography>
+                        </>}
+
                     <Box
                         className=""
                         sx={{
@@ -591,6 +597,7 @@ function Buy(props) {
                         color="secondary"
                         variant="contained"
                         sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
+                        disabled={ tabValue===1 && payType === 'StarPay' }
                         onClick={() => {
                             goBuy();
                         }}

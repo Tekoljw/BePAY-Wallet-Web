@@ -148,6 +148,7 @@ const locale = {
     home_buy_7: 'Income',
     home_buy_8: 'Buy Now',
     home_buy_9: 'Sell Now',
+    home_buy_10: 'No provider could be selected',
 
     home_withdraw_1: 'Choose Network',
     home_withdraw_2: 'Address',
