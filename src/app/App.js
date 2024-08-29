@@ -14,12 +14,10 @@ import withAppProviders from './withAppProviders';
 import { getNetworks, getConfig } from "app/store/config/configThunk";
 import {useEffect, useRef, useState} from "react";
 import {selectUserData} from "./store/user";
-import {getAutoLoginKey, getThirdPartId, getUrlParam} from "./util/tools/function";
+import {getCurrentLanguage, getUrlParam} from "./util/tools/function";
 import { getKycInfo } from "app/store/payment/paymentThunk";
 import { changeLanguage } from "./store/i18nSlice";
-import {checkLoginState} from "app/store/user/userThunk";
 import userType from './define/userType';
-import {requestUserLoginData} from "./util/tools/loginFunction";
 
 // import axios from 'axios';
 /**
@@ -55,12 +53,10 @@ const App = () => {
     const mainTheme = useSelector(selectMainTheme);
     const token = useSelector(selectUserData).token;
     const userRole = (token.length > 0 ? token : localStorage.getItem(`Authorization-${openAppId}-${openIndex}`)) ? 'home': '';
-    const lang = (getUrlParam('lang') ?? 'en') === 'undefined' ? 'en' : getUrlParam('lang');
+    const lang = getCurrentLanguage() === getUrlParam('lang') ? getCurrentLanguage() : getUrlParam('lang');
 
 
     useEffect(() => {
-
-        dispatch(changeLanguage(lang));
 
         dispatch(getNetworks());
         dispatch(getConfig());
@@ -71,9 +67,7 @@ const App = () => {
         if (openIndex) {
             window.sessionStorage.setItem('openIndex', openIndex)
         }
-        if (lang) {
-            window.localStorage.setItem('lang', lang)
-        }
+
         if (storageKey) {
             window.localStorage.setItem('storageKey', storageKey)
         }
@@ -102,6 +96,16 @@ const App = () => {
             }
         }
     }, []);
+
+    useEffect(() => {
+        if (lang) {
+            window.localStorage.setItem('lang', lang)
+        }
+        dispatch(changeLanguage(lang)).then(r => {
+            console.log(r.payload)
+            }
+        );
+    }, [lang]);
 
     useEffect(() => {
         dispatch(getKycInfo({
