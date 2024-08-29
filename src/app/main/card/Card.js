@@ -2260,7 +2260,7 @@ function Card(props) {
                             disabled={false}
                             className="boxCardBtn3 mb-12"
                             color="secondary"
-                            loading={false}
+                            loading={isLoadingBtn}
                             variant="contained"
                             onClick={() => {
                                 applyCard()

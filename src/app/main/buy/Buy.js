@@ -179,6 +179,7 @@ function Buy(props) {
                     balance: arrayLookup(fiatsData, 'currencyCode', payment.fiatCurrency, 'balance') || 0,
                     minAmount: payment.paymentOptions[0]?.minAmount ?? 0,
                     maxAmount: payment.paymentOptions[0]?.maxAmount ?? 0,
+                    avatar: payment.avatar
                 });
 
                 tmpFiatObj[payment.fiatCurrency] = {
@@ -186,6 +187,7 @@ function Buy(props) {
                     balance: arrayLookup(fiatsData, 'currencyCode', payment.fiatCurrency, 'balance') || 0,
                     minAmount: payment.paymentOptions[0]?.minAmount ?? 0,
                     maxAmount: payment.paymentOptions[0]?.maxAmount ?? 0,
+                    avatar: payment.avatar
                 }
             }
             if (tmpFiats.length > 0) {
@@ -396,7 +398,7 @@ function Buy(props) {
                                                     <img style={{
                                                         width: '3rem',
                                                         borderRadius: '8px'
-                                                    }} src={arrayLookup(currencys, 'currencyCode', row.currencyCode, 'avatar')} alt="" />
+                                                    }} src={ row.avatar} alt="" />
                                                     <div className="px-12 font-medium">
                                                         <Typography className="text-20 font-medium">{row.currencyCode}</Typography>
                                                     </div>
