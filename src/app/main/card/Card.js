@@ -1490,7 +1490,7 @@ function Card(props) {
                         loading={openCardBtnShow}
                         variant="contained"
                         onClick={() => {
-                            cardUpdate(2);
+                            cardUpdate(1);
                         }}
                     >
                         {t('card_31')}
