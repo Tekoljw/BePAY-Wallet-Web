@@ -616,6 +616,10 @@ export default {
             url: "/credit/applyCreditCard",
             method: "post",
         },
+        creditCardUpdate: {
+            url: "/credit/creditCardUpdate",
+            method: "post",
+        },
         confirmCardholderIdentity: {
             url: "/credit/confirmCardholderIdentity",
             method: "post",

@@ -28,6 +28,7 @@ import Typography from '@mui/material/Typography';
 import {
     getKycInfo,
     applyCreditCard,
+    creditCardUpdate,
     creditCardCryptoDeposit,
     creditCardCryptoWithdraw,
     getCreditConfig,
@@ -387,10 +388,10 @@ function Card(props) {
 
 
 
+
     const refreshKycInfo = () => {
         dispatch(getKycInfo()).then((value) => {
             if (!value.payload) return;
-            console.log(value.payload.data, "kkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
             let tempAddress = value.payload.data.address;
             if (tempAddress) {
                 setAddress(tempAddress)
@@ -417,6 +418,9 @@ function Card(props) {
     const [isLoadingBtn, setIsLoadingBtn] = useState(false);
     const [symbolList, setSymbolList] = useState([]);
     const [applyFeeSymbol, setApplyFeeSymbol] = useState('USDT');
+
+    const [currUserCardInfo, setCurrUserCardInfo] = useState({});
+
     //获取Config
     const getCardConfig = () => {
         dispatch(getCreditConfig()).then((res) => {
@@ -461,6 +465,22 @@ function Card(props) {
         })
     }
 
+    //更改卡的状态参数1是冻卡
+    const cardUpdate = (cardChangetype) => {
+        setOpenCardBtnShow(true);
+        dispatch(creditCardUpdate({
+            creditType: currUserCardInfo.creditType,
+            userCreditId: currUserCardInfo.id,
+            updateType: cardChangetype,
+        })).then((res) => {
+            console.log("将卡变成冻结状态");
+            setOpenAnimateModal(false);
+            setOpenCardBtnShow(false);
+        })
+    }
+
+
+
     // 获取卡列表
     const getCardList = () => {
         dispatch(getUserCreditCard()).then((res) => {
@@ -474,11 +494,12 @@ function Card(props) {
                     } else if (item.creditType === 3) {
                         tmpCardList[3].push(item)
                     }
-
                     tmpCardListObj[item.id] = item
                 })
                 setCardList(tmpCardList)
                 setCardListObj(tmpCardListObj)
+                console.log(tmpCardList, "tmpCardList")
+                console.log(tmpCardListObj, "tmpCardListObj")
             }
         })
     }
@@ -733,11 +754,13 @@ function Card(props) {
                                                                             <div className={clsx("cardNumber", kaBeiButton && "xiaoShi")}> <span id="cardNumberOne" >{cardItem.userCreditNo}</span> </div>
                                                                             <div className='cardBeiMian'>
                                                                                 <div className={clsx("", kaBeiButton && "xiaoShi")}>
-                                                                                    <div className='kaBeiZi flex'>
-                                                                                        <img id="cardIconWOne"
-                                                                                            onClick={(e) => handleImgClick(e, FanKa)}
-                                                                                            className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id="zhangDanZiOne" className='zhangDanZi'>{t('card_15')}</span>
-                                                                                    </div>
+                                                                                    {cardItem?.state == 10 && (
+                                                                                        <div className='kaBeiZi flex'>
+                                                                                            <img id="cardIconWOne"
+                                                                                                onClick={(e) => handleImgClick(e, FanKa)}
+                                                                                                className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id="zhangDanZiOne" className='zhangDanZi'>{t('card_15')}</span>
+                                                                                        </div>
+                                                                                    )}
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -758,6 +781,25 @@ function Card(props) {
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                    {cardItem?.state == 9 && (
+                                                                        <div className='cardErrorBg'>
+                                                                            <div className='flex justify-center mt-16' style={{ width: "100%" }}>
+                                                                                <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
+                                                                                <div className='TanHaoCardZi'>
+                                                                                    卡片已冻结
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className='cardErrorZi'>解冻请联系我们7*24小时在线客服</div>
+
+                                                                            <div className='cardErrorBtn txtColorTitleSmall' onClick={() => {
+                                                                                changePhoneTab('security');
+                                                                                history.push('/wallet/home/security', { tabValue: 4 })
+                                                                            }} >
+                                                                                联系客服
+                                                                            </div>
+                                                                        </div>
+                                                                    )
+                                                                    }
                                                                 </div>
                                                             </div>
 
@@ -768,6 +810,9 @@ function Card(props) {
                                                                         aria-controls="panel1-content"
                                                                         id="panel1-header"
                                                                         className='gongNengTan2'
+                                                                        onClick={() => {
+                                                                            setCurrUserCardInfo(cardItem);
+                                                                        }}
                                                                     >
                                                                         <div className='flex justify-between w-full'>
                                                                             <div className='flex'>
@@ -1445,11 +1490,7 @@ function Card(props) {
                         loading={openCardBtnShow}
                         variant="contained"
                         onClick={() => {
-                            setOpenCardBtnShow(true);
-                            setTimeout(() => {
-                                setOpenAnimateModal(false);
-                                setOpenCardBtnShow(false);
-                            }, 1500);
+                            cardUpdate(2);
                         }}
                     >
                         {t('card_31')}
