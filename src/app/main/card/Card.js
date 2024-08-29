@@ -456,12 +456,14 @@ function Card(props) {
             applyDesc: 'card applyDesc'
         })).then((res) => {
             let result = res.payload
-            setIsLoadingBtn(false)
-            setOpenXiangQing(false);
-            setTabValue(0);
-            closeChangeBi();
-            getCardList();
-            myFunction();
+            setTimeout(()=>{
+                setIsLoadingBtn(false)
+                setOpenXiangQing(false);
+                setTabValue(0);
+                closeChangeBi();
+                getCardList();
+                myFunction();
+            }, 500)
         })
     }
 
