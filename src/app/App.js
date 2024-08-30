@@ -102,7 +102,7 @@ const App = () => {
             window.localStorage.setItem('lang', lang)
         }
         dispatch(changeLanguage(lang)).then(r => {
-            console.log(r.payload)
+            console.log("change language success")
             }
         );
     }, [lang]);
