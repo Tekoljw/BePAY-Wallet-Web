@@ -80,7 +80,9 @@ const App = () => {
                     window.localStorage.setItem('autoLoginKey', autoLoginKey)
                     //直接设置已经获取到的访问token
                     if(openAppId && openIndex){
-                        localStorage.setItem(`Authorization-${openAppId}-${openIndex}`, accessToken);
+                        // 去掉末尾的符号
+                        const realAccessToken = accessToken.substring(0, accessType.lastIndexOf("#"));
+                        localStorage.setItem(`Authorization-${openAppId}-${openIndex}`, realAccessToken);
                     }
                     break;
                 }
