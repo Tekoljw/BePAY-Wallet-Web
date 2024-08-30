@@ -32,9 +32,9 @@ import { selectUserData } from "app/store/user";
 import { SvgIcon } from '@mui/material';
 import history from '@history';
 import { loginTelegram, requestUserLoginData } from "../../util/tools/loginFunction";
-import { checkLoginState } from "app/store/user/userThunk";
 // import FuseLoading from '@fuse/core/FuseLoading';
 import clsx from 'clsx';
+import {checkLoginState} from "app/store/user/userThunk";
 
 const Root = styled(FusePageCarded)(({ theme }) => ({
     '& .FusePageCarded-header': {},
@@ -54,7 +54,6 @@ function HomePage(props) {
     const networks = config.networks || [];
     const { pathname } = useLocation();
     const [menuShow, setMenuShow] = useState(false);
-    const loginType = window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType;
     let currentPhoneTab = window.localStorage.getItem('phoneTab') ?? 'wallet';
 
     // 滑动滑块
@@ -122,15 +121,22 @@ function HomePage(props) {
     useEffect(() => {
         const accessType = getAccessType();
         console.log(accessType, '请求的 accessType');
-        //console.log(getThirdPartId(), '请求的 ThirdPartId');
-        //console.log(getAutoLoginKey(), '请求的 AutoLoginKey');
-        switch (accessType) {
-            case "1": { //telegramWebApp
+        switch (accessType){
+            case "1":{ //telegramWebApp
+                setMenuShow(true);
+                setLeftSidebarOpen(false);
+
                 console.log(accessType, '请求telegramWebAppLoginApi方式登录,检查登录状态');
-                dispatch(checkLoginState());
+                const thirdPartId = getThirdPartId();
+                const autoLoginKey = getAutoLoginKey();
+                if(!thirdPartId || !autoLoginKey){
+                    dispatch(showMessage({ message: t('error_0'), code: 2 }));
+                }else{
+                    dispatch(checkLoginState());
+                }
                 break;
             }
-            default: {
+            default:{
                 console.log(accessType, '请求默认方式登录');
                 requestUserLoginData(dispatch);
                 break;
@@ -147,14 +153,6 @@ function HomePage(props) {
             changePhoneTab(currentPhoneTab);
         }
     }, [window.localStorage.getItem('phoneTab')])
-
-
-    useEffect(() => {
-        if (loginType === "telegram_web_app") {
-            setMenuShow(true);
-            setLeftSidebarOpen(false);
-        }
-    }, [loginType]);
 
     return (
         <>

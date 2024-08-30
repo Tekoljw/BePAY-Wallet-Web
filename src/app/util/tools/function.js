@@ -46,6 +46,11 @@ export const setPhoneTab = (phoneTab) =>{
     }
 }
 
+// 获取当前语言
+export const getCurrentLanguage = () => {
+    return  window.localStorage.getItem('lang') || 'en';
+};
+
 export const arrayLookup = (data,key,value,targetKey) => {
     var targetValue = "";
     if (data) {

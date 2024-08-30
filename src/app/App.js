@@ -8,19 +8,16 @@ import rtlPlugin from 'stylis-plugin-rtl';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import { selectCurrentLanguageDirection } from 'app/store/i18nSlice';
-import { selectUser } from 'app/store/userSlice';
 import themeLayouts from 'app/theme-layouts/themeLayouts';
 import { selectMainTheme } from 'app/store/fuse/settingsSlice';
-import FuseAuthorization from '@fuse/core/FuseAuthorization';
-import settingsConfig from 'app/configs/settingsConfig';
 import withAppProviders from './withAppProviders';
-import { AuthProvider } from './auth/AuthContext';
 import { getNetworks, getConfig } from "app/store/config/configThunk";
 import {useEffect, useRef, useState} from "react";
 import {selectUserData} from "./store/user";
-import {getUrlParam} from "./util/tools/function";
+import {getCurrentLanguage, getUrlParam} from "./util/tools/function";
 import { getKycInfo } from "app/store/payment/paymentThunk";
 import { changeLanguage } from "./store/i18nSlice";
+import userType from './define/userType';
 
 // import axios from 'axios';
 /**
@@ -50,17 +47,16 @@ const App = () => {
     const accessType = getUrlParam('accessType') || 0;
     const thirdPartId = getUrlParam('thirdPartId') || 0;
     const autoLoginKey = getUrlParam('autoLoginKey') || 0;
+    const accessToken = getUrlParam('accessToken') || '';
     const storageKey = getUrlParam('storageKey') || '';
     const langDirection = useSelector(selectCurrentLanguageDirection);
     const mainTheme = useSelector(selectMainTheme);
     const token = useSelector(selectUserData).token;
     const userRole = (token.length > 0 ? token : localStorage.getItem(`Authorization-${openAppId}-${openIndex}`)) ? 'home': '';
-    const lang = (getUrlParam('lang') ?? 'en') === 'undefined' ? 'en' : getUrlParam('lang');
+    const lang = getCurrentLanguage() === getUrlParam('lang') ? getCurrentLanguage() : getUrlParam('lang');
 
 
     useEffect(() => {
-
-        dispatch(changeLanguage(lang));
 
         dispatch(getNetworks());
         dispatch(getConfig());
@@ -71,28 +67,45 @@ const App = () => {
         if (openIndex) {
             window.sessionStorage.setItem('openIndex', openIndex)
         }
-        if (thirdPartId) {
-            window.localStorage.setItem('thirdPartId', thirdPartId)
+
+        if (storageKey) {
+            window.localStorage.setItem('storageKey', storageKey)
         }
         if (accessType) {
             window.localStorage.setItem('accessType', accessType);
             switch (accessType){
                 case 1:{ //telegramWebApp
                     window.localStorage.setItem('loginType', "telegram_web_app");
+                    window.localStorage.setItem('thirdPartId', thirdPartId)
+                    window.localStorage.setItem('autoLoginKey', autoLoginKey)
+                    //直接设置已经获取到的访问token
+                    if(openAppId && openIndex){
+                        localStorage.setItem(`Authorization-${openAppId}-${openIndex}`, accessToken);
+                    }
+                    break;
+                }
+                default:{
+                    if (thirdPartId) {
+                        window.localStorage.setItem('thirdPartId', thirdPartId)
+                    }
+                    if (autoLoginKey) {
+                        window.localStorage.setItem('autoLoginKey', autoLoginKey)
+                    }
                     break;
                 }
             }
         }
-        if (autoLoginKey) {
-            window.localStorage.setItem('autoLoginKey', autoLoginKey)
-        }
+    }, []);
+
+    useEffect(() => {
         if (lang) {
             window.localStorage.setItem('lang', lang)
         }
-        if (storageKey) {
-            window.localStorage.setItem('storageKey', storageKey)
-        }
-    }, []);
+        dispatch(changeLanguage(lang)).then(r => {
+            console.log(r.payload)
+            }
+        );
+    }, [lang]);
 
     useEffect(() => {
         dispatch(getKycInfo({
