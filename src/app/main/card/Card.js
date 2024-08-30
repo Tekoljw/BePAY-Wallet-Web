@@ -395,6 +395,8 @@ function Card(props) {
             let tempAddress = value.payload.data.address;
             if (tempAddress) {
                 setAddress(tempAddress)
+            } else {
+                return;
             }
         });
     };
@@ -456,7 +458,7 @@ function Card(props) {
             applyDesc: 'card applyDesc'
         })).then((res) => {
             let result = res.payload
-            setTimeout(()=>{
+            setTimeout(() => {
                 setIsLoadingBtn(false)
                 setOpenXiangQing(false);
                 setTabValue(0);
@@ -475,9 +477,12 @@ function Card(props) {
             userCreditId: currUserCardInfo.id,
             updateType: cardChangetype,
         })).then((res) => {
-            console.log("将卡变成冻结状态");
-            setOpenAnimateModal(false);
-            setOpenCardBtnShow(false);
+            setTimeout(() => {
+                setOpenAnimateModal(false);
+                setOpenCardBtnShow(false);
+                getCardList();
+                myFunction();
+            }, 1000)
         })
     }
 
@@ -1428,6 +1433,7 @@ function Card(props) {
                                 // setOpenChongZhi(true)
                                 // applyCard()
                                 openChangeBiFunc()
+                                refreshKycInfo()
                             }}
                         >
                             {t('card_36')}
@@ -2213,7 +2219,6 @@ function Card(props) {
                 aria-labelledby="customized-dialog-title"
                 className="dialog-container"
             >
-                {refreshKycInfo()}
                 <div id="openChangeBi" className="PINSty">
                     <div className='pinWindow2'>
                         <div className='flex'>
