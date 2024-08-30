@@ -1,7 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import history from '@history';
 import { useHistory } from 'react-router-dom';
-import {getOpenAppId, getOpenAppIndex} from "../../util/tools/function";
+import {getAccessType, getAutoLoginKey, getOpenAppId, getOpenAppIndex, getThirdPartId} from "../../util/tools/function";
+import {showMessage} from "app/store/fuse/messageSlice";
+import {checkLoginState} from "app/store/user/userThunk";
+import {requestUserLoginData} from "../../util/tools/loginFunction";
 // state
 const initialState = {
     token: '',
@@ -27,18 +30,28 @@ const userSlice = createSlice({
             state.profile = res.data;
             if (res.data.token) {
                 state.token = res.data.token;
-                var openAppId = getOpenAppId();
-                var openIndex = getOpenAppIndex();
+                const openAppId = getOpenAppId();
+                const openIndex = getOpenAppIndex();
                 window.localStorage.setItem(`Authorization-${openAppId}-${openIndex}`, res.data.token);
 
-
+                const accessType = getAccessType();
                 setTimeout(() => {
-                    if (res?.pathname && res?.pathname !== '/wallet/login'){
-                        // dispatch(push(res.pathname))
-                        history.push(res.pathname)
-                        // history.go(0)
-                    }else{
-                        history.push('/wallet/home');
+
+                    switch (accessType){
+                        case "1":{ //telegramWebApp
+                            //不跳转页面
+                            break;
+                        }
+                        default:{
+                            if (res?.pathname && res?.pathname !== '/wallet/login'){
+                                // dispatch(push(res.pathname))
+                                history.push(res.pathname)
+                                // history.go(0)
+                            }else{
+                                history.push('/wallet/home');
+                            }
+                            break;
+                        }
                     }
 
                     window.parent.postMessage(JSON.stringify({
