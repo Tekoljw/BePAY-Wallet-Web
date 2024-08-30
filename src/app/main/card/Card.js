@@ -18,6 +18,7 @@ import Tab from '@mui/material/Tab';
 import { useTranslation } from "react-i18next";
 import AnimateModal from "../../components/FuniModal";
 import LoadingButton from "@mui/lab/LoadingButton";
+import FuseLoading from '@fuse/core/FuseLoading';
 import history from '@history';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Controller, useForm } from 'react-hook-form';
@@ -465,7 +466,7 @@ function Card(props) {
                 closeChangeBi();
                 getCardList();
                 myFunction();
-            }, 500)
+            }, 1000)
         })
     }
 
@@ -517,6 +518,7 @@ function Card(props) {
     * oprate 默认1 转入 / 0 转出
     * */
     const doTransferCrypto = (oprate = 1) => {
+        setIsLoadingBtn(true)
         let doFun
         if (oprate === 1) {
             doFun = creditCardCryptoDeposit
@@ -531,13 +533,20 @@ function Card(props) {
             chain: 'trc',
             amount: transferMoney,
         })).then((res) => {
+            setIsLoadingBtn(false)
             let result = res.payload
             if (result) {
-                dispatch(showMessage({ message: result.msg, code: 2 }));
                 if (result.status === 'success') {
-                    closeRecordFunc()
-                    setTransferMoney(0)
-                    setCardID(0)
+                    setTimeout(()=>{
+                        dispatch(showMessage({ message: 'success', code: 1 }));
+                        closeRecordFunc()
+                        setTransferMoney(0)
+                        setCardID(0)
+                        getCardList();
+                        myFunction();
+                    }, 1000)
+                }else {
+                    dispatch(showMessage({ message: result.msg, code: 2 }));
                 }
             }
         })
@@ -1758,14 +1767,18 @@ function Card(props) {
                                         onClick={() => { handleDoMoney('.') }}>.</div>
                                 </div>
                             </div>
-                            <div id='zhuanZhangWanCheng' className='jianPanBtn3'
-                                onTouchStart={changeToBlack}
-                                onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}
-                                onClick={() => {
-                                    handleTransferCrypto()
-                                    // setOpenZhiFu(true)
-                                }}>{t('card_30')}</div>
+                            { isLoadingBtn && <FuseLoading />}
+                            { !isLoadingBtn &&
+                                <div id='zhuanZhangWanCheng' className='jianPanBtn3'
+                                    onTouchStart={changeToBlack}
+                                    onTouchEnd={changeToWhite}
+                                    onTouchCancel={changeToWhite}
+                                    onClick={() => {
+                                        handleTransferCrypto()
+                                        // setOpenZhiFu(true)
+                                    }}>{t('card_30')}
+                                    </div>
+                            }
                         </div>
                     </div>
 

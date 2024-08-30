@@ -28,6 +28,7 @@ import Select from '@mui/material/Select';
 import { borderRadius } from '@mui/system';
 import { setPhoneTab, getNowTime } from "../../util/tools/function";
 import FuseLoading from "@fuse/core/FuseLoading";
+import { getUserCreditCard } from "app/store/payment/paymentThunk";
 
 const container = {
     show: {
@@ -49,6 +50,7 @@ function Record() {
     const [page, setPage] = React.useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [transferList, setTransferList] = useState([]);
+    const [cardList, setCardList] = useState([]);
 
     // public static final int CONST_LOG_TYPE_DEPOSIT                = 1;
     // public static final int CONST_LOG_TYPE_POOL_TAKE_OUT            = 2;
@@ -94,7 +96,7 @@ function Record() {
     ];
 
     const [timeItem, setTimeItem] = React.useState( new Date().getMonth() +1 );
-    const [kaPianItem, setKaPianItem] = React.useState(1);
+    const [kaPianItem, setKaPianItem] = React.useState(0);
     const [selectCardID, setSelectCardID] = React.useState(0);
 
 
@@ -114,6 +116,28 @@ function Record() {
             limit: rowsPerPage
         }));
     };
+
+    // 获取卡列表
+    const getCardList = () => {
+        dispatch(getUserCreditCard()).then((res) => {
+            let result = res.payload
+            let tmpCardList = { 2: [], 3: [] }
+            let tmpCardListObj = {}
+            if (result) {
+                result.map((item) => {
+                    if (item.creditType === 2) {
+                        tmpCardList[2].push(item)
+                    } else if (item.creditType === 3) {
+                        tmpCardList[3].push(item)
+                    }
+                    tmpCardListObj[item.id] = item
+                })
+                setCardList(tmpCardList)
+                // setCardListObj(tmpCardListObj)
+                console.log(tmpCardList, "tmpCardList")
+            }
+        })
+    }
 
     const handleTransferRecord = (pageParam) => {
         if (type || type === 0) {
@@ -144,6 +168,7 @@ function Record() {
     }
 
     useEffect(() => {
+        getCardList();
         setPhoneTab('record');
     }, []);
 
@@ -402,9 +427,15 @@ function Record() {
                             },
                         }}
                     >
-                        <MenuItem value={1} className='text-16'>{t('card_169')}</MenuItem>
+                        <MenuItem value={0} className='text-16'>{t('card_169')}</MenuItem>
+                            {cardList && cardList[2].map((item) => {
+                                return (
+                                    <MenuItem value={item.userCreditKey} className='text-16'>{item.userCreditNo}<span style={{ color: "#94A3B8", marginLeft: "1rem" }}>VISA</span></MenuItem>
+                                )
+                            })}     
+                        {/* <MenuItem value={1} className='text-16'>{t('card_169')}</MenuItem>
                         <MenuItem value={2} className='text-16'>6584 2458 7848 7542<span style={{ color: "#94A3B8", marginLeft: "1rem" }}>VISA</span></MenuItem>
-                        <MenuItem value={3} className='text-16'>3354 6857 9584 8848<span style={{ color: "#94A3B8", marginLeft: "1rem" }}>MASTER</span></MenuItem>
+                        <MenuItem value={3} className='text-16'>3354 6857 9584 8848<span style={{ color: "#94A3B8", marginLeft: "1rem" }}>MASTER</span></MenuItem> */}
                     </Select>
                 </FormControl>
             </motion.div>
