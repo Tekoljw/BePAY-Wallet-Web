@@ -396,9 +396,9 @@ function Withdraw(props) {
         let conversionAmount = rate * inputVal.amount;
         if (conversionAmount >= transferState.limitSingle && googleCode.length < 6) {
             if (!hasAuthGoogle) {
-                dispatch(showMessage({ message: '请绑定Google Authenticator', code: 2 }));
+                dispatch(showMessage({ message: t('kyc_26') + " Google Authenticator", code: 2 }));
                 setTimeout(() => {
-                    // navigate('/home/security');
+                    navigate('/home/security');
                 }, 1000)
 
                 return;
@@ -409,9 +409,9 @@ function Withdraw(props) {
 
         if (transferState.daily >= transferState.limitDaily && googleCode.length < 6) {
             if (!hasAuthGoogle) {
-                dispatch(showMessage({ message: '请绑定Google Authenticator', code: 2 }));
+                dispatch(showMessage({ message: t('kyc_26') + " Google Authenticator", code: 2 }));
                 setTimeout(() => {
-                    // navigate('/home/security');
+                    navigate('/home/security');
                 }, 1000)
                 return;
             }
@@ -421,9 +421,9 @@ function Withdraw(props) {
 
         if (transferState.month >= transferState.limitMonth && googleCode.length < 6) {
             if (!hasAuthGoogle) {
-                dispatch(showMessage({ message: '请绑定Google Authenticator', code: 2 }));
+                dispatch(showMessage({ message: t('kyc_26') + " Google Authenticator", code: 2 }));
                 setTimeout(() => {
-                    // navigate('/home/security');
+                    navigate('/home/security');
                 }, 1000)
                 return;
             }
@@ -1356,12 +1356,12 @@ function Withdraw(props) {
                                         closeGoogleCodeFunc()
                                     }} />
                                 </div>
-                                <div className='PINTitle'>输入6位动态密码</div>
+                                <div className='PINTitle'>{t('card_176')}</div>
                                 <div className='flex justify-between mt-32 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
                                     <div className='PinNum color-box'
-                                         onTouchStart={changeToBlack}
-                                         onTouchEnd={changeToWhite}
-                                         onTouchCancel={changeToWhite}>{googleCode[0] ?? ''}</div>
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}>{googleCode[0] ?? ''}</div>
                                     <div className='PinNum' >{googleCode[1] ?? ''}</div>
                                     <div className='PinNum'>{googleCode[2] ?? ''}</div>
                                     <div className='PinNum'>{googleCode[3] ?? ''}</div>
@@ -1373,90 +1373,90 @@ function Withdraw(props) {
                             <div className='jianPanSty'>
                                 <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
                                     <div id="createPin1" className='jianPanNumBtn borderRight borderBottom color-box'
-                                         onTouchStart={changeToBlack}
-                                         onTouchEnd={changeToWhite}
-                                         onTouchCancel={changeToWhite}
-                                         onClick={() => {
-                                             handleDoGoogleCode(1)
-                                         }}
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => {
+                                            handleDoGoogleCode(1)
+                                        }}
                                     >1</div>
                                     <div id="createPin2" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
-                                         onTouchEnd={changeToWhite}
-                                         onTouchCancel={changeToWhite}
-                                         onClick={() => {
-                                             handleDoGoogleCode(2)
-                                         }}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => {
+                                            handleDoGoogleCode(2)
+                                        }}
                                     >2</div>
                                     <div id="createPin3" className='jianPanNumBtn  borderBottom color-box' onTouchStart={changeToBlack}
-                                         onTouchEnd={changeToWhite}
-                                         onTouchCancel={changeToWhite}
-                                         onClick={() => {
-                                             handleDoGoogleCode(3)
-                                         }}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => {
+                                            handleDoGoogleCode(3)
+                                        }}
                                     >3</div>
                                 </div>
                                 <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
                                     <div id="createPin4" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
-                                         onTouchEnd={changeToWhite}
-                                         onTouchCancel={changeToWhite}
-                                         onClick={() => {
-                                             handleDoGoogleCode(4)
-                                         }}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => {
+                                            handleDoGoogleCode(4)
+                                        }}
                                     >4</div>
                                     <div id="createPin5" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
-                                         onTouchEnd={changeToWhite}
-                                         onTouchCancel={changeToWhite}
-                                         onClick={() => {
-                                             handleDoGoogleCode(5)
-                                         }}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => {
+                                            handleDoGoogleCode(5)
+                                        }}
                                     >5</div>
                                     <div id="createPin6" className='jianPanNumBtn  borderBottom color-box' onTouchStart={changeToBlack}
-                                         onTouchEnd={changeToWhite}
-                                         onTouchCancel={changeToWhite}
-                                         onClick={() => {
-                                             handleDoGoogleCode(6)
-                                         }}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => {
+                                            handleDoGoogleCode(6)
+                                        }}
                                     >6</div>
                                 </div>
                                 <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
                                     <div id="createPin7" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
-                                         onTouchEnd={changeToWhite}
-                                         onTouchCancel={changeToWhite}
-                                         onClick={() => {
-                                             handleDoGoogleCode(7)
-                                         }}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => {
+                                            handleDoGoogleCode(7)
+                                        }}
                                     >7</div>
                                     <div id="createPin8" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
-                                         onTouchEnd={changeToWhite}
-                                         onTouchCancel={changeToWhite}
-                                         onClick={() => {
-                                             handleDoGoogleCode(8)
-                                         }}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => {
+                                            handleDoGoogleCode(8)
+                                        }}
                                     >8</div>
                                     <div id="createPin9" className='jianPanNumBtn borderBottom color-box' onTouchStart={changeToBlack}
-                                         onTouchEnd={changeToWhite}
-                                         onTouchCancel={changeToWhite}
-                                         onClick={() => {
-                                             handleDoGoogleCode(9)
-                                         }}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => {
+                                            handleDoGoogleCode(9)
+                                        }}
                                     >9</div>
                                 </div>
                                 <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
                                     <div className='jianPanNumBtn borderRight '></div>
                                     <div id="createPin0" className='jianPanNumBtn borderRight color-box' onTouchStart={changeToBlack}
-                                         onTouchEnd={changeToWhite}
-                                         onTouchCancel={changeToWhite}
-                                         onClick={() => {
-                                             handleDoGoogleCode(0)
-                                         }}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => {
+                                            handleDoGoogleCode(0)
+                                        }}
                                     >0</div>
                                     <div id="createPinx" className='jianPanNumBtn flex items-center color-box'
-                                         onTouchStart={changeToBlack}
-                                         onTouchEnd={changeToWhite}
-                                         onTouchCancel={changeToWhite}
-                                         onClick={() => {
-                                             handleDoGoogleCode(-1)
-                                         }}
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => {
+                                            handleDoGoogleCode(-1)
+                                        }}
                                     > <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img></div>
                                 </div>
                             </div>
@@ -1623,7 +1623,7 @@ function Withdraw(props) {
                                 closePinFunc();
                             }} />
                         </div>
-                        <div className='PINTitle'>{t('home_wallet_14')}（ {inputIDVal} ）{t('transfer_1')}</div>
+                        <div className='PINTitle'>{t('home_wallet_14')}{t('card_175')}（ {inputIDVal} ）{t('transfer_1')}</div>
                         <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
                             <img className='MoneyWithdraw' src="wallet/assets/images/withdraw/USDT.png"></img>
                             <div className='PINTitle3'>USDT</div>

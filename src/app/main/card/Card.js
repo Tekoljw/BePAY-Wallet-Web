@@ -2251,7 +2251,7 @@ function Card(props) {
                         <div className='my-24' style={{ borderBottom: "1px solid #2C3950" }}></div>
 
                         <div className='flex justify-between mt-12'>
-                            <div className='' style={{ color: "#94A3B8" }}>{t('card_111')}</div>
+                            <div className='' style={{ color: "#94A3B8" }}>{t('card_174')}</div>
                             <div className='' style={{ color: "#2DD4BF", textDecoration: "underline" }} onClick={() => {
                                 setOpenChangeBi(false);
                                 openKycFunc();

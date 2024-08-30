@@ -526,7 +526,10 @@ const locale = {
     card_171: "überweisen",
     card_172: "einchecken",
     card_173: "Gesamttransaktionsvolumen vom Vortag",
- 
+    home_record_0: 'alle',
+    card_174: "Postanschrift",
+    card_175: "Benutzer",
+    card_176: "Geben Sie das 6-stellige dynamische Passwort ein",
 };
 
 export default locale;

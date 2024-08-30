@@ -524,9 +524,10 @@ const locale = {
     card_171: "Przenieś",
     card_172: "Rejestracja",
     card_173: "Całkowity wolumen transakcji wczoraj",
-
-
-
+    home_record_0: 'wszystko',
+    card_174: "adres korespondencyjny",
+    card_175: "użytkownik",
+    card_176: "wprowadź 6-cyfrowe dynamiczne hasło",
 
 
 

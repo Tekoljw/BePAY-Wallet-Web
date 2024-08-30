@@ -58,7 +58,6 @@ const locale = {
     home_2fa_10: 'Verification code',
     home_2fa_11: 'Send',
 
-    home_record_0: 'All',
     home_record_1: 'Deposit',
     home_record_2: 'Pool',
     home_record_3: 'Service charge',
@@ -531,7 +530,10 @@ const locale = {
     card_172: "check in",
     card_173: "yesterday's total trading volume",
     kyc_41:"Required fields cannot be empty",
-    
+    home_record_0: 'All',
+    card_174: "mailing address",
+    card_175: "user",
+    card_176: "enter the 6-digit dynamic password",
 };
 
 export default locale;

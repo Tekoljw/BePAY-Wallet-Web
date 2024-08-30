@@ -523,9 +523,10 @@ const locale = {
     card_171: "effectuer un retrait",
     card_172: "pointage",
     card_173: "volume total des transactions d’hier",
-
-
-
+    home_record_0: 'tout',
+    card_174: "adresse postale",
+    card_175: "utilisateur",
+    card_176: "entrez le mot de passe dynamique à 6 chiffres",
 
 };
 

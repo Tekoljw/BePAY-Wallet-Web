@@ -524,9 +524,10 @@ const locale = {
     card_171: "Ilabas",
     card_172: "Check-in",
     card_173: "Total na volume ng transaksyon kahapon",
-
-
-
+    home_record_0: 'lahat',
+    card_174: "address ng koreo",
+    card_175: "gumagamit",
+    card_176: "ipasok ang 6-digit na dynamic na password",
 
 
 

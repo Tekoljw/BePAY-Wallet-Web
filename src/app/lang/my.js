@@ -523,9 +523,10 @@ const locale = {
     card_171: "Keluar",
     card_172: "Daftar hadir",
     card_173: "Jumlah dagangan keseluruhan semalam",
-
-
-
+    home_record_0: 'semua',
+    card_174: "alamat surat-menyurat",
+    card_175: "pengguna",
+    card_176: "masukkan kata laluan dinamik 6 digit",
 
 
 

@@ -523,6 +523,10 @@ const locale = {
     card_171: "retirar",
     card_172: "fazer check-in",
     card_173: "volume total de negociações de ontem",
+    home_record_0: 'todos',
+    card_174: "endereço de correspondência",
+    card_175: "usuário",
+    card_176: "insira a senha dinâmica de 6 dígitos",
  };
 export default locale;
     

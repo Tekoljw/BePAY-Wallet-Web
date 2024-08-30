@@ -513,7 +513,10 @@ const locale = {
     card_171: "chuyển ra",
     card_172: "đăng ký",
     card_173: "tổng khối lượng giao dịch ngày hôm qua",
-
+    home_record_0: 'tất cả',
+    card_174: "địa chỉ thư tín",
+    card_175: "người dùng",
+    card_176: "nhập mật khẩu động 6 chữ số",
     };
 
 export default locale;
