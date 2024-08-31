@@ -34,7 +34,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import { useTranslation } from "react-i18next";
-import {showMessage} from "app/store/fuse/messageSlice";
+import { showMessage } from "app/store/fuse/messageSlice";
 
 const container = {
     show: {
@@ -76,7 +76,7 @@ function Buy(props) {
         setExpanded(_expanded ? panel : false);
     };
 
-    const [ amount, setAmount ] = useState('');
+    const [amount, setAmount] = useState('');
 
     const fiatsData = useSelector(selectUserData).fiat || [];
     const config = useSelector(selectConfig);
@@ -90,6 +90,7 @@ function Buy(props) {
     const [payType, setPayType] = useState('StarPay');
     const [symbolWallet, setSymbolWallet] = useState([]);
     const [symbol, setSymbol] = useState('');
+    const [noSupplier, setNoSupplier] = useState(false);
 
     const walletData = useSelector(selectUserData).wallet;
     const getCryptoTarget = async () => {
@@ -147,11 +148,13 @@ function Buy(props) {
             await Promise.all([getStarPayTarget(), getStarPayOption()]).then((resArr) => {
                 let cryptoTarget = resArr[0];
                 paymentOption = resArr[1];
-                cryptoTarget.payload.data.forEach((symbol, index) => {
-                    if (allSymbols.indexOf(symbol.cryptoCurrency) === -1) {
-                        allSymbols.push(symbol.cryptoCurrency);
-                    }
-                })
+                if (cryptoTarget && cryptoTarget.payload && cryptoTarget.payload.data && cryptoTarget.payload.data.length > 0) {
+                    cryptoTarget.payload.data.forEach((symbol, index) => {
+                        if (allSymbols.indexOf(symbol.cryptoCurrency) === -1) {
+                            allSymbols.push(symbol.cryptoCurrency);
+                        }
+                    })
+                }
             });
         }
 
@@ -177,6 +180,7 @@ function Buy(props) {
                     balance: arrayLookup(fiatsData, 'currencyCode', payment.fiatCurrency, 'balance') || 0,
                     minAmount: payment.paymentOptions[0]?.minAmount ?? 0,
                     maxAmount: payment.paymentOptions[0]?.maxAmount ?? 0,
+                    avatar: payment.avatar
                 });
 
                 tmpFiatObj[payment.fiatCurrency] = {
@@ -184,6 +188,7 @@ function Buy(props) {
                     balance: arrayLookup(fiatsData, 'currencyCode', payment.fiatCurrency, 'balance') || 0,
                     minAmount: payment.paymentOptions[0]?.minAmount ?? 0,
                     maxAmount: payment.paymentOptions[0]?.maxAmount ?? 0,
+                    avatar: payment.avatar
                 }
             }
             if (tmpFiats.length > 0) {
@@ -258,6 +263,13 @@ function Buy(props) {
         setFiatsSelected(0);
         setCurrencyCode('USD');
         setCurrencyBalance(0);
+    }
+
+    const changeNoSupplier = () => {
+        if (!noSupplier)
+            setNoSupplier(true);
+        else
+            return
     }
 
     return (
@@ -399,7 +411,7 @@ function Buy(props) {
                                                     <img style={{
                                                         width: '3rem',
                                                         borderRadius: '8px'
-                                                    }} src={arrayLookup(currencys, 'currencyCode', row.currencyCode, 'avatar')} alt="" />
+                                                    }} src={row.avatar} alt="" />
                                                     <div className="px-12 font-medium">
                                                         <Typography className="text-20 font-medium">{row.currencyCode}</Typography>
                                                     </div>
@@ -578,17 +590,38 @@ function Buy(props) {
                         </>}
                     </>}
 
-                    <Box
-                        className=""
-                        sx={{
-                            borderRadius: '8px'
-                        }}
-                    >
-                        <Typography className="text-14 my-20" style={{ magin: '2.6rem 0 2.6rem 2rem', color: '#94a3b8' }}>
-                            <span style={{ color: '#fce100' }}>⚠ </span>
-                            {t('home_buy_5')}
-                        </Typography>
-                    </Box>
+                    {tabValue === 1 && payType === 'StarPay' && (<div>
+                        {changeNoSupplier()}
+                        <Typography className="text-14 font-medium my-16  tiShiSty"><span style={{ color: '#fce100' }}>⚠</span> {t('home_buy_10')}</Typography>
+                    </div>)}
+
+                    {tabValue === 0 && (
+                        <Box
+                            className=""
+                            sx={{ borderRadius: '8px' }}
+                        >
+                            <Typography className="text-14 my-20" style={{ magin: '2.6rem 0 2.6rem 2rem', color: '#94a3b8' }}>
+                                <span style={{ color: '#fce100' }}>⚠ </span>
+                                {t('home_buy_5')}
+                            </Typography>
+                        </Box>
+                    )
+                    }
+
+                    {tabValue === 1 && noSupplier && (
+                        <Box
+                            className=""
+                            sx={{
+                                borderRadius: '8px'
+                            }}
+                        >
+                            <Typography className="text-14 my-20" style={{ magin: '2.6rem 0 2.6rem 2rem', color: '#94a3b8' }}>
+                                <span style={{ color: '#fce100' }}>⚠ </span>
+                                {t('home_buy_5')}
+                            </Typography>
+                        </Box>
+                    )
+                    }
 
                     <Button
                         style={{ width: '100%', height: '4rem', margin: '0 auto', display: 'block', fontSize: '2rem', lineHeight: 'initial' }}
@@ -596,6 +629,7 @@ function Buy(props) {
                         color="secondary"
                         variant="contained"
                         sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
+                        disabled={tabValue === 1 && payType === 'StarPay'}
                         onClick={() => {
                             goBuy();
                         }}

@@ -523,9 +523,10 @@ const locale = {
     card_171: "Retirar",
     card_172: "Registrarse",
     card_173: "volumen total de transacciones de ayer",
-
-
-
+    home_record_0: 'todo',
+    card_174: "dirección postal",
+    card_175: "usuario",
+    card_176: "ingrese la contraseña dinámica de 6 dígitos",
 
 
 };

@@ -26,7 +26,9 @@ import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import {
+    getKycInfo,
     applyCreditCard,
+    creditCardUpdate,
     creditCardCryptoDeposit,
     creditCardCryptoWithdraw,
     getCreditConfig,
@@ -94,6 +96,7 @@ function Card(props) {
     const [openChongZhi, setOpenChongZhi] = useState(false);
     const [huaZhuanValue, setHuaZhuanValue] = useState(0);
     const [openChangeBi, setOpenChangeBi] = useState(false);
+    const [address, setAddress] = useState("");
 
     const changePhoneTab = (tab) => {
         window.localStorage.setItem('phoneTab', tab);
@@ -386,6 +389,17 @@ function Card(props) {
 
 
 
+    const refreshKycInfo = () => {
+        dispatch(getKycInfo()).then((value) => {
+            if (!value.payload) return;
+            let tempAddress = value.payload.data.address;
+            if (tempAddress) {
+                setAddress(tempAddress)
+            } else {
+                return;
+            }
+        });
+    };
 
 
 
@@ -406,6 +420,9 @@ function Card(props) {
     const [isLoadingBtn, setIsLoadingBtn] = useState(false);
     const [symbolList, setSymbolList] = useState([]);
     const [applyFeeSymbol, setApplyFeeSymbol] = useState('USDT');
+
+    const [currUserCardInfo, setCurrUserCardInfo] = useState({});
+
     //获取Config
     const getCardConfig = () => {
         dispatch(getCreditConfig()).then((res) => {
@@ -441,14 +458,35 @@ function Card(props) {
             applyDesc: 'card applyDesc'
         })).then((res) => {
             let result = res.payload
-            setIsLoadingBtn(false)
-            setOpenXiangQing(false);
-            setTabValue(0);
-            closeChangeBi();
-            getCardList();
-            myFunction();
+            setTimeout(() => {
+                setIsLoadingBtn(false)
+                setOpenXiangQing(false);
+                setTabValue(0);
+                closeChangeBi();
+                getCardList();
+                myFunction();
+            }, 500)
         })
     }
+
+    //更改卡的状态参数1是冻卡
+    const cardUpdate = (cardChangetype) => {
+        setOpenCardBtnShow(true);
+        dispatch(creditCardUpdate({
+            creditType: currUserCardInfo.creditType,
+            userCreditId: currUserCardInfo.id,
+            updateType: cardChangetype,
+        })).then((res) => {
+            setTimeout(() => {
+                setOpenAnimateModal(false);
+                setOpenCardBtnShow(false);
+                getCardList();
+                myFunction();
+            }, 1000)
+        })
+    }
+
+
 
     // 获取卡列表
     const getCardList = () => {
@@ -463,11 +501,12 @@ function Card(props) {
                     } else if (item.creditType === 3) {
                         tmpCardList[3].push(item)
                     }
-
                     tmpCardListObj[item.id] = item
                 })
                 setCardList(tmpCardList)
                 setCardListObj(tmpCardListObj)
+                console.log(tmpCardList, "tmpCardList")
+                console.log(tmpCardListObj, "tmpCardListObj")
             }
         })
     }
@@ -722,11 +761,13 @@ function Card(props) {
                                                                             <div className={clsx("cardNumber", kaBeiButton && "xiaoShi")}> <span id="cardNumberOne" >{cardItem.userCreditNo}</span> </div>
                                                                             <div className='cardBeiMian'>
                                                                                 <div className={clsx("", kaBeiButton && "xiaoShi")}>
-                                                                                    <div className='kaBeiZi flex'>
-                                                                                        <img id="cardIconWOne"
-                                                                                            onClick={(e) => handleImgClick(e, FanKa)}
-                                                                                            className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id="zhangDanZiOne" className='zhangDanZi'>{t('card_15')}</span>
-                                                                                    </div>
+                                                                                    {cardItem?.state == 10 && (
+                                                                                        <div className='kaBeiZi flex'>
+                                                                                            <img id="cardIconWOne"
+                                                                                                onClick={(e) => handleImgClick(e, FanKa)}
+                                                                                                className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id="zhangDanZiOne" className='zhangDanZi'>{t('card_15')}</span>
+                                                                                        </div>
+                                                                                    )}
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -747,6 +788,25 @@ function Card(props) {
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                    {cardItem?.state == 9 && (
+                                                                        <div className='cardErrorBg'>
+                                                                            <div className='flex justify-center mt-16' style={{ width: "100%" }}>
+                                                                                <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
+                                                                                <div className='TanHaoCardZi'>
+                                                                                    卡片已冻结
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className='cardErrorZi'>解冻请联系我们7*24小时在线客服</div>
+
+                                                                            <div className='cardErrorBtn txtColorTitleSmall' onClick={() => {
+                                                                                changePhoneTab('security');
+                                                                                history.push('/wallet/home/security', { tabValue: 4 })
+                                                                            }} >
+                                                                                联系客服
+                                                                            </div>
+                                                                        </div>
+                                                                    )
+                                                                    }
                                                                 </div>
                                                             </div>
 
@@ -757,6 +817,9 @@ function Card(props) {
                                                                         aria-controls="panel1-content"
                                                                         id="panel1-header"
                                                                         className='gongNengTan2'
+                                                                        onClick={() => {
+                                                                            setCurrUserCardInfo(cardItem);
+                                                                        }}
                                                                     >
                                                                         <div className='flex justify-between w-full'>
                                                                             <div className='flex'>
@@ -1370,6 +1433,7 @@ function Card(props) {
                                 // setOpenChongZhi(true)
                                 // applyCard()
                                 openChangeBiFunc()
+                                refreshKycInfo()
                             }}
                         >
                             {t('card_36')}
@@ -1434,11 +1498,7 @@ function Card(props) {
                         loading={openCardBtnShow}
                         variant="contained"
                         onClick={() => {
-                            setOpenCardBtnShow(true);
-                            setTimeout(() => {
-                                setOpenAnimateModal(false);
-                                setOpenCardBtnShow(false);
-                            }, 1500);
+                            cardUpdate(1);
                         }}
                     >
                         {t('card_31')}
@@ -2171,8 +2231,8 @@ function Card(props) {
                         <div className='flex mt-20 justify-between' style={{ borderBottom: "1px solid #2C3950" }}>
                             <div className='text-16'>{t('card_33')}</div>
                             <div className='flex pb-20'>
-                                <div className='text-16'>USDT</div>
-                                <div className='text-16 ml-10'>1.00</div>
+                                <div className='text-16 ml-10'>{cardConfigList[cardConfigID]?.applyCreditFee}</div>
+                                <div className='text-16'>&nbsp;{cardConfigList[cardConfigID]?.cardSymbol}</div>
                             </div>
                         </div>
 
@@ -2196,17 +2256,18 @@ function Card(props) {
                         <div className='my-24' style={{ borderBottom: "1px solid #2C3950" }}></div>
 
                         <div className='flex justify-between mt-12'>
-                            <div className='' style={{ color: "#94A3B8" }}>{t('card_111')}</div>
+                            <div className='' style={{ color: "#94A3B8" }}>{t('card_174')}</div>
                             <div className='' style={{ color: "#2DD4BF", textDecoration: "underline" }} onClick={() => {
+                                setOpenChangeBi(false);
+                                openKycFunc();
                             }} >{t('card_112')}</div>
                         </div>
-                        <div className='mt-20' style={{ marginBottom: "6rem" }}>中华人民共和国香港特别行政区中环皇后大道中银大厦123号901室</div>
-
+                        <div className='mt-20' style={{ marginBottom: "6rem" }}>{address}</div>
                         <LoadingButton
                             disabled={false}
                             className="boxCardBtn3 mb-12"
                             color="secondary"
-                            loading={false}
+                            loading={isLoadingBtn}
                             variant="contained"
                             onClick={() => {
                                 applyCard()

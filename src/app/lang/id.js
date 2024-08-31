@@ -523,9 +523,10 @@ const locale = {
     card_171: "transfer keluar",
     card_172: "check-in",
     card_173: "total volume perdagangan kemarin",
-
-
-
+    home_record_0: 'semua',
+    card_174: "alamat surat",
+    card_175: "pengguna",
+    card_176: "masukkan kata sandi dinamis 6 digit",
 
 
 

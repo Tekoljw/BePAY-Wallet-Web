@@ -521,9 +521,10 @@ const locale = {
     card_171: "çek",
     card_172: "giriş yap",
     card_173: "dünkü toplam işlem hacmi",
-
-
-
+    home_record_0: 'hepsi',
+    card_174: "posta adresi",
+    card_175: "kullanıcı",
+    card_176: "6 haneli dinamik şifreyi girin",
 
 
 

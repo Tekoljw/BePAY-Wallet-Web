@@ -1497,6 +1497,14 @@ input[type='number'] {
     width: 100%;
 }
 
+.tiShiSty {
+    color: #94A3B8;
+    border: 1px solid #17D8B7;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 32px;
+}
+
 
 .errorPinDi {
     background-color: #1E293B;

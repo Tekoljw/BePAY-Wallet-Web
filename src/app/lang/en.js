@@ -58,7 +58,6 @@ const locale = {
     home_2fa_10: 'Verification code',
     home_2fa_11: 'Send',
 
-    home_record_0: 'All',
     home_record_1: 'Deposit',
     home_record_2: 'Pool',
     home_record_3: 'Service charge',
@@ -148,6 +147,7 @@ const locale = {
     home_buy_7: 'Income',
     home_buy_8: 'Buy Now',
     home_buy_9: 'Sell Now',
+    home_buy_10: 'No provider could be selected',
 
     home_withdraw_1: 'Choose Network',
     home_withdraw_2: 'Address',
@@ -397,7 +397,7 @@ const locale = {
     card_29: "Total assets in the account",
     card_30: "Done",
     card_31: "Freeze",
-    card_32: "Change card",
+    card_32: "Change",
     card_33: "Card issuance",
     card_34: "Activate card",
     card_35: "Apply now",
@@ -530,7 +530,10 @@ const locale = {
     card_172: "check in",
     card_173: "yesterday's total trading volume",
     kyc_41:"Required fields cannot be empty",
-    
+    home_record_0: 'All',
+    card_174: "mailing address",
+    card_175: "user",
+    card_176: "enter the 6-digit dynamic password",
 };
 
 export default locale;

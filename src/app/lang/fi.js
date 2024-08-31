@@ -522,9 +522,10 @@ const locale = {
     card_171: "siirrä ulos",
     card_172: "kirjautuminen",
     card_173: "eiliseltä päivältä yhteensä kaupankäyntimäärä",
-
-
-
+    home_record_0: 'kaikki',
+    card_174: "postiosoite",
+    card_175: "käyttäjä",
+    card_176: "syötä 6-numeroinen dynaaminen salasana",
 
 
 
