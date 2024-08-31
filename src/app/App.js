@@ -7,14 +7,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import rtlPlugin from 'stylis-plugin-rtl';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
-import { selectCurrentLanguageDirection } from 'app/store/i18nSlice';
+import {selectCurrentLanguage, selectCurrentLanguageDirection} from 'app/store/i18nSlice';
 import themeLayouts from 'app/theme-layouts/themeLayouts';
 import { selectMainTheme } from 'app/store/fuse/settingsSlice';
 import withAppProviders from './withAppProviders';
 import { getNetworks, getConfig } from "app/store/config/configThunk";
 import {useEffect, useRef, useState} from "react";
 import {selectUserData} from "./store/user";
-import {getCurrentLanguage, getUrlParam} from "./util/tools/function";
+import {getUrlParam} from "./util/tools/function";
 import { getKycInfo } from "app/store/payment/paymentThunk";
 import { changeLanguage } from "./store/i18nSlice";
 import userType from './define/userType';
@@ -50,10 +50,11 @@ const App = () => {
     const accessToken = getUrlParam('accessToken') || '';
     const storageKey = getUrlParam('storageKey') || '';
     const langDirection = useSelector(selectCurrentLanguageDirection);
+    const currentLanguage = useSelector(selectCurrentLanguage);
     const mainTheme = useSelector(selectMainTheme);
     const token = useSelector(selectUserData).token;
     const userRole = (token.length > 0 ? token : localStorage.getItem(`Authorization-${openAppId}-${openIndex}`)) ? 'home': '';
-    const lang = getCurrentLanguage() === getUrlParam('lang') ? getCurrentLanguage() : getUrlParam('lang');
+    const lang = currentLanguage.id === getUrlParam('lang') ? currentLanguage.id : getUrlParam('lang');
 
 
     useEffect(() => {
@@ -101,12 +102,11 @@ const App = () => {
 
     useEffect(() => {
         if (lang) {
-            window.localStorage.setItem('lang', lang)
+            dispatch(changeLanguage(lang)).then(r => {
+                    console.log("change language success")
+                }
+            );
         }
-        dispatch(changeLanguage(lang)).then(r => {
-            console.log("change language success")
-            }
-        );
     }, [lang]);
 
     useEffect(() => {

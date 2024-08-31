@@ -19,7 +19,7 @@ import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
 import { selectConfig } from "../../store/config";
-import { arrayLookup, setPhoneTab } from "../../util/tools/function";
+import {arrayLookup, judgeIosOrAndroid, setPhoneTab} from "../../util/tools/function";
 import Button from "@mui/material/Button";
 import {
     getFaTPayCryptoTarget,
@@ -235,7 +235,12 @@ function Buy(props) {
                 })).then((res) => {
                     let result = res.payload
                     if (result.payurl) {
-                        window.open(result.payurl)
+                        if(judgeIosOrAndroid() === "ios"){
+                            //ios会屏蔽打开新的窗口
+                            window.location.href = result.payurl;
+                        }else{
+                            window.open(result.payurl)
+                        }
                     }
                 });
             } else {

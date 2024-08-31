@@ -14,6 +14,7 @@ import loginWays from '../../main/login/loginWays'
 import { EthereumProvider } from '@walletconnect/ethereum-provider';
 import {getAccessType, getAutoLoginKey, getThirdPartId} from "../../util/tools/function";
 import {requestUserLoginData} from "../../util/tools/loginFunction";
+import {changeLanguage} from "app/store/i18nSlice";
 
 // 检查用户是否已经登录
 export const checkLoginState = createAsyncThunk(
@@ -889,6 +890,12 @@ export const getUserData = createAsyncThunk(
 
         if (userData.errno === 0) {
             dispatch(updateUser(userData));
+            if (userData.data.user && userData.data.user.language) {
+                dispatch(changeLanguage(userData.data.user.language)).then(r => {
+                        console.log("change language success")
+                    }
+                )
+            }
             return userData
         } else {
             dispatch(showMessage({ message: t('error_2'), code: 1 }));

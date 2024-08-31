@@ -46,11 +46,6 @@ export const setPhoneTab = (phoneTab) =>{
     }
 }
 
-// 获取当前语言
-export const getCurrentLanguage = () => {
-    return  window.localStorage.getItem('lang') || 'en';
-};
-
 export const arrayLookup = (data,key,value,targetKey) => {
     var targetValue = "";
     if (data) {
@@ -72,6 +67,7 @@ export const randomString = (length) => {
     return result;
 };
 
+//判断是苹果还是安卓
 export const judgeIosOrAndroid = () => {
     var u = navigator.userAgent
     var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
