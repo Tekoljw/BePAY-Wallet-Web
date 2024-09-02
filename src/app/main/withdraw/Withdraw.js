@@ -1241,11 +1241,11 @@ function Withdraw(props) {
                                             </FormControl>
                                         </div>
 
-                                        <div className="flex items-center justify-content-start " style={{}}>
-                                            <Checkbox defaultChecked />
-                                            <Typography style={{ fontSize: '1.4rem' }}>
+                                        <div className="flex items-center mb-20 justify-content-start " style={{}}>
+                                            {/* <Checkbox defaultChecked /> */}
+                                            {/* <Typography style={{ fontSize: '1.4rem' }}>
                                                 {t('home_sendTips_8')}
-                                            </Typography>
+                                            </Typography> */}
                                         </div>
 
                                         <LoadingButton

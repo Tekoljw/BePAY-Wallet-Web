@@ -545,10 +545,10 @@ function Earn(props) {
                         {
                             // tabValue === 1 &&
                             <div className="px-16 flex items-center justify-content-start " style={{ paddingLeft: '0.7rem' }}>
-                                <Checkbox defaultChecked />
-                                <Typography style={{ fontSize: '1.5rem' }}>
+                                {/* <Checkbox defaultChecked /> */}
+                                {/* <Typography style={{ fontSize: '1.5rem' }}>
                                     {t('home_sendTips_8')}
-                                </Typography>
+                                </Typography> */}
                             </div>}
                         <Button
                             disabled={ismore(inputVal.amount)}
