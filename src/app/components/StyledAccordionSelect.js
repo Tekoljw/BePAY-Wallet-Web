@@ -76,6 +76,13 @@ function StyledAccordionSelect(props) {
         return currencyCode + ' ' + (currentBalance * (symbolRate * currencyRate)).toFixed(2)
     };
 
+    const currenyPaytoken = (currentSymbol, currentBalance) => {
+        const symbolRate = arrayLookup(config.symbols, 'symbol', currentSymbol, 'rate');
+        const currencyRate = arrayLookup(config.payment.currency, 'currencyCode', currencyCode, 'exchangeRate');
+        return (currentBalance * symbolRate).toFixed(2)
+    };
+
+
     useEffect(() => {
         if (!Array.isArray(symbol)) {
             throw new Error('symbol is not an Array')
@@ -151,6 +158,7 @@ function StyledAccordionSelect(props) {
                     }}
                 >
                     {symbol.map((row, index) => {
+                        debugger;
                         return (
 
                             <MenuItem
@@ -169,13 +177,13 @@ function StyledAccordionSelect(props) {
                                         }} src={row.avatar} alt="" />
                                         <div className="px-12 font-medium">
                                             <Typography className="text-18 font-medium">{row.symbol}</Typography>
-                                            <Typography className="text-14" style={{ color: '#94A3B8' }}>{row.symbol}</Typography>
+                                            <Typography className="text-14" style={{ color: '#94A3B8' }}>{ currencyCode }</Typography>
                                         </div>
                                     </div>
                                     <div style={{ marginLeft: 'auto' }}>
                                         <div className="px-12 font-medium" style={{ textAlign: 'right' }}>
                                             <Typography className="text-18 font-medium">{row.balance}</Typography>
-                                            {currencyCode && <Typography className="text-14" style={{ color: '#94A3B8' }}>{currenyBalance(row.symbol, row.balance)}</Typography>}
+                                            {currencyCode && <Typography className="text-14" style={{ color: '#94A3B8' }}>{currenyPaytoken(row.symbol, row.balance)}</Typography>}
 
                                         </div>
                                     </div>
