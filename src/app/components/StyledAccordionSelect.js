@@ -158,7 +158,6 @@ function StyledAccordionSelect(props) {
                     }}
                 >
                     {symbol.map((row, index) => {
-                        debugger;
                         return (
 
                             <MenuItem

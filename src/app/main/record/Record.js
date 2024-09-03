@@ -132,7 +132,7 @@ function Record() {
                     }
                     tmpCardListObj[item.id] = item
                 })
-                setCardList(tmpCardList)
+                setCardList([...tmpCardList[2], ...tmpCardList[3]])
                 // setCardListObj(tmpCardListObj)
                 console.log(tmpCardList, "tmpCardList")
             }
@@ -146,7 +146,8 @@ function Record() {
                 logType: type,
                 month: timeItem,
                 page: pageParam ?? page,
-                limit: rowsPerPage
+                limit: rowsPerPage,
+                userCreditNo: kaPianItem == 0 ? null: kaPianItem,
             })).then((res) => {
                 setTimeout(() => {
                     setIsLoading(false)
@@ -175,7 +176,7 @@ function Record() {
 
     useEffect(() => {
         handleTransferRecord()
-    }, [type, timeItem]);
+    }, [type, timeItem, kaPianItem]);
 
     const [moreBtnShow, setMoreBtnShow] = React.useState(false);
 
@@ -427,10 +428,13 @@ function Record() {
                             },
                         }}
                     >
-                        <MenuItem value={0} className='text-16'>{t('card_169')}</MenuItem>
-                            {cardList && cardList[2].map((item) => {
+                            <MenuItem value={0} className='text-16'>{t('home_record_0')}</MenuItem>
+                            {cardList && cardList.map((item) => {
                                 return (
-                                    <MenuItem value={item.userCreditKey} className='text-16'>{item.userCreditNo}<span style={{ color: "#94A3B8", marginLeft: "1rem" }}>VISA</span></MenuItem>
+                                    <MenuItem value={item.userCreditNo} className='text-16' style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                        <span> {item.userCreditNo} </span>
+                                        <span style={{ color: "#94A3B8", marginLeft: "1rem" }}>VISA</span>
+                                    </MenuItem>
                                 )
                             })}     
                         {/* <MenuItem value={1} className='text-16'>{t('card_169')}</MenuItem>

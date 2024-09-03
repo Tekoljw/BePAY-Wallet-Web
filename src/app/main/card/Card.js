@@ -483,7 +483,7 @@ function Card(props) {
                 setOpenCardBtnShow(false);
                 getCardList();
                 myFunction();
-            }, 1000)
+            }, 1500)
         })
     }
 
@@ -820,13 +820,14 @@ function Card(props) {
                                                             </div>
 
                                                             <div className='cardGongNengMyDi' style={{ position: "relative" }}>
-                                                                <Accordion className='gongNengTan1' >
+                                                                <Accordion className='gongNengTan1' disabled={ cardItem?.state == 9}>
                                                                     <AccordionSummary
                                                                         expandIcon={<ExpandMoreIcon />}
                                                                         aria-controls="panel1-content"
                                                                         id="panel1-header"
                                                                         className='gongNengTan2'
                                                                         onClick={() => {
+                                                                            if(cardItem && cardItem.state == 9) return;
                                                                             setCurrUserCardInfo(cardItem);
                                                                         }}
                                                                     >
@@ -835,9 +836,8 @@ function Card(props) {
                                                                                 <div className=''>{t('home_record_9')}</div>
                                                                                 <div className='ml-8 yuEZi'>${cardItem.amount ?? '0.00'}</div>
                                                                             </div>
-                                                                            <div
-                                                                                className='cardDepositeDi'
-                                                                            >{t('card_16')}</div>
+                                                                            <div className='cardDepositeDi'>{t('card_16')}</div>
+                                                                            
                                                                         </div>
                                                                     </AccordionSummary>
 
@@ -891,6 +891,7 @@ function Card(props) {
                                                                     </AccordionDetails>
                                                                 </Accordion>
                                                                 <div className='h-40 w-40  mr-40' style={{ position: "absolute", top: "12%", right: "0%" }} onClick={() => {
+                                                                    if(cardItem && cardItem.state == 9) return;
                                                                     setOpenRecordWindow(true)
                                                                     setCardID(cardItem.id)
                                                                     setCardConfigID(cardItem.creditConfigId)

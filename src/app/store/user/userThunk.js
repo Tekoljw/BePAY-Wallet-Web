@@ -905,6 +905,7 @@ export const transferRecords = createAsyncThunk(
             month: settings.month,
             page: settings.page,
             limit: settings.limit,
+            userCreditNo: settings.userCreditNo
         };
         const tranferList = await React.$api("transfer.records", data);
         if (tranferList.errno === 0) {
