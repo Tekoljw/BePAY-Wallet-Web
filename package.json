@@ -30,6 +30,7 @@
         "@uniswap/sdk-core": "^4.0.6",
         "@uniswap/v3-sdk": "^3.10.0",
         "@uniswap/widgets": "^2.53.0",
+        "@vkruglikov/react-telegram-web-app": "^2.1.9",
         "@walletconnect/auth-client": "2.0.3",
         "@walletconnect/client": "^1.8.0",
         "@walletconnect/ethereum-provider": "^2.9.1",

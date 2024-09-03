@@ -126,14 +126,8 @@ function HomePage(props) {
                 setMenuShow(true);
                 setLeftSidebarOpen(false);
 
-                console.log(accessType, '请求telegramWebAppLoginApi方式登录,检查登录状态');
-                const thirdPartId = getThirdPartId();
-                const autoLoginKey = getAutoLoginKey();
-                if(!thirdPartId || !autoLoginKey){
-                    dispatch(showMessage({ message: t('error_0'), code: 2 }));
-                }else{
-                    dispatch(checkLoginState());
-                }
+                console.log(accessType, '请求telegramWebAppLoginApi方式登录,检查登录状态')
+                dispatch(checkLoginState());
                 break;
             }
             default:{

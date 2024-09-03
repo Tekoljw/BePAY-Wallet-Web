@@ -17,7 +17,7 @@ import {selectUserData} from "./store/user";
 import {getUrlParam} from "./util/tools/function";
 import { getKycInfo } from "app/store/payment/paymentThunk";
 import { changeLanguage } from "./store/i18nSlice";
-import userType from './define/userType';
+import { useWebApp } from '@vkruglikov/react-telegram-web-app';
 
 // import axios from 'axios';
 /**
@@ -44,16 +44,14 @@ const App = () => {
     const dispatch = useDispatch();
     const openAppId = getUrlParam('openAppId') || 0;
     const openIndex = getUrlParam('openIndex') || 0;
-    const accessType = getUrlParam('accessType') || 0;
     const thirdPartId = getUrlParam('thirdPartId') || 0;
-    const autoLoginKey = getUrlParam('autoLoginKey') || 0;
-    const accessToken = getUrlParam('accessToken') || '';
+    const accessType = getUrlParam('accessType') || 0;
     const storageKey = getUrlParam('storageKey') || '';
     const langDirection = useSelector(selectCurrentLanguageDirection);
     const currentLanguage = useSelector(selectCurrentLanguage);
     const mainTheme = useSelector(selectMainTheme);
     const token = useSelector(selectUserData).token;
-    const userRole = (token.length > 0 ? token : localStorage.getItem(`Authorization-${openAppId}-${openIndex}`)) ? 'home': '';
+    const WebApp = useWebApp();
     const lang = currentLanguage.id === getUrlParam('lang') ? currentLanguage.id : getUrlParam('lang');
 
 
@@ -68,7 +66,9 @@ const App = () => {
         if (openIndex) {
             window.sessionStorage.setItem('openIndex', openIndex)
         }
-
+        if (thirdPartId) {
+            window.localStorage.setItem('thirdPartId', thirdPartId)
+        }
         if (storageKey) {
             window.localStorage.setItem('storageKey', storageKey)
         }
@@ -77,23 +77,21 @@ const App = () => {
             switch (accessType){
                 case 1:{ //telegramWebApp
                     window.localStorage.setItem('loginType', "telegram_web_app");
-                    window.localStorage.setItem('thirdPartId', thirdPartId)
-                    window.localStorage.setItem('autoLoginKey', autoLoginKey)
-                    //直接设置已经获取到的访问token
-                    if(openAppId && openIndex){
-                        // 去掉末尾的符号
-                        const realAccessToken = accessToken.substring(0, accessType.lastIndexOf("#"));
-                        localStorage.setItem(`Authorization-${openAppId}-${openIndex}`, realAccessToken);
-                    }
+                    //window.localStorage.setItem('autoLoginKey', autoLoginKey)
+                    WebApp.onEvent('popupClosed', function (buttonId, buttonType) {
+                        if(buttonType === "cancel"){
+                            WebApp.close();
+                        }
+                    });
+                    WebApp.onEvent('mainButtonClicked', function () {
+                        //dispatch(checkLoginState());
+                        console.log("click mainButton");
+                    });
                     break;
                 }
                 default:{
-                    if (thirdPartId) {
-                        window.localStorage.setItem('thirdPartId', thirdPartId)
-                    }
-                    if (autoLoginKey) {
-                        window.localStorage.setItem('autoLoginKey', autoLoginKey)
-                    }
+                    //window.localStorage.setItem('thirdPartId', '')
+                    //window.localStorage.setItem('autoLoginKey', '')
                     break;
                 }
             }

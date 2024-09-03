@@ -19,7 +19,7 @@ import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
 import { selectConfig } from "../../store/config";
-import {arrayLookup, judgeIosOrAndroid, setPhoneTab} from "../../util/tools/function";
+import {arrayLookup, getAccessType, setPhoneTab} from "../../util/tools/function";
 import Button from "@mui/material/Button";
 import {
     getFaTPayCryptoTarget,
@@ -35,6 +35,7 @@ import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import { useTranslation } from "react-i18next";
 import { showMessage } from "app/store/fuse/messageSlice";
+import {useWebApp} from '@vkruglikov/react-telegram-web-app';
 
 const container = {
     show: {
@@ -240,11 +241,16 @@ function Buy(props) {
                 })).then((res) => {
                     let result = res.payload
                     if (result.payurl) {
-                        if(judgeIosOrAndroid() === "ios"){
-                            //ios会屏蔽打开新的窗口
-                            window.location.href = result.payurl;
-                        }else{
-                            window.open(result.payurl)
+                        const accessType = getAccessType();
+                        switch (accessType){
+                            case "1": { //telegramWebApp
+                                useWebApp.openLink(result.payurl)
+                                break;
+                            }
+                            default: {
+                                window.open(result.payurl)
+                                break;
+                            }
                         }
                     }
                 });

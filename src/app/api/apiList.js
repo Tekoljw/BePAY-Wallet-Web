@@ -136,8 +136,8 @@ export default {
             url: "/mobile/telegramLogin",
             method: "post",
         },
-        telegramWebAppLogin: {
-            url: "/mobile/telegramWebAppLogin",
+        telegramWebAppSignIn: {
+            url: "/mobile/telegramWebAppSignIn",
             method: "post",
         },
         googleLogin: {
