@@ -403,8 +403,6 @@ function Card(props) {
     };
 
 
-
-
     // !# card逻辑 #!
 
     const dispatch = useDispatch();
@@ -423,6 +421,18 @@ function Card(props) {
     const [applyFeeSymbol, setApplyFeeSymbol] = useState('USDT');
 
     const [currUserCardInfo, setCurrUserCardInfo] = useState({});
+    const [timer, setTimer ] = useState(0);
+    const [updateCard, setUpdateCard] = useState(false);
+
+
+    useEffect(() => {
+        if (timer < 5 && updateCard) {
+            getCardList();
+        } else {
+            setUpdateCard(false)
+            setTimer(0)
+        }
+    }, [timer]);
 
     //获取Config
     const getCardConfig = () => {
@@ -459,14 +469,13 @@ function Card(props) {
             applyDesc: 'card applyDesc'
         })).then((res) => {
             let result = res.payload
-            setTimeout(() => {
-                setIsLoadingBtn(false)
-                setOpenXiangQing(false);
-                setTabValue(0);
-                closeChangeBi();
-                getCardList();
-                myFunction();
-            }, 1000)
+            setUpdateCard(true)
+            setTimer( timer+1)
+            setIsLoadingBtn(false)
+            setOpenXiangQing(false);
+            setTabValue(0);
+            closeChangeBi();
+            myFunction();
         })
     }
 
@@ -478,12 +487,12 @@ function Card(props) {
             userCreditId: currUserCardInfo.id,
             updateType: cardChangetype,
         })).then((res) => {
-            setTimeout(() => {
-                setOpenAnimateModal(false);
-                setOpenCardBtnShow(false);
-                getCardList();
-                myFunction();
-            }, 1500)
+            setOpenAnimateModal(false);
+            setOpenCardBtnShow(false);
+            // getCardList();
+            setUpdateCard(true)
+            setTimer(timer+1)
+            myFunction();
         })
     }
 
@@ -508,6 +517,9 @@ function Card(props) {
                 setCardListObj(tmpCardListObj)
                 console.log(tmpCardList, "tmpCardList")
                 console.log(tmpCardListObj, "tmpCardListObj")
+                setTimeout(()=>{
+                    setTimer(timer+1)
+                }, 1000)
             }
         })
     }
@@ -537,14 +549,13 @@ function Card(props) {
             let result = res.payload
             if (result) {
                 if (result.status === 'success') {
-                    setTimeout(()=>{
-                        dispatch(showMessage({ message: 'success', code: 1 }));
-                        closeRecordFunc()
-                        setTransferMoney(0)
-                        setCardID(0)
-                        getCardList();
-                        myFunction();
-                    }, 1000)
+                    dispatch(showMessage({ message: 'success', code: 1 }));
+                    setUpdateCard(true)
+                    setTimer(timer+1)
+                    closeRecordFunc()
+                    setTransferMoney(0)
+                    setCardID(0)
+                    myFunction();
                 }else {
                     dispatch(showMessage({ message: result.msg, code: 2 }));
                 }
