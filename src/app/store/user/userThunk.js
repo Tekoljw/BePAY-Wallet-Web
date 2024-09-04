@@ -37,7 +37,7 @@ export const checkLoginState = createAsyncThunk(
         if (loginState.errno === 501) { //没有登录
             switch (accessType){
                 case "1":{ //telegramWebApp
-                    console.log(accessType, '请求telegramWebAppLoginApi方式登录');
+                    console.log(accessType, '请求telegramWebAppSignInApi方式登录');
                     dispatch(telegramWebAppSignInApi({
                         telegramId:initDataUnsafe.user.id + '',
                         username:initDataUnsafe.user.username})
