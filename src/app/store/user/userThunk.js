@@ -851,7 +851,7 @@ export const googleQrText = createAsyncThunk(
     'user/googleQrText',
     async (settings, { dispatch, getState }) => {
         let data = {
-            strTile: 'FuniBox',
+            strTile: 'BingFi',
         };
         const userGoogleData = await React.$api("security.getQRText", data);
         if (userGoogleData?.errno === 0) {

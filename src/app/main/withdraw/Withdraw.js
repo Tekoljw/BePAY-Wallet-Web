@@ -255,7 +255,7 @@ function Withdraw(props) {
             setOpenGoogleCode(false);
         }, 300);
     };
-
+    
     const closePasteFunc = () => {
         document.getElementById('PasteSty').classList.remove('PinMoveAni');
         document.getElementById('PasteSty').classList.add('PinMoveOut');

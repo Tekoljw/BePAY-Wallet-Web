@@ -1031,7 +1031,7 @@ function Deposite() {
                     <div className='addressBigW flex justify-between mt-10'>
                         <div className="userIdW   guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
                             <div className="addressW2 flex justify-between guoDuDongHua">
-                                <div className='idZi guoDuDongHua' > <span style={{ color:"#ffffff",marginRight:"10px"}}>{t('card_7')}</span>  {userData?.profile?.user?.id}</div>
+                                <div className='idZi guoDuDongHua' > <span style={{ color: "#ffffff", marginRight: "10px" }}>{t('card_7')}</span>  {userData?.profile?.user?.id}</div>
                                 <img onClick={() => { handleCopyText(userData?.profile?.user?.id) }} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"></img>
                             </div>
                             <QRCode
@@ -1047,7 +1047,7 @@ function Deposite() {
                             />
                             {/*<img className='testQrCodeImg' src="wallet/assets/images/deposite/testCode.png"></img>*/}
                         </div>
-                        <img className='qrCodeImg' src="wallet/assets/images/deposite/newQrCode.png" onClick={() => {
+                        <img className='qrCodeImg ' src="wallet/assets/images/deposite/newQrCode.png" onClick={() => {
                             setShowQRcode(!showQRcode);
                         }} ></img>
                     </div>
@@ -1726,6 +1726,39 @@ function Deposite() {
                         {/*    </AccordionDetails>*/}
                         {/*</StyledAccordion>*/}
                     </Box>
+
+                    <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className="Inside2W"
+                    >
+                        <div className='addressBigW flex justify-between mt-10'>
+                            <div className="userIdW   guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
+                                <div className="addressW2 flex justify-between guoDuDongHua">
+                                    <div className='idZi guoDuDongHua' > <span style={{ color: "#ffffff", marginRight: "10px" }}>{t('card_7')}</span>  {userData?.profile?.user?.id}</div>
+                                    <img onClick={() => { handleCopyText(userData?.profile?.user?.id) }} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"></img>
+                                </div>
+                                <QRCode
+                                    className='testQrCodeImg'
+                                    style={{
+                                        padding: '10px',
+                                        borderRadius: '8px',
+                                        background: '#ffffff',
+                                        margin: '2.6rem auto 1rem auto',
+                                    }}
+                                    size={138}
+                                    value={userData?.profile?.user?.id}
+                                />
+                                {/*<img className='testQrCodeImg' src="wallet/assets/images/deposite/testCode.png"></img>*/}
+                            </div>
+                            <img className='qrCodeImg ' src="wallet/assets/images/deposite/newQrCode.png" onClick={() => {
+                                setShowQRcode(!showQRcode);
+                            }} ></img>
+                        </div>
+                        <div className='px-10 mt-12'><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8", fontSize: "1.3rem" }}>0 transaction fee, received in seconds!</span></div>
+                    </motion.div>
+
                     <Typography className="text-16 px-16 my-10">{t('home_deposite_17')}</Typography>
 
                     {bankCodeList.length > 0 && bankCodeList?.map((bankItem) => {
