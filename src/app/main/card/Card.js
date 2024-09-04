@@ -18,6 +18,7 @@ import Tab from '@mui/material/Tab';
 import { useTranslation } from "react-i18next";
 import AnimateModal from "../../components/FuniModal";
 import LoadingButton from "@mui/lab/LoadingButton";
+import FuseLoading from '@fuse/core/FuseLoading';
 import history from '@history';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Controller, useForm } from 'react-hook-form';
@@ -402,8 +403,6 @@ function Card(props) {
     };
 
 
-
-
     // !# card逻辑 #!
 
     const dispatch = useDispatch();
@@ -422,6 +421,18 @@ function Card(props) {
     const [applyFeeSymbol, setApplyFeeSymbol] = useState('USDT');
 
     const [currUserCardInfo, setCurrUserCardInfo] = useState({});
+    const [timer, setTimer ] = useState(0);
+    const [updateCard, setUpdateCard] = useState(false);
+
+
+    useEffect(() => {
+        if (timer < 5 && updateCard) {
+            getCardList();
+        } else {
+            setUpdateCard(false)
+            setTimer(0)
+        }
+    }, [timer]);
 
     //获取Config
     const getCardConfig = () => {
@@ -458,14 +469,13 @@ function Card(props) {
             applyDesc: 'card applyDesc'
         })).then((res) => {
             let result = res.payload
-            setTimeout(() => {
-                setIsLoadingBtn(false)
-                setOpenXiangQing(false);
-                setTabValue(0);
-                closeChangeBi();
-                getCardList();
-                myFunction();
-            }, 500)
+            setUpdateCard(true)
+            setTimer( timer+1)
+            setIsLoadingBtn(false)
+            setOpenXiangQing(false);
+            setTabValue(0);
+            closeChangeBi();
+            myFunction();
         })
     }
 
@@ -477,12 +487,12 @@ function Card(props) {
             userCreditId: currUserCardInfo.id,
             updateType: cardChangetype,
         })).then((res) => {
-            setTimeout(() => {
-                setOpenAnimateModal(false);
-                setOpenCardBtnShow(false);
-                getCardList();
-                myFunction();
-            }, 1000)
+            setOpenAnimateModal(false);
+            setOpenCardBtnShow(false);
+            // getCardList();
+            setUpdateCard(true)
+            setTimer(timer+1)
+            myFunction();
         })
     }
 
@@ -507,6 +517,9 @@ function Card(props) {
                 setCardListObj(tmpCardListObj)
                 console.log(tmpCardList, "tmpCardList")
                 console.log(tmpCardListObj, "tmpCardListObj")
+                setTimeout(()=>{
+                    setTimer(timer+1)
+                }, 1000)
             }
         })
     }
@@ -517,6 +530,7 @@ function Card(props) {
     * oprate 默认1 转入 / 0 转出
     * */
     const doTransferCrypto = (oprate = 1) => {
+        setIsLoadingBtn(true)
         let doFun
         if (oprate === 1) {
             doFun = creditCardCryptoDeposit
@@ -531,13 +545,19 @@ function Card(props) {
             chain: 'trc',
             amount: transferMoney,
         })).then((res) => {
+            setIsLoadingBtn(false)
             let result = res.payload
             if (result) {
-                dispatch(showMessage({ message: result.msg, code: 2 }));
                 if (result.status === 'success') {
+                    dispatch(showMessage({ message: 'success', code: 1 }));
+                    setUpdateCard(true)
+                    setTimer(timer+1)
                     closeRecordFunc()
                     setTransferMoney(0)
                     setCardID(0)
+                    myFunction();
+                }else {
+                    dispatch(showMessage({ message: result.msg, code: 2 }));
                 }
             }
         })
@@ -811,13 +831,14 @@ function Card(props) {
                                                             </div>
 
                                                             <div className='cardGongNengMyDi' style={{ position: "relative" }}>
-                                                                <Accordion className='gongNengTan1' >
+                                                                <Accordion className='gongNengTan1' disabled={ cardItem?.state == 9}>
                                                                     <AccordionSummary
                                                                         expandIcon={<ExpandMoreIcon />}
                                                                         aria-controls="panel1-content"
                                                                         id="panel1-header"
                                                                         className='gongNengTan2'
                                                                         onClick={() => {
+                                                                            if(cardItem && cardItem.state == 9) return;
                                                                             setCurrUserCardInfo(cardItem);
                                                                         }}
                                                                     >
@@ -826,9 +847,8 @@ function Card(props) {
                                                                                 <div className=''>{t('home_record_9')}</div>
                                                                                 <div className='ml-8 yuEZi'>${cardItem.amount ?? '0.00'}</div>
                                                                             </div>
-                                                                            <div
-                                                                                className='cardDepositeDi'
-                                                                            >{t('card_16')}</div>
+                                                                            <div className='cardDepositeDi'>{t('card_16')}</div>
+                                                                            
                                                                         </div>
                                                                     </AccordionSummary>
 
@@ -882,6 +902,7 @@ function Card(props) {
                                                                     </AccordionDetails>
                                                                 </Accordion>
                                                                 <div className='h-40 w-40  mr-40' style={{ position: "absolute", top: "12%", right: "0%" }} onClick={() => {
+                                                                    if(cardItem && cardItem.state == 9) return;
                                                                     setOpenRecordWindow(true)
                                                                     setCardID(cardItem.id)
                                                                     setCardConfigID(cardItem.creditConfigId)
@@ -1758,14 +1779,18 @@ function Card(props) {
                                         onClick={() => { handleDoMoney('.') }}>.</div>
                                 </div>
                             </div>
-                            <div id='zhuanZhangWanCheng' className='jianPanBtn3'
-                                onTouchStart={changeToBlack}
-                                onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}
-                                onClick={() => {
-                                    handleTransferCrypto()
-                                    // setOpenZhiFu(true)
-                                }}>{t('card_30')}</div>
+                            { isLoadingBtn && <FuseLoading />}
+                            { !isLoadingBtn &&
+                                <div id='zhuanZhangWanCheng' className='jianPanBtn3'
+                                    onTouchStart={changeToBlack}
+                                    onTouchEnd={changeToWhite}
+                                    onTouchCancel={changeToWhite}
+                                    onClick={() => {
+                                        handleTransferCrypto()
+                                        // setOpenZhiFu(true)
+                                    }}>{t('card_30')}
+                                    </div>
+                            }
                         </div>
                     </div>
 

@@ -861,7 +861,7 @@ export const googleQrText = createAsyncThunk(
     'user/googleQrText',
     async (settings, { dispatch, getState }) => {
         let data = {
-            strTile: 'FuniBox',
+            strTile: 'BingFi',
         };
         const userGoogleData = await React.$api("security.getQRText", data);
         if (userGoogleData?.errno === 0) {
@@ -921,6 +921,7 @@ export const transferRecords = createAsyncThunk(
             month: settings.month,
             page: settings.page,
             limit: settings.limit,
+            userCreditNo: settings.userCreditNo
         };
         const tranferList = await React.$api("transfer.records", data);
         if (tranferList.errno === 0) {
