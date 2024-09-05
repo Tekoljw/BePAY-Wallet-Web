@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import ComingSoon from "../coming-soon/ComingSoon";
 import web3 from '../../util/web3';
-import {arrayLookup, getLoginType, getAutoLoginKey, getThirdPartId, setPhoneTab} from "../../util/tools/function";
+import {arrayLookup, getAccessType, getAutoLoginKey, getThirdPartId, setPhoneTab} from "../../util/tools/function";
 import { selectConfig } from "app/store/config";
 import { showMessage } from 'app/store/fuse/messageSlice';
 import MobileDetect from 'mobile-detect';
@@ -35,7 +35,6 @@ import { loginTelegram, requestUserLoginData } from "../../util/tools/loginFunct
 // import FuseLoading from '@fuse/core/FuseLoading';
 import clsx from 'clsx';
 import {checkLoginState} from "app/store/user/userThunk";
-import loginType from "../../define/loginType";
 
 const Root = styled(FusePageCarded)(({ theme }) => ({
     '& .FusePageCarded-header': {},
@@ -120,19 +119,19 @@ function HomePage(props) {
     }, [config.networks]);
 
     useEffect(() => {
-        const curLoginType = getLoginType()
-        console.log(curLoginType, '请求的 curLoginType');
-        switch (curLoginType){
-            case loginType.LOGIN_TYPE_TELEGRAM_WEB_APP:{
+        const accessType = getAccessType();
+        console.log(accessType, '请求的 accessType');
+        switch (accessType){
+            case "1":{ //telegramWebApp
                 setMenuShow(true);
                 setLeftSidebarOpen(false);
 
-                console.log(curLoginType, '请求checkLoginState,检查登录状态')
+                console.log(accessType, '请求checkLoginState,检查登录状态')
                 dispatch(checkLoginState());
                 break;
             }
             default:{
-                console.log(curLoginType, '请求默认方式登录');
+                console.log(accessType, '请求默认方式登录');
                 requestUserLoginData(dispatch);
                 break;
             }
