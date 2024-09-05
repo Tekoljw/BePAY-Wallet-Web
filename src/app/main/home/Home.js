@@ -129,6 +129,7 @@ function HomePage(props) {
             case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP:{ //telegramWebApp
                 setMenuShow(true);
                 setLeftSidebarOpen(false);
+                window.Telegram?.WebApp?.ready();
                 break;
             }
             default:{
