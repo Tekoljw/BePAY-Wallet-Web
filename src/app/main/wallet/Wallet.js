@@ -9,7 +9,14 @@ import history from "@history";
 import { useSelector, useDispatch } from "react-redux";
 import { selectConfig } from "../../store/config";
 import { selectUserData } from "../../store/user";
-import { arrayLookup, getOpenAppId, getOpenAppIndex, getUrlParam, setPhoneTab } from "../../util/tools/function";
+import {
+  arrayLookup,
+  getLoginType,
+  getOpenAppId,
+  getOpenAppIndex,
+  getUrlParam,
+  setPhoneTab
+} from "../../util/tools/function";
 import { updateCurrency, updateWalletDisplay } from "../../store/user";
 import { showMessage } from "app/store/fuse/messageSlice";
 import { centerGetNftList } from '../../store/wallet/walletThunk';
@@ -200,7 +207,7 @@ function Wallet() {
   );
   const [walletImage, setWalletImage] = useState("");
 
-  const loginType = window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType;
+  const loginType =  getLoginType();
   useEffect(() => {
     if (window.sessionStorage.getItem("openAppId")) {
       if (openType.list[0].no == window.sessionStorage.getItem("openAppId")) {

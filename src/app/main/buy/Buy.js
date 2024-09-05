@@ -19,7 +19,7 @@ import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
 import { selectConfig } from "../../store/config";
-import {arrayLookup, getAccessType, setPhoneTab} from "../../util/tools/function";
+import {arrayLookup, getLoginType, setPhoneTab} from "../../util/tools/function";
 import Button from "@mui/material/Button";
 import {
     getFaTPayCryptoTarget,
@@ -35,7 +35,7 @@ import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import { useTranslation } from "react-i18next";
 import { showMessage } from "app/store/fuse/messageSlice";
-import {useWebApp} from '@vkruglikov/react-telegram-web-app';
+import loginType from "../../define/loginType";
 
 const container = {
     show: {
@@ -241,10 +241,10 @@ function Buy(props) {
                 })).then((res) => {
                     let result = res.payload
                     if (result.payurl) {
-                        const accessType = getAccessType();
-                        switch (accessType){
-                            case "1": { //telegramWebApp
-                                useWebApp.openLink(result.payurl)
+                        const curLoginType = getLoginType()
+                        switch (curLoginType){
+                            case loginType.LOGIN_TYPE_TELEGRAM_WEB_APP: {
+                                window.Telegram.WebApp.openLink(result.payurl)
                                 break;
                             }
                             default: {

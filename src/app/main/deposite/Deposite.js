@@ -25,7 +25,14 @@ import '../../../styles/home.css';
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
 import { selectConfig } from "../../store/config";
-import { arrayLookup, getOpenAppId, getOpenAppIndex, setPhoneTab, handleCopyText } from "../../util/tools/function";
+import {
+    arrayLookup,
+    getOpenAppId,
+    getOpenAppIndex,
+    setPhoneTab,
+    handleCopyText,
+    getLoginType
+} from "../../util/tools/function";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { foxSendTransaction, manualCryptoNotify } from "../../store/transfer/transferThunk";
 import {
@@ -327,7 +334,7 @@ function Deposite() {
         setInputVal({ ...transferFormData, [prop]: value });
     };
 
-    const loginType = window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType;
+    const loginType = getLoginType();
 
     //转账
     const BransferSubmit = () => {
