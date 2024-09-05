@@ -21,12 +21,11 @@ export const checkLoginState = createAsyncThunk(
     'user/checkLoginState',
     async (settings, { dispatch, getState }) => {
         const accessType = getAccessType();
-        console.log(accessType, '请求checkLoginState进行登录检查11111');
+        console.log(accessType, '请求checkLoginState进行登录检查');
         let loginUserId = "none";
         switch (accessType){
             case "1": { //telegramWebApp
                 const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
-                console.log(initDataUnsafe, '请求checkLoginState进行登录检查22222');
                 if(initDataUnsafe.user){
                     loginUserId = initDataUnsafe.user.username + "_" + initDataUnsafe.user.id;
                 }
@@ -36,14 +35,12 @@ export const checkLoginState = createAsyncThunk(
         let data = {
             autoLoginUserId: loginUserId,
         };
-        console.log(accessType, '请求checkLoginState进行登录检查3333');
         const loginState = await React.$api("user.checkLoginState", data);
         if (loginState.errno === 501) { //没有登录
             switch (accessType){
                 case "1":{ //telegramWebApp
                     console.log(accessType, '请求telegramWebAppSignInApi方式登录');
                     const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
-                    console.log(accessType, '请求checkLoginState进行登录检查33333');
                     dispatch(telegramWebAppSignInApi({
                         telegramId:initDataUnsafe.user.id + '',
                         username:initDataUnsafe.user.username})
