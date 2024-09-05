@@ -1,4 +1,3 @@
-//用户类型定义
 export default {
 
     USER_TYPE_WALLET : 0,
