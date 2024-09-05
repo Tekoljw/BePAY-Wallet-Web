@@ -12,19 +12,20 @@ import walletEthereum from '../../util/web3/walletEthereum';
 import settingsConfig from 'app/configs/settingsConfig';
 import loginWays from '../../main/login/loginWays'
 import { EthereumProvider } from '@walletconnect/ethereum-provider';
-import {getAccessType, getAutoLoginKey, getThirdPartId} from "../../util/tools/function";
+import {getLoginType, getThirdPartId} from "../../util/tools/function";
 import {requestUserLoginData} from "../../util/tools/loginFunction";
 import {changeLanguage} from "app/store/i18nSlice";
+import loginType from "../../define/loginType";
 
 // 检查用户是否已经登录
 export const checkLoginState = createAsyncThunk(
     'user/checkLoginState',
     async (settings, { dispatch, getState }) => {
-        const accessType = getAccessType();
-        console.log(accessType, '请求checkLoginState进行登录检查');
+        const curLoginType = getLoginType();
+        console.log(curLoginType, '请求checkLoginState进行登录检查');
         let loginUserId = "none";
-        switch (accessType){
-            case "1": { //telegramWebApp
+        switch (curLoginType){
+            case loginType.LOGIN_TYPE_TELEGRAM_WEB_APP: { //telegramWebApp
                 const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
                 if(initDataUnsafe.user){
                     loginUserId = initDataUnsafe.user.username + "_" + initDataUnsafe.user.id;
@@ -37,9 +38,9 @@ export const checkLoginState = createAsyncThunk(
         };
         const loginState = await React.$api("user.checkLoginState", data);
         if (loginState.errno === 501) { //没有登录
-            switch (accessType){
-                case "1":{ //telegramWebApp
-                    console.log(accessType, '请求telegramWebAppSignInApi方式登录');
+            switch (curLoginType){
+                case loginType.LOGIN_TYPE_TELEGRAM_WEB_APP:{ //telegramWebApp
+                    console.log(loginType, '请求telegramWebAppSignInApi方式登录');
                     const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
                     dispatch(telegramWebAppSignInApi({
                         telegramId:initDataUnsafe.user.id + '',
@@ -193,8 +194,8 @@ export const facebookLoginApi = createAsyncThunk(
         if (userLoginData.errno === 0) {
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userLoginData));
-            const accessType = getAccessType();
-            if(accessType !== 0){ //其他第三方直接登录成功后，开启请求基础数据
+            const curLoginType = getLoginType();
+            if(curLoginType === loginType.LOGIN_TYPE_TELEGRAM_WEB_APP){ //其他第三方直接登录成功后，开启请求基础数据
                 requestUserLoginData(dispatch);
             }
             if (config.storageKey) {
@@ -218,8 +219,8 @@ export const telegramLoginApi = createAsyncThunk(
         if (userLoginData.errno === 0) {
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userLoginData));
-            const accessType = getAccessType();
-            if(accessType !== 0){ //其他第三方直接登录成功后，开启请求基础数据
+            const curLoginType = getLoginType();
+            if(curLoginType === loginType.LOGIN_TYPE_TELEGRAM_WEB_APP){ //其他第三方直接登录成功后，开启请求基础数据
                 requestUserLoginData(dispatch);
             }
             if (config.storageKey) {

@@ -1,4 +1,7 @@
 // 公共方法
+import {useSelector} from "react-redux";
+import {selectUserData} from "app/store/user";
+
 export const getUrlParam = (param) => {
     const res = window.location.href;
     const URL = res.split('?')[1];
@@ -24,9 +27,10 @@ export const getOpenAppIndex = () => {
     return  window.sessionStorage.getItem('openIndex') || 0;
 };
 
-// 获取accessType(0:正常方式，1:telegram小程序)
-export const getAccessType = () => {
-    return window.localStorage.getItem('accessType') || 0;
+// 获取LoginType(0:正常方式，1:telegram小程序)
+export const getLoginType = () => {
+    const userData = useSelector(selectUserData);
+    return window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType;
 }
 
 // 获取thirdPartId(0:不使用第三方，其他为使用的第三方ID)

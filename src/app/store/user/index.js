@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import history from '@history';
 import { useHistory } from 'react-router-dom';
-import {getAccessType, getAutoLoginKey, getOpenAppId, getOpenAppIndex, getThirdPartId} from "../../util/tools/function";
+import {getLoginType, getAutoLoginKey, getOpenAppId, getOpenAppIndex, getThirdPartId} from "../../util/tools/function";
 import {showMessage} from "app/store/fuse/messageSlice";
 import {checkLoginState} from "app/store/user/userThunk";
 import {requestUserLoginData} from "../../util/tools/loginFunction";
+import loginType from "../../define/loginType";
 // state
 const initialState = {
     token: '',
@@ -34,11 +35,11 @@ const userSlice = createSlice({
                 const openIndex = getOpenAppIndex();
                 window.localStorage.setItem(`Authorization-${openAppId}-${openIndex}`, res.data.token);
 
-                const accessType = getAccessType();
+                const curLoginType = getLoginType();
                 setTimeout(() => {
 
-                    switch (accessType){
-                        case "1":{ //telegramWebApp
+                    switch (curLoginType){
+                        case loginType.LOGIN_TYPE_TELEGRAM_WEB_APP:{
                             //不跳转页面
                             break;
                         }

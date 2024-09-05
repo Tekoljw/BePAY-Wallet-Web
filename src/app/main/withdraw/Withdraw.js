@@ -25,7 +25,14 @@ import { tokenTransfer } from "../../store/user/userThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { selectConfig } from "../../store/config";
-import { arrayLookup, getNowTime, getOpenAppId, getOpenAppIndex, setPhoneTab } from "../../util/tools/function";
+import {
+    arrayLookup,
+    getLoginType,
+    getNowTime,
+    getOpenAppId,
+    getOpenAppIndex,
+    setPhoneTab
+} from "../../util/tools/function";
 import { openScan, closeScan } from "../../util/tools/scanqrcode";
 import { getWithDrawConfig, WalletConfigDefineMap, evalTokenTransferFee, cryptoWithdrawFee, getWithdrawHistoryAddress, delWithdrawHistoryAddress, getWithdrawTransferStats, createPin, verifyPin } from "app/store/wallet/walletThunk";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
@@ -573,7 +580,7 @@ function Withdraw(props) {
     const [networkData, setNetworkData] = useState([]);
     const [networkId, setNetworkId] = useState(0);
 
-    const loginType = window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType;
+    const loginType = getLoginType();
 
     const defaultValues = {
         email: '',
