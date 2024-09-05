@@ -125,6 +125,7 @@ const locale = {
     home_borrow_15: 'ন্যূনতম প্রাপ্ত পরিমাণ:',
     home_borrow_16: 'ফি:',
     home_borrow_17: 'নিশ্চিত করুন',
+    home_borrow_18: 'ফি',
     
     home_swap_1: 'থেকে',
     home_swap_2: 'পর্যন্ত',

@@ -125,6 +125,7 @@ const locale = {
     home_borrow_15: 'Mindestempfangsmenge:',
     home_borrow_16: 'Gebühr:',
     home_borrow_17: 'Bestätigen',
+    home_borrow_18: 'Gebühr',
     
     home_swap_1: 'Von',
     home_swap_2: 'Zu',

@@ -117,6 +117,7 @@ const locale = {
     home_borrow_15: 'Quantidade mínima recebida:',
     home_borrow_16: 'Taxa:',
     home_borrow_17: 'Confirmar',
+    home_borrow_18: 'Taxa',
 
     home_borrow_1: 'Lock',
     home_borrow_2: 'Borrow',

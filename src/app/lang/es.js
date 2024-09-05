@@ -125,6 +125,7 @@ const locale = {
     home_borrow_15: 'Cantidad mínima recibida:',
     home_borrow_16: 'Tarifa:',
     home_borrow_17: 'Confirmar',
+    home_borrow_18: 'Tarifa',
 
     
     home_swap_1: 'De',

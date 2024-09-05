@@ -125,6 +125,7 @@ const locale = {
     home_borrow_15: '最小接收金额:',
     home_borrow_16: '手续费:',
     home_borrow_17: '确认',
+    home_borrow_18: '手续费',
 
     home_swap_1: '从',
     home_swap_2: '到',

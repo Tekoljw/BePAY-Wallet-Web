@@ -125,6 +125,7 @@ const locale = {
     home_borrow_15: 'အနည်းဆုံးလက်လီသောပမာဏ:',
     home_borrow_16: 'အကောင်းစာရင်း:',
     home_borrow_17: 'အတည်ပြုခြင်း',
+    home_borrow_18: 'အကောင်းစာရင်း',
 
     home_swap_1: 'မှ',
     home_swap_2: 'သို့',

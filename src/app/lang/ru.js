@@ -125,6 +125,7 @@ const locale = {
     home_borrow_15: 'Минимальная сумма для получения:',
     home_borrow_16: 'Комиссия:',
     home_borrow_17: 'Подтвердить',
+    home_borrow_18: 'Комиссия',
     
     home_swap_1: 'От',
     home_swap_2: 'К',

@@ -125,6 +125,7 @@ const locale = {
     home_borrow_15: '最小受取額：',
     home_borrow_16: '手数料：',
     home_borrow_17: '確認',
+    home_borrow_18: '手数料',
     
     home_swap_1: '送信元',
     home_swap_2: '受信先',

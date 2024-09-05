@@ -127,6 +127,7 @@ const locale = {
     home_borrow_15: 'न्यूनतम प्राप्त राशि:',
     home_borrow_16: 'शुल्क:',
     home_borrow_17: 'पुष्टि करें',
+    home_borrow_18: 'शुल्क',
     
     home_swap_1: 'से',
     home_swap_2: 'को',

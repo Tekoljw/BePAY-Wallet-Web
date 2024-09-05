@@ -124,6 +124,7 @@ const locale = {
     home_borrow_15: 'Minimum Alınan Miktar:',
     home_borrow_16: 'Ücret:',
     home_borrow_17: 'Onayla',
+    home_borrow_18: 'Ücret',
     
     home_swap_1: 'Nereden',
     home_swap_2: 'Nereye',

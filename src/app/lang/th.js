@@ -125,6 +125,7 @@ const locale = {
     home_borrow_15: 'จำนวนขั้นต่ำที่ได้รับ:',
     home_borrow_16: 'ค่าธรรมเนียม:',
     home_borrow_17: 'ยืนยัน',
+    home_borrow_18: 'ค่าธรรมเนียม',
     
     home_swap_1: 'จาก',
     home_swap_2: 'ไปยัง',

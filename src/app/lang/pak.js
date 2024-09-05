@@ -125,6 +125,7 @@ const locale = {
     home_borrow_15: 'کم از کم موصولی مقدار:',
     home_borrow_16: 'فیس:',
     home_borrow_17: 'تصدیق',
+    home_borrow_18: 'فیس',
 
     home_swap_1: 'سے',
     home_swap_2: 'کو',

@@ -125,6 +125,7 @@ const locale = {
     home_borrow_15: 'Jumlah Minimum yang Diterima:',
     home_borrow_16: 'Biaya:',
     home_borrow_17: 'Konfirmasi',
+    home_borrow_18: 'Biaya',
 
     home_swap_1: 'Dari',
     home_swap_2: 'Ke',

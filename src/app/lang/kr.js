@@ -126,6 +126,7 @@ const locale = {
     home_borrow_15: '최소 수령 금액:',
     home_borrow_16: '수수료:',
     home_borrow_17: '확인',
+    home_borrow_18: '수수료',
     
     home_swap_1: '출발',
     home_swap_2: '도착',

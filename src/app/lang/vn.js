@@ -116,6 +116,7 @@ const locale = {
     home_borrow_15: 'Số lượng nhận tối thiểu:',
     home_borrow_16: 'Phí:',
     home_borrow_17: 'Xác nhận',
+    home_borrow_18: 'Phí',
     
     home_swap_1: 'Từ',
     home_swap_2: 'Đến',

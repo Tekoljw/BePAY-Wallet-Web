@@ -125,6 +125,7 @@ const locale = {
     home_borrow_15: 'குறைந்த பெறுமதி தொகை:',
     home_borrow_16: 'கட்டணம்:',
     home_borrow_17: 'உறுதிப்படுத்துக',
+    home_borrow_18: 'கட்டணம்',
 
     
     home_swap_1: 'இருந்து',

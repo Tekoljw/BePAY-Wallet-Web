@@ -125,6 +125,7 @@ const locale = {
     home_borrow_15: 'Minimum na Natanggap na Halaga:',
     home_borrow_16: 'Bayad:',
     home_borrow_17: 'Kumpirmahin',
+    home_borrow_18: 'Bayad',
 
     
     home_swap_1: 'Mula',

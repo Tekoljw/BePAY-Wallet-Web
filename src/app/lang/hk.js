@@ -125,6 +125,7 @@ const locale = {
     home_borrow_15: '最低接收量：',
     home_borrow_16: '費用：',
     home_borrow_17: '確認',
+    home_borrow_18: '費用',
 
     home_swap_1: '從',
     home_swap_2: '到',

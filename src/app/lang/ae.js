@@ -126,6 +126,7 @@ const locale = {
     home_borrow_15: 'الحد الأدنى للمبلغ المستلم:',
     home_borrow_16: 'الرسوم:',
     home_borrow_17: 'تأكيد',
+    home_borrow_18: 'الرسوم',
     
     home_swap_1: 'من',
     home_swap_2: 'إلى',
