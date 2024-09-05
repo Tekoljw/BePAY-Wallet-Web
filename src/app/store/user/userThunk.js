@@ -15,29 +15,35 @@ import { EthereumProvider } from '@walletconnect/ethereum-provider';
 import {getAccessType, getAutoLoginKey, getThirdPartId} from "../../util/tools/function";
 import {requestUserLoginData} from "../../util/tools/loginFunction";
 import {changeLanguage} from "app/store/i18nSlice";
-import { useInitData } from '@vkruglikov/react-telegram-web-app';
 
 // 检查用户是否已经登录
 export const checkLoginState = createAsyncThunk(
     'user/checkLoginState',
     async (settings, { dispatch, getState }) => {
         const accessType = getAccessType();
-        const [initDataUnsafe] = useInitData();
-        let loginUserId = "";
+        console.log(accessType, '请求checkLoginState进行登录检查11111');
+        let loginUserId = "none";
         switch (accessType){
             case "1": { //telegramWebApp
-                loginUserId = initDataUnsafe.user.username + "_" + initDataUnsafe.user.id;
+                const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
+                console.log(initDataUnsafe, '请求checkLoginState进行登录检查22222');
+                if(initDataUnsafe.user){
+                    loginUserId = initDataUnsafe.user.username + "_" + initDataUnsafe.user.id;
+                }
                 break;
             }
         }
         let data = {
             autoLoginUserId: loginUserId,
         };
+        console.log(accessType, '请求checkLoginState进行登录检查3333');
         const loginState = await React.$api("user.checkLoginState", data);
         if (loginState.errno === 501) { //没有登录
             switch (accessType){
                 case "1":{ //telegramWebApp
                     console.log(accessType, '请求telegramWebAppSignInApi方式登录');
+                    const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
+                    console.log(accessType, '请求checkLoginState进行登录检查33333');
                     dispatch(telegramWebAppSignInApi({
                         telegramId:initDataUnsafe.user.id + '',
                         username:initDataUnsafe.user.username})

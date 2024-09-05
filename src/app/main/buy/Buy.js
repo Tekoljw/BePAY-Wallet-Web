@@ -244,7 +244,7 @@ function Buy(props) {
                         const accessType = getAccessType();
                         switch (accessType){
                             case "1": { //telegramWebApp
-                                useWebApp.openLink(result.payurl)
+                                window.Telegram.WebApp.openLink(result.payurl)
                                 break;
                             }
                             default: {

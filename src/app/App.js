@@ -17,7 +17,6 @@ import {selectUserData} from "./store/user";
 import {getUrlParam} from "./util/tools/function";
 import { getKycInfo } from "app/store/payment/paymentThunk";
 import { changeLanguage } from "./store/i18nSlice";
-import { useWebApp } from '@vkruglikov/react-telegram-web-app';
 
 // import axios from 'axios';
 /**
@@ -51,7 +50,6 @@ const App = () => {
     const currentLanguage = useSelector(selectCurrentLanguage);
     const mainTheme = useSelector(selectMainTheme);
     const token = useSelector(selectUserData).token;
-    const WebApp = useWebApp();
     const lang = currentLanguage.id === getUrlParam('lang') ? currentLanguage.id : getUrlParam('lang');
 
 
@@ -78,12 +76,12 @@ const App = () => {
                 case 1:{ //telegramWebApp
                     window.localStorage.setItem('loginType', "telegram_web_app");
                     //window.localStorage.setItem('autoLoginKey', autoLoginKey)
-                    WebApp.onEvent('popupClosed', function (buttonId, buttonType) {
-                        if(buttonType === "cancel"){
-                            WebApp.close();
+                    window.Telegram.WebApp.onEvent('popupClosed', function (buttonId) {
+                        if(buttonId === "cancel"){
+                            window.Telegram.WebApp.close();
                         }
                     });
-                    WebApp.onEvent('mainButtonClicked', function () {
+                    window.Telegram.WebApp.onEvent('mainButtonClicked', function () {
                         //dispatch(checkLoginState());
                         console.log("click mainButton");
                     });

@@ -126,7 +126,7 @@ function HomePage(props) {
                 setMenuShow(true);
                 setLeftSidebarOpen(false);
 
-                console.log(accessType, '请求telegramWebAppLoginApi方式登录,检查登录状态')
+                console.log(accessType, '请求checkLoginState,检查登录状态')
                 dispatch(checkLoginState());
                 break;
             }
