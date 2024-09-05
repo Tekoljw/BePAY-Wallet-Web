@@ -172,6 +172,7 @@ function Fiat(props) {
                 });
             }, 1000);
         } else {
+            let entryType = getEntryType(currencyCode)
             let bankName = ''
             if (entryType === 'MMK_TRANSFER_KBZ') {
                 bankName = 'KBZ_Pay'
@@ -722,8 +723,6 @@ function Fiat(props) {
                                                     <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
                                                 </div>
                                             </div>
-
-
                                         </div>}
 
                                         {payoutList[currencyCode]?.length > 0 && <>

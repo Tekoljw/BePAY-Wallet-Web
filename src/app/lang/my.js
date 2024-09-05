@@ -528,7 +528,7 @@ const locale = {
     card_174: "alamat surat-menyurat",
     card_175: "pengguna",
     card_176: "masukkan kata laluan dinamik 6 digit",
-
+    card_177:"Tiada yuran, pemindahan segera!",
 
 
 

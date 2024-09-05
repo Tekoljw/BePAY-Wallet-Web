@@ -529,7 +529,7 @@ const locale = {
     card_174: "adres korespondencyjny",
     card_175: "użytkownik",
     card_176: "wprowadź 6-cyfrowe dynamiczne hasło",
-
+    card_177:"Bez opłat, natychmiastowy transfer!",
 
 
 

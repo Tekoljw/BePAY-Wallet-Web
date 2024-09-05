@@ -368,7 +368,7 @@ const locale = {
     error_41: "Current chain error.",
 
     card_1: "Record",
-    card_2: "Credit Card",
+    card_2: "My Cards",
     card_3: "Recive",
     card_4: "Send",
     card_5:"Buy",
@@ -535,6 +535,7 @@ const locale = {
     card_174: "mailing address",
     card_175: "user",
     card_176: "enter the 6-digit dynamic password",
+    card_177:"No fees, instant transfer!",
 };
 
 export default locale;

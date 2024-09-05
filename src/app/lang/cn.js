@@ -530,11 +530,12 @@ const locale = {
     card_171: "转出",
     card_172: "签到",
     card_173: "昨日总交易量",
-    kyc_41:"此处为必填项不能为空",
+    kyc_41: "此处为必填项不能为空",
     home_record_0: '全部',
     card_174: "通讯地址",
     card_175: "用户",
     card_176: "输入6位动态密码",
+    card_177: "无手续费，秒速到账！"
 };
 
 export default locale;

@@ -528,7 +528,7 @@ const locale = {
     card_174: "alamat surat",
     card_175: "pengguna",
     card_176: "masukkan kata sandi dinamis 6 digit",
-
+    card_177:"Tanpa biaya, dana masuk seketika!",
 
 
     };

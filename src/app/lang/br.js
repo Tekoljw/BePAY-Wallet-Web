@@ -528,6 +528,7 @@ const locale = {
     card_174: "endereço de correspondência",
     card_175: "usuário",
     card_176: "insira a senha dinâmica de 6 dígitos",
+    card_177:"Sem taxas, pagamento instantâneo!",
  };
 export default locale;
     

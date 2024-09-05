@@ -527,7 +527,7 @@ const locale = {
     card_174: "postiosoite",
     card_175: "käyttäjä",
     card_176: "syötä 6-numeroinen dynaaminen salasana",
-
+    card_177:"Ei maksuja, välitön siirto!",
 
 
     };

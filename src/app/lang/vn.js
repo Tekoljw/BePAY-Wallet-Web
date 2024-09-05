@@ -518,6 +518,7 @@ const locale = {
     card_174: "địa chỉ thư tín",
     card_175: "người dùng",
     card_176: "nhập mật khẩu động 6 chữ số",
+    card_177:"Không phí, chuyển khoản ngay lập tức!",
     };
 
 export default locale;

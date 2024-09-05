@@ -528,7 +528,7 @@ const locale = {
     card_174: "dirección postal",
     card_175: "usuario",
     card_176: "ingrese la contraseña dinámica de 6 dígitos",
-
+    card_177:"¡Sin comisiones, transferencia instantánea!",
 
 };
 export default locale;

@@ -526,7 +526,7 @@ const locale = {
     card_174: "posta adresi",
     card_175: "kullanıcı",
     card_176: "6 haneli dinamik şifreyi girin",
-
+    card_177:"Ücret yok, anında transfer!",
 
 
 

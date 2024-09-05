@@ -21,7 +21,7 @@ import { useNavigate } from 'react-router-dom';
 import '../../../styles/home.css';
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
-import { tokenTransfer } from "../../store/user/userThunk";
+import { sendTips, tokenTransfer } from "../../store/user/userThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { selectConfig } from "../../store/config";
@@ -255,7 +255,7 @@ function Withdraw(props) {
             setOpenGoogleCode(false);
         }, 300);
     };
-    
+
     const closePasteFunc = () => {
         document.getElementById('PasteSty').classList.remove('PinMoveAni');
         document.getElementById('PasteSty').classList.add('PinMoveOut');

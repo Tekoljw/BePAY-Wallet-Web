@@ -529,7 +529,7 @@ const locale = {
     card_174: "address ng koreo",
     card_175: "gumagamit",
     card_176: "ipasok ang 6-digit na dynamic na password",
-
+    card_177:"Walang bayad, instant transfer!",
 
 
 
