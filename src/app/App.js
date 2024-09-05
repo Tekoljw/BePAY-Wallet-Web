@@ -17,6 +17,7 @@ import {selectUserData} from "./store/user";
 import {getUrlParam} from "./util/tools/function";
 import { getKycInfo } from "app/store/payment/paymentThunk";
 import { changeLanguage } from "./store/i18nSlice";
+import userLoginType from "./define/userLoginType";
 
 // import axios from 'axios';
 /**
@@ -74,7 +75,7 @@ const App = () => {
             window.localStorage.setItem('accessType', accessType);
             switch (accessType){
                 case 1:{ //telegramWebApp
-                    window.localStorage.setItem('loginType', "telegram_web_app");
+                    window.localStorage.setItem('loginType', userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP);
                     //window.localStorage.setItem('autoLoginKey', autoLoginKey)
                     window.Telegram.WebApp.onEvent('popupClosed', function (buttonId) {
                         if(buttonId === "cancel"){

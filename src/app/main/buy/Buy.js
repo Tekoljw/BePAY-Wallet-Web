@@ -35,7 +35,6 @@ import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import { useTranslation } from "react-i18next";
 import { showMessage } from "app/store/fuse/messageSlice";
-import {useWebApp} from '@vkruglikov/react-telegram-web-app';
 
 const container = {
     show: {
