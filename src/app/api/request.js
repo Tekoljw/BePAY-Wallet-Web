@@ -1,10 +1,11 @@
 import axios from 'axios'
 import history from '@history'
-import {getAccessType, getOpenAppId, getOpenAppIndex} from "../util/tools/function";
+import {getOpenAppId, getOpenAppIndex, getUserLoginType} from "../util/tools/function";
 import {requestUserLoginData} from "../util/tools/loginFunction";
 import MobileDetect from 'mobile-detect';
 import useThemeMediaQuery from "../../@fuse/hooks/useThemeMediaQuery";
 import { isMobile } from "../util/tools/function";
+import userLoginType from "../define/userLoginType";
 
 const service = axios.create({
     timeout: 50000, // request timeout
@@ -40,8 +41,8 @@ service.interceptors.response.use(
     response => {
         const res = response.data;
         if (res.errno === 501) { //api 请求返回没有验证登录就跳转登录页面
-            const accessType = getAccessType();
-            if(accessType !== 0){ //其他第三方自动登录成功后，开启请求基础数据
+            const loginType = getUserLoginType();
+            if(loginType === userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP){ //其他第三方自动登录成功后，开启请求基础数据
                 //第三方自动登录，暂时不做处理
             }else{
                 setTimeout(() => {

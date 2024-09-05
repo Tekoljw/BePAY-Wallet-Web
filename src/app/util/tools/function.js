@@ -1,4 +1,5 @@
 // 公共方法
+
 export const getUrlParam = (param) => {
     const res = window.location.href;
     const URL = res.split('?')[1];
@@ -24,9 +25,9 @@ export const getOpenAppIndex = () => {
     return  window.sessionStorage.getItem('openIndex') || 0;
 };
 
-// 获取accessType(0:正常方式，1:telegram小程序)
-export const getAccessType = () => {
-    return window.localStorage.getItem('accessType') || 0;
+//获取用户登录方式
+export const getUserLoginType = (userData) => {
+    return (window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType) || 0;
 }
 
 // 获取thirdPartId(0:不使用第三方，其他为使用的第三方ID)

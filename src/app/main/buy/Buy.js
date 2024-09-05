@@ -19,7 +19,7 @@ import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
 import { selectConfig } from "../../store/config";
-import {arrayLookup, getAccessType, setPhoneTab} from "../../util/tools/function";
+import {arrayLookup, getUserLoginType, setPhoneTab} from "../../util/tools/function";
 import Button from "@mui/material/Button";
 import {
     getFaTPayCryptoTarget,
@@ -35,6 +35,7 @@ import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import { useTranslation } from "react-i18next";
 import { showMessage } from "app/store/fuse/messageSlice";
+import userLoginType from "../../define/userLoginType";
 
 const container = {
     show: {
@@ -77,8 +78,9 @@ function Buy(props) {
     };
 
     const [amount, setAmount] = useState('');
-
-    const fiatsData = useSelector(selectUserData).fiat || [];
+    const userData = useSelector(selectUserData);
+    const fiatsData = userData.fiat || [];
+    const walletData = userData.wallet;
     const config = useSelector(selectConfig);
     const currencys = useSelector(selectConfig).payment.currency || [];
     const symbols = useSelector(selectConfig).symbols || [];
@@ -91,8 +93,6 @@ function Buy(props) {
     const [symbolWallet, setSymbolWallet] = useState([]);
     const [symbol, setSymbol] = useState('');
     const [noSupplier, setNoSupplier] = useState(false);
-
-    const walletData = useSelector(selectUserData).wallet;
     const getCryptoTarget = async () => {
         let res = await dispatch(getLegendTradingCryptoTarget());
         return res;
@@ -240,9 +240,9 @@ function Buy(props) {
                 })).then((res) => {
                     let result = res.payload
                     if (result.payurl) {
-                        const accessType = getAccessType();
-                        switch (accessType){
-                            case "1": { //telegramWebApp
+                        const loginType = getUserLoginType(userData);
+                        switch (loginType){
+                            case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP: { //telegramWebApp
                                 window.Telegram.WebApp.openLink(result.payurl)
                                 break;
                             }

@@ -3,7 +3,7 @@ import Web3 from "../../util/web3";
 import React from "react";
 import history from '@history';
 import { showMessage } from 'app/store/fuse/messageSlice';
-import { updateTransfer, updateUser, updateUserToken, updateWallet } from "./index";
+import {selectUserData, updateTransfer, updateUser, updateUserToken, updateWallet} from "./index";
 import utils from "../../util/tools/utils";
 import BN from "bn.js";
 import { getWithdrawTransferStats } from '../wallet/walletThunk';
@@ -12,38 +12,29 @@ import walletEthereum from '../../util/web3/walletEthereum';
 import settingsConfig from 'app/configs/settingsConfig';
 import loginWays from '../../main/login/loginWays'
 import { EthereumProvider } from '@walletconnect/ethereum-provider';
-import {getAccessType, getAutoLoginKey, getThirdPartId} from "../../util/tools/function";
+import {getUserLoginType} from "../../util/tools/function";
 import {requestUserLoginData} from "../../util/tools/loginFunction";
 import {changeLanguage} from "app/store/i18nSlice";
+import userLoginType from "../../define/userLoginType";
 
 // 检查用户是否已经登录
 export const checkLoginState = createAsyncThunk(
     'user/checkLoginState',
     async (settings, { dispatch, getState }) => {
-        const accessType = getAccessType();
-        console.log(accessType, '请求checkLoginState进行登录检查');
-        let loginUserId = "none";
-        switch (accessType){
-            case "1": { //telegramWebApp
-                const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
-                if(initDataUnsafe.user){
-                    loginUserId = initDataUnsafe.user.username + "_" + initDataUnsafe.user.id;
-                }
-                break;
-            }
-        }
+
+        const loginType = getUserLoginType();
         let data = {
-            autoLoginUserId: loginUserId,
+            autoLoginUserId: settings.username + "_" + settings.userid
         };
+        console.log(data.autoLoginUserId, '请求checkLoginState进行登录检查');
         const loginState = await React.$api("user.checkLoginState", data);
         if (loginState.errno === 501) { //没有登录
-            switch (accessType){
-                case "1":{ //telegramWebApp
-                    console.log(accessType, '请求telegramWebAppSignInApi方式登录');
-                    const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
+            switch (loginType){
+                case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP:{ //telegramWebApp
+                    console.log(loginType, '请求telegramWebAppSignInApi方式登录');
                     dispatch(telegramWebAppSignInApi({
-                        telegramId:initDataUnsafe.user.id + '',
-                        username:initDataUnsafe.user.username})
+                        telegramId:settings.userid,
+                        username:settings.username})
                     );
                     break;
                 }
@@ -193,10 +184,6 @@ export const facebookLoginApi = createAsyncThunk(
         if (userLoginData.errno === 0) {
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userLoginData));
-            const accessType = getAccessType();
-            if(accessType !== 0){ //其他第三方直接登录成功后，开启请求基础数据
-                requestUserLoginData(dispatch);
-            }
             if (config.storageKey) {
                 React.$api("security.setKey", {
                     key: config.storageKey,
@@ -218,10 +205,6 @@ export const telegramLoginApi = createAsyncThunk(
         if (userLoginData.errno === 0) {
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userLoginData));
-            const accessType = getAccessType();
-            if(accessType !== 0){ //其他第三方直接登录成功后，开启请求基础数据
-                requestUserLoginData(dispatch);
-            }
             if (config.storageKey) {
                 React.$api("security.setKey", {
                     key: config.storageKey,
