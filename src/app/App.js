@@ -63,7 +63,7 @@ const App = () => {
         switch (loginType){
             case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP:{ //telegramWebApp
                 console.log(loginType, 'app请求checkLoginState,检查登录状态')
-                const initDataUnsafe = window.Telegram?.WebApp?.initDataUnsafe;
+                /*const initDataUnsafe = window.Telegram?.WebApp?.initDataUnsafe;
                 if(initDataUnsafe && initDataUnsafe.user){
                     let username = initDataUnsafe.user.username;
                     if(!username || username === ''){
@@ -75,7 +75,8 @@ const App = () => {
                     }));
                 }else{
                     dispatch(showMessage({ message: "telegram_web_app get info error", code: 2 }));
-                }
+                }*/
+                dispatch(checkLoginState());
                 break;
             }
             default:{

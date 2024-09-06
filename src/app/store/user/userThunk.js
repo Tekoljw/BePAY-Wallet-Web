@@ -12,7 +12,7 @@ import walletEthereum from '../../util/web3/walletEthereum';
 import settingsConfig from 'app/configs/settingsConfig';
 import loginWays from '../../main/login/loginWays'
 import { EthereumProvider } from '@walletconnect/ethereum-provider';
-import {getUserLoginType} from "../../util/tools/function";
+import {getAutoLoginKey, getThirdPartId, getUserLoginType} from "../../util/tools/function";
 import {requestUserLoginData} from "../../util/tools/loginFunction";
 import {changeLanguage} from "app/store/i18nSlice";
 import userLoginType from "../../define/userLoginType";
@@ -24,17 +24,20 @@ export const checkLoginState = createAsyncThunk(
 
         const loginType = getUserLoginType();
         let data = {
-            autoLoginUserId: settings.username + "_" + settings.userid
+            autoLoginUserId: getThirdPartId(),
         };
+        //let data = {
+        //    autoLoginUserId: settings.username + "_" + settings.userid
+        //};
         console.log(data.autoLoginUserId, '请求checkLoginState进行登录检查');
         const loginState = await React.$api("user.checkLoginState", data);
         if (loginState.errno === 501) { //没有登录
             switch (loginType){
                 case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP:{ //telegramWebApp
                     console.log(loginType, '请求telegramWebAppSignInApi方式登录');
-                    dispatch(telegramWebAppSignInApi({
-                        telegramId:settings.userid,
-                        username:settings.username})
+                    dispatch(telegramWebAppLoginApi({
+                        autoLoginUserId:getThirdPartId(),
+                        autoLoginKey:getAutoLoginKey()})
                     );
                     break;
                 }
@@ -218,11 +221,11 @@ export const telegramLoginApi = createAsyncThunk(
 );
 
 // telegramWebApp 登录
-export const telegramWebAppSignInApi = createAsyncThunk(
-    'user/telegramWebAppSignIn',
+export const telegramWebAppLoginApi = createAsyncThunk(
+    'user/telegramWebAppLogin',
     async (settings, { dispatch, getState }) => {
         const { config } = getState();
-        const userLoginData = await React.$api("user.telegramWebAppSignIn", settings);
+        const userLoginData = await React.$api("user.telegramWebAppLogin", settings);
         if (userLoginData.errno === 0) {
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userLoginData));

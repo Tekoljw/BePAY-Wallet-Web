@@ -240,8 +240,17 @@ function Buy(props) {
                 })).then((res) => {
                     let result = res.payload
                     if (result.payurl) {
-                        //默认打开外部浏览器
-                        window.open(result.payurl, '_system')
+                        const loginType = getUserLoginType(userData);
+                        switch (loginType){
+                            case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP: { //telegramWebApp
+                                window.open(result.payurl, "_system")
+                                break;
+                            }
+                            default: {
+                                window.open(result.payurl)
+                                break;
+                            }
+                        }
                     }
                 });
             } else {
