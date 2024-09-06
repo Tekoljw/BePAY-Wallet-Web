@@ -14,7 +14,7 @@ import withAppProviders from './withAppProviders';
 import { getNetworks, getConfig } from "app/store/config/configThunk";
 import {useEffect, useRef, useState} from "react";
 import {selectUserData} from "./store/user";
-import {getUrlParam, getUserLoginType} from "./util/tools/function";
+import {getThirdPartId, getUrlParam, getUserLoginType} from "./util/tools/function";
 import { getKycInfo } from "app/store/payment/paymentThunk";
 import { changeLanguage } from "./store/i18nSlice";
 import userLoginType from "./define/userLoginType";
@@ -58,17 +58,20 @@ const App = () => {
     const token = useSelector(selectUserData).token;
     const lang = currentLanguage.id === getUrlParam('lang') ? currentLanguage.id : getUrlParam('lang');
 
-    dispatch(sendLogInfo({
+    /*dispatch(sendLogInfo({
         logPlatform: accessType,
         logTitle: "react web url href",
         logContent: 'path url :' + window.location.href
-    }));
+    }));*/
 
     useEffect(() => {
 
         dispatch(getNetworks());
         dispatch(getConfig());
 
+        /**
+         sessionStorage : 数据只存在于当前浏览器标签页。
+         */
         if (openAppId) {
             window.sessionStorage.setItem('openAppId', openAppId)
         }
@@ -76,21 +79,24 @@ const App = () => {
             window.sessionStorage.setItem('openIndex', openIndex)
         }
         if (thirdPartId) {
-            window.localStorage.setItem('thirdPartId', thirdPartId)
+            window.sessionStorage.setItem('thirdPartId', thirdPartId)
         }
         if (autoLoginKey) {
-            window.localStorage.setItem('autoLoginKey', autoLoginKey)
+            window.sessionStorage.setItem('autoLoginKey', autoLoginKey)
         }else{
-            window.localStorage.removeItem('autoLoginKey');
+            window.sessionStorage.removeItem('autoLoginKey');
         }
+        /**
+         localStorage : 在同源的所有标签页和窗口之间共享数据。
+         */
         if (storageKey) {
             window.localStorage.setItem('storageKey', storageKey)
         }
-        dispatch(sendLogInfo({
+        /*dispatch(sendLogInfo({
             logPlatform: accessType,
             logTitle: "app accessType",
             logContent: "thirdPartId : " + thirdPartId
-        }));
+        }));*/
         switch (accessType){
             case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP:{ //telegramWebApp
                 window.localStorage.setItem('loginType', userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP);

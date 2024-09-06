@@ -15,6 +15,12 @@ export const getUrlParam = (param) => {
     return obj[param]
 };
 
+/**
+ sessionStorage : 数据只存在于当前浏览器标签页。
+ .具有相同页面的另一个标签页中将会有不同的存储。
+ .但是，它在同一标签页下的 iframe 之间是共享的（假如它们来自相同的源）。
+ .数据在页面刷新后仍然保留，但在关闭/重新打开浏览器标签页后不会被保留。
+ */
 // 获取openAppId
 export const getOpenAppId = () => {
     return  window.sessionStorage.getItem('openAppId') || 0;
@@ -25,20 +31,24 @@ export const getOpenAppIndex = () => {
     return  window.sessionStorage.getItem('openIndex') || 0;
 };
 
-//获取用户登录方式
-export const getUserLoginType = (userData) => {
-    return (window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType) || 0;
-}
-
 // 获取thirdPartId(0:不使用第三方，其他为使用的第三方ID)
 export const getThirdPartId = () => {
-    return  window.localStorage.getItem('thirdPartId') || 0;
+    return  window.sessionStorage.getItem('thirdPartId') || 0;
 };
 
 // 获取自动登录的key
 export const getAutoLoginKey = () => {
-    return  window.localStorage.getItem('autoLoginKey') || 0;
+    return  window.sessionStorage.getItem('autoLoginKey') || 0;
 };
+
+/**
+ localStorage : 在同源的所有标签页和窗口之间共享数据。
+ .数据不会过期。它在浏览器重启甚至系统重启后仍然存在。
+ */
+//获取用户登录方式
+export const getUserLoginType = (userData) => {
+    return (window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType) || 0;
+}
 
 // 设置手机分页
 export const setPhoneTab = (phoneTab) =>{

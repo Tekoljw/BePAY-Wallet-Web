@@ -243,7 +243,7 @@ function Buy(props) {
                         const loginType = getUserLoginType(userData);
                         switch (loginType){
                             case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP: { //telegramWebApp
-                                window.open(result.payurl, "_system")
+                                window.location.href = result.payurl
                                 break;
                             }
                             default: {

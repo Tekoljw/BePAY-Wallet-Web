@@ -1,9 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import React from "react";
 import { showMessage } from 'app/store/fuse/messageSlice';
-import { setKycInfo } from "../config/index";
-
-import format from 'date-fns/format';
 
 // action/thunk
 // 发送信息日志
@@ -13,6 +10,12 @@ export const sendLogInfo = createAsyncThunk(
 
         if (settings === undefined) {
             settings = {logPlatform: 'platform null', logTitle: 'title null', logContent: "content null"};
+        }
+        if(!settings.logPlatform) {
+            settings.logPlatform = "common platform"
+        }
+        if(!settings.logTitle) {
+            settings.logTitle = "common title"
         }
         const kycData = await React.$api("log.logInfo", settings);
         if (kycData.errno === 0) {
@@ -30,6 +33,12 @@ export const sendLogError = createAsyncThunk(
 
         if (settings === undefined) {
             settings = {logPlatform: 'platform null', logTitle: 'title null', logContent: "content null"};
+        }
+        if(!settings.logPlatform) {
+            settings.logPlatform = "common platform"
+        }
+        if(!settings.logTitle) {
+            settings.logTitle = "common title"
         }
         const kycData = await React.$api("log.logError", settings);
         if (kycData.errno === 0) {

@@ -12,7 +12,6 @@ import walletEthereum from '../../util/web3/walletEthereum';
 import settingsConfig from 'app/configs/settingsConfig';
 import loginWays from '../../main/login/loginWays'
 import { EthereumProvider } from '@walletconnect/ethereum-provider';
-import {getAutoLoginKey, getThirdPartId, getUserLoginType} from "../../util/tools/function";
 import {requestUserLoginData} from "../../util/tools/loginFunction";
 import {changeLanguage} from "app/store/i18nSlice";
 import userLoginType from "../../define/userLoginType";
@@ -30,7 +29,7 @@ export const checkLoginState = createAsyncThunk(
         dispatch(sendLogInfo({
             logPlatform: loginType,
             logTitle: "userThunk checkLoginState",
-            logContent: data.autoLoginUserId + '请求checkLoginState进行登录检查'
+            logContent: data.autoLoginUserId + '，请求checkLoginState进行登录检查 autoLoginKey ：' + settings.autoLoginKey
         }));
         console.log(data.autoLoginUserId, 'userThunk 请求checkLoginState进行登录检查');
         const loginState = await React.$api("user.checkLoginState", data);
@@ -38,11 +37,6 @@ export const checkLoginState = createAsyncThunk(
             switch (loginType){
                 case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP:{ //telegramWebApp
                     console.log(loginType, 'userThunk 请求telegramWebAppSignInApi方式登录');
-                    dispatch(sendLogInfo({
-                        logPlatform: loginType,
-                        logTitle: "userThunk telegramWebAppLoginApi",
-                        logContent: 'autoLoginUserId: ' + settings.autoLoginUserId + ', loginKey: ' + settings.autoLoginKey
-                    }));
                     dispatch(telegramWebAppLoginApi({
                         autoLoginUserId:settings.autoLoginUserId,
                         autoLoginKey:settings.autoLoginKey

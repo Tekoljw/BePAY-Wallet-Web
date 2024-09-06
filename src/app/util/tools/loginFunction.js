@@ -8,9 +8,8 @@ import {getPoolConfig} from "app/store/pool/poolThunk";
 import {centerGetUserFiat, getWithdrawTransferStats} from "app/store/wallet/walletThunk";
 
 //telegram 登录
-export const loginTelegram = () => {
+export const loginTelegram = (thirdPartId) => {
     //这里唯一要做的就是把你机器人参数传入进去
-    const thirdPartId = getThirdPartId();
     window.Telegram.Login.auth({ bot_id: thirdPartId, request_access: 'write', embed: 1 }, (data) => {
         console.log(data, '这是回调数据');//这里的data和之前返回的user数据和格式无差异
         if (!data) {
