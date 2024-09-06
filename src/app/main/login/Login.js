@@ -30,7 +30,7 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import { useState, useEffect } from "react";
-import { arrayLookup, getOpenAppId, getThirdPartId, getUrlParam } from "../../util/tools/function";
+import {getOpenAppId, getThirdPartId, getUrlParam} from "../../util/tools/function";
 import phoneCode from '../../../phone/phoneCode';
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -137,9 +137,6 @@ function Login() {
         setProfile(null);
     };
 
-
-
-
     const agentId = getUrlParam('agentId');
     if (agentId) {
         defaultValues.agentId = agentId
@@ -169,6 +166,7 @@ function Login() {
     const [hasInitialized, setHasInitialized] = useState(false);
     const [uri, setUri] = useState("");
     const [address, setAddress] = useState("");
+    const thirdPartId = getThirdPartId();
 
     // const WCLogin = useCallback(async () => {
     //     if (!client) return;
@@ -725,7 +723,7 @@ function Login() {
                                         <img style={{ height: '80%' }} src="/wallet/assets/images/login/icon-1.png" alt="" />
                                     </Button>
                                     <Button className='txtColorTitleSmall' onClick={() => {
-                                        loginTelegram()
+                                        loginTelegram(thirdPartId)
                                     }} style={{ width: '30%', margin: '.5rem 1.5%', backgroundColor: '#1E293B', borderColor: 'transparent', opacity: "1" }} variant="outlined">
                                         <img style={{ height: '80%' }} src="/wallet/assets/images/login/icon-2.png" alt="" />
                                     </Button>

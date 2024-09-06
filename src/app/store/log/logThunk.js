@@ -11,6 +11,12 @@ export const sendLogInfo = createAsyncThunk(
         if (settings === undefined) {
             settings = {logPlatform: 'platform null', logTitle: 'title null', logContent: "content null"};
         }
+        if(!settings.logPlatform) {
+            settings.logPlatform = "common platform"
+        }
+        if(!settings.logTitle) {
+            settings.logTitle = "common title"
+        }
         const kycData = await React.$api("log.logInfo", settings);
         if (kycData.errno === 0) {
 
@@ -27,6 +33,12 @@ export const sendLogError = createAsyncThunk(
 
         if (settings === undefined) {
             settings = {logPlatform: 'platform null', logTitle: 'title null', logContent: "content null"};
+        }
+        if(!settings.logPlatform) {
+            settings.logPlatform = "common platform"
+        }
+        if(!settings.logTitle) {
+            settings.logTitle = "common title"
         }
         const kycData = await React.$api("log.logError", settings);
         if (kycData.errno === 0) {

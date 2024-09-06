@@ -12,7 +12,6 @@ import walletEthereum from '../../util/web3/walletEthereum';
 import settingsConfig from 'app/configs/settingsConfig';
 import loginWays from '../../main/login/loginWays'
 import { EthereumProvider } from '@walletconnect/ethereum-provider';
-import {getAutoLoginKey, getThirdPartId, getUserLoginType} from "../../util/tools/function";
 import {requestUserLoginData} from "../../util/tools/loginFunction";
 import {changeLanguage} from "app/store/i18nSlice";
 import userLoginType from "../../define/userLoginType";
