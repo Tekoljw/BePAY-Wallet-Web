@@ -24,7 +24,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import ComingSoon from "../coming-soon/ComingSoon";
 import web3 from '../../util/web3';
-import {arrayLookup, getAccessType, getAutoLoginKey, getThirdPartId, setPhoneTab} from "../../util/tools/function";
+import {
+    arrayLookup, getUrlParam,
+    getUserLoginType,
+    setPhoneTab
+} from "../../util/tools/function";
 import { selectConfig } from "app/store/config";
 import { showMessage } from 'app/store/fuse/messageSlice';
 import MobileDetect from 'mobile-detect';
@@ -34,7 +38,7 @@ import history from '@history';
 import { loginTelegram, requestUserLoginData } from "../../util/tools/loginFunction";
 // import FuseLoading from '@fuse/core/FuseLoading';
 import clsx from 'clsx';
-import {checkLoginState} from "app/store/user/userThunk";
+import userLoginType from "../../define/userLoginType";
 
 const Root = styled(FusePageCarded)(({ theme }) => ({
     '& .FusePageCarded-header': {},
@@ -54,6 +58,7 @@ function HomePage(props) {
     const networks = config.networks || [];
     const { pathname } = useLocation();
     const [menuShow, setMenuShow] = useState(false);
+    const accessType = getUrlParam('accessType') || 0;
     let currentPhoneTab = window.localStorage.getItem('phoneTab') ?? 'wallet';
 
     // 滑动滑块
@@ -119,20 +124,15 @@ function HomePage(props) {
     }, [config.networks]);
 
     useEffect(() => {
-        const accessType = getAccessType();
-        console.log(accessType, '请求的 accessType');
+        console.log(accessType, 'home 请求的 loginType');
         switch (accessType){
-            case "1":{ //telegramWebApp
+            case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP:{ //telegramWebApp
                 setMenuShow(true);
                 setLeftSidebarOpen(false);
-
-                console.log(accessType, '请求checkLoginState,检查登录状态')
-                dispatch(checkLoginState());
+                window.Telegram?.WebApp?.ready();
                 break;
             }
             default:{
-                console.log(accessType, '请求默认方式登录');
-                requestUserLoginData(dispatch);
                 break;
             }
         }
