@@ -329,6 +329,8 @@ function Deposite() {
 
     const loginType = window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType;
 
+    console.log('enter deposit page')
+
     //转账
     const BransferSubmit = () => {
         console.log(transferFormData.amount, 'money...');

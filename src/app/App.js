@@ -21,6 +21,7 @@ import userLoginType from "./define/userLoginType";
 import {checkLoginState} from "app/store/user/userThunk";
 import {showMessage} from "app/store/fuse/messageSlice";
 import {requestUserLoginData} from "./util/tools/loginFunction";
+import {sendLogInfo} from "app/store/log/logThunk";
 
 // import axios from 'axios';
 /**
@@ -57,35 +58,11 @@ const App = () => {
     const token = useSelector(selectUserData).token;
     const lang = currentLanguage.id === getUrlParam('lang') ? currentLanguage.id : getUrlParam('lang');
 
-    //登录方式处理
-    const loginTypeHandle = (loginType) =>{
-        console.log(loginType, 'app请求的 loginType');
-        switch (loginType){
-            case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP:{ //telegramWebApp
-                console.log(loginType, 'app请求checkLoginState,检查登录状态')
-                /*const initDataUnsafe = window.Telegram?.WebApp?.initDataUnsafe;
-                if(initDataUnsafe && initDataUnsafe.user){
-                    let username = initDataUnsafe.user.username;
-                    if(!username || username === ''){
-                        username = 'beingfi_tg_web_user_name';
-                    }
-                    dispatch(checkLoginState({
-                        username: username,
-                        userid: initDataUnsafe.user.id + '',
-                    }));
-                }else{
-                    dispatch(showMessage({ message: "telegram_web_app get info error", code: 2 }));
-                }*/
-                dispatch(checkLoginState());
-                break;
-            }
-            default:{
-                console.log(loginType, 'app请求默认方式登录');
-                requestUserLoginData(dispatch);
-                break;
-            }
-        }
-    }
+    dispatch(sendLogInfo({
+        logPlatform: accessType,
+        logTitle: "react web url href",
+        logContent: 'path url :' + window.location.href
+    }));
 
     useEffect(() => {
 
@@ -109,16 +86,26 @@ const App = () => {
         if (storageKey) {
             window.localStorage.setItem('storageKey', storageKey)
         }
+        dispatch(sendLogInfo({
+            logPlatform: accessType,
+            logTitle: "app accessType",
+            logContent: "thirdPartId : " + thirdPartId
+        }));
         switch (accessType){
             case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP:{ //telegramWebApp
-                loginTypeHandle(userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP)
                 window.localStorage.setItem('loginType', userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP);
+                console.log(accessType, 'app请求checkLoginState,检查登录状态')
+                dispatch(checkLoginState({
+                    loginType: userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP,
+                    autoLoginUserId: thirdPartId,
+                    autoLoginKey: autoLoginKey
+                }));
                 break;
             }
             default:{
                 //console.log(1, '设置 loginType');
                 window.localStorage.removeItem('loginType');
-                loginTypeHandle()
+                requestUserLoginData(dispatch);
                 break;
             }
         }
