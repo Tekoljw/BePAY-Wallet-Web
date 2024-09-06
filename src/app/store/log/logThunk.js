@@ -1,9 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import React from "react";
 import { showMessage } from 'app/store/fuse/messageSlice';
-import { setKycInfo } from "../config/index";
-
-import format from 'date-fns/format';
 
 // action/thunk
 // 发送信息日志
