@@ -644,6 +644,16 @@ export default {
             url: "/credit/creditCardCryptoWithdraw",
             method: "post",
         },
-    }
+    },
 
+    log: {
+        logInfo: {
+            url: "/logSystem/logInfo",
+            method: "post",
+        },
+        logError: {
+            url: "/logSystem/logError",
+            method: "post",
+        },
+    }
 };

@@ -16,28 +16,37 @@ import {getAutoLoginKey, getThirdPartId, getUserLoginType} from "../../util/tool
 import {requestUserLoginData} from "../../util/tools/loginFunction";
 import {changeLanguage} from "app/store/i18nSlice";
 import userLoginType from "../../define/userLoginType";
+import {sendLogInfo} from "app/store/log/logThunk";
 
 // 检查用户是否已经登录
 export const checkLoginState = createAsyncThunk(
     'user/checkLoginState',
     async (settings, { dispatch, getState }) => {
 
-        const loginType = getUserLoginType();
+        const loginType = settings.loginType;
         let data = {
-            autoLoginUserId: getThirdPartId(),
+            autoLoginUserId: settings.autoLoginUserId,
         };
-        //let data = {
-        //    autoLoginUserId: settings.username + "_" + settings.userid
-        //};
+        dispatch(sendLogInfo({
+            logPlatform: loginType,
+            logTitle: "userThunk checkLoginState",
+            logContent: data.autoLoginUserId + '请求checkLoginState进行登录检查'
+        }));
         console.log(data.autoLoginUserId, 'userThunk 请求checkLoginState进行登录检查');
         const loginState = await React.$api("user.checkLoginState", data);
         if (loginState.errno === 501) { //没有登录
             switch (loginType){
                 case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP:{ //telegramWebApp
                     console.log(loginType, 'userThunk 请求telegramWebAppSignInApi方式登录');
+                    dispatch(sendLogInfo({
+                        logPlatform: loginType,
+                        logTitle: "userThunk telegramWebAppLoginApi",
+                        logContent: 'autoLoginUserId: ' + settings.autoLoginUserId + ', loginKey: ' + settings.autoLoginKey
+                    }));
                     dispatch(telegramWebAppLoginApi({
-                        autoLoginUserId:getThirdPartId(),
-                        autoLoginKey:getAutoLoginKey()})
+                        autoLoginUserId:settings.autoLoginUserId,
+                        autoLoginKey:settings.autoLoginKey
+                    })
                     );
                     break;
                 }
