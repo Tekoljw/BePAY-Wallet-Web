@@ -48,6 +48,8 @@ import Paper from '@mui/material/Paper';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import InputLabel from "@mui/material/InputLabel/InputLabel";
+import AnimateModal from "../../components/FuniModal";
+import Enable2FA from "../2fa/Enable2FA";
 
 const container = {
     show: {
@@ -166,6 +168,9 @@ function Withdraw(props) {
     const [fee, setFee] = useState(0);
     const [TransactionFee, setTransactionFee] = useState(0);
     const [bAppendFee, setBAppendFee] = useState(false);
+    const [openAnimateModal, setOpenAnimateModal] = useState(false);
+    const [openYanZheng, setOpenYanZheng] = useState(false);
+
 
     const handleChangeInputVal = (prop, value) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
@@ -184,9 +189,16 @@ function Withdraw(props) {
         document.getElementById(target.target.id).classList.remove('pinJianPanColor1');
     };
 
-    const [inputIDVal, setInputIDVal] = useState(0);
+    const [inputIDVal, setInputIDVal] = useState('');
     const handleChangeInputVal2 = (event) => {
         setInputIDVal(event.target.value);
+    };
+
+    const myFunction = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // 平滑滚动
+        });
     };
 
     const changeAddress = (prop, value) => {
@@ -327,7 +339,7 @@ function Withdraw(props) {
 
         if (conversionAmount >= transferState.limitSingle && googleCode.length < 6) {
             if (!hasAuthGoogle) {
-                navigate('/home/security');
+                setOpenAnimateModal(true);
                 return;
             }
             openGoogleCodeFunc()
@@ -336,7 +348,7 @@ function Withdraw(props) {
 
         if (transferState.daily >= transferState.limitDaily && googleCode.length < 6) {
             if (!hasAuthGoogle) {
-                navigate('/home/security');
+                setOpenAnimateModal(true);
                 return;
             }
             openGoogleCodeFunc()
@@ -345,7 +357,7 @@ function Withdraw(props) {
 
         if (transferState.month >= transferState.limitMonth && googleCode.length < 6) {
             if (!hasAuthGoogle) {
-                navigate('/home/security');
+                setOpenAnimateModal(true);
                 return;
             }
             openGoogleCodeFunc()
@@ -396,11 +408,9 @@ function Withdraw(props) {
         let conversionAmount = rate * inputVal.amount;
         if (conversionAmount >= transferState.limitSingle && googleCode.length < 6) {
             if (!hasAuthGoogle) {
-                dispatch(showMessage({ message: t('kyc_26') + " Google Authenticator", code: 2 }));
                 setTimeout(() => {
-                    navigate('/home/security');
-                }, 1000)
-
+                    setOpenAnimateModal(true);
+                }, 300)
                 return;
             }
             openGoogleCodeFunc()
@@ -409,10 +419,9 @@ function Withdraw(props) {
 
         if (transferState.daily >= transferState.limitDaily && googleCode.length < 6) {
             if (!hasAuthGoogle) {
-                dispatch(showMessage({ message: t('kyc_26') + " Google Authenticator", code: 2 }));
                 setTimeout(() => {
-                    navigate('/home/security');
-                }, 1000)
+                    setOpenAnimateModal(true);
+                }, 300)
                 return;
             }
             openGoogleCodeFunc()
@@ -421,10 +430,9 @@ function Withdraw(props) {
 
         if (transferState.month >= transferState.limitMonth && googleCode.length < 6) {
             if (!hasAuthGoogle) {
-                dispatch(showMessage({ message: t('kyc_26') + " Google Authenticator", code: 2 }));
                 setTimeout(() => {
-                    navigate('/home/security');
-                }, 1000)
+                    setOpenAnimateModal(true);
+                }, 300)
                 return;
             }
             openGoogleCodeFunc()
@@ -902,8 +910,8 @@ function Withdraw(props) {
 
 
     return (
-        <div>
-            <div>
+        <div style={{ position: "relative" }}>
+            <div style={{ position: "absolute", width: "100%" }} >
                 <motion.div
                     variants={container}
                     initial="hidden"
@@ -1351,7 +1359,7 @@ function Withdraw(props) {
                         <div id="GoogleCodeSty" className="PINSty">
                             <div className='pinWindow'>
                                 <div className='flex'>
-                                    <div className='PINTitle2'>Google Code</div>
+                                    <div className='PINTitle2'>{t('card_180')}</div>
                                     <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                         closeGoogleCodeFunc()
                                     }} />
@@ -1606,6 +1614,25 @@ function Withdraw(props) {
 
             </div>
 
+            {openYanZheng && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
+                    className='mt-12'
+                    id="topGo"
+                >
+                    <div className='flex mb-10' onClick={() => {
+                        setOpenYanZheng(false);
+                        myFunction;
+                    }}   >
+                        <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
+                    </div>
+                    <Enable2FA />
+                    <div style={{ height: "5rem" }}></div>
+                </motion.div>
+            </div>}
+
 
             <BootstrapDialog
                 onClose={() => {
@@ -1623,7 +1650,7 @@ function Withdraw(props) {
                                 closePinFunc();
                             }} />
                         </div>
-                        <div className='PINTitle'>{t('home_wallet_14')}{t('card_175')}（ {inputIDVal} ）{t('transfer_1')}</div>
+                        <div className='PINTitle'>{t('home_wallet_14')}{t('card_7')}（ {inputIDVal} ）{t('transfer_1')}</div>
                         <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
                             <img className='MoneyWithdraw' src="wallet/assets/images/withdraw/USDT.png"></img>
                             <div className='PINTitle3'>USDT</div>
@@ -1921,6 +1948,64 @@ function Withdraw(props) {
 
                 </div>
             </BootstrapDialog>
+
+            <AnimateModal
+                className="faBiDiCard tanChuanDiSe"
+                open={openAnimateModal}
+                onClose={() => setOpenAnimateModal(false)}
+            >
+                <div className='flex justify-center' style={{ width: "100%" }}>
+                    <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
+                    <div className='TanHaoCardZi '>
+                        {t('card_180')}
+                    </div>
+                </div>
+
+                <Box
+                    className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard"
+                    sx={{
+                        backgroundColor: "#2C394D",
+                        padding: "1.5rem",
+                        overflow: "hidden",
+                        margin: "1rem auto 0rem auto"
+                    }}
+                >
+                    <div className="dialog-select-fiat danChuangTxt">
+                        {t('card_181')}
+                    </div>
+                </Box>
+
+                <div className='flex mt-12 mb-28 px-15 justify-between' >
+                    <LoadingButton
+                        disabled={false}
+                        className="boxCardBtn"
+                        color="secondary"
+                        loading={false}
+                        variant="contained"
+                        onClick={() => {
+                            setOpenAnimateModal(false)
+                            setOpenYanZheng(true);
+                        }}
+                    >
+                        {t('card_182')}
+                    </LoadingButton>
+
+
+                    <LoadingButton
+                        disabled={false}
+                        className="boxCardBtn"
+                        color="secondary"
+                        loading={false}
+                        variant="contained"
+                        onClick={() => {
+                            setOpenAnimateModal(false)
+                        }}
+                    >
+                        {t('home_pools_15')}
+                    </LoadingButton>
+                </div>
+            </AnimateModal>
+
 
         </div>
     )

@@ -530,6 +530,15 @@ const locale = {
     card_175: "użytkownik",
     card_176: "wprowadź 6-cyfrowe dynamiczne hasło",
     card_177:"Bez opłat, natychmiastowy transfer!",
+    card_178: "Karta została zamrożona",
+    card_179: "Aby odblokować, skontaktuj się z naszym całodobowym działem obsługi klienta online.",
+    card_180: "Kod weryfikacyjny Google",
+    card_181: "W przypadku dużych przelewów, proszę włączyć weryfikację dwuetapową Google.",
+    card_182: "otworzyć",
+
+
+    
+
 
 
 

@@ -519,6 +519,18 @@ const locale = {
     card_175: "người dùng",
     card_176: "nhập mật khẩu động 6 chữ số",
     card_177:"Không phí, chuyển khoản ngay lập tức!",
+    card_178: "Thẻ đã bị đóng băng",
+    card_179: "Để mở khóa, vui lòng liên hệ dịch vụ khách hàng trực tuyến 24/7 của chúng tôi.",
+    card_180: "Mã xác minh Google",
+    card_181: "Đối với các giao dịch chuyển khoản lớn, vui lòng bật xác minh hai bước của Google.",
+    card_182: "mở",
+
+
+    
+
+    
+
+
     };
 
 export default locale;

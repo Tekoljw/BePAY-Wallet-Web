@@ -527,7 +527,14 @@ const locale = {
     card_175: "kullanıcı",
     card_176: "6 haneli dinamik şifreyi girin",
     card_177:"Ücret yok, anında transfer!",
+    card_178: "Kart donduruldu",
+    card_179: "Kilidi açmak için lütfen 7/24 çevrimiçi müşteri hizmetlerimize başvurun.",
+    card_180: "Google Doğrulama Kodu",
+    card_181: "Büyük transferler için lütfen Google iki adımlı doğrulamayı etkinleştirin.",
+    card_182: "açmak",
 
+
+    
 
 
 

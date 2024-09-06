@@ -84,7 +84,7 @@ function Enable2FA() {
                     component={motion.div}
                     variants={item}
                 >
-                    <Typography className="text-20 px-16 font-medium" style={{ marginBottom: '1rem', paddingLeft: 0 }}>{t('home_2fa_1')}</Typography>
+                    <Typography className="text-16 px-16 font-medium" style={{ marginBottom: '1rem', paddingLeft: 0 }}>{t('home_2fa_1')}</Typography>
                 </Box>
                 <Box
                     className="w-full rounded-16 border flex flex-col color-76819B border-r-5"
@@ -115,7 +115,7 @@ function Enable2FA() {
                     component={motion.div}
                     variants={item}
                 >
-                    <Typography className="text-20 px-16 font-medium" style={{ marginBottom: '1rem', paddingLeft: 0 }}>{t('home_2fa_5')}</Typography>
+                    <Typography className="text-16 px-16 font-medium" style={{ marginBottom: '1rem', paddingLeft: 0 }}>{t('home_2fa_5')}</Typography>
                 </Box>
                 <Box
                     className="w-full rounded-16 border flex flex-col color-76819B border-r-5"
@@ -142,7 +142,7 @@ function Enable2FA() {
                     <Typography className="text-16 px-16 my-10 text-center">
                         {t('home_2fa_7')}
                     </Typography>
-                    <div className="px-10 mb-0 fa-input-conatiner ">
+                    <div className="px-10 mb-0 fa-input-conatiner">
                         <FormControl sx={{ width: '100%' }} variant="outlined">
                             <OutlinedInput
                                 disabled={true}
@@ -150,7 +150,6 @@ function Enable2FA() {
                                 value={googleText.key ? googleText.key : ''}
                                 endAdornment={<InputAdornment position="end">
                                     <IconButton
-                                        aria-label="toggle password visibility"
                                         onClick={() => {
                                             handleCopyText(googleText.key)
                                         }}
@@ -159,10 +158,6 @@ function Enable2FA() {
                                         <img src="wallet/assets/images/deposite/copy.png" alt="" />
                                     </IconButton>
                                 </InputAdornment>}
-                                aria-describedby="outlined-weight-helper-text"
-                                inputProps={{
-                                    'aria-label': 'weight',
-                                }}
                             />
                         </FormControl>
                     </div>
@@ -177,7 +172,7 @@ function Enable2FA() {
                     component={motion.div}
                     variants={item}
                 >
-                    <Typography className="text-20 px-16 font-medium" style={{ marginBottom: '1rem', paddingLeft: 0 }}>{t('home_2fa_9')}</Typography>
+                    <Typography className="text-16 px-16 font-medium" style={{ marginBottom: '1rem', paddingLeft: 0 }}>{t('home_2fa_9')}</Typography>
                 </Box>
                 <Box
                     className="w-full rounded-16 border mb-20 flex flex-col border-r-5"
@@ -188,9 +183,9 @@ function Enable2FA() {
                     component={motion.div}
                     variants={item}
                 >
-                    <Typography className="text-16 px-16 my-16 font-medium text-center pad-l-r-10 margin-t-b-10" style={{ color: '#94a3b8' }}>{t('home_2fa_10')}</Typography>
+                    <Typography className="text-16 px-16 my-16 font-medium text-center pad-l-r-10 margin-t-b-10" style={{ color: '#94a3b8' }}>{t('card_180')}</Typography>
                     <OtpPass googleTextKey={googleText.key} setGoogleCode={setGoogleCode} />
-                    <div className="mb-16 mt-4 flex items-center justify-content-center">
+                    <div className="mb-24 mt-4 flex items-center justify-content-center">
                         <Button
                             className="px-48 text-lg btnColorTitleBig"
                             size="large"

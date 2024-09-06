@@ -532,6 +532,17 @@ const locale = {
     card_175: "Benutzer",
     card_176: "Geben Sie das 6-stellige dynamische Passwort ein",
     card_177:"Keine Gebühren, sofortige Gutschrift!",
+    card_178: "Die Karte wurde gesperrt",
+    card_179: "Zum Entsperren kontaktieren Sie bitte unseren 24/7 Online-Kundendienst.",
+    card_180: "Google Verifizierungscode",
+    card_181: "Bitte aktivieren Sie die Zwei-Schritt-Verifizierung von Google für große Überweisungen.",
+    card_182: "öffnen",
+
+
+    
+
+
+
 };
 
 export default locale;

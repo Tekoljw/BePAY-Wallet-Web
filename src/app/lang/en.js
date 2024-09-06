@@ -235,7 +235,7 @@ const locale = {
     home_wallet_11: 'Please note that these are currency approximations. All bets & transactions will be settled in the crypto equivalent. For further details feel free to contact our live support.',
     home_wallet_12: 'MetaMask',
     home_wallet_13: 'From',
-    home_wallet_14: 'To',
+    home_wallet_14: 'To ',
     home_wallet_15: 'You also need',
     home_wallet_16: 'to complete this exchange.',
     home_wallet_17: 'Price',
@@ -431,8 +431,8 @@ const locale = {
     card_62: "Your wallet balance is insufficient to cover the card issuance fee. Please top up your wallet.",
     card_63: "Top up",
     card_64: "Align the QR code with the scanning frame",
-    card_65: "Please enter your PIN.",
-    card_66: "Please enter your PIN.",
+    card_65: "Please enter your PIN",
+    card_66: "Please enter your PIN",
     card_67: "for",
     card_68: "Create a PIN",
     card_69: "Enter the 6-digit code for payment",
@@ -536,6 +536,18 @@ const locale = {
     card_175: "user",
     card_176: "enter the 6-digit dynamic password",
     card_177:"No fees, instant transfer!",
+    card_178: "The card has been frozen",
+    card_179: "To unlock, please contact our 24/7 online customer service.",
+    card_180: "Google Verification Code",
+    card_181: "For large transfers, please enable Google two-step verification.",
+    card_182: "Enable",
+
+
+    
+
+
+
+
 };
 
 export default locale;

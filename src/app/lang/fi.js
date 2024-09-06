@@ -528,6 +528,16 @@ const locale = {
     card_175: "käyttäjä",
     card_176: "syötä 6-numeroinen dynaaminen salasana",
     card_177:"Ei maksuja, välitön siirto!",
+    card_178: "Kortti on jäädytetty",
+    card_179: "Jotta voit avata, ota yhteyttä 24/7 online-asiakaspalveluumme.",
+    card_180: "Googlen vahvistuskoodi",
+    card_181: "Suurten siirtojen yhteydessä ota käyttöön Googlen kaksivaiheinen todennus.",
+    card_182: "avata",
+
+
+    
+
+
 
 
     };

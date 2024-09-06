@@ -529,6 +529,15 @@ const locale = {
     card_175: "pengguna",
     card_176: "masukkan kata laluan dinamik 6 digit",
     card_177:"Tiada yuran, pemindahan segera!",
+    card_178: "Kad telah dibekukan",
+    card_179: "Untuk buka kunci, sila hubungi perkhidmatan pelanggan dalam talian 24/7 kami.",
+    card_180: "Kod Pengesahan Google",
+    card_181: "Untuk pemindahan besar, sila aktifkan pengesahan dua langkah Google.",
+    card_182: "buka",
+
+
+    
+
 
 
 
