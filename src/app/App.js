@@ -14,7 +14,7 @@ import withAppProviders from './withAppProviders';
 import { getNetworks, getConfig } from "app/store/config/configThunk";
 import {useEffect, useRef, useState} from "react";
 import {selectUserData} from "./store/user";
-import {getUrlParam, getUserLoginType} from "./util/tools/function";
+import {getThirdPartId, getUrlParam, getUserLoginType} from "./util/tools/function";
 import { getKycInfo } from "app/store/payment/paymentThunk";
 import { changeLanguage } from "./store/i18nSlice";
 import userLoginType from "./define/userLoginType";
@@ -103,7 +103,7 @@ const App = () => {
                 console.log(accessType, 'app请求checkLoginState,检查登录状态')
                 dispatch(checkLoginState({
                     loginType: userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP,
-                    autoLoginUserId: thirdPartId,
+                    autoLoginUserId: thirdPartId || getThirdPartId(),
                     autoLoginKey: autoLoginKey
                 }));
                 break;
