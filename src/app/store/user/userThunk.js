@@ -29,12 +29,12 @@ export const checkLoginState = createAsyncThunk(
         //let data = {
         //    autoLoginUserId: settings.username + "_" + settings.userid
         //};
-        console.log(data.autoLoginUserId, '请求checkLoginState进行登录检查');
+        console.log(data.autoLoginUserId, 'userThunk 请求checkLoginState进行登录检查');
         const loginState = await React.$api("user.checkLoginState", data);
         if (loginState.errno === 501) { //没有登录
             switch (loginType){
                 case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP:{ //telegramWebApp
-                    console.log(loginType, '请求telegramWebAppSignInApi方式登录');
+                    console.log(loginType, 'userThunk 请求telegramWebAppSignInApi方式登录');
                     dispatch(telegramWebAppLoginApi({
                         autoLoginUserId:getThirdPartId(),
                         autoLoginKey:getAutoLoginKey()})
