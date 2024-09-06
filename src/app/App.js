@@ -103,7 +103,7 @@ const App = () => {
                 console.log(accessType, 'app请求checkLoginState,检查登录状态')
                 dispatch(checkLoginState({
                     loginType: userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP,
-                    autoLoginUserId: thirdPartId || getThirdPartId(),
+                    autoLoginUserId: thirdPartId,
                     autoLoginKey: autoLoginKey
                 }));
                 break;
