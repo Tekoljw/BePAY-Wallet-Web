@@ -58,11 +58,11 @@ const App = () => {
     const token = useSelector(selectUserData).token;
     const lang = currentLanguage.id === getUrlParam('lang') ? currentLanguage.id : getUrlParam('lang');
 
-    dispatch(sendLogInfo({
+    /*dispatch(sendLogInfo({
         logPlatform: accessType,
         logTitle: "react web url href",
         logContent: 'path url :' + window.location.href
-    }));
+    }));*/
 
     useEffect(() => {
 
@@ -92,11 +92,11 @@ const App = () => {
         if (storageKey) {
             window.localStorage.setItem('storageKey', storageKey)
         }
-        dispatch(sendLogInfo({
+        /*dispatch(sendLogInfo({
             logPlatform: accessType,
             logTitle: "app accessType",
             logContent: "thirdPartId : " + thirdPartId
-        }));
+        }));*/
         switch (accessType){
             case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP:{ //telegramWebApp
                 window.localStorage.setItem('loginType', userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP);
