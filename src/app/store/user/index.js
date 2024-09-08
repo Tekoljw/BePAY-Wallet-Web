@@ -9,7 +9,8 @@ import {
 import userLoginType from "../../define/userLoginType";
 // state
 const initialState = {
-    token: '',
+    token: '', //网站自己的验证token
+    thirdPartToken: '', //给第三方的验证token
     userInfo: {},
     profile: {},
     transferList: {},
@@ -32,6 +33,7 @@ const userSlice = createSlice({
             state.profile = res.data;
             if (res.data.token) {
                 state.token = res.data.token;
+                state.thirdPartToken = res.data.thirdPartToken;
                 const openAppId = getOpenAppId();
                 const openIndex = getOpenAppIndex();
                 window.localStorage.setItem(`Authorization-${openAppId}-${openIndex}`, res.data.token);
@@ -67,6 +69,7 @@ const userSlice = createSlice({
             let res = action.payload;
             if (res.data.token) {
                 state.token = res.data.token;
+                state.thirdPartToken = res.data.thirdPartToken;
                 var openAppId = getOpenAppId();
                 var openIndex = getOpenAppIndex();
                 localStorage.setItem(`Authorization-${openAppId}-${openIndex}`, res.data.token);
