@@ -68,11 +68,13 @@ const item = {
 function Fiat(props) {
     const { t } = useTranslation('mainPage');
     const [openTiBi, setOpenTiBi] = useState(false);
+    const [openTiBi2, setOpenTiBi2] = useState(false);
     const [withdrawOrderID, setWithdrawOrderID] = useState('');
     const [openLoad, setOpenLoad] = useState(false);
     const isMobileMedia = new MobileDetect(window.navigator.userAgent).mobile();
     const dispatch = useDispatch();
     const [openPasteWindow, setOpenPasteWindow] = useState(false);
+    const [faitSendId, setFaitSendId] = useState('');
     const [inputVal, setInputVal] = useState({
         cardName: '',
         pixId: '',
@@ -150,24 +152,27 @@ function Fiat(props) {
     const handleSubmit = () => {
         setOpenLoad(true)
         if (smallTabValue === 1) {
-            let data = {
-                currency: currencyCode,
-                transferUserId: inputVal.userId,
-                amount: inputVal.amount,
-                transferType: 1,
-            };
-            console.log(data);
-            dispatch(makeWithdrawOrder(data)).then((res) => {
-                setOpenLoad(false)
-                let result = res.payload;
-                if (result && result?.status != 'fail') {
-                    dispatch(showMessage({ message: t('errorMsg_1'), code: 1 }));
-                } else {
-                    dispatch(showMessage({ message: t('error_10'), code: 2 }));
-                }
-            });
-
+            setTimeout(() => {
+                let data = {
+                    currency: currencyCode,
+                    transferUserId: inputVal.userId,
+                    amount: inputVal.amount,
+                    transferType: 1,
+                };
+                dispatch(makeWithdrawOrder(data)).then((res) => {
+                    setOpenLoad(false)
+                    let result = res.payload;
+                    if (result && result?.status != 'fail') {
+                        setOpenTiBi2(true)
+                        setFaitSendId(result.transactionId)
+                        dispatch(showMessage({ message: t('errorMsg_1'), code: 1 }));
+                    } else {
+                        dispatch(showMessage({ message: t('error_10'), code: 2 }));
+                    }
+                });
+            }, 1000);
         } else {
+            let entryType = getEntryType(currencyCode)
             let bankName = ''
             if (entryType === 'MMK_TRANSFER_KBZ') {
                 bankName = 'KBZ_Pay'
@@ -718,8 +723,6 @@ function Fiat(props) {
                                                     <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
                                                 </div>
                                             </div>
-
-
                                         </div>}
 
                                         {payoutList[currencyCode]?.length > 0 && <>
@@ -1090,7 +1093,7 @@ function Fiat(props) {
                                 }} alt="close icon" />
                             </Typography>
                         </div>
-                        <Box className="dialog-content dialog-content-paste-height " style={{ paddingRight: "0px", height: "600px" }}>
+                        <Box className="dialog-content dialog-content-paste-height " style={{ paddingRight: "0px", height: "500px" }}>
                             <motion.div
                                 variants={container}
                                 initial="hidden"
@@ -1127,6 +1130,63 @@ function Fiat(props) {
                                         <div style={{ color: "#888B92" }}>Fee</div>
                                         <div>0.8 USDT</div>
                                     </motion.div> */}
+                                <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
+                                    <div style={{ color: "#888B92" }}>{t('home_Time')}</div>
+                                    <div>{getNowTime()}</div>
+                                </motion.div>
+                            </motion.div>
+                        </Box>
+                    </DialogContent>
+                </BootstrapDialog>
+
+                {/*提法币内部样式*/}
+                <BootstrapDialog
+                    onClose={() => { setOpenTiBi2(false); }}
+                    aria-labelledby="customized-dialog-title"
+                    open={openTiBi2}
+                    className="dialog-container"
+                >
+                    <DialogContent dividers >
+                        <div className='dialog-box' >
+                            <Typography id="customized-dialog-title" className="text-24 dialog-title-text" style={{ textAlign: "center", marginTop: "10px" }}>{t('home_Transaction')}
+                                <img src="wallet/assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => {
+                                    setOpenTiBi2(false)
+                                    setOpenLoad(false)
+                                }} alt="close icon" />
+                            </Typography>
+                        </div>
+                        <Box className="dialog-content dialog-content-paste-height " style={{ paddingRight: "0px", height: "500px" }}>
+                            <motion.div
+                                variants={container}
+                                initial="hidden"
+                                animate="show"
+                                className="dialog-content-inner  border-r-5">
+                                <motion.div variants={item}>
+                                    <img style={{ margin: "0 auto", width: "60px", height: "60px", marginTop: "10px" }} src='wallet/assets/images/wallet/naoZhong2.png'></img>
+                                </motion.div>
+                                <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "20px", fontSize: "24px" }}>-{inputVal.amount} {currencyCode}</motion.div>
+                                <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "10px", fontSize: "16px", color: "#2ECB71" }}>● {t('errorMsg_1')}</motion.div>
+
+                                <motion.div variants={item} className='flex justify-content-space px-20 mt-40' >
+                                    <div style={{ color: "#888B92" }}>{t('home_Type')}</div>
+                                    <div>Fiat</div>
+                                </motion.div>
+
+                                <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
+                                    <div style={{ color: "#888B92" }}>{t('card_7')}</div>
+                                    <div style={{ width: "50%", wordWrap: "break-word", textAlign: "right" }}>{inputVal.userId}</div>
+                                </motion.div>
+
+                                <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
+                                    <div style={{ color: "#888B92" }}>{t('home_borrow_18')}</div>
+                                    <div>0 {currencyCode}</div>
+                                </motion.div>
+
+                                <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
+                                    <div style={{ color: "#888B92" }}>{t('home_ID')}</div>
+                                    <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{faitSendId}</div>
+                                </motion.div>
+
                                 <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
                                     <div style={{ color: "#888B92" }}>{t('home_Time')}</div>
                                     <div>{getNowTime()}</div>

@@ -117,6 +117,7 @@ const locale = {
     home_borrow_15: 'Quantidade mínima recebida:',
     home_borrow_16: 'Taxa:',
     home_borrow_17: 'Confirmar',
+    home_borrow_18: 'Taxa',
 
     home_borrow_1: 'Lock',
     home_borrow_2: 'Borrow',
@@ -527,6 +528,18 @@ const locale = {
     card_174: "endereço de correspondência",
     card_175: "usuário",
     card_176: "insira a senha dinâmica de 6 dígitos",
+    card_177:"Sem taxas, pagamento instantâneo!",
+    card_178: "O cartão foi congelado",
+    card_179: "Para desbloquear, entre em contato com nosso atendimento ao cliente online 24/7.",
+    card_180: "Verificação do Google",
+    card_181: "Para transferências grandes, ative a verificação em duas etapas do Google.",
+    card_182: "abrir",
+
+
+    
+
+
+
  };
 export default locale;
     

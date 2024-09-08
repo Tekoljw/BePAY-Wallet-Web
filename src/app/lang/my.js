@@ -125,6 +125,7 @@ const locale = {
     home_borrow_15: 'Jumlah Minimum Diterima:',
     home_borrow_16: 'Bayaran:',
     home_borrow_17: 'Sahkan',
+    home_borrow_18: 'Bayaran',
     
     home_swap_1: 'Dari',
     home_swap_2: 'Ke',
@@ -527,6 +528,15 @@ const locale = {
     card_174: "alamat surat-menyurat",
     card_175: "pengguna",
     card_176: "masukkan kata laluan dinamik 6 digit",
+    card_177:"Tiada yuran, pemindahan segera!",
+    card_178: "Kad telah dibekukan",
+    card_179: "Untuk buka kunci, sila hubungi perkhidmatan pelanggan dalam talian 24/7 kami.",
+    card_180: "Kod Pengesahan Google",
+    card_181: "Untuk pemindahan besar, sila aktifkan pengesahan dua langkah Google.",
+    card_182: "buka",
+
+
+    
 
 
 

@@ -222,7 +222,7 @@
     background-color: #0F172A;
     width: 38px;
     height: 38px;
-    margin: 10px 10px 20px;
+    margin: 10px 8px 20px 8px;
     text-align: center;
     border-radius: 5px;
     font-size: 25px;
@@ -494,9 +494,9 @@ input[type='number'] {
 
 .PINTitle4 {
     text-align: center;
-    font-size: 2.2rem;
+    font-size: 2.6rem;
     font-weight: 600;
-    margin-left: 1rem;
+    margin-left: 0.6rem;
     height: 3.6rem;
     line-height: 3.6rem;
 }
@@ -762,9 +762,9 @@ input[type='number'] {
 
 
 .MoneyWithdraw {
-    width: 2.8rem;
-    height: 2.8rem;
-    margin-top: 0.25rem;
+    width: 2.4rem;
+    height: 2.4rem;
+    margin-top: 0.6rem;
 }
 
 .PinNum {
@@ -1349,10 +1349,11 @@ input[type='number'] {
 }
 
 .cardErrorZi {
-    margin-top: 1rem;
+    margin-top: 3rem;
     width: 100%;
     text-align: center;
     padding-inline: 1rem;
+    color: #1CD1AE;
 }
 
 .cardErrorBtn {
@@ -1379,6 +1380,10 @@ input[type='number'] {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+}
+
+.dingYueSty {
+    opacity: 0.3;
 }
 
 .zhangDanZi {
@@ -1754,9 +1759,8 @@ input[type='number'] {
 }
 
 .danChuangTxt {
-    word-wrap: break-word;
-    word-break: break-all;
-    overflow-wrap: break-word;
+    word-break: break-word; 
+    white-space: normal; 
     font-size: 1.6rem;
     padding-bottom: 2rem;
 }

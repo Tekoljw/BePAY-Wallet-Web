@@ -125,6 +125,7 @@ const locale = {
     home_borrow_15: 'Minimum na Natanggap na Halaga:',
     home_borrow_16: 'Bayad:',
     home_borrow_17: 'Kumpirmahin',
+    home_borrow_18: 'Bayad',
     
     home_swap_1: 'Mistä',
     home_swap_2: 'Mihin',
@@ -526,6 +527,16 @@ const locale = {
     card_174: "postiosoite",
     card_175: "käyttäjä",
     card_176: "syötä 6-numeroinen dynaaminen salasana",
+    card_177:"Ei maksuja, välitön siirto!",
+    card_178: "Kortti on jäädytetty",
+    card_179: "Jotta voit avata, ota yhteyttä 24/7 online-asiakaspalveluumme.",
+    card_180: "Googlen vahvistuskoodi",
+    card_181: "Suurten siirtojen yhteydessä ota käyttöön Googlen kaksivaiheinen todennus.",
+    card_182: "avata",
+
+
+    
+
 
 
 

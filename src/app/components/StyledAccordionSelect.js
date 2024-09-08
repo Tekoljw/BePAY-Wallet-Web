@@ -9,11 +9,13 @@ import { styled } from '@mui/material/styles';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { useSelector } from "react-redux";
 import { selectConfig } from "../store/config";
+import { selectUserData } from '../store/user'
 import OutlinedInput from "@mui/material/OutlinedInput";
 import FormControl from "@mui/material/FormControl";
 import { arrayLookup } from "../util/tools/function";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import * as _ from 'lodash'
 
 const container = {
     show: {
@@ -48,8 +50,8 @@ function StyledAccordionSelect(props) {
     const isSetAmount = props.isSetAmount ?? false;
     const isExpand = props.expand ?? false;
     const formControlSx = props.formControlSx ?? {};
-    
     const config = useSelector(selectConfig);
+    const userConfig = useSelector(selectUserData);
     const [selected, setSelected] = useState(0);
     const [inputVal, setInputVal] = useState({
         amount: 0.00000000
@@ -60,6 +62,8 @@ function StyledAccordionSelect(props) {
     }
     const [symbolName, setSymbolName] = useState(arrayLookup(config.symbols, 'symbol', symbol[selected]?.symbol, 'name'));
     const [expanded, setExpanded] = useState(isExpand);
+    const [rateArr, setRateArr] = useState([]);
+
     const toggleAccordion = (panel) => (event, _expanded) => {
         setExpanded(_expanded ? panel : false);
     };
@@ -77,10 +81,16 @@ function StyledAccordionSelect(props) {
     };
 
     const currenyPaytoken = (currentSymbol, currentBalance) => {
-        const symbolRate = arrayLookup(config.symbols, 'symbol', currentSymbol, 'rate');
+        const symbolRate = _.get(_.find(rateArr, {key: currentSymbol }), 'rate', 0);
         const currencyRate = arrayLookup(config.payment.currency, 'currencyCode', currencyCode, 'exchangeRate');
         return (currentBalance * symbolRate).toFixed(2)
     };
+
+    const assembleRateChange = () => {
+        const symbolArrRate = _.map(config.symbols, ( symbol )=> { return { key: symbol.symbol, rate: symbol.rate} });
+        const fiatArrRate = _.map(userConfig.fiat, (fa)=> { return {key: fa.currencyCode, rate: (1/fa.exchangeRate).toFixed(20)}});
+        setRateArr([...symbolArrRate, ...fiatArrRate]);
+    }
 
 
     useEffect(() => {
@@ -99,6 +109,7 @@ function StyledAccordionSelect(props) {
             props.setAmount(symbol[selected]?.balance || 0);
         }
         // console.log(symbol);
+        assembleRateChange();
         setSymbolName(arrayLookup(config.symbols, 'symbol', symbol[selected]?.symbol, 'name'));
 
 

@@ -125,6 +125,7 @@ const locale = {
     home_borrow_15: 'Minimum na Natanggap na Halaga:',
     home_borrow_16: 'Bayad:',
     home_borrow_17: 'Kumpirmahin',
+    home_borrow_18: 'Bayad',
 
     
     home_swap_1: 'Mula',
@@ -528,6 +529,15 @@ const locale = {
     card_174: "address ng koreo",
     card_175: "gumagamit",
     card_176: "ipasok ang 6-digit na dynamic na password",
+    card_177:"Walang bayad, instant transfer!",
+    card_178: "Ang card ay na-freeze na",
+    card_179: "Upang ma-unlock, mangyaring makipag-ugnayan sa aming 24/7 online na serbisyo sa customer.",
+    card_180: "Kodigo ng Pagpapatunay ng Google",
+    card_181: "Para sa malalaking paglilipat, mangyaring i-enable ang Google two-step verification.",
+    card_182: "buksan",
+
+
+    
 
 
 

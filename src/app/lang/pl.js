@@ -126,6 +126,7 @@ const locale = {
     home_borrow_15: 'Minimalna kwota odbioru:',
     home_borrow_16: 'Opłata:',
     home_borrow_17: 'Potwierdź',
+    home_borrow_18: 'Opłata',
     
     home_swap_1: 'Z',
     home_swap_2: 'Na',
@@ -528,6 +529,15 @@ const locale = {
     card_174: "adres korespondencyjny",
     card_175: "użytkownik",
     card_176: "wprowadź 6-cyfrowe dynamiczne hasło",
+    card_177:"Bez opłat, natychmiastowy transfer!",
+    card_178: "Karta została zamrożona",
+    card_179: "Aby odblokować, skontaktuj się z naszym całodobowym działem obsługi klienta online.",
+    card_180: "Kod weryfikacyjny Google",
+    card_181: "W przypadku dużych przelewów, proszę włączyć weryfikację dwuetapową Google.",
+    card_182: "otworzyć",
+
+
+    
 
 
 

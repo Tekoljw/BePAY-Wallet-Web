@@ -1602,7 +1602,7 @@ function Wallet() {
                         setIsOpenEye(!isOpenEye);
                       }}></img>
                   }
-                  <div className="ml-8 walletBalanceZi" style={{ color: "#84A59F" }} >Wallet Balance</div>
+                  <div className="ml-8 walletBalanceZi" style={{ color: "#84A59F" }} >{t("card_10")}</div>
                 </div>
                 <div className="zhangDanXiangQinZi" onClick={() => {
                   changePhoneTab("record");
@@ -1624,7 +1624,7 @@ function Wallet() {
                   changePhoneTab("card");
                   history.push('/wallet/home/card')
                 }} >
-                  My Cards
+                  {t("card_2")}
                 </div>
               </div>
             </div>
@@ -1727,7 +1727,7 @@ function Wallet() {
                                 "aria-label": "searchText",
                               }}
                               // autoFocus
-                              placeholder="search"
+                              placeholder={t("home_account_2")}
                             // onBlur={() => { setSearchInput(false) }}
                             />
                           </FormControl>
@@ -1851,7 +1851,7 @@ function Wallet() {
                             inputProps={{
                               "aria-label": "searchText",
                             }}
-                            placeholder="search"
+                            placeholder={t("home_account_2")}
                           />
                         </FormControl>
                         <img

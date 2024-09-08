@@ -125,6 +125,7 @@ const locale = {
     home_borrow_15: 'Jumlah Minimum yang Diterima:',
     home_borrow_16: 'Biaya:',
     home_borrow_17: 'Konfirmasi',
+    home_borrow_18: 'Biaya',
 
     home_swap_1: 'Dari',
     home_swap_2: 'Ke',
@@ -527,6 +528,18 @@ const locale = {
     card_174: "alamat surat",
     card_175: "pengguna",
     card_176: "masukkan kata sandi dinamis 6 digit",
+    card_177:"Tanpa biaya, dana masuk seketika!",
+    card_178: "Kartu telah dibekukan",
+    card_179: "Untuk membuka blokir, silakan hubungi layanan pelanggan online kami 24/7.",
+    card_180: "Kode Verifikasi Google",
+    card_181: "Untuk transfer besar, harap aktifkan verifikasi dua langkah Google.",
+    card_182: "buka",
+
+
+    
+
+
+
 
 
 

@@ -125,6 +125,7 @@ const locale = {
     home_borrow_15: 'Montant minimum reçu :',
     home_borrow_16: 'Frais :',
     home_borrow_17: 'Confirmer',
+    home_borrow_18: 'Frais',
 
     home_swap_1: 'Desde',
     home_swap_2: 'Hacia',
@@ -527,6 +528,20 @@ const locale = {
     card_174: "adresse postale",
     card_175: "utilisateur",
     card_176: "entrez le mot de passe dynamique à 6 chiffres",
+    card_177:"Pas de frais, transfert instantané!",
+    card_178: "La carte a été gelée",
+    card_179: "Pour débloquer, veuillez contacter notre service client en ligne 24/7.",
+    card_180: "Code de vérification Google",
+    card_181: "Pour les gros transferts, veuillez activer la vérification en deux étapes de Google.",
+    card_182: "ouvrir",
+
+
+    
+
+
+
+
+
 
 };
 

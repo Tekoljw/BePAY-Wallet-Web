@@ -116,6 +116,7 @@ const locale = {
     home_borrow_15: 'Số lượng nhận tối thiểu:',
     home_borrow_16: 'Phí:',
     home_borrow_17: 'Xác nhận',
+    home_borrow_18: 'Phí',
     
     home_swap_1: 'Từ',
     home_swap_2: 'Đến',
@@ -517,6 +518,19 @@ const locale = {
     card_174: "địa chỉ thư tín",
     card_175: "người dùng",
     card_176: "nhập mật khẩu động 6 chữ số",
+    card_177:"Không phí, chuyển khoản ngay lập tức!",
+    card_178: "Thẻ đã bị đóng băng",
+    card_179: "Để mở khóa, vui lòng liên hệ dịch vụ khách hàng trực tuyến 24/7 của chúng tôi.",
+    card_180: "Mã xác minh Google",
+    card_181: "Đối với các giao dịch chuyển khoản lớn, vui lòng bật xác minh hai bước của Google.",
+    card_182: "mở",
+
+
+    
+
+    
+
+
     };
 
 export default locale;

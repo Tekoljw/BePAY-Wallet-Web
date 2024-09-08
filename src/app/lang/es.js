@@ -125,6 +125,7 @@ const locale = {
     home_borrow_15: 'Cantidad mínima recibida:',
     home_borrow_16: 'Tarifa:',
     home_borrow_17: 'Confirmar',
+    home_borrow_18: 'Tarifa',
 
     
     home_swap_1: 'De',
@@ -527,6 +528,16 @@ const locale = {
     card_174: "dirección postal",
     card_175: "usuario",
     card_176: "ingrese la contraseña dinámica de 6 dígitos",
+    card_177:"¡Sin comisiones, transferencia instantánea!",
+    card_178: "La tarjeta ha sido congelada",
+    card_179: "Para desbloquear, comuníquese con nuestro servicio de atención al cliente en línea 24/7.",
+    card_180: "Código de verificación de Google",
+    card_181: "Para transferencias grandes, habilite la verificación en dos pasos de Google.",
+    card_182: "abrir",
+
+
+    
+
 
 
 };

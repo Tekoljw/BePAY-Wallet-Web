@@ -124,6 +124,7 @@ const locale = {
     home_borrow_15: 'Minimum Alınan Miktar:',
     home_borrow_16: 'Ücret:',
     home_borrow_17: 'Onayla',
+    home_borrow_18: 'Ücret',
     
     home_swap_1: 'Nereden',
     home_swap_2: 'Nereye',
@@ -525,8 +526,15 @@ const locale = {
     card_174: "posta adresi",
     card_175: "kullanıcı",
     card_176: "6 haneli dinamik şifreyi girin",
+    card_177:"Ücret yok, anında transfer!",
+    card_178: "Kart donduruldu",
+    card_179: "Kilidi açmak için lütfen 7/24 çevrimiçi müşteri hizmetlerimize başvurun.",
+    card_180: "Google Doğrulama Kodu",
+    card_181: "Büyük transferler için lütfen Google iki adımlı doğrulamayı etkinleştirin.",
+    card_182: "açmak",
 
 
+    
 
 
 

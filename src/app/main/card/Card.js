@@ -810,20 +810,20 @@ function Card(props) {
                                                                     </div>
                                                                     {cardItem?.state == 9 && (
                                                                         <div className='cardErrorBg'>
-                                                                            <div className='flex justify-center mt-16' style={{ width: "100%" }}>
+                                                                            <div className='flex justify-center mt-28' style={{ width: "100%" }}>
                                                                                 <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                                                                                 <div className='TanHaoCardZi'>
-                                                                                    卡片已冻结
+                                                                                {t('card_178')}
                                                                                 </div>
                                                                             </div>
-                                                                            <div className='cardErrorZi'>解冻请联系我们7*24小时在线客服</div>
-
+                                                                            <div className='cardErrorZi'>{t('card_179')}</div>
+                                                                            {/* 
                                                                             <div className='cardErrorBtn txtColorTitleSmall' onClick={() => {
                                                                                 changePhoneTab('security');
                                                                                 history.push('/wallet/home/security', { tabValue: 4 })
                                                                             }} >
                                                                                 联系客服
-                                                                            </div>
+                                                                            </div> */}
                                                                         </div>
                                                                     )
                                                                     }
@@ -879,8 +879,8 @@ function Card(props) {
                                                                                 setOpenBindWindow(true)
                                                                                 openBindFunc()
                                                                             }}>
-                                                                                <img className='gongNengTuBiao' src="wallet/assets/images/menu/bangDing.png"></img>
-                                                                                <div className='gongNengZiW mt-4 text-14'>{t('card_47')}</div>
+                                                                                <img className='gongNengTuBiao dingYueSty' src="wallet/assets/images/menu/bangDing.png"></img>
+                                                                                <div className='gongNengZiW mt-4 text-14 dingYueSty'>{t('card_47')}</div>
                                                                             </div>
                                                                         </div>
                                                                         {/*
@@ -1126,8 +1126,8 @@ function Card(props) {
                                                                                 setOpenBindWindow(true)
                                                                                 openBindFunc()
                                                                             }}>
-                                                                                <img className='gongNengTuBiao' src="wallet/assets/images/menu/bangDing.png"></img>
-                                                                                <div className='gongNengZiW mt-4 text-14'>{t('card_47')}</div>
+                                                                                <img className='gongNengTuBiao dingYueSty' src="wallet/assets/images/menu/bangDing.png"></img>
+                                                                                <div className='gongNengZiW mt-4 text-14 dingYueSty'>{t('card_47')}</div>
                                                                             </div>
                                                                         </div>
                                                                         {/*
@@ -1492,7 +1492,7 @@ function Card(props) {
             >
                 <div className='flex justify-center' style={{ width: "100%" }}>
                     <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
-                    <div className='TanHaoCardZi'>
+                    <div className='TanHaoCardZi '>
                         {t('card_31')}
                     </div>
                 </div>

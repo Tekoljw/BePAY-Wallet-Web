@@ -1053,7 +1053,7 @@ function Deposite() {
                             setShowQRcode(!showQRcode);
                         }} ></img>
                     </div>
-                    <div className='px-10 mt-12'><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8", fontSize: "1.3rem" }}>0 transaction fee, received in seconds!</span></div>
+                    <div className='px-10 mt-12'><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8", fontSize: "1.3rem" }}>{t('card_177')}</span></div>
                 </motion.div>
 
                 <motion.div
@@ -1758,7 +1758,7 @@ function Deposite() {
                                 setShowQRcode(!showQRcode);
                             }} ></img>
                         </div>
-                        <div className='px-10 mt-12'><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8", fontSize: "1.3rem" }}>0 transaction fee, received in seconds!</span></div>
+                        <div className='px-10 mt-12'><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8", fontSize: "1.3rem" }}>{t('card_177')}</span></div>
                     </motion.div>
 
                     <Typography className="text-16 px-16 my-10">{t('home_deposite_17')}</Typography>

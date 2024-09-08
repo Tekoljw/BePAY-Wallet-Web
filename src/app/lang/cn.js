@@ -125,6 +125,7 @@ const locale = {
     home_borrow_15: '最小接收金额:',
     home_borrow_16: '手续费:',
     home_borrow_17: '确认',
+    home_borrow_18: '手续费',
 
     home_swap_1: '从',
     home_swap_2: '到',
@@ -234,7 +235,7 @@ const locale = {
     home_wallet_11: '请注意，这些是货币的近似值。所有的赌注和交易将以加密货币等值的形式结算。如需进一步了解，请随时联系我们的在线客服。',
     home_wallet_12: 'MetaMask',
     home_wallet_13: '从',
-    home_wallet_14: '到',
+    home_wallet_14: '向',
     home_wallet_15: '您还需要',
     home_wallet_16: '完成此交易。',
     home_wallet_17: '价格',
@@ -529,11 +530,19 @@ const locale = {
     card_171: "转出",
     card_172: "签到",
     card_173: "昨日总交易量",
-    kyc_41:"此处为必填项不能为空",
+    kyc_41: "此处为必填项不能为空",
     home_record_0: '全部',
     card_174: "通讯地址",
     card_175: "用户",
     card_176: "输入6位动态密码",
+    card_177: "无手续费，秒速到账！",
+    card_178: "卡片已冻结",
+    card_179: "解冻请联系我们7*24小时在线客服。",
+    card_180: "谷歌验证码",
+    card_181: "大额转账请开启Google两步验证。",
+    card_182: "开启",
+
+
 };
 
 export default locale;

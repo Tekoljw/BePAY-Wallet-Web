@@ -125,6 +125,7 @@ const locale = {
     home_borrow_15: '最低接收量：',
     home_borrow_16: '費用：',
     home_borrow_17: '確認',
+    home_borrow_18: '費用',
 
     home_swap_1: '從',
     home_swap_2: '到',
@@ -526,7 +527,15 @@ const locale = {
     card_174: "通訊地址",
     card_175: "用戶",
     card_176: "輸入6位動態密碼",
+    card_177:"無手續費，秒速到賬！",
+    card_178: "卡片已凍結",
+    card_179: "解凍請聯繫我們7*24小時在線客服。",
+    card_180: "谷歌驗證碼",
+    card_181: "大額轉賬請開啟Google兩步驗證。",
+    card_182: "開啟",
 
+
+    
 
 
 
