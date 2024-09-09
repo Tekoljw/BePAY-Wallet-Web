@@ -353,32 +353,32 @@ function Withdraw(props) {
         const rate = arrayLookup(symbols, 'symbol', symbol, 'rate');
         let conversionAmount = rate * amount;
 
-        if (conversionAmount >= transferState.limitSingle && googleCode.length < 6) {
-            if (!hasAuthGoogle) {
-                setOpenAnimateModal(true);
-                return;
-            }
-            openGoogleCodeFunc()
-            return
-        }
+        // if (conversionAmount >= transferState.limitSingle && googleCode.length < 6) {
+        //     if (!hasAuthGoogle) {
+        //         setOpenAnimateModal(true);
+        //         return;
+        //     }
+        //     openGoogleCodeFunc()
+        //     return
+        // }
 
-        if (transferState.daily >= transferState.limitDaily && googleCode.length < 6) {
-            if (!hasAuthGoogle) {
-                setOpenAnimateModal(true);
-                return;
-            }
-            openGoogleCodeFunc()
-            return
-        }
+        // if (transferState.daily >= transferState.limitDaily && googleCode.length < 6) {
+        //     if (!hasAuthGoogle) {
+        //         setOpenAnimateModal(true);
+        //         return;
+        //     }
+        //     openGoogleCodeFunc()
+        //     return
+        // }
 
-        if (transferState.month >= transferState.limitMonth && googleCode.length < 6) {
-            if (!hasAuthGoogle) {
-                setOpenAnimateModal(true);
-                return;
-            }
-            openGoogleCodeFunc()
-            return
-        }
+        // if (transferState.month >= transferState.limitMonth && googleCode.length < 6) {
+        //     if (!hasAuthGoogle) {
+        //         setOpenAnimateModal(true);
+        //         return;
+        //     }
+        //     openGoogleCodeFunc()
+        //     return
+        // }
 
         let data = {
             address: inputVal.address,
@@ -394,12 +394,21 @@ function Withdraw(props) {
             setOpenLoad(false);
             let result = res.payload
             setGoogleCode('');
-            if (result) {
-                setOpenTiBi(true);
-                setWithDrawOrderID(result);
-            } else {
-                dispatch(showMessage({ message: t('error_10'), code: 2 }));
-            }
+            if( result.errno == -2 ){
+                if (!hasAuthGoogle) {
+                    setOpenAnimateModal(true);
+                    return;
+                }
+                openGoogleCodeFunc()
+                return
+            } else{
+                if (result) {
+                    setOpenTiBi(true);
+                    setWithDrawOrderID(result);
+                } else {
+                    dispatch(showMessage({ message: t('error_10'), code: 2 }));
+                }  
+            } 
 
         });
     };
@@ -421,38 +430,38 @@ function Withdraw(props) {
         // closePinFunc()
         const rate = arrayLookup(symbols, 'symbol', symbol, 'rate');
         let conversionAmount = rate * inputVal.amount;
-        if (conversionAmount >= transferState.limitSingle && googleCode.length < 6) {
-            if (!hasAuthGoogle) {
-                setTimeout(() => {
-                    setOpenAnimateModal(true);
-                }, 300)
-                return;
-            }
-            openGoogleCodeFunc()
-            return
-        }
+        // if (conversionAmount >= transferState.limitSingle && googleCode.length < 6) {
+        //     if (!hasAuthGoogle) {
+        //         setTimeout(() => {
+        //             setOpenAnimateModal(true);
+        //         }, 300)
+        //         return;
+        //     }
+        //     openGoogleCodeFunc()
+        //     return
+        // }
 
-        if (transferState.daily >= transferState.limitDaily && googleCode.length < 6) {
-            if (!hasAuthGoogle) {
-                setTimeout(() => {
-                    setOpenAnimateModal(true);
-                }, 300)
-                return;
-            }
-            openGoogleCodeFunc()
-            return
-        }
+        // if (transferState.daily >= transferState.limitDaily && googleCode.length < 6) {
+        //     if (!hasAuthGoogle) {
+        //         setTimeout(() => {
+        //             setOpenAnimateModal(true);
+        //         }, 300)
+        //         return;
+        //     }
+        //     openGoogleCodeFunc()
+        //     return
+        // }
 
-        if (transferState.month >= transferState.limitMonth && googleCode.length < 6) {
-            if (!hasAuthGoogle) {
-                setTimeout(() => {
-                    setOpenAnimateModal(true);
-                }, 300)
-                return;
-            }
-            openGoogleCodeFunc()
-            return
-        }
+        // if (transferState.month >= transferState.limitMonth && googleCode.length < 6) {
+        //     if (!hasAuthGoogle) {
+        //         setTimeout(() => {
+        //             setOpenAnimateModal(true);
+        //         }, 300)
+        //         return;
+        //     }
+        //     openGoogleCodeFunc()
+        //     return
+        // }
 
         let data = {
             userId: inputIDVal,
@@ -462,19 +471,30 @@ function Withdraw(props) {
         };
 
         dispatch(sendTips(data)).then((res) => {
-            if (res.payload) {
+            let resData = res.payload;
+            if (resData.errno == 0) {
                 setCurrRequestId(res.meta.requestId)
                 setOpenSuccess(false);
                 setTimeout(() => {
                     setZhuanQuan(false);
                 }, 1200);
-            } else
+            } else if(resData.errno == -2) {
+                if (!hasAuthGoogle) {
+                    setTimeout(() => {
+                        setOpenAnimateModal(true);
+                    }, 300)
+                    return;
+                }
+                openGoogleCodeFunc()
+                return
+            }else{
                 setOpenSuccess(true);
+            }
+            setIsLoadingBtn(false)
+            setTimeout(() => {
+                setGoogleCode('');
+            }, 500)    
         });
-
-        setTimeout(() => {
-            setGoogleCode('');
-        }, 500)
     };
 
     const handleCopyText = (text) => {
@@ -494,7 +514,11 @@ function Withdraw(props) {
     useEffect(() => {
         if (googleCode.length === 6) {
             setOpenGoogleCode(false);
-            handleSubmit();
+            if(smallTabValue == 0) {
+                handleSubmit();
+            }else if(smallTabValue == 1){
+                handleSendTipsSubmit();
+            }
         }
 
     }, [googleCode]);
@@ -1211,7 +1235,7 @@ function Withdraw(props) {
                                             sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
                                             style={{ width: '100%', height: '4rem', fontSize: "20px", margin: '3rem auto 1rem auto', display: 'block', lineHeight: "inherit", padding: "0px" }}
                                             onClick={() => {
-                                                handleSubmit()
+                                                isBindPin()
                                             }}
                                         >
                                             {t('home_withdraw_10')}
@@ -1679,7 +1703,7 @@ function Withdraw(props) {
                                     closePinFunc();
                                 }} />
                             </div>
-                            <div className='PINTitle'>{t('home_wallet_14')}{t('card_7')}（ {inputIDVal} ）{t('transfer_1')}</div>
+                            <div className='PINTitle'>{t('home_wallet_14')}{ smallTabValue == 0 ? t('card_8') : t('card_7')}（ {  smallTabValue == 0 ? inputVal.address : inputIDVal } ）{t('transfer_1')}</div>
                             <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
                                 <img className='MoneyWithdraw' src="wallet/assets/images/withdraw/USDT.png"></img>
                                 <div className='PINTitle3'>USDT</div>
@@ -1780,7 +1804,7 @@ function Withdraw(props) {
                                         onTouchEnd={changeToWhite}
                                         onTouchCancel={changeToWhite}
                                         onClick={() => {
-                                            handleSendTipsSubmit()
+                                            smallTabValue=== 0 ?  handleSubmit() : handleSendTipsSubmit()
                                         }}>{t('card_30')}</div>
                                 }
                             </div>

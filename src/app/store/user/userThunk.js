@@ -876,7 +876,6 @@ export const verifyGAuth = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             return true
         } else {
-            // alert(googleRes?.errmsg);
             dispatch(showMessage({ message: t('error_32'), code: 2 }));
             return false
         }
@@ -953,8 +952,10 @@ export const sendTips = createAsyncThunk(
         const sendTipsRes = await React.$api("transfer.sendTips", data);
         if (sendTipsRes.errno === 0) {
             // dispatch(showMessage({ message: 'success', code: 1 }));
-            return true;
-        } else {
+            return sendTipsRes;
+        } else if(sendTipsRes.errno === -2) {
+            return sendTipsRes;
+        } else{
             dispatch(showMessage({ message: sendTipsRes.errmsg, code: 2 }));
             return false;
         }
@@ -984,7 +985,9 @@ export const tokenTransfer = createAsyncThunk(
             // }));
             dispatch(showMessage({ message: 'pending...', code: 1 }));
             return transferRes.data
-        } else {
+        } else if(transferRes.errno === -2){
+            return transferRes
+        }else {
             dispatch(showMessage({ message: t('error_36'), code: 2 }));
             return false
         }
