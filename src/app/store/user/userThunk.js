@@ -3,7 +3,7 @@ import Web3 from "../../util/web3";
 import React from "react";
 import history from '@history';
 import { showMessage } from 'app/store/fuse/messageSlice';
-import {selectUserData, updateTransfer, updateUser, updateUserToken, updateWallet} from "./index";
+import { selectUserData, updateTransfer, updateUser, updateUserToken, updateWallet } from "./index";
 import utils from "../../util/tools/utils";
 import BN from "bn.js";
 import { getWithdrawTransferStats } from '../wallet/walletThunk';
@@ -12,10 +12,10 @@ import walletEthereum from '../../util/web3/walletEthereum';
 import settingsConfig from 'app/configs/settingsConfig';
 import loginWays from '../../main/login/loginWays'
 import { EthereumProvider } from '@walletconnect/ethereum-provider';
-import {requestUserLoginData} from "../../util/tools/loginFunction";
-import {changeLanguage} from "app/store/i18nSlice";
+import { requestUserLoginData } from "../../util/tools/loginFunction";
+import { changeLanguage } from "app/store/i18nSlice";
 import userLoginType from "../../define/userLoginType";
-import {sendLogInfo} from "app/store/log/logThunk";
+import { sendLogInfo } from "app/store/log/logThunk";
 
 // 检查用户是否已经登录
 export const checkLoginState = createAsyncThunk(
@@ -34,18 +34,18 @@ export const checkLoginState = createAsyncThunk(
         console.log(data.autoLoginUserId, 'userThunk 请求checkLoginState进行登录检查');
         const loginState = await React.$api("user.checkLoginState", data);
         if (loginState.errno === 501) { //没有登录
-            switch (loginType){
-                case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP:{ //telegramWebApp
+            switch (loginType) {
+                case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP: { //telegramWebApp
                     console.log(loginType, 'userThunk 请求telegramWebAppSignInApi方式登录');
                     dispatch(telegramWebAppLoginApi({
-                        autoLoginUserId:settings.autoLoginUserId,
-                        autoLoginKey:settings.autoLoginKey
+                        autoLoginUserId: settings.autoLoginUserId,
+                        autoLoginKey: settings.autoLoginKey
                     })
                     );
                     break;
                 }
             }
-        } else if(loginState.errno === 0){ //已经登录成功
+        } else if (loginState.errno === 0) { //已经登录成功
             //请求对应的数据
             requestUserLoginData(dispatch);
         } else { //其他错误
@@ -893,8 +893,8 @@ export const getUserData = createAsyncThunk(
             dispatch(updateUser(userData));
             if (userData.data.user && userData.data.user.language) {
                 dispatch(changeLanguage(userData.data.user.language)).then(r => {
-                        console.log("change language success")
-                    }
+                    console.log("change language success")
+                }
                 )
             }
             return userData
@@ -952,9 +952,11 @@ export const sendTips = createAsyncThunk(
         };
         const sendTipsRes = await React.$api("transfer.sendTips", data);
         if (sendTipsRes.errno === 0) {
-            dispatch(showMessage({ message: 'success', code: 1 }));
+            // dispatch(showMessage({ message: 'success', code: 1 }));
+            return true;
         } else {
             dispatch(showMessage({ message: sendTipsRes.errmsg, code: 2 }));
+            return false;
         }
     }
 );

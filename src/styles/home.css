@@ -215,6 +215,18 @@
     justify-content: flex-start;
 }
 
+.daGouDingWei {
+    left: 0%;
+    right: 0%;
+    margin: 0 auto;
+}
+
+.daGouDingWei1 {
+    left: 0%;
+    right: 0%;
+    margin: 0 auto;
+}
+
 .pinInput {
     box-sizing: border-box;
     padding: 0;
@@ -340,6 +352,10 @@ input[type='number'] {
     bottom: 0%;
     right: 0%;
     animation: rotateX 3s linear infinite;
+}
+
+.chuKuanDongHua {
+    animation: rotateX 1.5s linear infinite;
 }
 
 @keyframes rotateX {
@@ -1014,6 +1030,9 @@ input[type='number'] {
 }
 
 
+.daGouFangDa {
+    animation: zpFangDa 0.6s forwards;
+}
 
 .gongNengZiW {
     width: 100%;
@@ -1759,8 +1778,8 @@ input[type='number'] {
 }
 
 .danChuangTxt {
-    word-break: break-word; 
-    white-space: normal; 
+    word-break: break-word;
+    white-space: normal;
     font-size: 1.6rem;
     padding-bottom: 2rem;
 }

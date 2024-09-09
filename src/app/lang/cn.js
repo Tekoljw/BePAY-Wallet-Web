@@ -303,11 +303,11 @@ const locale = {
     reset_pass_5: '确认密码',
     reset_pass_6: '重置密码',
 
-    home_Transaction: '交易',
+    home_Transaction: '转账',
     home_PendingReview: '待审核',
     home_NetWork: '网络',
     home_Type: '类型',
-    home_ID: 'ID',
+    home_ID: '订单ID',
     home_Time: '时间',
     home_Bank: '银行',
     home_Name: '名称',

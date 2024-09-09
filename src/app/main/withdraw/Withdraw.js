@@ -50,6 +50,7 @@ import * as yup from 'yup';
 import InputLabel from "@mui/material/InputLabel/InputLabel";
 import AnimateModal from "../../components/FuniModal";
 import Enable2FA from "../2fa/Enable2FA";
+import FuseLoading from '@fuse/core/FuseLoading';
 
 const container = {
     show: {
@@ -170,7 +171,11 @@ function Withdraw(props) {
     const [bAppendFee, setBAppendFee] = useState(false);
     const [openAnimateModal, setOpenAnimateModal] = useState(false);
     const [openYanZheng, setOpenYanZheng] = useState(false);
-
+    const [openSuccess, setOpenSuccess] = useState(true);
+    const [divHeight, setDivHeight] = useState(0);
+    const [currRequestId, setCurrRequestId] = useState(0);
+    const [isLoadingBtn, setIsLoadingBtn] = useState(false);
+    const [zhuanQuan, setZhuanQuan] = useState(true);
 
     const handleChangeInputVal = (prop, value) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
@@ -179,6 +184,7 @@ function Withdraw(props) {
             evalFee2(networkId, symbol, event.target.value);
         }
     };
+
     const [showGuangBiao, setShowGuangBiao] = useState(false);
 
     const changeToBlack = (target) => {
@@ -200,6 +206,13 @@ function Withdraw(props) {
             behavior: 'smooth' // 平滑滚动
         });
     };
+
+    const getDivHeight = (divName) => {
+        setTimeout(() => {
+            setDivHeight(document.getElementById(divName).offsetHeight)
+        }, 300);
+    };
+
 
     const changeAddress = (prop, value) => {
         setInputVal({ ...inputVal, [prop]: value });
@@ -257,6 +270,9 @@ function Withdraw(props) {
         document.getElementById('PINSty').classList.add('PinMoveOut');
         setTimeout(() => {
             setOpenPinWindow(false);
+            setOpenSuccess(true);
+            setIsLoadingBtn(false);
+            setZhuanQuan(true);
         }, 300);
     };
 
@@ -389,6 +405,7 @@ function Withdraw(props) {
     };
 
     const handleSendTipsSubmit = () => {
+        setIsLoadingBtn(true)
         if (textSelect) {
             setTextSelect(false)
             setShowGuangBiao(false)
@@ -401,9 +418,7 @@ function Withdraw(props) {
         if (pin.length < 6) {
             return
         }
-
-        closePinFunc()
-
+        // closePinFunc()
         const rate = arrayLookup(symbols, 'symbol', symbol, 'rate');
         let conversionAmount = rate * inputVal.amount;
         if (conversionAmount >= transferState.limitSingle && googleCode.length < 6) {
@@ -446,11 +461,22 @@ function Withdraw(props) {
             checkCode: googleCode
         };
 
-        dispatch(sendTips(data));
+        dispatch(sendTips(data)).then((res) => {
+            if (res.payload) {
+                setCurrRequestId(res.meta.requestId)
+                setOpenSuccess(false);
+                setTimeout(() => {
+                    setZhuanQuan(false);
+                }, 1200);
+            } else
+                setOpenSuccess(true);
+        });
+
         setTimeout(() => {
             setGoogleCode('');
         }, 500)
     };
+
     const handleCopyText = (text) => {
         var input1 = document.createElement('input');
         document.body.appendChild(input1);
@@ -769,6 +795,7 @@ function Withdraw(props) {
         setPin('')
         setOpenPinWindow(true)
         openPinFunc()
+        getDivHeight("pinDivHeight");
     }
 
     // PIN错误 Tips
@@ -1216,7 +1243,7 @@ function Withdraw(props) {
                                             </FormControl>
                                             {
                                                 isMobileMedia &&
-                                                <img className='shaoMiaoIcon' src="wallet/assets/images/withdraw/code.png" alt="" onClick={() => {
+                                                <img className='shaoMiaoIcon ' src="wallet/assets/images/withdraw/code.png" alt="" onClick={() => {
                                                     setOpenChangeCurrency(true);
                                                 }} />
                                             }
@@ -1643,119 +1670,191 @@ function Withdraw(props) {
                 className="dialog-container"
             >
                 <div id="PINSty" className="PINSty">
-                    <div className='pinWindow'>
-                        <div className='flex'>
-                            <div className='PINTitle2'>{t('card_65')}</div>
-                            <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
-                                closePinFunc();
-                            }} />
-                        </div>
-                        <div className='PINTitle'>{t('home_wallet_14')}{t('card_7')}（ {inputIDVal} ）{t('transfer_1')}</div>
-                        <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
-                            <img className='MoneyWithdraw' src="wallet/assets/images/withdraw/USDT.png"></img>
-                            <div className='PINTitle3'>USDT</div>
-                            <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")} onClick={() => {
-                                setTextSelect(!textSelect)
-                                setShowGuangBiao(true)
-                            }}>
-                                {inputVal.amount} <span className={clsx("", !showGuangBiao ? 'guangBiaoNo' : 'guangBiao')} >︱</span>
-                            </div>
-                        </div>
-                        <div className='flex justify-between mt-10'>
-                            <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[0] ? '●' : ''}</div></div>
-                            <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[1] ? '●' : ''}</div></div>
-                            <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[2] ? '●' : ''}</div></div>
-                            <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[3] ? '●' : ''}</div></div>
-                            <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[4] ? '●' : ''}</div></div>
-                            <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[5] ? '●' : ''}</div></div>
-                        </div>
-                    </div>
 
-                    <div className='jianPanSty'>
-                        <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
-                            <div id="zhuanZhang1" className='jianPanBtn borderRight borderBottom color-box'
-                                onTouchStart={changeToBlack}
-                                onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}
-                                onClick={() => { handleDoPin(1) }}>1</div>
-                            <div id="zhuanZhang2" className='jianPanBtn borderRight borderBottom color-box'
-                                onTouchStart={changeToBlack}
-                                onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}
-                                onClick={() => { handleDoPin(2) }}>2</div>
-                            <div id="zhuanZhang3" className='jianPanBtn borderRight borderBottom'
-                                onTouchStart={changeToBlack}
-                                onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}
-                                onClick={() => { handleDoPin(3) }}>3</div>
-                            <div id="zhuanZhangImg" className='jianPanBtImgDiv flex items-center borderBottom'
-                                onTouchStart={changeToBlack}
-                                onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}
-                                onClick={() => { handleDoPin(-1) }}>
-                                <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img>
+                    {openSuccess && <div id='pinDivHeight'>
+                        <div className='pinWindow'>
+                            <div className='flex'>
+                                <div className='PINTitle2'>{t('card_65')}</div>
+                                <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                                    closePinFunc();
+                                }} />
                             </div>
-                        </div>
-                        <div className='flex' style={{ width: "100%" }}>
-                            <div style={{ width: "75.1%" }}>
-                                <div className='flex'>
-                                    <div id="zhuanZhang4" className='jianPanBtn1 borderRight'
-                                        onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoPin(4) }}>4</div>
-                                    <div id="zhuanZhang5" className='jianPanBtn1 borderRight'
-                                        onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoPin(5) }}>5</div>
-                                    <div id="zhuanZhang6" className='jianPanBtn1 borderRight'
-                                        onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoPin(6) }}>6</div>
-                                </div>
-                                <div className='flex'>
-                                    <div id="zhuanZhang7" className='jianPanBtn1 borderRight'
-                                        onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoPin(7) }}>7</div>
-                                    <div id="zhuanZhang8" className='jianPanBtn1 borderRight'
-                                        onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoPin(8) }}>8</div>
-                                    <div id="zhuanZhang9" className='jianPanBtn1 borderRight'
-                                        onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoPin(9) }}>9</div>
-                                </div>
-                                <div className='flex'>
-                                    <div id="zhuanZhang0" className='jianPanBtn2 borderRight'
-                                        onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoPin(0) }}>0</div>
-                                    <div id="zhuanZhangDian" className='jianPanBtn4 borderRight'
-                                        onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoPin('.') }}>.</div>
+                            <div className='PINTitle'>{t('home_wallet_14')}{t('card_7')}（ {inputIDVal} ）{t('transfer_1')}</div>
+                            <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
+                                <img className='MoneyWithdraw' src="wallet/assets/images/withdraw/USDT.png"></img>
+                                <div className='PINTitle3'>USDT</div>
+                                <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")} onClick={() => {
+                                    setTextSelect(!textSelect)
+                                    setShowGuangBiao(true)
+                                }}>
+                                    {inputVal.amount} <span className={clsx("", !showGuangBiao ? 'guangBiaoNo' : 'guangBiao')} >︱</span>
                                 </div>
                             </div>
-                            <div id='zhuanZhangWanCheng' className='jianPanBtn3'
-                                onTouchStart={changeToBlack}
-                                onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}
-                                onClick={() => {
-                                    handleSendTipsSubmit()
-                                }}>{t('card_30')}</div>
+                            <div className='flex justify-between mt-10'>
+                                <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[0] ? '●' : ''}</div></div>
+                                <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[1] ? '●' : ''}</div></div>
+                                <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[2] ? '●' : ''}</div></div>
+                                <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[3] ? '●' : ''}</div></div>
+                                <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[4] ? '●' : ''}</div></div>
+                                <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[5] ? '●' : ''}</div></div>
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                    </div>
+                        <div className='jianPanSty'>
+                            <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                                <div id="zhuanZhang1" className='jianPanBtn borderRight borderBottom color-box'
+                                    onTouchStart={changeToBlack}
+                                    onTouchEnd={changeToWhite}
+                                    onTouchCancel={changeToWhite}
+                                    onClick={() => { handleDoPin(1) }}>1</div>
+                                <div id="zhuanZhang2" className='jianPanBtn borderRight borderBottom color-box'
+                                    onTouchStart={changeToBlack}
+                                    onTouchEnd={changeToWhite}
+                                    onTouchCancel={changeToWhite}
+                                    onClick={() => { handleDoPin(2) }}>2</div>
+                                <div id="zhuanZhang3" className='jianPanBtn borderRight borderBottom'
+                                    onTouchStart={changeToBlack}
+                                    onTouchEnd={changeToWhite}
+                                    onTouchCancel={changeToWhite}
+                                    onClick={() => { handleDoPin(3) }}>3</div>
+                                <div id="zhuanZhangImg" className='jianPanBtImgDiv flex items-center borderBottom'
+                                    onTouchStart={changeToBlack}
+                                    onTouchEnd={changeToWhite}
+                                    onTouchCancel={changeToWhite}
+                                    onClick={() => { handleDoPin(-1) }}>
+                                    <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img>
+                                </div>
+                            </div>
+                            <div className='flex' style={{ width: "100%" }}>
+                                <div style={{ width: "75.1%" }}>
+                                    <div className='flex'>
+                                        <div id="zhuanZhang4" className='jianPanBtn1 borderRight'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => { handleDoPin(4) }}>4</div>
+                                        <div id="zhuanZhang5" className='jianPanBtn1 borderRight'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => { handleDoPin(5) }}>5</div>
+                                        <div id="zhuanZhang6" className='jianPanBtn1 borderRight'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => { handleDoPin(6) }}>6</div>
+                                    </div>
+                                    <div className='flex'>
+                                        <div id="zhuanZhang7" className='jianPanBtn1 borderRight'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => { handleDoPin(7) }}>7</div>
+                                        <div id="zhuanZhang8" className='jianPanBtn1 borderRight'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => { handleDoPin(8) }}>8</div>
+                                        <div id="zhuanZhang9" className='jianPanBtn1 borderRight'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => { handleDoPin(9) }}>9</div>
+                                    </div>
+                                    <div className='flex'>
+                                        <div id="zhuanZhang0" className='jianPanBtn2 borderRight'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => { handleDoPin(0) }}>0</div>
+                                        <div id="zhuanZhangDian" className='jianPanBtn4 borderRight'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => { handleDoPin('.') }}>.</div>
+                                    </div>
+                                </div>
+                                {isLoadingBtn && <FuseLoading />}
+                                {!isLoadingBtn &&
+                                    <div id='zhuanZhangWanCheng' className='jianPanBtn3'
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => {
+                                            handleSendTipsSubmit()
+                                        }}>{t('card_30')}</div>
+                                }
+                            </div>
+                        </div>
+                    </div>}
+                    {!openSuccess && <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        style={{ height: `${divHeight}px` }}
+                    >
+                        <div className='dialog-box' >
+                            <Typography id="customized-dialog-title" className="text-24 dialog-title-text" style={{ textAlign: "center", marginTop: "10px" }}>{t('home_Transaction')}
+                                <img src="wallet/assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => {
+                                    closePinFunc();
+                                }} />
+                            </Typography>
+                        </div>
+
+                        <div className='daGouDingWei' style={{ position: "relative" }}>
+                            <motion.div variants={item} className=' daGouDingWei1' style={{ position: "absolute", width: "100px", height: "100px", paddingTop: "10px" }}>
+                                <div className='daGouDingWei1' style={{ position: "absolute" }}>
+                                    <img style={{ margin: "0 auto", width: "60px", height: "60px" }} src='wallet/assets/images/wallet/naoZhong2.png'></img>
+                                </div>
+                                <div className='daGouDingWei1' style={{ marginLeft: "58px", position: "absolute" }}>
+                                    {
+                                        zhuanQuan && <img className='chuKuanDongHua' style={{ width: "22px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong3.png'></img>
+                                    }
+                                    {
+                                        !zhuanQuan && <img className='daGouFangDa' style={{ width: "23px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong4.png'></img>
+                                    }
+                                </div>
+                            </motion.div>
+                        </div>
+
+                        <div style={{ margin: "0 auto", textAlign: "center", marginTop: "84px", height: "23px", fontSize: "16px", color: "#2ECB71" }}>
+                            {
+                                !zhuanQuan && <motion.div variants={item} style={{ height: "23px", lineHeight: "23px" }}>
+                                    ● {t('errorMsg_1')}
+                                </motion.div>
+                            }
+                        </div>
+
+                        <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "8px", fontSize: "24px" }}> -{inputVal.amount} {symbol}</motion.div>
+                        <motion.div variants={item} className='mx-20  mt-24' style={{ borderTop: "1px solid #2C3950" }}>
+                        </motion.div>
+
+                        <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                            <div style={{ color: "#888B92" }}>{t('home_Type')}</div>
+                            <div>{t('home_deposite_1')}</div>
+                        </motion.div>
+
+                        <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                            <div style={{ color: "#888B92" }}>{t('card_7')}</div>
+                            <div style={{ width: "50%", wordWrap: "break-word", textAlign: "right" }}>{inputIDVal}</div>
+                        </motion.div>
+
+                        <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                            <div style={{ color: "#888B92" }}>{t('home_borrow_18')}</div>
+                            <div>0 {symbol} </div>
+                        </motion.div>
+
+                        <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                            <div style={{ color: "#888B92" }}>{t('home_ID')}</div>
+                            <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{currRequestId}</div>
+                        </motion.div>
+
+                        <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                            <div style={{ color: "#888B92" }}>{t('home_Time')}</div>
+                            <div>{getNowTime()}</div>
+                        </motion.div>
+                    </motion.div>
+                    }
+
                 </div>
             </BootstrapDialog>
 
