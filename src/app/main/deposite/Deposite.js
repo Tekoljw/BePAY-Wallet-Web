@@ -25,7 +25,14 @@ import '../../../styles/home.css';
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
 import { selectConfig } from "../../store/config";
-import { arrayLookup, getOpenAppId, getOpenAppIndex, setPhoneTab, handleCopyText } from "../../util/tools/function";
+import {
+    arrayLookup,
+    getOpenAppId,
+    getOpenAppIndex,
+    setPhoneTab,
+    handleCopyText,
+    getUserLoginType
+} from "../../util/tools/function";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { foxSendTransaction, manualCryptoNotify } from "../../store/transfer/transferThunk";
 import {
@@ -57,6 +64,7 @@ import { useStatStyles } from '@chakra-ui/react';
 import history from '@history';
 import { local } from 'web3modal';
 import LoadingButton from "@mui/lab/LoadingButton";
+import userLoginType from "../../define/userLoginType";
 
 
 const marks = [
@@ -455,7 +463,17 @@ function Deposite() {
         let result = res.payload;
         if (result) {
             if (result.payUrl) {
-                window.open(result.payUrl, "_blank");
+                const loginType = getUserLoginType(userData);
+                switch (loginType){
+                    case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP: { //telegramWebApp
+                        window.location.href = result.payUrl
+                        break;
+                    }
+                    default: {
+                        window.open(result.payUrl, "_blank");
+                        break;
+                    }
+                }
                 fbq('track', 'InitiateCheckout');
             }
             if (result.status === 'failed') {
