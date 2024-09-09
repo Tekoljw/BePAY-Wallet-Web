@@ -27,7 +27,7 @@ import { openScan, closeScan } from "../../../util/tools/scanqrcode";
 import { getWithDrawConfig, WalletConfigDefineMap, evalTokenTransferFee, getWithdrawHistoryAddress, getWithdrawTransferStats, createPin, verifyPin } from "app/store/wallet/walletThunk";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
 import Dialog from "@mui/material/Dialog/Dialog";
-import OtpPass from "../../otpPass/OtpPass";
+import history from '@history';
 import DialogTitle from "@mui/material/DialogTitle";
 import CloseIcon from "@mui/material/SvgIcon/SvgIcon";
 import { getCryptoDisplay, getFiatDisplay } from "../../../store/wallet/walletThunk";
@@ -113,6 +113,8 @@ function Fiat(props) {
     const loginType = window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType;
     const [openAnimateModal, setOpenAnimateModal] = useState(false);
     const [isLoadingBtn, setIsLoadingBtn] = useState(false);
+    const [openGoogleCode, setOpenGoogleCode] = useState(false);
+    const [googleCode, setGoogleCode] = useState('');
 
 
     const startScanQRCode = () => {
@@ -138,6 +140,14 @@ function Fiat(props) {
     };
 
 
+    const changeToBlack = (target) => {
+        document.getElementById(target.target.id).classList.add('pinJianPanColor1');
+    };
+
+    const changeToWhite = (target) => {
+        document.getElementById(target.target.id).classList.remove('pinJianPanColor1');
+    };
+
     const handleChangeAccountType = (event) => {
         setAccountType(event.target.value);
     };
@@ -154,11 +164,35 @@ function Fiat(props) {
         return result
     }
 
+    const openGoogleCodeFunc = () => {
+        setOpenGoogleCode(true);
+        setTimeout(() => {
+            document.getElementById('GoogleCodeSty').classList.add('PinMoveAni');
+        }, 0);
+    }
+
+
+    const closeGoogleCodeFunc = () => {
+        document.getElementById('GoogleCodeSty').classList.remove('PinMoveAni');
+        document.getElementById('GoogleCodeSty').classList.add('PinMoveOut');
+        setTimeout(() => {
+            setOpenGoogleCode(false);
+        }, 300);
+    };
+
+    const closeCreatePinFunc = () => {
+        document.getElementById('CreateSty').classList.remove('PinMoveAni');
+        document.getElementById('CreateSty').classList.add('PinMoveOut');
+        setTimeout(() => {
+            setCreatePinWindow(false)
+        }, 300);
+        setPin('');
+    };
+
     const handleSubmit = () => {
         setOpenLoad(true)
         setIsLoadingBtn(true)
         if (smallTabValue === 1) {
-            setTimeout(() => {
                 let data = {
                     currency: currencyCode,
                     transferUserId: inputVal.userId,
@@ -168,6 +202,8 @@ function Fiat(props) {
                 };
                 dispatch(makeWithdrawOrder(data)).then((res) => {
                     setOpenLoad(false)
+                    setGoogleCode('');
+                    setIsLoadingBtn(false)
                     let result = res.payload;
                     if(result.errno === 0){
                         if (result?.data && result?.data?.status != 'fail') {
@@ -187,9 +223,7 @@ function Fiat(props) {
                     } else {
                         dispatch(showMessage({ message: result.errmsg, code: 2 }));
                     }
-                    setIsLoadingBtn(false)
                 });
-            }, 1000);
         } else {
             let entryType = getEntryType(currencyCode)
             let bankName = ''
@@ -214,6 +248,8 @@ function Fiat(props) {
                 }),
             };
             dispatch(makeWithdrawOrder(data)).then((res) => {
+                setGoogleCode('')
+                setIsLoadingBtn(false)
                 setOpenLoad(false)
                 let result = res.payload;
                 if(result.errno === 0){
@@ -234,13 +270,10 @@ function Fiat(props) {
                 } else {
                     dispatch(showMessage({ message: result.errmsg, code: 2 }));
                 }
-                setIsLoadingBtn(false)
 
             });
         }
     };
-
-
 
     useEffect(() => {
         dispatch(getListBank()).then((res) => {
@@ -250,6 +283,14 @@ function Fiat(props) {
             }
         });
     }, []);
+
+    useEffect(() => {
+        if (googleCode.length === 6) {
+            setOpenGoogleCode(false);
+            handleSubmit();
+        }
+
+    }, [googleCode]);
 
     const fiatData = userData.fiat || [];
     const paymentFiat = config.payment?.currency;
@@ -267,7 +308,6 @@ function Fiat(props) {
     const [showGuangBiao, setShowGuangBiao] = useState(false);
 
     const [transferState, setTransferState] = useState([]);
-    const [googleCode, setGoogleCode] = useState('');
     const [withDrawOrderID, setWithDrawOrderID] = useState('');
     const [openPaste, setOpenPaste] = useState(false);
     const walletData = useSelector(selectUserData).wallet;
@@ -296,13 +336,6 @@ function Fiat(props) {
     const [pin, setPin] = useState('');
     const [hasPin, setHasPin] = useState(false)
 
-    const changeToBlack = (target) => {
-        document.getElementById(target.target.id).classList.add('pinJianPanColor1');
-    };
-
-    const changeToWhite = (target) => {
-        document.getElementById(target.target.id).classList.remove('pinJianPanColor1');
-    };
 
     const handleChangeInputVal2 = (event) => {
         setInputIDVal(event.target.value);
@@ -364,6 +397,11 @@ function Fiat(props) {
         }, 0);
     };
 
+    // PIN错误 Tips
+    const errPin = () => {
+        setOpenPinErr(true);
+        setOpenPinWindow(false);
+    }
 
       // 输入Pin
     const handleDoPin = (text) => {
@@ -600,6 +638,17 @@ function Fiat(props) {
             setOpenPasteWindow(false);
         }, 300);
     };
+
+    const handleDoGoogleCode = (text) => {
+        let tmpCode = googleCode
+        if (text === -1) {
+            tmpCode = tmpCode.slice(0, -1)
+        } else {
+            tmpCode = tmpCode + text
+        }
+
+        setGoogleCode(tmpCode)
+    }
 
 
     const fiatsFormatAmount = () => {
@@ -1683,6 +1732,130 @@ function Fiat(props) {
                             </Box>
                         </Box>
                     </DialogContent>
+                </BootstrapDialog>
+
+                {/*填写google验证码*/}
+                <BootstrapDialog
+                    onClose={() => {
+                        closeGoogleCodeFunc()
+                    }}
+                    aria-labelledby="customized-dialog-title"
+                    open={openGoogleCode}
+                    className="dialog-container"
+                >
+                    <div id="GoogleCodeSty" className="PINSty">
+                        <div className='pinWindow'>
+                            <div className='flex'>
+                                <div className='PINTitle2'>{t('card_180')}</div>
+                                <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                                    closeGoogleCodeFunc()
+                                }} />
+                            </div>
+                            <div className='PINTitle'>{t('card_176')}</div>
+                            <div className='flex justify-between mt-32 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
+                                <div className='PinNum color-box'
+                                    onTouchStart={changeToBlack}
+                                    onTouchEnd={changeToWhite}
+                                    onTouchCancel={changeToWhite}>{googleCode[0] ?? ''}</div>
+                                <div className='PinNum' >{googleCode[1] ?? ''}</div>
+                                <div className='PinNum'>{googleCode[2] ?? ''}</div>
+                                <div className='PinNum'>{googleCode[3] ?? ''}</div>
+                                <div className='PinNum'>{googleCode[4] ?? ''}</div>
+                                <div className='PinNum'>{googleCode[5] ?? ''}</div>
+                            </div>
+                        </div>
+
+                        <div className='jianPanSty'>
+                            <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                                <div id="createPin1" className='jianPanNumBtn borderRight borderBottom color-box'
+                                    onTouchStart={changeToBlack}
+                                    onTouchEnd={changeToWhite}
+                                    onTouchCancel={changeToWhite}
+                                    onClick={() => {
+                                        handleDoGoogleCode(1)
+                                    }}
+                                >1</div>
+                                <div id="createPin2" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                    onTouchEnd={changeToWhite}
+                                    onTouchCancel={changeToWhite}
+                                    onClick={() => {
+                                        handleDoGoogleCode(2)
+                                    }}
+                                >2</div>
+                                <div id="createPin3" className='jianPanNumBtn  borderBottom color-box' onTouchStart={changeToBlack}
+                                    onTouchEnd={changeToWhite}
+                                    onTouchCancel={changeToWhite}
+                                    onClick={() => {
+                                        handleDoGoogleCode(3)
+                                    }}
+                                >3</div>
+                            </div>
+                            <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                                <div id="createPin4" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                    onTouchEnd={changeToWhite}
+                                    onTouchCancel={changeToWhite}
+                                    onClick={() => {
+                                        handleDoGoogleCode(4)
+                                    }}
+                                >4</div>
+                                <div id="createPin5" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                    onTouchEnd={changeToWhite}
+                                    onTouchCancel={changeToWhite}
+                                    onClick={() => {
+                                        handleDoGoogleCode(5)
+                                    }}
+                                >5</div>
+                                <div id="createPin6" className='jianPanNumBtn  borderBottom color-box' onTouchStart={changeToBlack}
+                                    onTouchEnd={changeToWhite}
+                                    onTouchCancel={changeToWhite}
+                                    onClick={() => {
+                                        handleDoGoogleCode(6)
+                                    }}
+                                >6</div>
+                            </div>
+                            <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                                <div id="createPin7" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                    onTouchEnd={changeToWhite}
+                                    onTouchCancel={changeToWhite}
+                                    onClick={() => {
+                                        handleDoGoogleCode(7)
+                                    }}
+                                >7</div>
+                                <div id="createPin8" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                    onTouchEnd={changeToWhite}
+                                    onTouchCancel={changeToWhite}
+                                    onClick={() => {
+                                        handleDoGoogleCode(8)
+                                    }}
+                                >8</div>
+                                <div id="createPin9" className='jianPanNumBtn borderBottom color-box' onTouchStart={changeToBlack}
+                                    onTouchEnd={changeToWhite}
+                                    onTouchCancel={changeToWhite}
+                                    onClick={() => {
+                                        handleDoGoogleCode(9)
+                                    }}
+                                >9</div>
+                            </div>
+                            <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                                <div className='jianPanNumBtn borderRight '></div>
+                                <div id="createPin0" className='jianPanNumBtn borderRight color-box' onTouchStart={changeToBlack}
+                                    onTouchEnd={changeToWhite}
+                                    onTouchCancel={changeToWhite}
+                                    onClick={() => {
+                                        handleDoGoogleCode(0)
+                                    }}
+                                >0</div>
+                                <div id="createPinx" className='jianPanNumBtn flex items-center color-box'
+                                    onTouchStart={changeToBlack}
+                                    onTouchEnd={changeToWhite}
+                                    onTouchCancel={changeToWhite}
+                                    onClick={() => {
+                                        handleDoGoogleCode(-1)
+                                    }}
+                                > <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img></div>
+                            </div>
+                        </div>
+                    </div>
                 </BootstrapDialog>
 
                 {/*提法币界面样式*/}

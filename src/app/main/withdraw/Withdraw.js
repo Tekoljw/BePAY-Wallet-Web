@@ -471,6 +471,8 @@ function Withdraw(props) {
         };
 
         dispatch(sendTips(data)).then((res) => {
+            setIsLoadingBtn(false)
+            setGoogleCode('');
             let resData = res.payload;
             if (resData.errno == 0) {
                 setCurrRequestId(res.meta.requestId)
@@ -490,10 +492,6 @@ function Withdraw(props) {
             }else{
                 setOpenSuccess(true);
             }
-            setIsLoadingBtn(false)
-            setTimeout(() => {
-                setGoogleCode('');
-            }, 500)    
         });
     };
 
