@@ -70,7 +70,7 @@ function Card(props) {
     const userData = useSelector(selectUserData);
     const [tabValue, setTabValue] = useState(0);
     const [ranges, setRanges] = useState([t('card_2'), t('card_9')]);
-    const [huaZhuanRanges, setHuaZhuanRanges] = useState([t('转入'), t('转出')]);
+    const [huaZhuanRanges, setHuaZhuanRanges] = useState([t('card_170'), t('card_171')]);
     const [smallTabValue, setSmallTabValue] = useState(0);
     const [kaBeiButton, setKaBeiButton] = useState(false);
     const [kaBeiButton2, setKaBeiButton2] = useState(true);
@@ -421,7 +421,7 @@ function Card(props) {
     const [applyFeeSymbol, setApplyFeeSymbol] = useState('USDT');
 
     const [currUserCardInfo, setCurrUserCardInfo] = useState({});
-    const [timer, setTimer ] = useState(0);
+    const [timer, setTimer] = useState(0);
     const [updateCard, setUpdateCard] = useState(false);
 
 
@@ -470,7 +470,7 @@ function Card(props) {
         })).then((res) => {
             let result = res.payload
             setUpdateCard(true)
-            setTimer( timer+1)
+            setTimer(timer + 1)
             setIsLoadingBtn(false)
             setOpenXiangQing(false);
             setTabValue(0);
@@ -491,7 +491,7 @@ function Card(props) {
             setOpenCardBtnShow(false);
             // getCardList();
             setUpdateCard(true)
-            setTimer(timer+1)
+            setTimer(timer + 1)
             myFunction();
         })
     }
@@ -517,8 +517,8 @@ function Card(props) {
                 setCardListObj(tmpCardListObj)
                 console.log(tmpCardList, "tmpCardList")
                 console.log(tmpCardListObj, "tmpCardListObj")
-                setTimeout(()=>{
-                    setTimer(timer+1)
+                setTimeout(() => {
+                    setTimer(timer + 1)
                 }, 1000)
             }
         })
@@ -551,12 +551,12 @@ function Card(props) {
                 if (result.status === 'success') {
                     dispatch(showMessage({ message: 'success', code: 1 }));
                     setUpdateCard(true)
-                    setTimer(timer+1)
+                    setTimer(timer + 1)
                     closeRecordFunc()
                     setTransferMoney(0)
                     setCardID(0)
                     myFunction();
-                }else {
+                } else {
                     dispatch(showMessage({ message: result.msg, code: 2 }));
                 }
             }
@@ -813,7 +813,7 @@ function Card(props) {
                                                                             <div className='flex justify-center mt-28' style={{ width: "100%" }}>
                                                                                 <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                                                                                 <div className='TanHaoCardZi'>
-                                                                                {t('card_178')}
+                                                                                    {t('card_178')}
                                                                                 </div>
                                                                             </div>
                                                                             <div className='cardErrorZi'>{t('card_179')}</div>
@@ -831,14 +831,14 @@ function Card(props) {
                                                             </div>
 
                                                             <div className='cardGongNengMyDi' style={{ position: "relative" }}>
-                                                                <Accordion className='gongNengTan1' disabled={ cardItem?.state == 9}>
+                                                                <Accordion className='gongNengTan1' disabled={cardItem?.state == 9}>
                                                                     <AccordionSummary
                                                                         expandIcon={<ExpandMoreIcon />}
                                                                         aria-controls="panel1-content"
                                                                         id="panel1-header"
                                                                         className='gongNengTan2'
                                                                         onClick={() => {
-                                                                            if(cardItem && cardItem.state == 9) return;
+                                                                            if (cardItem && cardItem.state == 9) return;
                                                                             setCurrUserCardInfo(cardItem);
                                                                         }}
                                                                     >
@@ -847,8 +847,6 @@ function Card(props) {
                                                                                 <div className=''>{t('home_record_9')}</div>
                                                                                 <div className='ml-8 yuEZi'>${cardItem.amount ?? '0.00'}</div>
                                                                             </div>
-                                                                            <div className='cardDepositeDi'>{t('card_16')}</div>
-                                                                            
                                                                         </div>
                                                                     </AccordionSummary>
 
@@ -876,11 +874,16 @@ function Card(props) {
                                                                             </div>
 
                                                                             <div className='gongNengLanW' onClick={() => {
-                                                                                setOpenBindWindow(true)
-                                                                                openBindFunc()
+                                                                                // setOpenBindWindow(true)
+                                                                                // openBindFunc()
+                                                                                if (cardItem && cardItem.state == 9) return;
+                                                                                setOpenRecordWindow(true)
+                                                                                setCardID(cardItem.id)
+                                                                                setCardConfigID(cardItem.creditConfigId)
+                                                                                openRecordFunc()
                                                                             }}>
-                                                                                <img className='gongNengTuBiao dingYueSty' src="wallet/assets/images/menu/bangDing.png"></img>
-                                                                                <div className='gongNengZiW mt-4 text-14 dingYueSty'>{t('card_47')}</div>
+                                                                                <img className='gongNengTuBiao dingYueSty' src="wallet/assets/images/menu/huaZhuan.png"></img>
+                                                                                <div className='gongNengZiW mt-4 text-14 dingYueSty'>{t('card_16')}</div>
                                                                             </div>
                                                                         </div>
                                                                         {/*
@@ -901,13 +904,6 @@ function Card(props) {
 
                                                                     </AccordionDetails>
                                                                 </Accordion>
-                                                                <div className='h-40 w-40  mr-40' style={{ position: "absolute", top: "12%", right: "0%" }} onClick={() => {
-                                                                    if(cardItem && cardItem.state == 9) return;
-                                                                    setOpenRecordWindow(true)
-                                                                    setCardID(cardItem.id)
-                                                                    setCardConfigID(cardItem.creditConfigId)
-                                                                    openRecordFunc()
-                                                                }}></div>
                                                             </div>
                                                         </motion.div>
                                                     )
@@ -1094,8 +1090,6 @@ function Card(props) {
                                                                                 <div className=''>{t('home_record_9')}</div>
                                                                                 <div className='ml-8 yuEZi'>$50.00</div>
                                                                             </div>
-                                                                            <div className='cardDepositeDi'
-                                                                            >{t('card_16')}</div>
                                                                         </div>
                                                                     </AccordionSummary>
 
@@ -1123,11 +1117,16 @@ function Card(props) {
                                                                             </div>
 
                                                                             <div className='gongNengLanW' onClick={() => {
-                                                                                setOpenBindWindow(true)
-                                                                                openBindFunc()
+                                                                                // setOpenBindWindow(true)
+                                                                                // openBindFunc()
+                                                                                if (cardItem && cardItem.state == 9) return;
+                                                                                setOpenRecordWindow(true)
+                                                                                setCardID(cardItem.id)
+                                                                                setCardConfigID(cardItem.creditConfigId)
+                                                                                openRecordFunc()
                                                                             }}>
-                                                                                <img className='gongNengTuBiao dingYueSty' src="wallet/assets/images/menu/bangDing.png"></img>
-                                                                                <div className='gongNengZiW mt-4 text-14 dingYueSty'>{t('card_47')}</div>
+                                                                                <img className='gongNengTuBiao dingYueSty' src="wallet/assets/images/menu/huaZhuan.png"></img>
+                                                                                <div className='gongNengZiW mt-4 text-14 dingYueSty'>{t('card_16')}</div>
                                                                             </div>
                                                                         </div>
                                                                         {/*
@@ -1148,10 +1147,6 @@ function Card(props) {
 
                                                                     </AccordionDetails>
                                                                 </Accordion>
-                                                                <div className='h-40 w-40  mr-40' style={{ position: "absolute", top: "12%", right: "0%" }} onClick={() => {
-                                                                    setOpenRecordWindow(true)
-                                                                    openRecordFunc()
-                                                                }}></div>
                                                             </div>
                                                         </motion.div>
                                                     )
@@ -1687,7 +1682,7 @@ function Card(props) {
                             {huaZhuanValue == 0 && <div className='' style={{ color: "#2DD4BF", textDecoration: "underline" }} onClick={() => {
                                 changePhoneTab('swap');
                                 history.push('/wallet/home/swap')
-                            }} >{t('menu_5')}USDT</div>}
+                            }} >{t('menu_5')} USDT</div>}
                         </div>
 
                         <div className='w-full h-44 mt-24' style={{ position: "relative" }}>
@@ -1779,8 +1774,8 @@ function Card(props) {
                                         onClick={() => { handleDoMoney('.') }}>.</div>
                                 </div>
                             </div>
-                            { isLoadingBtn && <FuseLoading />}
-                            { !isLoadingBtn &&
+                            {isLoadingBtn && <FuseLoading />}
+                            {!isLoadingBtn &&
                                 <div id='zhuanZhangWanCheng' className='jianPanBtn3'
                                     onTouchStart={changeToBlack}
                                     onTouchEnd={changeToWhite}
@@ -1789,7 +1784,7 @@ function Card(props) {
                                         handleTransferCrypto()
                                         // setOpenZhiFu(true)
                                     }}>{t('card_30')}
-                                    </div>
+                                </div>
                             }
                         </div>
                     </div>
