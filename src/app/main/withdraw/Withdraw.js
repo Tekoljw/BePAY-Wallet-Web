@@ -1692,7 +1692,7 @@ function Withdraw(props) {
                 </motion.div>
             </div>}
 
-            <!--Pin码界面 -->
+            {/* pin码界面 */}
             <BootstrapDialog
                 onClose={() => {
                     closePinFunc();
