@@ -121,7 +121,7 @@ function Fiat(props) {
         openScan((result, err) => {
             if (result && result.text && result.text.length > 0) {
                 console.log("openScan", result);
-                changeAddress('address', result.text);
+                handleChangeUserIDVal(result.text)
                 closeScan();
                 setOpenChangeCurrency(false);
             }
@@ -291,6 +291,16 @@ function Fiat(props) {
         }
 
     }, [googleCode]);
+
+    useEffect(() => {
+        if (openChangeCurrency) {
+            console.log(openChangeCurrency);
+            console.log('startScanQRCode');
+            setTimeout(() => {
+                startScanQRCode();
+            }, 500);
+        }
+    }, [openChangeCurrency]);
 
     const fiatData = userData.fiat || [];
     const paymentFiat = config.payment?.currency;
@@ -1297,7 +1307,7 @@ function Fiat(props) {
                                                 {
                                                     isMobileMedia &&
                                                     <img className='shaoMiaoIcon' src="wallet/assets/images/withdraw/code.png" alt="" onClick={() => {
-                                                        // setOpenChangeCurrency(true);
+                                                        setOpenChangeCurrency(true);
                                                     }} />
                                                 }
                                             </div>
@@ -1366,7 +1376,29 @@ function Fiat(props) {
                     <div style={{ height: "5rem" }}></div>
                 </motion.div>
                 </div>}
-
+                
+                {/*打开摄像头*/}
+                <BootstrapDialog
+                    onClose={() => { setOpenChangeCurrency(false); closeScan(); }}
+                    aria-labelledby="customized-dialog-title"
+                    open={openChangeCurrency}
+                    className='scan-dialog-content'
+                >
+                    {/*<BootstrapDialogTitle id="customized-dialog-title" onClose={() => {setOpenChangeCurrency(false)}}>*/}
+                    {/*    Change Currency*/}
+                    {/*</BootstrapDialogTitle>*/}
+                    <DialogContent dividers>
+                        <div className='' style={{ width: '100%', height: '99vh', backgroundColor: '#0F172A' }}>
+                            <Typography className="text-18 px-16 my-12 font-medium flex items-center justify-between scan-code-top" style={{ backgroundColor: '#374252' }}>
+                                <img className='scan-code-back' src="wallet/assets/images/withdraw/icon-back.png" onClick={() => { setOpenChangeCurrency(false); closeScan(); }} alt="back-button" />
+                                <span className='scan-code-title text-18'>Scan Code</span>
+                                <img className='scan-code-camera' src="wallet/assets/images/withdraw/scan-code-img.png" alt="back-button" />
+                            </Typography>
+                            <div id="qrcode_reader" className='qrcode-reader' style={{ width: '300px', minHeight: "200px" }}></div>
+                            <div className='scan-code-bottom-tips'>Align the QR code to the scan frame</div>
+                        </div>
+                    </DialogContent>
+                </BootstrapDialog>
 
                 <BootstrapDialog
                     onClose={() => {

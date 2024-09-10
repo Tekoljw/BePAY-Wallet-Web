@@ -148,29 +148,41 @@ function Kyc(props) {
     }
 
     const onSubmitPhone = async () => {
-        let result = await dispatch(bindPhone({
+        await dispatch(bindPhone({
             nationCode: inputVal.nationCode,
             phone: approveData.phone,
             smsCode: approveData.code,
-        }));
-        if (result.payload) {
-            setTimeout(() => {
-                location.reload();
-            }, 1000)
-        }
+        })).then((res)=>{
+            let result = res.payload;
+            if (result.errno === 0) {
+                dispatch(showMessage({ message: 'Success', code: 1 }));
+                dispatch(getUserData());
+                setTimeout(() => {
+                    location.reload();
+                }, 1000)
+            } else {
+                dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            }
+        });
     };
 
     const onSubmitEmail = async () => {
-        let result = await dispatch(bindEmail({
+        await dispatch(bindEmail({
             email: approveData.email,
             smsCode: approveData.code,
             password: approveData.password,
-        }));
-        if (result.payload) {
-            setTimeout(() => {
-                location.reload();
-            }, 1000)
-        }
+        })).then((res)=>{
+            let result = res.payload;
+            if (result.errno === 0) {
+                dispatch(showMessage({ message: 'Success', code: 1 }));
+                dispatch(getUserData());
+                setTimeout(() => {
+                    location.reload();
+                }, 1000)
+            } else {
+                dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            }
+        });
     };
 
     const handleApproveData = (prop) => (event) => {
