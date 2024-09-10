@@ -978,7 +978,7 @@ export const tokenTransfer = createAsyncThunk(
             // dispatch(getTransferOrder({
             //     orderId: transferRes.data
             // }));
-            dispatch(showMessage({ message: 'pending...', code: 1 }));
+            // dispatch(showMessage({ message: 'pending...', code: 1 }));
             return transferRes.data
         } else if(transferRes.errno === -2){
             return transferRes

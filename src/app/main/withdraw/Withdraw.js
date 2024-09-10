@@ -390,25 +390,30 @@ function Withdraw(props) {
             bAppendFee: tmpBAppendFee,
         };
         setOpenLoad(true);
+        setOpenSuccess(false)
+
         dispatch(tokenTransfer(data)).then((res) => {
             setOpenLoad(false);
             let result = res.payload
             setGoogleCode('');
-            if( result.errno == -2 ){
+            if (result.errno == -2) {
                 if (!hasAuthGoogle) {
                     setOpenAnimateModal(true);
                     return;
                 }
                 openGoogleCodeFunc()
                 return
-            } else{
+            } else {
                 if (result) {
-                    setOpenTiBi(true);
-                    setWithDrawOrderID(result);
+                    setOpenSuccess(false);
+                    setTimeout(() => {
+                        setZhuanQuan(false);
+                        setWithDrawOrderID(result);
+                    }, 1200);
                 } else {
                     dispatch(showMessage({ message: t('error_10'), code: 2 }));
-                }  
-            } 
+                }
+            }
 
         });
     };
@@ -480,7 +485,7 @@ function Withdraw(props) {
                 setTimeout(() => {
                     setZhuanQuan(false);
                 }, 1200);
-            } else if(resData.errno == -2) {
+            } else if (resData.errno == -2) {
                 if (!hasAuthGoogle) {
                     setTimeout(() => {
                         setOpenAnimateModal(true);
@@ -489,7 +494,7 @@ function Withdraw(props) {
                 }
                 openGoogleCodeFunc()
                 return
-            }else{
+            } else {
                 setOpenSuccess(true);
             }
         });
@@ -512,9 +517,9 @@ function Withdraw(props) {
     useEffect(() => {
         if (googleCode.length === 6) {
             setOpenGoogleCode(false);
-            if(smallTabValue == 0) {
+            if (smallTabValue == 0) {
                 handleSubmit();
-            }else if(smallTabValue == 1){
+            } else if (smallTabValue == 1) {
                 handleSendTipsSubmit();
             }
         }
@@ -539,9 +544,9 @@ function Withdraw(props) {
         openScan((result, err) => {
             if (result && result.text && result.text.length > 0) {
                 console.log("openScan", result);
-                if(smallTabValue === 0){
+                if (smallTabValue === 0) {
                     changeAddress('address', result.text);
-                }else if(smallTabValue === 1){
+                } else if (smallTabValue === 1) {
                     setInputIDVal(result.text)
                 }
                 closeScan();
@@ -1536,6 +1541,7 @@ function Withdraw(props) {
                     {/*    </DialogContent>*/}
                     {/*</BootstrapDialog>*/}
 
+
                     {/*提虚拟币界面样式*/}
                     <BootstrapDialog
                         onClose={() => { setOpenTiBi(false); }}
@@ -1705,7 +1711,7 @@ function Withdraw(props) {
                                     closePinFunc();
                                 }} />
                             </div>
-                            <div className='PINTitle'>{t('home_wallet_14')}{ smallTabValue == 0 ? t('card_8') : t('card_7')}（ {  smallTabValue == 0 ? inputVal.address : inputIDVal } ）{t('transfer_1')}</div>
+                            <div className='PINTitle'>{t('home_wallet_14')}{smallTabValue == 0 ? t('card_8') : t('card_7')}（ <span className='quanYiLv'> {smallTabValue == 0 ? inputVal.address : inputIDVal} </span> ） {t('transfer_1')}</div>
                             <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
                                 <img className='MoneyWithdraw' src="wallet/assets/images/withdraw/USDT.png"></img>
                                 <div className='PINTitle3'>USDT</div>
@@ -1806,12 +1812,13 @@ function Withdraw(props) {
                                         onTouchEnd={changeToWhite}
                                         onTouchCancel={changeToWhite}
                                         onClick={() => {
-                                            smallTabValue=== 0 ?  handleSubmit() : handleSendTipsSubmit()
+                                            smallTabValue === 0 ? handleSubmit() : handleSendTipsSubmit()
                                         }}>{t('card_30')}</div>
                                 }
                             </div>
                         </div>
                     </div>}
+
                     {!openSuccess && <motion.div
                         variants={container}
                         initial="hidden"
@@ -1844,36 +1851,45 @@ function Withdraw(props) {
 
                         <div style={{ margin: "0 auto", textAlign: "center", marginTop: "84px", height: "23px", fontSize: "16px", color: "#2ECB71" }}>
                             {
-                                !zhuanQuan && <motion.div variants={item} style={{ height: "23px", lineHeight: "23px" }}>
+                                smallTabValue === 1 && !zhuanQuan && <motion.div variants={item} style={{ height: "23px", lineHeight: "23px" }}>
                                     ● {t('errorMsg_1')}
                                 </motion.div>
                             }
+                            {
+                                smallTabValue === 0 && !zhuanQuan && <motion.div variants={item} style={{ height: "23px", lineHeight: "23px", color: "#ffc600" }}>
+                                    ● {t('home_PendingReview')}
+                                </motion.div>
+                            }
                         </div>
-
                         <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "8px", fontSize: "24px" }}> -{inputVal.amount} {symbol}</motion.div>
                         <motion.div variants={item} className='mx-20  mt-24' style={{ borderTop: "1px solid #2C3950" }}>
                         </motion.div>
-
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
                             <div style={{ color: "#888B92" }}>{t('home_Type')}</div>
                             <div>{t('home_deposite_1')}</div>
                         </motion.div>
-
-                        <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
-                            <div style={{ color: "#888B92" }}>{t('card_7')}</div>
-                            <div style={{ width: "50%", wordWrap: "break-word", textAlign: "right" }}>{inputIDVal}</div>
-                        </motion.div>
+                        {
+                            smallTabValue === 1 && <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                                <div style={{ color: "#888B92" }}>{t('card_7')}</div>
+                                <div style={{ width: "50%", wordWrap: "break-word", textAlign: "right" }}>{inputIDVal}</div>
+                            </motion.div>
+                        }
+                        {
+                            smallTabValue === 0 && <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                                <div style={{ color: "#888B92" }}>{t('home_withdraw_14')}</div>
+                                <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{inputVal.address}</div>
+                            </motion.div>
+                        }
 
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
                             <div style={{ color: "#888B92" }}>{t('home_borrow_18')}</div>
-                            <div>0 {symbol} </div>
+                            <div>{smallTabValue === 0 ? fee : 0}  {symbol} </div>
                         </motion.div>
 
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
                             <div style={{ color: "#888B92" }}>{t('home_ID')}</div>
-                            <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{currRequestId}</div>
+                            <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{smallTabValue === 0 ? withDrawOrderID : currRequestId}</div>
                         </motion.div>
-
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
                             <div style={{ color: "#888B92" }}>{t('home_Time')}</div>
                             <div>{getNowTime()}</div>

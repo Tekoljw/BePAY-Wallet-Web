@@ -413,6 +413,8 @@ input[type='number'] {
     font-size: 1.8rem;
     text-align: center;
     padding-bottom: 1.5rem;
+    word-wrap: break-word;
+    word-break: break-word;
 }
 
 .inputNumSty {
@@ -4051,7 +4053,7 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
         width: 340px;
     }
 
-    
+
     .faBiBoxDi {
         width: 320px;
     }
