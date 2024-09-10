@@ -539,7 +539,11 @@ function Withdraw(props) {
         openScan((result, err) => {
             if (result && result.text && result.text.length > 0) {
                 console.log("openScan", result);
-                changeAddress('address', result.text);
+                if(smallTabValue === 0){
+                    changeAddress('address', result.text);
+                }else if(smallTabValue === 1){
+                    setInputIDVal(result.text)
+                }
                 closeScan();
                 setOpenChangeCurrency(false);
             }

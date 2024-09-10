@@ -332,13 +332,7 @@ export const bindPhone = createAsyncThunk(
             smsCode: settings.smsCode,
         };
         const result = await React.$api("user.bindPhone", data);
-        if (result.errno === 0) {
-            dispatch(showMessage({ message: 'Success', code: 1 }));
-            dispatch(getUserData());
-            return true
-        } else {
-            dispatch(showMessage({ message: t('error_32'), code: 2 }));
-        }
+        return result;
     }
 );
 
@@ -352,6 +346,7 @@ export const bindEmail = createAsyncThunk(
             password: settings.password,
         };
         const result = await React.$api("user.bindEmail", data);
+        return result;
         if (result.errno === 0) {
             dispatch(showMessage({ message: 'Success', code: 1 }));
             dispatch(getUserData());
