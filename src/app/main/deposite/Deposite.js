@@ -26,12 +26,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
 import { selectConfig } from "../../store/config";
 import {
-    arrayLookup,
-    getOpenAppId,
-    getOpenAppIndex,
-    setPhoneTab,
-    handleCopyText,
-    getUserLoginType
+    arrayLookup, getOpenAppId, getOpenAppIndex,
+    setPhoneTab, handleCopyText, getUserLoginType,
+    judgeIosOrAndroid
 } from "../../util/tools/function";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { foxSendTransaction, manualCryptoNotify } from "../../store/transfer/transferThunk";
@@ -466,7 +463,11 @@ function Deposite() {
                 const loginType = getUserLoginType(userData);
                 switch (loginType){
                     case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP: { //telegramWebApp
-                        window.location.href = result.payUrl
+                        if (judgeIosOrAndroid() === "ios") {
+                            window.location.href = result.payUrl
+                        }else{
+                            window.open(result.payUrl, "_blank");
+                        }
                         break;
                     }
                     default: {
