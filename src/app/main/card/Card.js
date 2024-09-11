@@ -153,6 +153,7 @@ function Card(props) {
         document.getElementById('openRecord').classList.add('PinMoveOut');
         setTimeout(() => {
             setOpenRecordWindow(false)
+            setOpenSuccess(true);
         }, 300);
     };
 
@@ -208,7 +209,9 @@ function Card(props) {
     const openRecordFunc = () => {
         setTimeout(() => {
             document.getElementById('openRecord').classList.add('PinMoveAni');
+            getDivHeight("pinDivHeight");
         }, 0);
+
     };
 
     const openApplyFunc = () => {
@@ -264,6 +267,12 @@ function Card(props) {
         passwordConfirm: '',
     };
 
+
+    const getDivHeight = (divName) => {
+        setTimeout(() => {
+            setDivHeight(document.getElementById(divName).offsetHeight)
+        }, 300);
+    };
 
     const schema = yup.object().shape({
         oldPassword: yup
@@ -424,6 +433,10 @@ function Card(props) {
     const [currUserCardInfo, setCurrUserCardInfo] = useState({});
     const [timer, setTimer] = useState(0);
     const [updateCard, setUpdateCard] = useState(false);
+    const [openSuccess, setOpenSuccess] = useState(true);
+    const [divHeight, setDivHeight] = useState(0);
+    const [zhuanQuan, setZhuanQuan] = useState(true);
+    const [tiJiaoState, setTiJiaoState] = useState(0);
 
 
     useEffect(() => {
@@ -538,7 +551,9 @@ function Card(props) {
         } else {
             doFun = creditCardCryptoWithdraw
         }
-
+        setOpenSuccess(false);
+        setZhuanQuan(true);
+        setTiJiaoState(0);
         dispatch(doFun({
             userCreditId: cardID,
             creditType: cardListObj[cardID].creditType,
@@ -550,13 +565,19 @@ function Card(props) {
             let result = res.payload
             if (result) {
                 if (result.status === 'success') {
-                    dispatch(showMessage({ message: 'success', code: 1 }));
+                    setZhuanQuan(false);
+                    setTiJiaoState(1);
                     setUpdateCard(true)
                     setTimer(timer + 1)
-                    closeRecordFunc()
                     setTransferMoney(0)
                     setCardID(0)
-                    myFunction();
+                    if (huaZhuanValue === 0) {
+
+                    }
+                    // closeRecordFunc()
+                    // myFunction();
+
+
                 } else {
                     dispatch(showMessage({ message: result.msg, code: 2 }));
                 }
@@ -682,7 +703,6 @@ function Card(props) {
                                     className="cardSty"
                                     style={{ flexWrap: "warp" }}
                                 >
-
                                     <div className="flex justify-between" style={{ marginTop: "6.5%" }}>
                                         <div className=" flex px-16 " style={{ width: "70%", height: "3rem" }}>
                                             {
@@ -691,7 +711,6 @@ function Card(props) {
                                                     onClick={() => {
                                                         setIsOpenEye(!isOpenEye);
                                                     }}></img>
-
                                             }
                                             {
                                                 !isOpenEye && <img className="cardImg"
@@ -832,14 +851,16 @@ function Card(props) {
                                                             </div>
 
                                                             <div className='cardGongNengMyDi' style={{ position: "relative" }}>
-                                                                <Accordion className='gongNengTan1' disabled={cardItem?.state == 9}>
+                                                                <Accordion className='gongNengTan1'
+                                                                // disabled={cardItem?.state == 9}
+                                                                >
                                                                     <AccordionSummary
                                                                         expandIcon={<ExpandMoreIcon />}
                                                                         aria-controls="panel1-content"
                                                                         id="panel1-header"
                                                                         className='gongNengTan2'
                                                                         onClick={() => {
-                                                                            if (cardItem && cardItem.state == 9) return;
+                                                                            // if (cardItem && cardItem.state == 9) return;
                                                                             setCurrUserCardInfo(cardItem);
                                                                         }}
                                                                     >
@@ -874,7 +895,7 @@ function Card(props) {
                                                                                 <div className='gongNengZiW mt-4 text-14'>{t('signIn_9')}</div>
                                                                             </div>
 
-                                                                            <div className='gongNengLanW' onClick={() => {
+                                                                            <div className={clsx("gongNengLanW", cardItem && cardItem.state == 9 && "checkIsPhone")} onClick={() => {
                                                                                 // setOpenBindWindow(true)
                                                                                 // openBindFunc()
                                                                                 if (cardItem && cardItem.state == 9) return;
@@ -1608,190 +1629,265 @@ function Card(props) {
                 className="dialog-container"
             >
                 <div id="openRecord" className="PINSty">
-                    <div className='pinWindow2'>
-                        <div className='flex'>
-                            <div className='PINTitleSelectCardZi'> {t('card_26')}</div>
-                            <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
-                                closeRecordFunc();
-                            }} />
-                        </div>
+                    {openSuccess &&
+                        <div id='pinDivHeight'>
+                            <div className='pinWindow2'>
+                                <div className='flex'>
+                                    <div className='PINTitleSelectCardZi'> {t('card_26')}</div>
+                                    <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                                        closeRecordFunc();
+                                    }} />
+                                </div>
 
-                        <Tabs
-                            value={huaZhuanValue}
-                            onChange={(ev, value) => setHuaZhuanValue(value)}
-                            indicatorColor="secondary"
-                            textColor="inherit"
-                            variant="scrollable"
-                            scrollButtons={false}
-                            className="tongYongDingBtn3"
-                            style={{ width: '50%!import' }}
-                            classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
-                            TabIndicatorProps={{
-                                children: (
-                                    <Box
-                                        sx={{ bgcolor: 'text.disabled' }}
-                                        className="w-full h-full rounded-full  huaKuaBgColor2"
-                                    />
-                                ),
-                            }}
-                            sx={{
-                                margin: "1rem 1.2rem",
-                            }}
-                        >
-                            {Object.entries(huaZhuanRanges).map(([key, label]) => (
-                                <Tab
-                                    className="text-14 font-semibold min-h-36 min-w-64 mx4 px-12 opacity1 txtColorTitle zindex"
-                                    disableRipple
-                                    key={key}
-                                    label={label}
-                                    sx={{
-                                        color: '#FFFFFF', height: '3.6rem', width: '50%'
+                                <Tabs
+                                    value={huaZhuanValue}
+                                    onChange={(ev, value) => setHuaZhuanValue(value)}
+                                    indicatorColor="secondary"
+                                    textColor="inherit"
+                                    variant="scrollable"
+                                    scrollButtons={false}
+                                    className="tongYongDingBtn3"
+                                    style={{ width: '50%!import' }}
+                                    classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
+                                    TabIndicatorProps={{
+                                        children: (
+                                            <Box
+                                                sx={{ bgcolor: 'text.disabled' }}
+                                                className="w-full h-full rounded-full  huaKuaBgColor2"
+                                            />
+                                        ),
                                     }}
-                                />
-                            ))}
-                        </Tabs>
+                                    sx={{
+                                        margin: "1rem 1.2rem",
+                                    }}
+                                >
+                                    {Object.entries(huaZhuanRanges).map(([key, label]) => (
+                                        <Tab
+                                            className="text-14 font-semibold min-h-36 min-w-64 mx4 px-12 opacity1 txtColorTitle zindex"
+                                            disableRipple
+                                            key={key}
+                                            label={label}
+                                            sx={{
+                                                color: '#FFFFFF', height: '3.6rem', width: '50%'
+                                            }}
+                                        />
+                                    ))}
+                                </Tabs>
 
 
-                        <div className='flex mt-20 justify-between' style={{ borderBottom: "1px solid #2C3950" }}>
-                            <div className='text-18'>{t('card_27')}</div>
-                            <div className='flex pb-32'>
-                                <div className='text-18'>USDT</div>
-                                <div className='text-18 ml-10'>{cardListObj[cardID]?.amount.toFixed(2) ?? '0.00'}</div>
-                            </div>
-                        </div>
-
-                        <Box
-                            className="w-full rounded-16 border flex flex-col mt-32"
-                            sx={{
-                                backgroundColor: '#374252!important',
-                                border: 'none'
-                            }}
-                        >
-                            {symbolWallet.length > 0 && <StyledAccordionSelect
-                                symbol={symbolWallet}
-                                currencyCode="USD"
-                                setSymbol={setSymbol}
-                                formControlSx={{ backgroundColor: '#374252!important' }}
-                            />}
-                        </Box>
-
-                        <div className='flex justify-between mt-12'>
-                            <div className='flex'>
-                                <div className='' style={{ color: "#94A3B8" }}>{t('card_29')}</div>
-                                <div className='ml-10'>${(userData.profile.wallet?.Crypto + userData.profile.wallet?.Fiat).toFixed(2) ?? '0.00'}</div>
-                            </div>
-                            {huaZhuanValue == 0 && <div className='' style={{ color: "#2DD4BF", textDecoration: "underline" }} onClick={() => {
-                                changePhoneTab('swap');
-                                history.push('/wallet/home/swap')
-                            }} >{t('menu_5')} USDT</div>}
-                        </div>
-
-                        <div className='w-full h-44 mt-24' style={{ position: "relative" }}>
-                            <div className='w-full h-44 border' style={{ borderRadius: "0.5rem", backgroundColor: "#151C2A", position: "absolute", top: "0%", right: "0%" }}>
-                            </div>
-                            <div className='text-16' style={{ position: "absolute", top: "0%", left: "4%", width: "82%", height: "4.4rem", lineHeight: "4.4rem" }}>{transferMoney}</div>
-                            <div style={{ position: "absolute", top: "0%", right: "4%", height: "4.4rem", lineHeight: "4.4rem" }}>Max</div>
-                        </div>
-
-                        <div className='flex justify-between mt-16'>
-                            <div className='flex'>
-                                <div className='' style={{ color: "#94A3B8" }}>{t('home_borrow_16')}</div>
-                                <div className='ml-10'>{transferFee.toFixed(2)} USDT</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className='jianPanSty'>
-                        <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
-                            <div id="zhuanZhang1" className='jianPanBtn borderRight borderBottom color-box'
-                                onTouchStart={changeToBlack}
-                                onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}
-                                onClick={() => { handleDoMoney(1) }}>1</div>
-                            <div id="zhuanZhang2" className='jianPanBtn borderRight borderBottom color-box'
-                                onTouchStart={changeToBlack}
-                                onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}
-                                onClick={() => { handleDoMoney(2) }}>2</div>
-                            <div id="zhuanZhang3" className='jianPanBtn borderRight borderBottom'
-                                onTouchStart={changeToBlack}
-                                onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}
-                                onClick={() => { handleDoMoney(3) }}>3</div>
-                            <div id="zhuanZhangImg" className='jianPanBtImgDiv flex items-center borderBottom'
-                                onTouchStart={changeToBlack}
-                                onTouchEnd={changeToWhite}
-                                onTouchCancel={changeToWhite}
-                                onClick={() => { handleDoMoney(-1) }}>
-                                <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img>
-                            </div>
-                        </div>
-                        <div className='flex' style={{ width: "100%" }}>
-                            <div style={{ width: "75.1%" }}>
-                                <div className='flex'>
-                                    <div id="zhuanZhang4" className='jianPanBtn1 borderRight'
-                                        onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoMoney(4) }}>4</div>
-                                    <div id="zhuanZhang5" className='jianPanBtn1 borderRight'
-                                        onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoMoney(5) }}>5</div>
-                                    <div id="zhuanZhang6" className='jianPanBtn1 borderRight'
-                                        onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoMoney(6) }}>6</div>
+                                <div className='flex mt-20 justify-between' style={{ borderBottom: "1px solid #2C3950" }}>
+                                    <div className='text-18'>{t('card_27')}</div>
+                                    <div className='flex pb-32'>
+                                        <div className='text-18'>USDT</div>
+                                        <div className='text-18 ml-10'>{cardListObj[cardID]?.amount.toFixed(2) ?? '0.00'}</div>
+                                    </div>
                                 </div>
-                                <div className='flex'>
-                                    <div id="zhuanZhang7" className='jianPanBtn1 borderRight'
-                                        onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoMoney(7) }}>7</div>
-                                    <div id="zhuanZhang8" className='jianPanBtn1 borderRight'
-                                        onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoMoney(8) }}>8</div>
-                                    <div id="zhuanZhang9" className='jianPanBtn1 borderRight'
-                                        onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoMoney(9) }}>9</div>
+
+                                <Box
+                                    className="w-full rounded-16 border flex flex-col mt-32"
+                                    sx={{
+                                        backgroundColor: '#374252!important',
+                                        border: 'none'
+                                    }}
+                                >
+                                    {symbolWallet.length > 0 && <StyledAccordionSelect
+                                        symbol={symbolWallet}
+                                        currencyCode="USD"
+                                        setSymbol={setSymbol}
+                                        formControlSx={{ backgroundColor: '#374252!important' }}
+                                    />}
+                                </Box>
+
+                                <div className='flex justify-between mt-12'>
+                                    <div className='flex'>
+                                        <div className='' style={{ color: "#94A3B8" }}>{t('card_29')}</div>
+                                        <div className='ml-10'>${(userData.profile.wallet?.Crypto + userData.profile.wallet?.Fiat).toFixed(2) ?? '0.00'}</div>
+                                    </div>
+                                    {huaZhuanValue == 0 && <div className='' style={{ color: "#2DD4BF", textDecoration: "underline" }} onClick={() => {
+                                        changePhoneTab('swap');
+                                        history.push('/wallet/home/swap')
+                                    }} >{t('menu_5')} USDT</div>}
                                 </div>
-                                <div className='flex'>
-                                    <div id="zhuanZhang0" className='jianPanBtn2 borderRight'
-                                        onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoMoney(0) }}>0</div>
-                                    <div id="zhuanZhangDian" className='jianPanBtn4 borderRight'
-                                        onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => { handleDoMoney('.') }}>.</div>
+
+                                <div className='w-full h-44 mt-24' style={{ position: "relative" }}>
+                                    <div className='w-full h-44 border' style={{ borderRadius: "0.5rem", backgroundColor: "#151C2A", position: "absolute", top: "0%", right: "0%" }}>
+                                    </div>
+                                    <div className='text-16' style={{ position: "absolute", top: "0%", left: "4%", width: "82%", height: "4.4rem", lineHeight: "4.4rem" }}>{transferMoney}</div>
+                                    <div style={{ position: "absolute", top: "0%", right: "4%", height: "4.4rem", lineHeight: "4.4rem" }}>Max</div>
+                                </div>
+
+                                <div className='flex justify-between mt-16'>
+                                    <div className='flex'>
+                                        <div className='' style={{ color: "#94A3B8" }}>{t('home_borrow_16')}</div>
+                                        <div className='ml-10'>{transferFee.toFixed(2)} USDT</div>
+                                    </div>
                                 </div>
                             </div>
-                            {isLoadingBtn && <FuseLoading />}
-                            {!isLoadingBtn &&
-                                <div id='zhuanZhangWanCheng' className='jianPanBtn3'
-                                    onTouchStart={changeToBlack}
-                                    onTouchEnd={changeToWhite}
-                                    onTouchCancel={changeToWhite}
-                                    onClick={() => {
-                                        handleTransferCrypto()
-                                        // setOpenZhiFu(true)
-                                    }}>{t('card_30')}
+                            <div className='jianPanSty'>
+                                <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                                    <div id="zhuanZhang1" className='jianPanBtn borderRight borderBottom color-box'
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => { handleDoMoney(1) }}>1</div>
+                                    <div id="zhuanZhang2" className='jianPanBtn borderRight borderBottom color-box'
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => { handleDoMoney(2) }}>2</div>
+                                    <div id="zhuanZhang3" className='jianPanBtn borderRight borderBottom'
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => { handleDoMoney(3) }}>3</div>
+                                    <div id="zhuanZhangImg" className='jianPanBtImgDiv flex items-center borderBottom'
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => { handleDoMoney(-1) }}>
+                                        <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img>
+                                    </div>
                                 </div>
+                                <div className='flex' style={{ width: "100%" }}>
+                                    <div style={{ width: "75.1%" }}>
+                                        <div className='flex'>
+                                            <div id="zhuanZhang4" className='jianPanBtn1 borderRight'
+                                                onTouchStart={changeToBlack}
+                                                onTouchEnd={changeToWhite}
+                                                onTouchCancel={changeToWhite}
+                                                onClick={() => { handleDoMoney(4) }}>4</div>
+                                            <div id="zhuanZhang5" className='jianPanBtn1 borderRight'
+                                                onTouchStart={changeToBlack}
+                                                onTouchEnd={changeToWhite}
+                                                onTouchCancel={changeToWhite}
+                                                onClick={() => { handleDoMoney(5) }}>5</div>
+                                            <div id="zhuanZhang6" className='jianPanBtn1 borderRight'
+                                                onTouchStart={changeToBlack}
+                                                onTouchEnd={changeToWhite}
+                                                onTouchCancel={changeToWhite}
+                                                onClick={() => { handleDoMoney(6) }}>6</div>
+                                        </div>
+                                        <div className='flex'>
+                                            <div id="zhuanZhang7" className='jianPanBtn1 borderRight'
+                                                onTouchStart={changeToBlack}
+                                                onTouchEnd={changeToWhite}
+                                                onTouchCancel={changeToWhite}
+                                                onClick={() => { handleDoMoney(7) }}>7</div>
+                                            <div id="zhuanZhang8" className='jianPanBtn1 borderRight'
+                                                onTouchStart={changeToBlack}
+                                                onTouchEnd={changeToWhite}
+                                                onTouchCancel={changeToWhite}
+                                                onClick={() => { handleDoMoney(8) }}>8</div>
+                                            <div id="zhuanZhang9" className='jianPanBtn1 borderRight'
+                                                onTouchStart={changeToBlack}
+                                                onTouchEnd={changeToWhite}
+                                                onTouchCancel={changeToWhite}
+                                                onClick={() => { handleDoMoney(9) }}>9</div>
+                                        </div>
+                                        <div className='flex'>
+                                            <div id="zhuanZhang0" className='jianPanBtn2 borderRight'
+                                                onTouchStart={changeToBlack}
+                                                onTouchEnd={changeToWhite}
+                                                onTouchCancel={changeToWhite}
+                                                onClick={() => { handleDoMoney(0) }}>0</div>
+                                            <div id="zhuanZhangDian" className='jianPanBtn4 borderRight'
+                                                onTouchStart={changeToBlack}
+                                                onTouchEnd={changeToWhite}
+                                                onTouchCancel={changeToWhite}
+                                                onClick={() => { handleDoMoney('.') }}>.</div>
+                                        </div>
+                                    </div>
+                                    {isLoadingBtn && <FuseLoading />}
+                                    {!isLoadingBtn &&
+                                        <div id='zhuanZhangWanCheng' className='jianPanBtn3'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => {
+                                                handleTransferCrypto()
+                                                // setOpenZhiFu(true)
+                                            }}>{t('card_30')}
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    {!openSuccess && <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        style={{ height: `${divHeight}px` }}
+                    >
+                        <div className='dialog-box'>
+                            <Typography id="customized-dialog-title" className="text-24 dialog-title-text" style={{ textAlign: "center", marginTop: "10px" }}>{t('home_Transaction')}
+                                <img src="wallet/assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => {
+                                    closeRecordFunc();
+                                }} />
+                            </Typography>
+                        </div>
+
+                        <div className='daGouDingWei' style={{ position: "relative" }}>
+                            <motion.div variants={item} className=' daGouDingWei1' style={{ position: "absolute", width: "100px", height: "100px", paddingTop: "10px" }}>
+                                <div className='daGouDingWei1' style={{ position: "absolute" }}>
+                                    <img style={{ margin: "0 auto", width: "60px", height: "60px" }} src='wallet/assets/images/wallet/naoZhong2.png'></img>
+                                </div>
+                                <div className='daGouDingWei1' style={{ marginLeft: "58px", position: "absolute" }}>
+                                    {
+                                        zhuanQuan && <img className='chuKuanDongHua' style={{ width: "22px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong3.png'></img>
+                                    }
+                                    {
+                                        !zhuanQuan && tiJiaoState === 1 && <img className='daGouFangDa' style={{ width: "23px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong4.png'></img>
+                                    }
+                                    {
+                                        !zhuanQuan && tiJiaoState === 2 && <img className='daGouFangDa' style={{ width: "23px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong5.png'></img>
+                                    }
+                                </div>
+                            </motion.div>
+                        </div>
+
+                        <div style={{ margin: "0 auto", textAlign: "center", marginTop: "84px", height: "23px", fontSize: "16px", color: "#2ECB71" }}>
+                            {
+                                tiJiaoState === 1 && !zhuanQuan && <motion.div variants={item} style={{ height: "23px", lineHeight: "23px" }}>
+                                    ● {t('errorMsg_1')}
+                                </motion.div>
+                            }
+                            {
+                                tiJiaoState === 2 && !zhuanQuan && <motion.div variants={item} style={{ height: "23px", lineHeight: "23px", color: "#EE124B" }}>
+                                    ● {t('error_36')}
+                                </motion.div>
                             }
                         </div>
-                    </div>
+                        <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "8px", fontSize: "24px" }}> 10 USDT</motion.div>
+                        <motion.div variants={item} className='mx-20  mt-24' style={{ borderTop: "1px solid #2C3950" }}>
+                        </motion.div>
+                        <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                            <div style={{ color: "#888B92" }}>{t('home_Type')}</div>
+                            <div>USDT</div>
+                        </motion.div>
+                        {
+                            <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                                <div style={{ color: "#888B92" }}>{t('card_86')}</div>
+                                <div style={{ width: "50%", wordWrap: "break-word", textAlign: "right" }}>4040382105518563</div>
+                            </motion.div>
+                        }
 
-                    <div>
-                    </div>
+                        <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                            <div style={{ color: "#888B92" }}>{t('home_borrow_18')}</div>
+                            <div>{smallTabValue === 0 ? 0.1 : 0.1}  USDT </div>
+                        </motion.div>
+
+                        <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                            <div style={{ color: "#888B92" }}>{t('home_ID')}</div>
+                            <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>202409061209290015944</div>
+                        </motion.div>
+                        <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                            <div style={{ color: "#888B92" }}>{t('home_Time')}</div>
+                            <div>2024-9-6 20:40:29</div>
+                        </motion.div>
+                    </motion.div>
+                    }
                 </div>
             </BootstrapDialog >
 

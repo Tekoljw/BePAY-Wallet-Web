@@ -1668,7 +1668,7 @@ function Deposite() {
                                                 <div className="flex items-center">
                                                     <img style={{
                                                         width: '3rem',
-                                                        borderRadius: '8px'
+                                                        borderRadius: '99px'
                                                     }} src={arrayLookup(currencys, 'currencyCode', row.currencyCode, 'avatar')} alt="" />
                                                     <div className="px-12 font-medium">
                                                         <Typography className="text-16 font-medium">{row.currencyCode}</Typography>

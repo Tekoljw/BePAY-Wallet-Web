@@ -69,7 +69,6 @@ const item = {
 function Fiat(props) {
     const { t } = useTranslation('mainPage');
     const [openTiBi, setOpenTiBi] = useState(false);
-    const [openTiBi2, setOpenTiBi2] = useState(false);
     const [withdrawOrderID, setWithdrawOrderID] = useState('');
     const [openLoad, setOpenLoad] = useState(false);
     const isMobileMedia = new MobileDetect(window.navigator.userAgent).mobile();
@@ -115,6 +114,7 @@ function Fiat(props) {
     const [isLoadingBtn, setIsLoadingBtn] = useState(false);
     const [openGoogleCode, setOpenGoogleCode] = useState(false);
     const [googleCode, setGoogleCode] = useState('');
+    const [openSuccess, setOpenSuccess] = useState(true);
 
 
     const startScanQRCode = () => {
@@ -193,37 +193,48 @@ function Fiat(props) {
         setOpenLoad(true)
         setIsLoadingBtn(true)
         if (smallTabValue === 1) {
-                let data = {
-                    currency: currencyCode,
-                    transferUserId: inputVal.userId,
-                    amount: inputVal.amount,
-                    transferType: 1,
-                    checkCode: googleCode
-                };
-                dispatch(makeWithdrawOrder(data)).then((res) => {
-                    setOpenLoad(false)
-                    setGoogleCode('');
-                    setIsLoadingBtn(false)
-                    let result = res.payload;
-                    if(result.errno === 0){
-                        if (result?.data && result?.data?.status != 'fail') {
-                            setOpenTiBi2(true)
-                            setFaitSendId(result.transactionId)
-                            dispatch(showMessage({ message: t('errorMsg_1'), code: 1 }));
-                        } else {
-                            dispatch(showMessage({ message: t('error_10'), code: 2 }));
-                        }
-                    }else if(result.errno === -2){
-                        if (!hasAuthGoogle) {
-                            setOpenAnimateModal(true);
-                            return;
-                        }
-                        openGoogleCodeFunc()
-                        return
+            let data = {
+                currency: currencyCode,
+                transferUserId: inputVal.userId,
+                amount: inputVal.amount,
+                transferType: 1,
+                checkCode: googleCode
+            };
+            dispatch(makeWithdrawOrder(data)).then((res) => {
+                setOpenLoad(false)
+                setGoogleCode('');
+                setIsLoadingBtn(false)
+                let result = res.payload;
+                if (result.errno === 0) {
+                    if (result?.data && result?.data?.status != 'fail') {
+                        setFaitSendId(result?.data?.transactionId)
+                        setOpenSuccess(false)
+                        setTimeout(() => {
+                            setZhuanQuan(false);
+                            setTiJiaoState(1);
+                        }, 1200);
                     } else {
-                        dispatch(showMessage({ message: result.errmsg, code: 2 }));
+                        setOpenSuccess(false)
+                        setTimeout(() => {
+                            setZhuanQuan(false);
+                            setTiJiaoState(2);
+                        }, 1200);
                     }
-                });
+                } else if (result.errno === -2) {
+                    if (!hasAuthGoogle) {
+                        setOpenAnimateModal(true);
+                        return;
+                    }
+                    openGoogleCodeFunc()
+                    return
+                } else {
+                    setOpenSuccess(false)
+                    setTimeout(() => {
+                        setZhuanQuan(false);
+                        setTiJiaoState(2);
+                    }, 1200);
+                }
+            });
         } else {
             let entryType = getEntryType(currencyCode)
             let bankName = ''
@@ -252,15 +263,22 @@ function Fiat(props) {
                 setIsLoadingBtn(false)
                 setOpenLoad(false)
                 let result = res.payload;
-                if(result.errno === 0){
+                if (result.errno === 0) {
                     if (result?.data && result?.data?.status != 'fail') {
-                        setOpenTiBi2(true)
-                        setFaitSendId(result.transactionId)
-                        dispatch(showMessage({ message: t('errorMsg_1'), code: 1 }));
+                        setOpenSuccess(false)
+                        setFaitSendId(result.data.transactionId)
+                        setTimeout(() => {
+                            setZhuanQuan(false);
+                            setTiJiaoState(1);
+                        }, 1200);
                     } else {
-                        dispatch(showMessage({ message: t('error_10'), code: 2 }));
+                        setOpenSuccess(false)
+                        setTimeout(() => {
+                            setZhuanQuan(false);
+                            setTiJiaoState(2);
+                        }, 1200);
                     }
-                }else if(result.errno === -2){
+                } else if (result.errno === -2) {
                     if (!hasAuthGoogle) {
                         setOpenAnimateModal(true);
                         return;
@@ -268,9 +286,12 @@ function Fiat(props) {
                     openGoogleCodeFunc()
                     return
                 } else {
-                    dispatch(showMessage({ message: result.errmsg, code: 2 }));
+                    setOpenSuccess(false)
+                    setTimeout(() => {
+                        setZhuanQuan(false);
+                        setTiJiaoState(2);
+                    }, 1200);
                 }
-
             });
         }
     };
@@ -333,6 +354,8 @@ function Fiat(props) {
     const [openPinErr, setOpenPinErr] = useState(false);
     const [inputIDVal, setInputIDVal] = useState('');
     const [divHeight, setDivHeight] = useState(0);
+    const [zhuanQuan, setZhuanQuan] = useState(true);
+    const [tiJiaoState, setTiJiaoState] = useState(0);
 
     const [tabValue, setTabValue] = useState(0);
     const [ranges, setRanges] = useState([
@@ -390,8 +413,8 @@ function Fiat(props) {
     const openInputPin = () => {
         setPin('')
         setOpenPinWindow(true)
-        openPinFunc()
         getDivHeight("pinDivHeight");
+        openPinFunc()
     }
 
     // 创建PIN Page
@@ -413,7 +436,7 @@ function Fiat(props) {
         setOpenPinWindow(false);
     }
 
-      // 输入Pin
+    // 输入Pin
     const handleDoPin = (text) => {
         if (textSelect) {
             editAmount(text)
@@ -636,7 +659,9 @@ function Fiat(props) {
         document.getElementById('PINSty').classList.add('PinMoveOut');
         setTimeout(() => {
             setOpenPinWindow(false);
+            setOpenSuccess(true);
             setIsLoadingBtn(false);
+            setZhuanQuan(true);
         }, 300);
     };
 
@@ -812,7 +837,7 @@ function Fiat(props) {
                                                 <div className="flex items-center">
                                                     <img style={{
                                                         width: '3rem',
-                                                        borderRadius: '8px'
+                                                        borderRadius: '99px'
                                                     }} src={row.avatar} alt="" />
                                                     <div className="px-12 font-medium">
                                                         <Typography className="text-16 font-medium">{row.currencyCode}</Typography>
@@ -896,7 +921,7 @@ function Fiat(props) {
                                     <div>
                                         {currencyCode === 'IDR' && <div>
                                             <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
-                                                <Typography className="text-16 ">Account No</Typography>
+                                                <Typography className="text-16 ">{t('home_withdraw_22')}</Typography>
                                             </div>
                                             <div className="flex items-center justify-between">
                                                 <FormControl sx={{ width: isMobileMedia ? '100%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
@@ -918,7 +943,7 @@ function Fiat(props) {
                                             </div>
 
                                             <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
-                                                <Typography className="text-16 ">Account Name</Typography>
+                                                <Typography className="text-16 ">{t('home_withdraw_23')}</Typography>
                                             </div>
                                             <div className="flex items-center justify-between">
                                                 <FormControl sx={{ width: isMobileMedia ? '100%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
@@ -1009,7 +1034,7 @@ function Fiat(props) {
 
                                         {currencyCode === 'MMK' && <div>
                                             <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
-                                                <Typography className="text-16 ">Account No</Typography>
+                                                <Typography className="text-16 ">{t('home_withdraw_22')}</Typography>
                                             </div>
                                             <div className="flex items-center justify-between">
                                                 <FormControl sx={{ width: isMobileMedia ? '100%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
@@ -1031,7 +1056,7 @@ function Fiat(props) {
                                             </div>
 
                                             <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
-                                                <Typography className="text-16 ">Account Name</Typography>
+                                                <Typography className="text-16 ">{t('home_withdraw_23')}</Typography>
                                             </div>
                                             <div className="flex items-center justify-between">
                                                 <FormControl sx={{ width: isMobileMedia ? '100%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
@@ -1337,46 +1362,44 @@ function Fiat(props) {
 
                                 <div style={{ width: "100%", paddingInline: "1rem" }}>
                                     <LoadingButton
-                                        className={clsx('px-48  m-28 btnColorTitleBig loadingBtnSty')}
+                                        className={clsx('px-48 m-28 btnColorTitleBig loadingBtnSty')}
                                         color="secondary"
                                         loading={openLoad}
                                         variant="contained"
                                         sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
                                         style={{ width: '100%', height: '4rem', fontSize: "20px", margin: '2.6rem auto 2.6rem auto', display: 'block', lineHeight: "inherit", padding: "0px" }}
                                         onClick={() => {
-                                              isBindPin()
+                                            isBindPin()
                                         }}
                                     >
                                         {t('home_withdraw_10')}
                                     </LoadingButton>
                                 </div>
-
+                                <div className='mb-60'></div>
                             </div>
-
-
                         </div>
                     </Box>
                 </motion.div>
 
                 {openYanZheng && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
-                <motion.div
-                    variants={container}
-                    initial="hidden"
-                    animate="show"
-                    className='mt-12'
-                    id="topGo"
-                >
-                    <div className='flex mb-10' onClick={() => {
-                        setOpenYanZheng(false);
-                        myFunction;
-                    }}   >
-                        <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
-                    </div>
-                    <Enable2FA />
-                    <div style={{ height: "5rem" }}></div>
-                </motion.div>
+                    <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className='mt-12'
+                        id="topGo"
+                    >
+                        <div className='flex mb-10' onClick={() => {
+                            setOpenYanZheng(false);
+                            myFunction;
+                        }}   >
+                            <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
+                        </div>
+                        <Enable2FA />
+                        <div style={{ height: "5rem" }}></div>
+                    </motion.div>
                 </div>}
-                
+
                 {/*打开摄像头*/}
                 <BootstrapDialog
                     onClose={() => { setOpenChangeCurrency(false); closeScan(); }}
@@ -1409,123 +1432,208 @@ function Fiat(props) {
                     className="dialog-container"
                 >
                     <div id="PINSty" className="PINSty">
-                        <div id='pinDivHeight'>
-                            <div className='pinWindow'>
-                                <div className='flex'>
-                                    <div className='PINTitle2'>{t('card_65')}</div>
-                                    <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                        {openSuccess &&
+                            <div id='pinDivHeight'>
+                                <div className='pinWindow'>
+                                    <div className='flex'>
+                                        <div className='PINTitle2'>{t('card_65')}</div>
+                                        <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                                            closePinFunc();
+                                        }} />
+                                    </div>
+                                    <div className='PINTitle'>{t('home_wallet_14')}{smallTabValue == 0 ? t('card_8') : t('card_7')}（ {smallTabValue == 0 ? inputVal.address : inputVal.userId} ）{t('transfer_1')}</div>
+                                    <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
+                                        <img className='MoneyWithdraw' src="wallet/assets/images/withdraw/USDT.png"></img>
+                                        <div className='PINTitle3'>USDT</div>
+                                        <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")} onClick={() => {
+                                            setTextSelect(!textSelect)
+                                            setShowGuangBiao(true)
+                                        }}>
+                                            {inputVal.amount} <span className={clsx("", !showGuangBiao ? 'guangBiaoNo' : 'guangBiao')} >︱</span>
+                                        </div>
+                                    </div>
+                                    <div className='flex justify-between mt-10'>
+                                        <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[0] ? '●' : ''}</div></div>
+                                        <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[1] ? '●' : ''}</div></div>
+                                        <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[2] ? '●' : ''}</div></div>
+                                        <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[3] ? '●' : ''}</div></div>
+                                        <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[4] ? '●' : ''}</div></div>
+                                        <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[5] ? '●' : ''}</div></div>
+                                    </div>
+                                </div>
+
+                                <div className='jianPanSty'>
+                                    <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                                        <div id="zhuanZhang1" className='jianPanBtn borderRight borderBottom color-box'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => { handleDoPin(1) }}>1</div>
+                                        <div id="zhuanZhang2" className='jianPanBtn borderRight borderBottom color-box'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => { handleDoPin(2) }}>2</div>
+                                        <div id="zhuanZhang3" className='jianPanBtn borderRight borderBottom'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => { handleDoPin(3) }}>3</div>
+                                        <div id="zhuanZhangImg" className='jianPanBtImgDiv flex items-center borderBottom'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => { handleDoPin(-1) }}>
+                                            <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img>
+                                        </div>
+                                    </div>
+                                    <div className='flex' style={{ width: "100%" }}>
+                                        <div style={{ width: "75.1%" }}>
+                                            <div className='flex'>
+                                                <div id="zhuanZhang4" className='jianPanBtn1 borderRight'
+                                                    onTouchStart={changeToBlack}
+                                                    onTouchEnd={changeToWhite}
+                                                    onTouchCancel={changeToWhite}
+                                                    onClick={() => { handleDoPin(4) }}>4</div>
+                                                <div id="zhuanZhang5" className='jianPanBtn1 borderRight'
+                                                    onTouchStart={changeToBlack}
+                                                    onTouchEnd={changeToWhite}
+                                                    onTouchCancel={changeToWhite}
+                                                    onClick={() => { handleDoPin(5) }}>5</div>
+                                                <div id="zhuanZhang6" className='jianPanBtn1 borderRight'
+                                                    onTouchStart={changeToBlack}
+                                                    onTouchEnd={changeToWhite}
+                                                    onTouchCancel={changeToWhite}
+                                                    onClick={() => { handleDoPin(6) }}>6</div>
+                                            </div>
+                                            <div className='flex'>
+                                                <div id="zhuanZhang7" className='jianPanBtn1 borderRight'
+                                                    onTouchStart={changeToBlack}
+                                                    onTouchEnd={changeToWhite}
+                                                    onTouchCancel={changeToWhite}
+                                                    onClick={() => { handleDoPin(7) }}>7</div>
+                                                <div id="zhuanZhang8" className='jianPanBtn1 borderRight'
+                                                    onTouchStart={changeToBlack}
+                                                    onTouchEnd={changeToWhite}
+                                                    onTouchCancel={changeToWhite}
+                                                    onClick={() => { handleDoPin(8) }}>8</div>
+                                                <div id="zhuanZhang9" className='jianPanBtn1 borderRight'
+                                                    onTouchStart={changeToBlack}
+                                                    onTouchEnd={changeToWhite}
+                                                    onTouchCancel={changeToWhite}
+                                                    onClick={() => { handleDoPin(9) }}>9</div>
+                                            </div>
+                                            <div className='flex'>
+                                                <div id="zhuanZhang0" className='jianPanBtn2 borderRight'
+                                                    onTouchStart={changeToBlack}
+                                                    onTouchEnd={changeToWhite}
+                                                    onTouchCancel={changeToWhite}
+                                                    onClick={() => { handleDoPin(0) }}>0</div>
+                                                <div id="zhuanZhangDian" className='jianPanBtn4 borderRight'
+                                                    onTouchStart={changeToBlack}
+                                                    onTouchEnd={changeToWhite}
+                                                    onTouchCancel={changeToWhite}
+                                                    onClick={() => { handleDoPin('.') }}>.</div>
+                                            </div>
+                                        </div>
+                                        {isLoadingBtn && <FuseLoading />}
+                                        {!isLoadingBtn && <div id='zhuanZhangWanCheng' className='jianPanBtn3'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => {
+                                                handleSubmit()
+                                            }}>{t('card_30')}</div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        {!openSuccess && <motion.div
+                            variants={container}
+                            initial="hidden"
+                            animate="show"
+                            style={{ height: `${divHeight}px` }}
+                        >
+                            <div className='dialog-box'>
+                                <Typography id="customized-dialog-title" className="text-24 dialog-title-text" style={{ textAlign: "center", marginTop: "10px" }}>{t('home_Transaction')}
+                                    <img src="wallet/assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => {
                                         closePinFunc();
                                     }} />
-                                </div>
-                                <div className='PINTitle'>{t('home_wallet_14')}{ smallTabValue == 0 ? t('card_8') : t('card_7')}（ {  smallTabValue == 0 ? inputVal.address : inputVal.userId } ）{t('transfer_1')}</div>
-                                <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
-                                    <img className='MoneyWithdraw' src="wallet/assets/images/withdraw/USDT.png"></img>
-                                    <div className='PINTitle3'>USDT</div>
-                                    <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")} onClick={() => {
-                                        setTextSelect(!textSelect)
-                                        setShowGuangBiao(true)
-                                    }}>
-                                        {inputVal.amount} <span className={clsx("", !showGuangBiao ? 'guangBiaoNo' : 'guangBiao')} >︱</span>
-                                    </div>
-                                </div>
-                                <div className='flex justify-between mt-10'>
-                                    <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[0] ? '●' : ''}</div></div>
-                                    <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[1] ? '●' : ''}</div></div>
-                                    <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[2] ? '●' : ''}</div></div>
-                                    <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[3] ? '●' : ''}</div></div>
-                                    <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[4] ? '●' : ''}</div></div>
-                                    <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[5] ? '●' : ''}</div></div>
-                                </div>
+                                </Typography>
                             </div>
-                        </div>
 
-                        <div className='jianPanSty'>
-                            <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
-                                <div id="zhuanZhang1" className='jianPanBtn borderRight borderBottom color-box'
-                                    onTouchStart={changeToBlack}
-                                    onTouchEnd={changeToWhite}
-                                    onTouchCancel={changeToWhite}
-                                    onClick={() => { handleDoPin(1) }}>1</div>
-                                <div id="zhuanZhang2" className='jianPanBtn borderRight borderBottom color-box'
-                                    onTouchStart={changeToBlack}
-                                    onTouchEnd={changeToWhite}
-                                    onTouchCancel={changeToWhite}
-                                    onClick={() => { handleDoPin(2) }}>2</div>
-                                <div id="zhuanZhang3" className='jianPanBtn borderRight borderBottom'
-                                    onTouchStart={changeToBlack}
-                                    onTouchEnd={changeToWhite}
-                                    onTouchCancel={changeToWhite}
-                                    onClick={() => { handleDoPin(3) }}>3</div>
-                                <div id="zhuanZhangImg" className='jianPanBtImgDiv flex items-center borderBottom'
-                                    onTouchStart={changeToBlack}
-                                    onTouchEnd={changeToWhite}
-                                    onTouchCancel={changeToWhite}
-                                    onClick={() => { handleDoPin(-1) }}>
-                                    <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img>
-                                </div>
+                            <div className='daGouDingWei' style={{ position: "relative" }}>
+                                <motion.div variants={item} className=' daGouDingWei1' style={{ position: "absolute", width: "100px", height: "100px", paddingTop: "10px" }}>
+                                    <div className='daGouDingWei1' style={{ position: "absolute" }}>
+                                        <img style={{ margin: "0 auto", width: "60px", height: "60px" }} src='wallet/assets/images/wallet/naoZhong2.png'></img>
+                                    </div>
+                                    <div className='daGouDingWei1' style={{ marginLeft: "58px", position: "absolute" }}>
+                                        {
+                                            zhuanQuan && <img className='chuKuanDongHua' style={{ width: "22px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong3.png'></img>
+                                        }
+                                        {
+                                            !zhuanQuan && tiJiaoState === 1 && <img className='daGouFangDa' style={{ width: "23px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong4.png'></img>
+                                        }
+                                        {
+                                            !zhuanQuan && tiJiaoState === 2 && <img className='daGouFangDa' style={{ width: "23px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong5.png'></img>
+                                        }
+                                    </div>
+                                </motion.div>
                             </div>
-                            <div className='flex' style={{ width: "100%" }}>
-                                <div style={{ width: "75.1%" }}>
-                                    <div className='flex'>
-                                        <div id="zhuanZhang4" className='jianPanBtn1 borderRight'
-                                            onTouchStart={changeToBlack}
-                                            onTouchEnd={changeToWhite}
-                                            onTouchCancel={changeToWhite}
-                                            onClick={() => { handleDoPin(4) }}>4</div>
-                                        <div id="zhuanZhang5" className='jianPanBtn1 borderRight'
-                                            onTouchStart={changeToBlack}
-                                            onTouchEnd={changeToWhite}
-                                            onTouchCancel={changeToWhite}
-                                            onClick={() => { handleDoPin(5) }}>5</div>
-                                        <div id="zhuanZhang6" className='jianPanBtn1 borderRight'
-                                            onTouchStart={changeToBlack}
-                                            onTouchEnd={changeToWhite}
-                                            onTouchCancel={changeToWhite}
-                                            onClick={() => { handleDoPin(6) }}>6</div>
-                                    </div>
-                                    <div className='flex'>
-                                        <div id="zhuanZhang7" className='jianPanBtn1 borderRight'
-                                            onTouchStart={changeToBlack}
-                                            onTouchEnd={changeToWhite}
-                                            onTouchCancel={changeToWhite}
-                                            onClick={() => { handleDoPin(7) }}>7</div>
-                                        <div id="zhuanZhang8" className='jianPanBtn1 borderRight'
-                                            onTouchStart={changeToBlack}
-                                            onTouchEnd={changeToWhite}
-                                            onTouchCancel={changeToWhite}
-                                            onClick={() => { handleDoPin(8) }}>8</div>
-                                        <div id="zhuanZhang9" className='jianPanBtn1 borderRight'
-                                            onTouchStart={changeToBlack}
-                                            onTouchEnd={changeToWhite}
-                                            onTouchCancel={changeToWhite}
-                                            onClick={() => { handleDoPin(9) }}>9</div>
-                                    </div>
-                                    <div className='flex'>
-                                        <div id="zhuanZhang0" className='jianPanBtn2 borderRight'
-                                            onTouchStart={changeToBlack}
-                                            onTouchEnd={changeToWhite}
-                                            onTouchCancel={changeToWhite}
-                                            onClick={() => { handleDoPin(0) }}>0</div>
-                                        <div id="zhuanZhangDian" className='jianPanBtn4 borderRight'
-                                            onTouchStart={changeToBlack}
-                                            onTouchEnd={changeToWhite}
-                                            onTouchCancel={changeToWhite}
-                                            onClick={() => { handleDoPin('.') }}>.</div>
-                                    </div>
-                                </div>
-                                {isLoadingBtn && <FuseLoading />}
-                                {!isLoadingBtn &&<div id='zhuanZhangWanCheng' className='jianPanBtn3'
-                                    onTouchStart={changeToBlack}
-                                    onTouchEnd={changeToWhite}
-                                    onTouchCancel={changeToWhite}
-                                    onClick={() => {
-                                        handleSubmit()
-                                    }}>{t('card_30')}</div>
+
+                            <div style={{ margin: "0 auto", textAlign: "center", marginTop: "84px", height: "23px", fontSize: "16px", color: "#2ECB71" }}>
+                                {
+                                    smallTabValue === 1 && tiJiaoState === 1 && !zhuanQuan && <motion.div variants={item} style={{ height: "23px", lineHeight: "23px" }}>
+                                        ● {t('errorMsg_1')}
+                                    </motion.div>
+                                }
+                                {
+                                    smallTabValue === 0 && tiJiaoState === 1 && !zhuanQuan && <motion.div variants={item} style={{ height: "23px", lineHeight: "23px", color: "#ffc600" }}>
+                                        ● {t('home_PendingReview')}
+                                    </motion.div>
+                                }
+                                {
+                                    tiJiaoState === 2 && !zhuanQuan && <motion.div variants={item} style={{ height: "23px", lineHeight: "23px", color: "#EE124B" }}>
+                                        ● {t('error_36')}
+                                    </motion.div>
                                 }
                             </div>
-                        </div>
-                        <div>
-                        </div>
+                            <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "8px", fontSize: "24px" }}> -{inputVal.amount} {currencyCode}</motion.div>
+                            <motion.div variants={item} className='mx-20  mt-24' style={{ borderTop: "1px solid #2C3950" }}>
+                            </motion.div>
+                            <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                                <div style={{ color: "#888B92" }}>{t('home_Type')}</div>
+                                <div>{t('home_deposite_2')}</div>
+                            </motion.div>
+                            {
+                                smallTabValue === 1 && <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                                    <div style={{ color: "#888B92" }}>{t('card_7')}</div>
+                                    <div style={{ width: "50%", wordWrap: "break-word", textAlign: "right" }}>{inputVal.userId}</div>
+                                </motion.div>
+                            }
+                            {
+                                smallTabValue === 0 && <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                                    <div style={{ color: "#888B92" }}>{t('home_withdraw_22')}</div>
+                                    <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{inputVal.accountNo}</div>
+                                </motion.div>
+                            }
+
+                            <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                                <div style={{ color: "#888B92" }}>{t('home_borrow_18')}</div>
+                                <div>{smallTabValue === 0 ? fee : 0}  {currencyCode} </div>
+                            </motion.div>
+
+                            <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                                <div style={{ color: "#888B92" }}>{t('home_ID')}</div>
+                                <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{faitSendId}</div>
+                            </motion.div>
+                            <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                                <div style={{ color: "#888B92" }}>{t('home_Time')}</div>
+                                <div>{getNowTime()}</div>
+                            </motion.div>
+                        </motion.div>
+                        }
                     </div>
                 </BootstrapDialog>
 
@@ -1681,7 +1789,6 @@ function Fiat(props) {
                     </div>
                 </BootstrapDialog>
 
-
                 <BootstrapDialog
                     onClose={() => {
                         closePasteFunc();
@@ -1715,7 +1822,6 @@ function Fiat(props) {
                                 })
                             }
                         </div>
-
                     </div>
                 </BootstrapDialog>
 
@@ -1890,126 +1996,6 @@ function Fiat(props) {
                     </div>
                 </BootstrapDialog>
 
-                {/*提法币界面样式*/}
-                <BootstrapDialog
-                    onClose={() => { setOpenTiBi(false); }}
-                    aria-labelledby="customized-dialog-title"
-                    open={openTiBi}
-                    className="dialog-container"
-                >
-                    <DialogContent dividers >
-                        <div className='dialog-box' >
-                            <Typography id="customized-dialog-title" className="text-24 dialog-title-text" style={{ textAlign: "center", marginTop: "10px" }}>{t('home_Transaction')}
-                                <img src="wallet/assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => {
-                                    setOpenTiBi(false)
-                                    setOpenLoad(false)
-                                }} alt="close icon" />
-                            </Typography>
-                        </div>
-                        <Box className="dialog-content dialog-content-paste-height " style={{ paddingRight: "0px", height: "500px" }}>
-                            <motion.div
-                                variants={container}
-                                initial="hidden"
-                                animate="show"
-                                className="dialog-content-inner  border-r-5">
-                                <motion.div variants={item}>
-                                    <img style={{ margin: "0 auto", width: "60px", height: "60px", marginTop: "10px" }} src='wallet/assets/images/wallet/naoZhong.png'></img>
-                                </motion.div>
-                                <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "20px", fontSize: "24px" }}>-{inputVal.amount} {currencyCode}</motion.div>
-                                <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "10px", fontSize: "16px", color: "#ffc600" }}>● {t('home_PendingReview')}</motion.div>
-
-
-                                <motion.div variants={item} className='flex justify-content-space px-20 mt-40' >
-                                    <div style={{ color: "#888B92" }}>{t('home_Type')}</div>
-                                    <div>Fiat</div>
-                                </motion.div>
-
-                                <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
-                                    <div style={{ color: "#888B92" }}>{t('home_Name')}</div>
-                                    <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{inputVal.accountName}</div>
-                                </motion.div>
-
-                                <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
-                                    <div style={{ color: "#888B92" }}>accountNo</div>
-                                    <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{inputVal.accountNo}</div>
-                                </motion.div>
-
-                                <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
-                                    <div style={{ color: "#888B92" }}>{t('home_ID')}</div>
-                                    <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{withdrawOrderID}</div>
-                                </motion.div>
-
-                                {/* <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
-                                        <div style={{ color: "#888B92" }}>Fee</div>
-                                        <div>0.8 USDT</div>
-                                    </motion.div> */}
-                                <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
-                                    <div style={{ color: "#888B92" }}>{t('home_Time')}</div>
-                                    <div>{getNowTime()}</div>
-                                </motion.div>
-                            </motion.div>
-                        </Box>
-                    </DialogContent>
-                </BootstrapDialog>
-
-                {/*提法币内部样式*/}
-                <BootstrapDialog
-                    onClose={() => { setOpenTiBi2(false); }}
-                    aria-labelledby="customized-dialog-title"
-                    open={openTiBi2}
-                    className="dialog-container"
-                >
-                    <DialogContent dividers >
-                        <div className='dialog-box' >
-                            <Typography id="customized-dialog-title" className="text-24 dialog-title-text" style={{ textAlign: "center", marginTop: "10px" }}>{t('home_Transaction')}
-                                <img src="wallet/assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => {
-                                    setOpenTiBi2(false)
-                                    setOpenLoad(false)
-                                }} alt="close icon" />
-                            </Typography>
-                        </div>
-                        <Box className="dialog-content dialog-content-paste-height " style={{ paddingRight: "0px", height: "500px" }}>
-                            <motion.div
-                                variants={container}
-                                initial="hidden"
-                                animate="show"
-                                className="dialog-content-inner  border-r-5">
-                                <motion.div variants={item}>
-                                    <img style={{ margin: "0 auto", width: "60px", height: "60px", marginTop: "10px" }} src='wallet/assets/images/wallet/naoZhong2.png'></img>
-                                </motion.div>
-                                <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "20px", fontSize: "24px" }}>-{inputVal.amount} {currencyCode}</motion.div>
-                                <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "10px", fontSize: "16px", color: "#2ECB71" }}>● {t('errorMsg_1')}</motion.div>
-
-                                <motion.div variants={item} className='flex justify-content-space px-20 mt-40' >
-                                    <div style={{ color: "#888B92" }}>{t('home_Type')}</div>
-                                    <div>Fiat</div>
-                                </motion.div>
-
-                                <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
-                                    <div style={{ color: "#888B92" }}>{t('card_7')}</div>
-                                    <div style={{ width: "50%", wordWrap: "break-word", textAlign: "right" }}>{inputVal.userId}</div>
-                                </motion.div>
-
-                                <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
-                                    <div style={{ color: "#888B92" }}>{t('home_borrow_18')}</div>
-                                    <div>0 {currencyCode}</div>
-                                </motion.div>
-
-                                <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
-                                    <div style={{ color: "#888B92" }}>{t('home_ID')}</div>
-                                    <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{faitSendId}</div>
-                                </motion.div>
-
-                                <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
-                                    <div style={{ color: "#888B92" }}>{t('home_Time')}</div>
-                                    <div>{getNowTime()}</div>
-                                </motion.div>
-                            </motion.div>
-                        </Box>
-                    </DialogContent>
-                </BootstrapDialog>
-
-
                 <BootstrapDialog
                     onClose={() => {
                         closePasteFunc();
@@ -2045,7 +2031,7 @@ function Fiat(props) {
                         </div>
                     </div>
                 </BootstrapDialog>
-                
+
                 <AnimateModal
                     className="faBiDiCard tanChuanDiSe"
                     open={openAnimateModal}
