@@ -867,13 +867,7 @@ export const verifyGAuth = createAsyncThunk(
             checkCode: settings.checkCode,
         };
         const googleRes = await React.$api("security.verifyGAuth", data);
-        if (googleRes?.errno === 0 && googleRes?.data === true) {
-            dispatch(showMessage({ message: 'success', code: 1 }));
-            return true
-        } else {
-            dispatch(showMessage({ message: t('error_32'), code: 2 }));
-            return false
-        }
+        return googleRes;
     }
 );
 

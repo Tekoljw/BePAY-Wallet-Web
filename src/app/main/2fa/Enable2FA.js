@@ -20,6 +20,7 @@ import {
     verifyGAuth
 } from '../../store/user/userThunk';
 import { useTranslation } from "react-i18next";
+import { showMessage } from 'app/store/fuse/messageSlice';
 
 
 const container = {
@@ -47,7 +48,7 @@ const handleCopyText = (text) => {
     document.body.removeChild(input);
 }
 
-function Enable2FA() {
+function Enable2FA(props) {
     const { t } = useTranslation('mainPage');
     const [googleText, setgoogleText] = useState({});
     const [googleCode, setGoogleCode] = useState('');
@@ -65,8 +66,23 @@ function Enable2FA() {
             return
         }
         let data = { checkCode: googleCode };
-        dispatch(verifyGAuth(data))
+        dispatch(verifyGAuth(data)).then((res)=>{
+            const result = res.payload;
+            if (result?.errno === 0 && result?.data === true) {
+                dispatch(showMessage({ message: 'success', code: 1 }));
+                 props.verifiedVAuth()
+            } else {
+                dispatch(showMessage({ message: t('error_32'), code: 2 }));
+                return false
+            }
+        })
     };
+
+    const resizeLayoutEvt = () => {
+        window.setTimeout(function () {
+            document.activeElement.scrollIntoViewIfNeeded();
+        }, 0);
+    }
 
     return (
         <div>
@@ -184,7 +200,7 @@ function Enable2FA() {
                     variants={item}
                 >
                     <Typography className="text-16 px-16 my-16 font-medium text-center pad-l-r-10 margin-t-b-10" style={{ color: '#94a3b8' }}>{t('card_180')}</Typography>
-                    <OtpPass googleTextKey={googleText.key} setGoogleCode={setGoogleCode} />
+                    <OtpPass googleTextKey={googleText.key} setGoogleCode={setGoogleCode} resizeLayout={(value)=> resizeLayoutEvt(value)}/>
                     <div className="mb-24 mt-4 flex items-center justify-content-center">
                         <Button
                             className="px-48 text-lg btnColorTitleBig"

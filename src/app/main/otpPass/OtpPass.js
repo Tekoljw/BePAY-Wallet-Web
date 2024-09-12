@@ -14,6 +14,7 @@ export default function OtpPass({googleTextKey,setGoogleCode}) {
         BACK_SPACE: 8,
     });
     const [value, setValue] = React.useState("");
+    const [resizeLayout, setResizeLayout] = React.useState(false);
     // 用来存放6个input的引用
     const inputsRef = React.useRef([]);
     // 当前聚焦的input的下标
@@ -23,7 +24,7 @@ export default function OtpPass({googleTextKey,setGoogleCode}) {
     const isInputValueValid = React.useCallback((value) => {
         return /^\d+$/.test(value);
     }, []);
-const [isdisable, setisdisable] = useState(true)
+    const [isdisable, setisdisable] = useState(true)
     // 聚焦指定下标的input
     const focusInput = React.useCallback((i) => {
         const inputs = inputsRef.current;
@@ -124,6 +125,16 @@ const [isdisable, setisdisable] = useState(true)
         },
         [focusInput, isInputValueValid]
     );
+
+    const handleWindowResize = ()=> {
+        if (document.activeElement.tagName == "INPUT" || document.activeElement.tagName == "TEXTAREA") {
+            setResizeLayout(true)
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener("resize", handleWindowResize())
+    }, [value])
 
     return (
         <div className="optpass">

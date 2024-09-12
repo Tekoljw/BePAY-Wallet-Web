@@ -242,6 +242,7 @@ function Withdraw(props) {
     const [createPinWindow, setCreatePinWindow] = useState(false);
     const [openPinErr, setOpenPinErr] = useState(false);
     const [openPasteWindow, setOpenPasteWindow] = useState(false);
+    const [fiatVerifiedAuth, setFiatVerifiedAuth] = useState(false);
 
     const changePhoneTab = (tab) => {
         window.localStorage.setItem('phoneTab', tab);
@@ -526,6 +527,7 @@ function Withdraw(props) {
         }
         document.body.removeChild(input1);
     }
+
     useEffect(() => {
         if (googleCode.length === 6) {
             setOpenGoogleCode(false);
@@ -877,6 +879,19 @@ function Withdraw(props) {
         setGoogleCode(tmpCode)
     }
 
+    const verifyGoogleCodeEvt = ()=>{
+        setOpenYanZheng(true);
+    }
+
+    const verifiedVAuthEvt = ()=> {
+        if(tabValue === cryptoSelect){
+            setOpenYanZheng(false);
+            setOpenGoogleCode(true);
+        }else if(tabValue === fiatSelect){
+           setFiatVerifiedAuth(true);
+        }
+    }
+
     // 输入Pin
     const handleDoPin = (text) => {
         if (textSelect) {
@@ -904,6 +919,7 @@ function Withdraw(props) {
                     }
                 })
             } else { // 创建pin
+                setOpenPinWindow(false);
                 dispatch(createPin({
                     paymentPassword: tmpPin
                 })).then((res) => {
@@ -1275,10 +1291,10 @@ function Withdraw(props) {
                                                 />
                                                 <div className='flex pasteSty  items-center'>
                                                     <div className='paste-btn' onClick={() => {
-                                                        const clipPromise = navigator.clipboard.readText();
-                                                        clipPromise.then(clipText => {
+                                                        setTimeout(async () => {
+                                                            const clipText = await navigator.clipboard.readText();
                                                             setInputIDVal(clipText)
-                                                        })
+                                                            }, 1000);
                                                     }}>{t('home_withdraw_11')}</div>
                                                     <img className='pasteJianTou' src="wallet/assets/images/withdraw/pasteJianTou.png" alt="" onClick={() => {
                                                         setOpenPasteWindow(true)
@@ -1617,7 +1633,7 @@ function Withdraw(props) {
 
                 </div>}
 
-                {tabValue === fiatSelect && <Fiat />}
+                {tabValue === fiatSelect && <Fiat  verifyGoogleCode={ ()=> verifyGoogleCodeEvt()} fiatVerifiedAuth={ fiatVerifiedAuth } />}
 
                 {/* {tabValue === 2 && <Nft />} */}
 
@@ -1698,7 +1714,7 @@ function Withdraw(props) {
                     }}   >
                         <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                     </div>
-                    <Enable2FA />
+                    <Enable2FA verifiedVAuth={()=> verifiedVAuthEvt()} />
                     <div style={{ height: "5rem" }}></div>
                 </motion.div>
             </div>}

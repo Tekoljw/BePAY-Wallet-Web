@@ -29,7 +29,7 @@ import DialogContent from "@mui/material/DialogContent/DialogContent";
 import Dialog from "@mui/material/Dialog/Dialog";
 import history from '@history';
 import DialogTitle from "@mui/material/DialogTitle";
-import CloseIcon from "@mui/material/SvgIcon/SvgIcon";
+import Enable2FA from "../../2fa/Enable2FA";
 import { getCryptoDisplay, getFiatDisplay } from "../../../store/wallet/walletThunk";
 import { showMessage } from 'app/store/fuse/messageSlice';
 import MobileDetect from 'mobile-detect';
@@ -42,6 +42,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import AnimateModal from "../../../components/FuniModal";
 import InputLabel from '@mui/material/InputLabel';
 import FuseLoading from '@fuse/core/FuseLoading';
+
 
 const container = {
     show: {
@@ -67,6 +68,7 @@ const item = {
 };
 
 function Fiat(props) {
+    const { fiatVerifiedAuth } = props;
     const { t } = useTranslation('mainPage');
     const [openTiBi, setOpenTiBi] = useState(false);
     const [withdrawOrderID, setWithdrawOrderID] = useState('');
@@ -115,7 +117,6 @@ function Fiat(props) {
     const [openGoogleCode, setOpenGoogleCode] = useState(false);
     const [googleCode, setGoogleCode] = useState('');
     const [openSuccess, setOpenSuccess] = useState(true);
-
 
     const startScanQRCode = () => {
         openScan((result, err) => {
@@ -295,6 +296,12 @@ function Fiat(props) {
             });
         }
     };
+
+    useEffect( ()=>{
+        if(fiatVerifiedAuth){
+            setOpenGoogleCode(true);
+        }
+    }, [fiatVerifiedAuth])
 
     useEffect(() => {
         dispatch(getListBank()).then((res) => {
@@ -739,6 +746,13 @@ function Fiat(props) {
 
     const tidyWalletData = () => {
         fiatsFormatAmount();
+    };
+
+    const myFunction = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // 平滑滚动
+        });
     };
 
     useEffect(() => {
@@ -2073,7 +2087,8 @@ function Fiat(props) {
                             variant="contained"
                             onClick={() => {
                                 setOpenAnimateModal(false)
-                                setOpenYanZheng(true);
+                                setOpenPinWindow(false)
+                                props.verifyGoogleCode()
                             }}
                         >
                             {t('card_182')}
