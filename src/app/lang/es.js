@@ -534,8 +534,8 @@ const locale = {
     card_180: "Código de verificación de Google",
     card_181: "Para transferencias grandes, habilite la verificación en dos pasos de Google.",
     card_182: "abrir",
-
-
+    card_183: "período de validez",
+    card_184: "deducir",
     
 
 

@@ -533,8 +533,8 @@ const locale = {
     card_180: "Googlen vahvistuskoodi",
     card_181: "Suurten siirtojen yhteydessä ota käyttöön Googlen kaksivaiheinen todennus.",
     card_182: "avata",
-
-
+    card_183: "voimassaoloaika",
+    card_184: "vähentää",
     
 
 

@@ -541,8 +541,8 @@ const locale = {
     card_180: "Google Verification Code",
     card_181: "For large transfers, please enable Google two-step verification.",
     card_182: "Enable",
-
-
+    card_183: "Validity period",
+    card_184: "deduct",
     
 
 

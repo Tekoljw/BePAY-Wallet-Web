@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { selectConfig, setSwapConfig } from "../../store/config";
-import { arrayLookup, setPhoneTab } from "../../util/tools/function";
+import { arrayLookup, setPhoneTab, getNowTime } from "../../util/tools/function";
 import Dialog from "@mui/material/Dialog/Dialog";
 import Tabs, { tabsClasses } from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -152,7 +152,8 @@ function Card(props) {
         document.getElementById('openRecord').classList.remove('PinMoveAni');
         document.getElementById('openRecord').classList.add('PinMoveOut');
         setTimeout(() => {
-            setOpenRecordWindow(false)
+            setTiJiaoState(0);
+            setOpenRecordWindow(false);
             setOpenSuccess(true);
         }, 300);
     };
@@ -553,7 +554,6 @@ function Card(props) {
         }
         setOpenSuccess(false);
         setZhuanQuan(true);
-        setTiJiaoState(0);
         dispatch(doFun({
             userCreditId: cardID,
             creditType: cardListObj[cardID].creditType,
@@ -571,14 +571,11 @@ function Card(props) {
                     setTimer(timer + 1)
                     setTransferMoney(0)
                     setCardID(0)
-                    if (huaZhuanValue === 0) {
-
-                    }
                     // closeRecordFunc()
                     // myFunction();
-
-
                 } else {
+                    setZhuanQuan(false);
+                    setTiJiaoState(2);
                     dispatch(showMessage({ message: result.msg, code: 2 }));
                 }
             }
@@ -1831,7 +1828,12 @@ function Card(props) {
                         <div className='daGouDingWei' style={{ position: "relative" }}>
                             <motion.div variants={item} className=' daGouDingWei1' style={{ position: "absolute", width: "100px", height: "100px", paddingTop: "10px" }}>
                                 <div className='daGouDingWei1' style={{ position: "absolute" }}>
-                                    <img style={{ margin: "0 auto", width: "60px", height: "60px" }} src='wallet/assets/images/wallet/naoZhong2.png'></img>
+                                    {
+                                        !(tiJiaoState === 2) && <img style={{ margin: "0 auto", width: "60px", height: "60px" }} src='wallet/assets/images/wallet/naoZhong2.png'></img>
+                                    }
+                                    {
+                                        tiJiaoState === 2 && <img style={{ margin: "0 auto", width: "60px", height: "60px" }} src='wallet/assets/images/wallet/naoZhong2_1.png'></img>
+                                    }
                                 </div>
                                 <div className='daGouDingWei1' style={{ marginLeft: "58px", position: "absolute" }}>
                                     {
@@ -1866,12 +1868,21 @@ function Card(props) {
                             <div style={{ color: "#888B92" }}>{t('home_Type')}</div>
                             <div>USDT</div>
                         </motion.div>
-                        {
-                            <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
-                                <div style={{ color: "#888B92" }}>{t('card_86')}</div>
-                                <div style={{ width: "50%", wordWrap: "break-word", textAlign: "right" }}>4040382105518563</div>
-                            </motion.div>
-                        }
+
+                        <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                            <div style={{ color: "#888B92" }}>{t('card_86')}</div>
+                            <div style={{ width: "50%", wordWrap: "break-word", textAlign: "right" }}>4040382105518563</div>
+                        </motion.div>
+
+                        <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                            <div style={{ color: "#888B92" }}>{t('card_39')}</div>
+                            <div>VISA</div>
+                        </motion.div>
+
+                        <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                            <div style={{ color: "#888B92" }}>{t('card_183')}</div>
+                            <div>2028-09</div>
+                        </motion.div>
 
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
                             <div style={{ color: "#888B92" }}>{t('home_borrow_18')}</div>

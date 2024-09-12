@@ -534,8 +534,8 @@ const locale = {
     card_180: "Kod Pengesahan Google",
     card_181: "Untuk pemindahan besar, sila aktifkan pengesahan dua langkah Google.",
     card_182: "buka",
-
-
+    card_183: "tempoh sah",
+    card_184: "tolak",
     
 
 

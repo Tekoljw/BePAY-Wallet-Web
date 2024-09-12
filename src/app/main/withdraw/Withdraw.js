@@ -274,6 +274,7 @@ function Withdraw(props) {
             setOpenSuccess(true);
             setIsLoadingBtn(false);
             setZhuanQuan(true);
+            setTiJiaoState(0);
         }, 300);
     };
 
@@ -1846,7 +1847,12 @@ function Withdraw(props) {
                         <div className='daGouDingWei' style={{ position: "relative" }}>
                             <motion.div variants={item} className=' daGouDingWei1' style={{ position: "absolute", width: "100px", height: "100px", paddingTop: "10px" }}>
                                 <div className='daGouDingWei1' style={{ position: "absolute" }}>
-                                    <img style={{ margin: "0 auto", width: "60px", height: "60px" }} src='wallet/assets/images/wallet/naoZhong2.png'></img>
+                                    {
+                                        !(tiJiaoState === 2) && <img style={{ margin: "0 auto", width: "60px", height: "60px" }} src='wallet/assets/images/wallet/naoZhong2.png'></img>
+                                    }
+                                    {
+                                        tiJiaoState === 2 && <img style={{ margin: "0 auto", width: "60px", height: "60px" }} src='wallet/assets/images/wallet/naoZhong2_1.png'></img>
+                                    }
                                 </div>
                                 <div className='daGouDingWei1' style={{ marginLeft: "58px", position: "absolute" }}>
                                     {

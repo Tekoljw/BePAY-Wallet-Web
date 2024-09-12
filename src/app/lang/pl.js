@@ -535,8 +535,8 @@ const locale = {
     card_180: "Kod weryfikacyjny Google",
     card_181: "W przypadku dużych przelewów, proszę włączyć weryfikację dwuetapową Google.",
     card_182: "otworzyć",
-
-
+    card_183: "okres ważności",
+    card_184: "odliczyć",
     
 
 

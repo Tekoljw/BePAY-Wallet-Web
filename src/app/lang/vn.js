@@ -524,11 +524,8 @@ const locale = {
     card_180: "Mã xác minh Google",
     card_181: "Đối với các giao dịch chuyển khoản lớn, vui lòng bật xác minh hai bước của Google.",
     card_182: "mở",
-
-
-    
-
-    
+    card_183: "thời hạn hiệu lực",
+    card_184: "khấu trừ",
 
 
     };

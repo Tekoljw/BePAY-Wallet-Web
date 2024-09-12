@@ -532,8 +532,8 @@ const locale = {
     card_180: "Google Doğrulama Kodu",
     card_181: "Büyük transferler için lütfen Google iki adımlı doğrulamayı etkinleştirin.",
     card_182: "açmak",
-
-
+    card_183: "geçerlilik süresi",
+    card_184: "düşmek",
     
 
 

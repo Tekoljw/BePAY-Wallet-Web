@@ -537,8 +537,8 @@ const locale = {
     card_180: "Google Verifizierungscode",
     card_181: "Bitte aktivieren Sie die Zwei-Schritt-Verifizierung von Google für große Überweisungen.",
     card_182: "öffnen",
-
-
+    card_183: "Gültigkeitsdauer",
+    card_184: "abziehen",
     
 
 

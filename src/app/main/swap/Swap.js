@@ -18,10 +18,9 @@ import {
   getSwapCrypto, getSwapFiat,
 } from "../../store/swap/swapThunk";
 import { useDispatch, useSelector } from "react-redux";
-
 import "../../../styles/home.css";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
-import { arrayLookup, setPhoneTab } from "../../util/tools/function";
+import { arrayLookup, setPhoneTab, getNowTime } from "../../util/tools/function";
 import { selectConfig, setSwapConfig } from "app/store/config";
 import { selectUserData } from "app/store/user";
 import { getCryptoDisplay } from "app/store/wallet/walletThunk";
@@ -38,6 +37,19 @@ import Web3Login from "../login/Web3Login";
 import { useTranslation } from "react-i18next";
 import el from "date-fns/esm/locale/el/index.js";
 import zhHK from "date-fns/locale/zh-HK";
+import DialogContent from "@mui/material/DialogContent/DialogContent";
+import Dialog from "@mui/material/Dialog/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(2),
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1),
+  },
+}));
+
 
 const container = {
   show: {
@@ -89,12 +101,13 @@ function Swap() {
   const cryptoDisplayData = useSelector(selectUserData).cryptoDisplay;
   const [expanded, setExpanded] = useState(null);
   const [symbolWallet, setSymbolWallet] = useState([]);
-  const [currencyCode, setCurrencyCode] = useState(
-    fiatData[0]?.currencyCode || "USD"
-  );
+  const [openSuccessWindow, setOpenSuccessWindow] = useState(false);
+  const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || "USD");
   // const [cryptoDisplayData, setCryptoDisplayData] = useState([]);
   const [symbol, setSymbol] = useState("");
   const [hasData, setHasData] = useState(false);
+  const [zhuanQuan, setZhuanQuan] = useState(true);
+  const [tiJiaoState, setTiJiaoState] = useState(0);
   const [formatSymbol, setFormatSymbol] = useState("");
   const [priceData, setPriceData] = useState({
     pair: "",
@@ -113,6 +126,23 @@ function Swap() {
     return regWalletParam;
   };
 
+  const closePinFunc = () => {
+    document.getElementById('PINSty').classList.remove('PinMoveAni');
+    document.getElementById('PINSty').classList.add('PinMoveOut');
+    setTimeout(() => {
+      setOpenSuccessWindow(false);
+      setZhuanQuan(true);
+      setTiJiaoState(0);
+    }, 300);
+  };
+
+  const openPinFunc = () => {
+    setOpenSuccessWindow(true);
+    setTimeout(() => {
+      document.getElementById('PINSty').classList.add('PinMoveAni');
+    }, 0);
+  };
+
   const [decentralized, setDdecentralized] = useState(
     localStorage.getItem("isDecentralized")
   );
@@ -127,7 +157,7 @@ function Swap() {
 
   const walletImage = config.walletConfig[regWallet]?.img || "";
   const [inputVal, setInputVal] = useState({
-    amount: 0.0,
+    amount: "",
   });
 
   const { t } = useTranslation("mainPage");
@@ -436,16 +466,18 @@ function Swap() {
         })
       ).then((res) => {
         let result = res.payload;
-        console.log(result, 'result')
+
         if (result && result.errno === 0) {
           let qty_base = result.data.qty_base;
           let qty_quote = result.data.qty_quote;
+
           if (result.data.pair !== (symbol + formatSymbol)) {
             qty_base = result.data.qty_quote;
           } else {
             qty_quote = result.data.qty_base;
           }
           setPriceData(result.data);
+
           dispatch(
             getSwapCrypto({
               srcSymbol: symbol,
@@ -456,9 +488,24 @@ function Swap() {
               qtyQuote: qty_quote,
               price: result.data.price ?? 0,
             })
-          );
+          ).then((res) => {
+            let result2 = res.payload
+            if (result2 && result2.errno === 0) {
+              setTimeout(() => {
+                setZhuanQuan(false);
+                setTiJiaoState(1);
+              }, 1200);
+            } else {
+              setTimeout(() => {
+                setZhuanQuan(false);
+                setTiJiaoState(2);
+              }, 1200);
+            }
+          });
+
         }
       });
+
     } else {
       dispatch(
         getSwapFiat({
@@ -466,9 +513,21 @@ function Swap() {
           dstSymbol: formatSymbol,
           amount: inputVal.amount,
         })
-      );
+      ).then((res) => {
+        let result = res.payload
+        if (result && result.errno === 0) {
+          setTimeout(() => {
+            setZhuanQuan(false);
+            setTiJiaoState(1);
+          }, 1200);
+        } else {
+          setTimeout(() => {
+            setZhuanQuan(false);
+            setTiJiaoState(2);
+          }, 1200);
+        }
+      });
     }
-
   };
   useEffect(() => {
     setHasData(
@@ -502,6 +561,7 @@ function Swap() {
 
   return (
     <div className='mt-12'>
+
       {/*<div*/}
       {/*  className="flex justify-center items-center wallet-top radius999"*/}
       {/*  style={{ marginBottom: "12px" }}*/}
@@ -638,6 +698,7 @@ function Swap() {
       {/*    })}*/}
       {/*  </Tabs>*/}
       {/*</div>*/}
+
       {walletType === 0 && (
         <motion.div
           variants={container}
@@ -859,6 +920,7 @@ function Swap() {
               variant="contained"
               sx={{ backgroundColor: "#0D9488", color: "#ffffff" }}
               onClick={() => {
+                openPinFunc();
                 onSubmit();
               }}
             >
@@ -885,6 +947,100 @@ function Swap() {
             {/*<Web3Login />*/}
           </>
         )}
+
+      <BootstrapDialog
+        onClose={() => {
+          closePinFunc();
+        }}
+        aria-labelledby="customized-dialog-title"
+        open={openSuccessWindow}
+        className="dialog-container"
+      >
+        <div id="PINSty" className="PINSty" style={{ bottom: "0%" }}>
+          <motion.div
+            variants={container}
+            initial="hidden"
+            animate="show"
+            style={{}}
+          >
+            <div className='dialog-box'>
+              <Typography id="customized-dialog-title" className="text-24 dialog-title-text" style={{ textAlign: "center", marginTop: "10px" }}>{t('menu_5')}
+                <img src="wallet/assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => {
+                  closePinFunc();
+                }} />
+              </Typography>
+            </div>
+
+            <div className='daGouDingWei' style={{ position: "relative" }}>
+              <motion.div variants={item} className=' daGouDingWei1' style={{ position: "absolute", width: "100px", height: "100px", paddingTop: "10px" }}>
+                <div className='daGouDingWei1' style={{ position: "absolute" }}>
+                  {
+                    !(tiJiaoState === 2) && <img style={{ margin: "0 auto", width: "60px", height: "60px" }} src='wallet/assets/images/wallet/naoZhong2.png'></img>
+                  }
+                  {
+                    tiJiaoState === 2 && <img style={{ margin: "0 auto", width: "60px", height: "60px" }} src='wallet/assets/images/wallet/naoZhong2_1.png'></img>
+                  }
+                </div>
+                <div className='daGouDingWei1' style={{ marginLeft: "58px", position: "absolute" }}>
+                  {
+                    zhuanQuan && <img className='chuKuanDongHua' style={{ width: "22px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong3.png'></img>
+                  }
+                  {
+                    !zhuanQuan && tiJiaoState === 1 && <img className='daGouFangDa' style={{ width: "23px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong4.png'></img>
+                  }
+                  {
+                    !zhuanQuan && tiJiaoState === 2 && <img className='daGouFangDa' style={{ width: "23px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong5.png'></img>
+                  }
+                </div>
+              </motion.div>
+            </div>
+
+            <div style={{ margin: "0 auto", textAlign: "center", marginTop: "84px", height: "23px", fontSize: "16px", color: "#2ECB71" }}>
+              {
+                tiJiaoState === 1 && !zhuanQuan && <motion.div variants={item} style={{ height: "23px", lineHeight: "23px" }}>
+                  ● {t('errorMsg_1')}
+                </motion.div>
+              }
+              {
+                tiJiaoState === 2 && !zhuanQuan && <motion.div variants={item} style={{ height: "23px", lineHeight: "23px", color: "#EE124B" }}>
+                  ● {t('error_36')}
+                </motion.div>
+              }
+            </div>
+            <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "8px", fontSize: "24px" }}> +1000 BFT </motion.div>
+            <motion.div variants={item} className='mx-20  mt-24' style={{ borderTop: "1px solid #2C3950" }}>
+            </motion.div>
+            <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+              <div style={{ color: "#888B92" }}>{t('home_Type')}</div>
+              <div>BFT</div>
+            </motion.div>
+            {
+              <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                <div style={{ color: "#888B92" }}>{t('home_ID')}</div>
+                <div style={{ width: "50%", wordWrap: "break-word", textAlign: "right" }}>2024158745240244</div>
+              </motion.div>
+            }
+            {
+              <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                <div style={{ color: "#888B92" }}>{t('card_184')}</div>
+                <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>1 USDT</div>
+              </motion.div>
+            }
+
+            <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+              <div style={{ color: "#888B92" }}>{t('home_borrow_18')}</div>
+              <div>0.1 USDT </div>
+            </motion.div>
+
+            <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+              <div style={{ color: "#888B92" }}>{t('home_Time')}</div>
+              <div>{getNowTime()}</div>
+            </motion.div>
+            <div className="mb-24"></div>
+          </motion.div>
+        </div>
+      </BootstrapDialog>
+
     </div>
   );
 }

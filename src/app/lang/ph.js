@@ -535,8 +535,8 @@ const locale = {
     card_180: "Kodigo ng Pagpapatunay ng Google",
     card_181: "Para sa malalaking paglilipat, mangyaring i-enable ang Google two-step verification.",
     card_182: "buksan",
-
-
+    card_183: "panahon ng bisa",
+    card_184: "bawasin",
     
 
 
