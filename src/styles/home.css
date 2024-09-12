@@ -2925,6 +2925,12 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     max-width: 42rem;
 }
 
+.faBiDiCard2 {
+    width: calc(100% - 3rem);
+    padding: 1.5rem 1.5rem 0rem 1.5rem;
+    max-width: 42rem;
+}
+
 .pinWindow2 .muiltr-1qeo8sv-MuiFormHelperText-root.Mui-error {
     background-color: #1E293B !important;
 }

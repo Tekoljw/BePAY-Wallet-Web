@@ -535,8 +535,8 @@ const locale = {
     card_182: "avata",
     card_183: "voimassaoloaika",
     card_184: "vähentää",
-    
-
+    card_185: "Päivitä",
+    card_186: "",
 
 
 

@@ -16,6 +16,7 @@ import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
+import AnimateModal from "../../components/FuniModal";
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import DialogContent from "@mui/material/DialogContent/DialogContent";
@@ -28,7 +29,7 @@ import { selectConfig } from "../../store/config";
 import {
     arrayLookup, getOpenAppId, getOpenAppIndex,
     setPhoneTab, handleCopyText, getUserLoginType,
-    judgeIosOrAndroid
+    judgeIosOrAndroid, getNowTime
 } from "../../util/tools/function";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { foxSendTransaction, manualCryptoNotify } from "../../store/transfer/transferThunk";
@@ -62,6 +63,7 @@ import history from '@history';
 import { local } from 'web3modal';
 import LoadingButton from "@mui/lab/LoadingButton";
 import userLoginType from "../../define/userLoginType";
+import { borderTop } from '@mui/system';
 
 
 const marks = [
@@ -299,16 +301,22 @@ function Deposite() {
     const fiatData = useSelector(selectUserData).fiat;
     const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || 'USD');
     // const [currencyBalance, setCurrencyBalance] = useState(fiatData[0]?.balance || 0);
-
+    const [openUpdateBtnShow, setOpenUpdateBtnShow] = useState(false);
     const [fiatsSelected, setFiatsSelected] = useState(0);
-
+    const [openAnimateModal, setOpenAnimateModal] = useState(false);
     const networks = config.networks;
     const symbolsData = config.symbols;
     const [cryptoDisplayData, setCryptoDisplayData] = useState([]);
     const [networkData, setNetworkData] = useState([]);
     const [networkId, setNetworkId] = useState(0);
-
     const [addressData, setAddressData] = useState({}); // 地址存储{symbol:{networdId:xx}}
+    const [tempAccount, setTempAccount] = useState(0);
+
+    const [chongZhiVal, setChongZhiVal] = useState({
+        id: '',
+        amount: 0,
+    });
+
     // select切换
     const handleChangeFiats = (event) => {
         setFiatsSelected(event.target.value);
@@ -377,6 +385,24 @@ function Deposite() {
                 setWalletAddressList(tmpList)
             }
         })
+    }
+
+    const changePhoneTab = (tab) => {
+        window.localStorage.setItem('phoneTab', tab);
+    }
+
+    const lookAccount = () => {
+        setTimeout(() => {
+            setOpenUpdateBtnShow(false)
+            setTempAccount(0)
+        }, 2000);
+        setTempAccount(fiats[fiatsSelected].balance)
+        if (tempAccount == 0) {
+            setTempAccount(fiats[fiatsSelected].balance)
+        }
+        if (fiats[fiatsSelected].balance > tempAccount) {
+            history.push('/wallet');
+        }
     }
 
     const backLoading = () => {
@@ -460,12 +486,14 @@ function Deposite() {
         let result = res.payload;
         if (result) {
             if (result.payUrl) {
+                chongZhiVal.id = result.orderId;
+                chongZhiVal.amount = Number(weight);
                 const loginType = getUserLoginType(userData);
-                switch (loginType){
+                switch (loginType) {
                     case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP: { //telegramWebApp
                         if (judgeIosOrAndroid() === "ios") {
                             window.location.href = result.payUrl
-                        }else{
+                        } else {
                             window.open(result.payUrl, "_blank");
                         }
                         break;
@@ -1868,6 +1896,7 @@ function Deposite() {
                                                     onClick={() => {
                                                         setOpenLoad(true);
                                                         fiatRecharge(bankItem.id);
+                                                        setOpenAnimateModal(true);
                                                     }}
                                                 >
                                                     {t('home_borrow_8')}
@@ -2174,6 +2203,65 @@ function Deposite() {
 
                 </Box>
             </motion.div>} */}
+
+
+            <AnimateModal
+                className="faBiDiCard2 tanChuanDiSe"
+                open={openAnimateModal}
+                onClose={() => setOpenAnimateModal(false)}
+            >
+                <div className='flex justify-center' style={{ width: "100%" }}>
+                    <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
+                    <div className='TanHaoCardZi '>
+                        {t('card_3')}
+                    </div>
+                </div>
+
+                <div className='mt-20' style={{ borderTop: "1px solid #414E65" }}></div>
+
+                <Box
+                    className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard"
+                    sx={{
+                        backgroundColor: "#2C394D",
+                        padding: "0rem",
+                        overflow: "hidden",
+                        margin: "1rem auto 0rem auto"
+                    }}
+                >
+                    <div className='flex justify-content-space mt-20' >
+                        <div style={{ color: "#888B92" }}>{t('home_ID')}</div>
+                        <div>{chongZhiVal.id}</div>
+                    </div>
+                    <div className='flex justify-content-space mt-20' >
+                        <div style={{ color: "#888B92" }}>{t('home_withdraw_25')}</div>
+                        <div>{chongZhiVal.amount}</div>
+                    </div>
+                    <div className='flex justify-content-space mt-20' >
+                        <div style={{ color: "#888B92" }}>{t('home_withdraw_25')}</div>
+                        <div> {t('kyc_23')}</div>
+                    </div>
+                    <div className='flex justify-content-space mt-20' >
+                        <div style={{ color: "#888B92" }}>{t('home_Time')}</div>
+                        <div>{getNowTime()}</div>
+                    </div>
+                </Box>
+
+                <div className='flex mt-28 mb-28 px-15 justify-center' >
+                    <LoadingButton
+                        disabled={false}
+                        className="boxCardBtn"
+                        color="secondary"
+                        loading={openUpdateBtnShow}
+                        variant="contained"
+                        onClick={() => {
+                            setOpenUpdateBtnShow(true);
+                            lookAccount();
+                        }}
+                    >
+                        {t('card_185')}
+                    </LoadingButton>
+                </div>
+            </AnimateModal>
 
         </div>
     )

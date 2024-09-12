@@ -536,8 +536,8 @@ const locale = {
     card_182: "buka",
     card_183: "masa berlaku",
     card_184: "memotong",
-    
-
+    card_185: "Segarkan",
+    card_186: "",
 
 
 

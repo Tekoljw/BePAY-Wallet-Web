@@ -535,8 +535,8 @@ const locale = {
     card_182: "開啟",
     card_183: "有效期",
     card_184: "扣除",
-    
-
+    card_185: "刷新",
+    card_186: "",
 
 
 

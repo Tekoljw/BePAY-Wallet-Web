@@ -536,8 +536,8 @@ const locale = {
     card_182: "abrir",
     card_183: "período de validez",
     card_184: "deducir",
-    
-
+    card_185: "Actualizar",
+    card_186: "",
 
 
 };

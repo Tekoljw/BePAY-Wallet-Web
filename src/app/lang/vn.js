@@ -526,6 +526,8 @@ const locale = {
     card_182: "mở",
     card_183: "thời hạn hiệu lực",
     card_184: "khấu trừ",
+    card_185: "Làm mới",
+    card_186: "",
 
 
     };

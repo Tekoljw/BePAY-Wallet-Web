@@ -537,8 +537,8 @@ const locale = {
     card_182: "otworzyć",
     card_183: "okres ważności",
     card_184: "odliczyć",
-    
-
+    card_185: "Odśwież",
+    card_186: "",
 
 
 

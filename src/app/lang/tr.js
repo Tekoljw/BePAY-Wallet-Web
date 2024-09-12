@@ -534,8 +534,8 @@ const locale = {
     card_182: "açmak",
     card_183: "geçerlilik süresi",
     card_184: "düşmek",
-    
-
+    card_185: "Yenile",
+    card_186: "",
 
 
 

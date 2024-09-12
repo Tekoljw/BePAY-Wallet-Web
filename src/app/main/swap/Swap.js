@@ -115,6 +115,16 @@ function Swap() {
     qty_base: "",
     qty_quote: "",
   });
+
+  const [lookData, setLookData] = useState({
+    oldType: "",
+    newType: "",
+    id: "",
+    oldNum: "",
+    newNum: "",
+    fee: ""
+  });
+
   //获取图片
   const toRegWallet = (regWalletParam) => {
     if (regWalletParam) {
@@ -490,6 +500,11 @@ function Swap() {
             })
           ).then((res) => {
             let result2 = res.payload
+            lookData.oldType = res.meta.arg.srcSymbol
+            lookData.newType = res.meta.arg.dstSymbol
+            lookData.oldNum = res.meta.arg.amount
+            lookData.newNum = res.meta.arg.price
+            lookData.id = res.meta.requestId
             if (result2 && result2.errno === 0) {
               setTimeout(() => {
                 setZhuanQuan(false);
@@ -502,10 +517,8 @@ function Swap() {
               }, 1200);
             }
           });
-
         }
       });
-
     } else {
       dispatch(
         getSwapFiat({

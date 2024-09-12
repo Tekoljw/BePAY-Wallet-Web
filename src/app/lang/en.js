@@ -543,8 +543,8 @@ const locale = {
     card_182: "Enable",
     card_183: "Validity period",
     card_184: "deduct",
-    
-
+    card_185: "Refresh",
+    card_186: "",
 
 
 
