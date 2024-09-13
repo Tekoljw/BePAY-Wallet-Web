@@ -1458,8 +1458,8 @@ function Fiat(props) {
                                     </div>
                                     <div className='PINTitle'>{t('home_wallet_14')}{smallTabValue == 0 ? t('card_8') : t('card_7')}（ {smallTabValue == 0 ? inputVal.address : inputVal.userId} ）{t('transfer_1')}</div>
                                     <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
-                                        <img className='MoneyWithdraw' src="wallet/assets/images/withdraw/USDT.png"></img>
-                                        <div className='PINTitle3'>USDT</div>
+                                        { fiats && fiats[fiatsSelected] && <img className='MoneyWithdraw' src={ fiats[fiatsSelected].avatar}></img>}
+                                        <div className='PINTitle3'>{ currencyCode }</div>
                                         <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")} onClick={() => {
                                             setTextSelect(!textSelect)
                                             setShowGuangBiao(true)
@@ -1557,7 +1557,9 @@ function Fiat(props) {
                                             onTouchEnd={changeToWhite}
                                             onTouchCancel={changeToWhite}
                                             onClick={() => {
-                                                handleSubmit()
+                                                if(pin && pin.length === 6){
+                                                    handleSubmit()
+                                                }
                                             }}>{t('card_30')}</div>
                                         }
                                     </div>

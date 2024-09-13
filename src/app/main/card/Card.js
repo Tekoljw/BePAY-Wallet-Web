@@ -483,7 +483,7 @@ function Card(props) {
             creditType: cardConfigList[cardConfigID].creditType,
             quotaAmount: 1,
             applyFeeSymbol: applyFeeSymbol,
-            cardBin: cardConfigList[cardConfigID].cardBin,
+            configId: cardConfigList[cardConfigID].configId,
             applyDesc: 'card applyDesc'
         })).then((res) => {
             let result = res.payload

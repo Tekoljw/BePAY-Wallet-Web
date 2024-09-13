@@ -1740,8 +1740,8 @@ function Withdraw(props) {
                                 </div>
                                 <div className='PINTitle'>{t('home_wallet_14')}{smallTabValue == 0 ? t('card_8') : t('card_7')}（ <span className='quanYiLv'> {smallTabValue == 0 ? inputVal.address : inputIDVal} </span> ） {t('transfer_1')}</div>
                                 <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
-                                    <img className='MoneyWithdraw' src="wallet/assets/images/withdraw/USDT.png"></img>
-                                    <div className='PINTitle3'>USDT</div>
+                                    <img className='MoneyWithdraw' style={{ borderRadius: '50%'}} src={ arrayLookup(symbolsData, 'symbol', symbol, 'avatar') || '' }></img>
+                                    <div className='PINTitle3'>{ symbol }</div>
                                     <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")} onClick={() => {
                                         setTextSelect(!textSelect)
                                         setShowGuangBiao(true)
@@ -1839,7 +1839,9 @@ function Withdraw(props) {
                                             onTouchEnd={changeToWhite}
                                             onTouchCancel={changeToWhite}
                                             onClick={() => {
-                                                smallTabValue === 0 ? handleSubmit() : handleSendTipsSubmit()
+                                                if(pin && pin.length === 6) {
+                                                    smallTabValue === 0 ? handleSubmit() : handleSendTipsSubmit()
+                                                }
                                             }}>{t('card_30')}</div>
                                     }
                                 </div>
