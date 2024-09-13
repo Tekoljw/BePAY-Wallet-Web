@@ -117,11 +117,8 @@ function Swap() {
   });
 
   const [lookData, setLookData] = useState({
-    oldType: "",
-    newType: "",
-    id: "",
-    oldNum: "",
     newNum: "",
+    id: "",
     fee: ""
   });
 
@@ -143,6 +140,9 @@ function Swap() {
       setOpenSuccessWindow(false);
       setZhuanQuan(true);
       setTiJiaoState(0);
+      lookData.id = "";
+      lookData.newNum = "";
+      lookData.fee = "";
     }, 300);
   };
 
@@ -476,18 +476,15 @@ function Swap() {
         })
       ).then((res) => {
         let result = res.payload;
-
         if (result && result.errno === 0) {
           let qty_base = result.data.qty_base;
           let qty_quote = result.data.qty_quote;
-
           if (result.data.pair !== (symbol + formatSymbol)) {
             qty_base = result.data.qty_quote;
           } else {
             qty_quote = result.data.qty_base;
           }
           setPriceData(result.data);
-
           dispatch(
             getSwapCrypto({
               srcSymbol: symbol,
@@ -500,11 +497,9 @@ function Swap() {
             })
           ).then((res) => {
             let result2 = res.payload
-            lookData.oldType = res.meta.arg.srcSymbol
-            lookData.newType = res.meta.arg.dstSymbol
-            lookData.oldNum = res.meta.arg.amount
-            lookData.newNum = res.meta.arg.price
-            lookData.id = res.meta.requestId
+            lookData.id = result2.data.orderId;
+            lookData.newNum = result2.data.targetAmount;
+            lookData.fee = result2.data.premium;
             if (result2 && result2.errno === 0) {
               setTimeout(() => {
                 setZhuanQuan(false);
@@ -528,6 +523,10 @@ function Swap() {
         })
       ).then((res) => {
         let result = res.payload
+        console.log(res, "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+        lookData.id = result.data.orderId;
+        lookData.newNum = (result.data.targetAmount).toFixed(2);
+        lookData.fee = (result.data.premium).toFixed(6);
         if (result && result.errno === 0) {
           setTimeout(() => {
             setZhuanQuan(false);
@@ -542,6 +541,8 @@ function Swap() {
       });
     }
   };
+
+
   useEffect(() => {
     setHasData(
       symbolWallet.length === 0 && symbolsData.length > 0 && networks.length > 0
@@ -1020,30 +1021,32 @@ function Swap() {
                 </motion.div>
               }
             </div>
-            <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "8px", fontSize: "24px" }}> +1000 BFT </motion.div>
+            <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "8px", fontSize: "24px" }}> {lookData.newNum} {formatSymbol}</motion.div>
             <motion.div variants={item} className='mx-20  mt-24' style={{ borderTop: "1px solid #2C3950" }}>
             </motion.div>
             <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
               <div style={{ color: "#888B92" }}>{t('home_Type')}</div>
-              <div>BFT</div>
+              <div>{formatSymbol}</div>
             </motion.div>
-            {
-              <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
-                <div style={{ color: "#888B92" }}>{t('home_ID')}</div>
-                <div style={{ width: "50%", wordWrap: "break-word", textAlign: "right" }}>2024158745240244</div>
-              </motion.div>
-            }
+
             {
               <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
                 <div style={{ color: "#888B92" }}>{t('card_184')}</div>
-                <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>1 USDT</div>
+                <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}> {inputVal.amount} {symbol}</div>
               </motion.div>
             }
 
             <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
               <div style={{ color: "#888B92" }}>{t('home_borrow_18')}</div>
-              <div>0.1 USDT </div>
+              <div>{lookData.fee} {formatSymbol} </div>
             </motion.div>
+
+            {
+              <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                <div style={{ color: "#888B92" }}>{t('home_ID')}</div>
+                <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{lookData.id}</div>
+              </motion.div>
+            }
 
             <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
               <div style={{ color: "#888B92" }}>{t('home_Time')}</div>

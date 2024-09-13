@@ -228,6 +228,11 @@
     margin: 0 auto;
 }
 
+.daGouDingWei2 {
+    left: 0%;
+    right: 0%;
+}
+
 .pinInput {
     box-sizing: border-box;
     padding: 0;
@@ -2955,6 +2960,12 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
 .tanChuanDiSe {
     background-color: #2C394D !important;
 }
+
+
+.tanChuanDiSe2 {
+    background-color: #1E293B !important;
+}
+
 
 .faBiDiCard .animate-close-btn {
     margin-top: 0.2rem;

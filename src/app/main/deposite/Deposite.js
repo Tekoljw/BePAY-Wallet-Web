@@ -63,7 +63,7 @@ import history from '@history';
 import { local } from 'web3modal';
 import LoadingButton from "@mui/lab/LoadingButton";
 import userLoginType from "../../define/userLoginType";
-import { borderTop } from '@mui/system';
+import { borderTop, width } from '@mui/system';
 
 
 const marks = [
@@ -264,6 +264,8 @@ function Deposite() {
     const [isLoading, setIsLoading] = useState(false);
     const [tabValue, setTabValue] = useState(0);
     const [weight, setWeight] = useState(0);
+    const [tiJiaoState, setTiJiaoState] = useState(0);
+    const [zhuanQuan, setZhuanQuan] = useState(true);
     const toggleAccordion = (panel) => (event, _expanded) => {
         setExpanded(_expanded ? panel : false);
     };
@@ -2206,50 +2208,76 @@ function Deposite() {
 
 
             <AnimateModal
-                className="faBiDiCard2 tanChuanDiSe"
+                className="faBiDiCard2 tanChuanDiSe2"
                 open={openAnimateModal}
                 onClose={() => setOpenAnimateModal(false)}
             >
-                <div className='flex justify-center' style={{ width: "100%" }}>
-                    <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
-                    <div className='TanHaoCardZi '>
-                        {t('card_3')}
-                    </div>
+                <div className='daGouDingWei2' style={{ position: "relative" }}>
+                    <motion.div variants={item} className=' daGouDingWei1' style={{ position: "absolute", width: "100px", height: "100px", left: "0%", right: "0%", margin: "0 auto" }}>
+                        <div className='daGouDingWei1' style={{ position: "absolute" }}>
+                            {
+                                !(tiJiaoState === 2) && <img style={{ margin: "0 auto", width: "60px", height: "60px" }} src='wallet/assets/images/wallet/naoZhong6.png'></img>
+                            }
+                            {
+                                tiJiaoState === 2 && <img style={{ margin: "0 auto", width: "60px", height: "60px" }} src='wallet/assets/images/wallet/naoZhong6_1.png'></img>
+                            }
+                        </div>
+                        <div className='daGouDingWei1' style={{ marginLeft: "58px", position: "absolute" }}>
+                            {
+                                zhuanQuan && <img className='chuKuanDongHua' style={{ width: "22px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong3.png'></img>
+                            }
+                            {
+                                !zhuanQuan && tiJiaoState === 1 && <img className='daGouFangDa' style={{ width: "23px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong4.png'></img>
+                            }
+                            {
+                                !zhuanQuan && tiJiaoState === 2 && <img className='daGouFangDa' style={{ width: "23px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong5.png'></img>
+                            }
+                        </div>
+                    </motion.div>
                 </div>
 
-                <div className='mt-20' style={{ borderTop: "1px solid #414E65" }}></div>
+                <div style={{ margin: "0 auto", textAlign: "center", marginTop: "70px", height: "23px", fontSize: "16px", color: "#2ECB71" }}>
+                    {
+                        tiJiaoState === 1 && !zhuanQuan && <motion.div variants={item} style={{ height: "23px", lineHeight: "23px" }}>
+                            ● {t('errorMsg_1')}
+                        </motion.div>
+                    }
+                    {
+                        tiJiaoState === 2 && !zhuanQuan && <motion.div variants={item} style={{ height: "23px", lineHeight: "23px", color: "#EE124B" }}>
+                            ● {t('error_36')}
+                        </motion.div>
+                    }
+                </div>
+
+                <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "8px", fontSize: "24px" }}> +100 MMK</motion.div>
+
+                <div className='mt-16' style={{ borderTop: "1px solid #2C3950" }}></div>
 
                 <Box
-                    className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard"
+                    className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard px-16"
                     sx={{
-                        backgroundColor: "#2C394D",
+                        backgroundColor: "#1E293B",
                         padding: "0rem",
                         overflow: "hidden",
                         margin: "1rem auto 0rem auto"
                     }}
                 >
-                    <div className='flex justify-content-space mt-20' >
+                    <div className='flex justify-content-space mt-16' >
                         <div style={{ color: "#888B92" }}>{t('home_ID')}</div>
                         <div>{chongZhiVal.id}</div>
                     </div>
-                    <div className='flex justify-content-space mt-20' >
-                        <div style={{ color: "#888B92" }}>{t('home_withdraw_25')}</div>
-                        <div>{chongZhiVal.amount}</div>
-                    </div>
-                    <div className='flex justify-content-space mt-20' >
-                        <div style={{ color: "#888B92" }}>{t('home_withdraw_25')}</div>
-                        <div> {t('kyc_23')}</div>
-                    </div>
-                    <div className='flex justify-content-space mt-20' >
+
+                    <div className='flex justify-content-space mt-16' >
                         <div style={{ color: "#888B92" }}>{t('home_Time')}</div>
                         <div>{getNowTime()}</div>
                     </div>
+
                 </Box>
 
-                <div className='flex mt-28 mb-28 px-15 justify-center' >
+                <div className='px-16 mt-20 mb-24'>
                     <LoadingButton
                         disabled={false}
-                        className="boxCardBtn"
+                        className="boxCardBtn2"
                         color="secondary"
                         loading={openUpdateBtnShow}
                         variant="contained"
@@ -2258,12 +2286,13 @@ function Deposite() {
                             lookAccount();
                         }}
                     >
-                        {t('card_185')}
+                        {t('card_185')} (9)
                     </LoadingButton>
                 </div>
-            </AnimateModal>
 
-        </div>
+            </AnimateModal >
+
+        </div >
     )
 }
 

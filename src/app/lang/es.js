@@ -537,8 +537,8 @@ const locale = {
     card_183: "período de validez",
     card_184: "deducir",
     card_185: "Actualizar",
-    card_186: "",
-
+    card_186: "Ve a comprobarlo",
+    card_187: "Esperando el pago",
 
 };
 export default locale;

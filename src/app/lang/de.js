@@ -540,8 +540,8 @@ const locale = {
     card_183: "Gültigkeitsdauer",
     card_184: "abziehen",
     card_185: "Aktualisieren",
-    card_186: "",
-
+    card_186: "Überprüfen Sie das",
+    card_187: "Zahlung ausstehend",
 
 };
 

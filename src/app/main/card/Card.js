@@ -98,6 +98,7 @@ function Card(props) {
     const [huaZhuanValue, setHuaZhuanValue] = useState(0);
     const [openChangeBi, setOpenChangeBi] = useState(false);
     const [address, setAddress] = useState("");
+    const [lookDataId, setLookDataId] = useState("");
 
     const changePhoneTab = (tab) => {
         window.localStorage.setItem('phoneTab', tab);
@@ -155,6 +156,8 @@ function Card(props) {
             setTiJiaoState(0);
             setOpenRecordWindow(false);
             setOpenSuccess(true);
+            setTransferMoney(0)
+            setCardID(0)
         }, 300);
     };
 
@@ -563,14 +566,13 @@ function Card(props) {
         })).then((res) => {
             setIsLoadingBtn(false)
             let result = res.payload
+            setLookDataId(result.mchOrderNo)
             if (result) {
                 if (result.status === 'success') {
                     setZhuanQuan(false);
                     setTiJiaoState(1);
                     setUpdateCard(true)
                     setTimer(timer + 1)
-                    setTransferMoney(0)
-                    setCardID(0)
                     // closeRecordFunc()
                     // myFunction();
                 } else {
@@ -780,7 +782,6 @@ function Card(props) {
 
                                         {
                                             smallTabValue === 0 && <div style={{ margin: "1.5rem 0rem 6rem 0rem" }}>
-
                                                 {cardList[2].map((cardItem) => {
                                                     return (
                                                         <motion.div
@@ -928,8 +929,6 @@ function Card(props) {
                                                     )
                                                 })}
 
-
-
                                                 {/*<motion.div variants={item}*/}
                                                 {/*    initial="hidden"*/}
                                                 {/*    animate="show"*/}
@@ -1037,9 +1036,6 @@ function Card(props) {
                                                 {/*        </div>*/}
                                                 {/*    </div>*/}
                                                 {/*</motion.div>*/}
-
-
-
 
                                                 <div className='tianJiaKaPian flex items-center pl-16' onClick={() => {
                                                     setTabValue(1);
@@ -1709,7 +1705,7 @@ function Card(props) {
                                 <div className='w-full h-44 mt-24' style={{ position: "relative" }}>
                                     <div className='w-full h-44 border' style={{ borderRadius: "0.5rem", backgroundColor: "#151C2A", position: "absolute", top: "0%", right: "0%" }}>
                                     </div>
-                                    <div className='text-16' style={{ position: "absolute", top: "0%", left: "4%", width: "82%", height: "4.4rem", lineHeight: "4.4rem" }}>{transferMoney}</div>
+                                    <div className='text-16 ' style={{ position: "absolute", top: "0%", left: "4%", width: "82%", height: "4.4rem", lineHeight: "4.4rem" }}>{transferMoney}</div>
                                     <div style={{ position: "absolute", top: "0%", right: "4%", height: "4.4rem", lineHeight: "4.4rem" }}>Max</div>
                                 </div>
 
@@ -1861,7 +1857,7 @@ function Card(props) {
                                 </motion.div>
                             }
                         </div>
-                        <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "8px", fontSize: "24px" }}> 10 USDT</motion.div>
+                        <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "8px", fontSize: "24px" }}> {transferMoney} USDT</motion.div>
                         <motion.div variants={item} className='mx-20  mt-24' style={{ borderTop: "1px solid #2C3950" }}>
                         </motion.div>
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
@@ -1871,31 +1867,31 @@ function Card(props) {
 
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
                             <div style={{ color: "#888B92" }}>{t('card_86')}</div>
-                            <div style={{ width: "50%", wordWrap: "break-word", textAlign: "right" }}>4040382105518563</div>
+                            <div style={{ width: "50%", wordWrap: "break-word", textAlign: "right" }}>{currUserCardInfo.userCreditNo}</div>
                         </motion.div>
 
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
                             <div style={{ color: "#888B92" }}>{t('card_39')}</div>
-                            <div>VISA</div>
+                            <div>{cardConfigList[cardConfigID]?.cardOrganizations}</div>
                         </motion.div>
 
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
                             <div style={{ color: "#888B92" }}>{t('card_183')}</div>
-                            <div>2028-09</div>
+                            <div>{currUserCardInfo.userCreditKey}</div>
                         </motion.div>
 
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
                             <div style={{ color: "#888B92" }}>{t('home_borrow_18')}</div>
-                            <div>{smallTabValue === 0 ? 0.1 : 0.1}  USDT </div>
+                            <div>{transferFee} USDT </div>
                         </motion.div>
 
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
                             <div style={{ color: "#888B92" }}>{t('home_ID')}</div>
-                            <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>202409061209290015944</div>
+                            <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{lookDataId}</div>
                         </motion.div>
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
                             <div style={{ color: "#888B92" }}>{t('home_Time')}</div>
-                            <div>2024-9-6 20:40:29</div>
+                            <div>{getNowTime()}</div>
                         </motion.div>
                     </motion.div>
                     }

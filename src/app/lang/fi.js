@@ -536,8 +536,8 @@ const locale = {
     card_183: "voimassaoloaika",
     card_184: "vähentää",
     card_185: "Päivitä",
-    card_186: "",
-
+    card_186: "Mene tarkistamaan se",
+    card_187: "Odottaa maksua",
 
 
     };

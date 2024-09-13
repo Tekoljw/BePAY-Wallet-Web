@@ -544,8 +544,8 @@ const locale = {
     card_183: "Validity period",
     card_184: "deduct",
     card_185: "Refresh",
-    card_186: "",
-
+    card_186: "Go check it",
+    card_187: "Waiting for payment",
 
 
 };

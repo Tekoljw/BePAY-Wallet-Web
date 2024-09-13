@@ -538,8 +538,8 @@ const locale = {
     card_183: "panahon ng bisa",
     card_184: "bawasin",
     card_185: "I-refresh",
-    card_186: "",
-
+    card_186: "Pumunta at tingnan ito",
+    card_187: "Naghihintay ng pagbabayad",
 
 
 
