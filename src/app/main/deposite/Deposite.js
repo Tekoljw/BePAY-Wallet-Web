@@ -1082,7 +1082,7 @@ function Deposite() {
                         <div className="userIdW   guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
                             <div className="addressW2 flex justify-between guoDuDongHua">
                                 <div className='idZi guoDuDongHua' > <span style={{ color: "#ffffff", marginRight: "10px" }}>{t('card_7')}</span>  {userData?.profile?.user?.id}</div>
-                                <img onClick={() => { handleCopyText(userData?.profile?.user?.id) }} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"></img>
+                                <img onClick={() => {handleCopyText(userData?.profile?.user?.id)}} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"/>
                             </div>
                             <QRCode
                                 className='testQrCodeImg'
@@ -1787,7 +1787,7 @@ function Deposite() {
                             <div className="userIdW   guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
                                 <div className="addressW2 flex justify-between guoDuDongHua">
                                     <div className='idZi guoDuDongHua' > <span style={{ color: "#ffffff", marginRight: "10px" }}>{t('card_7')}</span>  {userData?.profile?.user?.id}</div>
-                                    <img onClick={() => { handleCopyText(userData?.profile?.user?.id) }} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"></img>
+                                    <img onClick={() => {handleCopyText(userData?.profile?.user?.id)}} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"/>
                                 </div>
                                 <QRCode
                                     className='testQrCodeImg'

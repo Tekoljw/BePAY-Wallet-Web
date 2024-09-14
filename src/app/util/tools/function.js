@@ -105,17 +105,14 @@ export const getNowTime = (time) => {
     return currentTime;
 }
 
-export const handleCopyText = (text) => {
-    var input = document.createElement('input');
-    document.body.appendChild(input);
-    input.setAttribute('value', text);
-    input.select();
-    document.execCommand("copy"); // 执行浏览器复制命令
-    if (document.execCommand('copy')) {
-        document.execCommand('copy');
+//复制文本到粘贴板
+export const handleCopyText = async (text) => {
+    try {
+        await navigator.clipboard.writeText(text);
+    } catch (error) {
+        console.error(error.message);
     }
-    document.body.removeChild(input);
-}
+};
 
 export const isMobile = () =>  {
     const userAgent = navigator.userAgent;

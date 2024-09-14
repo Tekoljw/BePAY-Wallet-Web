@@ -5,18 +5,12 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
-import AccordionDetails from '@mui/material/AccordionDetails';
 import { styled } from '@mui/material/styles';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
 import { useNavigate } from 'react-router-dom';
 import '../../../styles/home.css';
 import { useSelector, useDispatch } from "react-redux";
@@ -25,9 +19,16 @@ import { sendTips, tokenTransfer } from "../../store/user/userThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { selectConfig } from "../../store/config";
-import { arrayLookup, getNowTime, getOpenAppId, getOpenAppIndex, setPhoneTab } from "../../util/tools/function";
+import {
+    arrayLookup,
+    getNowTime,
+    getOpenAppId,
+    getOpenAppIndex,
+    handleCopyText,
+    setPhoneTab
+} from "../../util/tools/function";
 import { openScan, closeScan } from "../../util/tools/scanqrcode";
-import { getWithDrawConfig, WalletConfigDefineMap, evalTokenTransferFee, cryptoWithdrawFee, getWithdrawHistoryAddress, delWithdrawHistoryAddress, getWithdrawTransferStats, createPin, verifyPin } from "app/store/wallet/walletThunk";
+import {evalTokenTransferFee, cryptoWithdrawFee, getWithdrawHistoryAddress, delWithdrawHistoryAddress, createPin, verifyPin } from "app/store/wallet/walletThunk";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
 import Dialog from "@mui/material/Dialog/Dialog";
 import OtpPass from "../otpPass/OtpPass";
@@ -512,21 +513,6 @@ function Withdraw(props) {
             }
         });
     };
-
-    const handleCopyText = (text) => {
-        var input1 = document.createElement('input');
-        document.body.appendChild(input1);
-        input1.setAttribute('value', text);
-        input1.select();
-        document.execCommand("copy"); // 执行浏览器复制命令
-        navigator.clipboard.writeText(text)
-        if (document.execCommand('copy')) {
-            document.execCommand('copy');
-            document.execCommand('copy');
-            document.execCommand('copy');
-        }
-        document.body.removeChild(input1);
-    }
 
     useEffect(() => {
         if (googleCode.length === 6) {
