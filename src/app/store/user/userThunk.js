@@ -896,19 +896,35 @@ export const getUserData = createAsyncThunk(
 export const transferRecords = createAsyncThunk(
     'user/transferRecords',
     async (settings, { dispatch, getState }) => {
-        let data = {
-            logType: settings.logType,
-            month: settings.month,
-            page: settings.page,
-            limit: settings.limit,
-            userCreditNo: settings.userCreditNo
-        };
-        const tranferList = await React.$api("transfer.records", data);
-        if (tranferList.errno === 0) {
-            return tranferList.data
-            dispatch(updateTransfer(tranferList));
-        } else {
-            dispatch(showMessage({ message: t('error_2'), code: 2 }));
+
+        if(settings.userCreditNo){ //存在信用卡号，是查询信用卡消费信息
+            let data = {
+                userCreditNo: settings.userCreditNo,
+                month: settings.month,
+                page: settings.page,
+                limit: settings.limit,
+            };
+            const tranferList = await React.$api("transfer.creditTradeRecords", data);
+            if (tranferList.errno === 0) {
+                return tranferList.data
+                dispatch(updateTransfer(tranferList));
+            } else {
+                dispatch(showMessage({ message: t('error_2'), code: 2 }));
+            }
+        }else{
+            let data = {
+                recordType: settings.logType,
+                month: settings.month,
+                page: settings.page,
+                limit: settings.limit,
+            };
+            const tranferList = await React.$api("transfer.records", data);
+            if (tranferList.errno === 0) {
+                return tranferList.data
+                dispatch(updateTransfer(tranferList));
+            } else {
+                dispatch(showMessage({ message: t('error_2'), code: 2 }));
+            }
         }
     }
 );

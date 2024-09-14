@@ -216,7 +216,11 @@ export default {
         sendTips: {
             url: "/transfer/sendTips",
             method: "post",
-        }
+        },
+        creditTradeRecords: {
+            url: "/transfer/creditTradeRecords",
+            method: "post",
+        },
     },
 
     paytoken: {
