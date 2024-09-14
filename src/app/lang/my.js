@@ -538,8 +538,10 @@ const locale = {
     card_184: "tolak",
     card_185: "Segarkan",
     card_186: "Pergi semak",
-    card_187: "Menunggu pembayaran",
+    card_187: "Menunggu pengisian semula",
+    card_188: "Pesanan anda telah tamat masa!",
 
+    
 
 
 };

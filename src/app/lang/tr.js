@@ -536,8 +536,10 @@ const locale = {
     card_184: "düşmek",
     card_185: "Yenile",
     card_186: "Git kontrol et",
-    card_187: "Ödeme bekleniyor",
+    card_187: "Şarj bekleniyor",
+    card_188: "Siparişinizin süresi doldu!",
 
+    
 
 
 

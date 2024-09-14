@@ -545,8 +545,10 @@ const locale = {
     card_184: "deduct",
     card_185: "Refresh",
     card_186: "Go check it",
-    card_187: "Waiting for payment",
+    card_187: "Waiting for recharge",
+    card_188: "Your order has timed out!",
 
+    
 
 };
 

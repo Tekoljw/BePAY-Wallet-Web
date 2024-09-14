@@ -538,8 +538,10 @@ const locale = {
     card_184: "déduire",
     card_185: "Actualiser",
     card_186: "Allez vérifier",
-    card_187: "En attente de paiement",
+    card_187: "En attente de recharge",
+    card_188: "Votre commande a expiré !",
 
+    
 
 
 

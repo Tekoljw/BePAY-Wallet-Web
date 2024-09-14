@@ -528,8 +528,10 @@ const locale = {
     card_184: "khấu trừ",
     card_185: "Làm mới",
     card_186: "Đi kiểm tra nó",
-    card_187: "Đang chờ thanh toán",
+    card_187: "Đang chờ nạp tiền",
+    card_188: "Đơn hàng của bạn đã hết thời gian!",
 
+    
     };
 
 export default locale;

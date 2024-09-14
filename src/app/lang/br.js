@@ -538,8 +538,10 @@ const locale = {
     card_184: "deduzir",
     card_185: "Atualizar",
     card_186: "Verifique isso",
-    card_187: "Aguardando pagamento",
+    card_187: "Aguardando recarga",
+    card_188: "O seu pedido expirou!",
 
+    
  };
 export default locale;
     

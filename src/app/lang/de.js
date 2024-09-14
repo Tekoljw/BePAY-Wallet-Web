@@ -541,8 +541,10 @@ const locale = {
     card_184: "abziehen",
     card_185: "Aktualisieren",
     card_186: "Überprüfen Sie das",
-    card_187: "Zahlung ausstehend",
+    card_187: "Warten auf Aufladung",
+    card_188: "Ihre Bestellung ist abgelaufen!",
 
+    
 };
 
 export default locale;

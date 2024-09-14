@@ -537,8 +537,10 @@ const locale = {
     card_184: "vähentää",
     card_185: "Päivitä",
     card_186: "Mene tarkistamaan se",
-    card_187: "Odottaa maksua",
+    card_187: "Odotetaan latausta",
+    card_188: "Tilauksesi on vanhentunut!",
 
+    
 
     };
     

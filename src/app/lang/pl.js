@@ -539,8 +539,10 @@ const locale = {
     card_184: "odliczyć",
     card_185: "Odśwież",
     card_186: "Idź sprawdź to",
-    card_187: "Oczekiwanie na płatność",
+    card_187: "Oczekiwanie na doładowanie",
+    card_188: "Twoje zamówienie wygasło!",
 
+    
 
 
 };
