@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 import '../../../styles/home.css';
 
-export default function OtpPass({googleTextKey,setGoogleCode}) {
+export default function OtpPass({googleTextKey,setGoogleCode, resizeLayout}) {
     const pinLength = 6
     const KEYCODE = Object.freeze({
         LEFT_ARROW: 37,
@@ -14,7 +14,6 @@ export default function OtpPass({googleTextKey,setGoogleCode}) {
         BACK_SPACE: 8,
     });
     const [value, setValue] = React.useState("");
-    const [resizeLayout, setResizeLayout] = React.useState(false);
     // 用来存放6个input的引用
     const inputsRef = React.useRef([]);
     // 当前聚焦的input的下标
@@ -128,7 +127,7 @@ export default function OtpPass({googleTextKey,setGoogleCode}) {
 
     const handleWindowResize = ()=> {
         if (document.activeElement.tagName == "INPUT" || document.activeElement.tagName == "TEXTAREA") {
-            setResizeLayout(true)
+            resizeLayout()
         }
     }
 

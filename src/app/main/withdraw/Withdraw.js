@@ -878,6 +878,7 @@ function Withdraw(props) {
             setOpenYanZheng(false);
             setOpenGoogleCode(true);
         }else if(tabValue === fiatSelect){
+           setOpenYanZheng(false);
            setFiatVerifiedAuth(true);
         }
     }
