@@ -367,8 +367,8 @@ const locale = {
     card_4: "pengeluaran",
     card_5:"membeli",
     card_6:"Buat alamat",
-    card_7:"ID Pengguna Dalaman",
-    card_8:"alamat luaran",
+    card_7:"Pemindahan",
+    card_8:"Mengeluarkan",
     card_9: "Memohon kad.",
     card_10: "Baki dompet.",
     card_11: "Maklumat Kad",
@@ -540,7 +540,7 @@ const locale = {
     card_186: "Pergi semak",
     card_187: "Menunggu pengisian semula",
     card_188: "Pesanan anda telah tamat masa!",
-
+    kyc_60: "Sebelum mengikat atau mengubah maklumat KYC, anda perlu terlebih dahulu mengikat nombor telefon atau emel.",
     
 
 

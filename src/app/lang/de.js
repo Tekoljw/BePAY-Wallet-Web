@@ -370,8 +370,8 @@ const locale = {
     card_4: "Rückzug",
     card_5:"kaufen",
     card_6:"Adresse erstellen",
-    card_7:"Interne Benutzer-ID",
-    card_8:"externe Adresse",
+    card_7:"Übertragen",
+    card_8:"Abheben",
     card_9: "Karte beantragen",
     card_10: "Kontostand",
     card_11: "Karteninformationen",
@@ -543,7 +543,7 @@ const locale = {
     card_186: "Überprüfen Sie das",
     card_187: "Warten auf Aufladung",
     card_188: "Ihre Bestellung ist abgelaufen!",
-
+    kyc_60: "Bevor Sie KYC-Informationen verknüpfen oder ändern, müssen Sie zuerst eine Telefonnummer oder E-Mail-Adresse verknüpfen.",
     
 };
 

@@ -368,8 +368,8 @@ const locale = {
     card_4: "wycofanie",
     card_5:"kupić",
     card_6:"Utwórz adres",
-    card_7:"Wewnętrzny identyfikator użytkownika",
-    card_8:"zewnętrzny adres",
+    card_7:"Przeniesienie",
+    card_8:"Wypłacić",
     card_9: "Aplikacja o kartę",
     card_10: "Saldo portfela",
     card_11: "Informacje o karcie",
@@ -541,7 +541,7 @@ const locale = {
     card_186: "Idź sprawdź to",
     card_187: "Oczekiwanie na doładowanie",
     card_188: "Twoje zamówienie wygasło!",
-
+    kyc_60: "Przed połączeniem lub modyfikacją informacji KYC, należy najpierw połączyć numer telefonu lub e-mail.",
     
 
 

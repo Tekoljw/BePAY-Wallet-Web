@@ -368,8 +368,8 @@ const locale = {
     card_4: "pag-alis",
     card_5:"bumili",
     card_6:"Lumikha ng address",
-    card_7:"Panloob na User ID",
-    card_8:"panlabas na address",
+    card_7:"Paglipat",
+    card_8:"Mag-withdraw",
     card_9: "Mag-apply ng card.",
     card_10: "Balanseng nasa wallet",
     card_11: "Impormasyon ng Card",
@@ -541,7 +541,7 @@ const locale = {
     card_186: "Pumunta at tingnan ito",
     card_187: "Naghihintay ng pag-recharge",
     card_188: "Ang iyong order ay nag-expire na!",
-
+    kyc_60: "Bago mag-bind o magbago ng impormasyon ng KYC, kailangan mo munang i-bind ang numero ng telepono o email.",
     
 
 

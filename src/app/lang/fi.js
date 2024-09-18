@@ -366,8 +366,8 @@ const locale = {
     card_4: "vetäytyminen",
     card_5:"ostaa",
     card_6:"Luo osoite",
-    card_7:"Sisäinen käyttäjätunnus",
-    card_8:"ulkoinen osoite",
+    card_7:"Siirto",
+    card_8:"Nostaa",
     card_9: "Hakea korttia.",
     card_10: "Lompakon saldo.",
     card_11: "Korttitiedot",
@@ -539,7 +539,7 @@ const locale = {
     card_186: "Mene tarkistamaan se",
     card_187: "Odotetaan latausta",
     card_188: "Tilauksesi on vanhentunut!",
-
+    kyc_60: "Ennen kuin sitoo tai muuttaa KYC-tietoja, sinun on ensin liitettävä puhelinnumero tai sähköpostiosoite.",
     
 
     };

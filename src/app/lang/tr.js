@@ -365,8 +365,8 @@ const locale = {
     card_4: "geri çekilme",
     card_5:"satın almak",
     card_6:"Adres oluştur",
-    card_7:"Dahili Kullanıcı Kimliği",
-    card_8:"dış adres",
+    card_7:"Transfer",
+    card_8:"Çekmek",
     card_9: "Kart başvurusu.",
     card_10: "Cüzdan bakiyesi.",
     card_11: "Kart Bilgileri",
@@ -538,7 +538,7 @@ const locale = {
     card_186: "Git kontrol et",
     card_187: "Şarj bekleniyor",
     card_188: "Siparişinizin süresi doldu!",
-
+    kyc_60: "KYC bilgilerini bağlamadan veya değiştirmeden önce, önce bir telefon numarası veya e-posta bağlamanız gerekir.",
     
 
 
