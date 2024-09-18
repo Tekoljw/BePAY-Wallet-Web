@@ -400,6 +400,7 @@ function Withdraw(props) {
             setOpenLoad(false);
             let result = res.payload
             setGoogleCode('');
+            setOpenPinWindow(false);
             if (result.errno == -2) {
                 if (!hasAuthGoogle) {
                     setOpenAnimateModal(true);
@@ -487,6 +488,7 @@ function Withdraw(props) {
         dispatch(sendTips(data)).then((res) => {
             setIsLoadingBtn(false)
             setGoogleCode('');
+            setOpenPinWindow(false);
             let resData = res.payload;
             if (resData.errno == 0) {
                 setCurrRequestId(res.meta.requestId)
@@ -501,9 +503,10 @@ function Withdraw(props) {
                         setOpenAnimateModal(true);
                     }, 300)
                     return;
+                }else {
+                    openGoogleCodeFunc()
+                    return
                 }
-                openGoogleCodeFunc()
-                return
             } else {
                 setOpenSuccess(false);
                 setTimeout(() => {
@@ -768,6 +771,7 @@ function Withdraw(props) {
     });
 
     const { isValid, dirtyFields, errors } = formState;
+    const [correctPin, setCorrectPin] = useState(false);
 
     const getSettingSymbol = async () => {
         return {}
@@ -899,22 +903,24 @@ function Withdraw(props) {
                 })).then((res) => {
                     let result = res.payload
                     if (!result.paymentPasswordSuccess) {
+                        setCorrectPin(false);
                         errPin()
                     } else {
-
-                    }
-                })
-            } else { // 创建pin
-                setOpenPinWindow(false);
-                dispatch(createPin({
-                    paymentPassword: tmpPin
-                })).then((res) => {
-                    if (res.payload) {
-                        setHasPin(true)
-                        closeCreatePinFunc()
+                        setCorrectPin(true);
                     }
                 })
             }
+            // } else { // 创建pin
+            //     setOpenPinWindow(false);
+            //     dispatch(createPin({
+            //         paymentPassword: tmpPin
+            //     })).then((res) => {
+            //         if (res.payload) {
+            //             setHasPin(true)
+            //             closeCreatePinFunc()
+            //         }
+            //     })
+            // }
         }
     }
 
@@ -1825,7 +1831,7 @@ function Withdraw(props) {
                                             onTouchEnd={changeToWhite}
                                             onTouchCancel={changeToWhite}
                                             onClick={() => {
-                                                if(pin && pin.length === 6) {
+                                                if(pin && pin.length === 6 && correctPin) {
                                                     smallTabValue === 0 ? handleSubmit() : handleSendTipsSubmit()
                                                 }
                                             }}>{t('card_30')}</div>
@@ -2054,8 +2060,8 @@ function Withdraw(props) {
             <BootstrapDialog
                 onClose={() => {
                     setOpenPinErr(false)
-                    setCreatePinWindow(true)
-                    openCreatePinFunc()
+                    // setCreatePinWindow(false)
+                    // openCreatePinFunc()
                 }}
                 aria-labelledby="customized-dialog-title"
                 open={openPinErr}

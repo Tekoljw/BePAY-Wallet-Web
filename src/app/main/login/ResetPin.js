@@ -210,8 +210,7 @@ function ResetPin(props) {
                         )}
                     />
 
-                    <div className="flex flex-col sm:flex-row items-center">
-                        {t('re_tied_email_3')}
+                    <div style={{ textAlign: "center"}}>
                         <a href='/wallet/home' className="text-md font-medium">
                             {t('re_tied_email_4')}
                         </a>
@@ -362,8 +361,7 @@ function ResetPin(props) {
                                                         />
                                                     )}
                                                 />
-                                                <div className="flex flex-col sm:flex-row items-center">
-                                                    {t('re_tied_email_3')}
+                                                <div style={{ textAlign: "center"}}>
                                                     <a href='/wallet/home' className="text-md font-medium">
                                                         {t('re_tied_email_4')}
                                                     </a>
@@ -547,8 +545,7 @@ function ResetPin(props) {
                                                     )}
                                                 />
 
-                                                <div className="flex flex-col sm:flex-row items-center">
-                                                    {t('re_tied_email_3')}
+                                                <div style={{ textAlign: "center"}}>
                                                     <a href='/wallet/home' className="text-md font-medium">
                                                         {t('re_tied_email_4')}
                                                     </a>
