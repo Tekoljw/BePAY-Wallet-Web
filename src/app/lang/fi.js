@@ -540,7 +540,9 @@ const locale = {
     card_187: "Odotetaan latausta",
     card_188: "Tilauksesi on vanhentunut!",
     kyc_60: "Ennen kuin sitoo tai muuttaa KYC-tietoja, sinun on ensin liitettävä puhelinnumero tai sähköpostiosoite.",
-    
+    card_189: "Ulkoinen Osoite",
+
+
 
     };
     

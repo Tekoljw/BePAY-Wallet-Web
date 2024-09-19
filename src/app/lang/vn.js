@@ -531,7 +531,7 @@ const locale = {
     card_187: "Đang chờ nạp tiền",
     card_188: "Đơn hàng của bạn đã hết thời gian!",
     kyc_60: "Trước khi liên kết hoặc sửa đổi thông tin KYC, bạn cần liên kết số điện thoại hoặc email trước.",
-
+    card_189: "Địa Chỉ Bên Ngoài",
 
 
     

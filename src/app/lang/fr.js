@@ -541,7 +541,7 @@ const locale = {
     card_187: "En attente de recharge",
     card_188: "Votre commande a expiré !",
     kyc_60: "Avant de lier ou de modifier les informations KYC, vous devez d'abord lier un numéro de téléphone ou un e-mail.",
-    
+    card_189: "Adresse Externe",
 
 
 

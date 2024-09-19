@@ -542,7 +542,9 @@ const locale = {
     card_187: "Oczekiwanie na doładowanie",
     card_188: "Twoje zamówienie wygasło!",
     kyc_60: "Przed połączeniem lub modyfikacją informacji KYC, należy najpierw połączyć numer telefonu lub e-mail.",
-    
+    card_189: "Adres Zewnętrzny",
+
+
 
 
 };

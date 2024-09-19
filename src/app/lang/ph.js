@@ -542,6 +542,7 @@ const locale = {
     card_187: "Naghihintay ng pag-recharge",
     card_188: "Ang iyong order ay nag-expire na!",
     kyc_60: "Bago mag-bind o magbago ng impormasyon ng KYC, kailangan mo munang i-bind ang numero ng telepono o email.",
+    card_189: "Panlabas na Address",
     
 
 

@@ -541,7 +541,9 @@ const locale = {
     card_187: "Esperando recarga",
     card_188: "¡Su pedido ha expirado!",
     kyc_60: "Antes de vincular o modificar la información de KYC, primero debe vincular un número de teléfono o correo electrónico.",
-    
+    card_189: "Dirección Externa",    
+
+
 };
 export default locale;
     

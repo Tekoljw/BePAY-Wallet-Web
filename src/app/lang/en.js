@@ -548,7 +548,7 @@ const locale = {
     card_187: "Waiting for recharge",
     card_188: "Your order has timed out!",
     kyc_60: "Before binding or modifying KYC information, you need to first bind a phone number or email.",
-    
+    card_189: "External Address",
 
 };
 

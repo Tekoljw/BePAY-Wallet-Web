@@ -539,7 +539,7 @@ const locale = {
     card_187: "Şarj bekleniyor",
     card_188: "Siparişinizin süresi doldu!",
     kyc_60: "KYC bilgilerini bağlamadan veya değiştirmeden önce, önce bir telefon numarası veya e-posta bağlamanız gerekir.",
-    
+    card_189: "Dış Adres",
 
 
 

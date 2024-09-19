@@ -162,8 +162,8 @@ function Wallet() {
   const fiatsData = userData.fiat || [];
   const paymentFiat = config.payment?.currency;
   const [ranges, setRanges] = useState([
-    // 'Token', t('home_deposite_2'), t('home_deposite_3')
-    'Token', t('home_deposite_2')
+    // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
+    t('home_deposite_1'), t('home_deposite_2')
   ]);
   const [userSetting, setUserSetting] = useState({});
   const [isOpenEye, setIsOpenEye] = useState(false);
@@ -463,8 +463,8 @@ function Wallet() {
         if (currencyType) {
           if (currencyType == 1) {
             tmpRanges = [
-              'Token', t('home_deposite_2')
-              // 'Token', t('home_deposite_2'), t('home_deposite_3')
+              t('home_deposite_1'), t('home_deposite_2')
+              // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
             ];
             tmpCryptoSelect = 0;
             tmpFiatSelect = 1;
@@ -481,7 +481,6 @@ function Wallet() {
           setRanges(tmpRanges);
           setCryptoSelect(tmpCryptoSelect);
           setFiatSelect(tmpFiatSelect);
-
         }
         else if (userData.profile?.loginType !== "unknown") {
           var tmpRanges = [
@@ -493,23 +492,21 @@ function Wallet() {
           if (userData.profile.wallet?.Crypto < userData.profile.wallet?.Fiat) {
           } else if (userData.profile.wallet?.Crypto > userData.profile.wallet?.Fiat) {
             tmpRanges = [
-              'Token', t('home_deposite_2')
-              // 'Token', t('home_deposite_2'), t('home_deposite_3')
+              t('home_deposite_1'), t('home_deposite_2')
+              // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
             ];
             tmpCryptoSelect = 0;
             tmpFiatSelect = 1;
           } else {
             if (userData.profile?.loginType === "web3_wallet") {
               tmpRanges = [
-                'Token', t('home_deposite_2')
-                // 'Token', t('home_deposite_2'), t('home_deposite_3')
+                t('home_deposite_1'), t('home_deposite_2')
+                // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
               ];
               tmpCryptoSelect = 0;
               tmpFiatSelect = 1;
             }
           }
-
-
           setRanges(tmpRanges);
           setCryptoSelect(tmpCryptoSelect);
           setFiatSelect(tmpFiatSelect);
