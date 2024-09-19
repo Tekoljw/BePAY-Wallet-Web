@@ -6,25 +6,17 @@ import history from "@history";
 
 
 export default function start() {
-    useEffect(() => {
-        // window.localStorage.setItem('redirectGuide', true);
-        try {
-            utils.consoleText(['Safe & Fast manage crypto assets', 'Crypto & Fiat swap in anytime', 'VISA & Master crypto bank card', 'Current interest up to 5%', 'Mining governance tokens'], 'qddzj', ['#31D4CA', '#5AF4BE', '#069FC9', '#14C2A3', '#5AF4BE', '#5AF4BE'])
-            utils.appendScript('https://static-scource.funibet.com/funibox/js/three.min.js', true)
-            utils.appendScript('https://static-scource.funibet.com/funibox/js/TweenMax.min.js', true)
-            setTimeout(() => {
-                utils.appendScript('https://static-scource.funibet.com/funibox/js/cc.js', true)
-            }, 100);
+
+    useEffect( () => {
+        Promise.all([utils.consoleText(['Safe & Fast manage crypto assets', 'Crypto & Fiat swap in anytime', 'VISA & Master crypto bank card', 'Current interest up to 5%', 'Mining governance tokens'], 'qddzj', ['#31D4CA', '#5AF4BE', '#069FC9', '#14C2A3', '#5AF4BE', '#5AF4BE']), utils.appendScript('https://static-scource.funibet.com/funibox/js/three.min.js', true),  utils.appendScript('https://static-scource.funibet.com/funibox/js/TweenMax.min.js', true)]).then((resArr) => {
+            utils.appendScript('https://static-scource.funibet.com/funibox/js/cc.js', true)
             return () => {
                 utils.removeScript('https://static-scource.funibet.com/funibox/js/three.min.js')
                 utils.removeScript('https://static-scource.funibet.com/funibox/js/TweenMax.min.js')
                 utils.removeScript('https://static-scource.funibet.com/funibox/js/cc.js')
                 // document.getElementById("my-three-js-canvas").remove()
-            }
-        } catch (e) {
-            console.log(e)
-        }
-    }, []);
+            }})
+        }, [])
 
     return (
         <div id="kkqd" class="">

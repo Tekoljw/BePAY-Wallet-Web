@@ -130,31 +130,33 @@ function MintNft(props) {
         dispatch(getWalletAddress({
           walletName: 'DeFi'
         })).then((walletRes) => {
-          walletRes = walletRes.payload
-          console.log('walletRes => ', walletRes)
-
-          doMintGenesisRobot({
-            nftId: nftConfig.id,
-            tokenId: mintNum
-          }).then((res) => {
-            console.log(res, 'queryId......')
-            let timer = setInterval(async () => {
-              var res = await getMintGenesisRobot(res);
-              if (res === false) {
-                showMsg(2)
-                clearInterval(timer)
-                setMintClick(true)
-              } else if (res != '') {
-                showMsg(1, mintNum)
-                clearInterval(timer)
-                setMintClick(true)
-              }
-            }, 5000)
-          }).catch((e) => {
-            console.log(e, 'error......')
-            showMsg(2)
-            setMintClick(true)
-          })
+          const result = walletRes.payload;
+          if(result && result.errno === 0) {
+            doMintGenesisRobot({
+              nftId: nftConfig.id,
+              tokenId: mintNum
+            }).then((res) => {
+              console.log(res, 'queryId......')
+              let timer = setInterval(async () => {
+                var res = await getMintGenesisRobot(res);
+                if (res === false) {
+                  showMsg(2)
+                  clearInterval(timer)
+                  setMintClick(true)
+                } else if (res != '') {
+                  showMsg(1, mintNum)
+                  clearInterval(timer)
+                  setMintClick(true)
+                }
+              }, 5000)
+            }).catch((e) => {
+              console.log(e, 'error......')
+              showMsg(2)
+              setMintClick(true)
+            }) 
+          } else {
+              dispatch(showMessage({ message: t('error_39'), code: 2 }));
+          }
         }).catch((e) => {
           console.log(e, 'get address error......')
           showMsg(2)

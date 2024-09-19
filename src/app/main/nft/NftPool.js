@@ -106,8 +106,8 @@ function NftPool(props) {
         dispatch(getWalletAddress({
             walletName: 'DeFi',
         })).then(res => {
-            let result = res.payload;
-            if (result) {
+            const result = res.payload;
+            if(result && result.errno === 0) {
                 dispatch(goCenterTransfer({
                     toAddress: result.data,
                     tokenId: param.tokenId,
@@ -119,6 +119,8 @@ function NftPool(props) {
                         console.log(transferResult);
                     }
                 })
+            } else {
+                dispatch(showMessage({ message: t('error_39'), code: 2 }));
             }
         })
     }

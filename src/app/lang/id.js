@@ -367,8 +367,8 @@ const locale = {
     card_4: "penarikan",
     card_5:"membeli",
     card_6:"Buat alamat",
-    card_7:"ID Pengguna Internal",
-    card_8:"alamat eksternal",
+    card_7:"Transfer",
+    card_8:"Tarik",
     card_9: "Mengajukan kartu",
     card_10: "Saldo dompet",
     card_11: "Informasi Kartu",
@@ -538,8 +538,10 @@ const locale = {
     card_184: "memotong",
     card_185: "Segarkan",
     card_186: "Periksa itu",
-    card_187: "Menunggu pembayaran",
-
+    card_187: "Menunggu pengisian ulang",
+    card_188: "Pesanan Anda telah kedaluwarsa!",
+    kyc_60: "Sebelum mengikat atau mengubah informasi KYC, Anda harus terlebih dahulu mengikat nomor telepon atau email.",
+    card_189: "Alamat Eksternal",
 
 
 

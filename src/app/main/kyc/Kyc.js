@@ -22,7 +22,7 @@ import FusePageCarded from '@fuse/core/FusePageCarded';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import HomeSidebarContent from "../home/HomeSidebarContent";
 import MobileDetect from 'mobile-detect';
-
+import { getUserData } from "../../store/user/userThunk";
 import { uploadStorage } from "../../store/tools/toolThunk";
 import { getKycInfo, updateKycInfo, submitKycInfo } from "app/store/payment/paymentThunk";
 import { selectConfig } from "../../store/config";
@@ -32,11 +32,13 @@ import IconButton from "@mui/material/IconButton";
 import { sendEmail, sendSms, bindPhone, bindEmail } from "../../store/user/userThunk";
 import phoneCode from "../../../phone/phoneCode";
 import Autocomplete from "@mui/material/Autocomplete/Autocomplete";
+import AnimateModal from "../../components/FuniModal";
 import clsx from 'clsx';
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Hidden from "@mui/material/Hidden";
 import { useTranslation } from "react-i18next";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const container = {
     show: {
@@ -158,7 +160,7 @@ function Kyc(props) {
                 dispatch(showMessage({ message: 'Success', code: 1 }));
                 dispatch(getUserData());
                 setTimeout(() => {
-                    location.reload();
+                    refreshKycInfo();
                 }, 1000)
             } else {
                 dispatch(showMessage({ message: result.errmsg, code: 2 }));
@@ -177,7 +179,7 @@ function Kyc(props) {
                 dispatch(showMessage({ message: 'Success', code: 1 }));
                 dispatch(getUserData());
                 setTimeout(() => {
-                    location.reload();
+                    refreshKycInfo();
                 }, 1000)
             } else {
                 dispatch(showMessage({ message: result.errmsg, code: 2 }));
@@ -206,6 +208,7 @@ function Kyc(props) {
     const [idFrontUrlError, setIdFrontUrlError] = useState(false);
     const [idBackUrlError, setIdBackUrlError] = useState(false);
     const [emailError, setEmailError] = useState(false);
+    const [openAnimateModal, setOpenAnimateModal] = useState(false);
 
     //文凯改
     const handleChangeInputVal = (prop) => (event) => {
@@ -435,14 +438,13 @@ function Kyc(props) {
         if (kycInfo) {
             return kycInfo.isNeedAudit();
         }
-
         return true;
     };
 
     const refreshKycInfo = () => {
         dispatch(getKycInfo()).then((value) => {
             if (!isNeedAudit() || !value.payload) return;
-            let resultData = value.payload.data;
+            let resultData = {...value.payload.data};
 
             if (!resultData || Object.entries(resultData).length < 1) return;
 
@@ -542,6 +544,7 @@ function Kyc(props) {
         );
 
     };
+    
 
     useEffect(() => {
         refreshKycInfo();
@@ -562,18 +565,22 @@ function Kyc(props) {
 
     useEffect(() => {
         setPageState(1);
-
+        
         if (kycInfo.init) {
             if (!kycInfo.havePhone()) {
                 setPageState(2);
                 setTabValue(1);
+                setOpenAnimateModal(true)
                 return
             }
 
             if (!kycInfo.haveEmail()) {
                 setPageState(1);
+                setOpenAnimateModal(true)
                 return
             }
+
+            setOpenAnimateModal(false)
 
             let copyData = {};
 
@@ -1684,6 +1691,63 @@ function Kyc(props) {
                         </Button>
                     </>}
                 </motion.div>
+
+                <AnimateModal
+                    className="faBiDiCard tanChuanDiSe"
+                    open={openAnimateModal}
+                    onClose={() => setOpenAnimateModal(false)}
+                >
+                    <div className='flex justify-center' style={{ width: "100%" }}>
+                        <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
+                        <div className='TanHaoCardZi '>
+                            {t('kyc_26')}
+                        </div>
+                    </div>
+
+                    <Box
+                        className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard"
+                        sx={{
+                            backgroundColor: "#2C394D",
+                            padding: "1.5rem",
+                            overflow: "hidden",
+                            margin: "1rem auto 0rem auto"
+                        }}
+                    >
+                        <div className="dialog-select-fiat danChuangTxt">
+                            {t('kyc_60')}
+                        </div>
+                    </Box>
+
+                    <div className='flex mt-12 mb-28 px-15 justify-between' >
+                        <LoadingButton
+                            disabled={false}
+                            className="boxCardBtn"
+                            color="secondary"
+                            loading={false}
+                            variant="contained"
+                            onClick={() => {
+                                setOpenAnimateModal(false)
+                            }}
+                        >
+                            {t('card_167')}
+                        </LoadingButton>
+
+
+                        <LoadingButton
+                            disabled={false}
+                            className="boxCardBtn"
+                            color="secondary"
+                            loading={false}
+                            variant="contained"
+                            onClick={() => {
+                                setOpenAnimateModal(false)
+                                location.reload();
+                            }}
+                        >
+                            {t('home_pools_15')}
+                        </LoadingButton>
+                    </div>
+                </AnimateModal>
             </div>
         </>
 

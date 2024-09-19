@@ -1,5 +1,6 @@
 import truffle_contract from "@truffle/contract";
 import utils_web3 from "../web3"
+import { resolve } from "url";
 
 // 获取智能合约内容
 const contractAbi = (type) => {
@@ -85,19 +86,23 @@ export const isScriptLoad = (scriptToLoad) => {
     return false;
 }
 
-export const appendScript = (scriptToAppend, isAsync) => {
+export const appendScript = async(scriptToAppend, isAsync) => {
+  return new Promise((resolve, reject)=>{
     if(!isScriptLoad(scriptToAppend)) {
         const script = document.createElement("script");
         script.src = scriptToAppend;
         script.async = (isAsync == undefined || isAsync == true) ? true : false ;
         document.body.appendChild(script);
+        resolve(true)
     }
+  })
 }
 
 
 
 export const consoleText = (words, id, colors) => {
-  console.log("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
+  return new Promise((resolve, reject)=>{
+    console.log("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
     if (colors === undefined) colors = ['#fff'];
     var visible = true;
     var con = document.getElementById('console');
@@ -134,15 +139,17 @@ export const consoleText = (words, id, colors) => {
         }
       }, 120)
 
-    window.setInterval(function () {
-      if (visible === true) {
-        con.className = 'console-underscore hiddenDz'
-        visible = false;
-      } else {
-        con.className = 'console-underscore'
-        visible = true;
-      }
-    }, 400)
+      window.setInterval(function () {
+        if (visible === true) {
+          con.className = 'console-underscore hiddenDz'
+          visible = false;
+        } else {
+          con.className = 'console-underscore'
+          visible = true;
+        }
+      }, 400)
+      resolve(true)
+    })
   }
 
 

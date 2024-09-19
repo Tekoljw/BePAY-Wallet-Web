@@ -210,9 +210,8 @@ function ResetPin(props) {
                         )}
                     />
 
-                    <div className="flex flex-col sm:flex-row items-center">
-                        {t('re_tied_email_3')}
-                        <a href='/wallet/home' className="text-md font-medium">
+                    <div style={{ textAlign: "center"}}>
+                        <a href={`/wallet/home?accessType=${localStorage.getItem('accessType') || 0}`} className="text-md font-medium">
                             {t('re_tied_email_4')}
                         </a>
                     </div>
@@ -362,9 +361,8 @@ function ResetPin(props) {
                                                         />
                                                     )}
                                                 />
-                                                <div className="flex flex-col sm:flex-row items-center">
-                                                    {t('re_tied_email_3')}
-                                                    <a href='/wallet/home' className="text-md font-medium">
+                                                <div style={{ textAlign: "center"}}>
+                                                    <a href={`/wallet/home?accessType=${localStorage.getItem('accessType') || 0}`} className="text-md font-medium">
                                                         {t('re_tied_email_4')}
                                                     </a>
                                                 </div>
@@ -547,9 +545,8 @@ function ResetPin(props) {
                                                     )}
                                                 />
 
-                                                <div className="flex flex-col sm:flex-row items-center">
-                                                    {t('re_tied_email_3')}
-                                                    <a href='/wallet/home' className="text-md font-medium">
+                                                <div style={{ textAlign: "center"}}>
+                                                    <a href={`/wallet/home?accessType=${localStorage.getItem('accessType') || 0}`} className="text-md font-medium">
                                                         {t('re_tied_email_4')}
                                                     </a>
                                                 </div>

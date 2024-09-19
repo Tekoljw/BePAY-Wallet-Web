@@ -80,7 +80,7 @@ function Enable2FA(props) {
 
     const resizeLayoutEvt = () => {
         window.setTimeout(function () {
-            document.activeElement.scrollIntoViewIfNeeded();
+            document.getElementById('bind-google-code').scrollIntoView({ behavior: 'smooth' });
         }, 0);
     }
 
@@ -92,6 +92,7 @@ function Enable2FA(props) {
                 initial="hidden"
                 animate="show"
                 className="pb-24"
+                id="bind-google-code"
                 style={{ paddingInline: "1.5rem" }}
             >
                 {/*1*/}

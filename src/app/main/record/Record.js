@@ -80,19 +80,19 @@ function Record() {
         // { id: 3, label: 'Service charge' },
         // { id: 4, label: 'Change' },
         // { id: 5, label: 'Borrow' },
-        { id: 6, label: t('home_record_6') },
+        { id: 3, label: t('home_record_6') },
         // { id: 7, label: 'Fiat Buy' },
-        { id: 8, label: t('home_record_14') },
-        { id: 9, label: 'Swap' },
+        { id: 6, label: t('home_record_14') },
+        { id: 4, label: 'Swap' },
         // { id: 10, label: 'Admin Withdraw' },
         // { id: 11, label: 'Hash Game Bet' },
-        { id: 12, label: t('home_record_15') },
-        { id: 13, label: t('home_record_16') },
-        { id: 14, label: t('home_record_17') },
-        { id: 15, label: t('home_record_18') },
+        { id: 2, label: t('home_record_15') },
+        { id: 7, label: t('home_record_16') },
+        { id: 8, label: t('home_record_17') },
+        { id: 9, label: t('home_record_18') },
         // { id: 16, label: 'TRANSFER_TO_GAME' },
         // { id: 17, label: 'TRANSFER_FROM_GAME' },
-        { id: 18, label: t('menu_18')},
+        { id: 5, label: t('menu_18')},
     ];
 
     const [timeItem, setTimeItem] = React.useState( new Date().getMonth() +1 );
@@ -514,16 +514,21 @@ function Record() {
                                         <div className='flex justify-between '>
                                             <div className='flex'>
                                                 <div className='recordListZi'>{typeList.find(v => {
-                                                    return v.id == (transferItem.type)
-                                                }).label}</div>
-                                                <div className='recordListZi ml-10'>{transferItem.symbol}</div>
+                                                    return v.id == (transferItem.showType)
+                                                })?.label}</div>
+                                                { typeList.find(v => {
+                                                    return v.id == (transferItem.showType)
+                                                    }) ?
+                                                    <div className="recordListZi ml-10">{transferItem.symbol}</div>: 
+                                                    <div className="recordListZi">{transferItem.symbol}</div>
+                                                }
                                             </div>
                                             <div className='recordListZi2'>{transferItem.amount}</div>
                                         </div>
                                         <div className='recordListSmallZi'>{t('home_deposite_24')} <span>{transferItem.balance}</span>
                                         </div>
                                         <div
-                                            className='recordListSmallZi'>{getNowTime(transferItem.createTime * 1000)}</div>
+                                            className='recordListSmallZi'>{getNowTime(transferItem.createTime)}</div>
                                     </div>
                                 )
                             })) : (

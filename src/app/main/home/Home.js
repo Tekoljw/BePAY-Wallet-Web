@@ -125,6 +125,7 @@ function HomePage(props) {
 
     useEffect(() => {
         console.log(accessType, 'home 请求的 loginType');
+        localStorage.setItem('accessType', accessType)
         switch (accessType){
             case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP:{ //telegramWebApp
                 setMenuShow(true);

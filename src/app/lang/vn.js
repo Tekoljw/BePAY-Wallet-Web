@@ -357,8 +357,8 @@ const locale = {
     card_4: "rút lui",
     card_5:"mua",
     card_6:"Tạo địa chỉ",
-    card_7:"ID người dùng nội bộ",
-    card_8:"địa chỉ ngoài",
+    card_7:"Chuyển giao",
+    card_8:"Rút tiền",
     card_9: "Yêu cầu thẻ",
     card_10: "Số dư ví",
     card_11: "Thông tin thẻ",
@@ -528,8 +528,13 @@ const locale = {
     card_184: "khấu trừ",
     card_185: "Làm mới",
     card_186: "Đi kiểm tra nó",
-    card_187: "Đang chờ thanh toán",
+    card_187: "Đang chờ nạp tiền",
+    card_188: "Đơn hàng của bạn đã hết thời gian!",
+    kyc_60: "Trước khi liên kết hoặc sửa đổi thông tin KYC, bạn cần liên kết số điện thoại hoặc email trước.",
+    card_189: "Địa Chỉ Bên Ngoài",
 
+
+    
     };
 
 export default locale;

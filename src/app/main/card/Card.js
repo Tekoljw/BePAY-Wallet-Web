@@ -256,11 +256,11 @@ function Card(props) {
 
 
     const openKycFunc = () => {
-        history.push('/wallet/home/security', { tabValue: 4, resetTabValueParam: 1 })
-        // setOpenKyc(true)
-        // setTimeout(() => {
-        //     document.getElementById('topGo').scrollIntoView({ behavior: 'smooth' });
-        // }, 0);
+        // history.push('/wallet/home/security', { tabValue: 4, resetTabValueParam: 1 })
+        setOpenKyc(true)
+        setTimeout(() => {
+            document.getElementById('topGo').scrollIntoView({ behavior: 'smooth' });
+        }, 0);
     }
 
     const defaultValues = {

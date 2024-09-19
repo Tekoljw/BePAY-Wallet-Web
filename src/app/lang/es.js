@@ -367,8 +367,8 @@ const locale = {
     card_4: "retiro",
     card_5:"comprar",
     card_6:"Crear dirección",
-    card_7:"ID de usuario interno",
-    card_8:"dirección externa",
+    card_7:"Transferencia",
+    card_8:"Retirar",
     card_9: "Solicitar tarjeta",
     card_10: "Saldo del monedero",
     card_11: "Información de la tarjeta",
@@ -538,7 +538,11 @@ const locale = {
     card_184: "deducir",
     card_185: "Actualizar",
     card_186: "Ve a comprobarlo",
-    card_187: "Esperando el pago",
+    card_187: "Esperando recarga",
+    card_188: "¡Su pedido ha expirado!",
+    kyc_60: "Antes de vincular o modificar la información de KYC, primero debe vincular un número de teléfono o correo electrónico.",
+    card_189: "Dirección Externa",    
+
 
 };
 export default locale;

@@ -225,9 +225,10 @@ function Fiat(props) {
                     if (!hasAuthGoogle) {
                         setOpenAnimateModal(true);
                         return;
+                    }else{
+                        openGoogleCodeFunc()
+                        return
                     }
-                    openGoogleCodeFunc()
-                    return
                 } else {
                     setOpenSuccess(false)
                     setTimeout(() => {
@@ -363,6 +364,7 @@ function Fiat(props) {
     const [divHeight, setDivHeight] = useState(0);
     const [zhuanQuan, setZhuanQuan] = useState(true);
     const [tiJiaoState, setTiJiaoState] = useState(0);
+    const [correctPin, setCorrectPin] = useState(false);
 
     const [tabValue, setTabValue] = useState(0);
     const [ranges, setRanges] = useState([
@@ -443,6 +445,25 @@ function Fiat(props) {
         setOpenPinWindow(false);
     }
 
+    // 修改Amount
+    const editAmount = (text) => {
+        let tmpText = inputVal.amount.toString()
+        if (tmpText == 0) {
+            tmpText = ''
+        }
+        if (text === -1) {
+            tmpText = tmpText.slice(0, -1)
+        } else if (text === '.') {
+            if (!tmpText.includes(text)) {
+                tmpText = tmpText + text
+            }
+        } else {
+            tmpText = tmpText + text
+        }
+
+        setInputVal({ ...inputVal, amount: tmpText == 0 ? '' : tmpText });
+    }
+    
     // 输入Pin
     const handleDoPin = (text) => {
         if (textSelect) {
@@ -464,21 +485,23 @@ function Fiat(props) {
                 })).then((res) => {
                     let result = res.payload
                     if (!result.paymentPasswordSuccess) {
+                        setCorrectPin(false);
                         errPin()
                     } else {
-
-                    }
-                })
-            } else { // 创建pin
-                dispatch(createPin({
-                    paymentPassword: tmpPin
-                })).then((res) => {
-                    if (res.payload) {
-                        setHasPin(true)
-                        closeCreatePinFunc()
+                        setCorrectPin(true);
                     }
                 })
             }
+            // } else { // 创建pin
+            //     dispatch(createPin({
+            //         paymentPassword: tmpPin
+            //     })).then((res) => {
+            //         if (res.payload) {
+            //             setHasPin(true)
+            //             closeCreatePinFunc()
+            //         }
+            //     })
+            // }
         }
     }
 
@@ -1557,7 +1580,7 @@ function Fiat(props) {
                                             onTouchEnd={changeToWhite}
                                             onTouchCancel={changeToWhite}
                                             onClick={() => {
-                                                if(pin && pin.length === 6){
+                                                if(pin && pin.length === 6 && correctPin){
                                                     handleSubmit()
                                                 }
                                             }}>{t('card_30')}</div>
@@ -1786,8 +1809,8 @@ function Fiat(props) {
                 <BootstrapDialog
                     onClose={() => {
                         setOpenPinErr(false)
-                        setCreatePinWindow(true)
-                        openCreatePinFunc()
+                        // setCreatePinWindow(false)
+                        // openCreatePinFunc()
                     }}
                     aria-labelledby="customized-dialog-title"
                     open={openPinErr}

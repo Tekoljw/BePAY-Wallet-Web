@@ -50,7 +50,7 @@ import { getCryptoDisplay } from "../../store/wallet/walletThunk";
 import { getDecenterWalletBalance } from "../../store/user/userThunk";
 import FuseLoading from '@fuse/core/FuseLoading';
 import { useTranslation } from "react-i18next";
-import { makeOrder } from "../../store/payment/paymentThunk";
+import { makeOrder, getDepositeFiatOrderStatus } from "../../store/payment/paymentThunk";
 import { showMessage } from 'app/store/fuse/messageSlice';
 import DialogTitle from '@mui/material/DialogTitle';
 import CloseIcon from '@mui/icons-material/Close';
@@ -58,7 +58,7 @@ import Slider from '@mui/material/Slider';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { useStatStyles } from '@chakra-ui/react';
+import { StepStatus, useStatStyles } from '@chakra-ui/react';
 import history from '@history';
 import { local } from 'web3modal';
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -313,10 +313,10 @@ function Deposite() {
     const [networkId, setNetworkId] = useState(0);
     const [addressData, setAddressData] = useState({}); // 地址存储{symbol:{networdId:xx}}
     const [tempAccount, setTempAccount] = useState(0);
-
     const [chongZhiVal, setChongZhiVal] = useState({
         id: '',
         amount: 0,
+        currencyCode: ''
     });
 
     // select切换
@@ -393,18 +393,27 @@ function Deposite() {
         window.localStorage.setItem('phoneTab', tab);
     }
 
-    const lookAccount = () => {
+    const refreshOrderStatus = () => {
+        setOpenUpdateBtnShow(true)
+        dispatch(getDepositeFiatOrderStatus({
+            payOrderId: chongZhiVal.id,
+        })).then((res) => {
+            let result = res.payload
+            if (result && result.errno === 0 ) {
+              setTiJiaoState(result?.data?.state)
+            }
+        })
         setTimeout(() => {
             setOpenUpdateBtnShow(false)
             setTempAccount(0)
         }, 2000);
-        setTempAccount(fiats[fiatsSelected].balance)
-        if (tempAccount == 0) {
-            setTempAccount(fiats[fiatsSelected].balance)
-        }
-        if (fiats[fiatsSelected].balance > tempAccount) {
-            history.push('/wallet');
-        }
+        // setTempAccount(fiats[fiatsSelected].balance)
+        // if (tempAccount == 0) {
+        //     setTempAccount(fiats[fiatsSelected].balance)
+        // }
+        // if (fiats[fiatsSelected].balance > tempAccount) {
+        //     history.push('/wallet');
+        // }
     }
 
     const backLoading = () => {
@@ -422,23 +431,28 @@ function Deposite() {
         // console.log(symbol); //USGT
         // console.log(id);  //24
 
-        dispatch(getWalletAddress({ networkId: id, symbol: symbol })).then((value) => {
+        dispatch(getWalletAddress({ networkId: id, symbol: symbol })).then((res) => {
             setIsLoading(false);
-            setCryptoOpenLoad(false);
-            let addressDataObj = { ...addressData } || {};
-            if (!addressDataObj[symbol]) {
-                addressDataObj[symbol] = {}
-            }
-            addressDataObj[symbol][id] = value?.payload?.data || ''
-            setAddressData(addressDataObj);
-            if (!value.payload) return;
-            setWalletAddress(value.payload.data);
-            setIsGetWalletAddress(true);
-
-            if (value.payload.data?.address) {
-                setWalletAddressList([...walletAddressList, {
-                    address: value.payload.data?.address ?? '',
-                }])
+            const result = res.payload;
+            if(result.errno === 0) {
+                setCryptoOpenLoad(false);
+                let addressDataObj = { ...addressData } || {};
+                if (!addressDataObj[symbol]) {
+                    addressDataObj[symbol] = {}
+                }
+                addressDataObj[symbol][id] = result?.data || ''
+                setAddressData(addressDataObj);
+                if (!result) return;
+                setWalletAddress(result.data);
+                setIsGetWalletAddress(true);
+    
+                if (result?.data?.address) {
+                    setWalletAddressList([...walletAddressList, {
+                        address: result?.data?.address ?? '',
+                    }])
+                }
+            } else {
+                dispatch(showMessage({ message: t('error_39'), code: 2 }));
             }
 
         });
@@ -462,10 +476,16 @@ function Deposite() {
 
     // 获取nft钱包地址
     const getNftWalletAddressClick = (walltName) => {
-        dispatch(getWalletAddress({ walletName: walltName })).then((value) => {
-            if (!value.payload) return;
-            let resultData = value.payload.data;
-            setNftWalletAddress(resultData);
+        dispatch(getWalletAddress({ walletName: walltName })).then((res) => {
+            setIsLoading(false);
+            const result = res.payload;
+            if(result.errno === 0) { 
+                if (!result) return;
+                let resultData = result?.data;
+                setNftWalletAddress(resultData);
+            } else {
+                dispatch(showMessage({ message: t('error_39'), code: 2 }));
+            }
         });
     };
 
@@ -488,8 +508,12 @@ function Deposite() {
         let result = res.payload;
         if (result) {
             if (result.payUrl) {
-                chongZhiVal.id = result.orderId;
-                chongZhiVal.amount = Number(weight);
+                setChongZhiVal({
+                    ...chongZhiVal,
+                    id: result.orderId,
+                    amount: weight,
+                    currencyCode: currencyCode
+                })
                 const loginType = getUserLoginType(userData);
                 switch (loginType) {
                     case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP: { //telegramWebApp
@@ -507,12 +531,16 @@ function Deposite() {
                 }
                 fbq('track', 'InitiateCheckout');
             }
-            if (result.status === 'failed') {
-                dispatch(showMessage({ message: t('error_5'), code: 2 }));
+            if(result.status === 'wait') {
+                setTiJiaoState(1)
+            }else if(result.status === 'success'){
+                setTiJiaoState(2)
+            }else if (result.status === 'failed') {
+                setTiJiaoState(3)
+                // dispatch(showMessage({ message: t('error_5'), code: 2 }));
             }
         }
-
-        setTimeout(() => setOpenLoad(false), 500);
+        setOpenLoad(false)
     };
 
     // 切换到nft页面，自动获取nft钱包地址
@@ -850,8 +878,9 @@ function Deposite() {
         dispatch(getWalletAddress({
             walletName: 'DeFi',
         })).then(res => {
-            let result = res.payload;
-            if (result) {
+            setIsLoading(false);
+            const result = res.payload;
+            if(result && result.errno === 0) {
                 dispatch(goCenterTransfer({
                     toAddress: result.data,
                     tokenId: param.tokenId,
@@ -863,7 +892,10 @@ function Deposite() {
                         console.log(transferResult);
                     }
                 })
+            } else {
+                dispatch(showMessage({ message: t('error_39'), code: 2 }));
             }
+            
         })
     }
 
@@ -1081,8 +1113,8 @@ function Deposite() {
                 >
                     <div className='addressBigW flex justify-between mt-10'>
                         <div className="userIdW   guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
-                            <div className="addressW2 flex justify-between guoDuDongHua">
-                                <div className='idZi guoDuDongHua' > <span style={{ color: "#ffffff", marginRight: "10px" }}>{t('card_7')}</span>  {userData?.profile?.user?.id}</div>
+                            <div className="addressW2 flex justify-between guoDuDongHua ">
+                                <div className='idZi guoDuDongHua' > <span style={{ color: "#ffffff", marginRight: "10px" }}>UserID</span>  {userData?.profile?.user?.id}</div>
                                 <img onClick={() => {handleCopyText(userData?.profile?.user?.id)}} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"/>
                             </div>
                             <QRCode
@@ -1162,7 +1194,7 @@ function Deposite() {
                             })}
                         </div>
 
-                        <div className='text-16 ml-10 mt-16 mb-16'>{t('card_8')}</div>
+                        <div className='text-16 ml-10 mt-16 mb-16'>{t('card_189')}</div>
                         {/* 新地址 */}
                         <>
                             {walletAddressList.map((addressItem, index) => {
@@ -1787,7 +1819,7 @@ function Deposite() {
                         <div className='addressBigW flex justify-between mt-10'>
                             <div className="userIdW   guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
                                 <div className="addressW2 flex justify-between guoDuDongHua">
-                                    <div className='idZi guoDuDongHua' > <span style={{ color: "#ffffff", marginRight: "10px" }}>{t('card_7')}</span>  {userData?.profile?.user?.id}</div>
+                                    <div className='idZi guoDuDongHua' > <span style={{ color: "#ffffff", marginRight: "10px" }}>UserID</span>  {userData?.profile?.user?.id}</div>
                                     <img onClick={() => {handleCopyText(userData?.profile?.user?.id)}} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"/>
                                 </div>
                                 <QRCode
@@ -2212,83 +2244,136 @@ function Deposite() {
                 open={openAnimateModal}
                 onClose={() => setOpenAnimateModal(false)}
             >
-                <div className='daGouDingWei2' style={{ position: "relative" }}>
-                    <motion.div variants={item} className=' daGouDingWei1' style={{ position: "absolute", width: "100px", height: "100px", left: "0%", right: "0%", margin: "0 auto" }}>
-                        <div className='daGouDingWei1' style={{ position: "absolute" }}>
-                            {
-                                !(tiJiaoState === 2) && <img style={{ margin: "0 auto", width: "60px", height: "60px" }} src='wallet/assets/images/wallet/naoZhong6.png'></img>
-                            }
-                            {
-                                tiJiaoState === 2 && <img style={{ margin: "0 auto", width: "60px", height: "60px" }} src='wallet/assets/images/wallet/naoZhong6_1.png'></img>
-                            }
+
+                {/* 成功*/}
+                {
+                    tiJiaoState === 2 && <div>
+                        <div className='daGouDingWei2' >
+                            <motion.div variants={item} className=' daGouDingWei1' style={{ width: "78px", height: "78px", margin: "20px auto" }}>
+                                <div className='daGouDingWei1' style={{}}>
+                                    <img className='' style={{ width: "78px", height: "78px" }} src='wallet/assets/images/wallet/naoZhong6.png'></img>
+                                </div>
+                            </motion.div>
                         </div>
-                        <div className='daGouDingWei1' style={{ marginLeft: "58px", position: "absolute" }}>
-                            {
-                                zhuanQuan && <img className='chuKuanDongHua' style={{ width: "22px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong3.png'></img>
-                            }
-                            {
-                                !zhuanQuan && tiJiaoState === 1 && <img className='daGouFangDa' style={{ width: "23px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong4.png'></img>
-                            }
-                            {
-                                !zhuanQuan && tiJiaoState === 2 && <img className='daGouFangDa' style={{ width: "23px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong5.png'></img>
-                            }
+
+                        <div className='flex justify-center' style={{ width: "100%" }}>
+                            <motion.div variants={item} style={{ height: "23px", lineHeight: "23px", margin: "0 auto", color: "#2ECB71" }}>
+                                ● {t('errorMsg_1')}
+                            </motion.div>
                         </div>
-                    </motion.div>
-                </div>
 
-                <div style={{ margin: "0 auto", textAlign: "center", marginTop: "70px", height: "23px", fontSize: "16px", color: "#2ECB71" }}>
-                    {
-                        tiJiaoState === 1 && !zhuanQuan && <motion.div variants={item} style={{ height: "23px", lineHeight: "23px" }}>
-                            ● {t('errorMsg_1')}
-                        </motion.div>
-                    }
-                    {
-                        tiJiaoState === 2 && !zhuanQuan && <motion.div variants={item} style={{ height: "23px", lineHeight: "23px", color: "#EE124B" }}>
-                            ● {t('error_36')}
-                        </motion.div>
-                    }
-                </div>
+                        <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", fontSize: "20px", }}> { chongZhiVal?.amount } {chongZhiVal?.currencyCode}</motion.div>
 
-                <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "8px", fontSize: "24px" }}> +100 MMK</motion.div>
+                        <div className='mt-16' style={{ borderTop: "1px solid #2C3950" }}></div>
 
-                <div className='mt-16' style={{ borderTop: "1px solid #2C3950" }}></div>
+                        <Box
+                            className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard px-16"
+                            sx={{
+                                backgroundColor: "#1E293B",
+                                padding: "0rem",
+                                overflow: "hidden",
+                                margin: "1rem auto 0rem auto"
+                            }}
+                        >
+                            <div className='flex justify-content-space mt-16' >
+                                <div style={{ color: "#888B92" }}>ID</div>
+                                <div>{chongZhiVal?.id}</div>
+                            </div>
 
-                <Box
-                    className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard px-16"
-                    sx={{
-                        backgroundColor: "#1E293B",
-                        padding: "0rem",
-                        overflow: "hidden",
-                        margin: "1rem auto 0rem auto"
-                    }}
-                >
-                    <div className='flex justify-content-space mt-16' >
-                        <div style={{ color: "#888B92" }}>{t('home_ID')}</div>
-                        <div>{chongZhiVal.id}</div>
+                            <div className='flex justify-content-space mt-16' >
+                                <div style={{ color: "#888B92" }}>Time</div>
+                                <div>{getNowTime()}</div>
+                            </div>
+                        </Box>
+
+                        <div className='px-16 mt-20 mb-24'>
+                            <LoadingButton
+                                disabled={false}
+                                className="boxCardBtn2"
+                                color="secondary"
+                                loading={false}
+                                variant="contained"
+                                onClick={() => {
+                                }}
+                            >
+                                {t('card_186')}
+                            </LoadingButton>
+                        </div>
                     </div>
+                }
 
-                    <div className='flex justify-content-space mt-16' >
-                        <div style={{ color: "#888B92" }}>{t('home_Time')}</div>
-                        <div>{getNowTime()}</div>
+                {/* 等待*/}
+                {
+                    tiJiaoState === 1 && <div>
+                        <div className='flex justify-center' style={{ width: "100%" }}>
+                            <div className='' style={{ fontSize: "20px" }}>
+                                {t('card_187')}
+                            </div>
+                        </div>
+
+                        <div className='daGouDingWei2' >
+                            <motion.div variants={item} className=' daGouDingWei1' style={{ width: "60px", height: "60px", margin: "20px auto" }}>
+                                <div className='daGouDingWei1' style={{}}>
+                                    <img className='chuKuanDongHua' style={{ width: "60px", height: "60px" }} src='wallet/assets/images/wallet/zhuanQuanChongZhi.png'></img>
+                                </div>
+                            </motion.div>
+                        </div>
+
+                        <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", fontSize: "20px", color: "#ffc600" }}>23:24:59</motion.div>
+
+                        <div style={{ margin: "0 auto", textAlign: "center", height: "23px", fontSize: "14px" }}>
+                            <motion.div variants={item} style={{ height: "23px", lineHeight: "23px" }}>
+                                { chongZhiVal?.amount } {chongZhiVal?.currencyCode}
+                            </motion.div>
+                        </div>
+
+                        <div className='mt-16' style={{ borderTop: "1px solid #2C3950" }}></div>
+
+                        <Box
+                            className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard px-16"
+                            sx={{
+                                backgroundColor: "#1E293B",
+                                padding: "0rem",
+                                overflow: "hidden",
+                                margin: "1rem auto 0rem auto"
+                            }}
+                        >
+                            <div className='flex justify-content-space mt-16' >
+                                <div style={{ color: "#888B92" }}>{t('home_ID')}</div>
+                                <div>{chongZhiVal?.id}</div>
+                            </div>
+                        </Box>
+
+                        <div className='px-16 mt-20 mb-24'>
+                            <LoadingButton
+                                disabled={false}
+                                className="boxCardBtn2"
+                                color="secondary"
+                                loading={openUpdateBtnShow}
+                                variant="contained"
+                                onClick={() => {
+                                    refreshOrderStatus()
+                                }}
+                            >
+                                {t('card_185')}
+                            </LoadingButton>
+                        </div>
                     </div>
-
-                </Box>
-
-                <div className='px-16 mt-20 mb-24'>
-                    <LoadingButton
-                        disabled={false}
-                        className="boxCardBtn2"
-                        color="secondary"
-                        loading={openUpdateBtnShow}
-                        variant="contained"
-                        onClick={() => {
-                            setOpenUpdateBtnShow(true);
-                            lookAccount();
-                        }}
-                    >
-                        {t('card_185')} (9)
-                    </LoadingButton>
-                </div>
+                }
+                {/* 失败*/}
+                {
+                    (tiJiaoState === 3 ||  tiJiaoState === 6) && <div>
+                        <div className='daGouDingWei2' >
+                            <motion.div variants={item} className=' daGouDingWei1' style={{ width: "78px", height: "78px", margin: "20px auto" }}>
+                                <div className='daGouDingWei1' style={{}}>
+                                    <img className='' style={{ width: "78px", height: "78px" }} src='wallet/assets/images/wallet/naoZhong6_1.png'></img>
+                                </div>
+                            </motion.div>
+                        </div>
+                        <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", fontSize: "16px", }}> {t('card_188')}</motion.div>
+                        <div className='mt-36' style={{}}></div>
+                    </div>
+                }
 
             </AnimateModal >
 

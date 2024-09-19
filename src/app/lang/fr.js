@@ -367,8 +367,8 @@ const locale = {
     card_4: "retrait",
     card_5:"acheter",
     card_6:"Créer une adresse",
-    card_7:"ID utilisateur interne",
-    card_8:"adresse externe",
+    card_7:"Transfert",
+    card_8:"Retirer",
     card_9: "Demander une carte",
     card_10: "Solde du portefeuille",
     card_11: "Informations de la carte",
@@ -538,8 +538,10 @@ const locale = {
     card_184: "déduire",
     card_185: "Actualiser",
     card_186: "Allez vérifier",
-    card_187: "En attente de paiement",
-
+    card_187: "En attente de recharge",
+    card_188: "Votre commande a expiré !",
+    kyc_60: "Avant de lier ou de modifier les informations KYC, vous devez d'abord lier un numéro de téléphone ou un e-mail.",
+    card_189: "Adresse Externe",
 
 
 

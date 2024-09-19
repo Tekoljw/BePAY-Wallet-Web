@@ -373,8 +373,8 @@ const locale = {
     card_4: "Send",
     card_5:"Buy",
     card_6:"Create Address",
-    card_7:"Internal User ID",
-    card_8:"External Address",
+    card_7:"Transfer in BeingFi",
+    card_8:"Send/Withdraw",
     card_9: "Apply for card",
     card_10: "Wallet balance",
     card_11: "Card Information",
@@ -545,8 +545,10 @@ const locale = {
     card_184: "deduct",
     card_185: "Refresh",
     card_186: "Go check it",
-    card_187: "Waiting for payment",
-
+    card_187: "Waiting for recharge",
+    card_188: "Your order has timed out!",
+    kyc_60: "Before binding or modifying KYC information, you need to first bind a phone number or email.",
+    card_189: "External Address",
 
 };
 
