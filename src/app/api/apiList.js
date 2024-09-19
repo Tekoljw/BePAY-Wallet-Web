@@ -416,6 +416,11 @@ export default {
         payoutPayWays: {
             url: "/payment/payoutPayWays",
             method: "post",
+        },
+
+        fiatPayQueryOrder: {
+            url: "/payment/fiatPayQueryOrder",
+            method: "post",
         }
 
 },

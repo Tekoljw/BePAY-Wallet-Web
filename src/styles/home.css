@@ -202,6 +202,10 @@
     justify-content: space-between;
 }
 
+.justify-content-space-around {
+    justify-content: space-around;
+}
+
 .hiddenInput {
     width: 0;
     height: 0;
@@ -1874,6 +1878,7 @@ input[type='number'] {
     display: block;
     line-height: inherit;
     padding: 0px;
+    margin-bottom: 3rem;
 }
 
 .btnColorTitleBig:hover {
@@ -2046,7 +2051,7 @@ input[type='number'] {
 
 .recordW {
     width: calc(100% - 3rem);
-    margin: 1.2rem auto 0rem auto;
+    margin: 1.2rem auto 3rem auto;
     background-color: '#1E293B';
 }
 

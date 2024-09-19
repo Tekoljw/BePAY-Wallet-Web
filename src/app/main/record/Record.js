@@ -514,16 +514,21 @@ function Record() {
                                         <div className='flex justify-between '>
                                             <div className='flex'>
                                                 <div className='recordListZi'>{typeList.find(v => {
-                                                    return v.id == (transferItem.type)
-                                                }).label}</div>
-                                                <div className='recordListZi ml-10'>{transferItem.symbol}</div>
+                                                    return v.id == (transferItem.showType)
+                                                })?.label}</div>
+                                                { typeList.find(v => {
+                                                    return v.id == (transferItem.showType)
+                                                    }) ?
+                                                    <div className="recordListZi ml-10">{transferItem.symbol}</div>: 
+                                                    <div className="recordListZi">{transferItem.symbol}</div>
+                                                }
                                             </div>
                                             <div className='recordListZi2'>{transferItem.amount}</div>
                                         </div>
                                         <div className='recordListSmallZi'>{t('home_deposite_24')} <span>{transferItem.balance}</span>
                                         </div>
                                         <div
-                                            className='recordListSmallZi'>{getNowTime(transferItem.createTime * 1000)}</div>
+                                            className='recordListSmallZi'>{getNowTime(transferItem.createTime)}</div>
                                     </div>
                                 )
                             })) : (

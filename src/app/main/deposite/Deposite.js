@@ -50,7 +50,7 @@ import { getCryptoDisplay } from "../../store/wallet/walletThunk";
 import { getDecenterWalletBalance } from "../../store/user/userThunk";
 import FuseLoading from '@fuse/core/FuseLoading';
 import { useTranslation } from "react-i18next";
-import { makeOrder } from "../../store/payment/paymentThunk";
+import { makeOrder, getDepositeFiatOrderStatus } from "../../store/payment/paymentThunk";
 import { showMessage } from 'app/store/fuse/messageSlice';
 import DialogTitle from '@mui/material/DialogTitle';
 import CloseIcon from '@mui/icons-material/Close';
@@ -58,7 +58,7 @@ import Slider from '@mui/material/Slider';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { useStatStyles } from '@chakra-ui/react';
+import { StepStatus, useStatStyles } from '@chakra-ui/react';
 import history from '@history';
 import { local } from 'web3modal';
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -316,6 +316,7 @@ function Deposite() {
     const [chongZhiVal, setChongZhiVal] = useState({
         id: '',
         amount: 0,
+        currencyCode: ''
     });
 
     // select切换
@@ -392,18 +393,27 @@ function Deposite() {
         window.localStorage.setItem('phoneTab', tab);
     }
 
-    const lookAccount = () => {
+    const refreshOrderStatus = () => {
+        setOpenUpdateBtnShow(true)
+        dispatch(getDepositeFiatOrderStatus({
+            payOrderId: chongZhiVal.id,
+        })).then((res) => {
+            let result = res.payload
+            if (result && result.errno === 0 ) {
+              setTiJiaoState(result?.data?.state)
+            }
+        })
         setTimeout(() => {
             setOpenUpdateBtnShow(false)
             setTempAccount(0)
         }, 2000);
-        setTempAccount(fiats[fiatsSelected].balance)
-        if (tempAccount == 0) {
-            setTempAccount(fiats[fiatsSelected].balance)
-        }
-        if (fiats[fiatsSelected].balance > tempAccount) {
-            history.push('/wallet');
-        }
+        // setTempAccount(fiats[fiatsSelected].balance)
+        // if (tempAccount == 0) {
+        //     setTempAccount(fiats[fiatsSelected].balance)
+        // }
+        // if (fiats[fiatsSelected].balance > tempAccount) {
+        //     history.push('/wallet');
+        // }
     }
 
     const backLoading = () => {
@@ -421,23 +431,28 @@ function Deposite() {
         // console.log(symbol); //USGT
         // console.log(id);  //24
 
-        dispatch(getWalletAddress({ networkId: id, symbol: symbol })).then((value) => {
+        dispatch(getWalletAddress({ networkId: id, symbol: symbol })).then((res) => {
             setIsLoading(false);
-            setCryptoOpenLoad(false);
-            let addressDataObj = { ...addressData } || {};
-            if (!addressDataObj[symbol]) {
-                addressDataObj[symbol] = {}
-            }
-            addressDataObj[symbol][id] = value?.payload?.data || ''
-            setAddressData(addressDataObj);
-            if (!value.payload) return;
-            setWalletAddress(value.payload.data);
-            setIsGetWalletAddress(true);
-
-            if (value.payload.data?.address) {
-                setWalletAddressList([...walletAddressList, {
-                    address: value.payload.data?.address ?? '',
-                }])
+            const result = res.payload;
+            if(result.errno === 0) {
+                setCryptoOpenLoad(false);
+                let addressDataObj = { ...addressData } || {};
+                if (!addressDataObj[symbol]) {
+                    addressDataObj[symbol] = {}
+                }
+                addressDataObj[symbol][id] = result?.data || ''
+                setAddressData(addressDataObj);
+                if (!result) return;
+                setWalletAddress(result.data);
+                setIsGetWalletAddress(true);
+    
+                if (result?.data?.address) {
+                    setWalletAddressList([...walletAddressList, {
+                        address: result?.data?.address ?? '',
+                    }])
+                }
+            } else {
+                dispatch(showMessage({ message: t('error_39'), code: 2 }));
             }
 
         });
@@ -461,10 +476,16 @@ function Deposite() {
 
     // 获取nft钱包地址
     const getNftWalletAddressClick = (walltName) => {
-        dispatch(getWalletAddress({ walletName: walltName })).then((value) => {
-            if (!value.payload) return;
-            let resultData = value.payload.data;
-            setNftWalletAddress(resultData);
+        dispatch(getWalletAddress({ walletName: walltName })).then((res) => {
+            setIsLoading(false);
+            const result = res.payload;
+            if(result.errno === 0) { 
+                if (!result) return;
+                let resultData = result?.data;
+                setNftWalletAddress(resultData);
+            } else {
+                dispatch(showMessage({ message: t('error_39'), code: 2 }));
+            }
         });
     };
 
@@ -487,8 +508,12 @@ function Deposite() {
         let result = res.payload;
         if (result) {
             if (result.payUrl) {
-                chongZhiVal.id = result.orderId;
-                chongZhiVal.amount = Number(weight);
+                setChongZhiVal({
+                    ...chongZhiVal,
+                    id: result.orderId,
+                    amount: weight,
+                    currencyCode: currencyCode
+                })
                 const loginType = getUserLoginType(userData);
                 switch (loginType) {
                     case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP: { //telegramWebApp
@@ -506,12 +531,16 @@ function Deposite() {
                 }
                 fbq('track', 'InitiateCheckout');
             }
-            if (result.status === 'failed') {
-                dispatch(showMessage({ message: t('error_5'), code: 2 }));
+            if(result.status === 'wait') {
+                setTiJiaoState(1)
+            }else if(result.status === 'success'){
+                setTiJiaoState(2)
+            }else if (result.status === 'failed') {
+                setTiJiaoState(3)
+                // dispatch(showMessage({ message: t('error_5'), code: 2 }));
             }
         }
-
-        setTimeout(() => setOpenLoad(false), 500);
+        setOpenLoad(false)
     };
 
     // 切换到nft页面，自动获取nft钱包地址
@@ -849,8 +878,9 @@ function Deposite() {
         dispatch(getWalletAddress({
             walletName: 'DeFi',
         })).then(res => {
-            let result = res.payload;
-            if (result) {
+            setIsLoading(false);
+            const result = res.payload;
+            if(result && result.errno === 0) {
                 dispatch(goCenterTransfer({
                     toAddress: result.data,
                     tokenId: param.tokenId,
@@ -862,7 +892,10 @@ function Deposite() {
                         console.log(transferResult);
                     }
                 })
+            } else {
+                dispatch(showMessage({ message: t('error_39'), code: 2 }));
             }
+            
         })
     }
 
@@ -2214,7 +2247,7 @@ function Deposite() {
 
                 {/* 成功*/}
                 {
-                    tiJiaoState === 1 && <div>
+                    tiJiaoState === 2 && <div>
                         <div className='daGouDingWei2' >
                             <motion.div variants={item} className=' daGouDingWei1' style={{ width: "78px", height: "78px", margin: "20px auto" }}>
                                 <div className='daGouDingWei1' style={{}}>
@@ -2229,7 +2262,7 @@ function Deposite() {
                             </motion.div>
                         </div>
 
-                        <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", fontSize: "20px", }}> 990 MMK</motion.div>
+                        <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", fontSize: "20px", }}> { chongZhiVal?.amount } {chongZhiVal?.currencyCode}</motion.div>
 
                         <div className='mt-16' style={{ borderTop: "1px solid #2C3950" }}></div>
 
@@ -2244,7 +2277,7 @@ function Deposite() {
                         >
                             <div className='flex justify-content-space mt-16' >
                                 <div style={{ color: "#888B92" }}>ID</div>
-                                <div>{chongZhiVal.id}</div>
+                                <div>{chongZhiVal?.id}</div>
                             </div>
 
                             <div className='flex justify-content-space mt-16' >
@@ -2258,7 +2291,7 @@ function Deposite() {
                                 disabled={false}
                                 className="boxCardBtn2"
                                 color="secondary"
-                                loading={openUpdateBtnShow}
+                                loading={false}
                                 variant="contained"
                                 onClick={() => {
                                 }}
@@ -2271,7 +2304,7 @@ function Deposite() {
 
                 {/* 等待*/}
                 {
-                    tiJiaoState === 2 && <div>
+                    tiJiaoState === 1 && <div>
                         <div className='flex justify-center' style={{ width: "100%" }}>
                             <div className='' style={{ fontSize: "20px" }}>
                                 {t('card_187')}
@@ -2290,7 +2323,7 @@ function Deposite() {
 
                         <div style={{ margin: "0 auto", textAlign: "center", height: "23px", fontSize: "14px" }}>
                             <motion.div variants={item} style={{ height: "23px", lineHeight: "23px" }}>
-                                990 MMK
+                                { chongZhiVal?.amount } {chongZhiVal?.currencyCode}
                             </motion.div>
                         </div>
 
@@ -2307,7 +2340,7 @@ function Deposite() {
                         >
                             <div className='flex justify-content-space mt-16' >
                                 <div style={{ color: "#888B92" }}>{t('home_ID')}</div>
-                                <div>{chongZhiVal.id}</div>
+                                <div>{chongZhiVal?.id}</div>
                             </div>
                         </Box>
 
@@ -2319,6 +2352,7 @@ function Deposite() {
                                 loading={openUpdateBtnShow}
                                 variant="contained"
                                 onClick={() => {
+                                    refreshOrderStatus()
                                 }}
                             >
                                 {t('card_185')}
@@ -2328,7 +2362,7 @@ function Deposite() {
                 }
                 {/* 失败*/}
                 {
-                    tiJiaoState === 3 && <div>
+                    (tiJiaoState === 3 ||  tiJiaoState === 6) && <div>
                         <div className='daGouDingWei2' >
                             <motion.div variants={item} className=' daGouDingWei1' style={{ width: "78px", height: "78px", margin: "20px auto" }}>
                                 <div className='daGouDingWei1' style={{}}>

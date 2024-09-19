@@ -400,7 +400,7 @@ function Withdraw(props) {
             setOpenLoad(false);
             let result = res.payload
             setGoogleCode('');
-            setOpenPinWindow(false);
+            // setOpenPinWindow(false);
             if (result.errno == -2) {
                 if (!hasAuthGoogle) {
                     setOpenAnimateModal(true);
@@ -485,6 +485,8 @@ function Withdraw(props) {
             checkCode: googleCode
         };
 
+        setOpenLoad(true);
+        setOpenSuccess(false)
         dispatch(sendTips(data)).then((res) => {
             setIsLoadingBtn(false)
             setGoogleCode('');
@@ -580,7 +582,7 @@ function Withdraw(props) {
             // setFee: setFee
         })).then((res) => {
             let resData = res.payload;
-            if (resData.data == 0) {
+            if (resData && resData.data == 0) {
                 setFee(0);
                 return
             }

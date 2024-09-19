@@ -147,10 +147,10 @@ export const getWalletAddress = createAsyncThunk(
         };
 
         const resultData = await React.$api("wallet.getWalletAddress", data);
-        if (resultData.errno === 0) {
-            return resultData;
-        }
-        dispatch(showMessage({ message: t('error_39'), code: 2 }));
+        return resultData
+        // if (resultData.errno === 0) {
+        //     return resultData;
+        // }
     }
 );
 
@@ -171,7 +171,7 @@ export const getAddressListDesc = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData.data;
         }
-        dispatch(showMessage({ message: t('error_39'), code: 2 }));
+        showMessage({ message: t('error_39'), code: 2 });
     }
 );
 

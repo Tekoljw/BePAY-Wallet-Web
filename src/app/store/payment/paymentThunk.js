@@ -344,3 +344,12 @@ export const creditCardCryptoWithdraw = createAsyncThunk(
     }
 );
 
+// 获取法币充值订单状态
+export const getDepositeFiatOrderStatus = createAsyncThunk(
+    'payment/fiatPayQueryOrder',
+    async (settings, { dispatch, getState }) => {
+        const result = await React.$api("payment.fiatPayQueryOrder", settings);
+        return result
+    }
+);
+
