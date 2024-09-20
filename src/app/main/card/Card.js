@@ -1356,15 +1356,15 @@ function Card(props) {
 
                             <div className='flex justify-between mt-10'>
                                 <div className='quanYiHuiZi'>{t('card_39')}</div>
-                                {cardConfigList[cardConfigID].creditType === 2 && (<div>{t('card_12')}</div>)}
-                                {cardConfigList[cardConfigID].creditType === 3 && (<div>{t('card_13')}</div>)}
+                                {cardConfigList[cardConfigID]?.creditType === 2 && (<div>{t('card_12')}</div>)}
+                                {cardConfigList[cardConfigID]?.creditType === 3 && (<div>{t('card_13')}</div>)}
 
                             </div>
 
                             <div className='flex justify-between mt-10'>
                                 <div className='quanYiHuiZi'>{t('card_33')}</div>
                                 <div className='flex'>
-                                    <div className='quanYiZi quanYiHui mr-10'>100 USD</div><div className='quanYiZi quanYiLv'>{cardConfigList[cardConfigID].applyCreditFee} {cardConfigList[cardConfigID].cardSymbol}</div>
+                                    <div className='quanYiZi quanYiHui mr-10'>100 USD</div><div className='quanYiZi quanYiLv'>{cardConfigList[cardConfigID]?.applyCreditFee} {cardConfigList[cardConfigID]?.cardSymbol}</div>
                                 </div>
                             </div>
 

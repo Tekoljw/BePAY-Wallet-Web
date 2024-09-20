@@ -394,7 +394,6 @@ function Withdraw(props) {
             bAppendFee: tmpBAppendFee,
         };
         setOpenLoad(true);
-        setOpenSuccess(false)
 
         dispatch(tokenTransfer(data)).then((res) => {
             setOpenLoad(false);
@@ -486,11 +485,9 @@ function Withdraw(props) {
         };
 
         setOpenLoad(true);
-        setOpenSuccess(false)
         dispatch(sendTips(data)).then((res) => {
             setIsLoadingBtn(false)
             setGoogleCode('');
-            setOpenPinWindow(false);
             let resData = res.payload;
             if (resData.errno == 0) {
                 setCurrRequestId(res.meta.requestId)
@@ -1845,6 +1842,7 @@ function Withdraw(props) {
                         variants={container}
                         initial="hidden"
                         animate="show"
+                        id='pinDivHeight'
                         style={{ height: `${divHeight}px` }}
                     >
                         <div className='dialog-box' >

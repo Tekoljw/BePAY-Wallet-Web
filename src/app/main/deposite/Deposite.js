@@ -64,6 +64,7 @@ import { local } from 'web3modal';
 import LoadingButton from "@mui/lab/LoadingButton";
 import userLoginType from "../../define/userLoginType";
 import { borderTop, width } from '@mui/system';
+import * as _ from 'lodash'
 
 
 const marks = [
@@ -316,8 +317,14 @@ function Deposite() {
     const [chongZhiVal, setChongZhiVal] = useState({
         id: '',
         amount: 0,
-        currencyCode: ''
+        currencyCode: '',
+        successTime: 0
     });
+
+    let timer;
+    let refreshTimer;
+    const [time, setTime] = useState({ hour: 0, minute: 0, second: 0})
+    const [refreshTime, setRefreshTime] = useState(10)
 
     // select切换
     const handleChangeFiats = (event) => {
@@ -401,6 +408,13 @@ function Deposite() {
             let result = res.payload
             if (result && result.errno === 0 ) {
               setTiJiaoState(result?.data?.state)
+              if(result?.data?.successTime){
+                setChongZhiVal({
+                    ...chongZhiVal,
+                    successTime: _.toNumber(result?.data?.successTime)
+                })
+                setRefreshTime(9)
+              }
             }
         })
         setTimeout(() => {
@@ -493,6 +507,7 @@ function Deposite() {
     const fiatRecharge = async (bankID) => {
         if (currencyCode === 'IDR') {
             if (weight < 20000) {
+                setOpenLoad(false)
                 dispatch(showMessage({ message: t('error_4'), code: 2 }));
                 return
             }
@@ -507,6 +522,7 @@ function Deposite() {
 
         let result = res.payload;
         if (result) {
+            setOpenAnimateModal(true);
             if (result.payUrl) {
                 setChongZhiVal({
                     ...chongZhiVal,
@@ -532,6 +548,7 @@ function Deposite() {
                 fbq('track', 'InitiateCheckout');
             }
             if(result.status === 'wait') {
+                timeFun((result.expiredTime))
                 setTiJiaoState(1)
             }else if(result.status === 'success'){
                 setTiJiaoState(2)
@@ -721,6 +738,39 @@ function Deposite() {
         }
     };
 
+    useEffect(()=> {
+        if(refreshTime === 0){
+            setOpenAnimateModal(false);
+            history.push('/wallet/home/wallet');
+        } else {
+            if(tiJiaoState === 2){
+                setTimeout(()=>{
+                    setRefreshTime(refreshTime -1)
+                }, 1000)
+            }
+        }
+    }, [refreshTime])
+    
+    const timeFun = (time) => {
+        let end_time = new Date(time).getTime(),
+        sys_second = (end_time - new Date().getTime());
+        timer = setInterval(() => {
+            if (sys_second > 1000) {
+                sys_second -= 1000;
+                let hour = Math.floor((sys_second / 1000 / 3600) % 24);
+                let minute = Math.floor((sys_second / 1000 / 60) % 60);
+                let second = Math.floor(sys_second / 1000 % 60);
+                setTime({
+                    hour:hour < 10 ? "0" + hour : hour,
+                    minute:minute < 10 ? "0" + minute : minute,
+                    second:second < 10 ? "0" + second : second
+                })
+            } else {
+                setTiJiaoState(6)
+                clearInterval(timer);
+            }
+        }, 1000);
+    }
 
     useEffect(() => {
         // isGetWalletAddress && handleWalletAddress();
@@ -1930,7 +1980,6 @@ function Deposite() {
                                                     onClick={() => {
                                                         setOpenLoad(true);
                                                         fiatRecharge(bankItem.id);
-                                                        setOpenAnimateModal(true);
                                                     }}
                                                 >
                                                     {t('home_borrow_8')}
@@ -2282,7 +2331,7 @@ function Deposite() {
 
                             <div className='flex justify-content-space mt-16' >
                                 <div style={{ color: "#888B92" }}>Time</div>
-                                <div>{getNowTime()}</div>
+                                <div>{getNowTime(chongZhiVal?.successTime)}</div>
                             </div>
                         </Box>
 
@@ -2294,9 +2343,10 @@ function Deposite() {
                                 loading={false}
                                 variant="contained"
                                 onClick={() => {
+                                    history.push('/wallet/home/wallet');
                                 }}
                             >
-                                {t('card_186')}
+                                {t('card_186')} ({refreshTime})
                             </LoadingButton>
                         </div>
                     </div>
@@ -2319,7 +2369,7 @@ function Deposite() {
                             </motion.div>
                         </div>
 
-                        <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", fontSize: "20px", color: "#ffc600" }}>23:24:59</motion.div>
+                        <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", fontSize: "20px", color: "#ffc600" }}>{ `${time.hour}:${time.minute}:${time.second}`}</motion.div>
 
                         <div style={{ margin: "0 auto", textAlign: "center", height: "23px", fontSize: "14px" }}>
                             <motion.div variants={item} style={{ height: "23px", lineHeight: "23px" }}>
