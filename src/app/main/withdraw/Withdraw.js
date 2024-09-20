@@ -1733,7 +1733,7 @@ function Withdraw(props) {
                                         closePinFunc();
                                     }} />
                                 </div>
-                                <div className='PINTitle'>{t('home_wallet_14')}{smallTabValue == 0 ? t('card_8') : t('card_7')}（ <span className='quanYiLv'> {smallTabValue == 0 ? inputVal.address : inputIDVal} </span> ） {t('transfer_1')}</div>
+                                <div className='PINTitle'>{t('home_wallet_14')}{smallTabValue == 0 ? t('card_189') : t('card_7')}（ <span className='quanYiLv'> {smallTabValue == 0 ? inputVal.address : inputIDVal} </span> ） {t('transfer_1')}</div>
                                 <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
                                     <img className='MoneyWithdraw' style={{ borderRadius: '50%'}} src={ arrayLookup(symbolsData, 'symbol', symbol, 'avatar') || '' }></img>
                                     <div className='PINTitle3'>{ symbol }</div>

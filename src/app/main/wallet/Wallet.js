@@ -173,6 +173,8 @@ function Wallet() {
   const [walletDisplayData, setwalletDisplayData] = useState([]);
   const [networkData, setNetworkData] = useState([]);
 
+
+
   useEffect(() => {
     setwalletDisplayData(userData.walletDisplay);
   }, [userData]);
@@ -296,6 +298,7 @@ function Wallet() {
   const [openAnimateModal, setOpenAnimateModal] = useState(false);
   const [cryptoSelect, setCryptoSelect] = useState(0);
   const [fiatSelect, setFiatSelect] = useState(1);
+  const [loadingShow, setLoadingShow] = useState(false);
 
   const mounted = useRef();
   // let fiats = [];
@@ -312,6 +315,13 @@ function Wallet() {
     setInputVal({ ...inputVal, [prop]: event.target.value });
   };
   const [totalBalance, setTotalBalance] = useState(0);
+
+
+  useEffect(() => {
+    if (symbols.length > 0) {
+      setLoadingShow(true);
+    }
+  }, [symbols]);
 
   const handleSelectedSymbol = (type, symbol) => {
     setSelectedSymbol(symbol);
@@ -336,6 +346,8 @@ function Wallet() {
     })
 
   };
+
+
 
   const saveSettingSymbol = async (data) => {
     var openAppId = getOpenAppId();
@@ -740,6 +752,7 @@ function Wallet() {
     setSearchSymbols(tmpSymbols);
     setCryptoDisplayShowData(tmpDisplaySymbols);
   };
+
   useEffect(() => {
     if (!mounted.current) {
       mounted.current = true;
@@ -753,7 +766,7 @@ function Wallet() {
             doSearch(inputVal.searchText);
           }
         }
-      }, 100)
+      }, 0)
     }
   }, [
     symbolsData,
@@ -1359,8 +1372,7 @@ function Wallet() {
 
 
   return (
-    <div>
-      {/*head*/}
+    <div style={{ position: "relative" }}>
       <motion.div variants={container} initial="hidden" animate="show">
         <Box
           component={motion.div}
@@ -1369,8 +1381,6 @@ function Wallet() {
             backgroundColor: "#0E1421",
           }}
         >
-
-
           <motion.div
             variants={container}
             initial="hidden"
@@ -1946,17 +1956,47 @@ function Wallet() {
 
                 {showType === cryptoSelect && walletType === 0 && !doPlus && !isSearch && (
                   <>
-                    <motion.div
-                      variants={container}
-                      initial="hidden"
-                      animate="show"
-                      className="pb-8 "
-                    >
+                    {
+                      loadingShow &&
 
-                      {searchSymbols.map((row, index) => {
-                        if (hideSmall) {
-                          return (
-                            row.dollarFiat > 0.01 && (
+                      <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className="pb-8"
+                      >
+                        {searchSymbols.map((row, index) => {
+                          if (hideSmall) {
+                            return (
+                              row.dollarFiat > 0.01 && (
+                                <motion.div variants={item}
+                                  className={clsx(
+                                    "flex justify-between items-center py-12 wallet-symbol cursor-pointer",
+                                    selectedSymbol === row.symbol &&
+                                    "active-border2"
+                                  )}
+                                  onClick={() => {
+                                    handleSelectedSymbol(1, row.symbol);
+                                  }}
+                                  key={index}
+                                >
+                                  <div className="flex px-10 items-center">
+                                    <img style={{ borderRadius: '50%' }} className="mr-4" width="24" src={row.avatar} alt="" />
+                                    {row.symbol}
+                                  </div>
+                                  {isFait && (
+                                    <div className="px-10">
+                                      {row.currencyAmount}
+                                    </div>
+                                  )}
+                                  {!isFait && (
+                                    <div className="px-10">{row.balance}</div>
+                                  )}
+                                </motion.div>
+                              )
+                            );
+                          } else {
+                            return (
                               <motion.div variants={item}
                                 className={clsx(
                                   "flex justify-between items-center py-12 wallet-symbol cursor-pointer",
@@ -1969,54 +2009,28 @@ function Wallet() {
                                 key={index}
                               >
                                 <div className="flex px-10 items-center">
-                                  <img style={{ borderRadius: '50%' }} className="mr-4" width="24" src={row.avatar} alt="" />
+                                  <img
+                                    style={{ borderRadius: "50%" }}
+                                    className="mr-4"
+                                    width="24"
+                                    src={row.avatar}
+                                    alt=""
+                                  />
                                   {row.symbol}
                                 </div>
                                 {isFait && (
-                                  <div className="px-10">
-                                    {row.currencyAmount}
-                                  </div>
+                                  <div className="px-10">{row.currencyAmount}</div>
                                 )}
                                 {!isFait && (
                                   <div className="px-10">{row.balance}</div>
                                 )}
                               </motion.div>
-                            )
-                          );
-                        } else {
-                          return (
-                            <motion.div variants={item}
-                              className={clsx(
-                                "flex justify-between items-center py-12 wallet-symbol cursor-pointer",
-                                selectedSymbol === row.symbol &&
-                                "active-border2"
-                              )}
-                              onClick={() => {
-                                handleSelectedSymbol(1, row.symbol);
-                              }}
-                              key={index}
-                            >
-                              <div className="flex px-10 items-center">
-                                <img
-                                  style={{ borderRadius: "50%" }}
-                                  className="mr-4"
-                                  width="24"
-                                  src={row.avatar}
-                                  alt=""
-                                />
-                                {row.symbol}
-                              </div>
-                              {isFait && (
-                                <div className="px-10">{row.currencyAmount}</div>
-                              )}
-                              {!isFait && (
-                                <div className="px-10">{row.balance}</div>
-                              )}
-                            </motion.div>
-                          );
-                        }
-                      })}
-                    </motion.div>
+                            );
+                          }
+                        })}
+                      </motion.div>
+                    }
+
                   </>
                 )}
               </motion.div>
@@ -2619,7 +2633,7 @@ function Wallet() {
                 {/* search区域 */}
                 {decentralized != -1 && walletType === 1 && (
                   <div
-                    className="mt-8 px-24 flex justify-between items-center testRed"
+                    className="mt-8 px-24 flex justify-between items-center "
                     style={{
                       marginTop: 0,
                       marginBottom: "1rem",
@@ -3173,10 +3187,44 @@ function Wallet() {
               </div>
             </DialogContent>
           </BootstrapDialog>
-
         </Box>
       </motion.div >
+      {/* {
+        !loadingShow &&
+        <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }}>
+          <div className="loadingChuang1">
+            <div className="loadingChuangTiao1"></div>
+            <div className="loadingChuangTiao2"></div>
+            <div className="loadingChuangTiao1"></div>
+            <div className="loadingChuangTiao2"></div>
+          </div>
 
+          <div className="loadingChuang1">
+            <div className="loadingChuangTiao1"></div>
+            <div className="loadingChuangTiao2"></div>
+            <div className="loadingChuangTiao1"></div>
+            <div className="loadingChuangTiao2"></div>
+            <div className="loadingChuangTiao1"></div>
+            <div className="loadingChuangTiao2"></div>
+            <div className="loadingChuangTiao1"></div>
+            <div className="loadingChuangTiao2"></div>
+            <div className="loadingChuangTiao1"></div>
+            <div className="loadingChuangTiao2"></div>
+          </div>
+
+          <div className="loadingChuang1">
+            <div className="loadingChuangTiao1"></div>
+            <div className="loadingChuangTiao2"></div>
+            <div className="loadingChuangTiao1"></div>
+            <div className="loadingChuangTiao2"></div>
+            <div className="loadingChuangTiao1"></div>
+            <div className="loadingChuangTiao2"></div>
+            <div className="loadingChuangTiao1"></div>
+            <div className="loadingChuangTiao2"></div>
+          </div>
+
+        </div>
+      } */}
     </div >
   );
 }
