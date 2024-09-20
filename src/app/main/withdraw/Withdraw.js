@@ -1162,8 +1162,7 @@ function Withdraw(props) {
                                                 />
                                                 <div className='flex pasteSty  items-center'>
                                                     <div className='paste-btn' onClick={() => {
-                                                        const clipPromise = navigator.clipboard.readText();
-                                                        clipPromise.then(clipText => {
+                                                        navigator.clipboard.readText().then(clipText => {
                                                             changeAddress('address', clipText)
                                                         })
                                                     }}>{t('home_withdraw_11')}</div>
@@ -1286,10 +1285,9 @@ function Withdraw(props) {
                                                 />
                                                 <div className='flex pasteSty  items-center'>
                                                     <div className='paste-btn' onClick={() => {
-                                                        setTimeout(async () => {
-                                                            const clipText = await navigator.clipboard.readText();
-                                                            setInputIDVal(clipText)
-                                                            }, 1000);
+                                                            navigator.clipboard.readText().then(clipText => {
+                                                                setInputIDVal(clipText)
+                                                            });
                                                     }}>{t('home_withdraw_11')}</div>
                                                     <img className='pasteJianTou' src="wallet/assets/images/withdraw/pasteJianTou.png" alt="" onClick={() => {
                                                         setOpenPasteWindow(true)
@@ -1414,7 +1412,7 @@ function Withdraw(props) {
                                                     >
                                                         {item}
                                                     </Typography>
-                                                    <IconButton onClick={() => { handleCopyText(item) }}>
+                                                    <IconButton onClick={() => { handleCopyText(item).then(r =>{}) }}>
                                                         <img src="wallet/assets/images/deposite/copy.png" alt="" />
                                                     </IconButton>
                                                     <IconButton onClick={() => { del(item) }}>
