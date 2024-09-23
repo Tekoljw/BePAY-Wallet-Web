@@ -491,17 +491,16 @@ function Fiat(props) {
                         setCorrectPin(true);
                     }
                 })
+            } else { // 创建pin
+                dispatch(createPin({
+                    paymentPassword: tmpPin
+                })).then((res) => {
+                    if (res.payload) {
+                        setHasPin(true)
+                        closeCreatePinFunc()
+                    }
+                })
             }
-            // } else { // 创建pin
-            //     dispatch(createPin({
-            //         paymentPassword: tmpPin
-            //     })).then((res) => {
-            //         if (res.payload) {
-            //             setHasPin(true)
-            //             closeCreatePinFunc()
-            //         }
-            //     })
-            // }
         }
     }
 

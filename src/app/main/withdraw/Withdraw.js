@@ -402,6 +402,7 @@ function Withdraw(props) {
             // setOpenPinWindow(false);
             if (result.errno == -2) {
                 if (!hasAuthGoogle) {
+                    closePinFunc()
                     setOpenAnimateModal(true);
                     return;
                 }
@@ -498,6 +499,7 @@ function Withdraw(props) {
                 }, 1200);
             } else if (resData.errno == -2) {
                 if (!hasAuthGoogle) {
+                    closePinFunc()
                     setTimeout(() => {
                         setOpenAnimateModal(true);
                     }, 300)
@@ -909,19 +911,18 @@ function Withdraw(props) {
                         setCorrectPin(true);
                     }
                 })
+            } else { // 创建pin
+                setOpenPinWindow(false);
+                dispatch(createPin({
+                    paymentPassword: tmpPin
+                })).then((res) => {
+                    if (res.payload) {
+                        setHasPin(true)
+                        closeCreatePinFunc()
+                    }
+                })
             }
-            // } else { // 创建pin
-            //     setOpenPinWindow(false);
-            //     dispatch(createPin({
-            //         paymentPassword: tmpPin
-            //     })).then((res) => {
-            //         if (res.payload) {
-            //             setHasPin(true)
-            //             closeCreatePinFunc()
-            //         }
-            //     })
-            // }
-        }
+        } 
     }
 
     useEffect(() => {
