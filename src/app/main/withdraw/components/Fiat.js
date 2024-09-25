@@ -42,6 +42,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import AnimateModal from "../../../components/FuniModal";
 import InputLabel from '@mui/material/InputLabel';
 import FuseLoading from '@fuse/core/FuseLoading';
+import { fontSize } from '@mui/system';
 
 
 const container = {
@@ -225,7 +226,7 @@ function Fiat(props) {
                     if (!hasAuthGoogle) {
                         setOpenAnimateModal(true);
                         return;
-                    }else{
+                    } else {
                         openGoogleCodeFunc()
                         return
                     }
@@ -298,8 +299,8 @@ function Fiat(props) {
         }
     };
 
-    useEffect( ()=>{
-        if(fiatVerifiedAuth){
+    useEffect(() => {
+        if (fiatVerifiedAuth) {
             setOpenGoogleCode(true);
         }
     }, [fiatVerifiedAuth])
@@ -463,7 +464,7 @@ function Fiat(props) {
 
         setInputVal({ ...inputVal, amount: tmpText == 0 ? '' : tmpText });
     }
-    
+
     // 输入Pin
     const handleDoPin = (text) => {
         if (textSelect) {
@@ -585,7 +586,7 @@ function Fiat(props) {
                     setFiatSelect(tmpFiatSelect);
                 }
             })
-        }else{ //telegram小程序的标题语言处理
+        } else { //telegram小程序的标题语言处理
             setRanges([t('home_deposite_1'), t('home_deposite_2')]);
         }
 
@@ -1473,22 +1474,30 @@ function Fiat(props) {
                         {openSuccess &&
                             <div id='pinDivHeight'>
                                 <div className='pinWindow'>
+
                                     <div className='flex'>
-                                        <div className='PINTitle2'>{t('card_65')}</div>
+                                        <div className='PINTitle2' style={{ marginBottom: "1rem" }}>{t('card_65')}</div>
                                         <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                             closePinFunc();
                                         }} />
                                     </div>
-                                    <div className='PINTitle'>{t('home_wallet_14')}{smallTabValue == 0 ? t('card_189') : t('card_7')}（ {smallTabValue == 0 ? inputVal.address : inputVal.userId} ）{t('transfer_1')}</div>
-                                    <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
-                                        { fiats && fiats[fiatsSelected] && <img className='MoneyWithdraw' src={ fiats[fiatsSelected].avatar}></img>}
-                                        <div className='PINTitle3'>{ currencyCode }</div>
-                                        <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")} onClick={() => {
-                                            setTextSelect(!textSelect)
-                                            setShowGuangBiao(true)
-                                        }}>
-                                            {inputVal.amount} <span className={clsx("", !showGuangBiao ? 'guangBiaoNo' : 'guangBiao')} >︱</span>
+                                    <div className='PINTitle' style={{ color: "#909FB4", paddingBottom: "1rem", fontSize: "16px" }} >{smallTabValue == 0 ? t('card_189') : t('card_7')}</div>
+
+                                    <div style={{ fontSize: smallTabValue == 0 ? "14px" : "22px", textAlign: "center", color: "#12C1A2" }}> {smallTabValue == 0 ? inputVal.accountNo : inputVal.userId} </div>
+                                    <div className='flex justify-center mt-10' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "2rem" }}>
+                                        {fiats && fiats[fiatsSelected] && <img className='MoneyWithdraw' src={fiats[fiatsSelected].avatar}></img>}
+                                        <div className='PINTitle3'>{currencyCode}</div>
+
+                                        <div className='flex'>
+                                            <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")}>
+                                                {inputVal.amount} <span className={clsx("", !showGuangBiao ? 'guangBiaoNo' : 'guangBiao')} >︱</span>
+                                            </div>
+                                            <img src="wallet/assets/images/deposite/bianJiBi.png" className='ml-4 mt-4' style={{ width: "26px", height: "26px" }} onClick={() => {
+                                                setTextSelect(!textSelect)
+                                                setShowGuangBiao(!textSelect)
+                                            }} />
                                         </div>
+
                                     </div>
                                     <div className='flex justify-between mt-10'>
                                         <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[0] ? '●' : ''}</div></div>
@@ -1580,7 +1589,7 @@ function Fiat(props) {
                                             onTouchEnd={changeToWhite}
                                             onTouchCancel={changeToWhite}
                                             onClick={() => {
-                                                if(pin && pin.length === 6 && correctPin){
+                                                if (pin && pin.length === 6 && correctPin) {
                                                     handleSubmit()
                                                 }
                                             }}>{t('card_30')}</div>
@@ -2135,7 +2144,7 @@ function Fiat(props) {
                     </div>
                 </AnimateModal>
 
-            </div>
+            </div >
         </div >
     )
 }

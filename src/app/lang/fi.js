@@ -541,7 +541,23 @@ const locale = {
     card_188: "Tilauksesi on vanhentunut!",
     kyc_60: "Ennen kuin sitoo tai muuttaa KYC-tietoja, sinun on ensin liitettävä puhelinnumero tai sähköpostiosoite.",
     card_189: "Ulkoinen Osoite",
+    card_190: "verkkopankkikortti",
+    card_191: "Verkkokauppakortti",
+    card_192: "Elinkustannuskortti",
+    card_193: "Mainoskortti",
+    card_194: "Työhankintakortti",
 
+
+    
+    
+    
+
+    
+
+    
+
+    
+    
 
 
     };

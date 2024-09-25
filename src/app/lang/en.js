@@ -549,7 +549,23 @@ const locale = {
     card_188: "Your order has timed out!",
     kyc_60: "Before binding or modifying KYC information, you need to first bind a phone number or email.",
     card_189: "External Address",
+    card_190: "online payment card",
+    card_191: "Online shopping card",
+    card_192: "Living Expense Card",
+    card_193: "Advertisement Card",
+    card_194: "Job Procurement Card",
 
+
+    
+    
+    
+
+    
+
+    
+
+    
+    
 };
 
 export default locale;

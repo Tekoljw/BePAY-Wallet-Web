@@ -194,6 +194,10 @@ function Deposite() {
 
     };
 
+    const divRefs = useRef([]);
+    const divRefsParent = useRef([]);
+
+
     // 创建处理滑块变化的函数
     const handleSliderChange = (e) => {
         const value = e.target.value;
@@ -892,7 +896,7 @@ function Deposite() {
                     setFiatSelect(tmpFiatSelect);
                 }
             })
-        }else{ //telegram小程序的标题语言处理
+        } else { //telegram小程序的标题语言处理
             setRanges([t('home_deposite_1'), t('home_deposite_2')]);
         }
 
@@ -1086,24 +1090,18 @@ function Deposite() {
     }
 
 
-    const divRefs = useRef([]);
-    const divRefsParent = useRef([]);
-    const [widths, setWidths] = useState([]);
-    const [widthsParent, setWidthsParent] = useState([]);
 
     useEffect(() => {
-        const newWidths = divRefs.current.map(div => div ? div.getBoundingClientRect().width : 0);
-        const newWidthsParent = divRefsParent.current.map(div => div ? div.getBoundingClientRect().width : 0);
-        setWidths(newWidths);
-        setWidthsParent(newWidthsParent);
-        
-        walletAddressList.map((item, index) => {
-            if ((newWidths[index] + 16) > widthsParent[0]) {
-                divRefs.current[index].style.fontSize = '1.1rem';
-            } else {
-                divRefs.current[index].style.fontSize = '1.2rem';
-            }
-        })
+        setTimeout(() => {
+            divRefs.current.forEach(div => {
+                if (div) {
+                    div.style.fontSize = '1.2rem';
+                    if ((div.getBoundingClientRect().width + 22 + 16) > (divRefsParent.current[0]?.getBoundingClientRect().width)) {
+                        div.style.fontSize = '0.95rem';
+                    }
+                }
+            });
+        }, 0);
     }, [walletAddressList]);
 
 
@@ -1298,9 +1296,10 @@ function Deposite() {
                                             </div>
                                         </div>
                                         <div className='addressBigW flex justify-between mt-10'>
-                                            <div className="addressW guoDuDongHua" style={{ height: selectWalletAddressIndex == index ? "22rem" : '4.2rem' }}>
+                                            <div
+                                                ref={el => (divRefsParent.current[index] = el)}
+                                                className="addressW guoDuDongHua" style={{ height: selectWalletAddressIndex == index ? "22rem" : '4.2rem' }}>
                                                 <div
-                                                    ref={el => (divRefsParent.current[index] = el)}
                                                     className="addressW2 flex justify-between guoDuDongHua">
                                                     <div
                                                         ref={el => (divRefs.current[index] = el)}

@@ -545,7 +545,23 @@ const locale = {
     card_188: "Ihre Bestellung ist abgelaufen!",
     kyc_60: "Bevor Sie KYC-Informationen verknüpfen oder ändern, müssen Sie zuerst eine Telefonnummer oder E-Mail-Adresse verknüpfen.",
     card_189: "Externe Adresse",
+    card_190: "Online-Zahlungskarte",
+    card_191: "Online-Einkaufskarte",
+    card_192: "Lebensverbrauchskarte",
+    card_193: "Werbekarte",
+    card_194: "Arbeitsbeschaffungskarte",
 
+
+    
+    
+    
+
+    
+
+    
+
+    
+    
 
 };
 

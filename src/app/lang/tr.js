@@ -540,7 +540,23 @@ const locale = {
     card_188: "Siparişinizin süresi doldu!",
     kyc_60: "KYC bilgilerini bağlamadan veya değiştirmeden önce, önce bir telefon numarası veya e-posta bağlamanız gerekir.",
     card_189: "Dış Adres",
+    card_190: "çevrimiçi ödeme kartı",
+    card_191: "Çevrimiçi alışveriş kartı",
+    card_192: "Yaşam Giderleri Kartı",
+    card_193: "Reklam Kartı",
+    card_194: "İş Tedarik Kartı",
 
+
+    
+    
+    
+
+    
+
+    
+
+    
+    
 
 
 

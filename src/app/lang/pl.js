@@ -543,7 +543,23 @@ const locale = {
     card_188: "Twoje zamówienie wygasło!",
     kyc_60: "Przed połączeniem lub modyfikacją informacji KYC, należy najpierw połączyć numer telefonu lub e-mail.",
     card_189: "Adres Zewnętrzny",
+    card_190: "karta płatnicza online",
+    card_191: "Karta zakupów online",
+    card_192: "Karta Wydatków na Życie",
+    card_193: "Karta Reklamowa",
+    card_194: "Karta Nabycia Pracy",
 
+
+    
+    
+    
+
+    
+
+    
+
+    
+    
 
 
 

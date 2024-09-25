@@ -542,7 +542,23 @@ const locale = {
     card_188: "Pesanan Anda telah kedaluwarsa!",
     kyc_60: "Sebelum mengikat atau mengubah informasi KYC, Anda harus terlebih dahulu mengikat nomor telepon atau email.",
     card_189: "Alamat Eksternal",
+    card_190: "kartu pembayaran online",
+    card_191: "Kartu belanja online",
+    card_192: "Kartu Pengeluaran Hidup",
+    card_193: "Kartu Iklan",
+    card_194: "Kartu Pengadaan Kerja",
 
+
+    
+    
+    
+
+    
+
+    
+
+    
+    
 
 
     };

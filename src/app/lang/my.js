@@ -542,7 +542,23 @@ const locale = {
     card_188: "Pesanan anda telah tamat masa!",
     kyc_60: "Sebelum mengikat atau mengubah maklumat KYC, anda perlu terlebih dahulu mengikat nombor telefon atau emel.",
     card_189: "Alamat Luaran",
+    card_190: "kad pembayaran dalam talian",
+    card_191: "Kad membeli-belah dalam talian",
+    card_192: "Kad Perbelanjaan Hidup",
+    card_193: "Kad Iklan",
+    card_194: "Kad Perolehan Pekerjaan",
 
+
+    
+    
+    
+
+    
+
+    
+
+    
+    
 
 };
 

@@ -532,7 +532,11 @@ const locale = {
     card_188: "Đơn hàng của bạn đã hết thời gian!",
     kyc_60: "Trước khi liên kết hoặc sửa đổi thông tin KYC, bạn cần liên kết số điện thoại hoặc email trước.",
     card_189: "Địa Chỉ Bên Ngoài",
-
+    card_190: "thẻ thanh toán trực tuyến",
+    card_191: "Thẻ mua sắm trực tuyến",
+    card_192: "Thẻ Chi Tiêu Sinh Hoạt",
+    card_193: "Thẻ Quảng Cáo",
+    card_194: "Thẻ Mua Sắm Công Việc",
 
     
     };

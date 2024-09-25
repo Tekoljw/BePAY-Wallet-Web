@@ -542,7 +542,23 @@ const locale = {
     card_188: "Votre commande a expiré !",
     kyc_60: "Avant de lier ou de modifier les informations KYC, vous devez d'abord lier un numéro de téléphone ou un e-mail.",
     card_189: "Adresse Externe",
+    card_190: "carte de paiement en ligne",
+    card_191: "Carte de shopping en ligne",
+    card_192: "Carte de Dépenses Quotidiennes",
+    card_193: "Carte Publicitaire",
+    card_194: "Carte d'Approvisionnement de Travail",
 
+
+    
+    
+    
+
+    
+
+    
+
+    
+    
 
 
 };

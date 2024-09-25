@@ -543,6 +543,22 @@ const locale = {
     card_188: "Ang iyong order ay nag-expire na!",
     kyc_60: "Bago mag-bind o magbago ng impormasyon ng KYC, kailangan mo munang i-bind ang numero ng telepono o email.",
     card_189: "Panlabas na Address",
+    card_190: "online payment card",
+    card_191: "Online shopping card",
+    card_192: "Kard ng Gastos sa Pamumuhay",
+    card_193: "Ad Card",
+    card_194: "Kard ng Pagkuha ng Trabaho",
+
+
+    
+    
+    
+
+    
+
+    
+
+    
     
 
 
