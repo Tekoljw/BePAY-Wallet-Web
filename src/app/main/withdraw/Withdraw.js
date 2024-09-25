@@ -1147,7 +1147,7 @@ function Withdraw(props) {
                                         />
                                     ))}
                                 </Tabs>
-                                <!-->通过地址转账<-->
+                                {/*通过地址转账*/}
                                 {
                                     smallTabValue === 0 && <div className="px-10 ">
                                         <div className="flex items-center justify-between">
@@ -1273,7 +1273,7 @@ function Withdraw(props) {
                                         <div className='mb-40'></div>
                                     </div>
                                 }
-                                <!-->通过内部id转账<-->
+                                {/*通过内部id转账*/}
                                 {
                                     smallTabValue === 1 && <div className="px-10 ">
                                         <div className="flex items-center justify-between ">
