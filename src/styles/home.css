@@ -1396,7 +1396,7 @@ input[type='number'] {
 }
 
 .card1Bg {
-    background-image: url("../../public/assets/images/card/card1.png");
+    /* background-image: url("../../public/assets/images/card/card1.png"); */
     background-size: cover;
     background-position: center;
 }
@@ -2369,6 +2369,7 @@ input[type='number'] {
 }
 
 .cardSelectBg {
+    margin-bottom: 5rem;
     padding: '0 1.5rem 0rem 1.5rem';
 }
 
