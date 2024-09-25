@@ -532,10 +532,10 @@ function Fiat(props) {
     };
 
     useEffect(() => {
-        getSettingSymbol().then((res) => {
-            var currencyType = res.data?.data?.setting?.currencyType
-            console.log(currencyType);
-            if (loginType !== "telegram_web_app") {
+        if (loginType !== "telegram_web_app") {
+            getSettingSymbol().then((res) => {
+                var currencyType = res.data?.data?.setting?.currencyType
+                console.log(currencyType);
                 if (currencyType) {
                     if (currencyType == 1) {
                         tmpRanges = [
@@ -556,8 +556,7 @@ function Fiat(props) {
                     setRanges(tmpRanges);
                     setCryptoSelect(tmpCryptoSelect);
                     setFiatSelect(tmpFiatSelect);
-                }
-                else if (userData.profile?.loginType !== "unknown") {
+                } else if (userData.profile?.loginType !== "unknown") {
                     var tmpRanges = [
                         t('home_deposite_2'), t('home_deposite_1')
                         // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
@@ -586,8 +585,10 @@ function Fiat(props) {
                     setCryptoSelect(tmpCryptoSelect);
                     setFiatSelect(tmpFiatSelect);
                 }
-            }
-        })
+            })
+        }else{ //telegram小程序的标题语言处理
+            setRanges([t('home_deposite_1'), t('home_deposite_2')]);
+        }
 
         setHasPin(userData.profile?.user?.hasSetPaymentPassword ?? false)
 

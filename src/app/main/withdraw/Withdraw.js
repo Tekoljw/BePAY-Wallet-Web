@@ -928,10 +928,10 @@ function Withdraw(props) {
     }
 
     useEffect(() => {
-        getSettingSymbol().then((res) => {
-            var currencyType = res.data?.data?.setting?.currencyType
-            console.log(currencyType);
-            if (loginType !== "telegram_web_app") {
+        if (loginType !== "telegram_web_app") {
+            getSettingSymbol().then((res) => {
+                var currencyType = res.data?.data?.setting?.currencyType
+                console.log(currencyType);
                 if (currencyType) {
                     if (currencyType == 1) {
                         tmpRanges = [
@@ -952,8 +952,7 @@ function Withdraw(props) {
                     setRanges(tmpRanges);
                     setCryptoSelect(tmpCryptoSelect);
                     setFiatSelect(tmpFiatSelect);
-                }
-                else if (userData.profile?.loginType !== "unknown") {
+                } else if (loginType !== "unknown") {
                     var tmpRanges = [
                         t('home_deposite_2'), t('home_deposite_1')
                         // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
@@ -961,6 +960,7 @@ function Withdraw(props) {
                     var tmpCryptoSelect = 1;
                     var tmpFiatSelect = 0;
                     if (userData.profile.wallet?.Crypto < userData.profile.wallet?.Fiat) {
+
                     } else if (userData.profile.wallet?.Crypto > userData.profile.wallet?.Fiat) {
                         tmpRanges = [
                             t('home_deposite_1'), t('home_deposite_2')
@@ -969,7 +969,7 @@ function Withdraw(props) {
                         tmpCryptoSelect = 0;
                         tmpFiatSelect = 1;
                     } else {
-                        if (userData.profile?.loginType === "web3_wallet") {
+                        if (loginType === "web3_wallet") {
                             tmpRanges = [
                                 t('home_deposite_1'), t('home_deposite_2')
                                 // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
@@ -982,9 +982,10 @@ function Withdraw(props) {
                     setCryptoSelect(tmpCryptoSelect);
                     setFiatSelect(tmpFiatSelect);
                 }
-            }
-        })
-
+            })
+        }else{ //telegram小程序的标题语言处理
+            setRanges([t('home_deposite_1'), t('home_deposite_2')]);
+        }
         setHasPin(userData.profile?.user?.hasSetPaymentPassword ?? false)
 
     }, [userData.profile]);
@@ -1146,7 +1147,7 @@ function Withdraw(props) {
                                         />
                                     ))}
                                 </Tabs>
-
+                                <!-->通过地址转账<-->
                                 {
                                     smallTabValue === 0 && <div className="px-10 ">
                                         <div className="flex items-center justify-between">
@@ -1272,7 +1273,7 @@ function Withdraw(props) {
                                         <div className='mb-40'></div>
                                     </div>
                                 }
-
+                                <!-->通过内部id转账<-->
                                 {
                                     smallTabValue === 1 && <div className="px-10 ">
                                         <div className="flex items-center justify-between ">

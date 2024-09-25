@@ -167,7 +167,6 @@ function Wallet() {
   ]);
   const [userSetting, setUserSetting] = useState({});
   const [isOpenEye, setIsOpenEye] = useState(false);
-
   // const walletDisplayData = userData.walletDisplay || [];
   // const walletDisplayData =  [];
   const [walletDisplayData, setwalletDisplayData] = useState([]);
@@ -458,60 +457,63 @@ function Wallet() {
 
   useEffect(() => {
     if (JSON.stringify(userData.profile) !== '{}') {
-      getSettingSymbol().then((res) => {
-        var currencyType = res.data?.data?.setting?.currencyType
-        if (currencyType) {
-          if (currencyType == 1) {
-            tmpRanges = [
-              t('home_deposite_1'), t('home_deposite_2')
-              // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
-            ];
-            tmpCryptoSelect = 0;
-            tmpFiatSelect = 1;
-          } else {
-            console.log('存在.......');
-            var tmpRanges = [
-              t('home_deposite_2'), t('home_deposite_1')
-              // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
-            ];
-            var tmpCryptoSelect = 1;
-            var tmpFiatSelect = 0;
-          }
-
-          setRanges(tmpRanges);
-          setCryptoSelect(tmpCryptoSelect);
-          setFiatSelect(tmpFiatSelect);
-        }
-        else if (userData.profile?.loginType !== "unknown") {
-          var tmpRanges = [
-            t('home_deposite_2'), t('home_deposite_1')
-            // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
-          ];
-          var tmpCryptoSelect = 1;
-          var tmpFiatSelect = 0;
-          if (userData.profile.wallet?.Crypto < userData.profile.wallet?.Fiat) {
-          } else if (userData.profile.wallet?.Crypto > userData.profile.wallet?.Fiat) {
-            tmpRanges = [
-              t('home_deposite_1'), t('home_deposite_2')
-              // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
-            ];
-            tmpCryptoSelect = 0;
-            tmpFiatSelect = 1;
-          } else {
-            if (userData.profile?.loginType === "web3_wallet") {
+      if (loginType !== "telegram_web_app") {
+        getSettingSymbol().then((res) => {
+          var currencyType = res.data?.data?.setting?.currencyType
+          if (currencyType) {
+            if (currencyType == 1) {
               tmpRanges = [
                 t('home_deposite_1'), t('home_deposite_2')
                 // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
               ];
               tmpCryptoSelect = 0;
               tmpFiatSelect = 1;
+            } else {
+              console.log('存在.......');
+              var tmpRanges = [
+                t('home_deposite_2'), t('home_deposite_1')
+                // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
+              ];
+              var tmpCryptoSelect = 1;
+              var tmpFiatSelect = 0;
             }
+
+            setRanges(tmpRanges);
+            setCryptoSelect(tmpCryptoSelect);
+            setFiatSelect(tmpFiatSelect);
+          } else if (loginType !== "unknown") {
+            var tmpRanges = [
+              t('home_deposite_2'), t('home_deposite_1')
+              // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
+            ];
+            var tmpCryptoSelect = 1;
+            var tmpFiatSelect = 0;
+            if (userData.profile.wallet?.Crypto < userData.profile.wallet?.Fiat) {
+            } else if (userData.profile.wallet?.Crypto > userData.profile.wallet?.Fiat) {
+              tmpRanges = [
+                t('home_deposite_1'), t('home_deposite_2')
+                // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
+              ];
+              tmpCryptoSelect = 0;
+              tmpFiatSelect = 1;
+            } else {
+              if (loginType === "web3_wallet") {
+                tmpRanges = [
+                  t('home_deposite_1'), t('home_deposite_2')
+                  // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
+                ];
+                tmpCryptoSelect = 0;
+                tmpFiatSelect = 1;
+              }
+            }
+            setRanges(tmpRanges);
+            setCryptoSelect(tmpCryptoSelect);
+            setFiatSelect(tmpFiatSelect);
           }
-          setRanges(tmpRanges);
-          setCryptoSelect(tmpCryptoSelect);
-          setFiatSelect(tmpFiatSelect);
-        }
-      })
+        })
+      }
+    }else{ //telegram小程序的标题语言处理
+      setRanges([t('home_deposite_1'), t('home_deposite_2')]);
     }
     // dispatch(getCurrencySelect());
   }, [userData.profile]);

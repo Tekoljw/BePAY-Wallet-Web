@@ -454,7 +454,6 @@ function Deposite() {
             } else {
                 dispatch(showMessage({ message: t('error_39'), code: 2 }));
             }
-
         });
     };
 
@@ -783,10 +782,11 @@ function Deposite() {
         return res;
     };
     useEffect(() => {
-        getSettingSymbol().then((res) => {
-            var currencyType = res.data?.data?.setting?.currencyType
-            console.log(currencyType, 'currencyType.....');
-            if (loginType !== "telegram_web_app") {
+        if (loginType !== "telegram_web_app") {
+            getSettingSymbol().then((res) => {
+                var currencyType = res.data?.data?.setting?.currencyType
+                console.log(currencyType, 'currencyType.....');
+
                 if (currencyType) {
                     if (currencyType == 1) {
                         tmpRanges = [
@@ -808,8 +808,7 @@ function Deposite() {
                     setRanges(tmpRanges);
                     setCryptoSelect(tmpCryptoSelect);
                     setFiatSelect(tmpFiatSelect);
-                }
-                else if (userData.profile?.loginType !== "unknown") {
+                } else if (userData.profile?.loginType !== "unknown") {
                     var tmpRanges = [
                         t('home_deposite_2'), t('home_deposite_1')
                         // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
@@ -839,8 +838,10 @@ function Deposite() {
                     setCryptoSelect(tmpCryptoSelect);
                     setFiatSelect(tmpFiatSelect);
                 }
-            }
-        })
+            })
+        }else{ //telegram小程序的标题语言处理
+            setRanges([t('home_deposite_1'), t('home_deposite_2')]);
+        }
 
     }, [userData.profile]);
 
@@ -1593,7 +1594,6 @@ function Deposite() {
                                         <div className='text-16 txtColorTitleD' style={{ width: "54px", textAlign: "center", height: "36px", lineHeight: "36px" }} >MAX</div>
                                     </div> */}
                                     <Box sx={{ width: 300 }} >
-
                                         <Slider
                                             style={{ marginLeft: '30px' }}
                                             marks={marks}
@@ -1646,7 +1646,6 @@ function Deposite() {
                                     </FormControl> */}
                                 </Box>
                             </DialogContent>
-
 
                             <DialogActions className='mb-20'>
                                 <Button
