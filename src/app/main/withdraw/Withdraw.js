@@ -1731,7 +1731,7 @@ function Withdraw(props) {
                                     }} />
                                 </div>
                                 <div className='PINTitle' style={{ color: "#909FB4", paddingBottom: "1rem", fontSize: "16px" }}>{smallTabValue == 0 ? t('card_189') : t('card_7')}</div>
-                                <div className='' style={{ fontSize: smallTabValue == 0 ? "12px" : "22px", textAlign: "center", color: "#12C1A2" }}> {smallTabValue == 0 ? inputVal.address : inputIDVal} </div>
+                                <div className='' style={{ fontSize: smallTabValue == 0 ? "12px" : "22px", textAlign: "center", color: "#12C1A2", width: "100%", overflow: "hidden" }}> {smallTabValue == 0 ? inputVal.address : inputIDVal} </div>
                                 <div className='flex justify-center mt-10' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "2rem" }}>
                                     <img className='MoneyWithdraw' style={{ borderRadius: '50%' }} src={arrayLookup(symbolsData, 'symbol', symbol, 'avatar') || ''}></img>
                                     <div className='PINTitle3'>{symbol}</div>
