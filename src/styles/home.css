@@ -2140,10 +2140,15 @@ input[type='number'] {
     width: 100%;
 }
 
+
 .addressZi {
     font-size: 1.2rem;
     height: 2.2rem;
     line-height: 2.2rem;
+}
+
+.addressZiH {
+    color: #00FFD1;
 }
 
 .idZi {
