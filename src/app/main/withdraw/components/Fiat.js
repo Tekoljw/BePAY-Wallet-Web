@@ -491,17 +491,16 @@ function Fiat(props) {
                         setCorrectPin(true);
                     }
                 })
+            } else { // 创建pin
+                dispatch(createPin({
+                    paymentPassword: tmpPin
+                })).then((res) => {
+                    if (res.payload) {
+                        setHasPin(true)
+                        closeCreatePinFunc()
+                    }
+                })
             }
-            // } else { // 创建pin
-            //     dispatch(createPin({
-            //         paymentPassword: tmpPin
-            //     })).then((res) => {
-            //         if (res.payload) {
-            //             setHasPin(true)
-            //             closeCreatePinFunc()
-            //         }
-            //     })
-            // }
         }
     }
 
@@ -1480,7 +1479,7 @@ function Fiat(props) {
                                             closePinFunc();
                                         }} />
                                     </div>
-                                    <div className='PINTitle'>{t('home_wallet_14')}{smallTabValue == 0 ? t('card_8') : t('card_7')}（ {smallTabValue == 0 ? inputVal.address : inputVal.userId} ）{t('transfer_1')}</div>
+                                    <div className='PINTitle'>{t('home_wallet_14')}{smallTabValue == 0 ? t('card_189') : t('card_7')}（ {smallTabValue == 0 ? inputVal.address : inputVal.userId} ）{t('transfer_1')}</div>
                                     <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
                                         { fiats && fiats[fiatsSelected] && <img className='MoneyWithdraw' src={ fiats[fiatsSelected].avatar}></img>}
                                         <div className='PINTitle3'>{ currencyCode }</div>

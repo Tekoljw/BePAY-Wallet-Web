@@ -394,7 +394,6 @@ function Withdraw(props) {
             bAppendFee: tmpBAppendFee,
         };
         setOpenLoad(true);
-        setOpenSuccess(false)
 
         dispatch(tokenTransfer(data)).then((res) => {
             setOpenLoad(false);
@@ -403,6 +402,7 @@ function Withdraw(props) {
             // setOpenPinWindow(false);
             if (result.errno == -2) {
                 if (!hasAuthGoogle) {
+                    closePinFunc()
                     setOpenAnimateModal(true);
                     return;
                 }
@@ -486,11 +486,9 @@ function Withdraw(props) {
         };
 
         setOpenLoad(true);
-        setOpenSuccess(false)
         dispatch(sendTips(data)).then((res) => {
             setIsLoadingBtn(false)
             setGoogleCode('');
-            setOpenPinWindow(false);
             let resData = res.payload;
             if (resData.errno == 0) {
                 setCurrRequestId(res.meta.requestId)
@@ -501,6 +499,7 @@ function Withdraw(props) {
                 }, 1200);
             } else if (resData.errno == -2) {
                 if (!hasAuthGoogle) {
+                    closePinFunc()
                     setTimeout(() => {
                         setOpenAnimateModal(true);
                     }, 300)
@@ -912,19 +911,18 @@ function Withdraw(props) {
                         setCorrectPin(true);
                     }
                 })
+            } else { // 创建pin
+                setOpenPinWindow(false);
+                dispatch(createPin({
+                    paymentPassword: tmpPin
+                })).then((res) => {
+                    if (res.payload) {
+                        setHasPin(true)
+                        closeCreatePinFunc()
+                    }
+                })
             }
-            // } else { // 创建pin
-            //     setOpenPinWindow(false);
-            //     dispatch(createPin({
-            //         paymentPassword: tmpPin
-            //     })).then((res) => {
-            //         if (res.payload) {
-            //             setHasPin(true)
-            //             closeCreatePinFunc()
-            //         }
-            //     })
-            // }
-        }
+        } 
     }
 
     useEffect(() => {
@@ -1732,7 +1730,7 @@ function Withdraw(props) {
                                         closePinFunc();
                                     }} />
                                 </div>
-                                <div className='PINTitle'>{t('home_wallet_14')}{smallTabValue == 0 ? t('card_8') : t('card_7')}（ <span className='quanYiLv'> {smallTabValue == 0 ? inputVal.address : inputIDVal} </span> ） {t('transfer_1')}</div>
+                                <div className='PINTitle'>{t('home_wallet_14')}{smallTabValue == 0 ? t('card_189') : t('card_7')}（ <span className='quanYiLv'> {smallTabValue == 0 ? inputVal.address : inputIDVal} </span> ） {t('transfer_1')}</div>
                                 <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
                                     <img className='MoneyWithdraw' style={{ borderRadius: '50%'}} src={ arrayLookup(symbolsData, 'symbol', symbol, 'avatar') || '' }></img>
                                     <div className='PINTitle3'>{ symbol }</div>
@@ -1846,6 +1844,7 @@ function Withdraw(props) {
                         variants={container}
                         initial="hidden"
                         animate="show"
+                        id='pinDivHeight'
                         style={{ height: `${divHeight}px` }}
                     >
                         <div className='dialog-box' >
