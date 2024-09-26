@@ -39,6 +39,8 @@ import { createPin, verifyPin } from "app/store/wallet/walletThunk";
 import { showMessage } from "app/store/fuse/messageSlice";
 import { borderBottom } from '@mui/system';
 import Kyc from "../kyc/Kyc";
+import _ from 'lodash';
+import {selectCurrentLanguage} from "app/store/i18nSlice";
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -68,6 +70,7 @@ const item = {
 function Card(props) {
     const { t } = useTranslation('mainPage');
     const userData = useSelector(selectUserData);
+    const currentLanguage = useSelector(selectCurrentLanguage);
     const [tabValue, setTabValue] = useState(0);
     const [ranges, setRanges] = useState([t('card_2'), t('card_9')]);
     const [huaZhuanRanges, setHuaZhuanRanges] = useState([t('card_170'), t('card_171')]);
@@ -147,7 +150,9 @@ function Card(props) {
         setPhoneTab('card');
     }, []);
 
-
+    useEffect(() => {
+        setRanges([t('card_2'), t('card_9')]);
+    }, [currentLanguage.id]);
 
     const closeRecordFunc = () => {
         document.getElementById('openRecord').classList.remove('PinMoveAni');
@@ -566,7 +571,7 @@ function Card(props) {
         })).then((res) => {
             setIsLoadingBtn(false)
             let result = res.payload
-            setLookDataId(result.mchOrderNo)
+            setLookDataId(result && result.mchOrderNo)
             if (result) {
                 if (result.status === 'success') {
                     setZhuanQuan(false);
@@ -595,20 +600,23 @@ function Card(props) {
     // 输入金额
     const handleDoMoney = (text) => {
         let tmpText = transferMoney.toString()
-        if (tmpText == 0) {
-            tmpText = ''
-        }
+        // if (tmpText == 0) {
+        //     tmpText = ''
+        // }
         if (text === -1) {
             tmpText = tmpText.slice(0, -1)
         } else if (text === '.') {
             if (!tmpText.includes(text)) {
                 tmpText = tmpText + text
+                if( !tmpText.split('.')[0]) {
+                    tmpText = '0' + text
+                }
             }
         } else {
             tmpText = tmpText + text
         }
 
-        setTransferMoney(tmpText == 0 ? '' : tmpText);
+        setTransferMoney(tmpText === '0'? '': tmpText);
     }
 
     useEffect(() => {
@@ -624,8 +632,10 @@ function Card(props) {
         }
     }, [transferMoney])
 
-
-
+    const setMaxValue = ()=> {
+        const balance = _.get(_.find(symbolList, { 'symbol': symbol}), 'balance', 0)
+        setTransferMoney(balance)
+    }
 
     return (
         <div style={{ position: "relative" }}>
@@ -794,7 +804,7 @@ function Card(props) {
                                                             <div className='flex justify-center container' style={{ position: "relative" }}>
                                                                 <div className="responsive-div creditcard" id="responsive-div">
                                                                     <div className={clsx("", fanZhuan && "xiaoShi")}>
-                                                                        <div className="responsive-div-content card4Bg cardZhiDi" onClick={() => {
+                                                                        <div className="responsive-div-content card4Bg cardZhiDi" style={{ background: `url(${ cardConfigList[cardItem.creditConfigId]?.url})`,  backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat'}} onClick={() => {
                                                                         }}  >
                                                                             <div className={clsx("cardNumber", kaBeiButton && "xiaoShi")}> <span id="cardNumberOne" >{cardItem.userCreditNo}</span> </div>
                                                                             <div className='cardBeiMian'>
@@ -812,7 +822,7 @@ function Card(props) {
                                                                     </div>
 
                                                                     <div className={clsx("", !fanZhuan && "xiaoShi")} >
-                                                                        <div className="responsive-div-content card41Bg cardZhiDi flipped2" onClick={() => {
+                                                                        <div className="responsive-div-content card41Bg cardZhiDi flipped2" style={{ background: `url(${ cardConfigList[cardItem.creditConfigId]?.backUrl})`,  backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat'}} onClick={() => {
                                                                         }}  >
                                                                             <div className='cardAnQuanMa '>{cardItem.userCreditKey}</div>
                                                                             <div className='cardBeiMian flipped2 '>
@@ -1225,7 +1235,8 @@ function Card(props) {
                                     </Tabs>
 
                                     {
-                                        smallTabValue === 0 && <div>
+                                        smallTabValue === 0 && !openXiangQing &&
+                                        <div>
                                             {cardConfig[2].map((configItem) => {
                                                 return (
                                                     <motion.div
@@ -1237,7 +1248,7 @@ function Card(props) {
                                                     >
                                                         <div className='cardName'>{configItem.creditConfigName}</div>
                                                         <div className="responsive-div">
-                                                            <div className="responsive-div-content card1Bg" onClick={() => {
+                                                            <div className="responsive-div-content card1Bg" style={{ background: `url(${configItem?.url})`, backgroundSize: 'cover', backgroundPosition: 'center'}} onClick={() => {
                                                                 setOpenXiangQing(true);
                                                                 setCardConfigID(configItem.configId);
                                                                 myFunction;
@@ -1248,7 +1259,7 @@ function Card(props) {
 
                                                             <div className='flex justify-between'>
                                                                 <div className='kaPianInfoLeiXing' onClick={() => {
-                                                                }} >VISA Card</div>
+                                                                }} >{ configItem.cardOrganizations} Card</div>
                                                                 <div className='kaPianInfo' onClick={() => {
                                                                     setOpenXiangQing(true);
                                                                     setCardConfigID(configItem.configId);
@@ -1341,7 +1352,7 @@ function Card(props) {
 
                     <div className='flex justify-center mt-10'>
                         <motion.div variants={item} className='shenQingCardDi flex items-center'>
-                            <img className='shenQingCard' src="wallet/assets/images/card/card1.png"></img>
+                            <img className='shenQingCard' src={cardConfigList[cardConfigID]?.url }></img>
                         </motion.div>
                     </div>
                     <div className='kaPianQuanYiZi'>{t('card_37')}</div>
@@ -1388,12 +1399,12 @@ function Card(props) {
 
                             <div className='flex justify-between mt-10'>
                                 <div className='quanYiHuiZi'>{t('card_104')}</div>
-                                <div>0 USD </div>
+                                <div>{cardConfigList[cardConfigID]?.yearBasicFee} {cardConfigList[cardConfigID]?.cardSymbol} </div>
                             </div>
 
                             <div className='flex justify-between mt-10'>
                                 <div className='quanYiHuiZi'>{t('card_46')}</div>
-                                <div>VISA</div>
+                                <div>{cardConfigList[cardConfigID]?.cardOrganizations == 'visa'? 'VISA':'MASTER'}</div>
                             </div>
 
 
@@ -1706,7 +1717,7 @@ function Card(props) {
                                     <div className='w-full h-44 border' style={{ borderRadius: "0.5rem", backgroundColor: "#151C2A", position: "absolute", top: "0%", right: "0%" }}>
                                     </div>
                                     <div className='text-16 ' style={{ position: "absolute", top: "0%", left: "4%", width: "82%", height: "4.4rem", lineHeight: "4.4rem" }}>{transferMoney}</div>
-                                    <div style={{ position: "absolute", top: "0%", right: "4%", height: "4.4rem", lineHeight: "4.4rem" }}>Max</div>
+                                    <div style={{ position: "absolute", top: "0%", right: "4%", height: "4.4rem", lineHeight: "4.4rem" }} onClick={setMaxValue}>Max</div>
                                 </div>
 
                                 <div className='flex justify-between mt-16'>
