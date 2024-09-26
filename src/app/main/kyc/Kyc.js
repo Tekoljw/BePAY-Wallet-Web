@@ -1741,7 +1741,7 @@ function Kyc(props) {
                             variant="contained"
                             onClick={() => {
                                 setOpenAnimateModal(false)
-                                location.reload();
+                                props.backCardPage()
                             }}
                         >
                             {t('home_pools_15')}

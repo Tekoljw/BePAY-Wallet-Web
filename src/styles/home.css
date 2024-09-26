@@ -1579,11 +1579,16 @@ input[type='number'] {
 .cardNumber {
     width: 84%;
     margin: 0 auto;
-    height: 34%;
+    height: 25%;
     font-size: 160%;
     text-align: left;
 }
-
+.cardExpired{
+    width: 84%;
+    margin: 0 auto;
+    font-size: 1.4rem;
+    margin-bottom: 1.4rem;
+}
 .cardAnQuanMa {
     width: 46%;
     height: 22%;

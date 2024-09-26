@@ -277,6 +277,7 @@ function Card(props) {
                     paymentPassword: tmpPin
                 })).then((res) => {
                     if (res.payload) {
+                        dispatch(showMessage({ message: 'success', code: 1 }));
                         setHasPin(true)
                         closeCreatePinFunc()
                     }
@@ -858,6 +859,11 @@ function Card(props) {
         setTransferMoney(balance)
     }
 
+    const backCardPageEvt = () =>{
+        history.push(`/wallet/home/card?accessType=${localStorage.getItem('accessType') || 0}`)
+        setOpenKyc(false)
+    }
+
     return (
         <div style={{ position: "relative" }}>
             <div style={{ position: "absolute", width: "100%" }}>
@@ -1025,9 +1031,12 @@ function Card(props) {
                                                             <div className='flex justify-center container' style={{ position: "relative" }}>
                                                                 <div className="responsive-div creditcard" id="responsive-div">
                                                                     <div className={clsx("", fanZhuan && "xiaoShi")}>
-                                                                        <div className="responsive-div-content card4Bg cardZhiDi" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.url})`, backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat' }} onClick={() => {
+                                                                        <div className="responsive-div-content card4Bg cardZhiDi" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.url})`,backgroundSize: 'cover',backgroundPosition: 'center' }} onClick={() => {
                                                                         }}  >
-                                                                            <div className={clsx("cardNumber", kaBeiButton && "xiaoShi")}> <span id="cardNumberOne" >{cardItem.userCreditNo}</span> </div>
+                                                                            <div className={clsx("cardNumber", kaBeiButton && "xiaoShi")}> <span id="cardNumberOne" >{cardItem?.userCreditNo?.replace(/(.{4})/g, '$1 ')}</span> </div>
+                                                                            <div className={clsx("cardExpired", kaBeiButton && "xiaoShi")}>
+                                                                                <span id="cardNumberOne" >{cardItem?.userCreditEndTime.split('-')[1]}/{cardItem?.userCreditEndTime.split('-')[0].slice(-2)}</span>
+                                                                            </div>
                                                                             <div className='cardBeiMian'>
                                                                                 <div className={clsx("", kaBeiButton && "xiaoShi")}>
                                                                                     {cardItem?.state == 10 && (
@@ -1293,7 +1302,7 @@ function Card(props) {
                                                                     <div className={clsx("", fanZhuan && "xiaoShi")}>
                                                                         <div className="responsive-div-content card4Bg cardZhiDi" onClick={() => {
                                                                         }}  >
-                                                                            <div className={clsx("cardNumber", kaBeiButton && "xiaoShi")}> <span id="cardNumberOne" >{cardItem.userCreditNo}</span> </div>
+                                                                            <div className={clsx("cardNumber", kaBeiButton && "xiaoShi")}> <span id="cardNumberOne" >{cardItem?.userCreditNo?.replace(/(.{4})/g, '$1 ')}</span> </div>
                                                                             <div className='cardBeiMian'>
                                                                                 <div className={clsx("", kaBeiButton && "xiaoShi")}>
                                                                                     <div className='kaBeiZi flex'>
@@ -1722,7 +1731,7 @@ function Card(props) {
                     }}   >
                         <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                     </div>
-                    <Kyc />
+                    <Kyc backCardPage={ backCardPageEvt}/>
                     <div style={{ height: "5rem" }}></div>
                 </motion.div>
             </div>}
