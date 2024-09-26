@@ -545,7 +545,7 @@ const locale = {
     card_192: "Yaşam Giderleri Kartı",
     card_193: "Reklam Kartı",
     card_194: "İş Tedarik Kartı",
-
+    card_195: "Kopyalandı",
 
     
     

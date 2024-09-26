@@ -537,6 +537,9 @@ const locale = {
     card_192: "Thẻ Chi Tiêu Sinh Hoạt",
     card_193: "Thẻ Quảng Cáo",
     card_194: "Thẻ Mua Sắm Công Việc",
+    card_195: "Đã sao chép",
+
+
 
     
     };

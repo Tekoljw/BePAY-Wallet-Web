@@ -548,7 +548,7 @@ const locale = {
     card_192: "Karta Wydatków na Życie",
     card_193: "Karta Reklamowa",
     card_194: "Karta Nabycia Pracy",
-
+    card_195: "Skopiowano",
 
     
     

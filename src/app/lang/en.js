@@ -165,7 +165,7 @@ const locale = {
     home_withdraw_13: 'Slow',
     home_withdraw_14: 'address',
     home_withdraw_15: 'Transaction fee - ',
-    home_withdraw_16: ' Time taken 0 - 2 Hours. ',
+    home_withdraw_16: ' Time taken 0 - 2 Hours . ',
     home_withdraw_17: 'Network confirmation is not included and can take some extra time',
     home_withdraw_18: 'Bank',
     home_withdraw_19: 'Recipient the name of bank',
@@ -554,7 +554,7 @@ const locale = {
     card_192: "Living Expense Card",
     card_193: "Advertisement Card",
     card_194: "Job Procurement Card",
-
+    card_195: "Copied",
 
     
     

@@ -604,7 +604,7 @@ function Card(props) {
         } else if (text === '.') {
             if (!tmpText.includes(text)) {
                 tmpText = tmpText + text
-                if( !tmpText.split('.')[0]) {
+                if (!tmpText.split('.')[0]) {
                     tmpText = '0' + text
                 }
             }
@@ -612,7 +612,7 @@ function Card(props) {
             tmpText = tmpText + text
         }
 
-        setTransferMoney(tmpText === '0'? '': tmpText);
+        setTransferMoney(tmpText === '0' ? '' : tmpText);
     }
 
     useEffect(() => {
@@ -628,8 +628,8 @@ function Card(props) {
         }
     }, [transferMoney])
 
-    const setMaxValue = ()=> {
-        const balance = _.get(_.find(symbolList, { 'symbol': symbol}), 'balance', 0)
+    const setMaxValue = () => {
+        const balance = _.get(_.find(symbolList, { 'symbol': symbol }), 'balance', 0)
         setTransferMoney(balance)
     }
 
@@ -800,7 +800,7 @@ function Card(props) {
                                                             <div className='flex justify-center container' style={{ position: "relative" }}>
                                                                 <div className="responsive-div creditcard" id="responsive-div">
                                                                     <div className={clsx("", fanZhuan && "xiaoShi")}>
-                                                                        <div className="responsive-div-content card4Bg cardZhiDi" style={{ background: `url(${ cardConfigList[cardItem.creditConfigId]?.url})`,  backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat'}} onClick={() => {
+                                                                        <div className="responsive-div-content card4Bg cardZhiDi" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.url})`, backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat' }} onClick={() => {
                                                                         }}  >
                                                                             <div className={clsx("cardNumber", kaBeiButton && "xiaoShi")}> <span id="cardNumberOne" >{cardItem.userCreditNo}</span> </div>
                                                                             <div className='cardBeiMian'>
@@ -818,7 +818,7 @@ function Card(props) {
                                                                     </div>
 
                                                                     <div className={clsx("", !fanZhuan && "xiaoShi")} >
-                                                                        <div className="responsive-div-content card41Bg cardZhiDi flipped2" style={{ background: `url(${ cardConfigList[cardItem.creditConfigId]?.backUrl})`,  backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat'}} onClick={() => {
+                                                                        <div className="responsive-div-content card41Bg cardZhiDi flipped2" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.backUrl})`, backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat' }} onClick={() => {
                                                                         }}  >
                                                                             <div className='cardAnQuanMa '>{cardItem.userCreditKey}</div>
                                                                             <div className='cardBeiMian flipped2 '>
@@ -1244,7 +1244,7 @@ function Card(props) {
                                                     >
                                                         <div className='cardName'>{configItem.creditConfigName}</div>
                                                         <div className="responsive-div">
-                                                            <div className="responsive-div-content card1Bg" style={{ background: `url(${configItem?.url})`, backgroundSize: 'cover', backgroundPosition: 'center'}} onClick={() => {
+                                                            <div className="responsive-div-content card1Bg" style={{ background: `url(${configItem?.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }} onClick={() => {
                                                                 setOpenXiangQing(true);
                                                                 setCardConfigID(configItem.configId);
                                                                 myFunction;
@@ -1255,7 +1255,7 @@ function Card(props) {
 
                                                             <div className='flex justify-between'>
                                                                 <div className='kaPianInfoLeiXing' onClick={() => {
-                                                                }} >{ configItem.cardOrganizations} Card</div>
+                                                                }} >{configItem.cardOrganizations} Card</div>
                                                                 <div className='kaPianInfo' onClick={() => {
                                                                     setOpenXiangQing(true);
                                                                     setCardConfigID(configItem.configId);
@@ -1348,7 +1348,7 @@ function Card(props) {
 
                     <div className='flex justify-center mt-10'>
                         <motion.div variants={item} className='shenQingCardDi flex items-center'>
-                            <img className='shenQingCard' src={cardConfigList[cardConfigID]?.url }></img>
+                            <img className='shenQingCard' src={cardConfigList[cardConfigID]?.url}></img>
                         </motion.div>
                     </div>
                     <div className='kaPianQuanYiZi'>{t('card_37')}</div>
@@ -1400,7 +1400,7 @@ function Card(props) {
 
                             <div className='flex justify-between mt-10'>
                                 <div className='quanYiHuiZi'>{t('card_46')}</div>
-                                <div>{cardConfigList[cardConfigID]?.cardOrganizations == 'visa'? 'VISA':'MASTER'}</div>
+                                <div>{cardConfigList[cardConfigID]?.cardOrganizations == 'visa' ? 'VISA' : 'MASTER'}</div>
                             </div>
 
 
@@ -1418,17 +1418,17 @@ function Card(props) {
 
                             <div className='flex justify-between mt-10 '>
                                 <div className='quanYiHuiZi'>{t('card_52')}</div>
-                                <div>{t('card_57')}</div>
+                                <div style={{ textAlign: "end" }}>{t('card_57')}</div>
                             </div>
 
                             <div className='flex justify-between mt-10 '>
                                 <div className='quanYiHuiZi'>{t('card_53')}</div>
-                                <div>{t('card_58')}</div>
+                                <div style={{ textAlign: "end" }}>{t('card_58')}</div>
                             </div>
 
                             <div className='flex justify-between mt-10'>
                                 <div className='quanYiHuiZi'>{t('card_54')}</div>
-                                <div>{t('card_59')}</div>
+                                <div style={{ textAlign: "end" }}>{t('card_59')}</div>
                             </div>
 
                             <div className='flex justify-between mt-10 '>

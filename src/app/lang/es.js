@@ -547,7 +547,7 @@ const locale = {
     card_192: "Tarjeta de Gastos Diarios",
     card_193: "Tarjeta de Anuncio",
     card_194: "Tarjeta de Adquisición de Trabajo",
-
+    card_195: "Copiado",
 
     
     

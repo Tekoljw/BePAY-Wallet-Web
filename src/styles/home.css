@@ -515,6 +515,20 @@ input[type='number'] {
     min-height: 50rem;
 }
 
+.copyTiShiW {
+    max-width: 40% !important;
+    margin: 0 auto;
+}
+
+.copyTiShiW .muiltr-1loik7f-MuiPaper-root-MuiDialog-paper {
+    background-color: #374252;
+}
+
+
+.copyTiShiW .muiltr-yiavyu-MuiBackdrop-root-MuiDialog-backdrop {
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
 .pasteWindow {
     padding: 3rem 1.5rem 0rem 1.5rem;
 }

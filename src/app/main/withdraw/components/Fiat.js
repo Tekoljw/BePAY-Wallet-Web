@@ -1334,7 +1334,7 @@ function Fiat(props) {
                                             }}
                                         >
                                             <Typography className="text-14 px-16">
-                                                <span style={{ color: '#FCE100' }}>⚠</span>{t('home_withdraw_15')} {fee} {currencyCode} . {t('home_withdraw_16')}. {t('home_withdraw_17')}
+                                                <span style={{ color: '#FCE100' }}>⚠</span>{t('home_withdraw_15')} {fee} {currencyCode} . {t('home_withdraw_16')} {t('home_withdraw_17')}
                                             </Typography>
                                         </Box>
 

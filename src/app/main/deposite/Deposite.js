@@ -216,7 +216,7 @@ function Deposite() {
     const [balanceAll, setbalanceAll] = useState(0)
 
     const [checkboxChecked, setCheckboxChecked] = useState(true);
-
+    const [copyTiShi, setCopyTiShi] = useState(false);
     const handleCheckboxChange = (e) => {
         setCheckboxChecked(!checkboxChecked);
         if (checkboxChecked) {
@@ -1105,6 +1105,14 @@ function Deposite() {
     }, [walletAddressList]);
 
 
+    const copyTiShiFunc = () => {
+        setCopyTiShi(true)
+        setTimeout(() => {
+            setCopyTiShi(false)
+        }, 800);
+    }
+
+
     return (
         <div>
             {/*head*/}
@@ -1187,7 +1195,10 @@ function Deposite() {
                         <div className="userIdW guoDuDongHua" style={{ height: showQRcode ? '22rem' : '4.2rem' }}>
                             <div className="addressW2 flex justify-between guoDuDongHua">
                                 <div className='idZi guoDuDongHua'> <span style={{ color: "#ffffff", marginRight: "10px" }}>UserID</span>  {userData?.profile?.user?.id}</div>
-                                <img onClick={() => { handleCopyText(userData?.profile?.user?.id) }} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png" />
+                                <img onClick={() => {
+                                    copyTiShiFunc();
+                                    handleCopyText(userData?.profile?.user?.id)
+                                }} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png" />
                             </div>
                             <QRCode
                                 className='testQrCodeImg'
@@ -1307,9 +1318,10 @@ function Deposite() {
                                                     </div>
                                                     <img
                                                         onClick={() => {
+                                                            copyTiShiFunc();
                                                             handleCopyText(addressItem.address)
                                                         }}
-                                                        className='bianJiBiImg'
+                                                        className='bianJiBiImg '
                                                         src="wallet/assets/images/deposite/newCopy.png"
                                                     />
                                                 </div>
@@ -1897,7 +1909,10 @@ function Deposite() {
                             <div className="userIdW   guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
                                 <div className="addressW2 flex justify-between guoDuDongHua">
                                     <div className='idZi guoDuDongHua' > <span style={{ color: "#ffffff", marginRight: "10px" }}>UserID</span>  {userData?.profile?.user?.id}</div>
-                                    <img onClick={() => { handleCopyText(userData?.profile?.user?.id) }} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png" />
+                                    <img onClick={() => {
+                                        copyTiShiFunc();
+                                        handleCopyText(userData?.profile?.user?.id)
+                                    }} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png" />
                                 </div>
                                 <QRCode
                                     className='testQrCodeImg'
@@ -1956,7 +1971,7 @@ function Deposite() {
 
                                     <AccordionDetails>
                                         <div>
-                                            <FormControl className="my-16" sx={{ width: '100%' }} variant="outlined">
+                                            <FormControl className="my-16 " sx={{ width: '100%' }} variant="outlined">
                                                 <OutlinedInput
                                                     type='number'
                                                     disabled={false}
@@ -1996,6 +2011,9 @@ function Deposite() {
                                                     )
                                                 })}
                                             </div>}
+
+                                            <div className='ml-2'>{t('home_borrow_16')} 0.001</div>
+
                                             <div className="my-16 flex items-center justify-content-center">
                                                 <LoadingButton
                                                     className="px-48 text-lg btnColorTitleBig"
@@ -2453,6 +2471,22 @@ function Deposite() {
                 }
 
             </AnimateModal >
+
+
+            <BootstrapDialog
+                onClose={() => {
+                    setCopyTiShi(false)
+                }}
+                aria-labelledby="customized-dialog-title "
+                open={copyTiShi}
+                className="dialog-container copyTiShiW"
+            >
+                <div style={{ textAlign: "center", padding: "1rem 1rem 1rem 1rem" }}>
+                    {t('card_195')}
+                </div>
+
+            </BootstrapDialog>
+
 
         </div >
     )

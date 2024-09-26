@@ -550,7 +550,7 @@ const locale = {
     card_192: "Lebensverbrauchskarte",
     card_193: "Werbekarte",
     card_194: "Arbeitsbeschaffungskarte",
-
+    card_195: "Kopiert",
 
     
     
