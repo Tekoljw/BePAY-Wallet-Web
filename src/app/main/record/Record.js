@@ -28,7 +28,7 @@ import Select from '@mui/material/Select';
 import { borderRadius } from '@mui/system';
 import { setPhoneTab, getNowTime } from "../../util/tools/function";
 import FuseLoading from "@fuse/core/FuseLoading";
-import { getUserCreditCard } from "app/store/payment/paymentThunk";
+import { getUserCreditCard, getCreditConfig} from "app/store/payment/paymentThunk";
 
 const container = {
     show: {
@@ -51,6 +51,8 @@ function Record() {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [transferList, setTransferList] = useState([]);
     const [cardList, setCardList] = useState([]);
+    const [cardConfig, setCardConfig] = useState({ 2: [], 3: [] })
+    const [cardConfigList, setCardConfigList] = useState({});
 
     // public static final int CONST_LOG_TYPE_DEPOSIT                = 1;
     // public static final int CONST_LOG_TYPE_POOL_TAKE_OUT            = 2;
@@ -116,6 +118,30 @@ function Record() {
             limit: rowsPerPage
         }));
     };
+
+    //获取Config
+    const getCardConfig = () => {
+        dispatch(getCreditConfig()).then((res) => {
+            let result = res.payload
+            if (result) {
+                let tmpConfig = { 2: [], 3: [] }
+                let tmpConfigList = {}
+                result.map((item) => {
+                    if (item.state === 1) {
+                        if (item.creditType === 2) {
+                            tmpConfig[2].push(item)
+                        } else if (item.creditType === 3) {
+                            tmpConfig[3].push(item)
+                        }
+
+                        tmpConfigList[item.configId] = item
+                    }
+                })
+                setCardConfig(tmpConfig)
+                setCardConfigList(tmpConfigList)
+            }
+        })
+    }
 
     // 获取卡列表
     const getCardList = () => {
@@ -391,7 +417,7 @@ function Record() {
                 </FormControl>
             </motion.div>
 
-            {selectCardID === 18 && <motion.div
+            {selectCardID === 5 && <motion.div
                 variants={container}
                 initial="hidden"
                 animate="show"
@@ -433,7 +459,7 @@ function Record() {
                                 return (
                                     <MenuItem value={item.userCreditNo} className='text-16' style={{ display: 'flex', justifyContent: 'space-between' }}>
                                         <span> {item.userCreditNo} </span>
-                                        <span style={{ color: "#94A3B8", marginLeft: "1rem" }}>VISA</span>
+                                        <span style={{ color: "#94A3B8", marginLeft: "1rem" }}>{ cardConfigList[item.creditConfigId]?.cardOrganizations == 'visa'? 'VISA':'MASTER' } </span>
                                     </MenuItem>
                                 )
                             })}     

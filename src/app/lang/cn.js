@@ -58,7 +58,7 @@ const locale = {
     home_2fa_10: '验证码',
     home_2fa_11: '发送',
 
-    home_record_1: '存款',
+    home_record_1: '收款',
     home_record_2: '池',
     home_record_3: '服务费',
     home_record_4: '变化',
@@ -550,6 +550,15 @@ const locale = {
     card_188: "您的订单已超时！",
     kyc_60: "绑定或修改KYC信息前需要先绑定手机号或者email。",
     card_189: "外部地址",
+    card_190: "线上支付卡",
+    card_191: "网络购物卡",
+    card_192: "生活消费卡",
+    card_193: "广告投放卡",
+    card_194: "工作采购卡",
+    card_195: "已复制",
+
+
+
 
 };
 

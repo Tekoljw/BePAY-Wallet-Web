@@ -323,11 +323,12 @@ export const creditCardCryptoDeposit = createAsyncThunk(
     'credit/creditCardCryptoDeposit',
     async (settings, { dispatch, getState }) => {
         const result = await React.$api("credit.creditCardCryptoDeposit", settings);
-        if (result.errno === 0) {
-            return result.data
-        } else {
-            dispatch(showMessage({ message: result.errmsg, code: 2 }));
-        }
+        return result
+        // if (result.errno === 0) {
+        //     return result.data
+        // } else {
+        //     dispatch(showMessage({ message: result.errmsg, code: 2 }));
+        // }
     }
 );
 
@@ -336,11 +337,12 @@ export const creditCardCryptoWithdraw = createAsyncThunk(
     'credit/creditCardCryptoWithdraw',
     async (settings, { dispatch, getState }) => {
         const result = await React.$api("credit.creditCardCryptoWithdraw", settings);
-        if (result.errno === 0) {
-            return result.data
-        } else {
-            dispatch(showMessage({ message: result.errmsg, code: 2 }));
-        }
+        return result
+        // if (result.errno === 0) {
+        //     return result.data
+        // } else {
+        //     dispatch(showMessage({ message: result.errmsg, code: 2 }));
+        // }
     }
 );
 

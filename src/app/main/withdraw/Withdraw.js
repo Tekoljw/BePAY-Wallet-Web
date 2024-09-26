@@ -28,7 +28,7 @@ import {
     setPhoneTab
 } from "../../util/tools/function";
 import { openScan, closeScan } from "../../util/tools/scanqrcode";
-import {evalTokenTransferFee, cryptoWithdrawFee, getWithdrawHistoryAddress, delWithdrawHistoryAddress, createPin, verifyPin } from "app/store/wallet/walletThunk";
+import { evalTokenTransferFee, cryptoWithdrawFee, getWithdrawHistoryAddress, delWithdrawHistoryAddress, createPin, verifyPin } from "app/store/wallet/walletThunk";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
 import Dialog from "@mui/material/Dialog/Dialog";
 import OtpPass from "../otpPass/OtpPass";
@@ -504,7 +504,7 @@ function Withdraw(props) {
                         setOpenAnimateModal(true);
                     }, 300)
                     return;
-                }else {
+                } else {
                     openGoogleCodeFunc()
                     return
                 }
@@ -870,17 +870,17 @@ function Withdraw(props) {
         setGoogleCode(tmpCode)
     }
 
-    const verifyGoogleCodeEvt = ()=>{
+    const verifyGoogleCodeEvt = () => {
         setOpenYanZheng(true);
     }
 
-    const verifiedVAuthEvt = ()=> {
-        if(tabValue === cryptoSelect){
+    const verifiedVAuthEvt = () => {
+        if (tabValue === cryptoSelect) {
             setOpenYanZheng(false);
             setOpenGoogleCode(true);
-        }else if(tabValue === fiatSelect){
-           setOpenYanZheng(false);
-           setFiatVerifiedAuth(true);
+        } else if (tabValue === fiatSelect) {
+            setOpenYanZheng(false);
+            setFiatVerifiedAuth(true);
         }
     }
 
@@ -922,7 +922,7 @@ function Withdraw(props) {
                     }
                 })
             }
-        } 
+        }
     }
 
     useEffect(() => {
@@ -981,7 +981,7 @@ function Withdraw(props) {
                     setFiatSelect(tmpFiatSelect);
                 }
             })
-        }else{ //telegram小程序的标题语言处理
+        } else { //telegram小程序的标题语言处理
             setRanges([t('home_deposite_1'), t('home_deposite_2')]);
         }
         setHasPin(userData.profile?.user?.hasSetPaymentPassword ?? false)
@@ -1284,9 +1284,9 @@ function Withdraw(props) {
                                                 />
                                                 <div className='flex pasteSty  items-center'>
                                                     <div className='paste-btn' onClick={() => {
-                                                            navigator.clipboard.readText().then(clipText => {
-                                                                setInputIDVal(clipText)
-                                                            });
+                                                        navigator.clipboard.readText().then(clipText => {
+                                                            setInputIDVal(clipText)
+                                                        });
                                                     }}>{t('home_withdraw_11')}</div>
                                                     <img className='pasteJianTou' src="wallet/assets/images/withdraw/pasteJianTou.png" alt="" onClick={() => {
                                                         setOpenPasteWindow(true)
@@ -1411,7 +1411,7 @@ function Withdraw(props) {
                                                     >
                                                         {item}
                                                     </Typography>
-                                                    <IconButton onClick={() => { handleCopyText(item).then(r =>{}) }}>
+                                                    <IconButton onClick={() => { handleCopyText(item).then(r => { }) }}>
                                                         <img src="wallet/assets/images/deposite/copy.png" alt="" />
                                                     </IconButton>
                                                     <IconButton onClick={() => { del(item) }}>
@@ -1625,7 +1625,7 @@ function Withdraw(props) {
 
                 </div>}
 
-                {tabValue === fiatSelect && <Fiat  verifyGoogleCode={ ()=> verifyGoogleCodeEvt()} fiatVerifiedAuth={ fiatVerifiedAuth } />}
+                {tabValue === fiatSelect && <Fiat verifyGoogleCode={() => verifyGoogleCodeEvt()} fiatVerifiedAuth={fiatVerifiedAuth} />}
 
                 {/* {tabValue === 2 && <Nft />} */}
 
@@ -1706,7 +1706,7 @@ function Withdraw(props) {
                     }}   >
                         <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                     </div>
-                    <Enable2FA verifiedVAuth={()=> verifiedVAuthEvt()} />
+                    <Enable2FA verifiedVAuth={() => verifiedVAuthEvt()} />
                     <div style={{ height: "5rem" }}></div>
                 </motion.div>
             </div>}
@@ -1725,20 +1725,22 @@ function Withdraw(props) {
                         <div id='pinDivHeight'>
                             <div className='pinWindow'>
                                 <div className='flex'>
-                                    <div className='PINTitle2'>{t('card_65')}</div>
+                                    <div className='PINTitle2' style={{ marginBottom: "1rem" }}>{t('card_65')}</div>
                                     <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                         closePinFunc();
                                     }} />
                                 </div>
-                                <div className='PINTitle'>{t('home_wallet_14')}{smallTabValue == 0 ? t('card_189') : t('card_7')}（ <span className='quanYiLv'> {smallTabValue == 0 ? inputVal.address : inputIDVal} </span> ） {t('transfer_1')}</div>
-                                <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
-                                    <img className='MoneyWithdraw' style={{ borderRadius: '50%'}} src={ arrayLookup(symbolsData, 'symbol', symbol, 'avatar') || '' }></img>
-                                    <div className='PINTitle3'>{ symbol }</div>
-                                    <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")} onClick={() => {
-                                        setTextSelect(!textSelect)
-                                        setShowGuangBiao(true)
-                                    }}>
-                                        {inputVal.amount} <span className={clsx("", !showGuangBiao ? 'guangBiaoNo' : 'guangBiao')} >︱</span>
+                                <div className='py-4' style={{ fontSize: smallTabValue == 0 ? "14px" : "20px", textAlign: "center", color: "#909FB4", width: "100%", overflow: "hidden", wordBreak: "break-all" }}>{smallTabValue == 0 ? "Address" : "UserID"}  {smallTabValue == 0 ? inputVal.address : inputIDVal} </div>
+                                <div className='flex justify-center mt-10 ' style={{ paddingLeft: "14%", width: "100%", overflow: "hidden", borderBottom: "1px solid #2C3950", paddingBottom: "2rem" }}>
+                                    <img className='MoneyWithdraw' style={{ borderRadius: '50%' }} src={arrayLookup(symbolsData, 'symbol', symbol, 'avatar') || ''}></img>
+                                    <div className='flex'>
+                                        <div className={clsx('PINTitle4  inputNumSty ', textSelect && "inputBackDi")}>
+                                            {inputVal.amount} <span className={clsx("", !showGuangBiao ? 'guangBiaoNo' : 'guangBiao')} >︱</span>
+                                        </div>
+                                        <img src="wallet/assets/images/deposite/bianJiBi.png" className='ml-4 mt-8' style={{ width: "18px", height: "18px" }} onClick={() => {
+                                            setTextSelect(!textSelect)
+                                            setShowGuangBiao(!textSelect)
+                                        }} />
                                     </div>
                                 </div>
                                 <div className='flex justify-between mt-10'>
@@ -1831,7 +1833,7 @@ function Withdraw(props) {
                                             onTouchEnd={changeToWhite}
                                             onTouchCancel={changeToWhite}
                                             onClick={() => {
-                                                if(pin && pin.length === 6 && correctPin) {
+                                                if (pin && pin.length === 6 && correctPin) {
                                                     smallTabValue === 0 ? handleSubmit() : handleSendTipsSubmit()
                                                 }
                                             }}>{t('card_30')}</div>

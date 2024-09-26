@@ -40,7 +40,6 @@ import { showMessage } from "app/store/fuse/messageSlice";
 import { borderBottom } from '@mui/system';
 import Kyc from "../kyc/Kyc";
 import _ from 'lodash';
-import {selectCurrentLanguage} from "app/store/i18nSlice";
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -70,7 +69,6 @@ const item = {
 function Card(props) {
     const { t } = useTranslation('mainPage');
     const userData = useSelector(selectUserData);
-    const currentLanguage = useSelector(selectCurrentLanguage);
     const [tabValue, setTabValue] = useState(0);
     const [ranges, setRanges] = useState([t('card_2'), t('card_9')]);
     const [huaZhuanRanges, setHuaZhuanRanges] = useState([t('card_170'), t('card_171')]);
@@ -102,6 +100,196 @@ function Card(props) {
     const [openChangeBi, setOpenChangeBi] = useState(false);
     const [address, setAddress] = useState("");
     const [lookDataId, setLookDataId] = useState("");
+    const [openPinWindow, setOpenPinWindow] = useState(false);
+    const [movePinWindow, setMovePinWindow] = useState(false);
+    const [createPinWindow, setCreatePinWindow] = useState(false);
+    const [openPinErr, setOpenPinErr] = useState(false);
+    const [openGoogleCode, setOpenGoogleCode] = useState(false);
+    const [googleCode, setGoogleCode] = useState('');
+    const [textSelect, setTextSelect] = useState(false);
+    const [showGuangBiao, setShowGuangBiao] = useState(false);
+    const [correctPin, setCorrectPin] = useState(false);
+    const hasAuthGoogle = useSelector(selectUserData).userInfo?.hasAuthGoogle
+
+    const [pin, setPin] = useState('');
+    const [hasPin, setHasPin] = useState(false)
+
+    const openPinFunc = () => {
+        setTimeout(() => {
+            document.getElementById('PINSty').classList.add('PinMoveAni');
+        }, 0);
+    };
+
+    const openPasteFunc = () => {
+        setTimeout(() => {
+            document.getElementById('PasteSty').classList.add('PinMoveAni');
+        }, 0);
+    };
+
+    const openGoogleCodeFunc = () => {
+        setOpenGoogleCode(true);
+        setTimeout(() => {
+            document.getElementById('GoogleCodeSty').classList.add('PinMoveAni');
+        }, 0);
+    };
+
+    const closePinFunc = () => {
+        document.getElementById('PINSty').classList.remove('PinMoveAni');
+        document.getElementById('PINSty').classList.add('PinMoveOut');
+        setTimeout(() => {
+            setOpenPinWindow(false);
+            setOpenSuccess(true);
+            setIsLoadingBtn(false);
+            setZhuanQuan(true);
+            setTiJiaoState(0);
+        }, 300);
+    };
+
+    const closeGoogleCodeFunc = () => {
+        document.getElementById('GoogleCodeSty') && document.getElementById('GoogleCodeSty').classList.remove('PinMoveAni');
+        document.getElementById('GoogleCodeSty') && document.getElementById('GoogleCodeSty').classList.add('PinMoveOut');
+        setTimeout(() => {
+            setOpenGoogleCode(false);
+        }, 300);
+    };
+
+    const closePasteFunc = () => {
+        document.getElementById('PasteSty').classList.remove('PinMoveAni');
+        document.getElementById('PasteSty').classList.add('PinMoveOut');
+        setTimeout(() => {
+            setOpenPasteWindow(false);
+        }, 300);
+    };
+
+    // 判断是否绑定了PIN
+    const isBindPin = () => {
+        if (hasPin) {
+            if (transferMoney <= 0) {
+                setTextSelect(true)
+                setShowGuangBiao(true)
+            } else {
+                setTextSelect(false)
+                setShowGuangBiao(false)
+            }
+            openInputPin()
+            return true
+        }
+        openCreatePin()
+        return false
+    }
+
+    const openCreatePinFunc = () => {
+        setTimeout(() => {
+            document.getElementById('CreateSty').classList.add('PinMoveAni');
+        }, 0);
+    };
+
+    const closeCreatePinFunc = () => {
+        document.getElementById('CreateSty').classList.remove('PinMoveAni');
+        document.getElementById('CreateSty').classList.add('PinMoveOut');
+        setTimeout(() => {
+            setCreatePinWindow(false)
+        }, 300);
+        setPin('');
+    };
+
+    // 创建PIN Page
+    const openCreatePin = () => {
+        setPin('')
+        setCreatePinWindow(true)
+        openCreatePinFunc()
+    }
+
+    // 输入PIN Page
+    const openInputPin = () => {
+        setPin('')
+        setOpenPinWindow(true)
+        openPinFunc()
+        getDivHeight("pinDivHeight");
+    }
+
+    // PIN错误 Tips
+    const errPin = () => {
+        setOpenPinErr(true);
+        setOpenPinWindow(false);
+    }
+
+    // 修改Amount
+    const editAmount = (text) => {
+        let tmpText = transferMoney.toString()
+        if (tmpText == 0) {
+            tmpText = ''
+        }
+        if (text === -1) {
+            tmpText = tmpText.slice(0, -1)
+        } else if (text === '.') {
+            if (!tmpText.includes(text)) {
+                tmpText = tmpText + text
+            }
+        } else {
+            tmpText = tmpText + text
+        }
+
+        setTransferMoney(tmpText);
+    }
+
+    const handleDoGoogleCode = (text) => {
+        let tmpCode = googleCode
+        if (text === -1) {
+            tmpCode = tmpCode.slice(0, -1)
+        } else {
+            tmpCode = tmpCode + text
+        }
+
+        setGoogleCode(tmpCode)
+    }
+
+    // 输入Pin
+    const handleDoPin = (text) => {
+        if (textSelect) {
+            editAmount(text)
+            return
+        }
+        let tmpPin = pin
+        if (text === -1) {
+            tmpPin = tmpPin.slice(0, -1)
+        } else {
+            tmpPin = tmpPin + text
+        }
+
+        setPin(tmpPin)
+        if (tmpPin.length === 6) {
+            if (hasPin) { // 验证pin
+                dispatch(verifyPin({
+                    paymentPassword: tmpPin
+                })).then((res) => {
+                    let result = res.payload
+                    if (!result.paymentPasswordSuccess) {
+                        setCorrectPin(false);
+                        errPin()
+                    } else {
+                        setCorrectPin(true);
+                    }
+                })
+            } else { // 创建pin
+                setOpenPinWindow(false);
+                dispatch(createPin({
+                    paymentPassword: tmpPin
+                })).then((res) => {
+                    if (res.payload) {
+                        dispatch(showMessage({ message: 'success', code: 1 }));
+                        setHasPin(true)
+                        closeCreatePinFunc()
+                    }
+                })
+            }
+        }
+    }
+
+    useEffect(() => {
+        setHasPin(userData.profile?.user?.hasSetPaymentPassword ?? false)
+
+    }, [userData.profile]);
 
     const changePhoneTab = (tab) => {
         window.localStorage.setItem('phoneTab', tab);
@@ -150,13 +338,11 @@ function Card(props) {
         setPhoneTab('card');
     }, []);
 
-    useEffect(() => {
-        setRanges([t('card_2'), t('card_9')]);
-    }, [currentLanguage.id]);
+
 
     const closeRecordFunc = () => {
-        document.getElementById('openRecord').classList.remove('PinMoveAni');
-        document.getElementById('openRecord').classList.add('PinMoveOut');
+        document.getElementById('openRecord') && document.getElementById('openRecord').classList.remove('PinMoveAni');
+        document.getElementById('openRecord') && document.getElementById('openRecord').classList.add('PinMoveOut');
         setTimeout(() => {
             setTiJiaoState(0);
             setOpenRecordWindow(false);
@@ -547,6 +733,17 @@ function Card(props) {
         })
     }
 
+    useEffect(() => {
+        if (googleCode.length === 6) {
+            if (huaZhuanValue === 0) {
+                doTransferCrypto()
+            } else {
+                doTransferCrypto(0)
+            }
+        }
+
+    }, [googleCode]);
+
     /*
     * 信用卡划转(crypto)
     *
@@ -560,6 +757,7 @@ function Card(props) {
         } else {
             doFun = creditCardCryptoWithdraw
         }
+        setOpenPinWindow(false)
         setOpenSuccess(false);
         setZhuanQuan(true);
         dispatch(doFun({
@@ -568,26 +766,50 @@ function Card(props) {
             symbol: symbol,
             chain: 'trc',
             amount: transferMoney,
+            checkCode: googleCode
         })).then((res) => {
             setIsLoadingBtn(false)
             let result = res.payload
-            setLookDataId(result && result.mchOrderNo)
-            if (result) {
-                if (result.status === 'success') {
-                    setZhuanQuan(false);
-                    setTiJiaoState(1);
-                    setUpdateCard(true)
-                    setTimer(timer + 1)
-                    // closeRecordFunc()
-                    // myFunction();
-                } else {
-                    setZhuanQuan(false);
-                    setTiJiaoState(2);
-                    dispatch(showMessage({ message: result.msg, code: 2 }));
+            setGoogleCode('');
+            // setOpenPinWindow(false);
+            if (result.errno == -2) {
+                setOpenRecordWindow(false)
+                setOpenSuccess(true);
+                if (!hasAuthGoogle) {
+                    closePinFunc()
+                    setOpenAnimateModal(true)
+                    return;
                 }
+                openGoogleCodeFunc()
+                return
+            } else if (result.errno === 0) {
+                setLookDataId(result.data && result.data.mchOrderNo)
+                if (result.data) {
+                    if (result.data.status === 'success') {
+                        closeGoogleCodeFunc();
+                        setZhuanQuan(false);
+                        setTiJiaoState(1);
+                        setUpdateCard(true)
+                        setTimer(timer + 1)
+                        // setOpenSuccess(true);
+                        // closeRecordFunc()
+                        // myFunction();
+                    } else {
+                        setZhuanQuan(false);
+                        setTiJiaoState(2);
+                        setOpenSuccess(true);
+                        dispatch(showMessage({ message: result.data.msg, code: 2 }));
+                    }
+                }
+            } else {
+                setZhuanQuan(false);
+                setOpenSuccess(true);
+                setTiJiaoState(2);
+                dispatch(showMessage({ message: result.data.errmsg, code: 2 }));
             }
         })
     }
+
 
     const handleTransferCrypto = () => {
         if (huaZhuanValue === 0) {
@@ -608,7 +830,7 @@ function Card(props) {
         } else if (text === '.') {
             if (!tmpText.includes(text)) {
                 tmpText = tmpText + text
-                if( !tmpText.split('.')[0]) {
+                if (!tmpText.split('.')[0]) {
                     tmpText = '0' + text
                 }
             }
@@ -616,7 +838,7 @@ function Card(props) {
             tmpText = tmpText + text
         }
 
-        setTransferMoney(tmpText === '0'? '': tmpText);
+        setTransferMoney(tmpText === '0' ? '' : tmpText);
     }
 
     useEffect(() => {
@@ -632,9 +854,14 @@ function Card(props) {
         }
     }, [transferMoney])
 
-    const setMaxValue = ()=> {
-        const balance = _.get(_.find(symbolList, { 'symbol': symbol}), 'balance', 0)
+    const setMaxValue = () => {
+        const balance = _.get(_.find(symbolList, { 'symbol': symbol }), 'balance', 0)
         setTransferMoney(balance)
+    }
+
+    const backCardPageEvt = () => {
+        history.push(`/wallet/home/card?accessType=${localStorage.getItem('accessType') || 0}`)
+        setOpenKyc(false)
     }
 
     return (
@@ -804,9 +1031,12 @@ function Card(props) {
                                                             <div className='flex justify-center container' style={{ position: "relative" }}>
                                                                 <div className="responsive-div creditcard" id="responsive-div">
                                                                     <div className={clsx("", fanZhuan && "xiaoShi")}>
-                                                                        <div className="responsive-div-content card4Bg cardZhiDi" style={{ background: `url(${ cardConfigList[cardItem.creditConfigId]?.url})`,  backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat'}} onClick={() => {
+                                                                        <div className="responsive-div-content card4Bg cardZhiDi" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }} onClick={() => {
                                                                         }}  >
-                                                                            <div className={clsx("cardNumber", kaBeiButton && "xiaoShi")}> <span id="cardNumberOne" >{cardItem.userCreditNo}</span> </div>
+                                                                            <div className={clsx("cardNumber", kaBeiButton && "xiaoShi")}> <span id="cardNumberOne" >{cardItem?.userCreditNo?.replace(/(.{4})/g, '$1 ')}</span> </div>
+                                                                            <div className={clsx("cardExpired ", kaBeiButton && "xiaoShi")}>
+                                                                                <span id="cardNumberOne" style={{ paddingTop: "2%" }} >{cardItem?.userCreditEndTime.split('-')[1]}/{cardItem?.userCreditEndTime.split('-')[0].slice(-2)}</span>
+                                                                            </div>
                                                                             <div className='cardBeiMian'>
                                                                                 <div className={clsx("", kaBeiButton && "xiaoShi")}>
                                                                                     {cardItem?.state == 10 && (
@@ -822,7 +1052,7 @@ function Card(props) {
                                                                     </div>
 
                                                                     <div className={clsx("", !fanZhuan && "xiaoShi")} >
-                                                                        <div className="responsive-div-content card41Bg cardZhiDi flipped2" style={{ background: `url(${ cardConfigList[cardItem.creditConfigId]?.backUrl})`,  backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat'}} onClick={() => {
+                                                                        <div className="responsive-div-content card41Bg cardZhiDi flipped2" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.backUrl})`, backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat' }} onClick={() => {
                                                                         }}  >
                                                                             <div className='cardAnQuanMa '>{cardItem.userCreditKey}</div>
                                                                             <div className='cardBeiMian flipped2 '>
@@ -1072,7 +1302,7 @@ function Card(props) {
                                                                     <div className={clsx("", fanZhuan && "xiaoShi")}>
                                                                         <div className="responsive-div-content card4Bg cardZhiDi" onClick={() => {
                                                                         }}  >
-                                                                            <div className={clsx("cardNumber", kaBeiButton && "xiaoShi")}> <span id="cardNumberOne" >{cardItem.userCreditNo}</span> </div>
+                                                                            <div className={clsx("cardNumber", kaBeiButton && "xiaoShi")}> <span id="cardNumberOne" >{cardItem?.userCreditNo?.replace(/(.{4})/g, '$1 ')}</span> </div>
                                                                             <div className='cardBeiMian'>
                                                                                 <div className={clsx("", kaBeiButton && "xiaoShi")}>
                                                                                     <div className='kaBeiZi flex'>
@@ -1248,7 +1478,7 @@ function Card(props) {
                                                     >
                                                         <div className='cardName'>{configItem.creditConfigName}</div>
                                                         <div className="responsive-div">
-                                                            <div className="responsive-div-content card1Bg" style={{ background: `url(${configItem?.url})`, backgroundSize: 'cover', backgroundPosition: 'center'}} onClick={() => {
+                                                            <div className="responsive-div-content card1Bg" style={{ background: `url(${configItem?.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }} onClick={() => {
                                                                 setOpenXiangQing(true);
                                                                 setCardConfigID(configItem.configId);
                                                                 myFunction;
@@ -1259,7 +1489,7 @@ function Card(props) {
 
                                                             <div className='flex justify-between'>
                                                                 <div className='kaPianInfoLeiXing' onClick={() => {
-                                                                }} >{ configItem.cardOrganizations} Card</div>
+                                                                }} >{configItem.cardOrganizations} Card</div>
                                                                 <div className='kaPianInfo' onClick={() => {
                                                                     setOpenXiangQing(true);
                                                                     setCardConfigID(configItem.configId);
@@ -1352,7 +1582,7 @@ function Card(props) {
 
                     <div className='flex justify-center mt-10'>
                         <motion.div variants={item} className='shenQingCardDi flex items-center'>
-                            <img className='shenQingCard' src={cardConfigList[cardConfigID]?.url }></img>
+                            <img className='shenQingCard' src={cardConfigList[cardConfigID]?.url}></img>
                         </motion.div>
                     </div>
                     <div className='kaPianQuanYiZi'>{t('card_37')}</div>
@@ -1404,7 +1634,7 @@ function Card(props) {
 
                             <div className='flex justify-between mt-10'>
                                 <div className='quanYiHuiZi'>{t('card_46')}</div>
-                                <div>{cardConfigList[cardConfigID]?.cardOrganizations == 'visa'? 'VISA':'MASTER'}</div>
+                                <div>{cardConfigList[cardConfigID]?.cardOrganizations == 'visa' ? 'VISA' : 'MASTER'}</div>
                             </div>
 
 
@@ -1422,17 +1652,17 @@ function Card(props) {
 
                             <div className='flex justify-between mt-10 '>
                                 <div className='quanYiHuiZi'>{t('card_52')}</div>
-                                <div>{t('card_57')}</div>
+                                <div style={{ textAlign: "end" }}>{t('card_57')}</div>
                             </div>
 
                             <div className='flex justify-between mt-10 '>
                                 <div className='quanYiHuiZi'>{t('card_53')}</div>
-                                <div>{t('card_58')}</div>
+                                <div style={{ textAlign: "end" }}>{t('card_58')}</div>
                             </div>
 
                             <div className='flex justify-between mt-10'>
                                 <div className='quanYiHuiZi'>{t('card_54')}</div>
-                                <div>{t('card_59')}</div>
+                                <div style={{ textAlign: "end" }}>{t('card_59')}</div>
                             </div>
 
                             <div className='flex justify-between mt-10 '>
@@ -1501,7 +1731,7 @@ function Card(props) {
                     }}   >
                         <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                     </div>
-                    <Kyc />
+                    <Kyc backCardPage={backCardPageEvt} />
                     <div style={{ height: "5rem" }}></div>
                 </motion.div>
             </div>}
@@ -1808,7 +2038,9 @@ function Card(props) {
                                             onTouchEnd={changeToWhite}
                                             onTouchCancel={changeToWhite}
                                             onClick={() => {
-                                                handleTransferCrypto()
+                                                setTiJiaoState(0);
+                                                isBindPin()
+                                                // handleTransferCrypto()
                                                 // setOpenZhiFu(true)
                                             }}>{t('card_30')}
                                         </div>
@@ -1819,6 +2051,7 @@ function Card(props) {
                     }
 
                     {!openSuccess && <motion.div
+                        id='pinDivHeight'
                         variants={container}
                         initial="hidden"
                         animate="show"
@@ -2346,7 +2579,414 @@ function Card(props) {
                 </div>
             </AnimateModal>
 
+            {/*填写google验证码*/}
+            <BootstrapDialog
+                onClose={() => {
+                    closeGoogleCodeFunc()
+                }}
+                aria-labelledby="customized-dialog-title"
+                open={openGoogleCode}
+                className="dialog-container"
+            >
+                <div id="GoogleCodeSty" className="PINSty">
+                    <div className='pinWindow'>
+                        <div className='flex'>
+                            <div className='PINTitle2'>{t('card_180')}</div>
+                            <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                                closeGoogleCodeFunc()
+                            }} />
+                        </div>
+                        <div className='PINTitle'>{t('card_176')}</div>
+                        <div className='flex justify-between mt-32 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
+                            <div className='PinNum color-box'
+                                onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}>{googleCode[0] ?? ''}</div>
+                            <div className='PinNum' >{googleCode[1] ?? ''}</div>
+                            <div className='PinNum'>{googleCode[2] ?? ''}</div>
+                            <div className='PinNum'>{googleCode[3] ?? ''}</div>
+                            <div className='PinNum'>{googleCode[4] ?? ''}</div>
+                            <div className='PinNum'>{googleCode[5] ?? ''}</div>
+                        </div>
+                    </div>
 
+                    <div className='jianPanSty'>
+                        <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                            <div id="createPin1" className='jianPanNumBtn borderRight borderBottom color-box'
+                                onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoGoogleCode(1)
+                                }}
+                            >1</div>
+                            <div id="createPin2" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoGoogleCode(2)
+                                }}
+                            >2</div>
+                            <div id="createPin3" className='jianPanNumBtn  borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoGoogleCode(3)
+                                }}
+                            >3</div>
+                        </div>
+                        <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                            <div id="createPin4" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoGoogleCode(4)
+                                }}
+                            >4</div>
+                            <div id="createPin5" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoGoogleCode(5)
+                                }}
+                            >5</div>
+                            <div id="createPin6" className='jianPanNumBtn  borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoGoogleCode(6)
+                                }}
+                            >6</div>
+                        </div>
+                        <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                            <div id="createPin7" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoGoogleCode(7)
+                                }}
+                            >7</div>
+                            <div id="createPin8" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoGoogleCode(8)
+                                }}
+                            >8</div>
+                            <div id="createPin9" className='jianPanNumBtn borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoGoogleCode(9)
+                                }}
+                            >9</div>
+                        </div>
+                        <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                            <div className='jianPanNumBtn borderRight '></div>
+                            <div id="createPin0" className='jianPanNumBtn borderRight color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoGoogleCode(0)
+                                }}
+                            >0</div>
+                            <div id="createPinx" className='jianPanNumBtn flex items-center color-box'
+                                onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoGoogleCode(-1)
+                                }}
+                            > <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img></div>
+                        </div>
+                    </div>
+                </div>
+            </BootstrapDialog>
+
+            {/* pin码界面 */}
+            <BootstrapDialog
+                onClose={() => {
+                    closePinFunc();
+                }}
+                aria-labelledby="customized-dialog-title"
+                open={openPinWindow}
+                className="dialog-container"
+            >
+                <div id="PINSty" className="PINSty">
+                    <div id='pinDivHeight'>
+                        <div className='pinWindow'>
+                            <div className='flex'>
+                                <div className='PINTitle2'>{t('card_65')}</div>
+                                <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                                    closePinFunc();
+                                }} />
+                            </div>
+                            {/* <div className='PINTitle'>{t('home_wallet_14')}{smallTabValue == 0 ? t('card_189') : t('card_7')}（ <span className='quanYiLv'> {smallTabValue == 0 ? inputVal.address : inputIDVal} </span> ） {t('transfer_1')}</div> */}
+                            <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
+                                {/* <img className='MoneyWithdraw' style={{ borderRadius: '50%'}} src={ arrayLookup(symbolsData, 'symbol', symbol, 'avatar') || '' }></img> */}
+                                <div className='PINTitle3'>{symbol}</div>
+                                <div className='flex'>
+                                    <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")}>{transferMoney} <span className={clsx("", !showGuangBiao ? 'guangBiaoNo' : 'guangBiao')} >︱</span>
+                                    </div>
+                                    <img src="wallet/assets/images/deposite/bianJiBi.png" className='ml-4 mt-4' style={{ width: "26px", height: "26px" }} onClick={() => {
+                                        setTextSelect(!textSelect)
+                                        setShowGuangBiao(!textSelect)
+                                    }} />
+                                </div>
+
+                            </div>
+                            <div className='flex justify-between mt-10'>
+                                <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[0] ? '●' : ''}</div></div>
+                                <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[1] ? '●' : ''}</div></div>
+                                <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[2] ? '●' : ''}</div></div>
+                                <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[3] ? '●' : ''}</div></div>
+                                <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[4] ? '●' : ''}</div></div>
+                                <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[5] ? '●' : ''}</div></div>
+                            </div>
+                        </div>
+                        <div className='jianPanSty'>
+                            <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                                <div id="zhuanZhang1" className='jianPanBtn borderRight borderBottom color-box'
+                                    onTouchStart={changeToBlack}
+                                    onTouchEnd={changeToWhite}
+                                    onTouchCancel={changeToWhite}
+                                    onClick={() => { handleDoPin(1) }}>1</div>
+                                <div id="zhuanZhang2" className='jianPanBtn borderRight borderBottom color-box'
+                                    onTouchStart={changeToBlack}
+                                    onTouchEnd={changeToWhite}
+                                    onTouchCancel={changeToWhite}
+                                    onClick={() => { handleDoPin(2) }}>2</div>
+                                <div id="zhuanZhang3" className='jianPanBtn borderRight borderBottom'
+                                    onTouchStart={changeToBlack}
+                                    onTouchEnd={changeToWhite}
+                                    onTouchCancel={changeToWhite}
+                                    onClick={() => { handleDoPin(3) }}>3</div>
+                                <div id="zhuanZhangImg" className='jianPanBtImgDiv flex items-center borderBottom'
+                                    onTouchStart={changeToBlack}
+                                    onTouchEnd={changeToWhite}
+                                    onTouchCancel={changeToWhite}
+                                    onClick={() => { handleDoPin(-1) }}>
+                                    <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img>
+                                </div>
+                            </div>
+                            <div className='flex' style={{ width: "100%" }}>
+                                <div style={{ width: "75.1%" }}>
+                                    <div className='flex'>
+                                        <div id="zhuanZhang4" className='jianPanBtn1 borderRight'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => { handleDoPin(4) }}>4</div>
+                                        <div id="zhuanZhang5" className='jianPanBtn1 borderRight'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => { handleDoPin(5) }}>5</div>
+                                        <div id="zhuanZhang6" className='jianPanBtn1 borderRight'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => { handleDoPin(6) }}>6</div>
+                                    </div>
+                                    <div className='flex'>
+                                        <div id="zhuanZhang7" className='jianPanBtn1 borderRight'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => { handleDoPin(7) }}>7</div>
+                                        <div id="zhuanZhang8" className='jianPanBtn1 borderRight'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => { handleDoPin(8) }}>8</div>
+                                        <div id="zhuanZhang9" className='jianPanBtn1 borderRight'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => { handleDoPin(9) }}>9</div>
+                                    </div>
+                                    <div className='flex'>
+                                        <div id="zhuanZhang0" className='jianPanBtn2 borderRight'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => { handleDoPin(0) }}>0</div>
+                                        <div id="zhuanZhangDian" className='jianPanBtn4 borderRight'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => { handleDoPin('.') }}>.</div>
+                                    </div>
+                                </div>
+                                {isLoadingBtn && <FuseLoading />}
+                                {!isLoadingBtn &&
+                                    <div id='zhuanZhangWanCheng' className='jianPanBtn3'
+                                        onTouchStart={changeToBlack}
+                                        onTouchEnd={changeToWhite}
+                                        onTouchCancel={changeToWhite}
+                                        onClick={() => {
+                                            if (pin && pin.length === 6 && correctPin) {
+                                                handleTransferCrypto()
+                                            }
+                                        }}>{t('card_30')}</div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </BootstrapDialog>
+
+            <BootstrapDialog
+                onClose={() => {
+                    closeCreatePinFunc();
+                }}
+                aria-labelledby="customized-dialog-title"
+                open={createPinWindow}
+                className="dialog-container"
+            >
+                <div id="CreateSty" className="PINSty">
+                    <div className='pinWindow'>
+                        <div className='flex'>
+                            <div className='PINTitle2'>{t('card_68')}</div>
+                            <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                                closeCreatePinFunc();
+                            }} />
+                        </div>
+                        <div className='PINTitle'>{t('card_69')}</div>
+                        <div className='flex justify-between mt-32 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
+                            <div className='PinNum color-box'
+                                onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}>{pin[0] ?? ''}</div>
+                            <div className='PinNum' >{pin[1] ?? ''}</div>
+                            <div className='PinNum'>{pin[2] ?? ''}</div>
+                            <div className='PinNum'>{pin[3] ?? ''}</div>
+                            <div className='PinNum'>{pin[4] ?? ''}</div>
+                            <div className='PinNum'>{pin[5] ?? ''}</div>
+                        </div>
+                    </div>
+
+                    <div className='jianPanSty'>
+                        <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                            <div id="createPin1" className='jianPanNumBtn borderRight borderBottom color-box'
+                                onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(1)
+                                }}
+                            >1</div>
+                            <div id="createPin2" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(2)
+                                }}
+                            >2</div>
+                            <div id="createPin3" className='jianPanNumBtn  borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(3)
+                                }}
+                            >3</div>
+                        </div>
+                        <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                            <div id="createPin4" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(4)
+                                }}
+                            >4</div>
+                            <div id="createPin5" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(5)
+                                }}
+                            >5</div>
+                            <div id="createPin6" className='jianPanNumBtn  borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(6)
+                                }}
+                            >6</div>
+                        </div>
+                        <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                            <div id="createPin7" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(7)
+                                }}
+                            >7</div>
+                            <div id="createPin8" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(8)
+                                }}
+                            >8</div>
+                            <div id="createPin9" className='jianPanNumBtn borderBottom color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(9)
+                                }}
+                            >9</div>
+                        </div>
+                        <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                            <div className='jianPanNumBtn borderRight '></div>
+                            <div id="createPin0" className='jianPanNumBtn borderRight color-box' onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(0)
+                                }}
+                            >0</div>
+                            <div id="createPinx" className='jianPanNumBtn flex items-center color-box'
+                                onTouchStart={changeToBlack}
+                                onTouchEnd={changeToWhite}
+                                onTouchCancel={changeToWhite}
+                                onClick={() => {
+                                    handleDoPin(-1)
+                                }}
+                            > <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img></div>
+                        </div>
+                    </div>
+                </div>
+            </BootstrapDialog>
+
+            {/*打开错误提示*/}
+            <BootstrapDialog
+                onClose={() => {
+                    setOpenPinErr(false)
+                    // setCreatePinWindow(false)
+                    // openCreatePinFunc()
+                }}
+                aria-labelledby="customized-dialog-title"
+                open={openPinErr}
+                className="dialog-container"
+            >
+                <div className='errorPinDi'>
+                    <div className='errorPinZi flex items-center  justify-content-center'>{t('card_70')}</div>
+                    <div className='errorPinLine'></div>
+                    <div className='flex justify-between'>
+                        <div className='errorPinBtn errorRightLine' onClick={() => {
+                            setOpenPinErr(false)
+                            history.push('/wallet/home/security', { tabValue: 5, resetTabValueParam: 1 })
+                        }}>{t('card_71')}</div>
+                        <div className='errorPinBtn' style={{ color: "#81A39F" }}
+                            onClick={() => {
+                                setOpenPinErr(false)
+                                openInputPin()
+                            }}
+                        >{t('card_72')}</div>
+                    </div>
+                </div>
+            </BootstrapDialog>
 
             <BootstrapDialog
                 open={openChangeBi}

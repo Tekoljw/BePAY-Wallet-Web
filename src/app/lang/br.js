@@ -542,8 +542,22 @@ const locale = {
     card_188: "O seu pedido expirou!",
     kyc_60: "Antes de vincular ou modificar as informações KYC, você precisa primeiro vincular um número de telefone ou email.",
     card_189: "Endereço Externo",
+    card_190: "cartão de pagamento online",
+    card_191: "Cartão de compras online",
+    card_192: "Cartão de Despesas Diárias",
+    card_193: "Cartão de Anúncio",
+    card_194: "Cartão de Aquisição de Trabalho",
+    card_195: "Copiado",
 
+    
+    
+    
 
+    
+
+    
+
+    
  };
 export default locale;
     

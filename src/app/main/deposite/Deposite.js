@@ -136,10 +136,6 @@ const sortUseAge = (a, b) => {
     }
 };
 
-
-
-
-
 const container = {
     show: {
         transition: {
@@ -147,6 +143,7 @@ const container = {
         },
     },
 };
+
 const StyledAccordion = styled(Accordion)(({ theme }) => ({
     margin: 0,
     border: 'none',
@@ -181,6 +178,9 @@ const nftNetwork = [
     { network: "Ethereum", walletName: "ETH", protol: "ETH", url: 'wallet/assets/images/deposite/btc.png', 'desc': 'ETH', 'desc2': 'ETH-2' },
 ];
 
+
+
+
 function Deposite() {
 
     const [inputValue, setInputValue] = useState(0);
@@ -193,6 +193,10 @@ function Deposite() {
         setSliderValue(value / balanceAll * 100);
 
     };
+
+    const divRefs = useRef([]);
+    const divRefsParent = useRef([]);
+
 
     // 创建处理滑块变化的函数
     const handleSliderChange = (e) => {
@@ -212,7 +216,7 @@ function Deposite() {
     const [balanceAll, setbalanceAll] = useState(0)
 
     const [checkboxChecked, setCheckboxChecked] = useState(true);
-
+    const [copyTiShi, setCopyTiShi] = useState(false);
     const handleCheckboxChange = (e) => {
         setCheckboxChecked(!checkboxChecked);
         if (checkboxChecked) {
@@ -323,7 +327,7 @@ function Deposite() {
 
     let timer;
     let refreshTimer;
-    const [time, setTime] = useState({ hour: 0, minute: 0, second: 0})
+    const [time, setTime] = useState({ hour: 0, minute: 0, second: 0 })
     const [refreshTime, setRefreshTime] = useState(10)
 
     // select切换
@@ -406,15 +410,15 @@ function Deposite() {
             payOrderId: chongZhiVal.id,
         })).then((res) => {
             let result = res.payload
-            if (result && result.errno === 0 ) {
-              setTiJiaoState(result?.data?.state)
-              if(result?.data?.successTime){
-                setChongZhiVal({
-                    ...chongZhiVal,
-                    successTime: _.toNumber(result?.data?.successTime)
-                })
-                setRefreshTime(9)
-              }
+            if (result && result.errno === 0) {
+                setTiJiaoState(result?.data?.state)
+                if (result?.data?.successTime) {
+                    setChongZhiVal({
+                        ...chongZhiVal,
+                        successTime: _.toNumber(result?.data?.successTime)
+                    })
+                    setRefreshTime(9)
+                }
             }
         })
         setTimeout(() => {
@@ -448,7 +452,7 @@ function Deposite() {
         dispatch(getWalletAddress({ networkId: id, symbol: symbol })).then((res) => {
             setIsLoading(false);
             const result = res.payload;
-            if(result.errno === 0) {
+            if (result.errno === 0) {
                 setCryptoOpenLoad(false);
                 let addressDataObj = { ...addressData } || {};
                 if (!addressDataObj[symbol]) {
@@ -459,7 +463,7 @@ function Deposite() {
                 if (!result) return;
                 setWalletAddress(result.data);
                 setIsGetWalletAddress(true);
-    
+
                 if (result?.data?.address) {
                     setWalletAddressList([...walletAddressList, {
                         address: result?.data?.address ?? '',
@@ -492,7 +496,7 @@ function Deposite() {
         dispatch(getWalletAddress({ walletName: walltName })).then((res) => {
             setIsLoading(false);
             const result = res.payload;
-            if(result.errno === 0) { 
+            if (result.errno === 0) {
                 if (!result) return;
                 let resultData = result?.data;
                 setNftWalletAddress(resultData);
@@ -546,12 +550,12 @@ function Deposite() {
                 }
                 fbq('track', 'InitiateCheckout');
             }
-            if(result.status === 'wait') {
+            if (result.status === 'wait') {
                 timeFun((result.expiredTime))
                 setTiJiaoState(1)
-            }else if(result.status === 'success'){
+            } else if (result.status === 'success') {
                 setTiJiaoState(2)
-            }else if (result.status === 'failed') {
+            } else if (result.status === 'failed') {
                 setTiJiaoState(3)
                 // dispatch(showMessage({ message: t('error_5'), code: 2 }));
             }
@@ -737,22 +741,22 @@ function Deposite() {
         }
     };
 
-    useEffect(()=> {
-        if(refreshTime === 0){
+    useEffect(() => {
+        if (refreshTime === 0) {
             setOpenAnimateModal(false);
             history.push('/wallet/home/wallet');
         } else {
-            if(tiJiaoState === 2){
-                setTimeout(()=>{
-                    setRefreshTime(refreshTime -1)
+            if (tiJiaoState === 2) {
+                setTimeout(() => {
+                    setRefreshTime(refreshTime - 1)
                 }, 1000)
             }
         }
     }, [refreshTime])
-    
+
     const timeFun = (time) => {
         let end_time = new Date(time).getTime(),
-        sys_second = (end_time - new Date().getTime());
+            sys_second = (end_time - new Date().getTime());
         timer = setInterval(() => {
             if (sys_second > 1000) {
                 sys_second -= 1000;
@@ -760,9 +764,9 @@ function Deposite() {
                 let minute = Math.floor((sys_second / 1000 / 60) % 60);
                 let second = Math.floor(sys_second / 1000 % 60);
                 setTime({
-                    hour:hour < 10 ? "0" + hour : hour,
-                    minute:minute < 10 ? "0" + minute : minute,
-                    second:second < 10 ? "0" + second : second
+                    hour: hour < 10 ? "0" + hour : hour,
+                    minute: minute < 10 ? "0" + minute : minute,
+                    second: second < 10 ? "0" + second : second
                 })
             } else {
                 setTiJiaoState(6)
@@ -804,6 +808,9 @@ function Deposite() {
         //     );
         // }
     }, [symbol]);
+
+
+
 
 
     const getSettingSymbol = async () => {
@@ -889,7 +896,7 @@ function Deposite() {
                     setFiatSelect(tmpFiatSelect);
                 }
             })
-        }else{ //telegram小程序的标题语言处理
+        } else { //telegram小程序的标题语言处理
             setRanges([t('home_deposite_1'), t('home_deposite_2')]);
         }
 
@@ -931,7 +938,7 @@ function Deposite() {
         })).then(res => {
             setIsLoading(false);
             const result = res.payload;
-            if(result && result.errno === 0) {
+            if (result && result.errno === 0) {
                 dispatch(goCenterTransfer({
                     toAddress: result.data,
                     tokenId: param.tokenId,
@@ -946,7 +953,7 @@ function Deposite() {
             } else {
                 dispatch(showMessage({ message: t('error_39'), code: 2 }));
             }
-            
+
         })
     }
 
@@ -1067,6 +1074,7 @@ function Deposite() {
 
 
 
+
     // 格式化金额
     const formatAmount = (amount) => {
         if (amount >= 1000000000) {
@@ -1078,10 +1086,31 @@ function Deposite() {
         } else if (amount >= 1000) {
             return (amount / 1000) + 'K';
         }
-
         return amount
     }
 
+
+
+    useEffect(() => {
+        setTimeout(() => {
+            divRefs.current.forEach(div => {
+                if (div) {
+                    div.style.fontSize = '1.2rem';
+                    if ((div.getBoundingClientRect().width + 22 + 16) > (divRefsParent.current[0]?.getBoundingClientRect().width)) {
+                        div.style.fontSize = '0.95rem';
+                    }
+                }
+            });
+        }, 0);
+    }, [walletAddressList]);
+
+
+    const copyTiShiFunc = () => {
+        setCopyTiShi(true)
+        setTimeout(() => {
+            setCopyTiShi(false)
+        }, 800);
+    }
 
 
     return (
@@ -1163,10 +1192,13 @@ function Deposite() {
                     className="InsideW"
                 >
                     <div className='addressBigW flex justify-between mt-10'>
-                        <div className="userIdW   guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
-                            <div className="addressW2 flex justify-between guoDuDongHua ">
-                                <div className='idZi guoDuDongHua' > <span style={{ color: "#ffffff", marginRight: "10px" }}>UserID</span>  {userData?.profile?.user?.id}</div>
-                                <img onClick={() => {handleCopyText(userData?.profile?.user?.id)}} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"/>
+                        <div className="userIdW guoDuDongHua" style={{ height: showQRcode ? '22rem' : '4.2rem' }}>
+                            <div className="addressW2 flex justify-between guoDuDongHua">
+                                <div className='idZi guoDuDongHua'> <span style={{ color: "#ffffff", marginRight: "10px" }}>UserID</span>  {userData?.profile?.user?.id}</div>
+                                <img onClick={() => {
+                                    copyTiShiFunc();
+                                    handleCopyText(userData?.profile?.user?.id)
+                                }} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png" />
                             </div>
                             <QRCode
                                 className='testQrCodeImg'
@@ -1181,6 +1213,7 @@ function Deposite() {
                             />
                             {/*<img className='testQrCodeImg' src="wallet/assets/images/deposite/testCode.png"></img>*/}
                         </div>
+
                         <img className='qrCodeImg ' src="wallet/assets/images/deposite/newQrCode.png" onClick={() => {
                             setShowQRcode(!showQRcode);
                         }} ></img>
@@ -1274,14 +1307,21 @@ function Deposite() {
                                             </div>
                                         </div>
                                         <div className='addressBigW flex justify-between mt-10'>
-                                            <div className="addressW   guoDuDongHua" style={{ height: selectWalletAddressIndex == index ? "22rem" : '4.2rem' }}>
-                                                <div className="addressW2 flex justify-between guoDuDongHua">
-                                                    <div className='addressZi'>{addressItem.address}</div>
+                                            <div
+                                                ref={el => (divRefsParent.current[index] = el)}
+                                                className="addressW guoDuDongHua" style={{ height: selectWalletAddressIndex == index ? "22rem" : '4.2rem' }}>
+                                                <div
+                                                    className="addressW2 flex justify-between guoDuDongHua">
+                                                    <div
+                                                        ref={el => (divRefs.current[index] = el)}
+                                                        className={clsx('addressZi')}>{addressItem.address}
+                                                    </div>
                                                     <img
                                                         onClick={() => {
+                                                            copyTiShiFunc();
                                                             handleCopyText(addressItem.address)
                                                         }}
-                                                        className='bianJiBiImg'
+                                                        className='bianJiBiImg '
                                                         src="wallet/assets/images/deposite/newCopy.png"
                                                     />
                                                 </div>
@@ -1869,7 +1909,10 @@ function Deposite() {
                             <div className="userIdW   guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
                                 <div className="addressW2 flex justify-between guoDuDongHua">
                                     <div className='idZi guoDuDongHua' > <span style={{ color: "#ffffff", marginRight: "10px" }}>UserID</span>  {userData?.profile?.user?.id}</div>
-                                    <img onClick={() => {handleCopyText(userData?.profile?.user?.id)}} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"/>
+                                    <img onClick={() => {
+                                        copyTiShiFunc();
+                                        handleCopyText(userData?.profile?.user?.id)
+                                    }} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png" />
                                 </div>
                                 <QRCode
                                     className='testQrCodeImg'
@@ -1928,7 +1971,7 @@ function Deposite() {
 
                                     <AccordionDetails>
                                         <div>
-                                            <FormControl className="my-16" sx={{ width: '100%' }} variant="outlined">
+                                            <FormControl className="my-16 " sx={{ width: '100%' }} variant="outlined">
                                                 <OutlinedInput
                                                     type='number'
                                                     disabled={false}
@@ -1968,6 +2011,9 @@ function Deposite() {
                                                     )
                                                 })}
                                             </div>}
+
+                                            <div className='ml-2' style={{ fontSize: "13px" }} >{t('home_borrow_16')} 0.001</div>
+
                                             <div className="my-16 flex items-center justify-content-center">
                                                 <LoadingButton
                                                     className="px-48 text-lg btnColorTitleBig"
@@ -2310,7 +2356,7 @@ function Deposite() {
                             </motion.div>
                         </div>
 
-                        <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", fontSize: "20px", }}> { chongZhiVal?.amount } {chongZhiVal?.currencyCode}</motion.div>
+                        <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", fontSize: "20px", }}> {chongZhiVal?.amount} {chongZhiVal?.currencyCode}</motion.div>
 
                         <div className='mt-16' style={{ borderTop: "1px solid #2C3950" }}></div>
 
@@ -2368,11 +2414,11 @@ function Deposite() {
                             </motion.div>
                         </div>
 
-                        <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", fontSize: "20px", color: "#ffc600" }}>{ `${time.hour}:${time.minute}:${time.second}`}</motion.div>
+                        <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", fontSize: "20px", color: "#ffc600" }}>{`${time.hour}:${time.minute}:${time.second}`}</motion.div>
 
                         <div style={{ margin: "0 auto", textAlign: "center", height: "23px", fontSize: "14px" }}>
                             <motion.div variants={item} style={{ height: "23px", lineHeight: "23px" }}>
-                                { chongZhiVal?.amount } {chongZhiVal?.currencyCode}
+                                {chongZhiVal?.amount} {chongZhiVal?.currencyCode}
                             </motion.div>
                         </div>
 
@@ -2411,7 +2457,7 @@ function Deposite() {
                 }
                 {/* 失败*/}
                 {
-                    (tiJiaoState === 3 ||  tiJiaoState === 6) && <div>
+                    (tiJiaoState === 3 || tiJiaoState === 6) && <div>
                         <div className='daGouDingWei2' >
                             <motion.div variants={item} className=' daGouDingWei1' style={{ width: "78px", height: "78px", margin: "20px auto" }}>
                                 <div className='daGouDingWei1' style={{}}>
@@ -2425,6 +2471,22 @@ function Deposite() {
                 }
 
             </AnimateModal >
+
+
+            <BootstrapDialog
+                onClose={() => {
+                    setCopyTiShi(false)
+                }}
+                aria-labelledby="customized-dialog-title "
+                open={copyTiShi}
+                className="dialog-container copyTiShiW"
+            >
+                <div style={{ textAlign: "center", padding: "1rem 1rem 1rem 1rem" }}>
+                    {t('card_195')}
+                </div>
+
+            </BootstrapDialog>
+
 
         </div >
     )

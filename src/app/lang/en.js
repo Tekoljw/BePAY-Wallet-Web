@@ -58,7 +58,7 @@ const locale = {
     home_2fa_10: 'Verification code',
     home_2fa_11: 'Send',
 
-    home_record_1: 'Deposit',
+    home_record_1: 'Recive',
     home_record_2: 'Pool',
     home_record_3: 'Service charge',
     home_record_4: 'Change',
@@ -165,7 +165,7 @@ const locale = {
     home_withdraw_13: 'Slow',
     home_withdraw_14: 'address',
     home_withdraw_15: 'Transaction fee - ',
-    home_withdraw_16: ' Time taken 0 - 2 Hours. ',
+    home_withdraw_16: ' Time taken 0 - 2 Hours . ',
     home_withdraw_17: 'Network confirmation is not included and can take some extra time',
     home_withdraw_18: 'Bank',
     home_withdraw_19: 'Recipient the name of bank',
@@ -549,7 +549,23 @@ const locale = {
     card_188: "Your order has timed out!",
     kyc_60: "Before binding or modifying KYC information, you need to first bind a phone number or email.",
     card_189: "External Address",
+    card_190: "online payment card",
+    card_191: "Online shopping card",
+    card_192: "Living Expense Card",
+    card_193: "Advertisement Card",
+    card_194: "Job Procurement Card",
+    card_195: "Copied",
 
+    
+    
+    
+
+    
+
+    
+
+    
+    
 };
 
 export default locale;
