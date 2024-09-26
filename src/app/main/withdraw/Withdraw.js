@@ -1730,16 +1730,14 @@ function Withdraw(props) {
                                         closePinFunc();
                                     }} />
                                 </div>
-                                <div className='PINTitle' style={{ color: "#909FB4", paddingBottom: "1rem", fontSize: "16px" }}>{smallTabValue == 0 ? t('card_189') : t('card_7')}</div>
-                                <div className='' style={{ fontSize: smallTabValue == 0 ? "12px" : "22px", textAlign: "center", color: "#12C1A2", width: "100%", overflow: "hidden" }}> {smallTabValue == 0 ? inputVal.address : inputIDVal} </div>
-                                <div className='flex justify-center mt-10' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "2rem" }}>
+                                <div className='py-4' style={{ fontSize: smallTabValue == 0 ? "14px" : "20px", textAlign: "center", color: "#909FB4", width: "100%", overflow: "hidden", wordBreak: "break-all" }}>{smallTabValue == 0 ? "Address" : "UserID"}  {smallTabValue == 0 ? inputVal.address : inputIDVal} </div>
+                                <div className='flex justify-center mt-10 ' style={{ paddingLeft: "14%", width: "100%", overflow: "hidden", borderBottom: "1px solid #2C3950", paddingBottom: "2rem" }}>
                                     <img className='MoneyWithdraw' style={{ borderRadius: '50%' }} src={arrayLookup(symbolsData, 'symbol', symbol, 'avatar') || ''}></img>
-                                    <div className='PINTitle3'>{symbol}</div>
                                     <div className='flex'>
                                         <div className={clsx('PINTitle4  inputNumSty ', textSelect && "inputBackDi")}>
                                             {inputVal.amount} <span className={clsx("", !showGuangBiao ? 'guangBiaoNo' : 'guangBiao')} >︱</span>
                                         </div>
-                                        <img src="wallet/assets/images/deposite/bianJiBi.png" className='ml-4 mt-4' style={{ width: "26px", height: "26px" }} onClick={() => {
+                                        <img src="wallet/assets/images/deposite/bianJiBi.png" className='ml-4 mt-8' style={{ width: "18px", height: "18px" }} onClick={() => {
                                             setTextSelect(!textSelect)
                                             setShowGuangBiao(!textSelect)
                                         }} />

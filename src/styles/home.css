@@ -491,7 +491,7 @@ input[type='number'] {
 
 .inputNumSty {
     border-radius: 0.5rem;
-    padding: 0rem 1rem 0rem 1rem;
+    padding: 0rem 0.5rem 0rem 0.5rem;
 }
 
 .inputBackDi {
@@ -602,8 +602,8 @@ input[type='number'] {
     font-size: 2.6rem;
     font-weight: 600;
     margin-left: 0.6rem;
-    height: 3.6rem;
-    line-height: 3.6rem;
+    height: 3.4rem;
+    line-height: 3.4rem;
 }
 
 .jianPanSty {
@@ -1579,7 +1579,7 @@ input[type='number'] {
 .cardNumber {
     width: 84%;
     margin: 0 auto;
-    height: 25%;
+    height: 17%;
     font-size: 160%;
     text-align: left;
 }

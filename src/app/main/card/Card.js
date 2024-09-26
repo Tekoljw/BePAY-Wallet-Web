@@ -230,7 +230,7 @@ function Card(props) {
             tmpText = tmpText + text
         }
 
-        setTransferMoney(tmpText );
+        setTransferMoney(tmpText);
     }
 
     const handleDoGoogleCode = (text) => {
@@ -283,7 +283,7 @@ function Card(props) {
                     }
                 })
             }
-        } 
+        }
     }
 
     useEffect(() => {
@@ -734,13 +734,13 @@ function Card(props) {
     }
 
     useEffect(() => {
-    if (googleCode.length === 6) {
-               if (huaZhuanValue === 0) {
-            doTransferCrypto()
-        } else {
-            doTransferCrypto(0)
+        if (googleCode.length === 6) {
+            if (huaZhuanValue === 0) {
+                doTransferCrypto()
+            } else {
+                doTransferCrypto(0)
+            }
         }
-    }
 
     }, [googleCode]);
 
@@ -782,7 +782,7 @@ function Card(props) {
                 }
                 openGoogleCodeFunc()
                 return
-            } else if(result.errno === 0){
+            } else if (result.errno === 0) {
                 setLookDataId(result.data && result.data.mchOrderNo)
                 if (result.data) {
                     if (result.data.status === 'success') {
@@ -809,7 +809,7 @@ function Card(props) {
             }
         })
     }
-    
+
 
     const handleTransferCrypto = () => {
         if (huaZhuanValue === 0) {
@@ -859,7 +859,7 @@ function Card(props) {
         setTransferMoney(balance)
     }
 
-    const backCardPageEvt = () =>{
+    const backCardPageEvt = () => {
         history.push(`/wallet/home/card?accessType=${localStorage.getItem('accessType') || 0}`)
         setOpenKyc(false)
     }
@@ -1031,11 +1031,11 @@ function Card(props) {
                                                             <div className='flex justify-center container' style={{ position: "relative" }}>
                                                                 <div className="responsive-div creditcard" id="responsive-div">
                                                                     <div className={clsx("", fanZhuan && "xiaoShi")}>
-                                                                        <div className="responsive-div-content card4Bg cardZhiDi" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.url})`,backgroundSize: 'cover',backgroundPosition: 'center' }} onClick={() => {
+                                                                        <div className="responsive-div-content card4Bg cardZhiDi" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }} onClick={() => {
                                                                         }}  >
                                                                             <div className={clsx("cardNumber", kaBeiButton && "xiaoShi")}> <span id="cardNumberOne" >{cardItem?.userCreditNo?.replace(/(.{4})/g, '$1 ')}</span> </div>
-                                                                            <div className={clsx("cardExpired", kaBeiButton && "xiaoShi")}>
-                                                                                <span id="cardNumberOne" >{cardItem?.userCreditEndTime.split('-')[1]}/{cardItem?.userCreditEndTime.split('-')[0].slice(-2)}</span>
+                                                                            <div className={clsx("cardExpired ", kaBeiButton && "xiaoShi")}>
+                                                                                <span id="cardNumberOne" style={{ paddingTop: "2%" }} >{cardItem?.userCreditEndTime.split('-')[1]}/{cardItem?.userCreditEndTime.split('-')[0].slice(-2)}</span>
                                                                             </div>
                                                                             <div className='cardBeiMian'>
                                                                                 <div className={clsx("", kaBeiButton && "xiaoShi")}>
@@ -1731,7 +1731,7 @@ function Card(props) {
                     }}   >
                         <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                     </div>
-                    <Kyc backCardPage={ backCardPageEvt}/>
+                    <Kyc backCardPage={backCardPageEvt} />
                     <div style={{ height: "5rem" }}></div>
                 </motion.div>
             </div>}
@@ -2702,7 +2702,7 @@ function Card(props) {
                     </div>
                 </div>
             </BootstrapDialog>
-            
+
             {/* pin码界面 */}
             <BootstrapDialog
                 onClose={() => {
@@ -2724,7 +2724,7 @@ function Card(props) {
                             {/* <div className='PINTitle'>{t('home_wallet_14')}{smallTabValue == 0 ? t('card_189') : t('card_7')}（ <span className='quanYiLv'> {smallTabValue == 0 ? inputVal.address : inputIDVal} </span> ） {t('transfer_1')}</div> */}
                             <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
                                 {/* <img className='MoneyWithdraw' style={{ borderRadius: '50%'}} src={ arrayLookup(symbolsData, 'symbol', symbol, 'avatar') || '' }></img> */}
-                                <div className='PINTitle3'>{ symbol }</div>
+                                <div className='PINTitle3'>{symbol}</div>
                                 <div className='flex'>
                                     <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")}>{transferMoney} <span className={clsx("", !showGuangBiao ? 'guangBiaoNo' : 'guangBiao')} >︱</span>
                                     </div>
@@ -2733,7 +2733,7 @@ function Card(props) {
                                         setShowGuangBiao(!textSelect)
                                     }} />
                                 </div>
-                               
+
                             </div>
                             <div className='flex justify-between mt-10'>
                                 <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[0] ? '●' : ''}</div></div>
@@ -2825,7 +2825,7 @@ function Card(props) {
                                         onTouchEnd={changeToWhite}
                                         onTouchCancel={changeToWhite}
                                         onClick={() => {
-                                            if(pin && pin.length === 6 && correctPin) {
+                                            if (pin && pin.length === 6 && correctPin) {
                                                 handleTransferCrypto()
                                             }
                                         }}>{t('card_30')}</div>
