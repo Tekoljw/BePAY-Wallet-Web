@@ -582,11 +582,13 @@ input[type='number'] {
 .guangBiao {
     color: #2DD4BF;
     animation: fadeZi 1s infinite;
+    margin-left: -12px;
 }
 
 .guangBiaoNo {
     color: #1E293B;
     animation: fadeZi2 1s infinite;
+    margin-left: -12px;
 }
 
 
@@ -1604,12 +1606,14 @@ input[type='number'] {
     font-size: 160%;
     text-align: left;
 }
-.cardExpired{
+
+.cardExpired {
     width: 84%;
     margin: 0 auto;
     font-size: 1.4rem;
     margin-bottom: 1.4rem;
 }
+
 .cardAnQuanMa {
     width: 46%;
     height: 22%;
@@ -2618,6 +2622,8 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     font-size: 1.4rem;
     right: 0.8rem;
     cursor: pointer;
+    height: 26px;
+    line-height: 26px;
 }
 
 

@@ -828,6 +828,9 @@ function Withdraw(props) {
 
     // 输入PIN Page
     const openInputPin = () => {
+        setTimeout(() => {
+            applyMiddleEllipsis(document.getElementById('AddressText'), 32);
+        }, 100);
         setPin('')
         setOpenPinWindow(true)
         openPinFunc()
@@ -996,6 +999,17 @@ function Withdraw(props) {
             setLoadingShow(true);
         }, 1500);
     }, []);
+
+
+    const applyMiddleEllipsis = (element, maxLength) => {
+        const text = element.innerText;
+        if (text.length > maxLength) {
+            const start = text.slice(0, Math.floor(maxLength / 2));
+            const end = text.slice(-Math.floor(maxLength / 2));
+            element.innerText = `${start}...${end}`;
+        }
+    }
+
 
     return (
         <div style={{ position: "relative" }}>
@@ -1182,7 +1196,7 @@ function Withdraw(props) {
                                                 </FormControl>
                                                 {
                                                     isMobileMedia &&
-                                                    <img className='shaoMiaoIcon' src="wallet/assets/images/withdraw/code.png" alt="" onClick={() => {
+                                                    <img className='shaoMiaoIcon ' src="wallet/assets/images/withdraw/code.png" alt="" onClick={() => {
                                                         setOpenChangeCurrency(true);
                                                     }} />
                                                 }
@@ -1342,6 +1356,7 @@ function Withdraw(props) {
                                                 {/* <Typography style={{ fontSize: '1.4rem' }}>
                                                 {t('home_sendTips_8')}
                                             </Typography> */}
+                                                <div className='mt-4'><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8", fontSize: "1.3rem" }}>{t('card_177')}</span></div>
                                             </div>
 
                                             <LoadingButton
@@ -1769,19 +1784,19 @@ function Withdraw(props) {
                         <div id='pinDivHeight'>
                             <div className='pinWindow'>
                                 <div className='flex'>
-                                    <div className='PINTitle2' style={{ marginBottom: "1rem" }}>{t('card_65')}</div>
+                                    <div className='PINTitle2' style={{ marginBottom: "1rem" }}>{t('card_196')}</div>
                                     <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                         closePinFunc();
                                     }} />
                                 </div>
-                                <div className='py-4' style={{ fontSize: smallTabValue == 0 ? "14px" : "20px", textAlign: "center", color: "#909FB4", width: "100%", overflow: "hidden", wordBreak: "break-all" }}>{smallTabValue == 0 ? "Address" : "UserID"}  {smallTabValue == 0 ? inputVal.address : inputIDVal} </div>
-                                <div className='flex justify-center mt-10 ' style={{ paddingLeft: "14%", width: "100%", overflow: "hidden", borderBottom: "1px solid #2C3950", paddingBottom: "2rem" }}>
+                                <div id="AddressText" className='py-4' style={{ fontSize: smallTabValue == 0 ? "16px" : "20px", textAlign: "center", margin: "0 auto", color: "#909FB4", width: "100%", overflow: "hidden", whiteSpace: "nowrap" }}>{smallTabValue == 0 ? "Address" : "UserID"}  {smallTabValue == 0 ? inputVal.address : inputIDVal} </div>
+                                <div className='flex justify-center mt-10 ' style={{ width: "100%", overflow: "hidden", borderBottom: "1px solid #2C3950", paddingBottom: "2rem" }}>
                                     <img className='MoneyWithdraw' style={{ borderRadius: '50%' }} src={arrayLookup(symbolsData, 'symbol', symbol, 'avatar') || ''}></img>
                                     <div className='flex'>
                                         <div className={clsx('PINTitle4  inputNumSty ', textSelect && "inputBackDi")}>
                                             {inputVal.amount} <span className={clsx("", !showGuangBiao ? 'guangBiaoNo' : 'guangBiao')} >︱</span>
                                         </div>
-                                        <img src="wallet/assets/images/deposite/bianJiBi.png" className='ml-4 mt-8' style={{ width: "18px", height: "18px" }} onClick={() => {
+                                        <img src="wallet/assets/images/deposite/bianJiBi.png" className='mt-8' style={{ zIndex: "100", marginLeft: textSelect ? "4px" : "-12px", width: "18px", height: "18px" }} onClick={() => {
                                             setTextSelect(!textSelect)
                                             setShowGuangBiao(!textSelect)
                                         }} />

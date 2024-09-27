@@ -40,7 +40,7 @@ import { showMessage } from "app/store/fuse/messageSlice";
 import { borderBottom } from '@mui/system';
 import Kyc from "../kyc/Kyc";
 import _ from 'lodash';
-import {selectCurrentLanguage} from "app/store/i18nSlice";
+import { selectCurrentLanguage } from "app/store/i18nSlice";
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -232,7 +232,7 @@ function Card(props) {
             tmpText = tmpText + text
         }
 
-        setTransferMoney(tmpText === 0 ? '': tmpText );
+        setTransferMoney(tmpText === 0 ? '' : tmpText);
     }
 
     const handleDoGoogleCode = (text) => {
@@ -1905,7 +1905,7 @@ function Card(props) {
                         <div id='pinDivHeight'>
                             <div className='pinWindow2'>
                                 <div className='flex'>
-                                    <div className='PINTitleSelectCardZi'> {t('card_26')}</div>
+                                    <div className='PINTitleSelectCardZi '> {t('card_16')}</div>
                                     <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                         closeRecordFunc();
                                     }} />
@@ -1985,7 +1985,7 @@ function Card(props) {
                                     <div className='w-full h-44 border' style={{ borderRadius: "0.5rem", backgroundColor: "#151C2A", position: "absolute", top: "0%", right: "0%" }}>
                                     </div>
                                     <div className='text-16 ' style={{ position: "absolute", top: "0%", left: "4%", width: "82%", height: "4.4rem", lineHeight: "4.4rem" }}>{transferMoney}</div>
-                                    <div style={{ position: "absolute", top: "0%", right: "4%", height: "4.4rem", lineHeight: "4.4rem" }} onClick={setMaxValue}>Max</div>
+                                    <div className='' style={{ position: "absolute", top: "0%", right: "4%", height: "4.4rem", lineHeight: "4.4rem" }} onClick={setMaxValue}>Max</div>
                                 </div>
 
                                 <div className='flex justify-between mt-16'>
@@ -2749,25 +2749,28 @@ function Card(props) {
                     <div id='pinDivHeight'>
                         <div className='pinWindow'>
                             <div className='flex'>
-                                <div className='PINTitle2'>{t('card_65')}</div>
+                                <div className='PINTitle2'>{t('card_196')}</div>
                                 <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                     closePinFunc();
                                 }} />
                             </div>
                             {/* <div className='PINTitle'>{t('home_wallet_14')}{smallTabValue == 0 ? t('card_189') : t('card_7')}（ <span className='quanYiLv'> {smallTabValue == 0 ? inputVal.address : inputIDVal} </span> ） {t('transfer_1')}</div> */}
+
                             <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
                                 {/* <img className='MoneyWithdraw' style={{ borderRadius: '50%'}} src={ arrayLookup(symbolsData, 'symbol', symbol, 'avatar') || '' }></img> */}
-                                <div className='PINTitle3'>{symbol}</div>
+                                {/* <div className='PINTitle3'>{symbol}</div> */}
+                                <img className='MoneyWithdraw' src="wallet/assets/images/withdraw/USDT.png" />
+
                                 <div className='flex'>
-                                    <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")}>{transferMoney} <span className={clsx("", !showGuangBiao ? 'guangBiaoNo' : 'guangBiao')} >︱</span>
+                                    <div className={clsx('PINTitle4 inputNumSty', textSelect && "inputBackDi")}>{transferMoney} <span className={clsx("", !showGuangBiao ? 'guangBiaoNo' : 'guangBiao')} >︱</span>
                                     </div>
-                                    <img src="wallet/assets/images/deposite/bianJiBi.png" className='ml-4 mt-4' style={{ width: "26px", height: "26px" }} onClick={() => {
+                                    <img src="wallet/assets/images/deposite/bianJiBi.png" className='ml-4 mt-8' style={{ zIndex: "100", marginLeft: textSelect ? "4px" : "-12px", width: "18px", height: "18px" }} onClick={() => {
                                         setTextSelect(!textSelect)
                                         setShowGuangBiao(!textSelect)
                                     }} />
                                 </div>
-
                             </div>
+
                             <div className='flex justify-between mt-10'>
                                 <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[0] ? '●' : ''}</div></div>
                                 <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[1] ? '●' : ''}</div></div>

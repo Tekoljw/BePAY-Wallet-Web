@@ -1572,7 +1572,7 @@ function Deposite() {
                                                             <div className='addressBigW flex justify-between mt-10'>
                                                                 <div className="addressW flex justify-between  guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
                                                                     <div className="addressW2 flex justify-between guoDuDongHua">
-                                                                        <div className='addressZi testRed'>{addressItem}</div>
+                                                                        <div className='addressZi '>{addressItem}</div>
                                                                         <img className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"></img>
                                                                     </div>
                                                                     <img className='testQrCodeImg' src="wallet/assets/images/deposite/testCode.png"></img>
@@ -1958,7 +1958,8 @@ function Deposite() {
                                             <div className="flex items-center py-4 flex-grow" style={{ width: '100%' }}>
                                                 <div className="flex items-center">
                                                     <img style={{
-                                                        width: '3rem'
+                                                        width: '3rem',
+                                                        borderRadius: "5px"
                                                     }} src={bankItem.url || "wallet/assets/images/deposite/touchngo.png"} alt="" />
                                                     <div className="px-12 font-medium">
                                                         <Typography className="text-18 font-medium">{bankItem.payName}</Typography>
@@ -2015,7 +2016,7 @@ function Deposite() {
                                                     })}
                                                 </div>}
 
-                                                <div className='ml-2' style={{ fontSize: "13px" }} >{t('home_borrow_16')} 0.001</div>
+                                                <div className='ml-2' style={{ fontSize: "13px" }} >{t('home_borrow_16')}  {bankItem?.ifRate * weight + bankItem?.basicFee} </div>
 
                                                 <div className="my-16 flex items-center justify-content-center">
                                                     <LoadingButton

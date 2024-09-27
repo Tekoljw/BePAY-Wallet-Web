@@ -546,7 +546,10 @@ const locale = {
     card_193: "Reklam Kartı",
     card_194: "İş Tedarik Kartı",
     card_195: "Kopyalandı",
+    card_196: "PIN",
 
+
+    
     
     
     
