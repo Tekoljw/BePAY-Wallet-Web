@@ -42,6 +42,7 @@ import Dialog from "@mui/material/Dialog/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import {centerGetTokenBalanceList} from "app/store/user/userThunk";
 import {centerGetUserFiat} from "app/store/wallet/walletThunk";
+import { showMessage } from 'app/store/fuse/messageSlice';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -502,10 +503,10 @@ function Swap() {
             })
           ).then((res) => {
             let result2 = res.payload
-            lookData.id = result2.data.orderId;
-            lookData.newNum = result2.data.targetAmount;
-            lookData.fee = result2.data.premium;
             if (result2 && result2.errno === 0) {
+              lookData.id = result2.data.orderId;
+              lookData.newNum = result2.data.targetAmount;
+              lookData.fee = result2.data.premium;
               setTimeout(() => {
                 setZhuanQuan(false);
                 setTiJiaoState(1);
@@ -521,6 +522,7 @@ function Swap() {
                 setZhuanQuan(false);
                 setTiJiaoState(2);
               }, 1200);
+              dispatch(showMessage({ message: result2.errmsg, code: 2 }));
             }
           });
         }

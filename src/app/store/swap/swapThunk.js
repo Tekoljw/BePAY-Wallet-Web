@@ -97,13 +97,13 @@ export const getSwapCrypto = createAsyncThunk(
         };
 
         const resultData = await React.$api("swap.crypto", data);
-
-        if (resultData.errno === 0) {
-            // dispatch(showMessage({ message: 'success', code: 1 }));
-            return resultData;
-        } else {
-            // dispatch(showMessage({ message: t('error_2'), code: 2 }));
-        }
+        return resultData;
+        // if (resultData.errno === 0) {
+        //     // dispatch(showMessage({ message: 'success', code: 1 }));
+        //     return resultData;
+        // } else {
+        //     // dispatch(showMessage({ message: t('error_2'), code: 2 }));
+        // }
     }
 );
 

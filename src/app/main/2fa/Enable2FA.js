@@ -21,6 +21,7 @@ import {
 } from '../../store/user/userThunk';
 import { useTranslation } from "react-i18next";
 import { showMessage } from 'app/store/fuse/messageSlice';
+import LoadingButton from "@mui/lab/LoadingButton";
 
 
 const container = {
@@ -52,6 +53,7 @@ function Enable2FA(props) {
     const { t } = useTranslation('mainPage');
     const [googleText, setgoogleText] = useState({});
     const [googleCode, setGoogleCode] = useState('');
+    const [openLoad, setOpenLoad] = useState(false);
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -65,8 +67,10 @@ function Enable2FA(props) {
         if (googleCode.length < 6) {
             return
         }
+        setOpenLoad(true);
         let data = { checkCode: googleCode };
         dispatch(verifyGAuth(data)).then((res)=>{
+            setOpenLoad(false);
             const result = res.payload;
             if (result?.errno === 0 && result?.data === true) {
                 dispatch(showMessage({ message: 'success', code: 1 }));
@@ -203,16 +207,18 @@ function Enable2FA(props) {
                     <Typography className="text-16 px-16 my-16 font-medium text-center pad-l-r-10 margin-t-b-10" style={{ color: '#94a3b8' }}>{t('card_180')}</Typography>
                     <OtpPass googleTextKey={googleText.key} setGoogleCode={setGoogleCode} resizeLayout={(value)=> resizeLayoutEvt(value)}/>
                     <div className="mb-24 mt-4 flex items-center justify-content-center">
-                        <Button
+                        <LoadingButton
+                            disabled={openLoad}
                             className="px-48 text-lg btnColorTitleBig"
                             size="large"
                             color="secondary"
+                            loading={openLoad}
                             variant="contained"
                             sx={{ width: "100%", backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1.4rem' }}
                             onClick={() => { handleSubmit() }}
                         >
                             {t('home_2fa_11')}
-                        </Button>
+                        </LoadingButton>
                     </div>
                 </Box>
             </motion.div>
