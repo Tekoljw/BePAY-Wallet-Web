@@ -144,185 +144,223 @@ function Borrow() {
             initSymbol()
         }
     }, [symbols]);
+
+    const [loadingShow, setLoadingShow] = useState(true);
+    useEffect(() => {
+        setTimeout(() => {
+            setLoadingShow(true);
+        }, 1500);
+    }, []);
+
+
     return (
         <div>
-            <div>
-                <motion.div
-                    variants={container}
-                    initial="hidden"
-                    animate="show"
-                    className="borrow-container mt-10"
-                    style={{ padding: "1.4rem 1.5rem 2.4rem 1.5rem" }}
-                >
-                    <div className="mb-16 flex items-center justify-between color-76819B" style={{ marginBottom: '0.8rem' }}>
-                        <Typography className="text-20 font-medium">{t('home_borrow_1')} </Typography>
-                        <div className="text-14 flex" style={{ color: '#FFFFFF', marginBottom: "1rem" }}>
-                            <Typography className={clsx("cursor-pointer text-14 mx-8 txtColorTitle", percentage === 1 && 'colro-12C1A2')} onClick={() => { handleClick(1) }}>25%</Typography>
-                            <Typography className={clsx("cursor-pointer text-14 mx-8 txtColorTitle", percentage === 2 && 'colro-12C1A2')} onClick={() => { handleClick(2) }}>50%</Typography>
-                            <Typography className={clsx("cursor-pointer text-14 mx-8 txtColorTitle", percentage === 3 && 'colro-12C1A2')} onClick={() => { handleClick(3) }}>75%</Typography>
-                            <Typography className={clsx("cursor-pointer text-14 mx-8 txtColorTitle", percentage === 4 && 'colro-12C1A2')} onClick={() => { handleClick(4) }}>100%</Typography>
-                        </div>
-                    </div>
-
-                    <Box
-                        className="w-full rounded-16 border flex flex-col"
-                        sx={{
-                            backgroundColor: '#1E293B',
-                            border: 'none'
-                        }}
-                    >
-                        {/*<StyledAccordionSelect*/}
-                        {/*    symbol={[*/}
-                        {/*        {symbol: 'USDT', balance: 0}*/}
-                        {/*    ]}*/}
-                        {/*    // currencyCode="USD"*/}
-                        {/*    // setSymbol={setSymbol}*/}
-                        {/*    // isSetAmount={true}*/}
-                        {/*    // setAmount={setAmount}*/}
-                        {/*/>*/}
-
-                        {symbolWallet.length > 0 && <StyledAccordionSelect
-                            symbol={symbolWallet}
-                            currencyCode="USD"
-                            setSymbol={setSymbol}
-                        />}
-                    </Box>
-
+            {loadingShow &&
+                <div>
                     <motion.div
-                        component={motion.div}
-                        variants={item}
-                        className="flex items-center justify-content-center -mb-56 -mt-4 position-re"
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className="borrow-container mt-10"
+                        style={{ padding: "1.4rem 1.5rem 2.4rem 1.5rem" }}
                     >
-                        <div className="cursor-pointer borrow-btn flex items-center justify-content-center double-borrow-btn">
-                            {/* <FuseSvgIcon className="list-item-icon" sx={{ color: '#76819B' }} size={52}>
-                                feather:chevrons-down
-                            </FuseSvgIcon> */}
-                            <img src="wallet/assets/images/borrow/double-arrow.png" alt="" />
+                        <div className="mb-16 flex items-center justify-between color-76819B" style={{ marginBottom: '0.8rem' }}>
+                            <Typography className="text-20 font-medium">{t('home_borrow_1')} </Typography>
+                            <div className="text-14 flex" style={{ color: '#FFFFFF', marginBottom: "1rem" }}>
+                                <Typography className={clsx("cursor-pointer text-14 mx-8 txtColorTitle", percentage === 1 && 'colro-12C1A2')} onClick={() => { handleClick(1) }}>25%</Typography>
+                                <Typography className={clsx("cursor-pointer text-14 mx-8 txtColorTitle", percentage === 2 && 'colro-12C1A2')} onClick={() => { handleClick(2) }}>50%</Typography>
+                                <Typography className={clsx("cursor-pointer text-14 mx-8 txtColorTitle", percentage === 3 && 'colro-12C1A2')} onClick={() => { handleClick(3) }}>75%</Typography>
+                                <Typography className={clsx("cursor-pointer text-14 mx-8 txtColorTitle", percentage === 4 && 'colro-12C1A2')} onClick={() => { handleClick(4) }}>100%</Typography>
+                            </div>
                         </div>
-                    </motion.div>
 
-                    <Typography className="font-medium my-16 color-76819B" style={{ marginBottom: '0.8rem', marginTop: '2rem', fontSize: "18px" }}>{t('home_borrow_2')} </Typography>
-                    <Box
-                        className="w-full rounded-16 border flex flex-col"
-                        sx={{
-                            backgroundColor: '#1E293B',
-                            border: 'none'
-                        }}
-                    >
-                        {symbolWallet.length > 0 && <StyledAccordionSelect
-                            symbol={symbolWallet}
-                            currencyCode="USD"
-                            setSymbol={setSymbol}
-                        />}
-                        {/*<StyledAccordion*/}
-                        {/*    component={motion.div}*/}
-                        {/*    variants={item}*/}
-                        {/*    classes={{*/}
-                        {/*        root: 'FaqPage-panel shadow',*/}
-                        {/*    }}*/}
-                        {/*    expanded={expanded === 2}*/}
-                        {/*    onChange={toggleAccordion(2)}*/}
-                        {/*>*/}
-                        {/*    <AccordionSummary*/}
-                        {/*        expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}*/}
-                        {/*    >*/}
-                        {/*        <div className="flex items-center py-4 flex-grow" style={{width: '100%'}}>*/}
-                        {/*            <div className="flex items-center">*/}
-                        {/*                <img style={{*/}
-                        {/*                    width: '3rem'*/}
-                        {/*                }} src="wallet/assets/images/deposite/usd.png" alt=""/>*/}
-                        {/*                <div className="px-12 font-medium">*/}
-                        {/*                    <Typography className="text-16 font-medium">BNB</Typography>*/}
-                        {/*                    <Typography className="text-12" style={{color: '#94A3B8'}}>Binance Coin</Typography>*/}
-                        {/*                </div>*/}
-                        {/*            </div>*/}
-                        {/*            <div style={{marginLeft: 'auto'}}>*/}
-                        {/*                <div className="px-12 font-medium" style={{textAlign: 'right'}}>*/}
-                        {/*                    <Typography className="text-16 font-medium">0.00000001</Typography>*/}
-                        {/*                    <Typography className="text-12" style={{color: '#94A3B8'}}>$12.00</Typography>*/}
-                        {/*                </div>*/}
-                        {/*            </div>*/}
-                        {/*        </div>*/}
-                        {/*    </AccordionSummary>*/}
+                        <Box
+                            className="w-full rounded-16 border flex flex-col"
+                            sx={{
+                                backgroundColor: '#1E293B',
+                                border: 'none'
+                            }}
+                        >
+                            {/*<StyledAccordionSelect*/}
+                            {/*    symbol={[*/}
+                            {/*        {symbol: 'USDT', balance: 0}*/}
+                            {/*    ]}*/}
+                            {/*    // currencyCode="USD"*/}
+                            {/*    // setSymbol={setSymbol}*/}
+                            {/*    // isSetAmount={true}*/}
+                            {/*    // setAmount={setAmount}*/}
+                            {/*/>*/}
 
-                        {/*    <AccordionDetails>*/}
-                        {/*    </AccordionDetails>*/}
-                        {/*</StyledAccordion>*/}
-                    </Box>
+                            {symbolWallet.length > 0 && <StyledAccordionSelect
+                                symbol={symbolWallet}
+                                currencyCode="USD"
+                                setSymbol={setSymbol}
+                            />}
+                        </Box>
 
-                    <Typography className="my-8 text-14 color-76819B text-center" style={{ margin: '1.8rem 0' }}>
-                        {t('home_borrow_11')}
-                        <span className="color-ffffff">&nbsp; 1BNB &nbsp; </span>
-                        {t('home_borrow_12')}
-                    </Typography>
-
-                    <Box
-                        className="w-full rounded-16 border flex flex-col my-16"
-                        sx={{
-                            backgroundColor: '#1E293B',
-                            border: 'none',
-                        }}
-                        style={{ marginTop: 0 }}
-                    >
-                        <StyledAccordion
+                        <motion.div
                             component={motion.div}
                             variants={item}
-                            classes={{
-                                root: 'FaqPage-panel shadow',
-                            }}
-                            expanded={expanded === 2}
-                            onChange={toggleAccordion(2)}
+                            className="flex items-center justify-content-center -mb-56 -mt-4 position-re"
                         >
-                            <div className="items-center p-12 flex-grow" style={{ width: '100%', padding: '0.7rem 1.2rem' }}>
-                                <div className="flex items-center my-4">
-                                    <div className="px-12 font-medium color-76819B">
-                                        <Typography className="text-14 font-medium">
-                                            {t('home_borrow_13')}
-                                            <span className="color-ffffff">1ETH ~ 0.07867355 BTC</span>
-                                        </Typography>
-                                    </div>
-                                </div>
-                                <div className="flex items-center my-4">
-                                    <div className="px-12 font-medium color-76819B">
-                                        <Typography className="text-14 font-medium">
-                                            {t('home_borrow_5')} :
-                                            <span className="color-ffffff">0.5%</span>
-                                        </Typography>
-                                    </div>
-                                </div>
-                                <div className="flex items-center my-4">
-                                    <div className="px-12 font-medium color-76819B">
-                                        <Typography className="text-14 font-medium">
-                                            {t('home_borrow_6')} :
-                                            <span className="color-ffffff">0.00000000 BTC</span>
-                                        </Typography>
-                                    </div>
-                                </div>
-                                <div className="flex items-center my-4">
-                                    <div className="px-12 font-medium color-76819B">
-                                        <Typography className="text-14 font-medium">
-                                            {t('home_borrow_7')} :
-                                            <span className="color-ffffff">0</span>
-                                        </Typography>
-                                    </div>
-                                </div>
+                            <div className="cursor-pointer borrow-btn flex items-center justify-content-center double-borrow-btn">
+                                {/* <FuseSvgIcon className="list-item-icon" sx={{ color: '#76819B' }} size={52}>
+                                feather:chevrons-down
+                            </FuseSvgIcon> */}
+                                <img src="wallet/assets/images/borrow/double-arrow.png" alt="" />
                             </div>
-                        </StyledAccordion>
-                    </Box>
+                        </motion.div>
+
+                        <Typography className="font-medium my-16 color-76819B" style={{ marginBottom: '0.8rem', marginTop: '2rem', fontSize: "18px" }}>{t('home_borrow_2')} </Typography>
+                        <Box
+                            className="w-full rounded-16 border flex flex-col"
+                            sx={{
+                                backgroundColor: '#1E293B',
+                                border: 'none'
+                            }}
+                        >
+                            {symbolWallet.length > 0 && <StyledAccordionSelect
+                                symbol={symbolWallet}
+                                currencyCode="USD"
+                                setSymbol={setSymbol}
+                            />}
+                            {/*<StyledAccordion*/}
+                            {/*    component={motion.div}*/}
+                            {/*    variants={item}*/}
+                            {/*    classes={{*/}
+                            {/*        root: 'FaqPage-panel shadow',*/}
+                            {/*    }}*/}
+                            {/*    expanded={expanded === 2}*/}
+                            {/*    onChange={toggleAccordion(2)}*/}
+                            {/*>*/}
+                            {/*    <AccordionSummary*/}
+                            {/*        expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}*/}
+                            {/*    >*/}
+                            {/*        <div className="flex items-center py-4 flex-grow" style={{width: '100%'}}>*/}
+                            {/*            <div className="flex items-center">*/}
+                            {/*                <img style={{*/}
+                            {/*                    width: '3rem'*/}
+                            {/*                }} src="wallet/assets/images/deposite/usd.png" alt=""/>*/}
+                            {/*                <div className="px-12 font-medium">*/}
+                            {/*                    <Typography className="text-16 font-medium">BNB</Typography>*/}
+                            {/*                    <Typography className="text-12" style={{color: '#94A3B8'}}>Binance Coin</Typography>*/}
+                            {/*                </div>*/}
+                            {/*            </div>*/}
+                            {/*            <div style={{marginLeft: 'auto'}}>*/}
+                            {/*                <div className="px-12 font-medium" style={{textAlign: 'right'}}>*/}
+                            {/*                    <Typography className="text-16 font-medium">0.00000001</Typography>*/}
+                            {/*                    <Typography className="text-12" style={{color: '#94A3B8'}}>$12.00</Typography>*/}
+                            {/*                </div>*/}
+                            {/*            </div>*/}
+                            {/*        </div>*/}
+                            {/*    </AccordionSummary>*/}
+
+                            {/*    <AccordionDetails>*/}
+                            {/*    </AccordionDetails>*/}
+                            {/*</StyledAccordion>*/}
+                        </Box>
+
+                        <Typography className="my-8 text-14 color-76819B text-center" style={{ margin: '1.8rem 0' }}>
+                            {t('home_borrow_11')}
+                            <span className="color-ffffff">&nbsp; 1BNB &nbsp; </span>
+                            {t('home_borrow_12')}
+                        </Typography>
+
+                        <Box
+                            className="w-full rounded-16 border flex flex-col my-16"
+                            sx={{
+                                backgroundColor: '#1E293B',
+                                border: 'none',
+                            }}
+                            style={{ marginTop: 0 }}
+                        >
+                            <StyledAccordion
+                                component={motion.div}
+                                variants={item}
+                                classes={{
+                                    root: 'FaqPage-panel shadow',
+                                }}
+                                expanded={expanded === 2}
+                                onChange={toggleAccordion(2)}
+                            >
+                                <div className="items-center p-12 flex-grow" style={{ width: '100%', padding: '0.7rem 1.2rem' }}>
+                                    <div className="flex items-center my-4">
+                                        <div className="px-12 font-medium color-76819B">
+                                            <Typography className="text-14 font-medium">
+                                                {t('home_borrow_13')}
+                                                <span className="color-ffffff">1ETH ~ 0.07867355 BTC</span>
+                                            </Typography>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center my-4">
+                                        <div className="px-12 font-medium color-76819B">
+                                            <Typography className="text-14 font-medium">
+                                                {t('home_borrow_5')} :
+                                                <span className="color-ffffff">0.5%</span>
+                                            </Typography>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center my-4">
+                                        <div className="px-12 font-medium color-76819B">
+                                            <Typography className="text-14 font-medium">
+                                                {t('home_borrow_6')} :
+                                                <span className="color-ffffff">0.00000000 BTC</span>
+                                            </Typography>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center my-4">
+                                        <div className="px-12 font-medium color-76819B">
+                                            <Typography className="text-14 font-medium">
+                                                {t('home_borrow_7')} :
+                                                <span className="color-ffffff">0</span>
+                                            </Typography>
+                                        </div>
+                                    </div>
+                                </div>
+                            </StyledAccordion>
+                        </Box>
 
 
 
-                    <Button
-                        style={{ width: '100%', margin: '2.9rem auto', display: 'block' }}
-                        className='m-28 px-48 text-lg btnColorTitleBig'
-                        color="secondary"
-                        variant="contained"
-                        sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
-                    >
-                        {t('home_borrow_17')}
-                    </Button>
-                </motion.div>
-            </div>
+                        <Button
+                            style={{ width: '100%', margin: '2.9rem auto', display: 'block' }}
+                            className='m-28 px-48 text-lg btnColorTitleBig'
+                            color="secondary"
+                            variant="contained"
+                            sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
+                        >
+                            {t('home_borrow_17')}
+                        </Button>
+                    </motion.div>
+                </div>
+            }{
+                !loadingShow &&
+                <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }}>
+                    <div className="loadingChuang1">
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                    </div>
+
+                    <div className="loadingChuang1">
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                    </div>
+
+                    <div className="loadingChuang1">
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+
+                    </div>
+                </div>
+            }
         </div>
     )
 }

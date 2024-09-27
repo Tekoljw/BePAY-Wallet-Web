@@ -989,7 +989,7 @@ function Withdraw(props) {
 
     }, [userData.profile]);
 
-    const [loadingShow, setLoadingShow] = useState(false);
+    const [loadingShow, setLoadingShow] = useState(true);
 
     useEffect(() => {
         setTimeout(() => {

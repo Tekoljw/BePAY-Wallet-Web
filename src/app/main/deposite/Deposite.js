@@ -1111,7 +1111,7 @@ function Deposite() {
         }, 800);
     }
 
-    const [loadingShow, setLoadingShow] = useState(false);
+    const [loadingShow, setLoadingShow] = useState(true);
     useEffect(() => {
         setTimeout(() => {
             setLoadingShow(true);

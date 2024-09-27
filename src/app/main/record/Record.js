@@ -28,7 +28,7 @@ import Select from '@mui/material/Select';
 import { borderRadius } from '@mui/system';
 import { setPhoneTab, getNowTime } from "../../util/tools/function";
 import FuseLoading from "@fuse/core/FuseLoading";
-import { getUserCreditCard, getCreditConfig} from "app/store/payment/paymentThunk";
+import { getUserCreditCard, getCreditConfig } from "app/store/payment/paymentThunk";
 
 const container = {
     show: {
@@ -94,10 +94,10 @@ function Record() {
         { id: 9, label: t('home_record_18') },
         // { id: 16, label: 'TRANSFER_TO_GAME' },
         // { id: 17, label: 'TRANSFER_FROM_GAME' },
-        { id: 5, label: t('menu_18')},
+        { id: 5, label: t('menu_18') },
     ];
 
-    const [timeItem, setTimeItem] = React.useState( new Date().getMonth() +1 );
+    const [timeItem, setTimeItem] = React.useState(new Date().getMonth() + 1);
     const [kaPianItem, setKaPianItem] = React.useState(0);
     const [selectCardID, setSelectCardID] = React.useState(0);
 
@@ -173,7 +173,7 @@ function Record() {
                 month: timeItem,
                 page: pageParam ?? page,
                 limit: rowsPerPage,
-                userCreditNo: kaPianItem == 0 ? null: kaPianItem,
+                userCreditNo: kaPianItem == 0 ? null : kaPianItem,
             })).then((res) => {
                 setTimeout(() => {
                     setIsLoading(false)
@@ -227,6 +227,14 @@ function Record() {
         setTransferList([]);
         setKaPianItem(event.target.value);
     };
+
+
+    const [loadingShow, setLoadingShow] = useState(true);
+    useEffect(() => {
+        setTimeout(() => {
+            setLoadingShow(true);
+        }, 1500);
+    }, []);
 
     return (
         <div>
@@ -327,264 +335,297 @@ function Record() {
                 onRowsPerPageChange={handleChangeRowsPerPage}
             /> */}
 
-            <motion.div
-                variants={container}
-                initial="hidden"
-                animate="show"
-                className="select-fieldset-noborder recordPx  flex justify-between"
-            >
-                <FormControl sx={{
-                    m: 1,
-                    width: "58%",
-                    margin: 0,
-                    border: 'none',
-                    borderRadius: '10px!important',
-                    backgroundColor: '#1E293B!important',
-                    '&:before': {
-                        display: 'none',
-                    },
-                    '&:first-of-type': {},
-                    '&:last-of-type': {
-                        marginBottom: 0,
-                    }
-                }}
-                >
-                    <Select
-                        value={type}
-                        onChange={handleChange}
-                        displayEmpty
-                        className="MuiSelect-icon recordSelectHeight"
-                        MenuProps={{
-                            PaperProps: {
-                                style: {
-                                    maxHeight: 450,
-                                    border: 'none'
-                                },
-                            },
-                        }}
+
+            {loadingShow &&
+                <div>
+                    <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className="select-fieldset-noborder recordPx  flex justify-between"
                     >
-                        {typeList.map((item) => {
-                            return (
-                                <MenuItem key={item.id} value={item.id} className='text-16'>{item.label}</MenuItem>
-                            )
-                        })}
-                    </Select>
-                </FormControl>
-
-                <FormControl sx={{
-                    m: 1,
-                    width: "38%",
-                    margin: 0,
-                    border: 'none',
-                    borderRadius: '10px!important',
-                    backgroundColor: '#1E293B!important',
-                    '&:before': {
-                        display: 'none',
-                    },
-                    '&:first-of-type': {},
-                    '&:last-of-type': {
-                        marginBottom: 0,
-                    }
-                }}
-                >
-                    <Select
-                        value={timeItem}
-                        onChange={handleChange2}
-                        displayEmpty
-                        className="MuiSelect-icon recordSelectHeight"
-                        MenuProps={{
-                            PaperProps: {
-                                style: {
-                                    maxHeight: 600,
-                                    border: 'none'
-                                },
+                        <FormControl sx={{
+                            m: 1,
+                            width: "58%",
+                            margin: 0,
+                            border: 'none',
+                            borderRadius: '10px!important',
+                            backgroundColor: '#1E293B!important',
+                            '&:before': {
+                                display: 'none',
                             },
+                            '&:first-of-type': {},
+                            '&:last-of-type': {
+                                marginBottom: 0,
+                            }
                         }}
-                    >
-                        <MenuItem value={1} className='text-16'>{t('card_140')}</MenuItem>
-                        <MenuItem value={2} className='text-16'>{t('card_141')}</MenuItem>
-                        <MenuItem value={3} className='text-16'>{t('card_142')}</MenuItem>
-                        <MenuItem value={4} className='text-16'>{t('card_143')}</MenuItem>
-                        <MenuItem value={5} className='text-16'>{t('card_144')}</MenuItem>
-                        <MenuItem value={6} className='text-16'>{t('card_145')}</MenuItem>
-                        <MenuItem value={7} className='text-16'>{t('card_146')}</MenuItem>
-                        <MenuItem value={8} className='text-16'>{t('card_147')}</MenuItem>
-                        <MenuItem value={9} className='text-16'>{t('card_148')}</MenuItem>
-                        <MenuItem value={10} className='text-16'>{t('card_149')}</MenuItem>
-                        <MenuItem value={11} className='text-16'>{t('card_150')}</MenuItem>
-                        <MenuItem value={12} className='text-16'>{t('card_151')}</MenuItem>
-                    </Select>
-                </FormControl>
-            </motion.div>
+                        >
+                            <Select
+                                value={type}
+                                onChange={handleChange}
+                                displayEmpty
+                                className="MuiSelect-icon recordSelectHeight"
+                                MenuProps={{
+                                    PaperProps: {
+                                        style: {
+                                            maxHeight: 450,
+                                            border: 'none'
+                                        },
+                                    },
+                                }}
+                            >
+                                {typeList.map((item) => {
+                                    return (
+                                        <MenuItem key={item.id} value={item.id} className='text-16'>{item.label}</MenuItem>
+                                    )
+                                })}
+                            </Select>
+                        </FormControl>
 
-            {selectCardID === 5 && <motion.div
-                variants={container}
-                initial="hidden"
-                animate="show"
-                className="select-fieldset-noborder recordPx  flex justify-between"
-            >
-                <FormControl sx={{
-                    m: 1,
-                    width: "100%",
-                    margin: 0,
-                    border: 'none',
-                    borderRadius: '10px!important',
-                    backgroundColor: '#1E293B!important',
-                    '&:before': {
-                        display: 'none',
-                    },
-                    '&:first-of-type': {},
-                    '&:last-of-type': {
-                        marginBottom: 0,
-                    }
-                }}
-                >
-                    <Select
-                        value={kaPianItem}
-                        onChange={handleChange3}
-                        displayEmpty
-                        className="recordSelectHeight"
-                        MenuProps={{
-                            PaperProps: {
-                                style: {
-                                    maxHeight: 600,
-                                    overflow: "hidden",
-                                    border: 'none',
-                                },
+                        <FormControl sx={{
+                            m: 1,
+                            width: "38%",
+                            margin: 0,
+                            border: 'none',
+                            borderRadius: '10px!important',
+                            backgroundColor: '#1E293B!important',
+                            '&:before': {
+                                display: 'none',
                             },
+                            '&:first-of-type': {},
+                            '&:last-of-type': {
+                                marginBottom: 0,
+                            }
                         }}
+                        >
+                            <Select
+                                value={timeItem}
+                                onChange={handleChange2}
+                                displayEmpty
+                                className="MuiSelect-icon recordSelectHeight"
+                                MenuProps={{
+                                    PaperProps: {
+                                        style: {
+                                            maxHeight: 600,
+                                            border: 'none'
+                                        },
+                                    },
+                                }}
+                            >
+                                <MenuItem value={1} className='text-16'>{t('card_140')}</MenuItem>
+                                <MenuItem value={2} className='text-16'>{t('card_141')}</MenuItem>
+                                <MenuItem value={3} className='text-16'>{t('card_142')}</MenuItem>
+                                <MenuItem value={4} className='text-16'>{t('card_143')}</MenuItem>
+                                <MenuItem value={5} className='text-16'>{t('card_144')}</MenuItem>
+                                <MenuItem value={6} className='text-16'>{t('card_145')}</MenuItem>
+                                <MenuItem value={7} className='text-16'>{t('card_146')}</MenuItem>
+                                <MenuItem value={8} className='text-16'>{t('card_147')}</MenuItem>
+                                <MenuItem value={9} className='text-16'>{t('card_148')}</MenuItem>
+                                <MenuItem value={10} className='text-16'>{t('card_149')}</MenuItem>
+                                <MenuItem value={11} className='text-16'>{t('card_150')}</MenuItem>
+                                <MenuItem value={12} className='text-16'>{t('card_151')}</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </motion.div>
+                    {selectCardID === 5 && <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className="select-fieldset-noborder recordPx  flex justify-between"
                     >
-                            <MenuItem value={0} className='text-16'>{t('home_record_0')}</MenuItem>
-                            {cardList && cardList.map((item) => {
-                                return (
-                                    <MenuItem value={item.userCreditNo} className='text-16' style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                        <span> {item.userCreditNo} </span>
-                                        <span style={{ color: "#94A3B8", marginLeft: "1rem" }}>{ cardConfigList[item.creditConfigId]?.cardOrganizations == 'visa'? 'VISA':'MASTER' } </span>
-                                    </MenuItem>
-                                )
-                            })}     
-                        {/* <MenuItem value={1} className='text-16'>{t('card_169')}</MenuItem>
-                        <MenuItem value={2} className='text-16'>6584 2458 7848 7542<span style={{ color: "#94A3B8", marginLeft: "1rem" }}>VISA</span></MenuItem>
-                        <MenuItem value={3} className='text-16'>3354 6857 9584 8848<span style={{ color: "#94A3B8", marginLeft: "1rem" }}>MASTER</span></MenuItem> */}
-                    </Select>
-                </FormControl>
-            </motion.div>
-            }
+                        <FormControl sx={{
+                            m: 1,
+                            width: "100%",
+                            margin: 0,
+                            border: 'none',
+                            borderRadius: '10px!important',
+                            backgroundColor: '#1E293B!important',
+                            '&:before': {
+                                display: 'none',
+                            },
+                            '&:first-of-type': {},
+                            '&:last-of-type': {
+                                marginBottom: 0,
+                            }
+                        }}
+                        >
+                            <Select
+                                value={kaPianItem}
+                                onChange={handleChange3}
+                                displayEmpty
+                                className="recordSelectHeight"
+                                MenuProps={{
+                                    PaperProps: {
+                                        style: {
+                                            maxHeight: 600,
+                                            overflow: "hidden",
+                                            border: 'none',
+                                        },
+                                    },
+                                }}
+                            >
+                                <MenuItem value={0} className='text-16'>{t('home_record_0')}</MenuItem>
+                                {cardList && cardList.map((item) => {
+                                    return (
+                                        <MenuItem value={item.userCreditNo} className='text-16' style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                            <span> {item.userCreditNo} </span>
+                                            <span style={{ color: "#94A3B8", marginLeft: "1rem" }}>{cardConfigList[item.creditConfigId]?.cardOrganizations == 'visa' ? 'VISA' : 'MASTER'} </span>
+                                        </MenuItem>
+                                    )
+                                })}
+                                {/* <MenuItem value={1} className='text-16'>{t('card_169')}</MenuItem>
+                    <MenuItem value={2} className='text-16'>6584 2458 7848 7542<span style={{ color: "#94A3B8", marginLeft: "1rem" }}>VISA</span></MenuItem>
+                    <MenuItem value={3} className='text-16'>3354 6857 9584 8848<span style={{ color: "#94A3B8", marginLeft: "1rem" }}>MASTER</span></MenuItem> */}
+                            </Select>
+                        </FormControl>
+                    </motion.div>
+                    }
+                    <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className=""
+                    >
+                        <Box
+                            className="flex flex-col color-76819B recordW"
+                            component={motion.div}
+                            variants={item}
+                        >
+                            {/* <Paper sx={{ width: '100%' }} style={{ backgroundColor: '#1E293B' }}>
+                    <TableContainer sx={{ height: transferList?.records?.length !== 0 ? 'calc(100vh - 22rem)' : '0' }}>
+                        <Table aria-label="sticky table" style={{ backgroundColor: '#1E293B' }}>
+                            <TableHead>
+                                <TableRow>
+                                    {columns.map((column, index) => (
+                                        <TableCell
+                                            key={column.field}
+                                            align={column.align}
+                                            style={{ color: '#6f7a94', padding: '1rem 0', borderBottomColor: '#151c2a', backgroundColor: '#1E293B', paddingLeft: index === 0 ? '1rem' : '0', paddingRight: index === columns.length - 1 ? '1rem' : '0' }}
+                                        >
+                                            {column.label}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {(transferList?.records ?? [])
+                                    .map((row) => {
+                                        return (
+                                            <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                                                {columns.map((column) => {
+                                                    const value = row[column.field];
+                                                    return (
+                                                        <TableCell key={column.field} align={column.align}
+                                                            style={{ backgroundColor: '#1E293B', color: '#FFFFF', fontSize: '14px', padding: '4px 5px', border: 'none' }}
+                                                        >
+                                                            {column.format ? column.format(value) : value}
+                                                        </TableCell>
+                                                    );
+                                                })}
+                                            </TableRow>
+                                        );
+                                    })}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
 
-            <motion.div
-                variants={container}
-                initial="hidden"
-                animate="show"
-                className=""
-            >
-                <Box
-                    className="flex flex-col color-76819B recordW"
-                    component={motion.div}
-                    variants={item}
-                >
-                    {/* <Paper sx={{ width: '100%' }} style={{ backgroundColor: '#1E293B' }}>
-                        <TableContainer sx={{ height: transferList?.records?.length !== 0 ? 'calc(100vh - 22rem)' : '0' }}>
-                            <Table aria-label="sticky table" style={{ backgroundColor: '#1E293B' }}>
-                                <TableHead>
-                                    <TableRow>
-                                        {columns.map((column, index) => (
-                                            <TableCell
-                                                key={column.field}
-                                                align={column.align}
-                                                style={{ color: '#6f7a94', padding: '1rem 0', borderBottomColor: '#151c2a', backgroundColor: '#1E293B', paddingLeft: index === 0 ? '1rem' : '0', paddingRight: index === columns.length - 1 ? '1rem' : '0' }}
-                                            >
-                                                {column.label}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {(transferList?.records ?? [])
-                                        .map((row) => {
-                                            return (
-                                                <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                                                    {columns.map((column) => {
-                                                        const value = row[column.field];
-                                                        return (
-                                                            <TableCell key={column.field} align={column.align}
-                                                                style={{ backgroundColor: '#1E293B', color: '#FFFFF', fontSize: '14px', padding: '4px 5px', border: 'none' }}
-                                                            >
-                                                                {column.format ? column.format(value) : value}
-                                                            </TableCell>
-                                                        );
-                                                    })}
-                                                </TableRow>
-                                            );
-                                        })}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
+                    {transferList?.records?.length === 0 && <div className="mt-12 no-data-container" style={{ height: 'calc(100vh - 24rem)' }}>
+                        <img className='noDataImg' src='wallet/assets/images/logo/xc.png'></img>
+                        <div className='noDataImgTxt text-22'>{t('home_record_12')}</div></div>}
+                </Paper> */}
 
-                        {transferList?.records?.length === 0 && <div className="mt-12 no-data-container" style={{ height: 'calc(100vh - 24rem)' }}>
-                            <img className='noDataImg' src='wallet/assets/images/logo/xc.png'></img>
-                            <div className='noDataImgTxt text-22'>{t('home_record_12')}</div></div>}
-                    </Paper> */}
+                            {isLoading ? (
+                                <div className='flex' style={{ height: "85vh" }}>
+                                    <FuseLoading />
+                                </div>
+                            ) : (
+                                <div className='px-12'
+                                    style={{ width: '100%', borderRadius: "1rem", backgroundColor: '#1E293B' }}>
 
-                    {isLoading ? (
-                        <div className='flex' style={{ height: "85vh" }}>
-                            <FuseLoading />
-                        </div>
-                    ) : (
-                        <div className='px-12'
-                            style={{ width: '100%', borderRadius: "1rem", backgroundColor: '#1E293B' }}>
-
-                            {transferList?.length > 0 ? (transferList?.map((transferItem, index) => {
-                                return (
-                                    <div key={transferItem.id ?? index} className='py-10'
-                                        style={{ borderBottom: index != (transferList.length - 1) ? "solid 1px #33435d" : '' }}>
-                                        <div className='flex justify-between '>
-                                            <div className='flex'>
-                                                <div className='recordListZi'>{typeList.find(v => {
-                                                    return v.id == (transferItem.showType)
-                                                })?.label}</div>
-                                                { typeList.find(v => {
-                                                    return v.id == (transferItem.showType)
-                                                    }) ?
-                                                    <div className="recordListZi ml-10">{transferItem.symbol}</div>: 
-                                                    <div className="recordListZi">{transferItem.symbol}</div>
-                                                }
+                                    {transferList?.length > 0 ? (transferList?.map((transferItem, index) => {
+                                        return (
+                                            <div key={transferItem.id ?? index} className='py-10'
+                                                style={{ borderBottom: index != (transferList.length - 1) ? "solid 1px #33435d" : '' }}>
+                                                <div className='flex justify-between '>
+                                                    <div className='flex'>
+                                                        <div className='recordListZi'>{typeList.find(v => {
+                                                            return v.id == (transferItem.showType)
+                                                        })?.label}</div>
+                                                        {typeList.find(v => {
+                                                            return v.id == (transferItem.showType)
+                                                        }) ?
+                                                            <div className="recordListZi ml-10">{transferItem.symbol}</div> :
+                                                            <div className="recordListZi">{transferItem.symbol}</div>
+                                                        }
+                                                    </div>
+                                                    <div className='recordListZi2'>{transferItem.amount}</div>
+                                                </div>
+                                                <div className='recordListSmallZi'>{t('home_deposite_24')} <span>{transferItem.balance}</span>
+                                                </div>
+                                                <div
+                                                    className='recordListSmallZi'>{getNowTime(transferItem.createTime)}</div>
                                             </div>
-                                            <div className='recordListZi2'>{transferItem.amount}</div>
+                                        )
+                                    })) : (
+                                        <div className="mt-12 no-data-container" style={{ height: 'calc(100vh - 24rem)' }}>
+                                            <img className='noDataImg' src='wallet/assets/images/logo/xc.png'></img>
+                                            <div className='noDataImgTxt text-22'>{t('home_record_12')}</div>
                                         </div>
-                                        <div className='recordListSmallZi'>{t('home_deposite_24')} <span>{transferItem.balance}</span>
-                                        </div>
-                                        <div
-                                            className='recordListSmallZi'>{getNowTime(transferItem.createTime)}</div>
-                                    </div>
-                                )
-                            })) : (
-                                <div className="mt-12 no-data-container" style={{ height: 'calc(100vh - 24rem)' }}>
-                                    <img className='noDataImg' src='wallet/assets/images/logo/xc.png'></img>
-                                    <div className='noDataImgTxt text-22'>{t('home_record_12')}</div>
+                                    )}
+
+                                    {
+                                        moreBtnShow && <LoadingButton
+                                            disabled={false}
+                                            className='px-48 btnColorTitleBig loadingBtnSty recordMoreBtn'
+                                            color="secondary"
+                                            loading={false}
+                                            variant="contained"
+                                            onClick={() => {
+                                                handleTransferRecord(page + 1)
+                                            }}
+                                        >
+                                            {t('card_169')}
+                                        </LoadingButton>
+                                    }
                                 </div>
                             )}
 
-                            {
-                                moreBtnShow && <LoadingButton
-                                    disabled={false}
-                                    className='px-48 btnColorTitleBig loadingBtnSty recordMoreBtn'
-                                    color="secondary"
-                                    loading={false}
-                                    variant="contained"
-                                    onClick={() => {
-                                        handleTransferRecord(page + 1)
-                                    }}
-                                >
-                                    {t('card_169')}
-                                </LoadingButton>
-                            }
-                        </div>
-                    )}
+                        </Box>
 
-                </Box>
-
-            </motion.div>
-
+                    </motion.div>
+                </div>
+            }
+            {
+                !loadingShow &&
+                <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }}>
+                    <div className="loadingChuang1">
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                    </div>
+                </div>
+            }
 
         </div>
     )
