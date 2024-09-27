@@ -230,7 +230,7 @@ function Card(props) {
             tmpText = tmpText + text
         }
 
-        setTransferMoney(tmpText);
+        setTransferMoney(tmpText === 0 ? '': tmpText );
     }
 
     const handleDoGoogleCode = (text) => {
@@ -277,9 +277,9 @@ function Card(props) {
                     paymentPassword: tmpPin
                 })).then((res) => {
                     if (res.payload) {
-                        dispatch(showMessage({ message: 'success', code: 1 }));
                         setHasPin(true)
                         closeCreatePinFunc()
+                        dispatch(showMessage({ message: 'success', code: 1 }));
                     }
                 })
             }

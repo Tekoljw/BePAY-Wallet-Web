@@ -40,6 +40,8 @@ import zhHK from "date-fns/locale/zh-HK";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
 import Dialog from "@mui/material/Dialog/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
+import {centerGetTokenBalanceList} from "app/store/user/userThunk";
+import {centerGetUserFiat} from "app/store/wallet/walletThunk";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -95,20 +97,23 @@ function Swap() {
   const symbolsData = config.symbols;
   const fiatsData = config.payment?.currency;
   const networks = config.networks;
-  const fiatData = useSelector(selectUserData).fiat;
-  const userData = useSelector(selectUserData);
-  const walletData = useSelector(selectUserData).wallet;
   const cryptoDisplayData = useSelector(selectUserData).cryptoDisplay;
   const [expanded, setExpanded] = useState(null);
   const [symbolWallet, setSymbolWallet] = useState([]);
   const [openSuccessWindow, setOpenSuccessWindow] = useState(false);
-  const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || "USD");
   // const [cryptoDisplayData, setCryptoDisplayData] = useState([]);
   const [symbol, setSymbol] = useState("");
   const [hasData, setHasData] = useState(false);
   const [zhuanQuan, setZhuanQuan] = useState(true);
   const [tiJiaoState, setTiJiaoState] = useState(0);
   const [formatSymbol, setFormatSymbol] = useState("");
+  const [fiatData ,setFiatData] = useState([]);
+  const [walletData ,setWalletData] = useState([]);
+  let userData = useSelector(selectUserData);
+  // const fiatData = useSelector(selectUserData).fiat;
+  // const walletData = useSelector(selectUserData).wallet;
+  const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || "USD");
+
   const [priceData, setPriceData] = useState({
     pair: "",
     price: "",
@@ -504,6 +509,12 @@ function Swap() {
               setTimeout(() => {
                 setZhuanQuan(false);
                 setTiJiaoState(1);
+                dispatch(centerGetTokenBalanceList());
+                dispatch(centerGetUserFiat());
+                setTimeout(()=>{
+                  // userData = useSelector(selectUserData);
+                  symbolsFormatAmount();
+                },10000)
               }, 1200);
             } else {
               setTimeout(() => {

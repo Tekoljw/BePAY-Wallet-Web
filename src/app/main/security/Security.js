@@ -67,6 +67,10 @@ const item = {
     show: { opacity: 1, y: 0 },
 };
 
+const backCardPageEvt = () =>{
+    
+}
+
 function Security(props) {
     const { t } = useTranslation('mainPage');
 
@@ -126,7 +130,7 @@ function Security(props) {
                 {tabValue === 1 && <RetiedEmail />}
                 {tabValue === 2 && <RetiedPhone />}
                 {tabValue === 3 && <ResetPass />}
-                {tabValue === 4 && <Kyc />}
+                {tabValue === 4 && <Kyc backCardPage={ backCardPageEvt}/>}
                 {tabValue === 5 && <ResetPin resetTabValueParam={resetTabValueParam} />}
             </div>
         </div>

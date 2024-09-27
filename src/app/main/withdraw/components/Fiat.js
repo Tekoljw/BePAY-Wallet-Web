@@ -499,6 +499,7 @@ function Fiat(props) {
                     if (res.payload) {
                         setHasPin(true)
                         closeCreatePinFunc()
+                        dispatch(showMessage({ message: 'success', code: 1 }));
                     }
                 })
             }
