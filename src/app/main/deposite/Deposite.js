@@ -1104,7 +1104,6 @@ function Deposite() {
         }, 0);
     }, [walletAddressList]);
 
-
     const copyTiShiFunc = () => {
         setCopyTiShi(true)
         setTimeout(() => {
@@ -1112,496 +1111,501 @@ function Deposite() {
         }, 800);
     }
 
+    const [loadingShow, setLoadingShow] = useState(false);
+    useEffect(() => {
+        setTimeout(() => {
+            setLoadingShow(true);
+        }, 1500);
+    }, []);
 
     return (
         <div>
-            {/*head*/}
-            <motion.div
-                variants={container}
-                initial="hidden"
-                animate="show"
-                className='mt-12'
-            >
-                <Tabs
-                    component={motion.div}
-                    variants={item}
-                    value={tabValue}
-                    onChange={(ev, value) => setTabValue(value)}
-                    indicatorColor="secondary"
-                    textColor="inherit"
-                    variant="scrollable"
-                    scrollButtons={false}
-                    className="tongYongDingBtn"
-                    style={{ width: '50%!import' }}
-                    classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
-                    TabIndicatorProps={{
-                        children: (
-                            <Box
-                                sx={{ bgcolor: 'text.disabled' }}
-                                className="w-full h-full rounded-full  huaKuaBgColor0"
-                            />
-                        ),
-                    }}
-                    sx={{
-                        margin: "1rem 1.2rem",
-                    }}
-                >
-                    {Object.entries(ranges)?.map(([key, label]) => (
-                        <Tab
-                            className="text-14 font-semibold min-h-36 min-w-64 mx4 px-12 opacity1 txtColorTitle zindex"
-                            disableRipple
-                            key={key}
-                            label={label}
-                            sx={{
-                                color: '#FFFFFF', height: '3.6rem', width: '50%'
-                            }}
-                        />
-                    ))}
-                </Tabs>
-            </motion.div>
-
-
-            {tabValue === cryptoSelect && <div>
+            {loadingShow && <div>
                 <motion.div
                     variants={container}
                     initial="hidden"
                     animate="show"
-                    style={{ padding: '0 1.5rem 1.5rem 1.5rem' }}
+                    className='mt-12'
                 >
-                    <Box
-                        className="w-full rounded-16 border flex flex-col"
-                        sx={{
-                            backgroundColor: '#1E293B',
-                            border: 'none'
-                        }}
-                    >
-                        {symbolWallet.length > 0 && <StyledAccordionSelect
-                            symbol={symbolWallet}
-                            currencyCode="USD"
-                            setSymbol={setSymbol}
-                            isExpand={true}
-
-                        />}
-                    </Box>
-                </motion.div>
-
-                <motion.div
-                    variants={container}
-                    initial="hidden"
-                    animate="show"
-                    className="InsideW"
-                >
-                    <div className='addressBigW flex justify-between mt-10'>
-                        <div className="userIdW guoDuDongHua" style={{ height: showQRcode ? '22rem' : '4.2rem' }}>
-                            <div className="addressW2 flex justify-between guoDuDongHua">
-                                <div className='idZi guoDuDongHua'> <span style={{ color: "#ffffff", marginRight: "10px" }}>UserID</span>  {userData?.profile?.user?.id}</div>
-                                <img onClick={() => {
-                                    copyTiShiFunc();
-                                    handleCopyText(userData?.profile?.user?.id)
-                                }} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png" />
-                            </div>
-                            <QRCode
-                                className='testQrCodeImg'
-                                style={{
-                                    padding: '10px',
-                                    borderRadius: '8px',
-                                    background: '#ffffff',
-                                    margin: '2.6rem auto 1rem auto',
-                                }}
-                                size={138}
-                                value={userData?.profile?.user?.id}
-                            />
-                            {/*<img className='testQrCodeImg' src="wallet/assets/images/deposite/testCode.png"></img>*/}
-                        </div>
-
-                        <img className='qrCodeImg ' src="wallet/assets/images/deposite/newQrCode.png" onClick={() => {
-                            setShowQRcode(!showQRcode);
-                        }} ></img>
-                    </div>
-                    <div className='px-10 mt-12'><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8", fontSize: "1.3rem" }}>{t('card_177')}</span></div>
-                </motion.div>
-
-                <motion.div
-                    variants={container}
-                    initial="hidden"
-                    animate="show"
-                    className="p-24 mb-24"
-                    style={{ padding: '0 1.5rem 1.5rem 1.5rem' }}
-                >
-                    <Box
+                    <Tabs
                         component={motion.div}
                         variants={item}
-                        className="w-full rounded-16 border flex flex-col py-16"
-                        style={{ borderRadius: '1rem' }}
+                        value={tabValue}
+                        onChange={(ev, value) => setTabValue(value)}
+                        indicatorColor="secondary"
+                        textColor="inherit"
+                        variant="scrollable"
+                        scrollButtons={false}
+                        className="tongYongDingBtn"
+                        style={{ width: '50%!import' }}
+                        classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
+                        TabIndicatorProps={{
+                            children: (
+                                <Box
+                                    sx={{ bgcolor: 'text.disabled' }}
+                                    className="w-full h-full rounded-full  huaKuaBgColor0"
+                                />
+                            ),
+                        }}
                         sx={{
-                            backgroundColor: '#1E293B',
-                            border: 'none'
+                            margin: "1rem 1.2rem",
                         }}
                     >
-                        <Typography className="text-16 px-10 my-12 " style={{ marginBottom: '0.5rem' }}>{t('home_deposite_4')}</Typography>
+                        {Object.entries(ranges)?.map(([key, label]) => (
+                            <Tab
+                                className="text-14 font-semibold min-h-36 min-w-64 mx4 px-12 opacity1 txtColorTitle zindex"
+                                disableRipple
+                                key={key}
+                                label={label}
+                                sx={{
+                                    color: '#FFFFFF', height: '3.6rem', width: '50%'
+                                }}
+                            />
+                        ))}
+                    </Tabs>
+                </motion.div>
 
-                        <div className="flex " style={{ flexWrap: 'wrap' }}>
-                            {networkData[symbol]?.length > 0 && networkData[symbol]?.map((item, index) => {
-                                return (
-                                    <div
-                                        onClick={() => {
-                                            setWalletName(item.network);
-                                            setNetworkId(item.id);
-                                            handleChangeNetWork(item.id)
-                                            // getWalletAddressClick(item.id);
-                                        }}
-                                        className={clsx('flex items-center rounded-8 border cursor-pointer deposite-token', networkId === item.id && 'active-border')}
-                                        key={index}
-                                        style={{
-                                            margin: '1rem 0rem 1.4rem 0.6rem',
-                                            paddingLeft: '0.2rem',
-                                            paddingRight: '0rem',
-                                            borderRadius: '0.5rem'
-                                        }}
-                                    >
-                                        <img style={{ width: '2rem', borderRadius: '50%' }} src={item.avatar} alt="" />
-                                        <div className="px-12"
+                {tabValue === cryptoSelect && <div>
+                    <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        style={{ padding: '0 1.5rem 1.5rem 1.5rem' }}
+                    >
+                        <Box
+                            className="w-full rounded-16 border flex flex-col"
+                            sx={{
+                                backgroundColor: '#1E293B',
+                                border: 'none'
+                            }}
+                        >
+                            {symbolWallet.length > 0 && <StyledAccordionSelect
+                                symbol={symbolWallet}
+                                currencyCode="USD"
+                                setSymbol={setSymbol}
+                                isExpand={true}
+
+                            />}
+                        </Box>
+                    </motion.div>
+
+                    <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className="InsideW"
+                    >
+                        <div className='addressBigW flex justify-between mt-10'>
+                            <div className="userIdW guoDuDongHua" style={{ height: showQRcode ? '22rem' : '4.2rem' }}>
+                                <div className="addressW2 flex justify-between guoDuDongHua">
+                                    <div className='idZi guoDuDongHua'> <span style={{ color: "#ffffff", marginRight: "10px" }}>UserID</span>  {userData?.profile?.user?.id}</div>
+                                    <img onClick={() => {
+                                        copyTiShiFunc();
+                                        handleCopyText(userData?.profile?.user?.id)
+                                    }} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png" />
+                                </div>
+                                <QRCode
+                                    className='testQrCodeImg'
+                                    style={{
+                                        padding: '10px',
+                                        borderRadius: '8px',
+                                        background: '#ffffff',
+                                        margin: '2.6rem auto 1rem auto',
+                                    }}
+                                    size={138}
+                                    value={userData?.profile?.user?.id}
+                                />
+                                {/*<img className='testQrCodeImg' src="wallet/assets/images/deposite/testCode.png"></img>*/}
+                            </div>
+
+                            <img className='qrCodeImg ' src="wallet/assets/images/deposite/newQrCode.png" onClick={() => {
+                                setShowQRcode(!showQRcode);
+                            }} ></img>
+                        </div>
+                        <div className='px-10 mt-12'><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8", fontSize: "1.3rem" }}>{t('card_177')}</span></div>
+                    </motion.div>
+
+                    <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className="p-24 mb-24"
+                        style={{ padding: '0 1.5rem 1.5rem 1.5rem' }}
+                    >
+                        <Box
+                            component={motion.div}
+                            variants={item}
+                            className="w-full rounded-16 border flex flex-col py-16"
+                            style={{ borderRadius: '1rem' }}
+                            sx={{
+                                backgroundColor: '#1E293B',
+                                border: 'none'
+                            }}
+                        >
+                            <Typography className="text-16 px-10 my-12 " style={{ marginBottom: '0.5rem' }}>{t('home_deposite_4')}</Typography>
+
+                            <div className="flex " style={{ flexWrap: 'wrap' }}>
+                                {networkData[symbol]?.length > 0 && networkData[symbol]?.map((item, index) => {
+                                    return (
+                                        <div
+                                            onClick={() => {
+                                                setWalletName(item.network);
+                                                setNetworkId(item.id);
+                                                handleChangeNetWork(item.id)
+                                                // getWalletAddressClick(item.id);
+                                            }}
+                                            className={clsx('flex items-center rounded-8 border cursor-pointer deposite-token', networkId === item.id && 'active-border')}
+                                            key={index}
                                             style={{
-                                                paddingLeft: '0.4rem',
-                                                paddingRight: '0.4rem'
+                                                margin: '1rem 0rem 1.4rem 0.6rem',
+                                                paddingLeft: '0.2rem',
+                                                paddingRight: '0rem',
+                                                borderRadius: '0.5rem'
                                             }}
                                         >
-                                            <Typography className={clsx("text-14 font-medium", networkId === item.id && 'color-ffffff')}>
-                                                {item.symbol}
-                                            </Typography>
-                                            <Typography className={clsx("text-12 font-medium color-grey", networkId === item.id && 'color-ffffff')}>
-                                                {item.network}
-                                            </Typography>
-                                        </div>
-                                    </div>
-                                )
-                            })}
-                        </div>
-
-                        <div className='text-16 ml-10 mt-16 mb-16'>{t('card_189')}</div>
-                        {/* 新地址 */}
-                        <>
-                            {walletAddressList.map((addressItem, index) => {
-                                return (
-                                    <div className='mb-16' key={index}>
-                                        <div>
-                                            <div className='flex ml-10'>
-                                                <img onClick={() => {
-                                                    handleEditAddressDesc(index, { disabled: !addressItem.disabled })
-                                                }} className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
-                                                <OutlinedInput
-                                                    className='diZhiShuRu'
-                                                    sx={{
-                                                        padding: '0rem',
-                                                        '& .MuiOutlinedInput-notchedOutline': {
-                                                            border: 'none',
-                                                        },
-                                                    }}
-                                                    disabled={addressItem.disabled}
-                                                    value={addressItem.addressDesc}
-                                                    inputProps={{ 'aria-label': 'weight' }}
-                                                    onChange={(event) => {
-                                                        handleEditAddressDesc(index, { addressDesc: event.target.value })
-                                                    }}
-                                                />
+                                            <img style={{ width: '2rem', borderRadius: '50%' }} src={item.avatar} alt="" />
+                                            <div className="px-12"
+                                                style={{
+                                                    paddingLeft: '0.4rem',
+                                                    paddingRight: '0.4rem'
+                                                }}
+                                            >
+                                                <Typography className={clsx("text-14 font-medium", networkId === item.id && 'color-ffffff')}>
+                                                    {item.symbol}
+                                                </Typography>
+                                                <Typography className={clsx("text-12 font-medium color-grey", networkId === item.id && 'color-ffffff')}>
+                                                    {item.network}
+                                                </Typography>
                                             </div>
                                         </div>
-                                        <div className='addressBigW flex justify-between mt-10'>
-                                            <div
-                                                ref={el => (divRefsParent.current[index] = el)}
-                                                className="addressW guoDuDongHua" style={{ height: selectWalletAddressIndex == index ? "22rem" : '4.2rem' }}>
-                                                <div
-                                                    className="addressW2 flex justify-between guoDuDongHua">
-                                                    <div
-                                                        ref={el => (divRefs.current[index] = el)}
-                                                        className={clsx('addressZi')}>{addressItem.address}
-                                                    </div>
-                                                    <img
-                                                        onClick={() => {
-                                                            copyTiShiFunc();
-                                                            handleCopyText(addressItem.address)
+                                    )
+                                })}
+                            </div>
+
+                            <div className='text-16 ml-10 mt-16 mb-16'>{t('card_189')}</div>
+                            {/* 新地址 */}
+                            <>
+                                {walletAddressList.map((addressItem, index) => {
+                                    return (
+                                        <div className='mb-16' key={index}>
+                                            <div>
+                                                <div className='flex ml-10'>
+                                                    <img onClick={() => {
+                                                        handleEditAddressDesc(index, { disabled: !addressItem.disabled })
+                                                    }} className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
+                                                    <OutlinedInput
+                                                        className='diZhiShuRu'
+                                                        sx={{
+                                                            padding: '0rem',
+                                                            '& .MuiOutlinedInput-notchedOutline': {
+                                                                border: 'none',
+                                                            },
                                                         }}
-                                                        className='bianJiBiImg '
-                                                        src="wallet/assets/images/deposite/newCopy.png"
+                                                        disabled={addressItem.disabled}
+                                                        value={addressItem.addressDesc}
+                                                        inputProps={{ 'aria-label': 'weight' }}
+                                                        onChange={(event) => {
+                                                            handleEditAddressDesc(index, { addressDesc: event.target.value })
+                                                        }}
                                                     />
                                                 </div>
-                                                <QRCode
-                                                    className='testQrCodeImg'
+                                            </div>
+                                            <div className='addressBigW flex justify-between mt-10'>
+                                                <div
+                                                    ref={el => (divRefsParent.current[index] = el)}
+                                                    className="addressW guoDuDongHua" style={{ height: selectWalletAddressIndex == index ? "22rem" : '4.2rem' }}>
+                                                    <div
+                                                        className="addressW2 flex justify-between guoDuDongHua">
+                                                        <div
+                                                            ref={el => (divRefs.current[index] = el)}
+                                                            className={clsx('addressZi')}>{addressItem.address}
+                                                        </div>
+                                                        <img
+                                                            onClick={() => {
+                                                                copyTiShiFunc();
+                                                                handleCopyText(addressItem.address)
+                                                            }}
+                                                            className='bianJiBiImg '
+                                                            src="wallet/assets/images/deposite/newCopy.png"
+                                                        />
+                                                    </div>
+                                                    <QRCode
+                                                        className='testQrCodeImg'
+                                                        style={{
+                                                            padding: '10px',
+                                                            borderRadius: '8px',
+                                                            background: '#ffffff',
+                                                            margin: '2.6rem auto 1rem auto',
+                                                        }}
+                                                        size={138}
+                                                        value={addressItem.address}
+                                                        imageSettings={{ // 二维码中间的logo图片
+                                                            src: 'wallet/assets/images/logo/logoNew.png',
+                                                            height: 30,
+                                                            width: 30,
+                                                            excavate: true, // 中间图片所在的位置是否镂空
+                                                        }}
+                                                    />
+                                                </div>
+                                                <img className='qrCodeImg' src="wallet/assets/images/deposite/newQrCode.png" onClick={() => {
+                                                    if (selectWalletAddressIndex === index) {
+                                                        setSelectWalletAddressIndex(null)
+                                                    } else {
+                                                        setSelectWalletAddressIndex(index)
+                                                    }
+                                                }} ></img>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+
+                                {walletAddressList.length < 10 && (
+                                    <div className='mb-16'>
+                                        <div className='addressBigW flex justify-between mt-10' onClick={() => {
+                                            handleWalletAddress(networkId)
+                                        }}>
+                                            <div className="addressW flex justify-between">
+                                                <div className='addressZi2 flex'>
+                                                    <img className='bianJiBiImg2' src="wallet/assets/images/card/jiaHao.png"></img>
+                                                    <div className='addressZi2'>{t('card_6')}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                            </>
+
+                            {false ?? (<>
+                                {
+                                    isGetWalletAddress
+                                        ? (//有钱包地址
+                                            <>{arrayLookup(symbolWallet, 'symbol', symbol, 'isManualNotify') != 1 && <Typography className="text-20 px-16 my-24 text-center" style={{ margin: '1rem' }}>
+                                                {symbol}&nbsp;{t('home_deposite_5')}({walletName})
+                                            </Typography>}
+
+                                                <div style={{
+                                                    position: 'relative'
+                                                }}>{arrayLookup(symbolWallet, 'symbol', symbol, 'isManualNotify') != 1 && <QRCode
                                                     style={{
                                                         padding: '10px',
                                                         borderRadius: '8px',
                                                         background: '#ffffff',
-                                                        margin: '2.6rem auto 1rem auto',
+                                                        margin: '10px auto',
                                                     }}
+                                                    value={walletAddress ? walletAddress : ''}
                                                     size={138}
-                                                    value={addressItem.address}
-                                                    imageSettings={{ // 二维码中间的logo图片
-                                                        src: 'wallet/assets/images/logo/logoNew.png',
-                                                        height: 30,
-                                                        width: 30,
-                                                        excavate: true, // 中间图片所在的位置是否镂空
-                                                    }}
-                                                />
-                                            </div>
-                                            <img className='qrCodeImg' src="wallet/assets/images/deposite/newQrCode.png" onClick={() => {
-                                                if (selectWalletAddressIndex === index) {
-                                                    setSelectWalletAddressIndex(null)
-                                                } else {
-                                                    setSelectWalletAddressIndex(index)
-                                                }
-                                            }} ></img>
-                                        </div>
-                                    </div>
-                                )
-                            })}
+                                                />}
 
-                            {walletAddressList.length < 10 && (
-                                <div className='mb-16'>
-                                    <div className='addressBigW flex justify-between mt-10' onClick={() => {
-                                        handleWalletAddress(networkId)
-                                    }}>
-                                        <div className="addressW flex justify-between">
-                                            <div className='addressZi2 flex'>
-                                                <img className='bianJiBiImg2' src="wallet/assets/images/card/jiaHao.png"></img>
-                                                <div className='addressZi2'>{t('card_6')}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
+                                                    {!isGetWalletAddress &&
+                                                        (<div className="shade-box cursor-pointer">
+                                                            {isLoading && <FuseLoading />}
+                                                            {!isLoading && <img
+                                                                className="txtColorTitleSmall"
+                                                                src="wallet/assets/images/deposite/refresh.png"
+                                                                alt=""
+                                                                onClick={() => {
+                                                                    handleWalletAddress(networkId).bind(this, 0);
+                                                                }}
+                                                            />}
+                                                        </div>)
+                                                    }
 
-                        </>
+                                                    {
+                                                        isGetWalletAddress &&
+                                                        (<div style={{ width: '21rem' }} className='login-right-btns-item text-16 flex items-center justify-start txtColorTitleSmall bg-success btn-center '
+                                                            // onClick={async () => {
+                                                            //     // console.log(symbolWallet, symbol, arrayLookup(symbolWallet, 'symbol', symbol, 'type'), "arrayLookup(symbolWallet, 'symbol', symbol, 'type')")
+                                                            //     let balanceRes = await dispatch(getDecenterWalletBalance({
+                                                            //         address: arrayLookup(symbolWallet, 'symbol', symbol, 'address'),
+                                                            //         decimals: arrayLookup(symbolWallet, 'symbol', symbol, 'decimals'),
+                                                            //         type: arrayLookup(symbolWallet, 'symbol', symbol, 'type'),
+                                                            //     }));
+                                                            //     console.log(arrayLookup(symbolWallet, 'symbol', symbol, 'address'), arrayLookup(symbolWallet, 'symbol', symbol, 'decimals'), arrayLookup(symbolWallet, 'symbol', symbol, 'type'),);
+                                                            //     let balance = balanceRes.payload || 0;
+                                                            //     setTransferDialogState(true)
+                                                            //     console.log(balance,regWallet,'balance...111');
+                                                            //     setbalanceAll(balance.toFixed(6))
+                                                            //     setInputValue(balance.toFixed(6));
+                                                            //     handleChangeTransferVal2('amount', balance);
+                                                            //     // console.log(transferFormData,'money...');
 
-                        {false ?? (<>
-                            {
-                                isGetWalletAddress
-                                    ? (//有钱包地址
-                                        <>{arrayLookup(symbolWallet, 'symbol', symbol, 'isManualNotify') != 1 && <Typography className="text-20 px-16 my-24 text-center" style={{ margin: '1rem' }}>
-                                            {symbol}&nbsp;{t('home_deposite_5')}({walletName})
-                                        </Typography>}
+                                                            // }}
+                                                            onClick={async () => {
 
-                                            <div style={{
-                                                position: 'relative'
-                                            }}>{arrayLookup(symbolWallet, 'symbol', symbol, 'isManualNotify') != 1 && <QRCode
-                                                style={{
-                                                    padding: '10px',
-                                                    borderRadius: '8px',
-                                                    background: '#ffffff',
-                                                    margin: '10px auto',
-                                                }}
-                                                value={walletAddress ? walletAddress : ''}
-                                                size={138}
-                                            />}
 
-                                                {!isGetWalletAddress &&
-                                                    (<div className="shade-box cursor-pointer">
-                                                        {isLoading && <FuseLoading />}
-                                                        {!isLoading && <img
-                                                            className="txtColorTitleSmall"
-                                                            src="wallet/assets/images/deposite/refresh.png"
-                                                            alt=""
-                                                            onClick={() => {
-                                                                handleWalletAddress(networkId).bind(this, 0);
+                                                                if (decentralized != 1 && userData.profile?.loginType != "unkown") {
+                                                                    // 跳转到 /account 页面
+                                                                    history.push('/wallet/account');
+                                                                } else {
+
+                                                                    // 保留原有的 onClick 逻辑
+                                                                    let balanceRes = await dispatch(getDecenterWalletBalance({
+                                                                        address: arrayLookup(symbolWallet, 'symbol', symbol, 'address'),
+                                                                        decimals: arrayLookup(symbolWallet, 'symbol', symbol, 'decimals'),
+                                                                        type: arrayLookup(symbolWallet, 'symbol', symbol, 'type'),
+                                                                        networkChainId: arrayLookup(networks, 'id', networkId, 'chainId'),
+                                                                    }));
+                                                                    let balance = balanceRes.payload || 0;
+                                                                    // if (balance == 0) {
+                                                                    //     return;
+                                                                    // }
+                                                                    handleChangeTransferVal2('amount', balance);
+                                                                    setTransferDialogState(true);
+                                                                    console.log(balance, 'balance..222.');
+                                                                    setbalanceAll(balance.toFixed(6));
+                                                                    setInputValue(balance.toFixed(6));
+                                                                    handleChangeTransferVal2('amount', balance);
+                                                                }
                                                             }}
-                                                        />}
-                                                    </div>)
-                                                }
-
-                                                {
-                                                    isGetWalletAddress &&
-                                                    (<div style={{ width: '21rem' }} className='login-right-btns-item text-16 flex items-center justify-start txtColorTitleSmall bg-success btn-center '
-                                                        // onClick={async () => {
-                                                        //     // console.log(symbolWallet, symbol, arrayLookup(symbolWallet, 'symbol', symbol, 'type'), "arrayLookup(symbolWallet, 'symbol', symbol, 'type')")
-                                                        //     let balanceRes = await dispatch(getDecenterWalletBalance({
-                                                        //         address: arrayLookup(symbolWallet, 'symbol', symbol, 'address'),
-                                                        //         decimals: arrayLookup(symbolWallet, 'symbol', symbol, 'decimals'),
-                                                        //         type: arrayLookup(symbolWallet, 'symbol', symbol, 'type'),
-                                                        //     }));
-                                                        //     console.log(arrayLookup(symbolWallet, 'symbol', symbol, 'address'), arrayLookup(symbolWallet, 'symbol', symbol, 'decimals'), arrayLookup(symbolWallet, 'symbol', symbol, 'type'),);
-                                                        //     let balance = balanceRes.payload || 0;
-                                                        //     setTransferDialogState(true)
-                                                        //     console.log(balance,regWallet,'balance...111');
-                                                        //     setbalanceAll(balance.toFixed(6))
-                                                        //     setInputValue(balance.toFixed(6));
-                                                        //     handleChangeTransferVal2('amount', balance);
-                                                        //     // console.log(transferFormData,'money...');
-
-                                                        // }}
-                                                        onClick={async () => {
-
-
-                                                            if (decentralized != 1 && userData.profile?.loginType != "unkown") {
-                                                                // 跳转到 /account 页面
-                                                                history.push('/wallet/account');
-                                                            } else {
-
-                                                                // 保留原有的 onClick 逻辑
-                                                                let balanceRes = await dispatch(getDecenterWalletBalance({
-                                                                    address: arrayLookup(symbolWallet, 'symbol', symbol, 'address'),
-                                                                    decimals: arrayLookup(symbolWallet, 'symbol', symbol, 'decimals'),
-                                                                    type: arrayLookup(symbolWallet, 'symbol', symbol, 'type'),
-                                                                    networkChainId: arrayLookup(networks, 'id', networkId, 'chainId'),
-                                                                }));
-                                                                let balance = balanceRes.payload || 0;
-                                                                // if (balance == 0) {
-                                                                //     return;
-                                                                // }
-                                                                handleChangeTransferVal2('amount', balance);
-                                                                setTransferDialogState(true);
-                                                                console.log(balance, 'balance..222.');
-                                                                setbalanceAll(balance.toFixed(6));
-                                                                setInputValue(balance.toFixed(6));
-                                                                handleChangeTransferVal2('amount', balance);
-                                                            }
-                                                        }}
-                                                    >
-                                                        <div className='flex justify-content-center' style={{ width: "180px", overflow: "hidden" }}>
-                                                            {/* <img className='login-way-img'
+                                                        >
+                                                            <div className='flex justify-content-center' style={{ width: "180px", overflow: "hidden" }}>
+                                                                {/* <img className='login-way-img'
 
                                                 src={
                                                     (decentralized != 1 || userData.profile?.loginType != 1) ? `/wallet/assets/images/menu/icon-wallet-active.png` : `${walletImage}`} alt="" /> */}
-                                                            <img className='login-way-img button-noreduce'
-                                                                src={
-                                                                    (() => {
-                                                                        switch (walletloginname) {
-                                                                            case 'BitKeep':
-                                                                                return '/wallet/assets/images/login/icon-right-14.png';
-                                                                            case 'MetaMask':
-                                                                                return '/wallet/assets/images/login/icon-right-1.png';
-                                                                            case 'WalletConnect':
-                                                                                return '/wallet/assets/images/login/icon-right-5.png';
-                                                                            case 'coinbase':
-                                                                                return '/wallet/assets/images/login/icon-right-10.png';
-                                                                            case 'TrustWallet':
-                                                                                return '/wallet/assets/images/login/icon-right-12.png';
-                                                                            case 'Coinbase':
-                                                                                return '/wallet/assets/images/login/icon-right-4.png';
-                                                                            case 'Polygon':
-                                                                                return '/wallet/assets/images/login/icon-right-13.png';
-                                                                            case 'Bitski':
-                                                                                return '/wallet/assets/images/login/icon-right-15.png';
-                                                                            case 'CLedger':
-                                                                                return '/wallet/assets/images/login/icon-right-16.png';
-                                                                            case 'Binance Smart':
-                                                                                return '/wallet/assets/images/login/icon-right-17.png';
-                                                                            case 'value2':
-                                                                                return '';
-                                                                            default:
-                                                                                return '/wallet/assets/images/menu/icon-wallet-active.png ';
-                                                                        }
-                                                                    })()
-                                                                }
-                                                                alt=""
-                                                            />
-                                                            <span className='login-way-name'>
-                                                                {(decentralized != -1 && userData.profile?.loginType === "web3_wallet") ? t('home_deposite_12') : t('home_deposite_10')}
+                                                                <img className='login-way-img button-noreduce'
+                                                                    src={
+                                                                        (() => {
+                                                                            switch (walletloginname) {
+                                                                                case 'BitKeep':
+                                                                                    return '/wallet/assets/images/login/icon-right-14.png';
+                                                                                case 'MetaMask':
+                                                                                    return '/wallet/assets/images/login/icon-right-1.png';
+                                                                                case 'WalletConnect':
+                                                                                    return '/wallet/assets/images/login/icon-right-5.png';
+                                                                                case 'coinbase':
+                                                                                    return '/wallet/assets/images/login/icon-right-10.png';
+                                                                                case 'TrustWallet':
+                                                                                    return '/wallet/assets/images/login/icon-right-12.png';
+                                                                                case 'Coinbase':
+                                                                                    return '/wallet/assets/images/login/icon-right-4.png';
+                                                                                case 'Polygon':
+                                                                                    return '/wallet/assets/images/login/icon-right-13.png';
+                                                                                case 'Bitski':
+                                                                                    return '/wallet/assets/images/login/icon-right-15.png';
+                                                                                case 'CLedger':
+                                                                                    return '/wallet/assets/images/login/icon-right-16.png';
+                                                                                case 'Binance Smart':
+                                                                                    return '/wallet/assets/images/login/icon-right-17.png';
+                                                                                case 'value2':
+                                                                                    return '';
+                                                                                default:
+                                                                                    return '/wallet/assets/images/menu/icon-wallet-active.png ';
+                                                                            }
+                                                                        })()
+                                                                    }
+                                                                    alt=""
+                                                                />
+                                                                <span className='login-way-name'>
+                                                                    {(decentralized != -1 && userData.profile?.loginType === "web3_wallet") ? t('home_deposite_12') : t('home_deposite_10')}
 
-                                                            </span>
-                                                        </div>
-                                                    </div>)
+                                                                </span>
+                                                            </div>
+                                                        </div>)
+                                                    }
+                                                </div>
+                                                {!isGetWalletAddress &&
+                                                    <Button
+                                                        className='text-lg btnColorTitleBig address-btn'
+                                                        color="secondary"
+                                                        variant="contained"
+                                                        onClick={() => {
+                                                            handleWalletAddress(networkId);
+                                                        }}
+                                                    >{t('home_deposite_13')}
+                                                    </Button>
                                                 }
-                                            </div>
-                                            {!isGetWalletAddress &&
-                                                <Button
-                                                    className='text-lg btnColorTitleBig address-btn'
-                                                    color="secondary"
-                                                    variant="contained"
-                                                    onClick={() => {
-                                                        handleWalletAddress(networkId);
+                                                {isGetWalletAddress && (
+                                                    <div className="px-10 my-24 fa-input-conatiner ">
+                                                        {arrayLookup(symbolWallet, 'symbol', symbol, 'isManualNotify') != 1 && <FormControl sx={{ width: '100%' }} variant="outlined">
+                                                            <OutlinedInput
+                                                                disabled={true}
+                                                                id="outlined-adornment-weight "
+                                                                value={walletAddress}
+                                                                endAdornment={<InputAdornment position="end">
+                                                                    <IconButton
+                                                                        aria-label="toggle password visibility "
+                                                                        onClick={() => {
+                                                                            handleCopyText(walletAddress)
+                                                                        }}
+                                                                        edge="end"
+                                                                    >
+                                                                        <img src="wallet/assets/images/deposite/copy.png" alt="" />
+                                                                    </IconButton>
+                                                                </InputAdornment>}
+                                                                aria-describedby="outlined-weight-helper-text "
+                                                                inputProps={{
+                                                                    'aria-label': 'weight',
+                                                                }}
+                                                            />
+                                                        </FormControl>}
+
+                                                    </div>
+                                                )}
+                                                <Box
+                                                    className="mx-10 "
+                                                    sx={{
+                                                        backgroundColor: '#0F172A',
+                                                        borderRadius: '8px'
                                                     }}
-                                                >{t('home_deposite_13')}
-                                                </Button>
-                                            }
-                                            {isGetWalletAddress && (
-                                                <div className="px-10 my-24 fa-input-conatiner ">
-                                                    {arrayLookup(symbolWallet, 'symbol', symbol, 'isManualNotify') != 1 && <FormControl sx={{ width: '100%' }} variant="outlined">
-                                                        <OutlinedInput
-                                                            disabled={true}
-                                                            id="outlined-adornment-weight "
-                                                            value={walletAddress}
-                                                            endAdornment={<InputAdornment position="end">
-                                                                <IconButton
-                                                                    aria-label="toggle password visibility "
-                                                                    onClick={() => {
-                                                                        handleCopyText(walletAddress)
-                                                                    }}
-                                                                    edge="end"
-                                                                >
-                                                                    <img src="wallet/assets/images/deposite/copy.png" alt="" />
-                                                                </IconButton>
-                                                            </InputAdornment>}
-                                                            aria-describedby="outlined-weight-helper-text "
-                                                            inputProps={{
-                                                                'aria-label': 'weight',
-                                                            }}
-                                                        />
-                                                    </FormControl>}
-
-                                                </div>
-                                            )}
-                                            <Box
-                                                className="mx-10 "
-                                                sx={{
-                                                    backgroundColor: '#0F172A',
-                                                    borderRadius: '8px'
-                                                }}
-                                            >
-                                                <Typography className="text-14 px-16 my-12" style={{ margin: '0.8rem 0' }}>
-                                                    <span style={{ color: '#FCE100' }}>⚠</span>
-                                                    {/* {networkData[symbol] ? networkData[symbol][networkId]?.desc : ''} */}
-                                                    {t('home_deposite_15')} {symbol}, {t('home_deposite_16')}
-                                                </Typography>
-                                            </Box>
-                                        </>
-                                    ) : (//没有钱包地址
-                                        <>
-                                            <div className='ml-10 mt-10 mb-16 text-16'>USDT Deposite Address(TRX)</div>
-                                            {walletAddressList.map((addressItem) => {
-                                                return (
-                                                    <div className='mb-16'>
-                                                        <div>
-                                                            <div className='flex ml-10'>
-                                                                <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
-                                                                <div className='bianJiBiZi'>Address1</div>
-                                                            </div>
-                                                        </div>
-                                                        <div className='addressBigW flex justify-between mt-10'>
-                                                            <div className="addressW flex justify-between  guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
-                                                                <div className="addressW2 flex justify-between guoDuDongHua">
-                                                                    <div className='addressZi testRed'>{addressItem}</div>
-                                                                    <img className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"></img>
+                                                >
+                                                    <Typography className="text-14 px-16 my-12" style={{ margin: '0.8rem 0' }}>
+                                                        <span style={{ color: '#FCE100' }}>⚠</span>
+                                                        {/* {networkData[symbol] ? networkData[symbol][networkId]?.desc : ''} */}
+                                                        {t('home_deposite_15')} {symbol}, {t('home_deposite_16')}
+                                                    </Typography>
+                                                </Box>
+                                            </>
+                                        ) : (//没有钱包地址
+                                            <>
+                                                <div className='ml-10 mt-10 mb-16 text-16'>USDT Deposite Address(TRX)</div>
+                                                {walletAddressList.map((addressItem) => {
+                                                    return (
+                                                        <div className='mb-16'>
+                                                            <div>
+                                                                <div className='flex ml-10'>
+                                                                    <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
+                                                                    <div className='bianJiBiZi'>Address1</div>
                                                                 </div>
-                                                                <img className='testQrCodeImg' src="wallet/assets/images/deposite/testCode.png"></img>
                                                             </div>
-                                                            <img className='qrCodeImg' src="wallet/assets/images/deposite/newQrCode.png" onClick={() => {
-                                                                setShowQRcode(!showQRcode);
-                                                            }} ></img>
+                                                            <div className='addressBigW flex justify-between mt-10'>
+                                                                <div className="addressW flex justify-between  guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
+                                                                    <div className="addressW2 flex justify-between guoDuDongHua">
+                                                                        <div className='addressZi testRed'>{addressItem}</div>
+                                                                        <img className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png"></img>
+                                                                    </div>
+                                                                    <img className='testQrCodeImg' src="wallet/assets/images/deposite/testCode.png"></img>
+                                                                </div>
+                                                                <img className='qrCodeImg' src="wallet/assets/images/deposite/newQrCode.png" onClick={() => {
+                                                                    setShowQRcode(!showQRcode);
+                                                                }} ></img>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                })}
+
+                                                <div className='mb-16'>
+                                                    <div>
+                                                        <div className='flex ml-10'>
+                                                            <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
+                                                            <div className='bianJiBiZi'>Address5</div>
                                                         </div>
                                                     </div>
-                                                )
-                                            })}
 
-                                            <div className='mb-16'>
-                                                <div>
-                                                    <div className='flex ml-10'>
-                                                        <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
-                                                        <div className='bianJiBiZi'>Address5</div>
+                                                    <div className='addressBigW flex justify-between mt-10' onClick={() => {
+                                                        handleWalletAddress()
+                                                    }}>
+                                                        <div className="addressW flex justify-between">
+                                                            <div className='addressZi2 flex'>
+                                                                <img className='bianJiBiImg2' src="wallet/assets/images/card/jiaHao.png"></img>
+                                                                <div className='addressZi2'>{t('card_6')}</div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
 
-                                                <div className='addressBigW flex justify-between mt-10' onClick={() => {
-                                                    handleWalletAddress()
-                                                }}>
-                                                    <div className="addressW flex justify-between">
-                                                        <div className='addressZi2 flex'>
-                                                            <img className='bianJiBiImg2' src="wallet/assets/images/card/jiaHao.png"></img>
-                                                            <div className='addressZi2'>{t('card_6')}</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            {/* <div className='flex justify-content-center' style={{ width: "100%", overflow: "hidden" }}>
+                                                {/* <div className='flex justify-content-center' style={{ width: "100%", overflow: "hidden" }}>
                                             <LoadingButton className="px-48 text-lg btnColorTitleBig"
                                                 size="large"
                                                 color="secondary"
@@ -1622,84 +1626,84 @@ function Deposite() {
                                                 </div>
                                             </LoadingButton>
                                         </div> */}
-                                        </>
-                                    )}
-                        </>)}
+                                            </>
+                                        )}
+                            </>)}
 
-                        <BootstrapDialog
-                            onClose={() => { setTransferDialogState(false); }}
-                            aria-labelledby="customized-dialog-title"
-                            open={transferDialogState}
-                            className="dialog-container "
-                        >
-                            <BootstrapDialogTitle id="customized-dialog-title" onClose={() => { setTransferDialogState(false) }} style={{ textAlign: "center" }} >
-                                {t('home_deposite_23')}
-                            </BootstrapDialogTitle>
+                            <BootstrapDialog
+                                onClose={() => { setTransferDialogState(false); }}
+                                aria-labelledby="customized-dialog-title"
+                                open={transferDialogState}
+                                className="dialog-container "
+                            >
+                                <BootstrapDialogTitle id="customized-dialog-title" onClose={() => { setTransferDialogState(false) }} style={{ textAlign: "center" }} >
+                                    {t('home_deposite_23')}
+                                </BootstrapDialogTitle>
 
-                            <DialogContent dividers style={{ width: "360px", padding: "0" }}>
-                                <Box
-                                    className="dialog-content-inner dialog-content-select-fiat-width border-r-5 "
-                                    style={{ height: "224px" }}
-                                >
-                                    <div className='' style={{ position: "relative", height: "70px", marginLeft: "15px" }}>
-                                        <div className='flex' style={{ position: "absolute" }}>
-                                            <div className='flex' style={{ width: "168px", overflow: "hidden", backgroundColor: "#1e293b", padding: "4px 14px", borderRadius: "5px" }}>
-                                                <img className='w-28 h-28 mt-8' src={arrayLookup(symbolWallet, 'symbol', symbol, 'avatar')} style={{ borderRadius: '50%' }}></img>
-                                                {/* <img className='w-16 h-8 mt-12 cursor-pointer' src={arrayLookup(symbolWallet, 'symbol', symbol, 'avatar')} style={{ marginLeft: "16px" }} ></img> */}
-                                                <div>
-                                                    <div className='ml-6' style={{ fontSize: "18px" }}>{symbol}</div>
-                                                    <div className='ml-6' style={{ fontSize: "12px", color: "#76819b" }}>
-                                                        {balanceAll}
+                                <DialogContent dividers style={{ width: "360px", padding: "0" }}>
+                                    <Box
+                                        className="dialog-content-inner dialog-content-select-fiat-width border-r-5 "
+                                        style={{ height: "224px" }}
+                                    >
+                                        <div className='' style={{ position: "relative", height: "70px", marginLeft: "15px" }}>
+                                            <div className='flex' style={{ position: "absolute" }}>
+                                                <div className='flex' style={{ width: "168px", overflow: "hidden", backgroundColor: "#1e293b", padding: "4px 14px", borderRadius: "5px" }}>
+                                                    <img className='w-28 h-28 mt-8' src={arrayLookup(symbolWallet, 'symbol', symbol, 'avatar')} style={{ borderRadius: '50%' }}></img>
+                                                    {/* <img className='w-16 h-8 mt-12 cursor-pointer' src={arrayLookup(symbolWallet, 'symbol', symbol, 'avatar')} style={{ marginLeft: "16px" }} ></img> */}
+                                                    <div>
+                                                        <div className='ml-6' style={{ fontSize: "18px" }}>{symbol}</div>
+                                                        <div className='ml-6' style={{ fontSize: "12px", color: "#76819b" }}>
+                                                            {balanceAll}
+                                                        </div>
                                                     </div>
+                                                    {/* <img className='w-16 h-8 mt-12 cursor-pointer' src="wallet/assets/images/deposite/jianTou.png" style={{ marginLeft: "16px" }} ></img> */}
                                                 </div>
-                                                {/* <img className='w-16 h-8 mt-12 cursor-pointer' src="wallet/assets/images/deposite/jianTou.png" style={{ marginLeft: "16px" }} ></img> */}
+
+                                                <div className='flex' style={{ width: "147px", marginLeft: "15px", height: "50px", backgroundColor: "#1e293b", borderRadius: "5px" }} >
+                                                    {/* <div style={{ width: "147px", fontSize: "18px", height: "50px", lineHeight: "50px", textAlign: "center" }}>{balanceAll*sidevalue/100} </div> */}
+                                                    {/* <input value={inputvalue} onChange={handleSliderChange} style={{ width: "147px", fontSize: "18px", height: "50px", lineHeight: "50px", textAlign: "center", backgroundColor:'rgb(30, 41, 59)' }}></input> */}
+                                                    <TextField
+                                                        style={{ width: "147px", fontSize: "18px", height: "40px", textAlign: "center", backgroundColor: 'rgb(30, 41, 59)' }}
+                                                        type="number"
+                                                        step="0.000001"
+                                                        value={inputValue}
+                                                        onChange={handleInputChange}
+                                                        size="small"
+                                                        error={Number(inputValue) > Number(balanceAll)}
+                                                        helperText={Number(inputValue) > Number(balanceAll) ? t('home_deposite_28') : ''}
+                                                    />
+
+                                                </div>
+
                                             </div>
 
-                                            <div className='flex' style={{ width: "147px", marginLeft: "15px", height: "50px", backgroundColor: "#1e293b", borderRadius: "5px" }} >
-                                                {/* <div style={{ width: "147px", fontSize: "18px", height: "50px", lineHeight: "50px", textAlign: "center" }}>{balanceAll*sidevalue/100} </div> */}
-                                                {/* <input value={inputvalue} onChange={handleSliderChange} style={{ width: "147px", fontSize: "18px", height: "50px", lineHeight: "50px", textAlign: "center", backgroundColor:'rgb(30, 41, 59)' }}></input> */}
-                                                <TextField
-                                                    style={{ width: "147px", fontSize: "18px", height: "40px", textAlign: "center", backgroundColor: 'rgb(30, 41, 59)' }}
-                                                    type="number"
-                                                    step="0.000001"
-                                                    value={inputValue}
-                                                    onChange={handleInputChange}
-                                                    size="small"
-                                                    error={Number(inputValue) > Number(balanceAll)}
-                                                    helperText={Number(inputValue) > Number(balanceAll) ? t('home_deposite_28') : ''}
-                                                />
-
-                                            </div>
-
+                                            <img style={{ position: "absolute", left: "161px", top: "10px" }} src='wallet/assets/images/deposite/fenPei.png'></img>
                                         </div>
 
-                                        <img style={{ position: "absolute", left: "161px", top: "10px" }} src='wallet/assets/images/deposite/fenPei.png'></img>
-                                    </div>
-
-                                    {/* <div className='flex justify-content-space cursor-pointer' style={{ widht: "340px", marginLeft: "12px", marginBottom: "20px" }}>
+                                        {/* <div className='flex justify-content-space cursor-pointer' style={{ widht: "340px", marginLeft: "12px", marginBottom: "20px" }}>
                                         <div className='text-16 txtColorTitleD' style={{ width: "54px", textAlign: "center", height: "36px", lineHeight: "36px" }} >10%</div>
                                         <div className='text-16 txtColorTitleD' style={{ width: "54px", textAlign: "center", height: "36px", lineHeight: "36px" }} >25%</div>
                                         <div className='text-16 txtColorTitleD' style={{ width: "54px", textAlign: "center", height: "36px", lineHeight: "36px" }} >50%</div>
                                         <div className='text-16 txtColorTitleD' style={{ width: "54px", textAlign: "center", height: "36px", lineHeight: "36px" }} >80%</div>
                                         <div className='text-16 txtColorTitleD' style={{ width: "54px", textAlign: "center", height: "36px", lineHeight: "36px" }} >MAX</div>
                                     </div> */}
-                                    <Box sx={{ width: 300 }} >
-                                        <Slider
-                                            style={{ marginLeft: '30px' }}
-                                            marks={marks}
-                                            // value={typeof value === 'number' ? value : 0}
-                                            value={sliderValue}
-                                            onChange={handleSliderChange}
+                                        <Box sx={{ width: 300 }} >
+                                            <Slider
+                                                style={{ marginLeft: '30px' }}
+                                                marks={marks}
+                                                // value={typeof value === 'number' ? value : 0}
+                                                value={sliderValue}
+                                                onChange={handleSliderChange}
 
-                                            aria-labelledby="input-slider"
-                                        />
-                                    </Box>
-                                    <div className='flex' style={{ marginLeft: "15px", marginTop: "5px" }}>
-                                        <FormControlLabel control={<Checkbox defaultChecked onChange={handleCheckboxChange} />} label="" />
-                                        <div style={{ marginLeft: "-10px", marginTop: "12px", color: "#76819b" }}>{t('home_deposite_26')} <span style={{ color: "#ffffff" }}>{t('home_deposite_25')} </span>{t('home_deposite_27')} </div>
-                                    </div>
+                                                aria-labelledby="input-slider"
+                                            />
+                                        </Box>
+                                        <div className='flex' style={{ marginLeft: "15px", marginTop: "5px" }}>
+                                            <FormControlLabel control={<Checkbox defaultChecked onChange={handleCheckboxChange} />} label="" />
+                                            <div style={{ marginLeft: "-10px", marginTop: "12px", color: "#76819b" }}>{t('home_deposite_26')} <span style={{ color: "#ffffff" }}>{t('home_deposite_25')} </span>{t('home_deposite_27')} </div>
+                                        </div>
 
-                                    {/* <FormControl sx={{ width: '73%' }}>
+                                        {/* <FormControl sx={{ width: '73%' }}>
                                         <OutlinedInput
                                             value={transferFormData.money}
                                             placeholder="Enter quantity"
@@ -1715,7 +1719,7 @@ function Deposite() {
                                             type="number"
                                         />
                                     </FormControl> */}
-                                    {/* <FormControl sx={{ width: '73%' }}>
+                                        {/* <FormControl sx={{ width: '73%' }}>
 
                                         <OutlinedInput
                                             value={transferFormData.amount}
@@ -1734,117 +1738,316 @@ function Deposite() {
                                             type="number"
                                         />
                                     </FormControl> */}
-                                </Box>
-                            </DialogContent>
+                                    </Box>
+                                </DialogContent>
 
-                            <DialogActions className='mb-20'>
-                                <Button
-                                    style={{ height: '4rem', width: '70%', margin: '0rem auto' }}
-                                    className='text-lg btnColorTitleBig'
-                                    color="secondary"
-                                    variant="contained"
-                                    disabled={inputValue > balanceAll}
-                                    sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
-                                    onClick={() => {
-                                        BransferSubmit()
+                                <DialogActions className='mb-20'>
+                                    <Button
+                                        style={{ height: '4rem', width: '70%', margin: '0rem auto' }}
+                                        className='text-lg btnColorTitleBig'
+                                        color="secondary"
+                                        variant="contained"
+                                        disabled={inputValue > balanceAll}
+                                        sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
+                                        onClick={() => {
+                                            BransferSubmit()
+                                        }}
+                                    >
+                                        {t('home_deposite_29')}
+
+                                    </Button>
+                                </DialogActions>
+
+                            </BootstrapDialog>
+                        </Box>
+                    </motion.div>
+                </div>}
+
+                {tabValue === fiatSelect && <div>
+                    <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className="px-15"
+                    >
+                        <Box
+                            className="w-full rounded-16 border flex flex-col select-fieldset-noborder"
+                            sx={{
+                                backgroundColor: '#1E293B',
+                                border: 'none'
+                            }}
+                        >
+                            <FormControl sx={{
+                                m: 1,
+                                minWidth: "100%",
+                                margin: 0,
+                                border: 'none',
+                                borderRadius: '8px!important',
+                                backgroundColor: '#1E293B!important',
+                                '&:before': {
+                                    display: 'none',
+                                },
+                                '&:first-of-type': {},
+                                '&:last-of-type': {
+                                    marginBottom: 0,
+                                }
+                            }}
+                            >
+                                <Select
+                                    value={fiatsSelected}
+                                    onChange={handleChangeFiats}
+                                    displayEmpty
+                                    inputProps={{ "aria-label": "Without label" }}
+                                    className="MuiSelect-icon"
+                                    // IconComponent={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
+                                    MenuProps={{
+                                        PaperProps: {
+                                            style: {
+                                                maxHeight: 300,
+                                                border: 'none'
+                                            },
+                                        },
                                     }}
                                 >
-                                    {t('home_deposite_29')}
-
-                                </Button>
-                            </DialogActions>
-
-                        </BootstrapDialog>
-                    </Box>
-                </motion.div>
-            </div>}
-
-
-            {tabValue === fiatSelect && <div>
-                <motion.div
-                    variants={container}
-                    initial="hidden"
-                    animate="show"
-                    className="px-15"
-                >
-                    <Box
-                        className="w-full rounded-16 border flex flex-col select-fieldset-noborder"
-                        sx={{
-                            backgroundColor: '#1E293B',
-                            border: 'none'
-                        }}
-                    >
-                        <FormControl sx={{
-                            m: 1,
-                            minWidth: "100%",
-                            margin: 0,
-                            border: 'none',
-                            borderRadius: '8px!important',
-                            backgroundColor: '#1E293B!important',
-                            '&:before': {
-                                display: 'none',
-                            },
-                            '&:first-of-type': {},
-                            '&:last-of-type': {
-                                marginBottom: 0,
-                            }
-                        }}
-                        >
-                            <Select
-                                value={fiatsSelected}
-                                onChange={handleChangeFiats}
-                                displayEmpty
-                                inputProps={{ "aria-label": "Without label" }}
-                                className="MuiSelect-icon"
-                                // IconComponent={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
-                                MenuProps={{
-                                    PaperProps: {
-                                        style: {
-                                            maxHeight: 300,
-                                            border: 'none'
-                                        },
-                                    },
-                                }}
-                            >
-                                {fiats.length > 0 && fiats?.map((row, index) => {
-                                    return (
-                                        <MenuItem
-                                            key={index}
-                                            value={index}
-                                        >
-                                            <div
-                                                className="flex items-center py-2 flex-grow"
-                                                style={{ width: '100%' }}
+                                    {fiats.length > 0 && fiats?.map((row, index) => {
+                                        return (
+                                            <MenuItem
+                                                key={index}
+                                                value={index}
                                             >
+                                                <div
+                                                    className="flex items-center py-2 flex-grow"
+                                                    style={{ width: '100%' }}
+                                                >
+                                                    <div className="flex items-center">
+                                                        <img style={{
+                                                            width: '3rem',
+                                                            borderRadius: '99px'
+                                                        }} src={arrayLookup(currencys, 'currencyCode', row.currencyCode, 'avatar')} alt="" />
+                                                        <div className="px-12 font-medium">
+                                                            <Typography className="text-16 font-medium">{row.currencyCode}</Typography>
+                                                        </div>
+                                                    </div>
+                                                    <div style={{ marginLeft: 'auto' }}>
+                                                        <div className="px-12 font-medium" style={{ textAlign: 'right' }}>
+                                                            <Typography className="text-16 font-medium">{row.balance?.toFixed(2)}</Typography>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </MenuItem>
+                                        )
+                                    })}
+                                </Select>
+                            </FormControl>
+                            {/*<StyledAccordion*/}
+                            {/*    component={motion.div}*/}
+                            {/*    variants={item}*/}
+                            {/*    classes={{*/}
+                            {/*        root: 'FaqPage-panel shadow',*/}
+                            {/*    }}*/}
+                            {/*    expanded={expanded === true}*/}
+                            {/*    onChange={toggleAccordion(true)}*/}
+                            {/*>*/}
+                            {/*    <AccordionSummary*/}
+                            {/*        expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}*/}
+                            {/*    >*/}
+                            {/*        <div className="flex items-center py-4 flex-grow" style={{width: '100%'}}>*/}
+                            {/*            <div className="flex items-center">*/}
+                            {/*                <img style={{*/}
+                            {/*                    width: '3rem'*/}
+                            {/*                }} src="" alt=""/>*/}
+                            {/*                <div className="px-12 font-medium">*/}
+                            {/*                    <Typography className="text-16 font-medium">{currencyCode}</Typography>*/}
+                            {/*                </div>*/}
+                            {/*            </div>*/}
+                            {/*            <div style={{marginLeft: 'auto'}}>*/}
+                            {/*                <div className="px-12 font-medium" style={{textAlign: 'right'}}>*/}
+                            {/*                    <Typography className="text-16 font-medium">{currencyBalance}</Typography>*/}
+
+                            {/*                </div>*/}
+                            {/*            </div>*/}
+                            {/*        </div>*/}
+                            {/*    </AccordionSummary>*/}
+
+                            {/*    <AccordionDetails>*/}
+                            {/*        <div*/}
+                            {/*            style={{*/}
+                            {/*                flexWrap: 'wrap',*/}
+                            {/*            }}*/}
+                            {/*            className='flex items-center justify-between'*/}
+                            {/*        >*/}
+                            {/*            {fiatData.map((row, index) => {*/}
+                            {/*                return (*/}
+                            {/*                    <div*/}
+                            {/*                        key={index}*/}
+                            {/*                        style={{*/}
+                            {/*                            width: '30%',*/}
+                            {/*                            margin: '.8rem 1.5%',*/}
+                            {/*                            textAlign: 'center',*/}
+                            {/*                            border: '1px solid #2DD4BF',*/}
+                            {/*                            borderRadius: '8px'*/}
+                            {/*                        }}*/}
+                            {/*                        className="my-8 cursor-pointer"*/}
+                            {/*                        onClick={() => {setCurrencyCode(row.currencyCode);setCurrencyBalance(row.balance)}}*/}
+                            {/*                    >*/}
+                            {/*                        <Typography className="text-16 font-medium">{row.currencyCode}</Typography>*/}
+                            {/*                        <Typography className="text-12" style={{color: '#94A3B8'}}>{row.balance}</Typography>*/}
+                            {/*                    </div>*/}
+                            {/*                )*/}
+                            {/*            })}*/}
+                            {/*        </div>*/}
+
+                            {/*    </AccordionDetails>*/}
+                            {/*</StyledAccordion>*/}
+                        </Box>
+
+                        <motion.div
+                            variants={container}
+                            initial="hidden"
+                            animate="show"
+                            className="Inside2W"
+                        >
+                            <div className='addressBigW flex justify-between mt-10'>
+                                <div className="userIdW   guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
+                                    <div className="addressW2 flex justify-between guoDuDongHua">
+                                        <div className='idZi guoDuDongHua' > <span style={{ color: "#ffffff", marginRight: "10px" }}>UserID</span>  {userData?.profile?.user?.id}</div>
+                                        <img onClick={() => {
+                                            copyTiShiFunc();
+                                            handleCopyText(userData?.profile?.user?.id)
+                                        }} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png" />
+                                    </div>
+                                    <QRCode
+                                        className='testQrCodeImg'
+                                        style={{
+                                            padding: '10px',
+                                            borderRadius: '8px',
+                                            background: '#ffffff',
+                                            margin: '2.6rem auto 1rem auto',
+                                        }}
+                                        size={138}
+                                        value={userData?.profile?.user?.id}
+                                    />
+                                    {/*<img className='testQrCodeImg' src="wallet/assets/images/deposite/testCode.png"></img>*/}
+                                </div>
+                                <img className='qrCodeImg ' src="wallet/assets/images/deposite/newQrCode.png" onClick={() => {
+                                    setShowQRcode(!showQRcode);
+                                }} ></img>
+                            </div>
+                            <div className='px-10 mt-12'><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8", fontSize: "1.3rem" }}>{t('card_177')}</span></div>
+                        </motion.div>
+
+                        <Typography className="text-16 px-16 my-10">{t('home_deposite_17')}</Typography>
+
+                        {bankCodeList.length > 0 && bankCodeList?.map((bankItem) => {
+                            if (currencyCode === bankItem.currency) {
+                                return (
+                                    <StyledAccordion
+                                        key={bankItem.id}
+                                        component={motion.div}
+                                        variants={item}
+                                        classes={{
+                                            root: clsx('FaqPage-panel shadow', expanded === `bank-${bankItem.id}` && 'active-border'),
+                                        }}
+                                        expanded={expanded === `bank-${bankItem.id}`}
+                                        onChange={toggleAccordion(`bank-${bankItem.id}`)}
+                                    >
+                                        <AccordionSummary
+                                            expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
+                                        >
+                                            <div className="flex items-center py-4 flex-grow" style={{ width: '100%' }}>
                                                 <div className="flex items-center">
                                                     <img style={{
-                                                        width: '3rem',
-                                                        borderRadius: '99px'
-                                                    }} src={arrayLookup(currencys, 'currencyCode', row.currencyCode, 'avatar')} alt="" />
+                                                        width: '3rem'
+                                                    }} src={bankItem.url || "wallet/assets/images/deposite/touchngo.png"} alt="" />
                                                     <div className="px-12 font-medium">
-                                                        <Typography className="text-16 font-medium">{row.currencyCode}</Typography>
+                                                        <Typography className="text-18 font-medium">{bankItem.payName}</Typography>
                                                     </div>
                                                 </div>
                                                 <div style={{ marginLeft: 'auto' }}>
                                                     <div className="px-12 font-medium" style={{ textAlign: 'right' }}>
-                                                        <Typography className="text-16 font-medium">{row.balance?.toFixed(2)}</Typography>
-
+                                                        <Typography className="text-14" style={{ color: '#94A3B8' }}>{t('home_deposite_18')}:{formatAmount(bankItem.minValue)} - {formatAmount(bankItem.maxValue)}</Typography>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </MenuItem>
-                                    )
-                                })}
-                            </Select>
-                        </FormControl>
+                                        </AccordionSummary>
+
+                                        <AccordionDetails>
+                                            <div>
+                                                <FormControl className="my-16 " sx={{ width: '100%' }} variant="outlined">
+                                                    <OutlinedInput
+                                                        type='number'
+                                                        disabled={false}
+                                                        id="outlined-adornment-weight send-tips-container-amount"
+                                                        value={weight}
+                                                        endAdornment={
+                                                            <InputAdornment
+                                                                position="end"
+                                                                onClick={() => {
+                                                                    setWeight(bankItem.maxValue)
+                                                                }}
+                                                            >MAX</InputAdornment>}
+                                                        aria-describedby="outlined-weight-helper-text"
+                                                        inputProps={{
+                                                            'aria-label': 'weight',
+                                                        }}
+                                                        onChange={(event) => {
+                                                            if (event.target.value === '') {
+                                                                setWeight('')
+                                                                return
+                                                            }
+                                                            if (event.target.value <= bankItem.maxValue) {
+                                                                setWeight(event.target.value);
+                                                            }
+                                                        }}
+                                                    />
+                                                </FormControl>
+
+                                                {bankItem?.depositRange?.length > 0 && <div className="flex weight-list">
+                                                    {bankItem?.depositRange.map((depositRangeItem) => {
+                                                        return (
+                                                            <div
+                                                                onClick={() => { setWeight(depositRangeItem) }}
+                                                                className={clsx('weight-item px-16 py-8 text-center my-12 touchnGoListDi color-0F172A', weight === 10 && 'weight-active')}>
+                                                                {depositRangeItem}
+                                                            </div>
+                                                        )
+                                                    })}
+                                                </div>}
+
+                                                <div className='ml-2' style={{ fontSize: "13px" }} >{t('home_borrow_16')} 0.001</div>
+
+                                                <div className="my-16 flex items-center justify-content-center">
+                                                    <LoadingButton
+                                                        className="px-48 text-lg btnColorTitleBig"
+                                                        size="large"
+                                                        color="secondary"
+                                                        variant="contained"
+                                                        loading={openLoad}
+                                                        sx={{ backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1rem' }}
+                                                        onClick={() => {
+                                                            setOpenLoad(true);
+                                                            fiatRecharge(bankItem.id);
+                                                        }}
+                                                    >
+                                                        {t('home_borrow_8')}
+                                                    </LoadingButton>
+                                                </div>
+                                            </div>
+                                        </AccordionDetails>
+                                    </StyledAccordion>
+                                )
+                            }
+                        })}
+
                         {/*<StyledAccordion*/}
                         {/*    component={motion.div}*/}
                         {/*    variants={item}*/}
                         {/*    classes={{*/}
-                        {/*        root: 'FaqPage-panel shadow',*/}
+                        {/*        root: clsx('FaqPage-panel shadow', expanded === 4 && 'active-border')*/}
                         {/*    }}*/}
-                        {/*    expanded={expanded === true}*/}
-                        {/*    onChange={toggleAccordion(true)}*/}
+                        {/*    expanded={expanded === 4}*/}
+                        {/*    onChange={toggleAccordion(4)}*/}
                         {/*>*/}
                         {/*    <AccordionSummary*/}
                         {/*        expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}*/}
@@ -1853,370 +2056,209 @@ function Deposite() {
                         {/*            <div className="flex items-center">*/}
                         {/*                <img style={{*/}
                         {/*                    width: '3rem'*/}
-                        {/*                }} src="" alt=""/>*/}
+                        {/*                }} src="wallet/assets/images/deposite/touchngo.png" alt=""/>*/}
                         {/*                <div className="px-12 font-medium">*/}
-                        {/*                    <Typography className="text-16 font-medium">{currencyCode}</Typography>*/}
+                        {/*                    <Typography className="text-18 font-medium">Touchn Go</Typography>*/}
                         {/*                </div>*/}
                         {/*            </div>*/}
                         {/*            <div style={{marginLeft: 'auto'}}>*/}
                         {/*                <div className="px-12 font-medium" style={{textAlign: 'right'}}>*/}
-                        {/*                    <Typography className="text-16 font-medium">{currencyBalance}</Typography>*/}
-
+                        {/*                    <Typography className="text-12" style={{color: '#94A3B8'}}>Limit:51-5000</Typography>*/}
                         {/*                </div>*/}
                         {/*            </div>*/}
                         {/*        </div>*/}
                         {/*    </AccordionSummary>*/}
 
                         {/*    <AccordionDetails>*/}
-                        {/*        <div*/}
-                        {/*            style={{*/}
-                        {/*                flexWrap: 'wrap',*/}
-                        {/*            }}*/}
-                        {/*            className='flex items-center justify-between'*/}
-                        {/*        >*/}
-                        {/*            {fiatData.map((row, index) => {*/}
-                        {/*                return (*/}
-                        {/*                    <div*/}
-                        {/*                        key={index}*/}
-                        {/*                        style={{*/}
-                        {/*                            width: '30%',*/}
-                        {/*                            margin: '.8rem 1.5%',*/}
-                        {/*                            textAlign: 'center',*/}
-                        {/*                            border: '1px solid #2DD4BF',*/}
-                        {/*                            borderRadius: '8px'*/}
-                        {/*                        }}*/}
-                        {/*                        className="my-8 cursor-pointer"*/}
-                        {/*                        onClick={() => {setCurrencyCode(row.currencyCode);setCurrencyBalance(row.balance)}}*/}
-                        {/*                    >*/}
-                        {/*                        <Typography className="text-16 font-medium">{row.currencyCode}</Typography>*/}
-                        {/*                        <Typography className="text-12" style={{color: '#94A3B8'}}>{row.balance}</Typography>*/}
-                        {/*                    </div>*/}
-                        {/*                )*/}
-                        {/*            })}*/}
+                        {/*        <div>*/}
+                        {/*            <FormControl className="my-16" sx={{ width: '100%' }} variant="outlined">*/}
+                        {/*                <OutlinedInput*/}
+                        {/*                    disabled={true}*/}
+                        {/*                    id="outlined-adornment-weight"*/}
+                        {/*                    value={weight}*/}
+                        {/*                    endAdornment={<InputAdornment position="end">MAX</InputAdornment>}*/}
+                        {/*                    aria-describedby="outlined-weight-helper-text"*/}
+                        {/*                    inputProps={{*/}
+                        {/*                        'aria-label': 'weight',*/}
+                        {/*                    }}*/}
+                        {/*                />*/}
+                        {/*            </FormControl>*/}
+                        {/*            <div className="flex weight-list">*/}
+                        {/*                <div*/}
+                        {/*                    onClick={ () => {setWeight(51)}}*/}
+                        {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 51 && 'weight-active')}>*/}
+                        {/*                    51*/}
+                        {/*                </div>*/}
+                        {/*                <div*/}
+                        {/*                    onClick={ () => {setWeight(100)}}*/}
+                        {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 100 && 'weight-active')}>*/}
+                        {/*                    100*/}
+                        {/*                </div>*/}
+                        {/*                <div*/}
+                        {/*                    onClick={ () => {setWeight(1000)}}*/}
+                        {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 1000 && 'weight-active')}>*/}
+                        {/*                    1000*/}
+                        {/*                </div>*/}
+                        {/*                <div*/}
+                        {/*                    onClick={ () => {setWeight(2000)}}*/}
+                        {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 2000 && 'weight-active')}>*/}
+                        {/*                    2000*/}
+                        {/*                </div>*/}
+                        {/*                <div*/}
+                        {/*                    onClick={ () => {setWeight(3000)}}*/}
+                        {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 3000 && 'weight-active')}>*/}
+                        {/*                    3000*/}
+                        {/*                </div>*/}
+                        {/*                <div*/}
+                        {/*                    onClick={ () => {setWeight(5000)}}*/}
+                        {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 5000 && 'weight-active')}>*/}
+                        {/*                    5000*/}
+                        {/*                </div>*/}
+                        {/*            </div>*/}
+                        {/*            <div className="my-16 flex items-center justify-content-center">*/}
+                        {/*                <Button*/}
+                        {/*                    className="px-48 text-lg"*/}
+                        {/*                    size="large"*/}
+                        {/*                    color="secondary"*/}
+                        {/*                    variant="contained"*/}
+                        {/*                    sx={{ backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1rem' }}*/}
+                        {/*                >*/}
+                        {/*                    Confirm*/}
+                        {/*                </Button>*/}
+                        {/*            </div>*/}
                         {/*        </div>*/}
-
                         {/*    </AccordionDetails>*/}
                         {/*</StyledAccordion>*/}
-                    </Box>
+                        {/*<StyledAccordion*/}
+                        {/*    component={motion.div}*/}
+                        {/*    variants={item}*/}
+                        {/*    classes={{*/}
+                        {/*        root: clsx('FaqPage-panel shadow', expanded === 5 && 'active-border')*/}
+                        {/*    }}*/}
+                        {/*    expanded={expanded === 5}*/}
+                        {/*    onChange={toggleAccordion(5)}*/}
+                        {/*>*/}
+                        {/*    <AccordionSummary*/}
+                        {/*        expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}*/}
+                        {/*    >*/}
+                        {/*        <div className="flex items-center py-4 flex-grow" style={{width: '100%'}}>*/}
+                        {/*            <div className="flex items-center">*/}
+                        {/*                <img style={{*/}
+                        {/*                    width: '3rem'*/}
+                        {/*                }} src="wallet/assets/images/deposite/touchngo.png" alt=""/>*/}
+                        {/*                <div className="px-12 font-medium">*/}
+                        {/*                    <Typography className="text-18 font-medium">Touchn Go</Typography>*/}
+                        {/*                </div>*/}
+                        {/*            </div>*/}
+                        {/*            <div style={{marginLeft: 'auto'}}>*/}
+                        {/*                <div className="px-12 font-medium" style={{textAlign: 'right'}}>*/}
+                        {/*                    <Typography className="text-12" style={{color: '#94A3B8'}}>Limit:51-5000</Typography>*/}
+                        {/*                </div>*/}
+                        {/*            </div>*/}
+                        {/*        </div>*/}
+                        {/*    </AccordionSummary>*/}
 
-                    <motion.div
-                        variants={container}
-                        initial="hidden"
-                        animate="show"
-                        className="Inside2W"
-                    >
-                        <div className='addressBigW flex justify-between mt-10'>
-                            <div className="userIdW   guoDuDongHua" style={{ height: showQRcode ? "22rem" : '4.2rem' }}>
-                                <div className="addressW2 flex justify-between guoDuDongHua">
-                                    <div className='idZi guoDuDongHua' > <span style={{ color: "#ffffff", marginRight: "10px" }}>UserID</span>  {userData?.profile?.user?.id}</div>
-                                    <img onClick={() => {
-                                        copyTiShiFunc();
-                                        handleCopyText(userData?.profile?.user?.id)
-                                    }} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png" />
-                                </div>
-                                <QRCode
-                                    className='testQrCodeImg'
-                                    style={{
-                                        padding: '10px',
-                                        borderRadius: '8px',
-                                        background: '#ffffff',
-                                        margin: '2.6rem auto 1rem auto',
-                                    }}
-                                    size={138}
-                                    value={userData?.profile?.user?.id}
-                                />
-                                {/*<img className='testQrCodeImg' src="wallet/assets/images/deposite/testCode.png"></img>*/}
-                            </div>
-                            <img className='qrCodeImg ' src="wallet/assets/images/deposite/newQrCode.png" onClick={() => {
-                                setShowQRcode(!showQRcode);
-                            }} ></img>
-                        </div>
-                        <div className='px-10 mt-12'><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8", fontSize: "1.3rem" }}>{t('card_177')}</span></div>
+                        {/*    <AccordionDetails>*/}
+                        {/*        <div>*/}
+                        {/*            <FormControl className="my-16" sx={{ width: '100%' }} variant="outlined">*/}
+                        {/*                <OutlinedInput*/}
+                        {/*                    disabled={true}*/}
+                        {/*                    id="outlined-adornment-weight"*/}
+                        {/*                    value={weight}*/}
+                        {/*                    endAdornment={<InputAdornment position="end">MAX</InputAdornment>}*/}
+                        {/*                    aria-describedby="outlined-weight-helper-text"*/}
+                        {/*                    inputProps={{*/}
+                        {/*                        'aria-label': 'weight',*/}
+                        {/*                    }}*/}
+                        {/*                />*/}
+                        {/*            </FormControl>*/}
+                        {/*            <div className="flex weight-list">*/}
+                        {/*                <div*/}
+                        {/*                    onClick={ () => {setWeight(51)}}*/}
+                        {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 51 && 'weight-active')}>*/}
+                        {/*                    51*/}
+                        {/*                </div>*/}
+                        {/*                <div*/}
+                        {/*                    onClick={ () => {setWeight(100)}}*/}
+                        {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 100 && 'weight-active')}>*/}
+                        {/*                    100*/}
+                        {/*                </div>*/}
+                        {/*                <div*/}
+                        {/*                    onClick={ () => {setWeight(1000)}}*/}
+                        {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 1000 && 'weight-active')}>*/}
+                        {/*                    1000*/}
+                        {/*                </div>*/}
+                        {/*                <div*/}
+                        {/*                    onClick={ () => {setWeight(2000)}}*/}
+                        {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 2000 && 'weight-active')}>*/}
+                        {/*                    2000*/}
+                        {/*                </div>*/}
+                        {/*                <div*/}
+                        {/*                    onClick={ () => {setWeight(3000)}}*/}
+                        {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 3000 && 'weight-active')}>*/}
+                        {/*                    3000*/}
+                        {/*                </div>*/}
+                        {/*                <div*/}
+                        {/*                    onClick={ () => {setWeight(5000)}}*/}
+                        {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 5000 && 'weight-active')}>*/}
+                        {/*                    5000*/}
+                        {/*                </div>*/}
+                        {/*            </div>*/}
+                        {/*            <div className="my-16 flex items-center justify-content-center">*/}
+                        {/*                <Button*/}
+                        {/*                    className="px-48 text-lg"*/}
+                        {/*                    size="large"*/}
+                        {/*                    color="secondary"*/}
+                        {/*                    variant="contained"*/}
+                        {/*                    sx={{ backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1rem' }}*/}
+                        {/*                >*/}
+                        {/*                    Confirm*/}
+                        {/*                </Button>*/}
+                        {/*            </div>*/}
+                        {/*        </div>*/}
+                        {/*    </AccordionDetails>*/}
+                        {/*</StyledAccordion>*/}
                     </motion.div>
-
-                    <Typography className="text-16 px-16 my-10">{t('home_deposite_17')}</Typography>
-
-                    {bankCodeList.length > 0 && bankCodeList?.map((bankItem) => {
-                        if (currencyCode === bankItem.currency) {
-                            return (
-                                <StyledAccordion
-                                    key={bankItem.id}
-                                    component={motion.div}
-                                    variants={item}
-                                    classes={{
-                                        root: clsx('FaqPage-panel shadow', expanded === `bank-${bankItem.id}` && 'active-border'),
-                                    }}
-                                    expanded={expanded === `bank-${bankItem.id}`}
-                                    onChange={toggleAccordion(`bank-${bankItem.id}`)}
-                                >
-                                    <AccordionSummary
-                                        expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
-                                    >
-                                        <div className="flex items-center py-4 flex-grow" style={{ width: '100%' }}>
-                                            <div className="flex items-center">
-                                                <img style={{
-                                                    width: '3rem'
-                                                }} src={bankItem.url || "wallet/assets/images/deposite/touchngo.png"} alt="" />
-                                                <div className="px-12 font-medium">
-                                                    <Typography className="text-18 font-medium">{bankItem.payName}</Typography>
-                                                </div>
-                                            </div>
-                                            <div style={{ marginLeft: 'auto' }}>
-                                                <div className="px-12 font-medium" style={{ textAlign: 'right' }}>
-                                                    <Typography className="text-14" style={{ color: '#94A3B8' }}>{t('home_deposite_18')}:{formatAmount(bankItem.minValue)} - {formatAmount(bankItem.maxValue)}</Typography>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </AccordionSummary>
-
-                                    <AccordionDetails>
-                                        <div>
-                                            <FormControl className="my-16 " sx={{ width: '100%' }} variant="outlined">
-                                                <OutlinedInput
-                                                    type='number'
-                                                    disabled={false}
-                                                    id="outlined-adornment-weight send-tips-container-amount"
-                                                    value={weight}
-                                                    endAdornment={
-                                                        <InputAdornment
-                                                            position="end"
-                                                            onClick={() => {
-                                                                setWeight(bankItem.maxValue)
-                                                            }}
-                                                        >MAX</InputAdornment>}
-                                                    aria-describedby="outlined-weight-helper-text"
-                                                    inputProps={{
-                                                        'aria-label': 'weight',
-                                                    }}
-                                                    onChange={(event) => {
-                                                        if (event.target.value === '') {
-                                                            setWeight('')
-                                                            return
-                                                        }
-                                                        if (event.target.value <= bankItem.maxValue) {
-                                                            setWeight(event.target.value);
-                                                        }
-                                                    }}
-                                                />
-                                            </FormControl>
-
-                                            {bankItem?.depositRange?.length > 0 && <div className="flex weight-list">
-                                                {bankItem?.depositRange.map((depositRangeItem) => {
-                                                    return (
-                                                        <div
-                                                            onClick={() => { setWeight(depositRangeItem) }}
-                                                            className={clsx('weight-item px-16 py-8 text-center my-12 touchnGoListDi color-0F172A', weight === 10 && 'weight-active')}>
-                                                            {depositRangeItem}
-                                                        </div>
-                                                    )
-                                                })}
-                                            </div>}
-
-                                            <div className='ml-2' style={{ fontSize: "13px" }} >{t('home_borrow_16')} 0.001</div>
-
-                                            <div className="my-16 flex items-center justify-content-center">
-                                                <LoadingButton
-                                                    className="px-48 text-lg btnColorTitleBig"
-                                                    size="large"
-                                                    color="secondary"
-                                                    variant="contained"
-                                                    loading={openLoad}
-                                                    sx={{ backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1rem' }}
-                                                    onClick={() => {
-                                                        setOpenLoad(true);
-                                                        fiatRecharge(bankItem.id);
-                                                    }}
-                                                >
-                                                    {t('home_borrow_8')}
-                                                </LoadingButton>
-                                            </div>
-                                        </div>
-                                    </AccordionDetails>
-                                </StyledAccordion>
-                            )
-                        }
-                    })}
-
-                    {/*<StyledAccordion*/}
-                    {/*    component={motion.div}*/}
-                    {/*    variants={item}*/}
-                    {/*    classes={{*/}
-                    {/*        root: clsx('FaqPage-panel shadow', expanded === 4 && 'active-border')*/}
-                    {/*    }}*/}
-                    {/*    expanded={expanded === 4}*/}
-                    {/*    onChange={toggleAccordion(4)}*/}
-                    {/*>*/}
-                    {/*    <AccordionSummary*/}
-                    {/*        expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}*/}
-                    {/*    >*/}
-                    {/*        <div className="flex items-center py-4 flex-grow" style={{width: '100%'}}>*/}
-                    {/*            <div className="flex items-center">*/}
-                    {/*                <img style={{*/}
-                    {/*                    width: '3rem'*/}
-                    {/*                }} src="wallet/assets/images/deposite/touchngo.png" alt=""/>*/}
-                    {/*                <div className="px-12 font-medium">*/}
-                    {/*                    <Typography className="text-18 font-medium">Touchn Go</Typography>*/}
-                    {/*                </div>*/}
-                    {/*            </div>*/}
-                    {/*            <div style={{marginLeft: 'auto'}}>*/}
-                    {/*                <div className="px-12 font-medium" style={{textAlign: 'right'}}>*/}
-                    {/*                    <Typography className="text-12" style={{color: '#94A3B8'}}>Limit:51-5000</Typography>*/}
-                    {/*                </div>*/}
-                    {/*            </div>*/}
-                    {/*        </div>*/}
-                    {/*    </AccordionSummary>*/}
-
-                    {/*    <AccordionDetails>*/}
-                    {/*        <div>*/}
-                    {/*            <FormControl className="my-16" sx={{ width: '100%' }} variant="outlined">*/}
-                    {/*                <OutlinedInput*/}
-                    {/*                    disabled={true}*/}
-                    {/*                    id="outlined-adornment-weight"*/}
-                    {/*                    value={weight}*/}
-                    {/*                    endAdornment={<InputAdornment position="end">MAX</InputAdornment>}*/}
-                    {/*                    aria-describedby="outlined-weight-helper-text"*/}
-                    {/*                    inputProps={{*/}
-                    {/*                        'aria-label': 'weight',*/}
-                    {/*                    }}*/}
-                    {/*                />*/}
-                    {/*            </FormControl>*/}
-                    {/*            <div className="flex weight-list">*/}
-                    {/*                <div*/}
-                    {/*                    onClick={ () => {setWeight(51)}}*/}
-                    {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 51 && 'weight-active')}>*/}
-                    {/*                    51*/}
-                    {/*                </div>*/}
-                    {/*                <div*/}
-                    {/*                    onClick={ () => {setWeight(100)}}*/}
-                    {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 100 && 'weight-active')}>*/}
-                    {/*                    100*/}
-                    {/*                </div>*/}
-                    {/*                <div*/}
-                    {/*                    onClick={ () => {setWeight(1000)}}*/}
-                    {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 1000 && 'weight-active')}>*/}
-                    {/*                    1000*/}
-                    {/*                </div>*/}
-                    {/*                <div*/}
-                    {/*                    onClick={ () => {setWeight(2000)}}*/}
-                    {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 2000 && 'weight-active')}>*/}
-                    {/*                    2000*/}
-                    {/*                </div>*/}
-                    {/*                <div*/}
-                    {/*                    onClick={ () => {setWeight(3000)}}*/}
-                    {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 3000 && 'weight-active')}>*/}
-                    {/*                    3000*/}
-                    {/*                </div>*/}
-                    {/*                <div*/}
-                    {/*                    onClick={ () => {setWeight(5000)}}*/}
-                    {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 5000 && 'weight-active')}>*/}
-                    {/*                    5000*/}
-                    {/*                </div>*/}
-                    {/*            </div>*/}
-                    {/*            <div className="my-16 flex items-center justify-content-center">*/}
-                    {/*                <Button*/}
-                    {/*                    className="px-48 text-lg"*/}
-                    {/*                    size="large"*/}
-                    {/*                    color="secondary"*/}
-                    {/*                    variant="contained"*/}
-                    {/*                    sx={{ backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1rem' }}*/}
-                    {/*                >*/}
-                    {/*                    Confirm*/}
-                    {/*                </Button>*/}
-                    {/*            </div>*/}
-                    {/*        </div>*/}
-                    {/*    </AccordionDetails>*/}
-                    {/*</StyledAccordion>*/}
-                    {/*<StyledAccordion*/}
-                    {/*    component={motion.div}*/}
-                    {/*    variants={item}*/}
-                    {/*    classes={{*/}
-                    {/*        root: clsx('FaqPage-panel shadow', expanded === 5 && 'active-border')*/}
-                    {/*    }}*/}
-                    {/*    expanded={expanded === 5}*/}
-                    {/*    onChange={toggleAccordion(5)}*/}
-                    {/*>*/}
-                    {/*    <AccordionSummary*/}
-                    {/*        expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}*/}
-                    {/*    >*/}
-                    {/*        <div className="flex items-center py-4 flex-grow" style={{width: '100%'}}>*/}
-                    {/*            <div className="flex items-center">*/}
-                    {/*                <img style={{*/}
-                    {/*                    width: '3rem'*/}
-                    {/*                }} src="wallet/assets/images/deposite/touchngo.png" alt=""/>*/}
-                    {/*                <div className="px-12 font-medium">*/}
-                    {/*                    <Typography className="text-18 font-medium">Touchn Go</Typography>*/}
-                    {/*                </div>*/}
-                    {/*            </div>*/}
-                    {/*            <div style={{marginLeft: 'auto'}}>*/}
-                    {/*                <div className="px-12 font-medium" style={{textAlign: 'right'}}>*/}
-                    {/*                    <Typography className="text-12" style={{color: '#94A3B8'}}>Limit:51-5000</Typography>*/}
-                    {/*                </div>*/}
-                    {/*            </div>*/}
-                    {/*        </div>*/}
-                    {/*    </AccordionSummary>*/}
-
-                    {/*    <AccordionDetails>*/}
-                    {/*        <div>*/}
-                    {/*            <FormControl className="my-16" sx={{ width: '100%' }} variant="outlined">*/}
-                    {/*                <OutlinedInput*/}
-                    {/*                    disabled={true}*/}
-                    {/*                    id="outlined-adornment-weight"*/}
-                    {/*                    value={weight}*/}
-                    {/*                    endAdornment={<InputAdornment position="end">MAX</InputAdornment>}*/}
-                    {/*                    aria-describedby="outlined-weight-helper-text"*/}
-                    {/*                    inputProps={{*/}
-                    {/*                        'aria-label': 'weight',*/}
-                    {/*                    }}*/}
-                    {/*                />*/}
-                    {/*            </FormControl>*/}
-                    {/*            <div className="flex weight-list">*/}
-                    {/*                <div*/}
-                    {/*                    onClick={ () => {setWeight(51)}}*/}
-                    {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 51 && 'weight-active')}>*/}
-                    {/*                    51*/}
-                    {/*                </div>*/}
-                    {/*                <div*/}
-                    {/*                    onClick={ () => {setWeight(100)}}*/}
-                    {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 100 && 'weight-active')}>*/}
-                    {/*                    100*/}
-                    {/*                </div>*/}
-                    {/*                <div*/}
-                    {/*                    onClick={ () => {setWeight(1000)}}*/}
-                    {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 1000 && 'weight-active')}>*/}
-                    {/*                    1000*/}
-                    {/*                </div>*/}
-                    {/*                <div*/}
-                    {/*                    onClick={ () => {setWeight(2000)}}*/}
-                    {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 2000 && 'weight-active')}>*/}
-                    {/*                    2000*/}
-                    {/*                </div>*/}
-                    {/*                <div*/}
-                    {/*                    onClick={ () => {setWeight(3000)}}*/}
-                    {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 3000 && 'weight-active')}>*/}
-                    {/*                    3000*/}
-                    {/*                </div>*/}
-                    {/*                <div*/}
-                    {/*                    onClick={ () => {setWeight(5000)}}*/}
-                    {/*                    className={clsx('weight-item px-16 py-8 text-center my-12', weight === 5000 && 'weight-active')}>*/}
-                    {/*                    5000*/}
-                    {/*                </div>*/}
-                    {/*            </div>*/}
-                    {/*            <div className="my-16 flex items-center justify-content-center">*/}
-                    {/*                <Button*/}
-                    {/*                    className="px-48 text-lg"*/}
-                    {/*                    size="large"*/}
-                    {/*                    color="secondary"*/}
-                    {/*                    variant="contained"*/}
-                    {/*                    sx={{ backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1rem' }}*/}
-                    {/*                >*/}
-                    {/*                    Confirm*/}
-                    {/*                </Button>*/}
-                    {/*            </div>*/}
-                    {/*        </div>*/}
-                    {/*    </AccordionDetails>*/}
-                    {/*</StyledAccordion>*/}
-                </motion.div>
+                </div>}
             </div>}
+
+            {
+                !loadingShow &&
+                <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }}>
+                    <div className="loadingChuang1">
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                    </div>
+
+                    <div className="loadingChuang1">
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                    </div>
+
+                    <div className="loadingChuang1">
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                    </div>
+                </div>
+            }
+
 
             {/* 上线暂时关闭
             {tabValue === 2 && <motion.div
@@ -2331,7 +2373,6 @@ function Deposite() {
 
                 </Box>
             </motion.div>} */}
-
 
             <AnimateModal
                 className="faBiDiCard2 tanChuanDiSe2"
@@ -2472,7 +2513,6 @@ function Deposite() {
 
             </AnimateModal >
 
-
             <BootstrapDialog
                 onClose={() => {
                     setCopyTiShi(false)
@@ -2486,8 +2526,6 @@ function Deposite() {
                 </div>
 
             </BootstrapDialog>
-
-
         </div >
     )
 }

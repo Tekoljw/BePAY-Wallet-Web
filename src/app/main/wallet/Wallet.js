@@ -1372,7 +1372,6 @@ function Wallet() {
   }, [loginType]);
 
 
-
   return (
     <div style={{ position: "relative" }}>
       {
