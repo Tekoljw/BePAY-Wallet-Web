@@ -632,8 +632,8 @@ function Withdraw(props) {
         });
     }, []);
 
-    const fiatData = useSelector(selectUserData).fiat;
     const userData = useSelector(selectUserData);
+    const fiatData = useSelector(selectUserData).fiat;
     const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || 'USD');
 
     const networks = config.networks;

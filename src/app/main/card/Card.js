@@ -40,6 +40,7 @@ import { showMessage } from "app/store/fuse/messageSlice";
 import { borderBottom } from '@mui/system';
 import Kyc from "../kyc/Kyc";
 import _ from 'lodash';
+import {selectCurrentLanguage} from "app/store/i18nSlice";
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -69,6 +70,7 @@ const item = {
 function Card(props) {
     const { t } = useTranslation('mainPage');
     const userData = useSelector(selectUserData);
+    const currentLanguage = useSelector(selectCurrentLanguage);
     const [tabValue, setTabValue] = useState(0);
     const [ranges, setRanges] = useState([t('card_2'), t('card_9')]);
     const [huaZhuanRanges, setHuaZhuanRanges] = useState([t('card_170'), t('card_171')]);
@@ -290,6 +292,10 @@ function Card(props) {
         setHasPin(userData.profile?.user?.hasSetPaymentPassword ?? false)
 
     }, [userData.profile]);
+
+    useEffect(() => {
+        setRanges([t('card_2'), t('card_9')]);
+    }, [currentLanguage.id]);
 
     const changePhoneTab = (tab) => {
         window.localStorage.setItem('phoneTab', tab);
