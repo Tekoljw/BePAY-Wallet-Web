@@ -172,7 +172,7 @@ const locale = {
     home_withdraw_20: 'Payee Name',
     home_withdraw_21: 'Recipient Full Name',
     home_withdraw_22: 'Payee Account',
-    home_withdraw_23: 'Recipient Account Name',
+    home_withdraw_23: 'Recipient Name',
     home_withdraw_24: 'Paste',
     home_withdraw_25: 'Amount',
     home_withdraw_26: 'Choose My',
@@ -395,7 +395,7 @@ const locale = {
     card_26: "Transfer amount",
     card_27: "Card balance",
     card_28: "Card balance",
-    card_29: "Total assets in the account",
+    card_29: "Total Assets",
     card_30: "Done",
     card_31: "Freeze",
     card_32: "Change",
@@ -526,8 +526,8 @@ const locale = {
     card_167: "bind now",
     card_168: "all cards",
     card_169: "more",
-    card_170: "transfer in",
-    card_171: "transfer out",
+    card_170: "In",
+    card_171: "Out",
     card_172: "check in",
     card_173: "yesterday's total trading volume",
     kyc_41:"Required fields cannot be empty",
@@ -555,7 +555,10 @@ const locale = {
     card_193: "Advertisement Card",
     card_194: "Job Procurement Card",
     card_195: "Copied",
+    card_196: "PIN",
 
+
+    
     
     
     

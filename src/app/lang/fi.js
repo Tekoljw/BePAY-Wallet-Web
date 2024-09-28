@@ -547,7 +547,10 @@ const locale = {
     card_193: "Mainoskortti",
     card_194: "Työhankintakortti",
     card_195: "Kopioitu",
+    card_196: "PIN",
 
+
+    
     
     
     

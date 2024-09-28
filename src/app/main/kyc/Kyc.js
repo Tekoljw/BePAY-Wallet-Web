@@ -567,17 +567,15 @@ function Kyc(props) {
         setPageState(1);
         
         if (kycInfo.init) {
-            if (!kycInfo.havePhone()) {
-                setPageState(2);
-                setTabValue(1);
+            if(!kycInfo.havePhone() && !kycInfo.haveEmail()){
                 setOpenAnimateModal(true)
-                return
-            }
-
-            if (!kycInfo.haveEmail()) {
-                setPageState(1);
-                setOpenAnimateModal(true)
-                return
+            } else {
+                if (kycInfo.havePhone()) {
+                    setPageState(2);
+                    setTabValue(1);
+                }else if (kycInfo.haveEmail()) {
+                    setPageState(1);
+                }
             }
 
             setOpenAnimateModal(false)

@@ -550,7 +550,10 @@ const locale = {
     card_193: "광고 카드",
     card_194: "작업 조달 카드",
     card_195: "복사됨",
+    card_196: "PIN",
 
+
+    
     
     
     

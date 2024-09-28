@@ -549,7 +549,10 @@ const locale = {
     card_193: "Ad Card",
     card_194: "Kard ng Pagkuha ng Trabaho",
     card_195: "Nakopya",
+    card_196: "PIN",
 
+
+    
     
     
     

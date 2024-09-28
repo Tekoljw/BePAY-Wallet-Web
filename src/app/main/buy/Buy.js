@@ -19,7 +19,7 @@ import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
 import { selectConfig } from "../../store/config";
-import {arrayLookup, getUserLoginType, setPhoneTab} from "../../util/tools/function";
+import { arrayLookup, getUserLoginType, setPhoneTab } from "../../util/tools/function";
 import Button from "@mui/material/Button";
 import {
     getFaTPayCryptoTarget,
@@ -241,7 +241,7 @@ function Buy(props) {
                     let result = res.payload
                     if (result.payurl) {
                         const loginType = getUserLoginType(userData);
-                        switch (loginType){
+                        switch (loginType) {
                             case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP: { //telegramWebApp
                                 window.location.href = result.payurl
                                 break;
@@ -277,381 +277,421 @@ function Buy(props) {
             return
     }
 
+    const [loadingShow, setLoadingShow] = useState(true);
+    useEffect(() => {
+        setTimeout(() => {
+            setLoadingShow(true);
+        }, 1500);
+    }, []);
+
     return (
         <div>
-            {/*head*/}
-            <motion.div
-                variants={container}
-                initial="hidden"
-                animate="show"
-                className='mt-16'
-            >
-                <Tabs
-                    component={motion.div}
-                    variants={item}
-                    value={tabValue}
-                    onChange={(ev, value) => setTabValue(value)}
-                    indicatorColor="secondary"
-                    textColor="inherit"
-                    variant="scrollable"
-                    className="tongYongDingBtn"
-                    style={{ width: '50%!import' }}
-                    classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
-                    TabIndicatorProps={{
-                        children: (
-                            <Box
-                                sx={{ bgcolor: 'text.disabled' }}
-                                className="w-full h-full rounded-full huaKuaBgColor0"
-                            />
-                        ),
-                    }}
-                    sx={{
-                        margin: '1rem 1.2rem',
-                    }}
-                >
-                    {Object.entries(ranges).map(([key, label]) => (
-                        <Tab
-                            className="text-14 font-semibold min-h-36 min-w-64 mx4 px-12 opacity1 txtColorTitle zindex"
-                            disableRipple
-                            key={key}
-                            label={label}
-                            sx={{
-                                color: '#FFFFFF', height: '3.6rem', width: '50%'
-                            }}
-                        />
-                    ))}
-                </Tabs>
-            </motion.div>
-
-            <div>
-                <motion.div
-                    variants={container}
-                    initial="hidden"
-                    animate="show"
-                    className=""
-                    style={{ padding: "1.2rem 1.5rem 1.5rem 1.5rem" }}
-                >
-                    <Typography className="text-20 font-medium mb-16">
-                        {tabValue === 0 && <>
-                            {t('home_buy_1')}
-                        </>}
-                        {tabValue === 1 && <>
-                            {t('home_buy_2')}
-                        </>}&nbsp;
-                        {symbol}
-                    </Typography>
-                    <Box
-                        className="w-full rounded-16 flex flex-col"
-                        sx={{
-                            backgroundColor: '#1E293B',
-                            border: 'none'
-                        }}
+            {
+                loadingShow &&
+                <div>
+                    <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className='mt-16'
                     >
-                        {symbolWallet.length > 0 && <StyledAccordionSelect
-                            symbol={symbolWallet}
-                            setSymbol={setSymbol}
-                        />}
-                    </Box>
-
-                    <Typography className="text-20 font-medium my-16">
-                        {tabValue === 0 && <>
-                            {t('home_buy_3')}
-                        </>}
-                        {tabValue === 1 && <>
-                            {t('home_buy_7')}
-                        </>}&nbsp;
-                        {currencyCode}
-                    </Typography>
-                    <Box
-                        className="w-full rounded-16 flex flex-col select-fieldset-noborder"
-                        sx={{
-                            backgroundColor: '#1E293B',
-                            border: 'none'
-                        }}
-                    >
-                        <FormControl sx={{
-                            m: 1,
-                            minWidth: "100%",
-                            margin: 0,
-                            border: 'none',
-                            borderRadius: '8px!important',
-                            backgroundColor: '#1E293B!important',
-                            '&:before': {
-                                display: 'none',
-                            },
-                            '&:first-of-type': {},
-                            '&:last-of-type': {
-                                marginBottom: 0,
-                            }
-                        }}
-                        >
-                            <Select
-                                value={fiatsSelected}
-                                onChange={handleChangeFiats}
-                                displayEmpty
-                                inputProps={{ "aria-label": "Without label" }}
-                                className="MuiSelect-icon"
-                                // IconComponent={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
-                                MenuProps={{
-                                    PaperProps: {
-                                        style: {
-                                            maxHeight: 300,
-                                            border: 'none'
-                                        },
-                                    },
-                                }}
-                            >
-                                {fiats.map((row, index) => {
-                                    return (
-                                        <MenuItem
-                                            key={index}
-                                            value={index}
-                                        >
-                                            <div
-                                                key={index}
-                                                className="flex items-center py-4 flex-grow"
-                                                style={{ width: '100%' }}
-                                            >
-                                                <div className="flex items-center">
-                                                    <img style={{
-                                                        width: '3rem',
-                                                        borderRadius: '999px'
-                                                    }} src={row.avatar} alt="" />
-                                                    <div className="px-12 font-medium">
-                                                        <Typography className="text-20 font-medium">{row.currencyCode}</Typography>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </MenuItem>
-                                    )
-                                })}
-                            </Select>
-                        </FormControl>
-                        {/*<StyledAccordion*/}
-                        {/*    component={motion.div}*/}
-                        {/*    variants={item}*/}
-                        {/*    classes={{*/}
-                        {/*        root: 'FaqPage-panel shadow',*/}
-                        {/*    }}*/}
-                        {/*    expanded={expanded === true}*/}
-                        {/*    onChange={toggleAccordion(true)}*/}
-                        {/*>*/}
-                        {/*    <AccordionSummary*/}
-                        {/*        expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}*/}
-                        {/*    >*/}
-                        {/*        <div className="flex items-center py-4 flex-grow" style={{width: '100%'}}>*/}
-                        {/*            <div className="flex items-center">*/}
-                        {/*                <img style={{*/}
-                        {/*                    width: '3rem'*/}
-                        {/*                }} src="" alt=""/>*/}
-                        {/*                <div className="px-12 font-medium">*/}
-                        {/*                    <Typography className="text-16 font-medium">{currencyCode}</Typography>*/}
-                        {/*                </div>*/}
-                        {/*            </div>*/}
-                        {/*            <div style={{marginLeft: 'auto'}}>*/}
-                        {/*                <div className="px-12 font-medium" style={{textAlign: 'right'}}>*/}
-                        {/*                    /!*<Typography className="text-16 font-medium">{currencyBalance}</Typography>*!/*/}
-                        {/*                </div>*/}
-                        {/*            </div>*/}
-                        {/*        </div>*/}
-                        {/*    </AccordionSummary>*/}
-                        {/*    <AccordionDetails>*/}
-                        {/*        <div*/}
-                        {/*            style={{*/}
-                        {/*                flexWrap: 'wrap',*/}
-                        {/*            }}*/}
-                        {/*            className='flex items-center justify-between'*/}
-                        {/*        >*/}
-                        {/*            {fiats.map((row, index) => {*/}
-                        {/*                return (*/}
-                        {/*                    <div*/}
-                        {/*                        key={index}*/}
-                        {/*                        style={{*/}
-                        {/*                            width: '30%',*/}
-                        {/*                            margin: '.8rem 1.5%',*/}
-                        {/*                            textAlign: 'center',*/}
-                        {/*                            border: '1px solid #2DD4BF',*/}
-                        {/*                            borderRadius: '8px'*/}
-                        {/*                        }}*/}
-                        {/*                        className="my-8 cursor-pointer"*/}
-                        {/*                        onClick={() => {setCurrencyCode(row.currencyCode);setCurrencyBalance(row.balance)}}*/}
-                        {/*                    >*/}
-                        {/*                        <Typography className="text-16 font-medium">{row.currencyCode}</Typography>*/}
-                        {/*                        /!*<Typography className="text-12" style={{color: '#94A3B8'}}>{row.balance}</Typography>*!/*/}
-                        {/*                    </div>*/}
-                        {/*                )*/}
-                        {/*            })}*/}
-                        {/*        </div>*/}
-                        {/*    </AccordionDetails>*/}
-                        {/*</StyledAccordion>*/}
-                    </Box>
-
-                    <Typography className="text-20 font-medium my-16" >{t('home_buy_4')}</Typography>
-
-                    {tabValue === 0 && <>
-                        <Box
-                            className={clsx("w-full rounded-8  flex flex-col my-16 cursor-pointer", payType === 'StarPay' && 'buy-pay-type-acitve')}
-                            sx={{
-                                backgroundColor: '#1E293B',
-                                border: "1px solid #1E293B"
+                        <Tabs
+                            component={motion.div}
+                            variants={item}
+                            value={tabValue}
+                            onChange={(ev, value) => setTabValue(value)}
+                            indicatorColor="secondary"
+                            textColor="inherit"
+                            variant="scrollable"
+                            className="tongYongDingBtn"
+                            style={{ width: '50%!import' }}
+                            classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
+                            TabIndicatorProps={{
+                                children: (
+                                    <Box
+                                        sx={{ bgcolor: 'text.disabled' }}
+                                        className="w-full h-full rounded-full huaKuaBgColor0"
+                                    />
+                                ),
                             }}
-                            onClick={() => {
-                                setPayType('StarPay');
-                                initSymbolAndFiat();
-                                getSdkSymbolData('StarPay');
+                            sx={{
+                                margin: '1rem 1.2rem',
                             }}
                         >
-                            <StyledAccordion
-                                component={motion.div}
-                                variants={item}
-                                classes={{
-                                    root: 'FaqPage-panel shadow',
-                                }}
-                                expanded={expanded === 2}
-                                onChange={toggleAccordion(2)}
-                            >
-                                <div className="flex items-center flex-grow buy-pay-type " style={{ width: '100%', padding: '1.6rem 1.2rem' }}>
-                                    <div className="flex items-center">
-                                        <div style={{
-                                            width: '30px',
-                                            borderRadius: '5px',
-                                        }}>
-                                            <img className='border-r-10' src="wallet/assets/images/buy/startPay.png" alt="" />
-                                        </div>
-                                        <div className="px-12 font-medium">
-                                            <Typography className="text-20 font-medium">StarPay</Typography>
-                                        </div>
-                                    </div>
-                                    <div style={{ marginLeft: 'auto' }}>
-                                        <div className="px-12 font-medium flex justify-content-center items-center" style={{ textAlign: 'right' }}>
-                                            <div className="mx-4"><img src="wallet/assets/images/buy/visa.png" alt="" /></div>
-                                            <div className="mx-4"><img src="wallet/assets/images/buy/jh.png" alt="" /></div>
-                                            <div className="mx-4"><img src="wallet/assets/images/buy/jcb.png" alt="" /></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </StyledAccordion>
-                        </Box>
-
-                        {/*<Box*/}
-                        {/*    className={clsx("w-full rounded-8  flex flex-col my-20 cursor-pointer", payType === 'FaTPay' && 'buy-pay-type-acitve')}*/}
-                        {/*    sx={{*/}
-                        {/*        backgroundColor: '#1E293B',*/}
-                        {/*        border: "1px solid #1E293B"*/}
-                        {/*    }}*/}
-                        {/*    onClick={() => {*/}
-                        {/*        setPayType('FaTPay');*/}
-                        {/*        initSymbolAndFiat();*/}
-                        {/*        getSdkSymbolData('FaTPay');*/}
-                        {/*    }}*/}
-                        {/*>*/}
-                        {/*    <StyledAccordion*/}
-                        {/*        component={motion.div}*/}
-                        {/*        variants={item}*/}
-                        {/*        classes={{*/}
-                        {/*            root: 'FaqPage-panel shadow',*/}
-                        {/*        }}*/}
-                        {/*        expanded={expanded === 2}*/}
-                        {/*        onChange={toggleAccordion(2)}*/}
-                        {/*    >*/}
-                        {/*        <div className="flex items-center flex-grow buy-pay-type" style={{ width: '100%', padding: '1.6rem 1.2rem' }}>*/}
-                        {/*            <div className="flex items-center">*/}
-                        {/*                <div style={{*/}
-                        {/*                    width: '30px',*/}
-                        {/*                    borderRadius: '5px',*/}
-
-                        {/*                }}>*/}
-                        {/*                    <img className='border-r-10' src="wallet/assets/images/buy/FaTPay.png" alt="" />*/}
-                        {/*                </div>*/}
-                        {/*                <div className="px-12 font-medium">*/}
-                        {/*                    <Typography className="text-20 font-medium">FaTPay</Typography>*/}
-                        {/*                </div>*/}
-                        {/*            </div>*/}
-                        {/*            <div style={{ marginLeft: 'auto' }}>*/}
-                        {/*                <div className="px-12 font-medium flex justify-content-center items-center" style={{ textAlign: 'right' }}>*/}
-                        {/*                    <div className="mx-4"><img src="wallet/assets/images/buy/visa.png" alt="" /></div>*/}
-                        {/*                    <div className="mx-4"><img src="wallet/assets/images/buy/jh.png" alt="" /></div>*/}
-                        {/*                    <div className="mx-4"><img src="wallet/assets/images/buy/jcb.png" alt="" /></div>*/}
-                        {/*                </div>*/}
-                        {/*            </div>*/}
-                        {/*        </div>*/}
-                        {/*    </StyledAccordion>*/}
-                        {/*</Box>*/}
-
-                        {payType === 'StarPay' && <>
-                            <Typography className="text-20 font-medium my-16" >Amount</Typography>
-
-                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
-                                <OutlinedInput
-                                    id="outlined-adornment-address send-tips-container-address"
-                                    value={amount}
-                                    onChange={(event) => { setAmount(event.target.value) }}
-                                    aria-describedby="outlined-weight-helper-text"
-                                    inputProps={{
-                                        'aria-label': 'address',
+                            {Object.entries(ranges).map(([key, label]) => (
+                                <Tab
+                                    className="text-14 font-semibold min-h-36 min-w-64 mx4 px-12 opacity1 txtColorTitle zindex"
+                                    disableRipple
+                                    key={key}
+                                    label={label}
+                                    sx={{
+                                        color: '#FFFFFF', height: '3.6rem', width: '50%'
                                     }}
                                 />
-                            </FormControl>
-                        </>}
-                    </>}
+                            ))}
+                        </Tabs>
+                    </motion.div>
 
-                    {tabValue === 1 && payType === 'StarPay' && (<div>
-                        {changeNoSupplier()}
-                        <Typography className="text-14 font-medium my-16  tiShiSty"><span style={{ color: '#fce100' }}>⚠</span> {t('home_buy_10')}</Typography>
-                    </div>)}
-
-                    {tabValue === 0 && (
-                        <Box
+                    <div>
+                        <motion.div
+                            variants={container}
+                            initial="hidden"
+                            animate="show"
                             className=""
-                            sx={{ borderRadius: '8px' }}
+                            style={{ padding: "1.2rem 1.5rem 1.5rem 1.5rem" }}
                         >
-                            <Typography className="text-14 my-20" style={{ magin: '2.6rem 0 2.6rem 2rem', color: '#94a3b8' }}>
-                                <span style={{ color: '#fce100' }}>⚠ </span>
-                                {t('home_buy_5')}
+                            <Typography className="text-20 font-medium mb-16">
+                                {tabValue === 0 && <>
+                                    {t('home_buy_1')}
+                                </>}
+                                {tabValue === 1 && <>
+                                    {t('home_buy_2')}
+                                </>}&nbsp;
+                                {symbol}
                             </Typography>
-                        </Box>
-                    )
-                    }
+                            <Box
+                                className="w-full rounded-16 flex flex-col"
+                                sx={{
+                                    backgroundColor: '#1E293B',
+                                    border: 'none'
+                                }}
+                            >
+                                {symbolWallet.length > 0 && <StyledAccordionSelect
+                                    symbol={symbolWallet}
+                                    setSymbol={setSymbol}
+                                />}
+                            </Box>
 
-                    {tabValue === 1 && noSupplier && (
-                        <Box
-                            className=""
-                            sx={{
-                                borderRadius: '8px'
-                            }}
-                        >
-                            <Typography className="text-14 my-20" style={{ magin: '2.6rem 0 2.6rem 2rem', color: '#94a3b8' }}>
-                                <span style={{ color: '#fce100' }}>⚠ </span>
-                                {t('home_buy_5')}
+                            <Typography className="text-20 font-medium my-16">
+                                {tabValue === 0 && <>
+                                    {t('home_buy_3')}
+                                </>}
+                                {tabValue === 1 && <>
+                                    {t('home_buy_7')}
+                                </>}&nbsp;
+                                {currencyCode}
                             </Typography>
-                        </Box>
-                    )
-                    }
+                            <Box
+                                className="w-full rounded-16 flex flex-col select-fieldset-noborder"
+                                sx={{
+                                    backgroundColor: '#1E293B',
+                                    border: 'none'
+                                }}
+                            >
+                                <FormControl sx={{
+                                    m: 1,
+                                    minWidth: "100%",
+                                    margin: 0,
+                                    border: 'none',
+                                    borderRadius: '8px!important',
+                                    backgroundColor: '#1E293B!important',
+                                    '&:before': {
+                                        display: 'none',
+                                    },
+                                    '&:first-of-type': {},
+                                    '&:last-of-type': {
+                                        marginBottom: 0,
+                                    }
+                                }}
+                                >
+                                    <Select
+                                        value={fiatsSelected}
+                                        onChange={handleChangeFiats}
+                                        displayEmpty
+                                        inputProps={{ "aria-label": "Without label" }}
+                                        className="MuiSelect-icon"
+                                        // IconComponent={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
+                                        MenuProps={{
+                                            PaperProps: {
+                                                style: {
+                                                    maxHeight: 300,
+                                                    border: 'none'
+                                                },
+                                            },
+                                        }}
+                                    >
+                                        {fiats.map((row, index) => {
+                                            return (
+                                                <MenuItem
+                                                    key={index}
+                                                    value={index}
+                                                >
+                                                    <div
+                                                        key={index}
+                                                        className="flex items-center py-4 flex-grow"
+                                                        style={{ width: '100%' }}
+                                                    >
+                                                        <div className="flex items-center">
+                                                            <img style={{
+                                                                width: '3rem',
+                                                                borderRadius: '999px'
+                                                            }} src={row.avatar} alt="" />
+                                                            <div className="px-12 font-medium">
+                                                                <Typography className="text-20 font-medium">{row.currencyCode}</Typography>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </MenuItem>
+                                            )
+                                        })}
+                                    </Select>
+                                </FormControl>
+                                {/*<StyledAccordion*/}
+                                {/*    component={motion.div}*/}
+                                {/*    variants={item}*/}
+                                {/*    classes={{*/}
+                                {/*        root: 'FaqPage-panel shadow',*/}
+                                {/*    }}*/}
+                                {/*    expanded={expanded === true}*/}
+                                {/*    onChange={toggleAccordion(true)}*/}
+                                {/*>*/}
+                                {/*    <AccordionSummary*/}
+                                {/*        expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}*/}
+                                {/*    >*/}
+                                {/*        <div className="flex items-center py-4 flex-grow" style={{width: '100%'}}>*/}
+                                {/*            <div className="flex items-center">*/}
+                                {/*                <img style={{*/}
+                                {/*                    width: '3rem'*/}
+                                {/*                }} src="" alt=""/>*/}
+                                {/*                <div className="px-12 font-medium">*/}
+                                {/*                    <Typography className="text-16 font-medium">{currencyCode}</Typography>*/}
+                                {/*                </div>*/}
+                                {/*            </div>*/}
+                                {/*            <div style={{marginLeft: 'auto'}}>*/}
+                                {/*                <div className="px-12 font-medium" style={{textAlign: 'right'}}>*/}
+                                {/*                    /!*<Typography className="text-16 font-medium">{currencyBalance}</Typography>*!/*/}
+                                {/*                </div>*/}
+                                {/*            </div>*/}
+                                {/*        </div>*/}
+                                {/*    </AccordionSummary>*/}
+                                {/*    <AccordionDetails>*/}
+                                {/*        <div*/}
+                                {/*            style={{*/}
+                                {/*                flexWrap: 'wrap',*/}
+                                {/*            }}*/}
+                                {/*            className='flex items-center justify-between'*/}
+                                {/*        >*/}
+                                {/*            {fiats.map((row, index) => {*/}
+                                {/*                return (*/}
+                                {/*                    <div*/}
+                                {/*                        key={index}*/}
+                                {/*                        style={{*/}
+                                {/*                            width: '30%',*/}
+                                {/*                            margin: '.8rem 1.5%',*/}
+                                {/*                            textAlign: 'center',*/}
+                                {/*                            border: '1px solid #2DD4BF',*/}
+                                {/*                            borderRadius: '8px'*/}
+                                {/*                        }}*/}
+                                {/*                        className="my-8 cursor-pointer"*/}
+                                {/*                        onClick={() => {setCurrencyCode(row.currencyCode);setCurrencyBalance(row.balance)}}*/}
+                                {/*                    >*/}
+                                {/*                        <Typography className="text-16 font-medium">{row.currencyCode}</Typography>*/}
+                                {/*                        /!*<Typography className="text-12" style={{color: '#94A3B8'}}>{row.balance}</Typography>*!/*/}
+                                {/*                    </div>*/}
+                                {/*                )*/}
+                                {/*            })}*/}
+                                {/*        </div>*/}
+                                {/*    </AccordionDetails>*/}
+                                {/*</StyledAccordion>*/}
+                            </Box>
 
-                    <Button
-                        style={{ width: '100%', height: '4rem', margin: '0 auto', display: 'block', fontSize: '2rem', lineHeight: 'initial' }}
-                        className='m-28 px-48 text-lg btnColorTitleBig text-20'
-                        color="secondary"
-                        variant="contained"
-                        sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
-                        disabled={tabValue === 1 && payType === 'StarPay'}
-                        onClick={() => {
-                            goBuy();
-                        }}
-                    >
-                        {tabValue === 0 && <>
-                            {t('home_buy_8')}
-                        </>}
-                        {tabValue === 1 && <>
-                            {t('home_buy_9')}
-                        </>}
-                    </Button>
-                </motion.div>
-            </div>
+                            <Typography className="text-20 font-medium my-16" >{t('home_buy_4')}</Typography>
 
-            {/*{tabValue === 1 && <div>*/}
-            {/*    sell*/}
-            {/*</div>}*/}
+                            {tabValue === 0 && <>
+                                <Box
+                                    className={clsx("w-full rounded-8  flex flex-col my-16 cursor-pointer", payType === 'StarPay' && 'buy-pay-type-acitve')}
+                                    sx={{
+                                        backgroundColor: '#1E293B',
+                                        border: "1px solid #1E293B"
+                                    }}
+                                    onClick={() => {
+                                        setPayType('StarPay');
+                                        initSymbolAndFiat();
+                                        getSdkSymbolData('StarPay');
+                                    }}
+                                >
+                                    <StyledAccordion
+                                        component={motion.div}
+                                        variants={item}
+                                        classes={{
+                                            root: 'FaqPage-panel shadow',
+                                        }}
+                                        expanded={expanded === 2}
+                                        onChange={toggleAccordion(2)}
+                                    >
+                                        <div className="flex items-center flex-grow buy-pay-type " style={{ width: '100%', padding: '1.6rem 1.2rem' }}>
+                                            <div className="flex items-center">
+                                                <div style={{
+                                                    width: '30px',
+                                                    borderRadius: '5px',
+                                                }}>
+                                                    <img className='border-r-10' src="wallet/assets/images/buy/startPay.png" alt="" />
+                                                </div>
+                                                <div className="px-12 font-medium">
+                                                    <Typography className="text-20 font-medium">StarPay</Typography>
+                                                </div>
+                                            </div>
+                                            <div style={{ marginLeft: 'auto' }}>
+                                                <div className="px-12 font-medium flex justify-content-center items-center" style={{ textAlign: 'right' }}>
+                                                    <div className="mx-4"><img src="wallet/assets/images/buy/visa.png" alt="" /></div>
+                                                    <div className="mx-4"><img src="wallet/assets/images/buy/jh.png" alt="" /></div>
+                                                    <div className="mx-4"><img src="wallet/assets/images/buy/jcb.png" alt="" /></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </StyledAccordion>
+                                </Box>
+
+                                {/*<Box*/}
+                                {/*    className={clsx("w-full rounded-8  flex flex-col my-20 cursor-pointer", payType === 'FaTPay' && 'buy-pay-type-acitve')}*/}
+                                {/*    sx={{*/}
+                                {/*        backgroundColor: '#1E293B',*/}
+                                {/*        border: "1px solid #1E293B"*/}
+                                {/*    }}*/}
+                                {/*    onClick={() => {*/}
+                                {/*        setPayType('FaTPay');*/}
+                                {/*        initSymbolAndFiat();*/}
+                                {/*        getSdkSymbolData('FaTPay');*/}
+                                {/*    }}*/}
+                                {/*>*/}
+                                {/*    <StyledAccordion*/}
+                                {/*        component={motion.div}*/}
+                                {/*        variants={item}*/}
+                                {/*        classes={{*/}
+                                {/*            root: 'FaqPage-panel shadow',*/}
+                                {/*        }}*/}
+                                {/*        expanded={expanded === 2}*/}
+                                {/*        onChange={toggleAccordion(2)}*/}
+                                {/*    >*/}
+                                {/*        <div className="flex items-center flex-grow buy-pay-type" style={{ width: '100%', padding: '1.6rem 1.2rem' }}>*/}
+                                {/*            <div className="flex items-center">*/}
+                                {/*                <div style={{*/}
+                                {/*                    width: '30px',*/}
+                                {/*                    borderRadius: '5px',*/}
+
+                                {/*                }}>*/}
+                                {/*                    <img className='border-r-10' src="wallet/assets/images/buy/FaTPay.png" alt="" />*/}
+                                {/*                </div>*/}
+                                {/*                <div className="px-12 font-medium">*/}
+                                {/*                    <Typography className="text-20 font-medium">FaTPay</Typography>*/}
+                                {/*                </div>*/}
+                                {/*            </div>*/}
+                                {/*            <div style={{ marginLeft: 'auto' }}>*/}
+                                {/*                <div className="px-12 font-medium flex justify-content-center items-center" style={{ textAlign: 'right' }}>*/}
+                                {/*                    <div className="mx-4"><img src="wallet/assets/images/buy/visa.png" alt="" /></div>*/}
+                                {/*                    <div className="mx-4"><img src="wallet/assets/images/buy/jh.png" alt="" /></div>*/}
+                                {/*                    <div className="mx-4"><img src="wallet/assets/images/buy/jcb.png" alt="" /></div>*/}
+                                {/*                </div>*/}
+                                {/*            </div>*/}
+                                {/*        </div>*/}
+                                {/*    </StyledAccordion>*/}
+                                {/*</Box>*/}
+
+                                {payType === 'StarPay' && <>
+                                    <Typography className="text-20 font-medium my-16" >Amount</Typography>
+
+                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
+                                        <OutlinedInput
+                                            id="outlined-adornment-address send-tips-container-address"
+                                            value={amount}
+                                            onChange={(event) => { setAmount(event.target.value) }}
+                                            aria-describedby="outlined-weight-helper-text"
+                                            inputProps={{
+                                                'aria-label': 'address',
+                                            }}
+                                        />
+                                    </FormControl>
+                                </>}
+                            </>}
+
+                            {tabValue === 1 && payType === 'StarPay' && (<div>
+                                {changeNoSupplier()}
+                                <Typography className="text-14 font-medium my-16  tiShiSty"><span style={{ color: '#fce100' }}>⚠</span> {t('home_buy_10')}</Typography>
+                            </div>)}
+
+                            {tabValue === 0 && (
+                                <Box
+                                    className=""
+                                    sx={{ borderRadius: '8px' }}
+                                >
+                                    <Typography className="text-14 my-20" style={{ magin: '2.6rem 0 2.6rem 2rem', color: '#94a3b8' }}>
+                                        <span style={{ color: '#fce100' }}>⚠ </span>
+                                        {t('home_buy_5')}
+                                    </Typography>
+                                </Box>
+                            )
+                            }
+
+                            {tabValue === 1 && noSupplier && (
+                                <Box
+                                    className=""
+                                    sx={{
+                                        borderRadius: '8px'
+                                    }}
+                                >
+                                    <Typography className="text-14 my-20" style={{ magin: '2.6rem 0 2.6rem 2rem', color: '#94a3b8' }}>
+                                        <span style={{ color: '#fce100' }}>⚠ </span>
+                                        {t('home_buy_5')}
+                                    </Typography>
+                                </Box>
+                            )
+                            }
+
+                            <Button
+                                style={{ width: '100%', height: '4rem', margin: '0 auto', display: 'block', fontSize: '2rem', lineHeight: 'initial' }}
+                                className='m-28 px-48 text-lg btnColorTitleBig text-20'
+                                color="secondary"
+                                variant="contained"
+                                sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
+                                disabled={tabValue === 1 && payType === 'StarPay'}
+                                onClick={() => {
+                                    goBuy();
+                                }}
+                            >
+                                {tabValue === 0 && <>
+                                    {t('home_buy_8')}
+                                </>}
+                                {tabValue === 1 && <>
+                                    {t('home_buy_9')}
+                                </>}
+                            </Button>
+                        </motion.div>
+                    </div>
+
+                    {/*{tabValue === 1 && <div>*/}
+                    {/*    sell*/}
+                    {/*</div>}*/}
+                </div>
+            }
+            {
+                !loadingShow &&
+                <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }}>
+                    <div className="loadingChuang1">
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                    </div>
+                    <div className="loadingChuang1">
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                    </div>
+                    <div className="loadingChuang1">
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                    </div>
+                    <div className="loadingChuang1">
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                    </div>
+                    <div className="loadingChuang1">
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                    </div>
+                    <div className="loadingChuang1">
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                    </div>
+                </div>
+            }
         </div>
     )
 }

@@ -549,7 +549,10 @@ const locale = {
     card_193: "Karta Reklamowa",
     card_194: "Karta Nabycia Pracy",
     card_195: "Skopiowano",
+    card_196: "PIN",
 
+
+    
     
     
     

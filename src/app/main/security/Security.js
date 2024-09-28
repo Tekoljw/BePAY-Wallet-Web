@@ -43,6 +43,10 @@ const item = {
     show: { opacity: 1, y: 0 },
 };
 
+const backCardPageEvt = () => {
+
+}
+
 function Security(props) {
     const { t } = useTranslation('mainPage');
 
@@ -56,60 +60,103 @@ function Security(props) {
         setPhoneTab('security');
     }, []);
 
+
+
+    const [loadingShow, setLoadingShow] = useState(true);
+    useEffect(() => {
+        setTimeout(() => {
+            setLoadingShow(true);
+        }, 1500);
+    }, []);
+
     useEffect(() => {
         setRanges([t('menu_12'), t('menu_13'), t('menu_14'), t('menu_15'), t('menu_16'), "PIN"]);
     }, [currentLanguage.id]);
 
+
     return (
         <div>
-            <div>
-                <motion.div
-                    variants={container}
-                    initial="hidden"
-                    animate="show"
-                    className='mb-16 mt-12'
-                >
-                    <Tabs
-                        value={tabValue}
-                        onChange={(ev, value) => setTabValue(value)}
-                        textColor="inherit"
-                        indicatorColor="secondary"
-                        variant="scrollable"
-                        scrollButtons={false}
-                        className="tongYongDingBtn"
-                        style={{ minWidth: '28%!import' }}
-                        classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
-                        TabIndicatorProps={{
-                            children: (
-                                <Box
-                                    sx={{ bgcolor: 'text.disabled' }}
-                                    className="w-full h-full rounded-full  huaKuaBgColor0" />
-                            ),
-                        }}
-                        sx={{
-                            margin: "1rem 1.2rem",
-                        }}
+            {
+                loadingShow &&
+                <div>
+                    <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className='mb-16 mt-12'
                     >
-                        {Object.entries(ranges).map(([key, label]) => (
-                            <Tab
-                                className="text-14 font-semibold min-h-36 min-w-64 mx4 px-12 opacity1 txtColorTitle zindex"
-                                disableRipple
-                                key={key}
-                                label={label}
-                                style={{
-                                    color: '#FFFFFF', height: '3.6rem', minWidth: '28%'
-                                }}
-                            />
-                        ))}
-                    </Tabs>
-                </motion.div>
-                {tabValue === 0 && <Enable2FA />}
-                {tabValue === 1 && <RetiedEmail />}
-                {tabValue === 2 && <RetiedPhone />}
-                {tabValue === 3 && <ResetPass />}
-                {tabValue === 4 && <Kyc />}
-                {tabValue === 5 && <ResetPin resetTabValueParam={resetTabValueParam} />}
-            </div>
+                        <Tabs
+                            value={tabValue}
+                            onChange={(ev, value) => setTabValue(value)}
+                            textColor="inherit"
+                            indicatorColor="secondary"
+                            variant="scrollable"
+                            scrollButtons={false}
+                            className="tongYongDingBtn"
+                            style={{ minWidth: '28%!import' }}
+                            classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
+                            TabIndicatorProps={{
+                                children: (
+                                    <Box
+                                        sx={{ bgcolor: 'text.disabled' }}
+                                        className="w-full h-full rounded-full  huaKuaBgColor0" />
+                                ),
+                            }}
+                            sx={{
+                                margin: "1rem 1.2rem",
+                            }}
+                        >
+                            {Object.entries(ranges).map(([key, label]) => (
+                                <Tab
+                                    className="text-14 font-semibold min-h-36 min-w-64 mx4 px-12 opacity1 txtColorTitle zindex"
+                                    disableRipple
+                                    key={key}
+                                    label={label}
+                                    style={{
+                                        color: '#FFFFFF', height: '3.6rem', minWidth: '28%'
+                                    }}
+                                />
+                            ))}
+                        </Tabs>
+                    </motion.div>
+                    {tabValue === 0 && <Enable2FA />}
+                    {tabValue === 1 && <RetiedEmail />}
+                    {tabValue === 2 && <RetiedPhone />}
+                    {tabValue === 3 && <ResetPass />}
+                    {tabValue === 4 && <Kyc backCardPage={backCardPageEvt} />}
+                    {tabValue === 5 && <ResetPin resetTabValueParam={resetTabValueParam} />}
+                </div>
+            }
+            {
+                !loadingShow &&
+                <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }}>
+                    <div className="loadingChuang1">
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                    </div>
+                    <div className="loadingChuang1">
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                    </div>
+                    <div className="loadingChuang1">
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                    </div>
+                </div>
+            }
+
         </div>
     )
 }

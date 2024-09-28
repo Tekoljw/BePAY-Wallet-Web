@@ -524,7 +524,7 @@ function Wallet() {
           }
         })
       }
-    }else{ //telegram小程序的标题语言处理
+    } else { //telegram小程序的标题语言处理
       setRanges([t('home_deposite_1'), t('home_deposite_2')]);
     }
     // dispatch(getCurrencySelect());
@@ -1372,78 +1372,139 @@ function Wallet() {
   }, [loginType]);
 
 
-
   return (
     <div style={{ position: "relative" }}>
-      <motion.div variants={container} initial="hidden" animate="show">
-        <Box
-          component={motion.div}
-          variants={item}
-          style={{
-            backgroundColor: "#0E1421",
-          }}
-        >
-          <motion.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="pb-12 mt-12"
+      {
+        loadingShow && <motion.div variants={container} initial="hidden" animate="show">
+          <Box
+            component={motion.div}
+            variants={item}
+            style={{
+              backgroundColor: "#0E1421",
+            }}
           >
-            {
-              !walletConnectShow && <div
-                className="flex justify-center items-center wallet-top radius999"
-              >
-                <Tabs
-                  component={motion.div}
-                  variants={item}
-                  value={walletType}
-                  onChange={(ev, value) => setWalletType(value)}
-                  indicatorColor="secondary"
-                  textColor="inherit"
-                  variant="scrollable"
-                  scrollButtons={false}
-                  className="wallet-show-type"
-                  classes={{
-                    indicator:
-                      "flex justify-between bg-transparent w-full h-full min-h-28 radius999",
-                  }}
-                  TabIndicatorProps={{
-                    children: (
-                      <Box className="w-full h-full rounded-full huaKuaBgColor0 min-h-28 radius999" />
-                    ),
-                  }}
-                  sx={{
-                    // padding: '1rem 1.2rem',
-                    flex: 1,
-                  }}
+            <motion.div
+              variants={container}
+              initial="hidden"
+              animate="show"
+              className="pb-12 mt-12"
+            >
+              {
+                !walletConnectShow && <div
+                  className="flex justify-center items-center wallet-top radius999"
                 >
-                  {Object.entries(walletTypeTab).map(([key, label]) => {
-                    if (label?.length === regWallet?.length) {
-                      if (label == "") {
-                        setDdecentralized(-1);
-                      }
-                      if (decentralized == -1) {
-                        return (
-                          <Tab
-                            className="text-16 font-semibold min-h-28 min-w-64 px-32 mt-4 txtColorTitle text-nowrap opacity-100 zindex radius999"
-                            disableRipple
-                            key={key}
-                            icon={
-                              <img
-                                className="mr-8"
-                                width="22"
-                                src="/wallet/assets/images/menu/icon-wallet-active.png"
-                                alt=""
-                              />
-                            }
-                            iconPosition="start"
-                            label={"Wallet Connect"}
-                            sx={{
-                              color: "#FFFFFF",
-                              width: "50%",
-                            }}
-                          />
-                        );
+                  <Tabs
+                    component={motion.div}
+                    variants={item}
+                    value={walletType}
+                    onChange={(ev, value) => setWalletType(value)}
+                    indicatorColor="secondary"
+                    textColor="inherit"
+                    variant="scrollable"
+                    scrollButtons={false}
+                    className="wallet-show-type"
+                    classes={{
+                      indicator:
+                        "flex justify-between bg-transparent w-full h-full min-h-28 radius999",
+                    }}
+                    TabIndicatorProps={{
+                      children: (
+                        <Box className="w-full h-full rounded-full huaKuaBgColor0 min-h-28 radius999" />
+                      ),
+                    }}
+                    sx={{
+                      // padding: '1rem 1.2rem',
+                      flex: 1,
+                    }}
+                  >
+                    {Object.entries(walletTypeTab).map(([key, label]) => {
+                      if (label?.length === regWallet?.length) {
+                        if (label == "") {
+                          setDdecentralized(-1);
+                        }
+                        if (decentralized == -1) {
+                          return (
+                            <Tab
+                              className="text-16 font-semibold min-h-28 min-w-64 px-32 mt-4 txtColorTitle text-nowrap opacity-100 zindex radius999"
+                              disableRipple
+                              key={key}
+                              icon={
+                                <img
+                                  className="mr-8"
+                                  width="22"
+                                  src="/wallet/assets/images/menu/icon-wallet-active.png"
+                                  alt=""
+                                />
+                              }
+                              iconPosition="start"
+                              label={"Wallet Connect"}
+                              sx={{
+                                color: "#FFFFFF",
+                                width: "50%",
+                              }}
+                            />
+                          );
+                        } else {
+                          return (
+                            <Tab
+                              className="text-16 font-semibold min-h-28 min-w-64 px-32 mt-4 txtColorTitle text-nowrap opacity-100 zindex radius999"
+                              disableRipple
+                              key={key}
+                              icon={
+                                <img
+                                  className="mr-8"
+                                  width="22"
+                                  src={(() => {
+                                    switch (walletloginname) {
+                                      case "BitKeep":
+                                        return "/wallet/assets/images/login/icon-right-14.png";
+                                      case "MetaMask":
+                                        return "/wallet/assets/images/login/icon-right-1.png";
+                                      case "WalletConnect":
+                                        return "/wallet/assets/images/login/icon-right-5.png";
+                                      case "coinbase":
+                                        return "/wallet/assets/images/login/icon-right-10.png";
+                                      case "TrustWallet":
+                                        return "/wallet/assets/images/login/icon-right-12.png";
+                                      case "Coinbase":
+                                        return "/wallet/assets/images/login/icon-right-4.png";
+                                      case "Polygon":
+                                        return "/wallet/assets/images/login/icon-right-13.png";
+                                      case "Bitski":
+                                        return "/wallet/assets/images/login/icon-right-15.png";
+                                      case "CLedger":
+                                        return "/wallet/assets/images/login/icon-right-16.png";
+                                      case "Binance Smart":
+                                        return "/wallet/assets/images/login/icon-right-17.png";
+                                      case "BeingFi Wallet":
+                                        return "/wallet/assets/images/menu/LOGO.png ";
+                                      case "value2":
+                                        return "";
+                                      default:
+                                        return "/wallet/assets/images/menu/icon-wallet-active.png ";
+                                    }
+                                  })()}
+                                  alt=""
+                                />
+                              }
+                              iconPosition="start"
+                              label={walletloginname}
+                              sx={{
+                                color: "#FFFFFF",
+                                width: "50%",
+                              }}
+                              onClick={async () => {
+                                // const bindWalletRes = await dispatch(bindWallet());
+                                // if (bindWalletRes.payload) {
+                                // decenterWalletFormatAmount();
+                                // }
+                                if (decentralized != -1) {
+                                  decenterWalletFormatAmount();
+                                }
+                              }}
+                            />
+                          );
+                        }
                       } else {
                         return (
                           <Tab
@@ -1454,8 +1515,9 @@ function Wallet() {
                               <img
                                 className="mr-8"
                                 width="22"
+                                // src="/wallet/assets/images/logo/loading-img.png"
                                 src={(() => {
-                                  switch (walletloginname) {
+                                  switch (label) {
                                     case "BitKeep":
                                       return "/wallet/assets/images/login/icon-right-14.png";
                                     case "MetaMask":
@@ -1476,289 +1538,227 @@ function Wallet() {
                                       return "/wallet/assets/images/login/icon-right-16.png";
                                     case "Binance Smart":
                                       return "/wallet/assets/images/login/icon-right-17.png";
+                                    case "Wallet Connect":
+                                      return "/wallet/assets/images/menu/icon-wallet-active.png ";
                                     case "BeingFi Wallet":
                                       return "/wallet/assets/images/menu/LOGO.png ";
-                                    case "value2":
-                                      return "";
                                     default:
-                                      return "/wallet/assets/images/menu/icon-wallet-active.png ";
+                                      return "/wallet/assets/images/logo/loading-img.png ";
                                   }
                                 })()}
                                 alt=""
                               />
                             }
                             iconPosition="start"
-                            label={walletloginname}
+                            label={label}
                             sx={{
                               color: "#FFFFFF",
                               width: "50%",
                             }}
-                            onClick={async () => {
-                              // const bindWalletRes = await dispatch(bindWallet());
-                              // if (bindWalletRes.payload) {
-                              // decenterWalletFormatAmount();
-                              // }
-                              if (decentralized != -1) {
-                                decenterWalletFormatAmount();
-                              }
-                            }}
                           />
                         );
                       }
-                    } else {
-                      return (
-                        <Tab
-                          className="text-16 font-semibold min-h-28 min-w-64 px-32 mt-4 txtColorTitle text-nowrap opacity-100 zindex radius999"
-                          disableRipple
-                          key={key}
-                          icon={
-                            <img
-                              className="mr-8"
-                              width="22"
-                              // src="/wallet/assets/images/logo/loading-img.png"
-                              src={(() => {
-                                switch (label) {
-                                  case "BitKeep":
-                                    return "/wallet/assets/images/login/icon-right-14.png";
-                                  case "MetaMask":
-                                    return "/wallet/assets/images/login/icon-right-1.png";
-                                  case "WalletConnect":
-                                    return "/wallet/assets/images/login/icon-right-5.png";
-                                  case "coinbase":
-                                    return "/wallet/assets/images/login/icon-right-10.png";
-                                  case "TrustWallet":
-                                    return "/wallet/assets/images/login/icon-right-12.png";
-                                  case "Coinbase":
-                                    return "/wallet/assets/images/login/icon-right-4.png";
-                                  case "Polygon":
-                                    return "/wallet/assets/images/login/icon-right-13.png";
-                                  case "Bitski":
-                                    return "/wallet/assets/images/login/icon-right-15.png";
-                                  case "CLedger":
-                                    return "/wallet/assets/images/login/icon-right-16.png";
-                                  case "Binance Smart":
-                                    return "/wallet/assets/images/login/icon-right-17.png";
-                                  case "Wallet Connect":
-                                    return "/wallet/assets/images/menu/icon-wallet-active.png ";
-                                  case "BeingFi Wallet":
-                                    return "/wallet/assets/images/menu/LOGO.png ";
-                                  default:
-                                    return "/wallet/assets/images/logo/loading-img.png ";
-                                }
-                              })()}
-                              alt=""
-                            />
-                          }
-                          iconPosition="start"
-                          label={label}
-                          sx={{
-                            color: "#FFFFFF",
-                            width: "50%",
-                          }}
-                        />
-                      );
+                    })}
+                  </Tabs>
+                  {/*<div*/}
+                  {/*    className={clsx('wallet-top-item py-14 cursor-pointer txtColorTitle', walletType === 'funi' && 'wallet-top-item-active')}*/}
+                  {/*    onClick={() => { setWalletType('funi') }}*/}
+                  {/*>*/}
+                  {/*    FuniBox Wallet*/}
+                  {/*</div>*/}
+                  {/*<div*/}
+                  {/*    className={clsx('wallet-top-item py-14 flex justify-center items-center cursor-pointer txtColorTitle', walletType === 'metamask' && 'wallet-top-item-active')}*/}
+                  {/*    onClick={async () => {*/}
+                  {/*        const bindWalletRes = await dispatch(bindWallet());*/}
+                  {/*        if (bindWalletRes.payload) {*/}
+                  {/*            decenterWalletFormatAmount();*/}
+                  {/*        }*/}
+                  {/*        setWalletType('metamask');*/}
+                  {/*    }}*/}
+                  {/*>*/}
+                  {/*    <img className="mr-8" width="22" src="/wallet/assets/images/connect/metamask.png" alt="" />*/}
+                  {/*    Metamask*/}
+                  {/*</div>*/}
+                </div>
+              }
+            </motion.div>
+
+            {walletType === 0 && (<motion.div
+              variants={container}
+              initial="hidden"
+              animate="show"
+              className="pb-6 flex justify-center"
+            >
+              <div
+                className="cardSty"
+                style={{ flexWrap: "warp" }}
+              >
+
+                <div className="flex justify-between" style={{ marginTop: "6.5%" }}>
+                  <div className=" flex px-16 " style={{ width: "70%", height: "3rem" }}>
+                    {
+                      isOpenEye && <img className="cardImg"
+                        src="/wallet/assets/images/withdraw/yan2.png"
+                        onClick={() => {
+                          setIsOpenEye(!isOpenEye);
+                        }}></img>
+
                     }
-                  })}
-                </Tabs>
-                {/*<div*/}
-                {/*    className={clsx('wallet-top-item py-14 cursor-pointer txtColorTitle', walletType === 'funi' && 'wallet-top-item-active')}*/}
-                {/*    onClick={() => { setWalletType('funi') }}*/}
-                {/*>*/}
-                {/*    FuniBox Wallet*/}
-                {/*</div>*/}
-                {/*<div*/}
-                {/*    className={clsx('wallet-top-item py-14 flex justify-center items-center cursor-pointer txtColorTitle', walletType === 'metamask' && 'wallet-top-item-active')}*/}
-                {/*    onClick={async () => {*/}
-                {/*        const bindWalletRes = await dispatch(bindWallet());*/}
-                {/*        if (bindWalletRes.payload) {*/}
-                {/*            decenterWalletFormatAmount();*/}
-                {/*        }*/}
-                {/*        setWalletType('metamask');*/}
-                {/*    }}*/}
-                {/*>*/}
-                {/*    <img className="mr-8" width="22" src="/wallet/assets/images/connect/metamask.png" alt="" />*/}
-                {/*    Metamask*/}
-                {/*</div>*/}
+                    {
+                      !isOpenEye && <img className="cardImg"
+                        src="/wallet/assets/images/withdraw/yan.png"
+                        onClick={() => {
+                          setIsOpenEye(!isOpenEye);
+                        }}></img>
+                    }
+                    <div className="ml-8 walletBalanceZi" style={{ color: "#84A59F" }} >{t("card_10")}</div>
+                  </div>
+                  <div className="zhangDanXiangQinZi" onClick={() => {
+                    changePhoneTab("record");
+                    history.push('/wallet/home/record')
+                  }} >{t("card_1")}</div>
+                </div>
+
+                <div className=" flex items-conter px-16" style={{ width: "100%", marginTop: "1.5rem", justifyContent: "space-between" }}>
+                  <div className="flex" style={{ width: "70%" }}>
+                    <img className="cardImg mt-3" src="/wallet/assets/images/withdraw/usd.png" onClick={() => {
+                      setOpenAnimateModal(true);
+                    }}></img>
+                    {
+                      isOpenEye ? <div className="eyeGongNengZi" style={{ color: "#ffffff" }}>{(userData.profile.wallet?.Crypto + userData.profile.wallet?.Fiat).toFixed(2) ?? '0.00'}</div>
+                        : <div className="eyeGongNengZi2 pt-5" style={{ color: "#ffffff" }}>******</div>
+                    }
+                  </div>
+                  <div className="text-16" style={{ width: "30%", textAlign: "center", height: "3rem", lineHeight: "3rem", color: "#3E9178", borderRadius: "99px", background: "#D4FFF3" }} onClick={() => {
+                    changePhoneTab("card");
+                    history.push('/wallet/home/card')
+                  }} >
+                    {t("card_2")}
+                  </div>
+                </div>
               </div>
+            </motion.div>)}
+
+            {walletType === 0 && <motion.div
+              variants={container}
+              initial="hidden"
+              animate="show"
+              className="pt-6 pb-5 flex justify-between accountGongNengKuang">
+              <div className="accountGongNengDi" onClick={() => {
+                changePhoneTab("deposite");
+                history.push('/wallet/home/deposite')
+              }}>
+                <img className="accountGoneNengImg" src="/wallet/assets/images/menu/deposite-active2.png"></img>
+                <div className="accountGoneNengZi">{t("card_3")}</div>
+              </div>
+
+              <div className="accountGongNengDi" onClick={() => {
+                changePhoneTab("withdraw");
+                history.push('/wallet/home/withdraw')
+              }}>
+                <img className="accountGoneNengImg" src="/wallet/assets/images/menu/withdraw-active2.png"></img>
+                <div className="accountGoneNengZi">{t("card_4")}</div>
+              </div>
+
+              <div className="accountGongNengDi" onClick={() => {
+                changePhoneTab("swap");
+                history.push('/wallet/home/swap')
+              }}>
+                <img className="accountGoneNengImg" src="/wallet/assets/images/menu/swap-active2.png"></img>
+                <div className="accountGoneNengZi">{t("menu_5")}</div>
+              </div>
+
+              <div className="accountGongNengDi" onClick={() => {
+                changePhoneTab("buyCrypto");
+                history.push('/wallet/home/buyCrypto')
+              }}>
+                <img className="accountGoneNengImg" src="/wallet/assets/images/menu/buyCrypto-active2.png"></img>
+                <div className="accountGoneNengZi">{t("card_5")}</div>
+              </div>
+            </motion.div>
             }
-          </motion.div>
 
-          {walletType === 0 && (<motion.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="pb-6 flex justify-center"
-          >
-            <div
-              className="cardSty"
-              style={{ flexWrap: "warp" }}
+            <motion.div
+              variants={container}
+              initial="hidden"
+              animate="show"
+              className="px-15 pb-4"
             >
-
-              <div className="flex justify-between" style={{ marginTop: "6.5%" }}>
-                <div className=" flex px-16 " style={{ width: "70%", height: "3rem" }}>
-                  {
-                    isOpenEye && <img className="cardImg"
-                      src="/wallet/assets/images/withdraw/yan2.png"
-                      onClick={() => {
-                        setIsOpenEye(!isOpenEye);
-                      }}></img>
-
-                  }
-                  {
-                    !isOpenEye && <img className="cardImg"
-                      src="/wallet/assets/images/withdraw/yan.png"
-                      onClick={() => {
-                        setIsOpenEye(!isOpenEye);
-                      }}></img>
-                  }
-                  <div className="ml-8 walletBalanceZi" style={{ color: "#84A59F" }} >{t("card_10")}</div>
-                </div>
-                <div className="zhangDanXiangQinZi" onClick={() => {
-                  changePhoneTab("record");
-                  history.push('/wallet/home/record')
-                }} >{t("card_1")}</div>
-              </div>
-
-              <div className=" flex items-conter px-16" style={{ width: "100%", marginTop: "1.5rem", justifyContent: "space-between" }}>
-                <div className="flex" style={{ width: "70%" }}>
-                  <img className="cardImg mt-3" src="/wallet/assets/images/withdraw/usd.png" onClick={() => {
-                    setOpenAnimateModal(true);
-                  }}></img>
-                  {
-                    isOpenEye ? <div className="eyeGongNengZi" style={{ color: "#ffffff" }}>{(userData.profile.wallet?.Crypto + userData.profile.wallet?.Fiat).toFixed(2) ?? '0.00'}</div>
-                      : <div className="eyeGongNengZi2 pt-5" style={{ color: "#ffffff" }}>******</div>
-                  }
-                </div>
-                <div className="text-16" style={{ width: "30%", textAlign: "center", height: "3rem", lineHeight: "3rem", color: "#3E9178", borderRadius: "99px", background: "#D4FFF3" }} onClick={() => {
-                  changePhoneTab("card");
-                  history.push('/wallet/home/card')
-                }} >
-                  {t("card_2")}
-                </div>
-              </div>
-            </div>
-          </motion.div>)}
-
-          {walletType === 0 && <motion.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="pt-6 pb-5 flex justify-between accountGongNengKuang">
-            <div className="accountGongNengDi" onClick={() => {
-              changePhoneTab("deposite");
-              history.push('/wallet/home/deposite')
-            }}>
-              <img className="accountGoneNengImg" src="/wallet/assets/images/menu/deposite-active2.png"></img>
-              <div className="accountGoneNengZi">{t("card_3")}</div>
-            </div>
-
-            <div className="accountGongNengDi" onClick={() => {
-              changePhoneTab("withdraw");
-              history.push('/wallet/home/withdraw')
-            }}>
-              <img className="accountGoneNengImg" src="/wallet/assets/images/menu/withdraw-active2.png"></img>
-              <div className="accountGoneNengZi">{t("card_4")}</div>
-            </div>
-
-            <div className="accountGongNengDi" onClick={() => {
-              changePhoneTab("swap");
-              history.push('/wallet/home/swap')
-            }}>
-              <img className="accountGoneNengImg" src="/wallet/assets/images/menu/swap-active2.png"></img>
-              <div className="accountGoneNengZi">{t("menu_5")}</div>
-            </div>
-
-            <div className="accountGongNengDi" onClick={() => {
-              changePhoneTab("buyCrypto");
-              history.push('/wallet/home/buyCrypto')
-            }}>
-              <img className="accountGoneNengImg" src="/wallet/assets/images/menu/buyCrypto-active2.png"></img>
-              <div className="accountGoneNengZi">{t("card_5")}</div>
-            </div>
-          </motion.div>
-          }
-
-          <motion.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="px-15 pb-4"
-          >
-            <Box
-              component={motion.div}
-              variants={item}
-              className="w-full border flex flex-col pt-16"
-              sx={{
-                backgroundColor: "#1E293B",
-                border: "none",
-                borderRadius: "1rem"
-              }}
-            >
-              <motion.div variants={container} initial="hidden" animate="show">
-                {walletType === 0 && (
-                  <div>
-                    <div className="flex justify-between items-center" style={{ marginBottom: "20px", marginLeft: "15px", marginRight: "15px" }}>
-                      {searchInput && (
-                        <>
-                          <FuseSvgIcon
-                            className="text-48 cursor-pointer font-medium"
-                            size={24}
-                            color="action"
-                            onClick={() => {
-                              setSearchInput(true);
-                            }}
-                          >
-                            feather:search
-                          </FuseSvgIcon>
-                        </>
-                      )}
-                      {!searchInput && (
-                        <>
-                          <FormControl
-                            className="wallet-search"
-                            sx={{ width: "90%", borderColor: "#94A3B8" }}
-                            variant="outlined"
-                          >
+              <Box
+                component={motion.div}
+                variants={item}
+                className="w-full border flex flex-col pt-16"
+                sx={{
+                  backgroundColor: "#1E293B",
+                  border: "none",
+                  borderRadius: "1rem"
+                }}
+              >
+                <motion.div variants={container} initial="hidden" animate="show">
+                  {walletType === 0 && (
+                    <div>
+                      <div className="flex justify-between items-center" style={{ marginBottom: "20px", marginLeft: "15px", marginRight: "15px" }}>
+                        {searchInput && (
+                          <>
                             <FuseSvgIcon
-                              className="text-48 cursor-pointer font-medium wallet-search-icon"
+                              className="text-48 cursor-pointer font-medium"
                               size={24}
                               color="action"
-                              onClick={handleChangeInputVal("searchText")}
+                              onClick={() => {
+                                setSearchInput(true);
+                              }}
                             >
                               feather:search
                             </FuseSvgIcon>
-                            <OutlinedInput
-                              id="outlined-adornment-address outlined-adornment-address-wallet outlined-adornment-address-wallet-input"
-                              value={inputVal.searchText}
-                              onChange={handleChangeInputVal("searchText")}
-                              aria-describedby="outlined-weight-helper-text"
-                              inputProps={{
-                                "aria-label": "searchText",
-                              }}
-                              // autoFocus
-                              placeholder={t("home_account_2")}
-                            // onBlur={() => { setSearchInput(false) }}
-                            />
-                          </FormControl>
-                        </>
-                      )}
-                      <img
-                        width="16"
-                        src="wallet/assets/images/wallet/addreduce.png"
-                        onClick={() => {
-                          setDoPlus(!doPlus);
-                        }}
-                        className="text-48 cursor-pointer font-medium imgChangeColor"
-                        alt="additions and deletions"
-                      />
-                      {/* <FuseSvgIcon onClick={() => { setDoPlus(!doPlus) }} className="text-48 cursor-pointer font-medium jiaShow" size={24} color="action">feather:plus</FuseSvgIcon> */}
-                    </div>
-                    <motion.div
-                      variants={container}
-                      initial="hidden"
-                      animate="show"
-                    >
-                      {/* <Tabs
+                          </>
+                        )}
+                        {!searchInput && (
+                          <>
+                            <FormControl
+                              className="wallet-search"
+                              sx={{ width: "90%", borderColor: "#94A3B8" }}
+                              variant="outlined"
+                            >
+                              <FuseSvgIcon
+                                className="text-48 cursor-pointer font-medium wallet-search-icon"
+                                size={24}
+                                color="action"
+                                onClick={handleChangeInputVal("searchText")}
+                              >
+                                feather:search
+                              </FuseSvgIcon>
+                              <OutlinedInput
+                                id="outlined-adornment-address outlined-adornment-address-wallet outlined-adornment-address-wallet-input"
+                                value={inputVal.searchText}
+                                onChange={handleChangeInputVal("searchText")}
+                                aria-describedby="outlined-weight-helper-text"
+                                inputProps={{
+                                  "aria-label": "searchText",
+                                }}
+                                // autoFocus
+                                placeholder={t("home_account_2")}
+                              // onBlur={() => { setSearchInput(false) }}
+                              />
+                            </FormControl>
+                          </>
+                        )}
+                        <img
+                          width="16"
+                          src="wallet/assets/images/wallet/addreduce.png"
+                          onClick={() => {
+                            setDoPlus(!doPlus);
+                          }}
+                          className="text-48 cursor-pointer font-medium imgChangeColor"
+                          alt="additions and deletions"
+                        />
+                        {/* <FuseSvgIcon onClick={() => { setDoPlus(!doPlus) }} className="text-48 cursor-pointer font-medium jiaShow" size={24} color="action">feather:plus</FuseSvgIcon> */}
+                      </div>
+                      <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                      >
+                        {/* <Tabs
                         component={motion.div}
                         variants={item}
                         value={showType}
@@ -1791,100 +1791,131 @@ function Wallet() {
                           />
                         ))}
                       </Tabs> */}
-                      <Tabs
-                        component={motion.div}
-                        variants={item}
-                        value={tabValue}
-                        onChange={(ev, value) => {
-                          setTabValue(value)
-                          setShowType(value)
-                        }}
-                        indicatorColor="secondary"
-                        textColor="inherit"
-                        variant="scrollable"
-                        scrollButtons={false}
-                        className="tongYongDingBtn1"
-                        style={{ width: '50%!import' }}
-                        classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
-                        TabIndicatorProps={{
-                          children: (
-                            <Box
-                              sx={{ bgcolor: 'text.disabled' }}
-                              className="w-full h-full rounded-full  huaKuaBgColor2"
-                            />
-                          ),
-                        }}
-                        sx={{
-                          margin: "1rem 1.2rem",
-                        }}
-                      >
-                        {Object.entries(ranges).map(([key, label]) => (
-                          <Tab
-                            className="text-14 font-semibold min-h-36 min-w-64 mx4 px-12 opacity1 txtColorTitle zindex"
-                            disableRipple
-                            key={key}
-                            label={label}
-                            sx={{
-                              color: '#FFFFFF', height: '3.6rem', width: '50%'
-                            }}
-                          />
-                        ))}
-                      </Tabs>
-                    </motion.div>
-                  </div>
-                )}
-
-
-                {decentralized != -1 && walletType === 1 && loginType === "web3_wallet" && (
-                  <>
-                    <div>
-                      <div className="px-24 flex justify-between items-center">
-                        <FormControl
-                          className="wallet-search"
-                          sx={{ width: "90%", borderColor: "#94A3B8" }}
-                          variant="outlined"
-                        >
-                          <FuseSvgIcon
-                            className="text-48 cursor-pointer font-medium wallet-search-icon"
-                            size={24}
-                            color="action"
-                            onClick={handleChangeInputVal("searchText")}
-                          >
-                            feather:search
-                          </FuseSvgIcon>
-                          <OutlinedInput
-                            id="outlined-adornment-address outlined-adornment-address-wallet-input-meta"
-                            value={inputVal.searchText}
-                            onChange={handleChangeInputVal("searchText")}
-                            aria-describedby="outlined-weight-helper-text"
-                            inputProps={{
-                              "aria-label": "searchText",
-                            }}
-                            placeholder={t("home_account_2")}
-                          />
-                        </FormControl>
-                        <img
-                          width="16"
-                          src="wallet/assets/images/wallet/addreduce.png"
-                          onClick={() => {
-                            setDoPlus(!doPlus);
+                        <Tabs
+                          component={motion.div}
+                          variants={item}
+                          value={tabValue}
+                          onChange={(ev, value) => {
+                            setTabValue(value)
+                            setShowType(value)
                           }}
-                          className="text-48 cursor-pointer font-medium imgChangeColor"
-                          alt="additions and deletions"
-                        />
-                        {/* <FuseSvgIcon onClick={() => { setDoPlus(!doPlus) }} className="text-48 cursor-pointer font-medium jiaShow" size={24} color="action">feather:plus</FuseSvgIcon> */}
-                      </div>
+                          indicatorColor="secondary"
+                          textColor="inherit"
+                          variant="scrollable"
+                          scrollButtons={false}
+                          className="tongYongDingBtn1"
+                          style={{ width: '50%!import' }}
+                          classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
+                          TabIndicatorProps={{
+                            children: (
+                              <Box
+                                sx={{ bgcolor: 'text.disabled' }}
+                                className="w-full h-full rounded-full  huaKuaBgColor2"
+                              />
+                            ),
+                          }}
+                          sx={{
+                            margin: "1rem 1.2rem",
+                          }}
+                        >
+                          {Object.entries(ranges).map(([key, label]) => (
+                            <Tab
+                              className="text-14 font-semibold min-h-36 min-w-64 mx4 px-12 opacity1 txtColorTitle zindex"
+                              disableRipple
+                              key={key}
+                              label={label}
+                              sx={{
+                                color: '#FFFFFF', height: '3.6rem', width: '50%'
+                              }}
+                            />
+                          ))}
+                        </Tabs>
+                      </motion.div>
                     </div>
+                  )}
 
-                    {walletType === 1 && !doPlus && walletType === 1 && (
-                      <div
-                        className="mt-8 px-24 pb-8"
-                      // style={{ borderBottom: '1px solid #374252' }}
-                      >
-                        {decenterSymbolsSearch.map((row, index) => {
-                          if (hideSmall) {
-                            return (
-                              row.dollarFiat > 0.01 && (
+
+                  {decentralized != -1 && walletType === 1 && loginType === "web3_wallet" && (
+                    <>
+                      <div>
+                        <div className="px-24 flex justify-between items-center">
+                          <FormControl
+                            className="wallet-search"
+                            sx={{ width: "90%", borderColor: "#94A3B8" }}
+                            variant="outlined"
+                          >
+                            <FuseSvgIcon
+                              className="text-48 cursor-pointer font-medium wallet-search-icon"
+                              size={24}
+                              color="action"
+                              onClick={handleChangeInputVal("searchText")}
+                            >
+                              feather:search
+                            </FuseSvgIcon>
+                            <OutlinedInput
+                              id="outlined-adornment-address outlined-adornment-address-wallet-input-meta"
+                              value={inputVal.searchText}
+                              onChange={handleChangeInputVal("searchText")}
+                              aria-describedby="outlined-weight-helper-text"
+                              inputProps={{
+                                "aria-label": "searchText",
+                              }}
+                              placeholder={t("home_account_2")}
+                            />
+                          </FormControl>
+                          <img
+                            width="16"
+                            src="wallet/assets/images/wallet/addreduce.png"
+                            onClick={() => {
+                              setDoPlus(!doPlus);
+                            }}
+                            className="text-48 cursor-pointer font-medium imgChangeColor"
+                            alt="additions and deletions"
+                          />
+                          {/* <FuseSvgIcon onClick={() => { setDoPlus(!doPlus) }} className="text-48 cursor-pointer font-medium jiaShow" size={24} color="action">feather:plus</FuseSvgIcon> */}
+                        </div>
+                      </div>
+
+                      {walletType === 1 && !doPlus && walletType === 1 && (
+                        <div
+                          className="mt-8 px-24 pb-8"
+                        // style={{ borderBottom: '1px solid #374252' }}
+                        >
+                          {decenterSymbolsSearch.map((row, index) => {
+                            if (hideSmall) {
+                              return (
+                                row.dollarFiat > 0.01 && (
+                                  <div
+                                    className={clsx(
+                                      "flex justify-between items-center py-12 wallet-symbol cursor-pointer",
+                                      selectedSymbol === row.symbol &&
+                                      "active-border2"
+                                    )}
+                                    key={index}
+                                  >
+                                    <div className="flex px-10 items-center">
+                                      <img
+                                        style={{ borderRadius: "50%" }}
+                                        className="mr-4"
+                                        width="24"
+                                        src={row.avatar}
+                                        alt=""
+                                      />
+                                      {row.symbol}
+                                    </div>
+                                    {isFait && (
+                                      <div className="px-10">
+                                        {row.currencyAmount}
+                                      </div>
+                                    )}
+                                    {!isFait && (
+                                      <div className="px-10">{row.balance}</div>
+                                    )}
+                                  </div>
+                                )
+                              );
+                            } else {
+                              return (
                                 <div
                                   className={clsx(
                                     "flex justify-between items-center py-12 wallet-symbol cursor-pointer",
@@ -1912,55 +1943,21 @@ function Wallet() {
                                     <div className="px-10">{row.balance}</div>
                                   )}
                                 </div>
-                              )
-                            );
-                          } else {
-                            return (
-                              <div
-                                className={clsx(
-                                  "flex justify-between items-center py-12 wallet-symbol cursor-pointer",
-                                  selectedSymbol === row.symbol &&
-                                  "active-border2"
-                                )}
-                                key={index}
-                              >
-                                <div className="flex px-10 items-center">
-                                  <img
-                                    style={{ borderRadius: "50%" }}
-                                    className="mr-4"
-                                    width="24"
-                                    src={row.avatar}
-                                    alt=""
-                                  />
-                                  {row.symbol}
-                                </div>
-                                {isFait && (
-                                  <div className="px-10">
-                                    {row.currencyAmount}
-                                  </div>
-                                )}
-                                {!isFait && (
-                                  <div className="px-10">{row.balance}</div>
-                                )}
-                              </div>
-                            );
-                          }
-                        })}
-                      </div>
-                    )}
-                  </>
-                )}
-                {(decentralized == -1 || !decentralized) && walletType === 1 && (
-                  <div style={{ margin: "0 auto" }}>
-                    <Web3Login />
-                  </div>
-                )}
+                              );
+                            }
+                          })}
+                        </div>
+                      )}
+                    </>
+                  )}
+                  {(decentralized == -1 || !decentralized) && walletType === 1 && (
+                    <div style={{ margin: "0 auto" }}>
+                      <Web3Login />
+                    </div>
+                  )}
 
-                {showType === cryptoSelect && walletType === 0 && !doPlus && !isSearch && (
-                  <>
-                    {
-                      loadingShow &&
-
+                  {showType === cryptoSelect && walletType === 0 && !doPlus && !isSearch && (
+                    <>
                       <motion.div
                         variants={container}
                         initial="hidden"
@@ -2031,23 +2028,48 @@ function Wallet() {
                           }
                         })}
                       </motion.div>
-                    }
-
-                  </>
-                )}
-              </motion.div>
-              {showType === fiatSelect && walletType === 0 && !doPlus && !isSearch && (
-                <>
-                  <motion.div
-                    variants={container}
-                    initial="hidden"
-                    animate="show"
-                    className="mt-8 px-0 pb-8 "
-                  >
-                    {searchFiats.map((row, index) => {
-                      if (hideSmall) {
-                        return (
-                          row.dollarFiat > 0.01 && (
+                    </>
+                  )}
+                </motion.div>
+                {showType === fiatSelect && walletType === 0 && !doPlus && !isSearch && (
+                  <>
+                    <motion.div
+                      variants={container}
+                      initial="hidden"
+                      animate="show"
+                      className="mt-8 px-0 pb-8 "
+                    >
+                      {searchFiats.map((row, index) => {
+                        if (hideSmall) {
+                          return (
+                            row.dollarFiat > 0.01 && (
+                              <motion.div variants={item}
+                                className={clsx(
+                                  "flex justify-between items-center py-12 wallet-symbol cursor-pointer",
+                                  selectedSymbol === row.currencyCode &&
+                                  "active-border2"
+                                )}
+                                onClick={() => {
+                                  handleSelectedSymbol(2, row.currencyCode);
+                                }}
+                                key={index}
+                              >
+                                <div className="flex px-10 items-center">
+                                  <img
+                                    style={{ borderRadius: "5px" }}
+                                    className="mr-4"
+                                    width="24"
+                                    src={row.avatar}
+                                    alt=""
+                                  />
+                                  {row.currencyCode}
+                                </div>
+                                <div className="px-10">{row.balance}</div>
+                              </motion.div>
+                            )
+                          );
+                        } else {
+                          return (
                             <motion.div variants={item}
                               className={clsx(
                                 "flex justify-between items-center py-12 wallet-symbol cursor-pointer",
@@ -2071,53 +2093,51 @@ function Wallet() {
                               </div>
                               <div className="px-10">{row.balance}</div>
                             </motion.div>
-                          )
-                        );
-                      } else {
-                        return (
-                          <motion.div variants={item}
-                            className={clsx(
-                              "flex justify-between items-center py-12 wallet-symbol cursor-pointer",
-                              selectedSymbol === row.currencyCode &&
-                              "active-border2"
-                            )}
-                            onClick={() => {
-                              handleSelectedSymbol(2, row.currencyCode);
-                            }}
-                            key={index}
-                          >
-                            <div className="flex px-10 items-center">
-                              <img
-                                style={{ borderRadius: "5px" }}
-                                className="mr-4"
-                                width="24"
-                                src={row.avatar}
-                                alt=""
-                              />
-                              {row.currencyCode}
-                            </div>
-                            <div className="px-10">{row.balance}</div>
-                          </motion.div>
-                        );
-                      }
-                    })}
-                  </motion.div>
-                </>
-              )}
+                          );
+                        }
+                      })}
+                    </motion.div>
+                  </>
+                )}
 
-              {showType === 2 && walletType === 0 && !doPlus && !isSearch && (
-                <>
-                  <motion.div
-                    variants={container}
-                    initial="hidden"
-                    animate="show"
-                    className="mt-8 px-24 pb-8"
-                  // style={{ borderBottom: '1px solid #374252' }}
-                  >
-                    {searchNfts.map((row, index) => {
-                      if (hideSmall) {
-                        return (
-                          row.dollarFiat > 0.01 && (
+                {showType === 2 && walletType === 0 && !doPlus && !isSearch && (
+                  <>
+                    <motion.div
+                      variants={container}
+                      initial="hidden"
+                      animate="show"
+                      className="mt-8 px-24 pb-8"
+                    // style={{ borderBottom: '1px solid #374252' }}
+                    >
+                      {searchNfts.map((row, index) => {
+                        if (hideSmall) {
+                          return (
+                            row.dollarFiat > 0.01 && (
+                              <motion.div variants={item}
+                                className="flex justify-between items-center py-12 wallet-symbol cursor-pointer"
+                                key={index}
+                              >
+                                <div className="flex px-8 items-center">
+                                  <img
+                                    style={{ borderRadius: "50%" }}
+                                    className="mr-4"
+                                    width="24"
+                                    src={row.avatar}
+                                    alt=""
+                                  />
+                                  {row.name}
+                                </div>
+                                {isFait && (
+                                  <div className="px-8">{row.currencyAmount}</div>
+                                )}
+                                {!isFait && (
+                                  <div className="px-8">{row.balance}</div>
+                                )}
+                              </motion.div>
+                            )
+                          );
+                        } else {
+                          return (
                             <motion.div variants={item}
                               className="flex justify-between items-center py-12 wallet-symbol cursor-pointer"
                               key={index}
@@ -2133,1065 +2153,1041 @@ function Wallet() {
                                 {row.name}
                               </div>
                               {isFait && (
-                                <div className="px-8">{row.currencyAmount}</div>
+                                <div classNaFiatme="px-8">
+                                  {row.currencyAmount}
+                                </div>
                               )}
                               {!isFait && (
                                 <div className="px-8">{row.balance}</div>
                               )}
                             </motion.div>
-                          )
-                        );
-                      } else {
-                        return (
-                          <motion.div variants={item}
-                            className="flex justify-between items-center py-12 wallet-symbol cursor-pointer"
-                            key={index}
-                          >
-                            <div className="flex px-8 items-center">
-                              <img
-                                style={{ borderRadius: "50%" }}
-                                className="mr-4"
-                                width="24"
-                                src={row.avatar}
-                                alt=""
-                              />
-                              {row.name}
-                            </div>
-                            {isFait && (
-                              <div classNaFiatme="px-8">
-                                {row.currencyAmount}
+                          );
+                        }
+                      })}
+                    </motion.div>
+                  </>
+                )}
+                {/* 修改顶部栏样式 */}
+                {walletType === 0 && isSearch && !doPlus && (
+                  <>
+                    <div
+                      className="mt-8 px-24 pb-8 "
+                    // style={{backgroundColor:'#334155'}}
+                    // style={{ borderBottom: '1px solid  "#0E1421" #374252' }}
+                    // style={{backgroundColor:'#334155'}}
+                    >
+                      {searchData.map((row, index) => {
+                        if (row.type === "token") {
+                          return (
+                            <div
+                              className="flex justify-between items-center py-12 wallet-symbol cursor-pointer"
+                              key={index}
+                            >
+                              <div
+                                className="flex px-8 items-center"
+                                style={{ width: "15rem" }}
+                              >
+                                <img
+                                  style={{ borderRadius: "50%" }}
+                                  className="mr-4"
+                                  width="24"
+                                  src={row.avatar}
+                                  alt=""
+                                />
+                                {row.symbol}
                               </div>
-                            )}
-                            {!isFait && (
-                              <div className="px-8">{row.balance}</div>
-                            )}
-                          </motion.div>
-                        );
-                      }
-                    })}
-                  </motion.div>
-                </>
-              )}
-              {/* 修改顶部栏样式 */}
-              {walletType === 0 && isSearch && !doPlus && (
-                <>
-                  <div
-                    className="mt-8 px-24 pb-8 "
-                  // style={{backgroundColor:'#334155'}}
-                  // style={{ borderBottom: '1px solid  "#0E1421" #374252' }}
-                  // style={{backgroundColor:'#334155'}}
-                  >
-                    {searchData.map((row, index) => {
-                      if (row.type === "token") {
-                        return (
-                          <div
-                            className="flex justify-between items-center py-12 wallet-symbol cursor-pointer"
-                            key={index}
-                          >
+                              {isFait && (
+                                <div className="px-8">{row.currencyAmount}</div>
+                              )}
+                              {!isFait && (
+                                <div className="px-8">{row.balance}</div>
+                              )}
+                              <div>
+                                <Switch
+                                  checked={row.isShow}
+                                  onChange={() => {
+                                    setCryptoDisplaySubmit(
+                                      row.symbol,
+                                      !row.isShow
+                                    );
+                                  }}
+                                  inputProps={{ "aria-label": "controlled" }}
+                                />
+                              </div>
+                            </div>
+                          );
+                        } else if (row.type === "fiat") {
+                          return (
                             <div
-                              className="flex px-8 items-center"
-                              style={{ width: "15rem" }}
+                              className="flex justify-between items-center py-12 wallet-symbol cursor-pointer"
+                              key={index}
                             >
-                              <img
-                                style={{ borderRadius: "50%" }}
-                                className="mr-4"
-                                width="24"
-                                src={row.avatar}
-                                alt=""
-                              />
-                              {row.symbol}
-                            </div>
-                            {isFait && (
-                              <div className="px-8">{row.currencyAmount}</div>
-                            )}
-                            {!isFait && (
-                              <div className="px-8">{row.balance}</div>
-                            )}
-                            <div>
-                              <Switch
-                                checked={row.isShow}
-                                onChange={() => {
-                                  setCryptoDisplaySubmit(
-                                    row.symbol,
-                                    !row.isShow
-                                  );
-                                }}
-                                inputProps={{ "aria-label": "controlled" }}
-                              />
-                            </div>
-                          </div>
-                        );
-                      } else if (row.type === "fiat") {
-                        return (
-                          <div
-                            className="flex justify-between items-center py-12 wallet-symbol cursor-pointer"
-                            key={index}
-                          >
-                            <div
-                              className="flex px-10 items-center"
-                              style={{ width: "15rem" }}
-                            >
-                              <img
-                                style={{ borderRadius: "50%" }}
-                                className="mr-4"
-                                width="24"
-                                src={row.avatar}
-                                alt=""
-                              />
-                              {row.currencyCode}
-                            </div>
-                            <div className="px-10">{row.balance}</div>
-                            <div>
-                              <Switch
-                                checked={row.isShow}
-                                onChange={() => {
-                                  setFiatDisplaySubmit(
-                                    row.currencyCode,
-                                    !row.isShow
-                                  );
-                                }}
-                                inputProps={{ "aria-label": "controlled" }}
-                              />
-                            </div>
-                          </div>
-                        );
-                      } else if (row.type === "nft") {
-                        return (
-                          <div
-                            className="flex justify-between items-center py-12 wallet-symbol cursor-pointer"
-                            key={index}
-                          >
-                            <div
-                              className="flex px-8 items-center"
-                              style={{ width: "15rem" }}
-                            >
-                              <img
-                                style={{
-                                  borderRadius: "50%",
-                                  width: "24px",
-                                  height: "24px",
-                                }}
-                                className="mr-4"
-                                src={row.avatar}
-                                alt=""
-                              />
-                              {row.name}
-                            </div>
-                            {isFait && (
-                              <div className="px-10">{row.currencyAmount}</div>
-                            )}
-                            {!isFait && (
+                              <div
+                                className="flex px-10 items-center"
+                                style={{ width: "15rem" }}
+                              >
+                                <img
+                                  style={{ borderRadius: "50%" }}
+                                  className="mr-4"
+                                  width="24"
+                                  src={row.avatar}
+                                  alt=""
+                                />
+                                {row.currencyCode}
+                              </div>
                               <div className="px-10">{row.balance}</div>
-                            )}
-                            <div>
-                              <Switch
-                                checked={row.isShow}
-                                onChange={() => {
-                                  setNftDisplaySubmit(row.symbol, !row.isShow);
-                                }}
-                                inputProps={{ "aria-label": "controlled" }}
-                              />
+                              <div>
+                                <Switch
+                                  checked={row.isShow}
+                                  onChange={() => {
+                                    setFiatDisplaySubmit(
+                                      row.currencyCode,
+                                      !row.isShow
+                                    );
+                                  }}
+                                  inputProps={{ "aria-label": "controlled" }}
+                                />
+                              </div>
                             </div>
+                          );
+                        } else if (row.type === "nft") {
+                          return (
+                            <div
+                              className="flex justify-between items-center py-12 wallet-symbol cursor-pointer"
+                              key={index}
+                            >
+                              <div
+                                className="flex px-8 items-center"
+                                style={{ width: "15rem" }}
+                              >
+                                <img
+                                  style={{
+                                    borderRadius: "50%",
+                                    width: "24px",
+                                    height: "24px",
+                                  }}
+                                  className="mr-4"
+                                  src={row.avatar}
+                                  alt=""
+                                />
+                                {row.name}
+                              </div>
+                              {isFait && (
+                                <div className="px-10">{row.currencyAmount}</div>
+                              )}
+                              {!isFait && (
+                                <div className="px-10">{row.balance}</div>
+                              )}
+                              <div>
+                                <Switch
+                                  checked={row.isShow}
+                                  onChange={() => {
+                                    setNftDisplaySubmit(row.symbol, !row.isShow);
+                                  }}
+                                  inputProps={{ "aria-label": "controlled" }}
+                                />
+                              </div>
+                            </div>
+                          );
+                        }
+                      })}
+                    </div>
+                  </>
+                )}
+
+                {/*中心化的token自定义*/}
+                {doPlus && showType === cryptoSelect && walletType === 0 && (
+                  <div
+                    className="mt-8 px-24 pb-8"
+                  // style={{ borderBottom: '1px solid #374252' }}
+                  >
+                    {cryptoDisplayShowData.map((row, index) => {
+                      return (
+                        <div
+                          className="flex justify-between items-center py-12 wallet-symbol cursor-pointer"
+                          key={index}
+                        >
+                          <div
+                            className="flex px-10 items-center"
+                            style={{ width: "10rem" }}
+                          >
+                            <img
+                              style={{ borderRadius: "50%" }}
+                              className="mr-4"
+                              width="24"
+                              src={row.avatar}
+                              alt=""
+                            />
+                            {row.symbol}
                           </div>
-                        );
-                      }
+                          {isFait && (
+                            <div className="px-8">{row.currencyAmount}</div>
+                          )}
+                          {!isFait && <div className="px-10">{row.balance}</div>}
+                          <div
+                            style={{
+                              width: "14rem",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "flex-end",
+                            }}
+                          >
+                            <span style={{ color: "#94A3B8" }}>{row.symbol}</span>
+                            <Switch
+                              checked={row.isShow}
+                              onChange={() => {
+                                setCryptoDisplaySubmit(row.symbol, !row.isShow);
+                              }}
+                              inputProps={{ "aria-label": "controlled" }}
+                            />
+                          </div>
+                        </div>
+                      );
                     })}
                   </div>
-                </>
-              )}
-
-              {/*中心化的token自定义*/}
-              {doPlus && showType === cryptoSelect && walletType === 0 && (
-                <div
-                  className="mt-8 px-24 pb-8"
-                // style={{ borderBottom: '1px solid #374252' }}
-                >
-                  {cryptoDisplayShowData.map((row, index) => {
-                    return (
-                      <div
-                        className="flex justify-between items-center py-12 wallet-symbol cursor-pointer"
-                        key={index}
-                      >
-                        <div
-                          className="flex px-10 items-center"
-                          style={{ width: "10rem" }}
-                        >
-                          <img
-                            style={{ borderRadius: "50%" }}
-                            className="mr-4"
-                            width="24"
-                            src={row.avatar}
-                            alt=""
-                          />
-                          {row.symbol}
-                        </div>
-                        {isFait && (
-                          <div className="px-8">{row.currencyAmount}</div>
-                        )}
-                        {!isFait && <div className="px-10">{row.balance}</div>}
-                        <div
-                          style={{
-                            width: "14rem",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "flex-end",
-                          }}
-                        >
-                          <span style={{ color: "#94A3B8" }}>{row.symbol}</span>
-                          <Switch
-                            checked={row.isShow}
-                            onChange={() => {
-                              setCryptoDisplaySubmit(row.symbol, !row.isShow);
-                            }}
-                            inputProps={{ "aria-label": "controlled" }}
-                          />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-
-              {/*法币自定义*/}
-              {doPlus && showType === fiatSelect && walletType === 0 && (
-                <div
-                  className="mt-8 px-24 pb-8"
-                // style={{ borderBottom: '1px solid #374252' }}
-                >
-                  {fiatDisplayShowData.map((row, index) => {
-                    return (
-                      <div
-                        className="flex justify-between items-center py-12 wallet-symbol cursor-pointer"
-                        key={index}
-                      >
-                        <div
-                          className="flex px-10 items-center"
-                          style={{ width: "10rem" }}
-                        >
-                          <img
-                            style={{ borderRadius: "50%" }}
-                            className="mr-4"
-                            width="24"
-                            src={row.avatar}
-                            alt=""
-                          />
-                          {row.currencyCode}
-                        </div>
-                        <div className="px-10">{row.balance}</div>
-                        <div
-                          style={{
-                            width: "14rem",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "flex-end",
-                          }}
-                        >
-                          <span style={{ color: "#94A3B8" }}>
-                            {row.currencyCode}
-                          </span>
-                          <Switch
-                            checked={row.isShow}
-                            onChange={() => {
-                              setFiatDisplaySubmit(
-                                row.currencyCode,
-                                !row.isShow
-                              );
-                            }}
-                            inputProps={{ "aria-label": "controlled" }}
-                          />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-
-              {/*nft自定义*/}
-              {doPlus && showType === 2 && walletType === 0 && (
-                <div
-                  className="mt-8 px-24 pb-8"
-                // style={{ borderBottom: '1px solid #374252' }}
-                >
-                  {nftDisplayShowData.map((row, index) => {
-                    return (
-                      <div
-                        className="flex justify-between items-center py-12 wallet-symbol cursor-pointer"
-                        key={index}
-                      >
-                        <div
-                          className="flex  items-center"
-                          style={{ width: "15rem" }}
-                        >
-                          <img
-                            style={{
-                              borderRadius: "50%",
-                              width: "24px",
-                              height: "24px",
-                            }}
-                            className="mr-4"
-                            src={row.avatar}
-                            alt=""
-                          />
-                          {row.name}
-                        </div>
-                        {isFait && <div>{row.currencyAmount}</div>}
-                        {!isFait && <div>{row.balance}</div>}
-                        <div
-                          style={{
-                            width: "14rem",
-                            overflow: "hidden",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "flex-end",
-                          }}
-                        >
-                          <span style={{ color: "#94A3B8" }}>{row.symbol}</span>
-                          <Switch
-                            checked={row.isShow}
-                            onChange={() => {
-                              setNftDisplaySubmit(row.symbol, !row.isShow);
-                            }}
-                            inputProps={{ "aria-label": "controlled" }}
-                          />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-
-              {/*metamask Token自定义*/}
-              {decentralized != -1 && doPlus && walletType === 1 && (
-                <div
-                  className="mt-8 px-24"
-                // style={{ borderBottom: '1px solid #374252' }}
-                >
-                  {walletDisplayShowData.map((row, index) => {
-                    return (
-                      <div
-                        className="flex justify-between items-center py-12 wallet-symbol cursor-pointer"
-                        key={index}
-                      >
-                        <div
-                          className="flex px-10 items-center"
-                          style={{ width: "15rem" }}
-                        >
-                          <img
-                            style={{
-                              borderRadius: "50%",
-                              width: "24px",
-                              height: "24px",
-                            }}
-                            className="mr-4"
-                            src={row.avatar}
-                            alt=""
-                          />
-                          {row.symbol}
-                        </div>
-                        {isFait && (
-                          <div className="px-10">{row.currencyAmount}</div>
-                        )}
-                        {!isFait && <div className="px-10">{row.balance}</div>}
-                        <div>
-                          <Switch
-                            checked={row.isShow}
-                            onChange={() => {
-                              setWalletDisplaySubmit(row.symbol, !row.isShow);
-                            }}
-                            inputProps={{ "aria-label": "controlled" }}
-                          />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </Box>
-          </motion.div>
-
-          {decentralized != -1 && loginType === "web3_wallet" && (
-            <motion.div
-              variants={container}
-              initial="hidden"
-              animate="show"
-              className="p-24"
-              style={{ paddingTop: "1.1rem" }}
-            >
-              <Box
-                component={motion.div}
-                variants={item}
-                className="w-full rounded-16 border flex flex-col"
-                sx={{
-                  backgroundColor: "#1E293B",
-                  border: "none",
-                }}
-              >
-                <div className="mt-8 px-24">
-                  <div
-                    className="flex justify-between items-center my-4 "
-                    style={{ height: "2rem" }}
-                  >
-                    <div>{t("home_account_3")} </div>
-
-                    <div
-                      className="mr-8 flex items-center"
-                      style={{ color: "#ffffff" }}
-                    >
-                      {(isFait || showType === fiatSelect) && (
-                        <div
-                          onClick={() => {
-                            // setOpenChangeCurrency(true)
-                            setOpenAnimateModal(true);
-                          }}
-                          className="px-20 py-4 flex items-center justify-center mr-24 cursor-pointer txtColorTitleSmall"
-                          style={{
-                            background: "#0e1421",
-                            borderRadius: "8px",
-                            height: "3rem",
-                            padding: "0 1rem 0 0.8rem",
-                          }}
-                        >
-                          <img
-                            className=""
-                            style={{
-                              width: "20px",
-                              borderRadius: "3px",
-                              marginRight: "1.2rem",
-                            }}
-                            src={arrayLookup(
-                              currencys,
-                              "currencyCode",
-                              userData.currencyCode,
-                              "avatar"
-                            )}
-                            alt=""
-                          />
-                          {userData.currencyCode}
-                        </div>
-                      )}
-
-                      {totalBalance}
-                    </div>
-                  </div>
-                  {showType !== fiatSelect && (
-                    <div className="flex justify-between items-center my-4">
-                      <div>{t("home_account_4")} </div>
-                      <div className="huaDongM">
-                        <Switch
-                          checked={isFait}
-                          onChange={() => {
-                            setIsFait(!isFait);
-                            getUserCurrencyMoney();
-                          }}
-                          inputProps={{ "aria-label": "controlled" }}
-                        />
-                      </div>
-                    </div>
-                  )}
-                  <div
-                    className="flex justify-between items-center my-4"
-                    style={{ marginTop: "-1rem" }}
-                  >
-                    <div>{t("home_account_5")}</div>
-                    <div className="huaDongM">
-                      <Switch
-                        checked={hideSmall}
-                        onChange={() => {
-                          setHideSmall(!hideSmall);
-                          document
-                            .getElementsByClassName("FusePageCarded-content")[0]
-                            ?.scrollIntoView();
-                        }}
-                        inputProps={{ "aria-label": "controlled" }}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/*<div className="mt-8 px-24">*/}
-                {/*    <FormControl sx={{ width: '100%' }} variant="outlined">*/}
-                {/*        <OutlinedInput*/}
-                {/*            disabled={true}*/}
-                {/*            id="outlined-adornment-weight"*/}
-                {/*            value="bc1qzm9ln6...kufte65t0pyh"*/}
-                {/*            endAdornment={<InputAdornment position="end">*/}
-                {/*                <IconButton*/}
-                {/*                    aria-label="toggle password visibility"*/}
-                {/*                    onClick={() => {*/}
-                {/*                        handleCopyText('bc1qzm9ln6...kufte65t0pyh')*/}
-                {/*                    }}*/}
-                {/*                    edge="end"*/}
-                {/*                >*/}
-                {/*                    <img src="wallet/assets/images/deposite/copy.png" alt=""/>*/}
-                {/*                </IconButton>*/}
-                {/*            </InputAdornment>}*/}
-                {/*            aria-describedby="outlined-weight-helper-text"*/}
-                {/*            inputProps={{*/}
-                {/*                'aria-label': 'weight',*/}
-                {/*            }}*/}
-                {/*        />*/}
-                {/*    </FormControl>*/}
-                {/*</div>*/}
-                {/* search区域 */}
-                {decentralized != -1 && walletType === 1 && (
-                  <div
-                    className="mt-8 px-24 flex justify-between items-center "
-                    style={{
-                      marginTop: 0,
-                      marginBottom: "1rem",
-                    }}
-                  >
-                    <Button
-                      className="foxBtn"
-                      style={{
-                        width: "36%",
-                        margin: ".5rem 0",
-                        borderRadius: "8px",
-                        backgroundColor: "#1F2A3C",
-                      }}
-                      onClick={() => {
-                        setOpenChangeNetwork(true);
-                      }}
-                    >
-                      <img
-                        className="mr-4"
-                        style={{ height: "80%" }}
-                        src="wallet/assets/images/deposite/bnb.png"
-                        alt=""
-                      />
-                      Network
-                    </Button>
-
-
-                    <Button
-                      className="foxBtn"
-                      style={{
-                        width: "36%",
-                        margin: ".5rem 0",
-                        borderRadius: "8px",
-                        backgroundColor: "#1F2A3C",
-                      }}
-                      variant="outlined"
-                      onClick={() => {
-                        dispatch(
-                          showMessage({ message: t('error_9'), code: 3 })
-                        );
-                        setTimeout(() => {
-                          setDdecentralized(-1);
-                          window.localStorage.setItem("isDecentralized", -1);
-                          // window.location.reload()
-                          window.localStorage.setItem("walletname", "");
-                        }, 1000);
-                      }}
-                    >
-                      {t("home_wallet_9")}
-                    </Button>
-                  </div>
                 )}
-              </Box>
-            </motion.div>
-          )}
-          {decentralized != -1 && loginType !== "web3_wallet" && walletType == 0 && (
-            <motion.div
-              variants={container}
-              initial="hidden"
-              animate="show"
-              className="px-15 mb-36"
-              style={{ paddingTop: "1rem" }}
-            >
-              <Box
-                component={motion.div}
-                variants={item}
-                className="w-full border flex flex-col shouYeYuanJiao"
-                sx={{
-                  backgroundColor: "#1E293B",
-                  border: "none",
-                }}
-              >
-                <div className="mt-8 px-10">
-                  <div
-                    className="flex justify-between items-center my-4 "
-                    style={{ height: "2rem" }}
-                  >
-                    <div>{t("home_account_3")} </div>
 
-                    <div
-                      className="mr-8 flex items-center"
-                      style={{ color: "#ffffff" }}
-                    >
-                      {(isFait || showType === fiatSelect) && (
+                {/*法币自定义*/}
+                {doPlus && showType === fiatSelect && walletType === 0 && (
+                  <div
+                    className="mt-8 px-24 pb-8"
+                  // style={{ borderBottom: '1px solid #374252' }}
+                  >
+                    {fiatDisplayShowData.map((row, index) => {
+                      return (
                         <div
-                          onClick={() => {
-                            // setOpenChangeCurrency(true)
-                            setOpenAnimateModal(true);
-                          }}
-                          className="px-20 py-4 flex items-center justify-center mr-24 cursor-pointer txtColorTitleSmall"
-                          style={{
-                            background: "#0e1421",
-                            borderRadius: "8px",
-                            height: "3rem",
-                            padding: "0 1rem 0 0.8rem",
-                          }}
+                          className="flex justify-between items-center py-12 wallet-symbol cursor-pointer"
+                          key={index}
                         >
-                          <img
-                            className=""
-                            style={{
-                              width: "20px",
-                              borderRadius: "3px",
-                              marginRight: "1.2rem",
-                            }}
-                            src={arrayLookup(
-                              currencys,
-                              "currencyCode",
-                              userData.currencyCode,
-                              "avatar"
-                            )}
-                            alt=""
-                          />
-                          {userData.currencyCode}
-                        </div>
-                      )}
-
-                      {totalBalance}
-                    </div>
-                  </div>
-                  {showType !== fiatSelect && (
-                    <div className="flex justify-between items-center my-4">
-                      <div>{t("home_account_4")} </div>
-                      <div className="huaDongM">
-                        <Switch
-                          checked={isFait}
-                          onChange={() => {
-                            setIsFait(!isFait);
-                            getUserCurrencyMoney();
-                          }}
-                          inputProps={{ "aria-label": "controlled" }}
-                        />
-                      </div>
-                    </div>
-                  )}
-                  <div
-                    className="flex justify-between items-center my-4"
-                    style={{ marginTop: "-1rem" }}
-                  >
-                    <div>{t("home_account_5")}</div>
-                    <div className="huaDongM">
-                      <Switch
-                        checked={hideSmall}
-                        onChange={() => {
-                          setHideSmall(!hideSmall);
-                          document
-                            .getElementsByClassName("FusePageCarded-content")[0]
-                            ?.scrollIntoView();
-                        }}
-                        inputProps={{ "aria-label": "controlled" }}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/*<div className="mt-8 px-24">*/}
-                {/*    <FormControl sx={{ width: '100%' }} variant="outlined">*/}
-                {/*        <OutlinedInput*/}
-                {/*            disabled={true}*/}
-                {/*            id="outlined-adornment-weight"*/}
-                {/*            value="bc1qzm9ln6...kufte65t0pyh"*/}
-                {/*            endAdornment={<InputAdornment position="end">*/}
-                {/*                <IconButton*/}
-                {/*                    aria-label="toggle password visibility"*/}
-                {/*                    onClick={() => {*/}
-                {/*                        handleCopyText('bc1qzm9ln6...kufte65t0pyh')*/}
-                {/*                    }}*/}
-                {/*                    edge="end"*/}
-                {/*                >*/}
-                {/*                    <img src="wallet/assets/images/deposite/copy.png" alt=""/>*/}
-                {/*                </IconButton>*/}
-                {/*            </InputAdornment>}*/}
-                {/*            aria-describedby="outlined-weight-helper-text"*/}
-                {/*            inputProps={{*/}
-                {/*                'aria-label': 'weight',*/}
-                {/*            }}*/}
-                {/*        />*/}
-                {/*    </FormControl>*/}
-                {/*</div>*/}
-                {/* search区域 */}
-                {decentralized != -1 && walletType === 1 && (
-                  <div
-                    className="mt-8 px-24 flex justify-between items-center"
-                    style={{
-                      marginTop: 0,
-                      marginBottom: "1rem",
-                    }}
-                  >
-                    <Button
-                      className="foxBtn"
-                      style={{
-                        width: "36%",
-                        margin: ".5rem 0",
-                        borderRadius: "8px",
-                        backgroundColor: "#1F2A3C",
-                      }}
-                      onClick={() => {
-                        setOpenChangeNetwork(true);
-                      }}
-                    >
-                      <img
-                        className="mr-4"
-                        style={{ height: "80%" }}
-                        src="wallet/assets/images/deposite/bnb.png"
-                        alt=""
-                      />
-                      Network
-                    </Button>
-                    <Button
-                      className="foxBtn"
-                      style={{
-                        width: "36%",
-                        margin: ".5rem 0",
-                        borderRadius: "8px",
-                        backgroundColor: "#1F2A3C",
-                      }}
-                      variant="outlined"
-                      onClick={() => {
-                        dispatch(
-                          showMessage({ message: t('error_9'), code: 3 })
-                        );
-                        setTimeout(() => {
-                          setDdecentralized(-1);
-                          window.localStorage.setItem("isDecentralized", "-1");
-                          // window.location.reload()
-                          window.localStorage.setItem("walletname", "");
-                        }, 1000);
-                      }}
-                    >
-                      {t("home_wallet_9")}
-                    </Button>
-                  </div>
-                )}
-              </Box>
-            </motion.div>
-          )}
-          {decentralized == -1 && walletType == 0 && (
-            <motion.div
-              variants={container}
-              initial="hidden"
-              animate="show"
-              className="p-24"
-              style={{ paddingTop: "1.1rem" }}
-            >
-              <Box
-                component={motion.div}
-                variants={item}
-                className="w-full rounded-16 border flex flex-col"
-                sx={{
-                  backgroundColor: "#1E293B",
-                  border: "none",
-                }}
-              >
-                <div className="mt-8 px-24">
-                  <div
-                    className="flex justify-between items-center my-4 "
-                    style={{ height: "2rem" }}
-                  >
-                    <div>{t("home_account_3")} </div>
-
-                    <div
-                      className="mr-8 flex items-center"
-                      style={{ color: "#ffffff" }}
-                    >
-                      {(isFait || showType === fiatSelect) && (
-                        <div
-                          onClick={() => {
-                            // setOpenChangeCurrency(true)
-                            setOpenAnimateModal(true);
-                          }}
-                          className="px-20 py-4 flex items-center justify-center mr-24 cursor-pointer txtColorTitleSmall"
-                          style={{
-                            background: "#0e1421",
-                            borderRadius: "8px",
-                            height: "3rem",
-                            padding: "0 1rem 0 0.8rem",
-                          }}
-                        >
-                          <img
-                            className=""
-                            style={{
-                              width: "20px",
-                              borderRadius: "3px",
-                              marginRight: "1.2rem",
-                            }}
-                            src={arrayLookup(
-                              currencys,
-                              "currencyCode",
-                              userData.currencyCode,
-                              "avatar"
-                            )}
-                            alt=""
-                          />
-                          {userData.currencyCode}
-                        </div>
-                      )}
-
-                      {totalBalance}
-                    </div>
-                  </div>
-                  {showType !== fiatSelect && (
-                    <div className="flex justify-between items-center my-4">
-                      <div>{t("home_account_4")} </div>
-                      <div className="huaDongM">
-                        <Switch
-                          checked={isFait}
-                          onChange={() => {
-                            setIsFait(!isFait);
-                            getUserCurrencyMoney();
-                          }}
-                          inputProps={{ "aria-label": "controlled" }}
-                        />
-                      </div>
-                    </div>
-                  )}
-                  <div
-                    className="flex justify-between items-center my-4"
-                    style={{ marginTop: "-1rem" }}
-                  >
-                    <div>{t("home_account_5")}</div>
-                    <div className="huaDongM">
-                      <Switch
-                        checked={hideSmall}
-                        onChange={() => {
-                          setHideSmall(!hideSmall);
-                          document
-                            .getElementsByClassName("FusePageCarded-content")[0]
-                            ?.scrollIntoView();
-                        }}
-                        inputProps={{ "aria-label": "controlled" }}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/*<div className="mt-8 px-24">*/}
-                {/*    <FormControl sx={{ width: '100%' }} variant="outlined">*/}
-                {/*        <OutlinedInput*/}
-                {/*            disabled={true}*/}
-                {/*            id="outlined-adornment-weight"*/}
-                {/*            value="bc1qzm9ln6...kufte65t0pyh"*/}
-                {/*            endAdornment={<InputAdornment position="end">*/}
-                {/*                <IconButton*/}
-                {/*                    aria-label="toggle password visibility"*/}
-                {/*                    onClick={() => {*/}
-                {/*                        handleCopyText('bc1qzm9ln6...kufte65t0pyh')*/}
-                {/*                    }}*/}
-                {/*                    edge="end"*/}
-                {/*                >*/}
-                {/*                    <img src="wallet/assets/images/deposite/copy.png" alt=""/>*/}
-                {/*                </IconButton>*/}
-                {/*            </InputAdornment>}*/}
-                {/*            aria-describedby="outlined-weight-helper-text"*/}
-                {/*            inputProps={{*/}
-                {/*                'aria-label': 'weight',*/}
-                {/*            }}*/}
-                {/*        />*/}
-                {/*    </FormControl>*/}
-                {/*</div>*/}
-                {/* search区域 */}
-                {decentralized != -1 && walletType === 1 && (
-                  <div
-                    className="mt-8 px-24 flex justify-between items-center"
-                    style={{
-                      marginTop: 0,
-                      marginBottom: "1rem",
-                    }}
-                  >
-                    <Button
-                      className="foxBtn"
-                      style={{
-                        width: "36%",
-                        margin: ".5rem 0",
-                        borderRadius: "8px",
-                        backgroundColor: "#1F2A3C",
-                      }}
-                      onClick={() => {
-                        setOpenChangeNetwork(true);
-                      }}
-                    >
-                      <img
-                        className="mr-4"
-                        style={{ height: "80%" }}
-                        src="wallet/assets/images/deposite/bnb.png"
-                        alt=""
-                      />
-                      Network
-                    </Button>
-                    <Button
-                      className="foxBtn"
-                      style={{
-                        width: "36%",
-                        margin: ".5rem 0",
-                        borderRadius: "8px",
-                        backgroundColor: "#1F2A3C",
-                      }}
-                      variant="outlined"
-                      onClick={() => {
-                        dispatch(
-                          showMessage({ message: t('error_9'), code: 3 })
-                        );
-                        setTimeout(() => {
-                          setDdecentralized(-1);
-                          window.localStorage.setItem("isDecentralized", -1);
-                          // window.location.reload()
-                          window.localStorage.setItem("walletname", "");
-                        }, 1000);
-                      }}
-                    >
-                      {t("home_wallet_9")}
-                    </Button>
-                  </div>
-                )}
-              </Box>
-            </motion.div>
-          )}
-
-
-          {/*切换法币*/}
-          <AnimateModal
-            className="faBiDi"
-            open={openAnimateModal}
-            onClose={() => setOpenAnimateModal(false)}
-            style={{ maxWidth: "360px" }}
-          >
-            <div
-              className="dialog-animate-box faBiBoxDi "
-              style={{ overflowY: "scroll", overflowX: "hidden" }}
-            >
-              <Box
-                className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidth"
-                sx={{
-                  backgroundColor: "#1e293b",
-                  padding: "1.5rem",
-                  overflow: "hidden",
-
-                }}
-              >
-                <Typography
-                  className="text-14 font-medium"
-                  style={{ marginBottom: "2rem", color: "#94a3b8" }}
-                >
-                  {t("home_wallet_11")}
-                </Typography>
-                <div className="dialog-select-fiat">
-                  {currencys.map((row, index) => {
-                    return (
-                      <div
-                        className="dialog-select-fiat-item border-r-5 flex items-center justify-start txtColorTitleSmall"
-                        key={index}
-                        onClick={() => {
-                          changeCurrency(row.currencyCode);
-                        }}
-                      >
-                        <img
-                          src={arrayLookup(
-                            currencys,
-                            "currencyCode",
-                            row.currencyCode,
-                            "avatar"
-                          )}
-                          className="dialog-select-fiat-icon border-r-5"
-                          alt=""
-                        />
-                        <Typography className="text-14">
-                          {row.currencyCode}
-                        </Typography>
-                      </div>
-                    );
-                  })}
-                </div>
-              </Box>
-
-            </div>
-            {/* </DialogContent> */}
-            {/* </BootstrapDialog> */}
-          </AnimateModal>
-
-          {/*切换网路*/}
-          <BootstrapDialog
-            onClose={() => {
-              setOpenChangeNetwork(false);
-            }}
-            aria-labelledby="customized-dialog-title"
-            open={openChangeNetwork}
-            className="dialog-container "
-          >
-            <DialogContent dividers className="netWorkDi">
-              <div className=" ">
-                <Typography
-                  id="customized-dialog-title"
-                  className="text-24 px-16 dialog-title-text netWorkTxtWh"
-                >
-                  &nbsp;
-                  <img
-                    src="wallet/assets/images/logo/icon-close.png"
-                    className="dialog-close-btn"
-                    onClick={() => {
-                      setOpenChangeNetwork(false);
-                    }}
-                    alt="close icon"
-                  />
-                </Typography>
-
-
-                <Box className="dialog-content dialog-content-select-network-height">
-                  <Box
-                    className="dialog-content-inner dialog-content-select-network-width"
-                    sx={{
-                      overflow: "hidden",
-                    }}
-                  >
-                    <Typography
-                      className="text-14 font-medium border-r-5 netWorkBannerWh"
-                      style={{
-                        marginBottom: "1.5rem",
-                        padding: "1.5rem",
-                        backgroundColor: "#1e293b",
-                        color: "#94a3b8",
-                      }}
-                    >
-                      You are currently browsing on the{" "}
-                      <span style={{ color: "#16c2a3" }}>Etherenum</span>{" "}
-                      network.
-                    </Typography>
-
-
-                    <div className="dialog-select-network flex flex-wrap justify-between">
-                      {networkData.map((row, index) => {
-                        return (
                           <div
-                            className="dialog-select-network-item border-r-5 flex items-center justify-start txtColorTitleSmall"
-                            key={index}
+                            className="flex px-10 items-center"
+                            style={{ width: "10rem" }}
+                          >
+                            <img
+                              style={{ borderRadius: "50%" }}
+                              className="mr-4"
+                              width="24"
+                              src={row.avatar}
+                              alt=""
+                            />
+                            {row.currencyCode}
+                          </div>
+                          <div className="px-10">{row.balance}</div>
+                          <div
+                            style={{
+                              width: "14rem",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "flex-end",
+                            }}
+                          >
+                            <span style={{ color: "#94A3B8" }}>
+                              {row.currencyCode}
+                            </span>
+                            <Switch
+                              checked={row.isShow}
+                              onChange={() => {
+                                setFiatDisplaySubmit(
+                                  row.currencyCode,
+                                  !row.isShow
+                                );
+                              }}
+                              inputProps={{ "aria-label": "controlled" }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+
+                {/*nft自定义*/}
+                {doPlus && showType === 2 && walletType === 0 && (
+                  <div
+                    className="mt-8 px-24 pb-8"
+                  // style={{ borderBottom: '1px solid #374252' }}
+                  >
+                    {nftDisplayShowData.map((row, index) => {
+                      return (
+                        <div
+                          className="flex justify-between items-center py-12 wallet-symbol cursor-pointer"
+                          key={index}
+                        >
+                          <div
+                            className="flex  items-center"
+                            style={{ width: "15rem" }}
+                          >
+                            <img
+                              style={{
+                                borderRadius: "50%",
+                                width: "24px",
+                                height: "24px",
+                              }}
+                              className="mr-4"
+                              src={row.avatar}
+                              alt=""
+                            />
+                            {row.name}
+                          </div>
+                          {isFait && <div>{row.currencyAmount}</div>}
+                          {!isFait && <div>{row.balance}</div>}
+                          <div
+                            style={{
+                              width: "14rem",
+                              overflow: "hidden",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "flex-end",
+                            }}
+                          >
+                            <span style={{ color: "#94A3B8" }}>{row.symbol}</span>
+                            <Switch
+                              checked={row.isShow}
+                              onChange={() => {
+                                setNftDisplaySubmit(row.symbol, !row.isShow);
+                              }}
+                              inputProps={{ "aria-label": "controlled" }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+
+                {/*metamask Token自定义*/}
+                {decentralized != -1 && doPlus && walletType === 1 && (
+                  <div
+                    className="mt-8 px-24"
+                  // style={{ borderBottom: '1px solid #374252' }}
+                  >
+                    {walletDisplayShowData.map((row, index) => {
+                      return (
+                        <div
+                          className="flex justify-between items-center py-12 wallet-symbol cursor-pointer"
+                          key={index}
+                        >
+                          <div
+                            className="flex px-10 items-center"
+                            style={{ width: "15rem" }}
+                          >
+                            <img
+                              style={{
+                                borderRadius: "50%",
+                                width: "24px",
+                                height: "24px",
+                              }}
+                              className="mr-4"
+                              src={row.avatar}
+                              alt=""
+                            />
+                            {row.symbol}
+                          </div>
+                          {isFait && (
+                            <div className="px-10">{row.currencyAmount}</div>
+                          )}
+                          {!isFait && <div className="px-10">{row.balance}</div>}
+                          <div>
+                            <Switch
+                              checked={row.isShow}
+                              onChange={() => {
+                                setWalletDisplaySubmit(row.symbol, !row.isShow);
+                              }}
+                              inputProps={{ "aria-label": "controlled" }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </Box>
+            </motion.div>
+
+            {decentralized != -1 && loginType === "web3_wallet" && (
+              <motion.div
+                variants={container}
+                initial="hidden"
+                animate="show"
+                className="p-24"
+                style={{ paddingTop: "1.1rem" }}
+              >
+                <Box
+                  component={motion.div}
+                  variants={item}
+                  className="w-full rounded-16 border flex flex-col"
+                  sx={{
+                    backgroundColor: "#1E293B",
+                    border: "none",
+                  }}
+                >
+                  <div className="mt-8 px-24">
+                    <div
+                      className="flex justify-between items-center my-4 "
+                      style={{ height: "2rem" }}
+                    >
+                      <div>{t("home_account_3")} </div>
+
+                      <div
+                        className="mr-8 flex items-center"
+                        style={{ color: "#ffffff" }}
+                      >
+                        {(isFait || showType === fiatSelect) && (
+                          <div
                             onClick={() => {
-                              changeNetwork(row);
+                              // setOpenChangeCurrency(true)
+                              setOpenAnimateModal(true);
+                            }}
+                            className="px-20 py-4 flex items-center justify-center mr-24 cursor-pointer txtColorTitleSmall"
+                            style={{
+                              background: "#0e1421",
+                              borderRadius: "8px",
+                              height: "3rem",
+                              padding: "0 1rem 0 0.8rem",
                             }}
                           >
                             <img
-                              src={row.avatar}
-                              className="dialog-select-fiat-icon border-r-5"
+                              className=""
+                              style={{
+                                width: "20px",
+                                borderRadius: "3px",
+                                marginRight: "1.2rem",
+                              }}
+                              src={arrayLookup(
+                                currencys,
+                                "currencyCode",
+                                userData.currencyCode,
+                                "avatar"
+                              )}
                               alt=""
                             />
-                            <Typography className="text-14 text-nowrap">
-                              {row.network}
-                            </Typography>
+                            {userData.currencyCode}
                           </div>
-                        );
-                      })}
+                        )}
+
+                        {totalBalance}
+                      </div>
                     </div>
-                  </Box>
+                    {showType !== fiatSelect && (
+                      <div className="flex justify-between items-center my-4">
+                        <div>{t("home_account_4")} </div>
+                        <div className="huaDongM">
+                          <Switch
+                            checked={isFait}
+                            onChange={() => {
+                              setIsFait(!isFait);
+                              getUserCurrencyMoney();
+                            }}
+                            inputProps={{ "aria-label": "controlled" }}
+                          />
+                        </div>
+                      </div>
+                    )}
+                    <div
+                      className="flex justify-between items-center my-4"
+                      style={{ marginTop: "-1rem" }}
+                    >
+                      <div>{t("home_account_5")}</div>
+                      <div className="huaDongM">
+                        <Switch
+                          checked={hideSmall}
+                          onChange={() => {
+                            setHideSmall(!hideSmall);
+                            document
+                              .getElementsByClassName("FusePageCarded-content")[0]
+                              ?.scrollIntoView();
+                          }}
+                          inputProps={{ "aria-label": "controlled" }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/*<div className="mt-8 px-24">*/}
+                  {/*    <FormControl sx={{ width: '100%' }} variant="outlined">*/}
+                  {/*        <OutlinedInput*/}
+                  {/*            disabled={true}*/}
+                  {/*            id="outlined-adornment-weight"*/}
+                  {/*            value="bc1qzm9ln6...kufte65t0pyh"*/}
+                  {/*            endAdornment={<InputAdornment position="end">*/}
+                  {/*                <IconButton*/}
+                  {/*                    aria-label="toggle password visibility"*/}
+                  {/*                    onClick={() => {*/}
+                  {/*                        handleCopyText('bc1qzm9ln6...kufte65t0pyh')*/}
+                  {/*                    }}*/}
+                  {/*                    edge="end"*/}
+                  {/*                >*/}
+                  {/*                    <img src="wallet/assets/images/deposite/copy.png" alt=""/>*/}
+                  {/*                </IconButton>*/}
+                  {/*            </InputAdornment>}*/}
+                  {/*            aria-describedby="outlined-weight-helper-text"*/}
+                  {/*            inputProps={{*/}
+                  {/*                'aria-label': 'weight',*/}
+                  {/*            }}*/}
+                  {/*        />*/}
+                  {/*    </FormControl>*/}
+                  {/*</div>*/}
+                  {/* search区域 */}
+                  {decentralized != -1 && walletType === 1 && (
+                    <div
+                      className="mt-8 px-24 flex justify-between items-center "
+                      style={{
+                        marginTop: 0,
+                        marginBottom: "1rem",
+                      }}
+                    >
+                      <Button
+                        className="foxBtn"
+                        style={{
+                          width: "36%",
+                          margin: ".5rem 0",
+                          borderRadius: "8px",
+                          backgroundColor: "#1F2A3C",
+                        }}
+                        onClick={() => {
+                          setOpenChangeNetwork(true);
+                        }}
+                      >
+                        <img
+                          className="mr-4"
+                          style={{ height: "80%" }}
+                          src="wallet/assets/images/deposite/bnb.png"
+                          alt=""
+                        />
+                        Network
+                      </Button>
+
+
+                      <Button
+                        className="foxBtn"
+                        style={{
+                          width: "36%",
+                          margin: ".5rem 0",
+                          borderRadius: "8px",
+                          backgroundColor: "#1F2A3C",
+                        }}
+                        variant="outlined"
+                        onClick={() => {
+                          dispatch(
+                            showMessage({ message: t('error_9'), code: 3 })
+                          );
+                          setTimeout(() => {
+                            setDdecentralized(-1);
+                            window.localStorage.setItem("isDecentralized", -1);
+                            // window.location.reload()
+                            window.localStorage.setItem("walletname", "");
+                          }, 1000);
+                        }}
+                      >
+                        {t("home_wallet_9")}
+                      </Button>
+                    </div>
+                  )}
                 </Box>
+              </motion.div>
+            )}
+            {decentralized != -1 && loginType !== "web3_wallet" && walletType == 0 && (
+              <motion.div
+                variants={container}
+                initial="hidden"
+                animate="show"
+                className="px-15 mb-36"
+                style={{ paddingTop: "1rem" }}
+              >
+                <Box
+                  component={motion.div}
+                  variants={item}
+                  className="w-full border flex flex-col shouYeYuanJiao"
+                  sx={{
+                    backgroundColor: "#1E293B",
+                    border: "none",
+                  }}
+                >
+                  <div className="mt-8 px-10">
+                    <div
+                      className="flex justify-between items-center my-4 "
+                      style={{ height: "2rem" }}
+                    >
+                      <div>{t("home_account_3")} </div>
+
+                      <div
+                        className="mr-8 flex items-center"
+                        style={{ color: "#ffffff" }}
+                      >
+                        {(isFait || showType === fiatSelect) && (
+                          <div
+                            onClick={() => {
+                              // setOpenChangeCurrency(true)
+                              setOpenAnimateModal(true);
+                            }}
+                            className="px-20 py-4 flex items-center justify-center mr-24 cursor-pointer txtColorTitleSmall"
+                            style={{
+                              background: "#0e1421",
+                              borderRadius: "8px",
+                              height: "3rem",
+                              padding: "0 1rem 0 0.8rem",
+                            }}
+                          >
+                            <img
+                              className=""
+                              style={{
+                                width: "20px",
+                                borderRadius: "3px",
+                                marginRight: "1.2rem",
+                              }}
+                              src={arrayLookup(
+                                currencys,
+                                "currencyCode",
+                                userData.currencyCode,
+                                "avatar"
+                              )}
+                              alt=""
+                            />
+                            {userData.currencyCode}
+                          </div>
+                        )}
+
+                        {totalBalance}
+                      </div>
+                    </div>
+                    {showType !== fiatSelect && (
+                      <div className="flex justify-between items-center my-4">
+                        <div>{t("home_account_4")} </div>
+                        <div className="huaDongM">
+                          <Switch
+                            checked={isFait}
+                            onChange={() => {
+                              setIsFait(!isFait);
+                              getUserCurrencyMoney();
+                            }}
+                            inputProps={{ "aria-label": "controlled" }}
+                          />
+                        </div>
+                      </div>
+                    )}
+                    <div
+                      className="flex justify-between items-center my-4"
+                      style={{ marginTop: "-1rem" }}
+                    >
+                      <div>{t("home_account_5")}</div>
+                      <div className="huaDongM">
+                        <Switch
+                          checked={hideSmall}
+                          onChange={() => {
+                            setHideSmall(!hideSmall);
+                            document
+                              .getElementsByClassName("FusePageCarded-content")[0]
+                              ?.scrollIntoView();
+                          }}
+                          inputProps={{ "aria-label": "controlled" }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/*<div className="mt-8 px-24">*/}
+                  {/*    <FormControl sx={{ width: '100%' }} variant="outlined">*/}
+                  {/*        <OutlinedInput*/}
+                  {/*            disabled={true}*/}
+                  {/*            id="outlined-adornment-weight"*/}
+                  {/*            value="bc1qzm9ln6...kufte65t0pyh"*/}
+                  {/*            endAdornment={<InputAdornment position="end">*/}
+                  {/*                <IconButton*/}
+                  {/*                    aria-label="toggle password visibility"*/}
+                  {/*                    onClick={() => {*/}
+                  {/*                        handleCopyText('bc1qzm9ln6...kufte65t0pyh')*/}
+                  {/*                    }}*/}
+                  {/*                    edge="end"*/}
+                  {/*                >*/}
+                  {/*                    <img src="wallet/assets/images/deposite/copy.png" alt=""/>*/}
+                  {/*                </IconButton>*/}
+                  {/*            </InputAdornment>}*/}
+                  {/*            aria-describedby="outlined-weight-helper-text"*/}
+                  {/*            inputProps={{*/}
+                  {/*                'aria-label': 'weight',*/}
+                  {/*            }}*/}
+                  {/*        />*/}
+                  {/*    </FormControl>*/}
+                  {/*</div>*/}
+                  {/* search区域 */}
+                  {decentralized != -1 && walletType === 1 && (
+                    <div
+                      className="mt-8 px-24 flex justify-between items-center"
+                      style={{
+                        marginTop: 0,
+                        marginBottom: "1rem",
+                      }}
+                    >
+                      <Button
+                        className="foxBtn"
+                        style={{
+                          width: "36%",
+                          margin: ".5rem 0",
+                          borderRadius: "8px",
+                          backgroundColor: "#1F2A3C",
+                        }}
+                        onClick={() => {
+                          setOpenChangeNetwork(true);
+                        }}
+                      >
+                        <img
+                          className="mr-4"
+                          style={{ height: "80%" }}
+                          src="wallet/assets/images/deposite/bnb.png"
+                          alt=""
+                        />
+                        Network
+                      </Button>
+                      <Button
+                        className="foxBtn"
+                        style={{
+                          width: "36%",
+                          margin: ".5rem 0",
+                          borderRadius: "8px",
+                          backgroundColor: "#1F2A3C",
+                        }}
+                        variant="outlined"
+                        onClick={() => {
+                          dispatch(
+                            showMessage({ message: t('error_9'), code: 3 })
+                          );
+                          setTimeout(() => {
+                            setDdecentralized(-1);
+                            window.localStorage.setItem("isDecentralized", "-1");
+                            // window.location.reload()
+                            window.localStorage.setItem("walletname", "");
+                          }, 1000);
+                        }}
+                      >
+                        {t("home_wallet_9")}
+                      </Button>
+                    </div>
+                  )}
+                </Box>
+              </motion.div>
+            )}
+            {decentralized == -1 && walletType == 0 && (
+              <motion.div
+                variants={container}
+                initial="hidden"
+                animate="show"
+                className="p-24"
+                style={{ paddingTop: "1.1rem" }}
+              >
+                <Box
+                  component={motion.div}
+                  variants={item}
+                  className="w-full rounded-16 border flex flex-col"
+                  sx={{
+                    backgroundColor: "#1E293B",
+                    border: "none",
+                  }}
+                >
+                  <div className="mt-8 px-24">
+                    <div
+                      className="flex justify-between items-center my-4 "
+                      style={{ height: "2rem" }}
+                    >
+                      <div>{t("home_account_3")} </div>
+
+                      <div
+                        className="mr-8 flex items-center"
+                        style={{ color: "#ffffff" }}
+                      >
+                        {(isFait || showType === fiatSelect) && (
+                          <div
+                            onClick={() => {
+                              // setOpenChangeCurrency(true)
+                              setOpenAnimateModal(true);
+                            }}
+                            className="px-20 py-4 flex items-center justify-center mr-24 cursor-pointer txtColorTitleSmall"
+                            style={{
+                              background: "#0e1421",
+                              borderRadius: "8px",
+                              height: "3rem",
+                              padding: "0 1rem 0 0.8rem",
+                            }}
+                          >
+                            <img
+                              className=""
+                              style={{
+                                width: "20px",
+                                borderRadius: "3px",
+                                marginRight: "1.2rem",
+                              }}
+                              src={arrayLookup(
+                                currencys,
+                                "currencyCode",
+                                userData.currencyCode,
+                                "avatar"
+                              )}
+                              alt=""
+                            />
+                            {userData.currencyCode}
+                          </div>
+                        )}
+
+                        {totalBalance}
+                      </div>
+                    </div>
+                    {showType !== fiatSelect && (
+                      <div className="flex justify-between items-center my-4">
+                        <div>{t("home_account_4")} </div>
+                        <div className="huaDongM">
+                          <Switch
+                            checked={isFait}
+                            onChange={() => {
+                              setIsFait(!isFait);
+                              getUserCurrencyMoney();
+                            }}
+                            inputProps={{ "aria-label": "controlled" }}
+                          />
+                        </div>
+                      </div>
+                    )}
+                    <div
+                      className="flex justify-between items-center my-4"
+                      style={{ marginTop: "-1rem" }}
+                    >
+                      <div>{t("home_account_5")}</div>
+                      <div className="huaDongM">
+                        <Switch
+                          checked={hideSmall}
+                          onChange={() => {
+                            setHideSmall(!hideSmall);
+                            document
+                              .getElementsByClassName("FusePageCarded-content")[0]
+                              ?.scrollIntoView();
+                          }}
+                          inputProps={{ "aria-label": "controlled" }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/*<div className="mt-8 px-24">*/}
+                  {/*    <FormControl sx={{ width: '100%' }} variant="outlined">*/}
+                  {/*        <OutlinedInput*/}
+                  {/*            disabled={true}*/}
+                  {/*            id="outlined-adornment-weight"*/}
+                  {/*            value="bc1qzm9ln6...kufte65t0pyh"*/}
+                  {/*            endAdornment={<InputAdornment position="end">*/}
+                  {/*                <IconButton*/}
+                  {/*                    aria-label="toggle password visibility"*/}
+                  {/*                    onClick={() => {*/}
+                  {/*                        handleCopyText('bc1qzm9ln6...kufte65t0pyh')*/}
+                  {/*                    }}*/}
+                  {/*                    edge="end"*/}
+                  {/*                >*/}
+                  {/*                    <img src="wallet/assets/images/deposite/copy.png" alt=""/>*/}
+                  {/*                </IconButton>*/}
+                  {/*            </InputAdornment>}*/}
+                  {/*            aria-describedby="outlined-weight-helper-text"*/}
+                  {/*            inputProps={{*/}
+                  {/*                'aria-label': 'weight',*/}
+                  {/*            }}*/}
+                  {/*        />*/}
+                  {/*    </FormControl>*/}
+                  {/*</div>*/}
+                  {/* search区域 */}
+                  {decentralized != -1 && walletType === 1 && (
+                    <div
+                      className="mt-8 px-24 flex justify-between items-center"
+                      style={{
+                        marginTop: 0,
+                        marginBottom: "1rem",
+                      }}
+                    >
+                      <Button
+                        className="foxBtn"
+                        style={{
+                          width: "36%",
+                          margin: ".5rem 0",
+                          borderRadius: "8px",
+                          backgroundColor: "#1F2A3C",
+                        }}
+                        onClick={() => {
+                          setOpenChangeNetwork(true);
+                        }}
+                      >
+                        <img
+                          className="mr-4"
+                          style={{ height: "80%" }}
+                          src="wallet/assets/images/deposite/bnb.png"
+                          alt=""
+                        />
+                        Network
+                      </Button>
+                      <Button
+                        className="foxBtn"
+                        style={{
+                          width: "36%",
+                          margin: ".5rem 0",
+                          borderRadius: "8px",
+                          backgroundColor: "#1F2A3C",
+                        }}
+                        variant="outlined"
+                        onClick={() => {
+                          dispatch(
+                            showMessage({ message: t('error_9'), code: 3 })
+                          );
+                          setTimeout(() => {
+                            setDdecentralized(-1);
+                            window.localStorage.setItem("isDecentralized", -1);
+                            // window.location.reload()
+                            window.localStorage.setItem("walletname", "");
+                          }, 1000);
+                        }}
+                      >
+                        {t("home_wallet_9")}
+                      </Button>
+                    </div>
+                  )}
+                </Box>
+              </motion.div>
+            )}
+
+
+            {/*切换法币*/}
+            <AnimateModal
+              className="faBiDi"
+              open={openAnimateModal}
+              onClose={() => setOpenAnimateModal(false)}
+              style={{ maxWidth: "360px" }}
+            >
+              <div
+                className="dialog-animate-box faBiBoxDi "
+                style={{ overflowY: "scroll", overflowX: "hidden" }}
+              >
+                <Box
+                  className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidth"
+                  sx={{
+                    backgroundColor: "#1e293b",
+                    padding: "1.5rem",
+                    overflow: "hidden",
+
+                  }}
+                >
+                  <Typography
+                    className="text-14 font-medium"
+                    style={{ marginBottom: "2rem", color: "#94a3b8" }}
+                  >
+                    {t("home_wallet_11")}
+                  </Typography>
+                  <div className="dialog-select-fiat">
+                    {currencys.map((row, index) => {
+                      return (
+                        <div
+                          className="dialog-select-fiat-item border-r-5 flex items-center justify-start txtColorTitleSmall"
+                          key={index}
+                          onClick={() => {
+                            changeCurrency(row.currencyCode);
+                          }}
+                        >
+                          <img
+                            src={arrayLookup(
+                              currencys,
+                              "currencyCode",
+                              row.currencyCode,
+                              "avatar"
+                            )}
+                            className="dialog-select-fiat-icon border-r-5"
+                            alt=""
+                          />
+                          <Typography className="text-14">
+                            {row.currencyCode}
+                          </Typography>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </Box>
+
               </div>
-            </DialogContent>
-          </BootstrapDialog>
-        </Box>
-      </motion.div >
-      {/* {
+              {/* </DialogContent> */}
+              {/* </BootstrapDialog> */}
+            </AnimateModal>
+
+            {/*切换网路*/}
+            <BootstrapDialog
+              onClose={() => {
+                setOpenChangeNetwork(false);
+              }}
+              aria-labelledby="customized-dialog-title"
+              open={openChangeNetwork}
+              className="dialog-container "
+            >
+              <DialogContent dividers className="netWorkDi">
+                <div className=" ">
+                  <Typography
+                    id="customized-dialog-title"
+                    className="text-24 px-16 dialog-title-text netWorkTxtWh"
+                  >
+                    &nbsp;
+                    <img
+                      src="wallet/assets/images/logo/icon-close.png"
+                      className="dialog-close-btn"
+                      onClick={() => {
+                        setOpenChangeNetwork(false);
+                      }}
+                      alt="close icon"
+                    />
+                  </Typography>
+
+
+                  <Box className="dialog-content dialog-content-select-network-height">
+                    <Box
+                      className="dialog-content-inner dialog-content-select-network-width"
+                      sx={{
+                        overflow: "hidden",
+                      }}
+                    >
+                      <Typography
+                        className="text-14 font-medium border-r-5 netWorkBannerWh"
+                        style={{
+                          marginBottom: "1.5rem",
+                          padding: "1.5rem",
+                          backgroundColor: "#1e293b",
+                          color: "#94a3b8",
+                        }}
+                      >
+                        You are currently browsing on the{" "}
+                        <span style={{ color: "#16c2a3" }}>Etherenum</span>{" "}
+                        network.
+                      </Typography>
+
+
+                      <div className="dialog-select-network flex flex-wrap justify-between">
+                        {networkData.map((row, index) => {
+                          return (
+                            <div
+                              className="dialog-select-network-item border-r-5 flex items-center justify-start txtColorTitleSmall"
+                              key={index}
+                              onClick={() => {
+                                changeNetwork(row);
+                              }}
+                            >
+                              <img
+                                src={row.avatar}
+                                className="dialog-select-fiat-icon border-r-5"
+                                alt=""
+                              />
+                              <Typography className="text-14 text-nowrap">
+                                {row.network}
+                              </Typography>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </Box>
+                  </Box>
+                </div>
+              </DialogContent>
+            </BootstrapDialog>
+          </Box>
+        </motion.div >
+      }
+      {
         !loadingShow &&
         <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }}>
           <div className="loadingChuang1">
@@ -3226,7 +3222,7 @@ function Wallet() {
           </div>
 
         </div>
-      } */}
+      }
     </div >
   );
 }

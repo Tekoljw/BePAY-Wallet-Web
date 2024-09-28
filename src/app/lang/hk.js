@@ -547,7 +547,10 @@ const locale = {
     card_193: "廣告投放卡",
     card_194: "工作採購卡",
     card_195: "已複製",
+    card_196: "PIN",
 
+
+    
     
     
     

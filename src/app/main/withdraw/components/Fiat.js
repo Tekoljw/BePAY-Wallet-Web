@@ -499,6 +499,7 @@ function Fiat(props) {
                     if (res.payload) {
                         setHasPin(true)
                         closeCreatePinFunc()
+                        dispatch(showMessage({ message: 'success', code: 1 }));
                     }
                 })
             }
@@ -873,7 +874,7 @@ function Fiat(props) {
                                                 className="flex items-center py-2 flex-grow"
                                                 style={{ width: '100%' }}
                                             >
-                                                <div className="flex items-center">
+                                                <div className="flex items-center ">
                                                     <img style={{
                                                         width: '3rem',
                                                         borderRadius: '99px'
@@ -1377,7 +1378,7 @@ function Fiat(props) {
                                             </div>
 
                                             <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
-                                                <Typography className="text-16 ">Amount</Typography>
+                                                <Typography className="text-16 ">{t('home_sendTips_3')}</Typography>
                                             </div>
 
                                         </div>
@@ -1396,6 +1397,7 @@ function Fiat(props) {
                                                 />
                                             </FormControl>
                                         </div>
+                                        <div className=''><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8", fontSize: "1.3rem" }}>{t('card_177')}</span></div>
                                     </div>
                                 }
 
@@ -1476,27 +1478,28 @@ function Fiat(props) {
                                 <div className='pinWindow'>
 
                                     <div className='flex'>
-                                        <div className='PINTitle2' style={{ marginBottom: "1rem" }}>{t('card_65')}</div>
+                                        <div className='PINTitle2' style={{ marginBottom: "1rem" }}>{t('card_196')}</div>
                                         <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                             closePinFunc();
                                         }} />
                                     </div>
-                                    <div className='PINTitle' style={{ color: "#909FB4", paddingBottom: "1rem", fontSize: "16px" }} >{smallTabValue == 0 ? t('card_189') : t('card_7')}</div>
 
-                                    <div style={{ fontSize: smallTabValue == 0 ? "14px" : "22px", textAlign: "center", color: "#12C1A2" }}> {smallTabValue == 0 ? inputVal.accountNo : inputVal.userId} </div>
-                                    <div className='flex justify-center mt-10' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "2rem" }}>
+                                    {smallTabValue == 0 && <div className='' style={{ fontSize: "20px", textAlign: "center", color: "#909FB4", width: "100%" }}>Name {inputVal.accountName} </div>}
+                                    <div className='py-4' style={{ fontSize: smallTabValue == 0 ? "20px" : "20px", textAlign: "center", color: "#909FB4", width: "100%", overflow: "hidden" }}>{smallTabValue == 0 ? "NO." : "UserID"}   {smallTabValue == 0 ? inputVal.accountNo : inputVal.userId} </div>
+
+                                    <div className='flex justify-center mt-10' style={{ width: "100%", overflow: "hidden", borderBottom: "1px solid #2C3950", paddingBottom: "2rem" }}>
                                         {fiats && fiats[fiatsSelected] && <img className='MoneyWithdraw' src={fiats[fiatsSelected].avatar}></img>}
-                                        <div className='PINTitle3'>{currencyCode}</div>
 
                                         <div className='flex'>
                                             <div className={clsx('PINTitle4  inputNumSty', textSelect && "inputBackDi")}>
                                                 {inputVal.amount} <span className={clsx("", !showGuangBiao ? 'guangBiaoNo' : 'guangBiao')} >︱</span>
                                             </div>
-                                            <img src="wallet/assets/images/deposite/bianJiBi.png" className='ml-4 mt-4' style={{ width: "26px", height: "26px" }} onClick={() => {
+                                            <img src="wallet/assets/images/deposite/bianJiBi.png" className='mt-8' style={{ zIndex: "100", marginLeft: textSelect ? "4px" : "-12px", width: "18px", height: "18px" }} onClick={() => {
                                                 setTextSelect(!textSelect)
                                                 setShowGuangBiao(!textSelect)
                                             }} />
                                         </div>
+
 
                                     </div>
                                     <div className='flex justify-between mt-10'>

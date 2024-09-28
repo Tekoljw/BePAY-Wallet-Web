@@ -828,6 +828,9 @@ function Withdraw(props) {
 
     // 输入PIN Page
     const openInputPin = () => {
+        setTimeout(() => {
+            applyMiddleEllipsis(document.getElementById('AddressText'), 32);
+        }, 100);
         setPin('')
         setOpenPinWindow(true)
         openPinFunc()
@@ -919,6 +922,7 @@ function Withdraw(props) {
                     if (res.payload) {
                         setHasPin(true)
                         closeCreatePinFunc()
+                        dispatch(showMessage({ message: 'success', code: 1 }));
                     }
                 })
             }
@@ -988,649 +992,669 @@ function Withdraw(props) {
 
     }, [userData.profile]);
 
+    const [loadingShow, setLoadingShow] = useState(true);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoadingShow(true);
+        }, 1500);
+    }, []);
+
+
+    const applyMiddleEllipsis = (element, maxLength) => {
+        const text = element.innerText;
+        if (text.length > maxLength) {
+            const start = text.slice(0, Math.floor(maxLength / 2));
+            const end = text.slice(-Math.floor(maxLength / 2));
+            element.innerText = `${start}...${end}`;
+        }
+    }
+
 
     return (
         <div style={{ position: "relative" }}>
-            <div style={{ position: "absolute", width: "100%" }} >
-                <motion.div
-                    variants={container}
-                    initial="hidden"
-                    animate="show"
-                    className='mb-6 mt-12'
-                >
-                    <Tabs
-                        component={motion.div}
-                        variants={item}
-                        value={tabValue}
-                        onChange={(ev, value) => setTabValue(value)}
-                        indicatorColor="secondary"
-                        textColor="inherit"
-                        variant="scrollable"
-                        className="tongYongDingBtn"
-                        style={{ width: '50%!import' }}
-                        classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
-                        TabIndicatorProps={{
-                            children: (
-                                <Box
-                                    sx={{ bgcolor: 'text.disabled' }}
-                                    className="w-full h-full rounded-full  huaKuaBgColor0"
-                                />
-                            ),
-                        }}
-                        sx={{
-                            margin: "1rem 1.2rem",
-                        }}
-                    >
-                        {Object.entries(ranges).map(([key, label]) => (
-                            <Tab
-                                className="text-14 font-semibold min-h-36 min-w-64 mx4 px-12 opacity1 txtColorTitle zindex"
-                                disableRipple
-                                key={key}
-                                label={label}
-                                sx={{
-                                    color: '#FFFFFF', height: '3.6rem', width: '50%'
-                                }}
-                            />
-                        ))}
-                    </Tabs>
-                </motion.div>
-
-
-                {tabValue === cryptoSelect && <div>
+            {loadingShow &&
+                <div style={{ position: "absolute", width: "100%" }} >
                     <motion.div
                         variants={container}
                         initial="hidden"
                         animate="show"
-                        style={{ padding: '0 1.5rem 1.4rem 1.5rem' }}
+                        className='mb-6 mt-12'
                     >
-                        <Box
-                            className="w-full rounded-16 border flex flex-col "
-                            sx={{
-                                backgroundColor: '#1E293B',
-                                border: 'none'
-                            }}
-                        >
-                            {symbolWallet.length > 0 && <StyledAccordionSelect
-                                symbol={symbolWallet}
-                                currencyCode="USD"
-                                setSymbol={setSymbol}
-                            />}
-                        </Box>
-                    </motion.div>
-
-                    <motion.div
-                        variants={container}
-                        initial="hidden"
-                        animate="show"
-                        className="p-24 mb-24"
-                        style={{ padding: '0 1.5rem 0 1.5rem' }}
-                    >
-                        <Box
+                        <Tabs
                             component={motion.div}
                             variants={item}
-                            className="w-full rounded-16 border flex flex-col "
-                            style={{ borderRadius: '0.5rem' }}
+                            value={tabValue}
+                            onChange={(ev, value) => setTabValue(value)}
+                            indicatorColor="secondary"
+                            textColor="inherit"
+                            variant="scrollable"
+                            className="tongYongDingBtn"
+                            style={{ width: '50%!import' }}
+                            classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
+                            TabIndicatorProps={{
+                                children: (
+                                    <Box
+                                        sx={{ bgcolor: 'text.disabled' }}
+                                        className="w-full h-full rounded-full  huaKuaBgColor0"
+                                    />
+                                ),
+                            }}
                             sx={{
-                                backgroundColor: '#1E293B',
-                                border: 'none'
+                                margin: "1rem 1.2rem",
                             }}
                         >
-                            <Typography className="text-16 px-10 my-12" style={{ marginBottom: '0.5rem', marginTop: '10px' }}>{t('home_withdraw_1')}</Typography>
-                            <div className="flex px-16" style={{ flexWrap: 'wrap', paddingLeft: '0.7rem', paddingRight: '0.7rem' }}>
-                                {networkData[symbol]?.map((item, index) => {
-                                    return (
-                                        <div
-                                            key={index}
-                                            // className="flex items-center px-8 rounded-8 border"
-                                            className={clsx('flex items-center px-8 rounded-8 border cursor-pointer deposite-token', networkId === item.id && 'active-border')}
-                                            onClick={() => {
-                                                setWalletName(item.network);
-                                                setNetworkId(item.id);
-                                            }}
-                                            style={{
-                                                // width: '30%',
-                                                margin: '.8rem 1%',
-                                                paddingLeft: '0.2rem',
-                                                paddingRight: '0.2rem',
-                                                borderRadius: '0.5rem'
-                                            }}
-                                        >
-                                            <img style={{ width: '2rem', borderRadius: '50%' }} src={item.avatar} alt="" />
-                                            <div className="px-12"
-                                                style={{
-                                                    paddingLeft: '0.4rem', paddingRight: '0.4rem'
-                                                }}
-                                            >
-                                                <Typography className={clsx("text-14 font-medium", networkId === item.id && 'color-ffffff')}>{item.symbol}</Typography>
-                                                <Typography className={clsx("text-12 font-medium color-grey", networkId === item.id && 'color-ffffff')}>{item.network}</Typography>
-                                            </div>
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                            <div className="py-16" style={{ paddingTop: 0 }}>
-                                <Tabs
-                                    component={motion.div}
-                                    variants={item}
-                                    value={smallTabValue}
-                                    onChange={(ev, value) => setSmallTabValue(value)}
-                                    indicatorColor="secondary"
-                                    textColor="inherit"
-                                    variant="scrollable"
-                                    scrollButtons={false}
-                                    className="min-h-32"
-                                    style={{ padding: '0 0', margin: '0.2rem 0rem 1.4rem 1rem', borderColor: 'transparent', backgroundColor: '#1E293B', width: 'auto', borderRadius: '0px', height: '30px' }}
-                                    classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
-                                    TabIndicatorProps={{
-                                        children: (
-                                            <Box
-                                                sx={{ bgcolor: 'text.disabled' }}
-                                                className="w-full h-full rounded-full huaKuaBgColorCard"
-                                            />
-                                        ),
-                                    }}
+                            {Object.entries(ranges).map(([key, label]) => (
+                                <Tab
+                                    className="text-14 font-semibold min-h-36 min-w-64 mx4 px-12 opacity1 txtColorTitle zindex"
+                                    disableRipple
+                                    key={key}
+                                    label={label}
                                     sx={{
-                                        padding: '1rem 1rem',
+                                        color: '#FFFFFF', height: '3.6rem', width: '50%'
                                     }}
-                                >
-                                    {Object.entries([t('card_8'), t('card_7')]).map(([key, label]) => (
-                                        <Tab
-                                            className="text-16 font-semibold min-h-32 min-w-60 mx4 px-12 txtColorTitle opacity-100 zindex"
-                                            disableRipple
-                                            key={key}
-                                            label={label}
-                                            sx={{
-                                                color: '#FFFFFF', height: '32px', width: 'auto', marginRight: "1rem"
-                                            }}
-                                        />
-                                    ))}
-                                </Tabs>
-                                {/*通过地址转账*/}
-                                {
-                                    smallTabValue === 0 && <div className="px-10 ">
-                                        <div className="flex items-center justify-between">
-                                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
-                                                <OutlinedInput
-                                                    id="outlined-adornment-address send-tips-container-address"
-                                                    value={inputVal.address}
-                                                    onChange={handleChangeInputVal('address')}
-                                                    aria-describedby="outlined-weight-helper-text"
-                                                    inputProps={{
-                                                        'aria-label': 'address',
-                                                    }}
-                                                />
-                                                <div className='flex pasteSty  items-center'>
-                                                    <div className='paste-btn' onClick={() => {
-                                                        navigator.clipboard.readText().then(clipText => {
-                                                            changeAddress('address', clipText)
-                                                        })
-                                                    }}>{t('home_withdraw_11')}</div>
-                                                    <img className='pasteJianTou' src="wallet/assets/images/withdraw/pasteJianTou.png" alt="" onClick={() => {
-                                                        setOpenPasteWindow(true)
-                                                        openPasteFunc()
-                                                    }} />
-                                                </div>
-                                            </FormControl>
-                                            {
-                                                isMobileMedia &&
-                                                <img className='shaoMiaoIcon' src="wallet/assets/images/withdraw/code.png" alt="" onClick={() => {
-                                                    setOpenChangeCurrency(true);
-                                                }} />
-                                            }
-                                        </div>
+                                />
+                            ))}
+                        </Tabs>
+                    </motion.div>
 
-                                        <Typography className="text-16 cursor-pointer mt-16">
-                                            {t('home_withdraw_3')}
-                                        </Typography>
-                                        <div className="flex items-center py-16 justify-between" style={{}}>
-                                            <FormControl sx={{ width: '68%', borderColor: '#94A3B8' }} variant="outlined">
-                                                <TextField
-                                                    error={ismore(inputVal.amount)}
-                                                    helperText={ismore(inputVal.amount) ? t('home_deposite_28') : ''}
-                                                    step="0.000001"
-                                                    id="outlined-adornment-address send-tips-container-amount"
-                                                    value={inputVal.amount}
-                                                    onChange={handleChangeInputVal('amount')}
-                                                    endAdornment={<InputAdornment position="end">
-                                                        <Typography className="text-16 font-medium cursor-pointer color-2DD4BF">
-                                                            {t('home_withdraw_5')}
-                                                        </Typography>
-                                                    </InputAdornment>}
-                                                    aria-describedby="outlined-weight-helper-text"
-                                                    inputProps={{
-                                                        'aria-label': 'amount',
-                                                    }}
-                                                    type="number"
-                                                    FormHelperTextProps={{ className: "form-helper-text" }}
-                                                />
-                                            </FormControl>
+
+                    {tabValue === cryptoSelect && <div>
+                        <motion.div
+                            variants={container}
+                            initial="hidden"
+                            animate="show"
+                            style={{ padding: '0 1.5rem 1.4rem 1.5rem' }}
+                        >
+                            <Box
+                                className="w-full rounded-16 border flex flex-col "
+                                sx={{
+                                    backgroundColor: '#1E293B',
+                                    border: 'none'
+                                }}
+                            >
+                                {symbolWallet.length > 0 && <StyledAccordionSelect
+                                    symbol={symbolWallet}
+                                    currencyCode="USD"
+                                    setSymbol={setSymbol}
+                                />}
+                            </Box>
+                        </motion.div>
+
+                        <motion.div
+                            variants={container}
+                            initial="hidden"
+                            animate="show"
+                            className="p-24 mb-24"
+                            style={{ padding: '0 1.5rem 0 1.5rem' }}
+                        >
+                            <Box
+                                component={motion.div}
+                                variants={item}
+                                className="w-full rounded-16 border flex flex-col "
+                                style={{ borderRadius: '0.5rem' }}
+                                sx={{
+                                    backgroundColor: '#1E293B',
+                                    border: 'none'
+                                }}
+                            >
+                                <Typography className="text-16 px-10 my-12" style={{ marginBottom: '0.5rem', marginTop: '10px' }}>{t('home_withdraw_1')}</Typography>
+                                <div className="flex px-16" style={{ flexWrap: 'wrap', paddingLeft: '0.7rem', paddingRight: '0.7rem' }}>
+                                    {networkData[symbol]?.map((item, index) => {
+                                        return (
                                             <div
-                                                className={clsx('mx-8 withdraw-input-item-right py-16 cursor-pointer text-center touchnGoListDi amount-tab-item', amountTab === 'HIGHER' && 'withdraw-input-item-right-active')}
+                                                key={index}
+                                                // className="flex items-center px-8 rounded-8 border"
+                                                className={clsx('flex items-center px-8 rounded-8 border cursor-pointer deposite-token', networkId === item.id && 'active-border')}
                                                 onClick={() => {
-                                                    setAmountTab('HIGHER')
+                                                    setWalletName(item.network);
+                                                    setNetworkId(item.id);
+                                                }}
+                                                style={{
+                                                    // width: '30%',
+                                                    margin: '.8rem 1%',
+                                                    paddingLeft: '0.2rem',
+                                                    paddingRight: '0.2rem',
+                                                    borderRadius: '0.5rem'
                                                 }}
                                             >
-                                                {t('home_withdraw_12')}
-                                            </div>
-                                            <div
-                                                className={clsx('mx-8 withdraw-input-item-right py-16 cursor-pointer text-center touchnGoListDi amount-tab-item', amountTab === 'LOW' && 'withdraw-input-item-right-active')}
-                                                onClick={() => {
-                                                    setAmountTab('LOW')
-                                                }}
-                                            >
-                                                {t('home_withdraw_13')}
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center justify-between my-16" style={{ marginTop: 0 }}>
-                                            <Typography className="text-16 cursor-pointer ">
-                                                <p style={{ fontSize: '1.3rem' }}> {t('home_withdraw_7')}: {fee}  {symbol}</p>
-                                            </Typography>
-                                            <Typography
-                                                className="text-16 cursor-pointer color-2DD4BF"
-                                                onClick={() => {
-                                                    if (!bAppendFee) {
-                                                        setBAppendFee(true);
-                                                        changeAddress('amount', Number(inputVal.amount) + Number(fee));
-                                                    } else {
-                                                        setBAppendFee(false);
-                                                        changeAddress('amount', Number(inputVal.amount) - Number(fee));
-                                                    }
-                                                    evalFee(symbol, networkId, amountTab)
-                                                }}
-                                            >
-                                                <p style={{ fontSize: '1.3rem' }}>{t('home_withdraw_8')}</p>
-                                            </Typography>
-                                        </div>
-
-                                        <Box
-                                            className="py-8 mb-20"
-                                            sx={{
-                                                backgroundColor: '#0F172A',
-                                                borderRadius: '8px'
-                                            }}
-                                        >
-                                            <Typography className="text-14 px-16">
-                                                <span style={{ color: '#FCE100' }}>⚠</span> {t('home_withdraw_15')}{TransactionFee}  {symbol}{t('home_withdraw_16')}{t('home_withdraw_17')}
-                                            </Typography>
-                                        </Box>
-
-                                        <LoadingButton
-                                            disabled={ismore(inputVal.amount)}
-                                            className={clsx('px-48  m-28 btnColorTitleBig loadingBtnSty')}
-                                            color="secondary"
-                                            loading={openLoad}
-                                            variant="contained"
-                                            sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
-                                            style={{ width: '100%', height: '4rem', fontSize: "20px", margin: '3rem auto 1rem auto', display: 'block', lineHeight: "inherit", padding: "0px" }}
-                                            onClick={() => {
-                                                isBindPin()
-                                            }}
-                                        >
-                                            {t('home_withdraw_10')}
-                                        </LoadingButton>
-                                        <div className='mb-40'></div>
-                                    </div>
-                                }
-                                {/*通过内部id转账*/}
-                                {
-                                    smallTabValue === 1 && <div className="px-10 ">
-                                        <div className="flex items-center justify-between ">
-                                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
-                                                <OutlinedInput
-                                                    id="outlined-adornment-address send-tips-container-address"
-                                                    value={inputIDVal}
-                                                    onChange={handleChangeInputVal2}
-                                                    aria-describedby="outlined-weight-helper-text"
-                                                />
-                                                <div className='flex pasteSty  items-center'>
-                                                    <div className='paste-btn' onClick={() => {
-                                                        navigator.clipboard.readText().then(clipText => {
-                                                            setInputIDVal(clipText)
-                                                        });
-                                                    }}>{t('home_withdraw_11')}</div>
-                                                    <img className='pasteJianTou' src="wallet/assets/images/withdraw/pasteJianTou.png" alt="" onClick={() => {
-                                                        setOpenPasteWindow(true)
-                                                    }} />
-                                                </div>
-                                            </FormControl>
-                                            {
-                                                isMobileMedia &&
-                                                <img className='shaoMiaoIcon ' src="wallet/assets/images/withdraw/code.png" alt="" onClick={() => {
-                                                    setOpenChangeCurrency(true);
-                                                }} />
-                                            }
-                                        </div>
-
-                                        <Typography className="text-16 cursor-pointer mt-16" >
-                                            {t('home_withdraw_3')}
-                                        </Typography>
-                                        <div className="flex items-center justify-between" style={{ paddingTop: "1.6rem", paddingBottom: "0.5rem" }}>
-                                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
-                                                <TextField
-                                                    error={ismore(inputVal.amount)}
-                                                    helperText={ismore(inputVal.amount) ? t('home_deposite_28') : ''}
-                                                    step="0.000001"
-                                                    id="outlined-adornment-address send-tips-container-amount"
-                                                    value={inputVal.amount}
-                                                    onChange={handleChangeInputVal('amount')}
-                                                    endAdornment={<InputAdornment position="end">
-                                                        <Typography className="text-16 font-medium cursor-pointer color-2DD4BF">
-                                                            {t('home_withdraw_5')}
-                                                        </Typography>
-                                                    </InputAdornment>}
-                                                    aria-describedby="outlined-weight-helper-text"
-                                                    inputProps={{
-                                                        'aria-label': 'amount',
+                                                <img style={{ width: '2rem', borderRadius: '50%' }} src={item.avatar} alt="" />
+                                                <div className="px-12"
+                                                    style={{
+                                                        paddingLeft: '0.4rem', paddingRight: '0.4rem'
                                                     }}
-                                                    type="number"
-                                                    FormHelperTextProps={{ className: "form-helper-text" }}
+                                                >
+                                                    <Typography className={clsx("text-14 font-medium", networkId === item.id && 'color-ffffff')}>{item.symbol}</Typography>
+                                                    <Typography className={clsx("text-12 font-medium color-grey", networkId === item.id && 'color-ffffff')}>{item.network}</Typography>
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                                <div className="py-16" style={{ paddingTop: 0 }}>
+                                    <Tabs
+                                        component={motion.div}
+                                        variants={item}
+                                        value={smallTabValue}
+                                        onChange={(ev, value) => setSmallTabValue(value)}
+                                        indicatorColor="secondary"
+                                        textColor="inherit"
+                                        variant="scrollable"
+                                        scrollButtons={false}
+                                        className="min-h-32"
+                                        style={{ padding: '0 0', margin: '0.2rem 0rem 1.4rem 1rem', borderColor: 'transparent', backgroundColor: '#1E293B', width: 'auto', borderRadius: '0px', height: '30px' }}
+                                        classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
+                                        TabIndicatorProps={{
+                                            children: (
+                                                <Box
+                                                    sx={{ bgcolor: 'text.disabled' }}
+                                                    className="w-full h-full rounded-full huaKuaBgColorCard"
                                                 />
-                                            </FormControl>
-                                        </div>
+                                            ),
+                                        }}
+                                        sx={{
+                                            padding: '1rem 1rem',
+                                        }}
+                                    >
+                                        {Object.entries([t('card_8'), t('card_7')]).map(([key, label]) => (
+                                            <Tab
+                                                className="text-16 font-semibold min-h-32 min-w-60 mx4 px-12 txtColorTitle opacity-100 zindex"
+                                                disableRipple
+                                                key={key}
+                                                label={label}
+                                                sx={{
+                                                    color: '#FFFFFF', height: '32px', width: 'auto', marginRight: "1rem"
+                                                }}
+                                            />
+                                        ))}
+                                    </Tabs>
+                                    {/*通过地址转账*/}
+                                    {
+                                        smallTabValue === 0 && <div className="px-10 ">
+                                            <div className="flex items-center justify-between">
+                                                <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
+                                                    <OutlinedInput
+                                                        id="outlined-adornment-address send-tips-container-address"
+                                                        value={inputVal.address}
+                                                        onChange={handleChangeInputVal('address')}
+                                                        aria-describedby="outlined-weight-helper-text"
+                                                        inputProps={{
+                                                            'aria-label': 'address',
+                                                        }}
+                                                    />
+                                                    <div className='flex pasteSty  items-center'>
+                                                        <div className='paste-btn' onClick={() => {
+                                                            navigator.clipboard.readText().then(clipText => {
+                                                                changeAddress('address', clipText)
+                                                            })
+                                                        }}>{t('home_withdraw_11')}</div>
+                                                        <img className='pasteJianTou' src="wallet/assets/images/withdraw/pasteJianTou.png" alt="" onClick={() => {
+                                                            setOpenPasteWindow(true)
+                                                            openPasteFunc()
+                                                        }} />
+                                                    </div>
+                                                </FormControl>
+                                                {
+                                                    isMobileMedia &&
+                                                    <img className='shaoMiaoIcon ' src="wallet/assets/images/withdraw/code.png" alt="" onClick={() => {
+                                                        setOpenChangeCurrency(true);
+                                                    }} />
+                                                }
+                                            </div>
 
-                                        <div className="flex items-center mb-20 justify-content-start " style={{}}>
-                                            {/* <Checkbox defaultChecked /> */}
-                                            {/* <Typography style={{ fontSize: '1.4rem' }}>
+                                            <Typography className="text-16 cursor-pointer mt-16">
+                                                {t('home_withdraw_3')}
+                                            </Typography>
+                                            <div className="flex items-center py-16 justify-between" style={{}}>
+                                                <FormControl sx={{ width: '68%', borderColor: '#94A3B8' }} variant="outlined">
+                                                    <TextField
+                                                        error={ismore(inputVal.amount)}
+                                                        helperText={ismore(inputVal.amount) ? t('home_deposite_28') : ''}
+                                                        step="0.000001"
+                                                        id="outlined-adornment-address send-tips-container-amount"
+                                                        value={inputVal.amount}
+                                                        onChange={handleChangeInputVal('amount')}
+                                                        endAdornment={<InputAdornment position="end">
+                                                            <Typography className="text-16 font-medium cursor-pointer color-2DD4BF">
+                                                                {t('home_withdraw_5')}
+                                                            </Typography>
+                                                        </InputAdornment>}
+                                                        aria-describedby="outlined-weight-helper-text"
+                                                        inputProps={{
+                                                            'aria-label': 'amount',
+                                                        }}
+                                                        type="number"
+                                                        FormHelperTextProps={{ className: "form-helper-text" }}
+                                                    />
+                                                </FormControl>
+                                                <div
+                                                    className={clsx('mx-8 withdraw-input-item-right py-16 cursor-pointer text-center touchnGoListDi amount-tab-item', amountTab === 'HIGHER' && 'withdraw-input-item-right-active')}
+                                                    onClick={() => {
+                                                        setAmountTab('HIGHER')
+                                                    }}
+                                                >
+                                                    {t('home_withdraw_12')}
+                                                </div>
+                                                <div
+                                                    className={clsx('mx-8 withdraw-input-item-right py-16 cursor-pointer text-center touchnGoListDi amount-tab-item', amountTab === 'LOW' && 'withdraw-input-item-right-active')}
+                                                    onClick={() => {
+                                                        setAmountTab('LOW')
+                                                    }}
+                                                >
+                                                    {t('home_withdraw_13')}
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center justify-between my-16" style={{ marginTop: 0 }}>
+                                                <Typography className="text-16 cursor-pointer ">
+                                                    <p style={{ fontSize: '1.3rem' }}> {t('home_withdraw_7')}: {fee}  {symbol}</p>
+                                                </Typography>
+                                                <Typography
+                                                    className="text-16 cursor-pointer color-2DD4BF"
+                                                    onClick={() => {
+                                                        if (!bAppendFee) {
+                                                            setBAppendFee(true);
+                                                            changeAddress('amount', Number(inputVal.amount) + Number(fee));
+                                                        } else {
+                                                            setBAppendFee(false);
+                                                            changeAddress('amount', Number(inputVal.amount) - Number(fee));
+                                                        }
+                                                        evalFee(symbol, networkId, amountTab)
+                                                    }}
+                                                >
+                                                    <p style={{ fontSize: '1.3rem' }}>{t('home_withdraw_8')}</p>
+                                                </Typography>
+                                            </div>
+
+                                            <Box
+                                                className="py-8 mb-20"
+                                                sx={{
+                                                    backgroundColor: '#0F172A',
+                                                    borderRadius: '8px'
+                                                }}
+                                            >
+                                                <Typography className="text-14 px-16">
+                                                    <span style={{ color: '#FCE100' }}>⚠</span> {t('home_withdraw_15')}{TransactionFee}  {symbol}{t('home_withdraw_16')}{t('home_withdraw_17')}
+                                                </Typography>
+                                            </Box>
+
+                                            <LoadingButton
+                                                disabled={ismore(inputVal.amount)}
+                                                className={clsx('px-48  m-28 btnColorTitleBig loadingBtnSty')}
+                                                color="secondary"
+                                                loading={openLoad}
+                                                variant="contained"
+                                                sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
+                                                style={{ width: '100%', height: '4rem', fontSize: "20px", margin: '3rem auto 1rem auto', display: 'block', lineHeight: "inherit", padding: "0px" }}
+                                                onClick={() => {
+                                                    isBindPin()
+                                                }}
+                                            >
+                                                {t('home_withdraw_10')}
+                                            </LoadingButton>
+                                            <div className='mb-40'></div>
+                                        </div>
+                                    }
+                                    {/*通过内部id转账*/}
+                                    {
+                                        smallTabValue === 1 && <div className="px-10 ">
+                                            <div className="flex items-center justify-between ">
+                                                <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
+                                                    <OutlinedInput
+                                                        id="outlined-adornment-address send-tips-container-address"
+                                                        value={inputIDVal}
+                                                        onChange={handleChangeInputVal2}
+                                                        aria-describedby="outlined-weight-helper-text"
+                                                    />
+                                                    <div className='flex pasteSty  items-center'>
+                                                        <div className='paste-btn' onClick={() => {
+                                                            navigator.clipboard.readText().then(clipText => {
+                                                                setInputIDVal(clipText)
+                                                            });
+                                                        }}>{t('home_withdraw_11')}</div>
+                                                        <img className='pasteJianTou' src="wallet/assets/images/withdraw/pasteJianTou.png" alt="" onClick={() => {
+                                                            setOpenPasteWindow(true)
+                                                        }} />
+                                                    </div>
+                                                </FormControl>
+                                                {
+                                                    isMobileMedia &&
+                                                    <img className='shaoMiaoIcon ' src="wallet/assets/images/withdraw/code.png" alt="" onClick={() => {
+                                                        setOpenChangeCurrency(true);
+                                                    }} />
+                                                }
+                                            </div>
+
+                                            <Typography className="text-16 cursor-pointer mt-16" >
+                                                {t('home_withdraw_3')}
+                                            </Typography>
+                                            <div className="flex items-center justify-between" style={{ paddingTop: "1.6rem", paddingBottom: "0.5rem" }}>
+                                                <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
+                                                    <TextField
+                                                        error={ismore(inputVal.amount)}
+                                                        helperText={ismore(inputVal.amount) ? t('home_deposite_28') : ''}
+                                                        step="0.000001"
+                                                        id="outlined-adornment-address send-tips-container-amount"
+                                                        value={inputVal.amount}
+                                                        onChange={handleChangeInputVal('amount')}
+                                                        endAdornment={<InputAdornment position="end">
+                                                            <Typography className="text-16 font-medium cursor-pointer color-2DD4BF">
+                                                                {t('home_withdraw_5')}
+                                                            </Typography>
+                                                        </InputAdornment>}
+                                                        aria-describedby="outlined-weight-helper-text"
+                                                        inputProps={{
+                                                            'aria-label': 'amount',
+                                                        }}
+                                                        type="number"
+                                                        FormHelperTextProps={{ className: "form-helper-text" }}
+                                                    />
+                                                </FormControl>
+                                            </div>
+
+                                            <div className="flex items-center mb-20 justify-content-start " style={{}}>
+                                                {/* <Checkbox defaultChecked /> */}
+                                                {/* <Typography style={{ fontSize: '1.4rem' }}>
                                                 {t('home_sendTips_8')}
                                             </Typography> */}
+                                                <div className='mt-4'><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8", fontSize: "1.3rem" }}>{t('card_177')}</span></div>
+                                            </div>
+
+                                            <LoadingButton
+                                                disabled={openPinWindow}
+                                                className={clsx('px-48  m-28 btnColorTitleBig loadingBtnSty')}
+                                                color="secondary"
+                                                loading={openPinWindow}
+                                                variant="contained"
+                                                sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
+                                                style={{ width: '100%', height: '4rem', fontSize: "20px", margin: '1.4rem auto 1rem auto', display: 'block', lineHeight: "inherit", padding: "0px" }}
+                                                onClick={() => {
+                                                    isBindPin()
+                                                }}
+                                            >
+                                                {t('home_withdraw_10')}
+                                            </LoadingButton>
                                         </div>
-
-                                        <LoadingButton
-                                            disabled={openPinWindow}
-                                            className={clsx('px-48  m-28 btnColorTitleBig loadingBtnSty')}
-                                            color="secondary"
-                                            loading={openPinWindow}
-                                            variant="contained"
-                                            sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
-                                            style={{ width: '100%', height: '4rem', fontSize: "20px", margin: '1.4rem auto 1rem auto', display: 'block', lineHeight: "inherit", padding: "0px" }}
-                                            onClick={() => {
-                                                isBindPin()
-                                            }}
-                                        >
-                                            {t('home_withdraw_10')}
-                                        </LoadingButton>
-                                    </div>
-                                }
-
-                            </div>
-
-                        </Box>
-                    </motion.div>
-                    {/*打开摄像头*/}
-                    <BootstrapDialog
-                        onClose={() => { setOpenChangeCurrency(false); closeScan(); }}
-                        aria-labelledby="customized-dialog-title"
-                        open={openChangeCurrency}
-                        className='scan-dialog-content'
-                    >
-                        {/*<BootstrapDialogTitle id="customized-dialog-title" onClose={() => {setOpenChangeCurrency(false)}}>*/}
-                        {/*    Change Currency*/}
-                        {/*</BootstrapDialogTitle>*/}
-                        <DialogContent dividers>
-                            <div className='' style={{ width: '100%', height: '99vh', backgroundColor: '#0F172A' }}>
-                                <Typography className="text-18 px-16 my-12 font-medium flex items-center justify-between scan-code-top" style={{ backgroundColor: '#374252' }}>
-                                    <img className='scan-code-back' src="wallet/assets/images/withdraw/icon-back.png" onClick={() => { setOpenChangeCurrency(false); closeScan(); }} alt="back-button" />
-                                    <span className='scan-code-title text-18'>Scan Code</span>
-                                    <img className='scan-code-camera' src="wallet/assets/images/withdraw/scan-code-img.png" alt="back-button" />
-                                </Typography>
-                                <div id="qrcode_reader" className='qrcode-reader' style={{ width: '300px', minHeight: "200px" }}></div>
-                                <div className='scan-code-bottom-tips'>Align the QR code to the scan frame</div>
-                            </div>
-                        </DialogContent>
-                    </BootstrapDialog>
-
-                    {/*打开历史记录*/}
-                    <BootstrapDialog
-                        onClose={() => { setOpenWithdrawLog(false); }}
-                        aria-labelledby="customized-dialog-title"
-                        open={openWithdrawLog}
-                        className="dialog-container"
-                    >
-                        <DialogContent dividers>
-                            <div className='dialog-box'>
-                                <Typography id="customized-dialog-title" className="text-24 px-16  dialog-title-text">&nbsp;
-                                    <img src="wallet/assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => { setOpenWithdrawLog(false) }} alt="close icon" />
-                                </Typography>
-                            </div>
-                            <Box
-                                className="dialog-content dialog-content-paste-height"
-                                style={{ padding: "0px" }}
-                            >
-                                <Box
-                                    className="dialog-content-inner dialog-content-paste-width border-r-5" style={{ width: "100%" }}
-                                >
-                                    {
-                                        historyAddress.map((item, index) => {
-                                            return (
-                                                <div className='dialog-item' key={index} style={{ margin: "10px auto" }} >
-                                                    <Typography className="text-14 px-16 dialog-withdraw-text"
-                                                        onClick={() => {
-                                                            setOpenWithdrawLog(false);
-                                                            changeAddress('address', item)
-                                                        }}
-                                                    >
-                                                        {item}
-                                                    </Typography>
-                                                    <IconButton onClick={() => { handleCopyText(item).then(r => { }) }}>
-                                                        <img src="wallet/assets/images/deposite/copy.png" alt="" />
-                                                    </IconButton>
-                                                    <IconButton onClick={() => { del(item) }}>
-                                                        <img src="wallet/assets/images/deposite/delete.png" alt="" />
-                                                    </IconButton>
-                                                </div>
-                                            )
-                                        })
                                     }
+
+                                </div>
+
+                            </Box>
+                        </motion.div>
+                        {/*打开摄像头*/}
+                        <BootstrapDialog
+                            onClose={() => { setOpenChangeCurrency(false); closeScan(); }}
+                            aria-labelledby="customized-dialog-title"
+                            open={openChangeCurrency}
+                            className='scan-dialog-content'
+                        >
+                            {/*<BootstrapDialogTitle id="customized-dialog-title" onClose={() => {setOpenChangeCurrency(false)}}>*/}
+                            {/*    Change Currency*/}
+                            {/*</BootstrapDialogTitle>*/}
+                            <DialogContent dividers>
+                                <div className='' style={{ width: '100%', height: '99vh', backgroundColor: '#0F172A' }}>
+                                    <Typography className="text-18 px-16 my-12 font-medium flex items-center justify-between scan-code-top" style={{ backgroundColor: '#374252' }}>
+                                        <img className='scan-code-back' src="wallet/assets/images/withdraw/icon-back.png" onClick={() => { setOpenChangeCurrency(false); closeScan(); }} alt="back-button" />
+                                        <span className='scan-code-title text-18'>Scan Code</span>
+                                        <img className='scan-code-camera' src="wallet/assets/images/withdraw/scan-code-img.png" alt="back-button" />
+                                    </Typography>
+                                    <div id="qrcode_reader" className='qrcode-reader' style={{ width: '300px', minHeight: "200px" }}></div>
+                                    <div className='scan-code-bottom-tips'>Align the QR code to the scan frame</div>
+                                </div>
+                            </DialogContent>
+                        </BootstrapDialog>
+
+                        {/*打开历史记录*/}
+                        <BootstrapDialog
+                            onClose={() => { setOpenWithdrawLog(false); }}
+                            aria-labelledby="customized-dialog-title"
+                            open={openWithdrawLog}
+                            className="dialog-container"
+                        >
+                            <DialogContent dividers>
+                                <div className='dialog-box'>
+                                    <Typography id="customized-dialog-title" className="text-24 px-16  dialog-title-text">&nbsp;
+                                        <img src="wallet/assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => { setOpenWithdrawLog(false) }} alt="close icon" />
+                                    </Typography>
+                                </div>
+                                <Box
+                                    className="dialog-content dialog-content-paste-height"
+                                    style={{ padding: "0px" }}
+                                >
+                                    <Box
+                                        className="dialog-content-inner dialog-content-paste-width border-r-5" style={{ width: "100%" }}
+                                    >
+                                        {
+                                            historyAddress.map((item, index) => {
+                                                return (
+                                                    <div className='dialog-item' key={index} style={{ margin: "10px auto" }} >
+                                                        <Typography className="text-14 px-16 dialog-withdraw-text"
+                                                            onClick={() => {
+                                                                setOpenWithdrawLog(false);
+                                                                changeAddress('address', item)
+                                                            }}
+                                                        >
+                                                            {item}
+                                                        </Typography>
+                                                        <IconButton onClick={() => { handleCopyText(item).then(r => { }) }}>
+                                                            <img src="wallet/assets/images/deposite/copy.png" alt="" />
+                                                        </IconButton>
+                                                        <IconButton onClick={() => { del(item) }}>
+                                                            <img src="wallet/assets/images/deposite/delete.png" alt="" />
+                                                        </IconButton>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </Box>
                                 </Box>
-                            </Box>
-                        </DialogContent>
-                    </BootstrapDialog>
+                            </DialogContent>
+                        </BootstrapDialog>
 
-                    {/*填写google验证码*/}
-                    <BootstrapDialog
-                        onClose={() => {
-                            closeGoogleCodeFunc()
-                        }}
-                        aria-labelledby="customized-dialog-title"
-                        open={openGoogleCode}
-                        className="dialog-container"
-                    >
-                        <div id="GoogleCodeSty" className="PINSty">
-                            <div className='pinWindow'>
-                                <div className='flex'>
-                                    <div className='PINTitle2'>{t('card_180')}</div>
-                                    <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
-                                        closeGoogleCodeFunc()
-                                    }} />
+                        {/*填写google验证码*/}
+                        <BootstrapDialog
+                            onClose={() => {
+                                closeGoogleCodeFunc()
+                            }}
+                            aria-labelledby="customized-dialog-title"
+                            open={openGoogleCode}
+                            className="dialog-container"
+                        >
+                            <div id="GoogleCodeSty" className="PINSty">
+                                <div className='pinWindow'>
+                                    <div className='flex'>
+                                        <div className='PINTitle2'>{t('card_180')}</div>
+                                        <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                                            closeGoogleCodeFunc()
+                                        }} />
+                                    </div>
+                                    <div className='PINTitle'>{t('card_176')}</div>
+                                    <div className='flex justify-between mt-32 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
+                                        <div className='PinNum color-box'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}>{googleCode[0] ?? ''}</div>
+                                        <div className='PinNum' >{googleCode[1] ?? ''}</div>
+                                        <div className='PinNum'>{googleCode[2] ?? ''}</div>
+                                        <div className='PinNum'>{googleCode[3] ?? ''}</div>
+                                        <div className='PinNum'>{googleCode[4] ?? ''}</div>
+                                        <div className='PinNum'>{googleCode[5] ?? ''}</div>
+                                    </div>
                                 </div>
-                                <div className='PINTitle'>{t('card_176')}</div>
-                                <div className='flex justify-between mt-32 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
-                                    <div className='PinNum color-box'
-                                        onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}>{googleCode[0] ?? ''}</div>
-                                    <div className='PinNum' >{googleCode[1] ?? ''}</div>
-                                    <div className='PinNum'>{googleCode[2] ?? ''}</div>
-                                    <div className='PinNum'>{googleCode[3] ?? ''}</div>
-                                    <div className='PinNum'>{googleCode[4] ?? ''}</div>
-                                    <div className='PinNum'>{googleCode[5] ?? ''}</div>
+
+                                <div className='jianPanSty'>
+                                    <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                                        <div id="createPin1" className='jianPanNumBtn borderRight borderBottom color-box'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => {
+                                                handleDoGoogleCode(1)
+                                            }}
+                                        >1</div>
+                                        <div id="createPin2" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => {
+                                                handleDoGoogleCode(2)
+                                            }}
+                                        >2</div>
+                                        <div id="createPin3" className='jianPanNumBtn  borderBottom color-box' onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => {
+                                                handleDoGoogleCode(3)
+                                            }}
+                                        >3</div>
+                                    </div>
+                                    <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                                        <div id="createPin4" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => {
+                                                handleDoGoogleCode(4)
+                                            }}
+                                        >4</div>
+                                        <div id="createPin5" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => {
+                                                handleDoGoogleCode(5)
+                                            }}
+                                        >5</div>
+                                        <div id="createPin6" className='jianPanNumBtn  borderBottom color-box' onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => {
+                                                handleDoGoogleCode(6)
+                                            }}
+                                        >6</div>
+                                    </div>
+                                    <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                                        <div id="createPin7" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => {
+                                                handleDoGoogleCode(7)
+                                            }}
+                                        >7</div>
+                                        <div id="createPin8" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => {
+                                                handleDoGoogleCode(8)
+                                            }}
+                                        >8</div>
+                                        <div id="createPin9" className='jianPanNumBtn borderBottom color-box' onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => {
+                                                handleDoGoogleCode(9)
+                                            }}
+                                        >9</div>
+                                    </div>
+                                    <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
+                                        <div className='jianPanNumBtn borderRight '></div>
+                                        <div id="createPin0" className='jianPanNumBtn borderRight color-box' onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => {
+                                                handleDoGoogleCode(0)
+                                            }}
+                                        >0</div>
+                                        <div id="createPinx" className='jianPanNumBtn flex items-center color-box'
+                                            onTouchStart={changeToBlack}
+                                            onTouchEnd={changeToWhite}
+                                            onTouchCancel={changeToWhite}
+                                            onClick={() => {
+                                                handleDoGoogleCode(-1)
+                                            }}
+                                        > <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img></div>
+                                    </div>
                                 </div>
                             </div>
+                        </BootstrapDialog>
+                        {/*<BootstrapDialog*/}
+                        {/*    onClose={() => { setOpenGoogleCode(false); }}*/}
+                        {/*    aria-labelledby="customized-dialog-title"*/}
+                        {/*    open={openGoogleCode}*/}
+                        {/*>*/}
+                        {/*    <DialogContent dividers>*/}
+                        {/*        <div className="mt-8">*/}
+                        {/*            <Typography className="text-18 px-16 my-12 font-medium">Google Code</Typography>*/}
+                        {/*            <OtpPass setGoogleCode={setGoogleCode} />*/}
+                        {/*        </div>*/}
+                        {/*    </DialogContent>*/}
+                        {/*</BootstrapDialog>*/}
 
-                            <div className='jianPanSty'>
-                                <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
-                                    <div id="createPin1" className='jianPanNumBtn borderRight borderBottom color-box'
-                                        onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => {
-                                            handleDoGoogleCode(1)
-                                        }}
-                                    >1</div>
-                                    <div id="createPin2" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => {
-                                            handleDoGoogleCode(2)
-                                        }}
-                                    >2</div>
-                                    <div id="createPin3" className='jianPanNumBtn  borderBottom color-box' onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => {
-                                            handleDoGoogleCode(3)
-                                        }}
-                                    >3</div>
+
+                        {/*提虚拟币界面样式*/}
+                        <BootstrapDialog
+                            onClose={() => { setOpenTiBi(false); }}
+                            aria-labelledby="customized-dialog-title"
+                            open={openTiBi}
+                            className="dialog-container"
+                        >
+                            <DialogContent dividers >
+                                <div className='dialog-box' >
+                                    <Typography id="customized-dialog-title" className="text-24 dialog-title-text" style={{ textAlign: "center", marginTop: "10px" }}>{t('home_Transaction')}
+                                        <img src="wallet/assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => {
+                                            setOpenTiBi(false)
+                                            setOpenLoad(false)
+                                        }} alt="close icon" />
+                                    </Typography>
                                 </div>
-                                <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
-                                    <div id="createPin4" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => {
-                                            handleDoGoogleCode(4)
-                                        }}
-                                    >4</div>
-                                    <div id="createPin5" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => {
-                                            handleDoGoogleCode(5)
-                                        }}
-                                    >5</div>
-                                    <div id="createPin6" className='jianPanNumBtn  borderBottom color-box' onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => {
-                                            handleDoGoogleCode(6)
-                                        }}
-                                    >6</div>
-                                </div>
-                                <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
-                                    <div id="createPin7" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => {
-                                            handleDoGoogleCode(7)
-                                        }}
-                                    >7</div>
-                                    <div id="createPin8" className='jianPanNumBtn borderRight borderBottom color-box' onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => {
-                                            handleDoGoogleCode(8)
-                                        }}
-                                    >8</div>
-                                    <div id="createPin9" className='jianPanNumBtn borderBottom color-box' onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => {
-                                            handleDoGoogleCode(9)
-                                        }}
-                                    >9</div>
-                                </div>
-                                <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
-                                    <div className='jianPanNumBtn borderRight '></div>
-                                    <div id="createPin0" className='jianPanNumBtn borderRight color-box' onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => {
-                                            handleDoGoogleCode(0)
-                                        }}
-                                    >0</div>
-                                    <div id="createPinx" className='jianPanNumBtn flex items-center color-box'
-                                        onTouchStart={changeToBlack}
-                                        onTouchEnd={changeToWhite}
-                                        onTouchCancel={changeToWhite}
-                                        onClick={() => {
-                                            handleDoGoogleCode(-1)
-                                        }}
-                                    > <img className='jianPanBtnImg' src="wallet/assets/images/card/return.png" ></img></div>
-                                </div>
-                            </div>
-                        </div>
-                    </BootstrapDialog>
-                    {/*<BootstrapDialog*/}
-                    {/*    onClose={() => { setOpenGoogleCode(false); }}*/}
-                    {/*    aria-labelledby="customized-dialog-title"*/}
-                    {/*    open={openGoogleCode}*/}
-                    {/*>*/}
-                    {/*    <DialogContent dividers>*/}
-                    {/*        <div className="mt-8">*/}
-                    {/*            <Typography className="text-18 px-16 my-12 font-medium">Google Code</Typography>*/}
-                    {/*            <OtpPass setGoogleCode={setGoogleCode} />*/}
-                    {/*        </div>*/}
-                    {/*    </DialogContent>*/}
-                    {/*</BootstrapDialog>*/}
+                                <Box className="dialog-content dialog-content-paste-height " style={{ paddingRight: "0px", height: "580px" }}>
+                                    <motion.div
+                                        variants={container}
+                                        initial="hidden"
+                                        animate="show"
+                                        className="dialog-content-inner  border-r-5">
+                                        <motion.div variants={item}>
+                                            <img style={{ margin: "0 auto", width: "60px", height: "60px", marginTop: "10px" }} src='wallet/assets/images/wallet/naoZhong.png'></img>
+                                        </motion.div>
+                                        <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "20px", fontSize: "24px" }}>-{inputVal.amount} {symbol}</motion.div>
+                                        <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "10px", fontSize: "16px", color: "#ffc600" }}>● {t('home_PendingReview')}</motion.div>
+                                        <motion.div variants={item} className='flex justify-content-space px-20 mt-40' >
+                                            <div style={{ color: "#888B92" }}>{t('home_NetWork')}</div>
+                                            <div>{walletName}</div>
+                                        </motion.div>
 
+                                        <motion.div variants={item} className='flex justify-content-space px-20 mt-40' >
+                                            <div style={{ color: "#888B92" }}>{t('home_Type')}</div>
+                                            <div>Crypto</div>
+                                        </motion.div>
+                                        <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
+                                            <div style={{ color: "#888B92" }}>{t('home_withdraw_14')}</div>
+                                            <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{inputVal.address}</div>
+                                        </motion.div>
 
-                    {/*提虚拟币界面样式*/}
-                    <BootstrapDialog
-                        onClose={() => { setOpenTiBi(false); }}
-                        aria-labelledby="customized-dialog-title"
-                        open={openTiBi}
-                        className="dialog-container"
-                    >
-                        <DialogContent dividers >
-                            <div className='dialog-box' >
-                                <Typography id="customized-dialog-title" className="text-24 dialog-title-text" style={{ textAlign: "center", marginTop: "10px" }}>{t('home_Transaction')}
-                                    <img src="wallet/assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => {
-                                        setOpenTiBi(false)
-                                        setOpenLoad(false)
-                                    }} alt="close icon" />
-                                </Typography>
-                            </div>
-                            <Box className="dialog-content dialog-content-paste-height " style={{ paddingRight: "0px", height: "580px" }}>
-                                <motion.div
-                                    variants={container}
-                                    initial="hidden"
-                                    animate="show"
-                                    className="dialog-content-inner  border-r-5">
-                                    <motion.div variants={item}>
-                                        <img style={{ margin: "0 auto", width: "60px", height: "60px", marginTop: "10px" }} src='wallet/assets/images/wallet/naoZhong.png'></img>
+                                        <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
+                                            <div style={{ color: "#888B92" }}>{t('home_ID')}</div>
+                                            <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{withDrawOrderID}</div>
+                                        </motion.div>
+
+                                        <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
+                                            <div style={{ color: "#888B92" }}>{t('home_sendTips_5')}</div>
+                                            <div>{fee} {symbol}</div>
+                                        </motion.div>
+
+                                        <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
+                                            <div style={{ color: "#888B92" }}>{t('home_Time')}</div>
+                                            <div>{getNowTime()}</div>
+                                        </motion.div>
                                     </motion.div>
-                                    <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "20px", fontSize: "24px" }}>-{inputVal.amount} {symbol}</motion.div>
-                                    <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "10px", fontSize: "16px", color: "#ffc600" }}>● {t('home_PendingReview')}</motion.div>
-                                    <motion.div variants={item} className='flex justify-content-space px-20 mt-40' >
-                                        <div style={{ color: "#888B92" }}>{t('home_NetWork')}</div>
-                                        <div>{walletName}</div>
-                                    </motion.div>
+                                </Box>
+                            </DialogContent>
+                        </BootstrapDialog>
 
-                                    <motion.div variants={item} className='flex justify-content-space px-20 mt-40' >
-                                        <div style={{ color: "#888B92" }}>{t('home_Type')}</div>
-                                        <div>Crypto</div>
-                                    </motion.div>
-                                    <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
-                                        <div style={{ color: "#888B92" }}>{t('home_withdraw_14')}</div>
-                                        <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{inputVal.address}</div>
-                                    </motion.div>
+                    </div>}
 
-                                    <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
-                                        <div style={{ color: "#888B92" }}>{t('home_ID')}</div>
-                                        <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{withDrawOrderID}</div>
-                                    </motion.div>
+                    {tabValue === fiatSelect && <Fiat verifyGoogleCode={() => verifyGoogleCodeEvt()} fiatVerifiedAuth={fiatVerifiedAuth} />}
 
-                                    <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
-                                        <div style={{ color: "#888B92" }}>{t('home_sendTips_5')}</div>
-                                        <div>{fee} {symbol}</div>
-                                    </motion.div>
+                    {/* {tabValue === 2 && <Nft />} */}
 
-                                    <motion.div variants={item} className='flex justify-content-space px-20 mt-28' >
-                                        <div style={{ color: "#888B92" }}>{t('home_Time')}</div>
-                                        <div>{getNowTime()}</div>
-                                    </motion.div>
-                                </motion.div>
-                            </Box>
-                        </DialogContent>
-                    </BootstrapDialog>
-
-                </div>}
-
-                {tabValue === fiatSelect && <Fiat verifyGoogleCode={() => verifyGoogleCodeEvt()} fiatVerifiedAuth={fiatVerifiedAuth} />}
-
-                {/* {tabValue === 2 && <Nft />} */}
-
-                {/*打开粘贴板*/}
-                {/* <BootstrapDialog
+                    {/*打开粘贴板*/}
+                    {/* <BootstrapDialog
                     onClose={() => {setOpenPaste(false)}}
                     aria-labelledby="customized-dialog-title"
                     open={openPaste}
@@ -1646,8 +1670,8 @@ function Withdraw(props) {
                     </DialogContent>
                 </BootstrapDialog> */}
 
-                {/*Select Fiat*/}
-                {/* <BootstrapDialog
+                    {/*Select Fiat*/}
+                    {/* <BootstrapDialog
                     onClose={() => {setOpenPaste(false)}}
                     aria-labelledby="customized-dialog-title"
                     open={openPaste}
@@ -1690,7 +1714,43 @@ function Withdraw(props) {
                         </div>
                     </DialogContent>
                 </BootstrapDialog> */}
-            </div>
+                </div>
+            }
+            {
+                !loadingShow &&
+                <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }}>
+                    <div className="loadingChuang1">
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                    </div>
+
+                    <div className="loadingChuang1">
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                    </div>
+                </div>
+            }
 
             {openYanZheng && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
                 <motion.div
@@ -1710,7 +1770,6 @@ function Withdraw(props) {
                     <div style={{ height: "5rem" }}></div>
                 </motion.div>
             </div>}
-
             {/* pin码界面 */}
             <BootstrapDialog
                 onClose={() => {
@@ -1725,19 +1784,19 @@ function Withdraw(props) {
                         <div id='pinDivHeight'>
                             <div className='pinWindow'>
                                 <div className='flex'>
-                                    <div className='PINTitle2' style={{ marginBottom: "1rem" }}>{t('card_65')}</div>
+                                    <div className='PINTitle2' style={{ marginBottom: "1rem" }}>{t('card_196')}</div>
                                     <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                         closePinFunc();
                                     }} />
                                 </div>
-                                <div className='py-4' style={{ fontSize: smallTabValue == 0 ? "14px" : "20px", textAlign: "center", color: "#909FB4", width: "100%", overflow: "hidden", wordBreak: "break-all" }}>{smallTabValue == 0 ? "Address" : "UserID"}  {smallTabValue == 0 ? inputVal.address : inputIDVal} </div>
-                                <div className='flex justify-center mt-10 ' style={{ paddingLeft: "14%", width: "100%", overflow: "hidden", borderBottom: "1px solid #2C3950", paddingBottom: "2rem" }}>
+                                <div id="AddressText" className='py-4' style={{ fontSize: smallTabValue == 0 ? "16px" : "20px", textAlign: "center", margin: "0 auto", color: "#909FB4", width: "100%", overflow: "hidden", whiteSpace: "nowrap" }}>{smallTabValue == 0 ? "Address" : "UserID"}  {smallTabValue == 0 ? inputVal.address : inputIDVal} </div>
+                                <div className='flex justify-center mt-10 ' style={{ width: "100%", overflow: "hidden", borderBottom: "1px solid #2C3950", paddingBottom: "2rem" }}>
                                     <img className='MoneyWithdraw' style={{ borderRadius: '50%' }} src={arrayLookup(symbolsData, 'symbol', symbol, 'avatar') || ''}></img>
                                     <div className='flex'>
                                         <div className={clsx('PINTitle4  inputNumSty ', textSelect && "inputBackDi")}>
                                             {inputVal.amount} <span className={clsx("", !showGuangBiao ? 'guangBiaoNo' : 'guangBiao')} >︱</span>
                                         </div>
-                                        <img src="wallet/assets/images/deposite/bianJiBi.png" className='ml-4 mt-8' style={{ width: "18px", height: "18px" }} onClick={() => {
+                                        <img src="wallet/assets/images/deposite/bianJiBi.png" className='mt-8' style={{ zIndex: "100", marginLeft: textSelect ? "4px" : "-12px", width: "18px", height: "18px" }} onClick={() => {
                                             setTextSelect(!textSelect)
                                             setShowGuangBiao(!textSelect)
                                         }} />
@@ -2088,7 +2147,6 @@ function Withdraw(props) {
                 </div>
             </BootstrapDialog>
 
-
             <BootstrapDialog
                 onClose={() => {
                     closePasteFunc();
@@ -2182,9 +2240,9 @@ function Withdraw(props) {
                     </LoadingButton>
                 </div>
             </AnimateModal>
-
-
         </div>
+
+
     )
 }
 
