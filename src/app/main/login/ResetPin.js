@@ -25,6 +25,7 @@ import IconButton from '@mui/material/IconButton';
 import Autocomplete from "@mui/material/Autocomplete/Autocomplete";
 import phoneCode from "../../../phone/phoneCode";
 import { createPin } from "app/store/wallet/walletThunk";
+import history from "../../../@history/@history";
 
 const container = {
     show: {
@@ -99,6 +100,10 @@ function ResetPin(props) {
 
     const resetPin = async () => {
         await dispatch(createPin(control._formValues))
+    }
+
+    const changePhoneTab = (tab) => {
+        window.localStorage.setItem('phoneTab', tab);
     }
 
     return (
@@ -211,7 +216,10 @@ function ResetPin(props) {
                     />
 
                     <div style={{ textAlign: "center"}}>
-                        <a href={`/wallet/home?accessType=${localStorage.getItem('accessType') || 0}`} className="text-md font-medium">
+                        <a className="text-md font-medium" onClick={() => {
+                            changePhoneTab('wallet');
+                            history.push('/wallet/home')
+                        }}>
                             {t('re_tied_email_4')}
                         </a>
                     </div>
