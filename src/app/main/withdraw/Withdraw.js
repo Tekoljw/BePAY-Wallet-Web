@@ -52,6 +52,7 @@ import InputLabel from "@mui/material/InputLabel/InputLabel";
 import AnimateModal from "../../components/FuniModal";
 import Enable2FA from "../2fa/Enable2FA";
 import FuseLoading from '@fuse/core/FuseLoading';
+import {selectCurrentLanguage} from "app/store/i18nSlice";
 
 const container = {
     show: {
@@ -634,6 +635,7 @@ function Withdraw(props) {
 
     const userData = useSelector(selectUserData);
     const fiatData = useSelector(selectUserData).fiat;
+    const currentLanguage = useSelector(selectCurrentLanguage);
     const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || 'USD');
 
     const networks = config.networks;
@@ -985,12 +987,14 @@ function Withdraw(props) {
                     setFiatSelect(tmpFiatSelect);
                 }
             })
-        } else { //telegram小程序的标题语言处理
-            setRanges([t('home_deposite_1'), t('home_deposite_2')]);
         }
         setHasPin(userData.profile?.user?.hasSetPaymentPassword ?? false)
 
     }, [userData.profile]);
+
+    useEffect(() => {
+        setRanges([t('home_deposite_1'), t('home_deposite_2')]);
+    }, [currentLanguage.id]);
 
     const [loadingShow, setLoadingShow] = useState(true);
 
