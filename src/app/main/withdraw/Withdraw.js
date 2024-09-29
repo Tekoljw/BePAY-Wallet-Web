@@ -1014,7 +1014,6 @@ function Withdraw(props) {
         }
     }
 
-
     return (
         <div style={{ position: "relative" }}>
             {loadingShow &&

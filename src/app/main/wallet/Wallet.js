@@ -1227,9 +1227,6 @@ function Wallet() {
     }
   };
 
-
-
-
   const changeCurrency = async (currency) => {
     await dispatch(updateCurrency(currency));
     setTimeout(() => {

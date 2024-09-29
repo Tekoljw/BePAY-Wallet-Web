@@ -59,6 +59,7 @@ function HomePage(props) {
     const { pathname } = useLocation();
     const [menuShow, setMenuShow] = useState(false);
     const accessType = getUrlParam('accessType') || 0;
+    const loginType = getUserLoginType();
     let currentPhoneTab = window.localStorage.getItem('phoneTab') ?? 'wallet';
 
     // 滑动滑块
@@ -134,6 +135,11 @@ function HomePage(props) {
                 break;
             }
             default:{
+                //历史记录是telegram_web_app访问，则隐藏
+                if(loginType === userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP){
+                    setMenuShow(true);
+                    setLeftSidebarOpen(false);
+                }
                 break;
             }
         }
