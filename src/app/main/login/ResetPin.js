@@ -370,7 +370,10 @@ function ResetPin(props) {
                                                     )}
                                                 />
                                                 <div style={{ textAlign: "center"}}>
-                                                    <a href={`/wallet/home?accessType=${localStorage.getItem('accessType') || 0}`} className="text-md font-medium">
+                                                    <a className="text-md font-medium" onClick={() => {
+                                                        changePhoneTab('wallet');
+                                                        history.push('/wallet/home')
+                                                    }}>
                                                         {t('re_tied_email_4')}
                                                     </a>
                                                 </div>
@@ -554,7 +557,10 @@ function ResetPin(props) {
                                                 />
 
                                                 <div style={{ textAlign: "center"}}>
-                                                    <a href={`/wallet/home?accessType=${localStorage.getItem('accessType') || 0}`} className="text-md font-medium">
+                                                    <a className="text-md font-medium" onClick={() => {
+                                                        changePhoneTab('wallet');
+                                                        history.push('/wallet/home')
+                                                    }}>
                                                         {t('re_tied_email_4')}
                                                     </a>
                                                 </div>
