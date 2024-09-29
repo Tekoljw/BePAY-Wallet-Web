@@ -386,9 +386,9 @@ function Deposite() {
     };
 
     // 获取地址列表
-    const getWalletAddressList = () => {
+    const getWalletAddressList = (selectNetworkId) => {
         dispatch(getAddressListDesc({
-            networkId: networkId,
+            networkId: selectNetworkId,
             symbol: symbol,
         })).then((res) => {
             let result = res.payload
@@ -703,7 +703,7 @@ function Deposite() {
         setIsGetWalletAddress(addressData[symbol] && addressData[symbol][tmpNetwordId]);
         setWalletAddress(address);
         if (tmpNetwordId !== 0) {
-            getWalletAddressList();
+            getWalletAddressList(tmpNetwordId);
             handleCheckWalletAddress(tmpNetwordId);
         }
     };
@@ -742,6 +742,7 @@ function Deposite() {
         }, 1000);
     }
 
+    //币种发生变化需要处理的逻辑
     useEffect(() => {
         // isGetWalletAddress && handleWalletAddress();
         setIsGetWalletAddress(false);
@@ -749,12 +750,17 @@ function Deposite() {
         setWalletAddressList([]);
         setSelectWalletAddressIndex(null);
         if (networkData[symbol]) {
-            const symbolNetworkId = networkData[symbol][0]?.id;
-            setNetworkId(symbolNetworkId);
-            handleChangeNetWork(symbolNetworkId);
+            setNetworkId(networkData[symbol][0]?.id);
+        }else{
+            setNetworkId(0);
         }
-        symbolsFormatAmount(networkId);
     }, [symbol]);
+
+    //网络发生变化需要处理的逻辑
+    useEffect(() => {
+        symbolsFormatAmount(networkId);
+        handleChangeNetWork(networkId);
+    }, [networkId]);
 
     const getSettingSymbol = async () => {
         return {}
@@ -1190,8 +1196,6 @@ function Deposite() {
                                             onClick={() => {
                                                 setWalletName(item.network);
                                                 setNetworkId(item.id);
-                                                handleChangeNetWork(item.id)
-                                                // getWalletAddressClick(item.id);
                                             }}
                                             className={clsx('flex items-center rounded-8 border cursor-pointer deposite-token', networkId === item.id && 'active-border')}
                                             key={index}
