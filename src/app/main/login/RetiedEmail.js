@@ -16,8 +16,9 @@ import InputLabel from "@mui/material/InputLabel/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
-import { useEffect, useRef, useState } from "react";
+import {default as React, useEffect, useRef, useState} from "react";
 import { useTranslation } from "react-i18next";
+import history from "../../../@history/@history";
 
 /**
  * Form Validation Schema
@@ -74,6 +75,10 @@ function RetiedEmail() {
         if (sendRes.payload) {
             setTime(60)
         }
+    }
+
+    const changePhoneTab = (tab) => {
+        window.localStorage.setItem('phoneTab', tab);
     }
 
     async function onSubmit() {
@@ -199,8 +204,11 @@ function RetiedEmail() {
                             )}
                         />
 
-                        <div className="flex flex-col sm:flex-row items-center">
-                            <a href={`/wallet/home?accessType=${localStorage.getItem('accessType') || 0}`} className="text-md font-medium">
+                        <div style={{ textAlign: "center"}}>
+                            <a className="text-md font-medium" onClick={() => {
+                                changePhoneTab('wallet');
+                                history.push('/wallet/home')
+                            }}>
                                 {t('re_tied_email_4')}
                             </a>
                         </div>

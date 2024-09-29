@@ -65,6 +65,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import userLoginType from "../../define/userLoginType";
 import { borderTop, width } from '@mui/system';
 import * as _ from 'lodash'
+import {selectCurrentLanguage} from "app/store/i18nSlice";
 
 
 const marks = [
@@ -301,6 +302,7 @@ function Deposite() {
 
     const config = useSelector(selectConfig);
     const userData = useSelector(selectUserData);
+    const currentLanguage = useSelector(selectCurrentLanguage);
     const currencys = useSelector(selectConfig).payment.currency || [];
     const bankCodeList = config.payment?.bankCode || [];
 
@@ -896,11 +898,12 @@ function Deposite() {
                     setFiatSelect(tmpFiatSelect);
                 }
             })
-        } else { //telegram小程序的标题语言处理
-            setRanges([t('home_deposite_1'), t('home_deposite_2')]);
         }
-
     }, [userData.profile]);
+
+    useEffect(() => {
+        setRanges([t('home_deposite_1'), t('home_deposite_2')]);
+    }, [currentLanguage.id]);
 
     const [nftConfig, setNftConfig] = useState({});
     const [nftId, setNftId] = useState('');

@@ -13,6 +13,8 @@ import {
 } from '../../store/user/userThunk';
 import { useTranslation } from "react-i18next";
 import { showMessage } from 'app/store/fuse/messageSlice';
+import history from "../../../@history/@history";
+import {default as React} from "react";
 
 
 
@@ -25,22 +27,22 @@ const defaultValues = {
 function ForgotPass() {
     const { t } = useTranslation('mainPage');
     /**
- * Form Validation Schema
- */
-const schema = yup.object().shape({
-    oldPassword: yup
-        .string()
-        .required('Please enter your old password.')
-        .min(6,t("signUp_8")),
-        // .min(6, 'Password is too short - should be 6 chars minimum.'),
-    password: yup
-        .string()
-        .required('Please enter your new password.')
-        .max(16, 'Password is too long - should be 16 chars maximum.')
-        // .min(6, 'Password is too short - should be 6 chars minimum.'),
-        .min(6,t("signUp_8")),
-    passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
-});
+     * Form Validation Schema
+     */
+    const schema = yup.object().shape({
+        oldPassword: yup
+            .string()
+            .required('Please enter your old password.')
+            .min(6,t("signUp_8")),
+            // .min(6, 'Password is too short - should be 6 chars minimum.'),
+        password: yup
+            .string()
+            .required('Please enter your new password.')
+            .max(16, 'Password is too long - should be 16 chars maximum.')
+            // .min(6, 'Password is too short - should be 6 chars minimum.'),
+            .min(6,t("signUp_8")),
+        passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
+    });
     const { control, formState, handleSubmit, reset } = useForm({
         mode: 'onChange',
         defaultValues,
@@ -50,6 +52,10 @@ const schema = yup.object().shape({
     const { isValid, dirtyFields, errors } = formState;
 
     const dispatch = useDispatch();
+
+    const changePhoneTab = (tab) => {
+        window.localStorage.setItem('phoneTab', tab);
+    }
 
     async function onSubmit() {
         // // 密码必须为6-16x位数，且包含大小写字母和特殊符号
@@ -142,7 +148,10 @@ const schema = yup.object().shape({
                         />
 
                         <div style={{ textAlign: "center"}}>
-                            <a href={`/wallet/home/wallet?accessType=${localStorage.getItem('accessType') || 0}`} className="text-md font-medium">
+                            <a className="text-md font-medium" onClick={() => {
+                                changePhoneTab('wallet');
+                                history.push('/wallet/home')
+                            }}>
                                 {t('re_tied_email_4')}
                             </a>
                         </div>
