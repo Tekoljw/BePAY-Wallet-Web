@@ -271,7 +271,6 @@ function Deposite() {
     const [tabValue, setTabValue] = useState(0);
     const [weight, setWeight] = useState(0);
     const [tiJiaoState, setTiJiaoState] = useState(0);
-    const [zhuanQuan, setZhuanQuan] = useState(true);
     const toggleAccordion = (panel) => (event, _expanded) => {
         setExpanded(_expanded ? panel : false);
     };
@@ -298,7 +297,6 @@ function Deposite() {
     });
     const [submitDisabled, setSubmitDisabled] = useState(false);
     const [isGetWalletAddress, setIsGetWalletAddress] = useState(false);
-
 
     const config = useSelector(selectConfig);
     const userData = useSelector(selectUserData);
@@ -658,6 +656,41 @@ function Deposite() {
         // console.log(arrayLookup(filterSymbolData, 'symbol', 'USDD', 'address') );
     };
 
+    //所有币种和所有网络发生变化需要处理的逻辑
+    useEffect(() => {
+        if (!mounted.current) {
+            mounted.current = true;
+        } else {
+            symbolsFormatAmount();
+        }
+    }, [cryptoDisplayData, symbolsData, networks]);
+
+    //网络数据发生变化需要处理的逻辑
+    useEffect(() => {
+        if (networkData[symbol] && networkId === 0) {
+            setNetworkId(networkData[symbol][0]?.id);
+        }
+    }, [networkData]);
+
+    //币种发生变化需要处理的逻辑
+    useEffect(() => {
+        setIsGetWalletAddress(false);
+        setWalletAddress('');
+        setWalletAddressList([]);
+        setSelectWalletAddressIndex(null);
+        if (networkData[symbol]) {
+            setNetworkId(networkData[symbol][0]?.id);
+        }else{
+            setNetworkId(0);
+        }
+    }, [symbol]);
+
+    //选择的网络发生变化需要处理的逻辑
+    useEffect(() => {
+        symbolsFormatAmount(networkId);
+        handleChangeNetWork(networkId);
+    }, [networkId]);
+
     const getUserMoney = (symbol) => {
         let arr = userData.wallet.inner || [];
         let balance = arrayLookup(arr, 'symbol', symbol, 'balance') || 0;
@@ -687,14 +720,6 @@ function Deposite() {
 
         setWalletAddressList(tmpList)
     }
-
-    useEffect(() => {
-        if (!mounted.current) {
-            mounted.current = true;
-        } else {
-            symbolsFormatAmount();
-        }
-    }, [cryptoDisplayData, symbolsData, networks]);
 
     //改变网络的处理
     const handleChangeNetWork = (tmpNetwordId) => {
@@ -741,26 +766,6 @@ function Deposite() {
             }
         }, 1000);
     }
-
-    //币种发生变化需要处理的逻辑
-    useEffect(() => {
-        // isGetWalletAddress && handleWalletAddress();
-        setIsGetWalletAddress(false);
-        setWalletAddress('');
-        setWalletAddressList([]);
-        setSelectWalletAddressIndex(null);
-        if (networkData[symbol]) {
-            setNetworkId(networkData[symbol][0]?.id);
-        }else{
-            setNetworkId(0);
-        }
-    }, [symbol]);
-
-    //网络发生变化需要处理的逻辑
-    useEffect(() => {
-        symbolsFormatAmount(networkId);
-        handleChangeNetWork(networkId);
-    }, [networkId]);
 
     const getSettingSymbol = async () => {
         return {}
