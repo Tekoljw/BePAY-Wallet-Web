@@ -440,6 +440,12 @@ function Deposite() {
         setTimeout(() => setOpenLoad(false), 1000);
     };
 
+    useEffect(() => {
+        dispatch(getCryptoDisplay()).then((res) => {
+            let result = res.payload;
+            setCryptoDisplayData(result?.data);
+        });
+    }, []);
 
     useEffect(() => {
         setSubmitDisabled(!transferFormData.money || !transferFormData.amount);
@@ -565,46 +571,15 @@ function Deposite() {
         setOpenLoad(false)
     };
 
-    // 切换到nft页面，自动获取nft钱包地址
-    // useEffect(() => {
-    //     // console.log(tabValue, 'tabValue....');
-    //     if (tabValue === 2) {
-    //         getNftWalletAddressClick('DeFi');
-    //     }
-    // }, [tabValue]);
-
-    // 获取config
-    // const getWalletConfig = () => {
-    //     dispatch(getWalletAddressConfig()).then((value) => {
-    //         if (!value.payload) return;
-    //         let resultData = value.payload.data;
-    //         // setWalletConfig(resultData);
-    //         let tmpSymbolWallet = [];
-    //         Object.keys(resultData).forEach((item, index) => {
-    //             tmpSymbolWallet.push({
-    //                 balance: arrayLookup(walletData.inner, 'symbol', item, 'balance') || 0,
-    //                 symbol: item,
-    //                 tradeLock: arrayLookup(walletData.inner, 'symbol', item, 'tradeLock') || 0,
-    //                 withdrawLock: arrayLookup(walletData.inner, 'symbol', item, 'withdrawLock') || 0
-    //             })
-    //         });
-    //         setSymbolWallet(tmpSymbolWallet);
-    //         getWalletAddressClick(
-    //             WalletConfigDefineMap[
-    //                 resultData[Object.keys(resultData)[defineMapSelected]][0]
-    //             ].walletName
-    //         );
-    //     });
-    // };
-
-    useEffect(() => {
-        symbolsFormatAmount(symbol, networkId)
-        getWalletAddressList()
-        console.log(networkData, 'tmpNetworkId ==>')
-    }, [symbol, networkId])
-
-    const symbolsFormatAmount = (a, b) => {
-        const symboldatafilter = symbolsData.filter(i => i.networkId == b)
+    //格式化币种和网络
+    const symbolsFormatAmount = (selectNetworkId) => {
+        let filterSymbolData = {};
+        if(selectNetworkId && selectNetworkId > 0){
+            //筛选币种
+            filterSymbolData = symbolsData.filter(i => i.networkId == selectNetworkId);
+        }else{
+            filterSymbolData = symbolsData;
+        }
 
         let currencyRate = arrayLookup(config.payment.currency, 'currencyCode', currencyCode, 'exchangeRate') || 0;
         let displayData = [];
@@ -631,7 +606,7 @@ function Deposite() {
                 var balance = getUserMoney(item);
                 tmpSymbols.push({
                     avatar: arrayLookup(symbolsData, 'symbol', item, 'avatar') || '',
-                    address: arrayLookup(symboldatafilter, 'symbol', item, 'address') || '',
+                    address: arrayLookup(filterSymbolData, 'symbol', item, 'address') || '',
                     decimals: arrayLookup(symbolsData, 'symbol', item, 'decimals') || '',
                     isManualNotify: arrayLookup(symbolsData, 'symbol', item, 'isManualNotify') || '',
                     type: arrayLookup(symbolsData, 'symbol', item, 'type') ?? '',
@@ -651,24 +626,24 @@ function Deposite() {
 
         let tmpNetworks = {};
         tmpSymbols.forEach((item, index) => {
-            var tmpNetId = [];
+            var tmpNetIds = [];
             var tmpNetData = [];
             symbolsData?.map((symbolData) => {
-                if (tmpNetId.indexOf(symbolData.networkId) === -1 && symbolData.symbol === item.symbol) {
-                    tmpNetId.push(symbolData.networkId);
+                if (tmpNetIds.indexOf(symbolData.networkId) === -1 && symbolData.symbol === item.symbol) {
+                    tmpNetIds.push(symbolData.networkId);
                 }
             });
 
-            for (var i = 0; i < tmpNetId.length; i++) {
-                if (arrayLookup(networks, 'id', tmpNetId[i], 'symbol')) {
+            for (var i = 0; i < tmpNetIds.length; i++) {
+                if (arrayLookup(networks, 'id', tmpNetIds[i], 'symbol')) {
                     tmpNetData.push({
-                        id: tmpNetId[i],
-                        symbol: arrayLookup(networks, 'id', tmpNetId[i], 'symbol'),
-                        avatar: arrayLookup(networks, 'id', tmpNetId[i], 'avatar'),
-                        network: arrayLookup(networks, 'id', tmpNetId[i], 'network'),
+                        id: tmpNetIds[i],
+                        symbol: arrayLookup(networks, 'id', tmpNetIds[i], 'symbol'),
+                        avatar: arrayLookup(networks, 'id', tmpNetIds[i], 'avatar'),
+                        network: arrayLookup(networks, 'id', tmpNetIds[i], 'network'),
                         text: 1,
                         desc: 2,
-                        networkLen: arrayLookup(networks, 'id', tmpNetId[i], 'network').length || 0,
+                        networkLen: arrayLookup(networks, 'id', tmpNetIds[i], 'network').length || 0,
                     })
                 }
             }
@@ -680,7 +655,7 @@ function Deposite() {
         // console.log(tmpSymbols,'........');
         setSymbolWallet(tmpSymbols.filter(i => i.symbol !== 'eUSDT'));
         setNetworkData(tmpNetworks);
-        // console.log(arrayLookup(symboldatafilter, 'symbol', 'USDD', 'address') );
+        // console.log(arrayLookup(filterSymbolData, 'symbol', 'USDD', 'address') );
     };
 
     const getUserMoney = (symbol) => {
@@ -713,32 +688,22 @@ function Deposite() {
         setWalletAddressList(tmpList)
     }
 
-    const tidyWalletData = () => {
-        symbolsFormatAmount();
-    };
-
     useEffect(() => {
         if (!mounted.current) {
             mounted.current = true;
         } else {
-            tidyWalletData();
+            symbolsFormatAmount();
         }
     }, [cryptoDisplayData, symbolsData, networks]);
 
-    useEffect(() => {
-        // getWalletConfig();
-        dispatch(getCryptoDisplay()).then((res) => {
-            let result = res.payload;
-            setCryptoDisplayData(result?.data);
-        });
-    }, []);
-
+    //改变网络的处理
     const handleChangeNetWork = (tmpNetwordId) => {
         let address = (addressData[symbol] && addressData[symbol][tmpNetwordId]) || ''
         setSelectWalletAddressIndex(null)
         setIsGetWalletAddress(addressData[symbol] && addressData[symbol][tmpNetwordId]);
         setWalletAddress(address);
         if (tmpNetwordId !== 0) {
+            getWalletAddressList();
             handleCheckWalletAddress(tmpNetwordId);
         }
     };
@@ -784,36 +749,12 @@ function Deposite() {
         setWalletAddressList([]);
         setSelectWalletAddressIndex(null);
         if (networkData[symbol]) {
-            let tmpNetwordId = networkData[symbol][0]?.id;
-            setNetworkId(tmpNetwordId);
-            handleChangeNetWork(tmpNetwordId);
+            const symbolNetworkId = networkData[symbol][0]?.id;
+            setNetworkId(symbolNetworkId);
+            handleChangeNetWork(symbolNetworkId);
         }
-        // getWalletAddressClick(networkData[symbol][0].id);
-        // function getArrayIndex(arr, obj) {
-        //     var i = arr.length;
-        //     while (i--) {
-        //         if (arr[i] === obj) {
-        //             return i;
-        //         }
-        //     }
-        //     return -1;
-        // }
-        // let walletConfigKey = Object.keys(walletConfig);
-        // let tmpDefineMapSelected = getArrayIndex(walletConfigKey, symbol);
-        // setDefineMapSelected(tmpDefineMapSelected);
-        // setWalletName('');
-        // if (walletConfig[Object.keys(walletConfig)[tmpDefineMapSelected]]) {
-        //     getWalletAddressClick(
-        //         WalletConfigDefineMap[
-        //             walletConfig[Object.keys(walletConfig)[tmpDefineMapSelected]][0]
-        //             ].walletName
-        //     );
-        // }
+        symbolsFormatAmount(networkId);
     }, [symbol]);
-
-
-
-
 
     const getSettingSymbol = async () => {
         return {}
@@ -1075,9 +1016,6 @@ function Deposite() {
         });
     }, []);
 
-
-
-
     // 格式化金额
     const formatAmount = (amount) => {
         if (amount >= 1000000000) {
@@ -1091,8 +1029,6 @@ function Deposite() {
         }
         return amount
     }
-
-
 
     useEffect(() => {
         setTimeout(() => {

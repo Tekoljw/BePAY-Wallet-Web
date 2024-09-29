@@ -206,8 +206,8 @@ function RetiedEmail() {
 
                         <div style={{ textAlign: "center"}}>
                             <a className="text-md font-medium" onClick={() => {
-                                changePhoneTab('wallet');
-                                history.push('/wallet/home')
+                                changePhoneTab('');
+                                history.push('/wallet/home/wallet')
                             }}>
                                 {t('re_tied_email_4')}
                             </a>
