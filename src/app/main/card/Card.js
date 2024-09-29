@@ -638,7 +638,7 @@ function Card(props) {
     const [divHeight, setDivHeight] = useState(0);
     const [zhuanQuan, setZhuanQuan] = useState(true);
     const [tiJiaoState, setTiJiaoState] = useState(0);
-
+    const [cardLanguage, setCardLanguage] = useState([]);
 
     useEffect(() => {
         if (timer < 5 && updateCard) {
@@ -656,19 +656,42 @@ function Card(props) {
             if (result) {
                 let tmpConfig = { 2: [], 3: [] }
                 let tmpConfigList = {}
+                let tmpLanguageList = []
                 result.map((item) => {
                     if (item.state === 1) {
                         if (item.creditType === 2) {
                             tmpConfig[2].push(item)
+                            if (item.creditConfigName.includes("支付")) {
+                                tmpLanguageList.push(t('card_190'));
+                            } else if (item.creditConfigName.includes("购物")) {
+                                tmpLanguageList.push(t('card_191'));
+                            } else if (item.creditConfigName.includes("消费")) {
+                                tmpLanguageList.push(t('card_192'));
+                            } else if (item.creditConfigName.includes("投放")) {
+                                tmpLanguageList.push(t('card_193'));
+                            } else if (item.creditConfigName.includes("采购")) {
+                                tmpLanguageList.push(t('card_194'));
+                            }
                         } else if (item.creditType === 3) {
                             tmpConfig[3].push(item)
+                            if (item.creditConfigName.includes("支付")) {
+                                tmpLanguageList.push(t('card_190'));
+                            } else if (item.creditConfigName.includes("购物")) {
+                                tmpLanguageList.push(t('card_191'));
+                            } else if (item.creditConfigName.includes("消费")) {
+                                tmpLanguageList.push(t('card_192'));
+                            } else if (item.creditConfigName.includes("投放")) {
+                                tmpLanguageList.push(t('card_193'));
+                            } else if (item.creditConfigName.includes("采购")) {
+                                tmpLanguageList.push(t('card_194'));
+                            }
                         }
-
                         tmpConfigList[item.configId] = item
                     }
                 })
                 setCardConfig(tmpConfig)
                 setCardConfigList(tmpConfigList)
+                setCardLanguage(tmpLanguageList);
             }
         })
     }
@@ -1484,7 +1507,7 @@ function Card(props) {
                                         {
                                             smallTabValue === 0 && !openXiangQing &&
                                             <div>
-                                                {cardConfig[2].map((configItem) => {
+                                                {cardConfig[2].map((configItem, index) => {
                                                     return (
                                                         <motion.div
                                                             key={configItem.configId}
@@ -1493,7 +1516,7 @@ function Card(props) {
                                                             animate="show"
                                                             className='cardJianGe'
                                                         >
-                                                            <div className='cardName'>{configItem.creditConfigName}</div>
+                                                            <div className='cardName'>{cardLanguage[index]}</div>
                                                             <div className="responsive-div">
                                                                 <div className="responsive-div-content card1Bg" style={{ background: `url(${configItem?.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }} onClick={() => {
                                                                     setOpenXiangQing(true);

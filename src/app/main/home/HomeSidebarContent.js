@@ -209,7 +209,8 @@ function HomeSidebarContent(props) {
                         <ListItemText className="truncate font16" primary={t('menu_18')} disableTypography />
                     </StyledListItem>}
 
-                    {hideMenu.indexOf('buyCrypto') === -1 && <StyledListItem
+
+                    {/* {hideMenu.indexOf('buyCrypto') === -1 && <StyledListItem
                         button
                         className={
                             clsx(
@@ -221,15 +222,12 @@ function HomeSidebarContent(props) {
                             tabClick('buyCrypto');
                         }}
                     >
-                        {/* <FuseSvgIcon className="list-item-icon" color="disabled">
-                            material-twotone:credit_card
-                        </FuseSvgIcon> */}
                         <div className='iconWz'>
                             <img className='menu-icon ' src='wallet/assets/images/menu/buyCrypto.png' alt='icon' />
                             <img className='menu-icon  active' src='wallet/assets/images/menu/buyCrypto-active.png' alt='icon' />
                         </div>
                         <ListItemText className="truncate font16" primary={t('menu_4')} disableTypography />
-                    </StyledListItem>}
+                    </StyledListItem>} */}
 
                     {/*{hideMenu.indexOf('swap') === -1 && <StyledListItem*/}
                     {/*    button*/}

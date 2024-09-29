@@ -1668,13 +1668,13 @@ function Wallet() {
                 <div className="accountGoneNengZi">{t("menu_5")}</div>
               </div>
 
-              <div className="accountGongNengDi" onClick={() => {
+              {/* <div className="accountGongNengDi" onClick={() => {
                 changePhoneTab("buyCrypto");
                 history.push('/wallet/home/buyCrypto')
               }}>
                 <img className="accountGoneNengImg" src="/wallet/assets/images/menu/buyCrypto-active2.png"></img>
                 <div className="accountGoneNengZi">{t("card_5")}</div>
-              </div>
+              </div> */}
             </motion.div>
             }
 
