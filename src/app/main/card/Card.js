@@ -313,6 +313,9 @@ function Card(props) {
         });
     };
 
+
+
+
     const FanKa = () => {
         setKaBeiButton(true);
         document.getElementById('responsive-div').classList.add('flipped');
@@ -649,6 +652,8 @@ function Card(props) {
         }
     }, [timer]);
 
+
+
     //获取Config
     const getCardConfig = () => {
         dispatch(getCreditConfig()).then((res) => {
@@ -657,33 +662,107 @@ function Card(props) {
                 let tmpConfig = { 2: [], 3: [] }
                 let tmpConfigList = {}
                 let tmpLanguageList = []
+                let tmpShenQinInfoMaster = []
+                let tmpShenQinInfoMaster2 = []
+                let tmpShenQinInfoVisa = []
+                let tmpShenQinInfoVisa2 = []
                 result.map((item) => {
                     if (item.state === 1) {
                         if (item.creditType === 2) {
                             tmpConfig[2].push(item)
                             if (item.creditConfigName.includes("支付")) {
                                 tmpLanguageList.push(t('card_190'));
+                                if (item.cardOrganizations.includes("Master")) {
+                                    tmpShenQinInfoMaster.push(t('card_201'));
+                                    tmpShenQinInfoMaster2.push(t('card_202'));
+                                } else {
+                                    tmpShenQinInfoVisa.push(t('card_211'));
+                                    tmpShenQinInfoVisa2.push(t('card_212'));
+                                }
                             } else if (item.creditConfigName.includes("购物")) {
                                 tmpLanguageList.push(t('card_191'));
+                                if (item.cardOrganizations.includes("Master")) {
+                                    tmpShenQinInfoMaster.push(t('card_203'));
+                                    tmpShenQinInfoMaster2.push(t('card_204'));
+                                } else {
+                                    tmpShenQinInfoVisa.push(t('card_213'));
+                                    tmpShenQinInfoVisa2.push(t('card_214'));
+                                }
                             } else if (item.creditConfigName.includes("消费")) {
                                 tmpLanguageList.push(t('card_192'));
+                                if (item.cardOrganizations.includes("Master")) {
+                                    tmpShenQinInfoMaster.push(t('card_205'));
+                                    tmpShenQinInfoMaster2.push(t('card_206'));
+                                } else {
+                                    tmpShenQinInfoVisa.push(t('card_215'));
+                                    tmpShenQinInfoVisa2.push(t('card_216'));
+                                }
                             } else if (item.creditConfigName.includes("投放")) {
                                 tmpLanguageList.push(t('card_193'));
+                                if (item.cardOrganizations.includes("Master")) {
+                                    tmpShenQinInfoMaster.push(t('card_207'));
+                                    tmpShenQinInfoMaster2.push(t('card_208'));
+                                } else {
+                                    tmpShenQinInfoVisa.push(t('card_217'));
+                                    tmpShenQinInfoVisa2.push(t('card_218'));
+                                }
                             } else if (item.creditConfigName.includes("采购")) {
                                 tmpLanguageList.push(t('card_194'));
+                                if (item.cardOrganizations.includes("Master")) {
+                                    tmpShenQinInfoMaster.push(t('card_209'));
+                                    tmpShenQinInfoMaster2.push(t('card_210'));
+                                } else {
+                                    tmpShenQinInfoVisa.push(t('card_219'));
+                                    tmpShenQinInfoVisa2.push(t('card_220'));
+                                }
                             }
                         } else if (item.creditType === 3) {
                             tmpConfig[3].push(item)
                             if (item.creditConfigName.includes("支付")) {
                                 tmpLanguageList.push(t('card_190'));
+                                if (item.cardOrganizations.includes("Master")) {
+                                    tmpShenQinInfoMaster.push(t('card_201'));
+                                    tmpShenQinInfoMaster2.push(t('card_202'));
+                                } else {
+                                    tmpShenQinInfoVisa.push(t('card_211'));
+                                    tmpShenQinInfoVisa2.push(t('card_212'));
+                                }
                             } else if (item.creditConfigName.includes("购物")) {
                                 tmpLanguageList.push(t('card_191'));
+                                if (item.cardOrganizations.includes("Master")) {
+                                    tmpShenQinInfoMaster.push(t('card_203'));
+                                    tmpShenQinInfoMaster2.push(t('card_204'));
+                                } else {
+                                    tmpShenQinInfoVisa.push(t('card_213'));
+                                    tmpShenQinInfoVisa2.push(t('card_214'));
+                                }
                             } else if (item.creditConfigName.includes("消费")) {
                                 tmpLanguageList.push(t('card_192'));
+                                if (item.cardOrganizations.includes("Master")) {
+                                    tmpShenQinInfoMaster.push(t('card_205'));
+                                    tmpShenQinInfoMaster2.push(t('card_206'));
+                                } else {
+                                    tmpShenQinInfoVisa.push(t('card_215'));
+                                    tmpShenQinInfoVisa2.push(t('card_216'));
+                                }
                             } else if (item.creditConfigName.includes("投放")) {
                                 tmpLanguageList.push(t('card_193'));
+                                if (item.cardOrganizations.includes("Master")) {
+                                    tmpShenQinInfoMaster.push(t('card_207'));
+                                    tmpShenQinInfoMaster2.push(t('card_208'));
+                                } else {
+                                    tmpShenQinInfoVisa.push(t('card_217'));
+                                    tmpShenQinInfoVisa2.push(t('card_218'));
+                                }
                             } else if (item.creditConfigName.includes("采购")) {
                                 tmpLanguageList.push(t('card_194'));
+                                if (item.cardOrganizations.includes("Master")) {
+                                    tmpShenQinInfoMaster.push(t('card_209'));
+                                    tmpShenQinInfoMaster2.push(t('card_210'));
+                                } else {
+                                    tmpShenQinInfoVisa.push(t('card_219'));
+                                    tmpShenQinInfoVisa2.push(t('card_220'));
+                                }
                             }
                         }
                         tmpConfigList[item.configId] = item
@@ -691,10 +770,94 @@ function Card(props) {
                 })
                 setCardConfig(tmpConfig)
                 setCardConfigList(tmpConfigList)
-                setCardLanguage(tmpLanguageList);
+                setCardLanguage(tmpLanguageList)
             }
         })
     }
+
+    const [clickShenQinCard, setClickShenQinCard] = useState(false);
+
+    const infoShenQinTxt = (type) => {
+        if (type?.includes("visa")) {
+            if (type?.includes("支付")) {
+                return t('card_211')
+            }
+            if (type?.includes("购物")) {
+                return t('card_213')
+            }
+            if (type?.includes("消费")) {
+                return t('card_215')
+            }
+            if (type?.includes("投放")) {
+                return t('card_217')
+            }
+            if (type?.includes("采购")) {
+                return t('card_219')
+            }
+        } else if (type?.includes("Master")) {
+            if (type?.includes("支付")) {
+                return t('card_201')
+            }
+            if (type?.includes("购物")) {
+                return t('card_203')
+            }
+            if (type?.includes("消费")) {
+                return t('card_205')
+            }
+            if (type?.includes("投放")) {
+                return t('card_207')
+            }
+            if (type?.includes("采购")) {
+                return t('card_219')
+            }
+        }
+        return "";
+    }
+
+
+    const infoShenQinTxt2 = (type) => {
+        if (type?.includes("visa")) {
+            if (type?.includes("支付")) {
+                return t('card_212')
+            }
+            if (type?.includes("购物")) {
+                return t('card_214')
+            }
+            if (type?.includes("消费")) {
+                return t('card_216')
+            }
+            if (type?.includes("投放")) {
+                return t('card_218')
+            }
+            if (type?.includes("采购")) {
+                return t('card_220')
+            }
+        } else if (type?.includes("Master")) {
+            if (type?.includes("支付")) {
+                return t('card_202')
+            }
+            if (type?.includes("购物")) {
+                return t('card_204')
+            }
+            if (type?.includes("消费")) {
+                return t('card_206')
+            }
+            if (type?.includes("投放")) {
+                return t('card_208')
+            }
+            if (type?.includes("采购")) {
+                return t('card_210')
+            }
+        }
+        return "";
+    }
+
+
+
+
+
+
+
 
     // 申请卡
     const applyCard = () => {
@@ -711,6 +874,7 @@ function Card(props) {
             setTimer(timer + 1)
             setIsLoadingBtn(false)
             setOpenXiangQing(false);
+            setClickShenQinCard(false);
             setTabValue(0);
             closeChangeBi();
             myFunction();
@@ -1520,32 +1684,35 @@ function Card(props) {
                                                             <div className="responsive-div">
                                                                 <div className="responsive-div-content card1Bg" style={{ background: `url(${configItem?.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }} onClick={() => {
                                                                     setOpenXiangQing(true);
+                                                                    setClickShenQinCard(true);
                                                                     setCardConfigID(configItem.configId);
                                                                     myFunction;
                                                                 }}   >
                                                                 </div>
                                                             </div>
-                                                            <div className='cardNameInFoDi px-12'>
+                                                            <div className='cardNameInFoDi px-12 '>
 
                                                                 <div className='flex justify-between'>
                                                                     <div className='kaPianInfoLeiXing' onClick={() => {
                                                                     }} >{configItem.cardOrganizations} Card</div>
-                                                                    <div className='kaPianInfo' onClick={() => {
+                                                                    <div className='kaPianInfo ' onClick={() => {
                                                                         setOpenXiangQing(true);
+                                                                        setClickShenQinCard(true);
                                                                         setCardConfigID(configItem.configId);
                                                                         myFunction;
                                                                     }}   >{t('card_11')}</div>
                                                                 </div>
 
                                                                 <div className='flex justify-between items-center mt-10'>
-                                                                    <div className='openingFee' >{t('card_33')} {configItem.applyCreditFee} {configItem.cardSymbol} </div>
+                                                                    {/* <div className='openingFee' >{t('card_33')} {configItem.applyCreditFee} {configItem.cardSymbol} </div> */}
+                                                                    <div className='openingFee' >{t('card_33')} 28 USDT</div>
                                                                     <div className='openCardBtn' onClick={() => {
                                                                         setOpenXiangQing(true);
+                                                                        setClickShenQinCard(true);
                                                                         setCardConfigID(configItem.configId);
                                                                         myFunction;
                                                                     }}   >{t('card_35')}</div>
                                                                 </div>
-
                                                             </div>
                                                         </motion.div>
                                                     )
@@ -1567,6 +1734,7 @@ function Card(props) {
                                                             <div className="responsive-div">
                                                                 <div className="responsive-div-content card1Bg" onClick={() => {
                                                                     setOpenXiangQing(true);
+                                                                    setClickShenQinCard(true);
                                                                     setCardConfigID(configItem.configId);
                                                                     myFunction;
                                                                 }}   >
@@ -1578,6 +1746,7 @@ function Card(props) {
                                                                     }} >VISA</div>
                                                                     <div className='kaPianInfo' onClick={() => {
                                                                         setOpenXiangQing(true);
+                                                                        setClickShenQinCard(true);
                                                                         setCardConfigID(configItem.configId);
                                                                         myFunction;
                                                                     }}   >{t('card_11')}</div>
@@ -1588,6 +1757,7 @@ function Card(props) {
 
                                                                     <div className='openCardBtn' onClick={() => {
                                                                         setOpenXiangQing(true);
+                                                                        setClickShenQinCard(true);
                                                                         setCardConfigID(configItem.configId);
                                                                         myFunction;
                                                                     }}   >{t('card_35')}</div>
@@ -1640,6 +1810,7 @@ function Card(props) {
                 >
                     <div className='flex' onClick={() => {
                         setOpenXiangQing(false);
+                        setClickShenQinCard(false);
                         myFunction;
                     }}   >
                         <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
@@ -1647,16 +1818,18 @@ function Card(props) {
 
                     <div className='flex justify-center mt-10'>
                         <motion.div variants={item} className='shenQingCardDi flex items-center'>
-                            <img className='shenQingCard' src={cardConfigList[cardConfigID]?.url}></img>
+                            <img className='shenQingCard'
+                                src={cardConfigList[cardConfigID]?.url}></img>
                         </motion.div>
                     </div>
                     <div className='kaPianQuanYiZi'>{t('card_37')}</div>
+
                     <motion.div variants={item} className='flex'>
                         <div className='quanYiDi' style={{ padding: "1.5rem" }}>
                             <div className='flex justify-between mt-10'>
                                 <div className='quanYiHuiZi'>{t('card_38')}</div>
                                 <div className='flex'>
-                                    <img className='quanYiIcon' src="wallet/assets/images/card/usd2.png" alt="" /><span className='quanYiZi'>USD</span>
+                                    <img className='quanYiIcon' src="wallet/assets/images/card/usd2.png" alt="" /><span className='quanYiZi'>USDT</span>
                                 </div>
                             </div>
 
@@ -1670,7 +1843,8 @@ function Card(props) {
                             <div className='flex justify-between mt-10'>
                                 <div className='quanYiHuiZi'>{t('card_33')}</div>
                                 <div className='flex'>
-                                    <div className='quanYiZi quanYiHui mr-10'>100 USD</div><div className='quanYiZi quanYiLv'>{cardConfigList[cardConfigID]?.applyCreditFee} {cardConfigList[cardConfigID]?.cardSymbol}</div>
+                                    {/* <div className='quanYiZi quanYiHui mr-10'>100 USD</div><div className='quanYiZi quanYiLv'>{cardConfigList[cardConfigID]?.applyCreditFee} {cardConfigList[cardConfigID]?.cardSymbol}</div> */}
+                                    <div className='quanYiZi quanYiHui mr-10'>100 USDT</div><div className='quanYiZi quanYiLv'>28 USDT</div>
                                 </div>
                             </div>
 
@@ -1681,8 +1855,19 @@ function Card(props) {
 
                             <div className='flex justify-between mt-10 mb-10'>
                                 <div className='quanYiHuiZi'>{t('card_43')}</div>
-                                <div> 1000,000 USD/<span>{t('card_103')}</span></div>
+                                {/* <div> 1000,000 USD/<span>{t('card_103')}</span></div> */}
+                                <div> 1000,000 USDT</div>
                             </div>
+                        </div>
+                    </motion.div>
+
+
+                    <motion.div variants={item} className='flex mt-20'>
+                        <div className='quanYiDi' style={{ padding: "1.5rem" }}>
+                            <div className='mt-10'>
+                                <div className='text-16'>{t('card_56')}</div>
+                            </div>
+                            <div className='pingTai'><span style={{ color: "#19D5B8" }}>{clickShenQinCard && infoShenQinTxt(cardConfigList[cardConfigID]?.creditConfigName)}</span>{clickShenQinCard && infoShenQinTxt2(cardConfigList[cardConfigID]?.creditConfigName)} </div>
                         </div>
                     </motion.div>
 
@@ -1694,8 +1879,25 @@ function Card(props) {
 
                             <div className='flex justify-between mt-10'>
                                 <div className='quanYiHuiZi'>{t('card_104')}</div>
-                                <div>{cardConfigList[cardConfigID]?.yearBasicFee} {cardConfigList[cardConfigID]?.cardSymbol} </div>
+                                {/* <div>{cardConfigList[cardConfigID]?.yearBasicFee} {cardConfigList[cardConfigID]?.cardSymbol} </div> */}
+                                <div>50 USDT</div>
                             </div>
+
+                            <div className='flex justify-between mt-10'>
+                                <div className='quanYiHuiZi'>{t('home_borrow_18')}</div>
+                                <div>2%</div>
+                            </div>
+
+                            <div className='flex justify-between mt-10'>
+                                <div className='quanYiHuiZi'>{t('card_200')}</div>
+                                <div>10 USDT</div>
+                            </div>
+
+                            <div className='flex justify-between mt-10'>
+                                <div className='quanYiHuiZi'>{t('home_withdraw_5')}</div>
+                                <div>10000 USDT</div>
+                            </div>
+
 
                             <div className='flex justify-between mt-10'>
                                 <div className='quanYiHuiZi'>{t('card_46')}</div>
@@ -1717,12 +1919,12 @@ function Card(props) {
 
                             <div className='flex justify-between mt-10 '>
                                 <div className='quanYiHuiZi'>{t('card_52')}</div>
-                                <div style={{ textAlign: "end" }}>{t('card_57')}</div>
+                                <div style={{ textAlign: "end" }}>{t('card_198')}</div>
                             </div>
 
                             <div className='flex justify-between mt-10 '>
                                 <div className='quanYiHuiZi'>{t('card_53')}</div>
-                                <div style={{ textAlign: "end" }}>{t('card_58')}</div>
+                                <div style={{ textAlign: "end" }}>{t('card_199')}</div>
                             </div>
 
                             <div className='flex justify-between mt-10'>
@@ -1733,11 +1935,6 @@ function Card(props) {
                             <div className='flex justify-between mt-10 '>
                                 <div className='quanYiHuiZi'>{t('card_55')}</div>
                                 <div>{t('card_60')}</div>
-                            </div>
-
-                            <div className='flex justify-between mt-10'>
-                                <div className='quanYiHuiZi2'>{t('card_56')}</div>
-                                <div className='langYouZi'>GooglePay/paypal/facebook/Ebay/AliExpress/Walmart/Taobao</div>
                             </div>
                         </div>
                     </motion.div>
@@ -2261,6 +2458,7 @@ function Card(props) {
                                 variant="contained"
                                 onClick={() => {
                                     setOpenXiangQing(false)
+                                    setClickShenQinCard(false);
                                     closesApplyFunc();
                                     setTabValue(0);
                                     setSmallTabValue(0);
@@ -2626,6 +2824,7 @@ function Card(props) {
                         onClick={() => {
                             setOpenChongZhi(false)
                             setOpenXiangQing(false)
+                            setClickShenQinCard(false);
                             changePhoneTab('deposite');
                             history.push('/wallet/home/deposite')
                         }}
@@ -3064,7 +3263,7 @@ function Card(props) {
 
                         <div className='flex mt-20 justify-between' style={{ borderBottom: "1px solid #2C3950" }}>
                             <div className='text-16'>{t('card_33')}</div>
-                            <div className='flex pb-20'>
+                            <div className='flex pb-20 '>
                                 <div className='text-16 ml-10'>{cardConfigList[cardConfigID]?.applyCreditFee}</div>
                                 <div className='text-16'>&nbsp;{cardConfigList[cardConfigID]?.cardSymbol}</div>
                             </div>

@@ -1382,6 +1382,12 @@ input[type='number'] {
     height: 5rem;
 }
 
+.pingTai {
+    margin-top: 10px;
+    white-space: normal;
+    /* 允许正常的换行 */
+}
+
 .xieYiZi {
     width: 100%;
     padding-bottom: 1.5rem;
