@@ -209,7 +209,6 @@ function HomeSidebarContent(props) {
                         <ListItemText className="truncate font16" primary={t('menu_18')} disableTypography />
                     </StyledListItem>}
 
-
                     {/* {hideMenu.indexOf('buyCrypto') === -1 && <StyledListItem
                         button
                         className={
