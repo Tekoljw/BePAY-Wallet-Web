@@ -557,6 +557,34 @@ const locale = {
     card_194: "工作采购卡",
     card_195: "已复制",
     card_196: "PIN",
+    card_197: "敬请期待！",
+    card_198: "中国大陆可以申请",
+    card_199: "中国大陆可以使用",
+    card_200: "最小值",
+    card_201: "苹果, 腾讯, YouTube, 微软, Telegram, Line, KakaoTalk, 暴雪, EA, 米哈游, Pixivfanbox, 12306, 滴滴, 美团, 中国联通, 库卡, Steam, Trip, 领英, 高德, ",
+    card_202: "Skype, Humble Bundle, GameStop, Deliveroo, Grab, Ultra Mobile, Kickstarter, 和记电讯, Foodpanda, Bolt, T-Mobile, Gumroad, Supercell, Giffgaff, WeMade, Spaceship, ENC Mobile, Xsolla, Ubox, 2co, Agoda, itch, Niantic",
+    card_203:"亚马逊, 阿里巴巴, 淘宝, 虾皮, Shopify, Shopline, Lazada, 拼多多, 敦煌网, ",
+    card_204:"全球速卖通, Mercari, MeShop, 易贝网, Etsy, Temu, Vinted",
+    card_205:"沃尔玛, Zara, 麦当劳, 百胜中国（肯德基、必胜客）, 瑞幸咖啡, ",
+    card_206:"全家便利店, Kindle, 永辉超市, JDSports",
+    card_207:"Facebook, 谷歌, TikTok, Twitter, 百度, 快手, ",
+    card_208:"Yandex, Select Media",
+    card_209:"亚马逊AWS, Chatgpt, OpenAI, Godaddy, 星链, TalkTT, Zoom, 甲骨文, QR Code, 华为, ",
+    card_210:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, 沃达丰, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
+   
+    card_211:"苹果, 腾讯, YouTube, Twitter, 微软, Telegram, Line, KakaoTalk, 暴雪, EA, OnlyFans, 美团, Steam, 库卡, Pixivfanbox, Trip, 12306, 中国联通, 中国电信, Booking, 高德, 滴滴, Grab, Ultra Mobile, 菜鸟, ",
+    card_212:"叮咚买菜, Gojek, Niantic, Go Taxi, T-Mobile, Skype, Foodpanda, 和记电讯, Humble Bundle, Deliveroo, Helium Mobile, Kickstarter, Bolt, Wolt, 沃达丰, Supercell, Giffgaff, DPD, WeMade, Spaceship, ENC Mobile, Tello, Glovo, DonationAlerts, Careem, Lime",
+    card_213:"亚马逊, 阿里巴巴, 淘宝, Lazada, 虾皮, 拼多多, Shopify, 敦煌网, ",
+    card_214:"全球速卖通, Mercari, MeShop, 易贝网, Etsy, Temu, Noon, iHerb",
+    card_215:"沃尔玛, 麦当劳, Zara, 百胜中国（肯德基、必胜客）, 星巴克, 瑞幸咖啡, 耐克, 罗森, 梅西百货, ",
+    card_216:"阿迪达斯, 全家超市, 维多利亚的秘密, 7-11, 李维斯, Coach, 纽巴伦, CK（Calvin Klein）, 家得宝, JDSports",
+    card_217:"Facebook, 谷歌, TikTok, Twitter, 百度, 快手,  ",
+    card_218:"Yandex, Select Media",
+    card_219:"亚马逊AWS, Chatgpt, OpenAI, Godaddy, 星链, TalkTT, Zoom, 甲骨文, QR Code, 华为, ",
+    card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, 沃达丰, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
+
+
+    
 
 
 

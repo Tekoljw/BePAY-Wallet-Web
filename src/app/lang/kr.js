@@ -551,10 +551,31 @@ const locale = {
     card_194: "작업 조달 카드",
     card_195: "복사됨",
     card_196: "PIN",
+    card_197: "기대해 주세요!",
+    card_198: "중국 본토에서 신청할 수 있습니다",
+    card_199: "중국 본토에서 사용할 수 있습니다",
+    card_200: "최소값",
+    card_201: "Apple, Tencent, YouTube, Microsoft, Telegram, Line, KakaoTalk, Blizzard, EA, HoYoverse, Pixivfanbox, 12306, DiDi, Meituan, China Unicom, Qookka, Steam, Trip, LinkedIn, GaoDe, ",
+    card_202: "Skype, Humble Bundle, GameStop, Deliveroo, Grab, Ultra Mobile, Kickstarter, Hutchison Telecom, Foodpanda, Bolt, T-Mobile, Gumroad, Supercell, Giffgaff, WeMade, Spaceship, ENC Mobile, Xsolla, Ubox, 2co, Agoda, itch, Niantic",
+    card_203:"Amazon, Alibaba, Taobao, Shopee, Shopify, Shopline, Lazada, PinDuoDuo, DHgate, ",
+    card_204:"AliExpress, Mercari, MeShop, eBay, Etsy, Temu, Vinted",
+    card_205:"Walmart, Zara, McDonalds, YumChina, Luckin Coffee, ",
+    card_206:"FamilyMart, Kindle, Yong Hui, JDSports",
+    card_207:"Facebook, Google, TikTok, Twitter, Baidu, kuaishou, ",
+    card_208:"Yandex, Select Media",
+    card_209:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
+    card_210:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
 
-
-    
-    
+    card_211:"Apple, Tencent, YouTube, Twitter, Microsoft, Telegram, Line, KakaoTalk, Blizzard, EA, OnlyFans, Meituan, Steam, Qookka, Pixivfanbox, Trip, 12306, China Unicom, China Telecom, Booking, GaoDe, DiDi, Grab, Ultra Mobile, Cai Niao, ",
+    card_212:"DingDong, Gojek, Niantic, Go Taxi, T-Mobile, Skype, Foodpanda, Hutchison Telecom, Humble Bundle, Deliveroo, Helium Mobile, Kickstarter, Bolt, Wolt, Vodafone, Supercell, Giffgaff, DPD, WeMade, Spaceship, ENC Mobile, Tello, Glovo, DonationAlerts, Careem, Lime",
+    card_213:"Amazon, Alibaba, Taobao, Lazada, Shopee, PinDuoDuo, Shopify, DHgate, ",
+    card_214:"AliExpress, Mercari, MeShop, eBay, Etsy, Temu, Noon, iHerb",
+    card_215:"Walmart, McDonalds, Zara, YumChina, Starbucks, Luckin Coffee, Nike, Lawson, Macy's, ",
+    card_216:"Adidas, FamilyMart, Victoria's Secret, Seven-Eleven, Levi's, Coach, New Balance, Calvin Klein, Homedepot, JDSports",
+    card_217:"Facebook, Google, TikTok, Twitter, Baidu, kuaishou, ",
+    card_218:"Yandex, Select Media",
+    card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
+    card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     
     
 
