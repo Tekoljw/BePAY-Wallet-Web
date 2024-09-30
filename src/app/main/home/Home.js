@@ -59,7 +59,7 @@ function HomePage(props) {
     const { pathname } = useLocation();
     const [menuShow, setMenuShow] = useState(false);
     const accessType = getUrlParam('accessType') || 0;
-    const loginType = getUserLoginType();
+    const loginType = getUserLoginType(userData);
     let currentPhoneTab = window.localStorage.getItem('phoneTab') ?? 'wallet';
 
     // 滑动滑块
@@ -126,7 +126,6 @@ function HomePage(props) {
 
     useEffect(() => {
         console.log(accessType, 'home 请求的 loginType');
-        localStorage.setItem('accessType', accessType)
         switch (accessType){
             case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP:{ //telegramWebApp
                 setMenuShow(true);

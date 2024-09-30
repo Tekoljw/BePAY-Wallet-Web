@@ -22,7 +22,7 @@ import { makeWithdrawOrder, getFiatFee, payoutBank, payoutPayWays } from "../../
 import BN from "bn.js";
 import StyledAccordionSelect from "../../../components/StyledAccordionSelect";
 import { selectConfig } from "../../../store/config";
-import { arrayLookup, getNowTime } from "../../../util/tools/function";
+import {arrayLookup, getNowTime, getUserLoginType} from "../../../util/tools/function";
 import { openScan, closeScan } from "../../../util/tools/scanqrcode";
 import { getWithDrawConfig, WalletConfigDefineMap, evalTokenTransferFee, getWithdrawHistoryAddress, getWithdrawTransferStats, createPin, verifyPin } from "app/store/wallet/walletThunk";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
@@ -112,7 +112,7 @@ function Fiat(props) {
     const [accountType, setAccountType] = useState('CPF');
     const [openChangeCurrency, setOpenChangeCurrency] = useState(false);
     const userData = useSelector(selectUserData);
-    const loginType = window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType;
+    const loginType = getUserLoginType(userData);;
     const [openAnimateModal, setOpenAnimateModal] = useState(false);
     const [isLoadingBtn, setIsLoadingBtn] = useState(false);
     const [openGoogleCode, setOpenGoogleCode] = useState(false);

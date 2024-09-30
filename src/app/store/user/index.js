@@ -52,7 +52,7 @@ const userSlice = createSlice({
                                 history.push(res.pathname)
                                 // history.go(0)
                             }else{
-                                history.push(`/wallet/home?accessType=${localStorage.getItem('accessType') || 0}`);
+                                history.push(`/wallet/home`);
                             }
                             break;
                         }

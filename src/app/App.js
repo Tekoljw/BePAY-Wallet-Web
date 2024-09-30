@@ -99,7 +99,7 @@ const App = () => {
         }));*/
         switch (accessType){
             case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP:{ //telegramWebApp
-                window.localStorage.setItem('loginType', userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP);
+                window.sessionStorage.setItem('loginType', userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP);
                 console.log(accessType, 'app请求checkLoginState,检查登录状态')
                 dispatch(checkLoginState({
                     loginType: userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP,
@@ -110,7 +110,6 @@ const App = () => {
             }
             default:{
                 //console.log(1, '设置 loginType');
-                window.localStorage.removeItem('loginType');
                 requestUserLoginData(dispatch);
                 break;
             }

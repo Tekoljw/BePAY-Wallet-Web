@@ -1053,7 +1053,7 @@ function Card(props) {
     }
 
     const backCardPageEvt = () => {
-        history.push(`/wallet/home/card?accessType=${localStorage.getItem('accessType') || 0}`)
+        history.push(`/wallet/home/card`)
         setOpenKyc(false)
     }
 

@@ -186,78 +186,16 @@ function Deposite() {
 
     const [inputValue, setInputValue] = useState(0);
     const [sliderValue, setSliderValue] = useState(100);
-    // 创建处理输入框变化的函数
-    const handleInputChange = (e) => {
-        // 限制输入框的值只保留六位小数
-        const value = parseFloat(e.target.value);
-        setInputValue(value);
-        setSliderValue(value / balanceAll * 100);
-
-    };
-
     const divRefs = useRef([]);
     const divRefsParent = useRef([]);
-
-
-    // 创建处理滑块变化的函数
-    const handleSliderChange = (e) => {
-        const value = e.target.value;
-        setInputValue((value * balanceAll / 100).toFixed(6));
-        setSliderValue(value);
-    };
-
-    const handleBlur = () => {
-        if (value < 0) {
-            setValue(0);
-        } else if (value > 100) {
-            setValue(100);
-        }
-    };
-
     const [balanceAll, setbalanceAll] = useState(0)
-
     const [checkboxChecked, setCheckboxChecked] = useState(true);
     const [copyTiShi, setCopyTiShi] = useState(false);
-    const handleCheckboxChange = (e) => {
-        setCheckboxChecked(!checkboxChecked);
-        if (checkboxChecked) {
-            setInputValue('');
-            setSliderValue('');
-        } else {
-            setInputValue(Number(balanceAll));
-            setSliderValue(100);
-        }
-    }
-
     const { t } = useTranslation('mainPage');
     const dispatch = useDispatch();
     const mounted = useRef();
     const [openLoad, setOpenLoad] = useState(false);
     const [cryptoOpenLoad, setCryptoOpenLoad] = useState(false);
-
-    function BootstrapDialogTitle(props) {
-        const { children, onClose, ...other } = props;
-        return (
-            <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-                {children}
-                {onClose ? (
-                    <IconButton
-                        aria-label="close"
-                        onClick={onClose}
-                        sx={{
-                            position: 'absolute',
-                            right: 8,
-                            top: 8,
-                            color: (theme) => theme.palette.grey[500],
-                        }}
-                    >
-                        <CloseIcon />
-                    </IconButton>
-                ) : null}
-            </DialogTitle>
-        );
-    }
-
     const [ranges, setRanges] = useState([
         t('home_deposite_1'), t('home_deposite_2')
         // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
@@ -271,10 +209,6 @@ function Deposite() {
     const [tabValue, setTabValue] = useState(0);
     const [weight, setWeight] = useState(0);
     const [tiJiaoState, setTiJiaoState] = useState(0);
-    const toggleAccordion = (panel) => (event, _expanded) => {
-        setExpanded(_expanded ? panel : false);
-    };
-
     const [symbol, setSymbol] = useState('');
     const [walletName, setWalletName] = useState('');
     const [walletAddressList, setWalletAddressList] = useState([]);
@@ -284,12 +218,9 @@ function Deposite() {
     // const [walletConfig, setWalletConfig] = useState([]);
     const [symbolWallet, setSymbolWallet] = useState([]);
     const [defineMapSelected, setDefineMapSelected] = useState(0);
-
     const [nftWalletAddress, setNftWalletAddress] = useState('');
     // const [nftWalletName, setNftWalletName] = useState('');
     const [nftWalletKey, setNftWalletKey] = useState(0);
-
-
     const [transferDialogState, setTransferDialogState] = useState(false);
     const [transferFormData, setInputVal] = useState({
         money: '',
@@ -297,13 +228,11 @@ function Deposite() {
     });
     const [submitDisabled, setSubmitDisabled] = useState(false);
     const [isGetWalletAddress, setIsGetWalletAddress] = useState(false);
-
     const config = useSelector(selectConfig);
     const userData = useSelector(selectUserData);
     const currentLanguage = useSelector(selectCurrentLanguage);
     const currencys = useSelector(selectConfig).payment.currency || [];
     const bankCodeList = config.payment?.bankCode || [];
-
     // 法币余额数据
     const fiatData = useSelector(selectUserData).fiat;
     const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || 'USD');
@@ -324,18 +253,64 @@ function Deposite() {
         currencyCode: '',
         successTime: 0
     });
-
-    let timer;
-    let refreshTimer;
     const [time, setTime] = useState({ hour: 0, minute: 0, second: 0 })
     const [refreshTime, setRefreshTime] = useState(10)
+    // const regWallet = toRegWallet(userData.profile?.user?.regWallet);
+    const regWallet = localStorage.getItem('walletname')
+    const walletImage = config.walletConfig[regWallet]?.img;
+    const loginType = getUserLoginType(userData);
+    const [nftConfig, setNftConfig] = useState({});
+    const [nftId, setNftId] = useState('');
+    const [isConfirmTransfer, setIsConfirmTransfer] = useState(false);
+    const [tokenId, setTokenId] = useState('');
 
+    console.log('enter deposit page')
+    const changePhoneTab = (tab) => {
+        window.localStorage.setItem('phoneTab', tab);
+    }
+
+    // 创建处理滑块变化的函数
+    const handleSliderChange = (e) => {
+        const value = e.target.value;
+        setInputValue((value * balanceAll / 100).toFixed(6));
+        setSliderValue(value);
+    };
+
+    const handleCheckboxChange = (e) => {
+        setCheckboxChecked(!checkboxChecked);
+        if (checkboxChecked) {
+            setInputValue('');
+            setSliderValue('');
+        } else {
+            setInputValue(Number(balanceAll));
+            setSliderValue(100);
+        }
+    }
+    const toggleAccordion = (panel) => (event, _expanded) => {
+        setExpanded(_expanded ? panel : false);
+    };
+
+    const handleChangeTransferVal = (prop) => (event) => {
+        setInputVal({ ...transferFormData, [prop]: event.target.value });
+    };
+    const handleChangeTransferVal2 = (prop, value) => {
+        setInputVal({ ...transferFormData, [prop]: value });
+    };
+        // 创建处理输入框变化的函数
+    const handleInputChange = (e) => {
+        // 限制输入框的值只保留六位小数
+        const value = parseFloat(e.target.value);
+        setInputValue(value);
+        setSliderValue(value / balanceAll * 100);
+
+    };
     // select切换
     const handleChangeFiats = (event) => {
         setFiatsSelected(event.target.value);
         setCurrencyCode(fiats[event.target.value].currencyCode);
         setWeight('');
     };
+
     //设置图片地址
     const toRegWallet = (regWalletParam) => {
         if (regWalletParam) {
@@ -343,19 +318,6 @@ function Deposite() {
         }
         return regWalletParam
     };
-    // const regWallet = toRegWallet(userData.profile?.user?.regWallet);
-    const regWallet = localStorage.getItem('walletname')
-    const walletImage = config.walletConfig[regWallet]?.img;
-    const handleChangeTransferVal = (prop) => (event) => {
-        setInputVal({ ...transferFormData, [prop]: event.target.value });
-    };
-    const handleChangeTransferVal2 = (prop, value) => {
-        setInputVal({ ...transferFormData, [prop]: value });
-    };
-
-    const loginType = window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType;
-
-    console.log('enter deposit page')
 
     //转账
     const BransferSubmit = () => {
@@ -400,8 +362,27 @@ function Deposite() {
         })
     }
 
-    const changePhoneTab = (tab) => {
-        window.localStorage.setItem('phoneTab', tab);
+    function BootstrapDialogTitle(props) {
+        const { children, onClose, ...other } = props;
+        return (
+            <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+                {children}
+                {onClose ? (
+                    <IconButton
+                        aria-label="close"
+                        onClick={onClose}
+                        sx={{
+                            position: 'absolute',
+                            right: 8,
+                            top: 8,
+                            color: (theme) => theme.palette.grey[500],
+                        }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                ) : null}
+            </DialogTitle>
+        );
     }
 
     const refreshOrderStatus = () => {
@@ -601,7 +582,7 @@ function Deposite() {
             if (tmpShow === true && item != 'eBGT') {
                 // 兑换成USDT的汇率
                 let symbolRate = arrayLookup(symbolsData, 'symbol', item, 'rate') || 0;
-                var balance = getUserMoney(item);
+                var balance = getSymbolMoney(item);
                 tmpSymbols.push({
                     avatar: arrayLookup(symbolsData, 'symbol', item, 'avatar') || '',
                     address: arrayLookup(filterSymbolData, 'symbol', item, 'address') || '',
@@ -656,6 +637,17 @@ function Deposite() {
         // console.log(arrayLookup(filterSymbolData, 'symbol', 'USDD', 'address') );
     };
 
+    //用户钱包发生变化时更新币种余额
+    useEffect(() => {
+        var tmpSymbolWallet = [];
+        symbolWallet.forEach((item, index) => {
+            item.balance = getSymbolMoney(item.symbol);
+            tmpSymbolWallet.push(item);
+        });
+        //重新刷新钱包余额
+        setSymbolWallet(tmpSymbolWallet);
+    }, [userData.wallet]);
+
     //所有币种和所有网络发生变化需要处理的逻辑
     useEffect(() => {
         if (!mounted.current) {
@@ -691,7 +683,7 @@ function Deposite() {
         handleChangeNetWork(networkId);
     }, [networkId]);
 
-    const getUserMoney = (symbol) => {
+    const getSymbolMoney = (symbol) => {
         let arr = userData.wallet.inner || [];
         let balance = arrayLookup(arr, 'symbol', symbol, 'balance') || 0;
         return balance.toFixed(6)
@@ -746,6 +738,7 @@ function Deposite() {
         }
     }, [refreshTime])
 
+    let timer;
     const timeFun = (time) => {
         let end_time = new Date(time).getTime(),
             sys_second = (end_time - new Date().getTime());
@@ -792,6 +785,7 @@ function Deposite() {
 
         return res;
     };
+
     useEffect(() => {
         if (loginType !== "telegram_web_app") {
             getSettingSymbol().then((res) => {
@@ -856,11 +850,6 @@ function Deposite() {
     useEffect(() => {
         setRanges([t('home_deposite_1'), t('home_deposite_2')]);
     }, [currentLanguage.id]);
-
-    const [nftConfig, setNftConfig] = useState({});
-    const [nftId, setNftId] = useState('');
-    const [isConfirmTransfer, setIsConfirmTransfer] = useState(false);
-    const [tokenId, setTokenId] = useState('');
 
     // 切换NFT
     const handleChangeNft = (event) => {

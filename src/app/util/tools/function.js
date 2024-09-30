@@ -41,14 +41,15 @@ export const getAutoLoginKey = () => {
     return  window.sessionStorage.getItem('autoLoginKey') || 0;
 };
 
+//获取用户登录方式
+export const getUserLoginType = (userData) => {
+    return (window.sessionStorage.getItem('loginType') ?? userData?.userInfo?.loginType) || 0;
+}
+
 /**
  localStorage : 在同源的所有标签页和窗口之间共享数据。
  .数据不会过期。它在浏览器重启甚至系统重启后仍然存在。
  */
-//获取用户登录方式
-export const getUserLoginType = (userData) => {
-    return (window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType) || 0;
-}
 
 // 设置手机分页
 export const setPhoneTab = (phoneTab) =>{

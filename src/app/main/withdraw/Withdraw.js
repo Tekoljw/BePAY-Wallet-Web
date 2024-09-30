@@ -23,7 +23,7 @@ import {
     arrayLookup,
     getNowTime,
     getOpenAppId,
-    getOpenAppIndex,
+    getOpenAppIndex, getUserLoginType,
     handleCopyText,
     setPhoneTab
 } from "../../util/tools/function";
@@ -644,7 +644,7 @@ function Withdraw(props) {
     const [networkData, setNetworkData] = useState([]);
     const [networkId, setNetworkId] = useState(0);
 
-    const loginType = window.localStorage.getItem('loginType') ?? userData?.userInfo?.loginType;
+    const loginType = getUserLoginType(userData);
 
     const defaultValues = {
         email: '',
@@ -652,6 +652,7 @@ function Withdraw(props) {
         password: '',
     };
 
+    //格式化币种和网络
     const symbolsFormatAmount = () => {
         let currencyRate = arrayLookup(config.payment.currency, 'currencyCode', currencyCode, 'exchangeRate') || 0;
         let displayData = [];
@@ -674,7 +675,7 @@ function Withdraw(props) {
             if (tmpShow === true && item != 'eBGT') {
                 // 兑换成USDT的汇率
                 let symbolRate = arrayLookup(symbolsData, 'symbol', item, 'rate') || 0;
-                var balance = getUserMoney(item);
+                var balance = getSymbolMoney(item);
                 tmpSymbols.push({
                     avatar: arrayLookup(symbolsData, 'symbol', item, 'avatar') || '',
                     symbol: item,
@@ -724,21 +725,28 @@ function Withdraw(props) {
         setNetworkData(tmpNetworks);
     };
 
-    const getUserMoney = (symbol) => {
+    const getSymbolMoney = (symbol) => {
         let arr = userData.wallet.inner || [];
         let balance = arrayLookup(arr, 'symbol', symbol, 'balance') || 0;
         return balance.toFixed(6)
     };
 
-    const tidyWalletData = () => {
-        symbolsFormatAmount();
-    };
+    //用户钱包发生变化时更新币种余额
+    useEffect(() => {
+        let tmpSymbolWallet = [];
+        symbolWallet.forEach((item, index) => {
+            item.balance = getSymbolMoney(item.symbol);
+            tmpSymbolWallet.push(item);
+        });
+        //重新刷新钱包余额
+        setSymbolWallet(tmpSymbolWallet);
+    }, [userData.wallet]);
 
     useEffect(() => {
         if (!mounted.current) {
             mounted.current = true;
         } else {
-            tidyWalletData();
+            symbolsFormatAmount();
         }
     }, [cryptoDisplayData, symbolsData, networks]);
 
