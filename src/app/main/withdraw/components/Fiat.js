@@ -1085,7 +1085,7 @@ function Fiat(props) {
 
                                         </div>}
 
-                                        {(currencyCode === 'MMK' || currencyCode === 'VND' || currencyCode === 'TBH' || currencyCode === 'MYR') && <div>
+                                        {(currencyCode === 'MMK' || currencyCode === 'VND' || currencyCode === 'THB' || currencyCode === 'MYR') && <div>
                                             <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
                                                 <Typography className="text-16 ">{t('home_withdraw_22')}</Typography>
                                             </div>

@@ -419,7 +419,9 @@ function Deposite() {
     };
 
     useEffect(() => {
+        setLoadingShow(true);
         dispatch(getCryptoDisplay()).then((res) => {
+            setLoadingShow(false);
             let result = res.payload;
             setCryptoDisplayData(result?.data);
         });
@@ -1029,16 +1031,11 @@ function Deposite() {
         }, 800);
     }
 
-    const [loadingShow, setLoadingShow] = useState(true);
-    useEffect(() => {
-        setTimeout(() => {
-            setLoadingShow(true);
-        }, 1500);
-    }, []);
+    const [loadingShow, setLoadingShow] = useState(false);
 
     return (
         <div>
-            {loadingShow && <div>
+            {!loadingShow && <div>
                 <motion.div
                     variants={container}
                     initial="hidden"
@@ -2140,7 +2137,7 @@ function Deposite() {
             </div>}
 
             {
-                !loadingShow &&
+                loadingShow &&
                 <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }}>
                     <div className="loadingChuang1">
                         <div className="loadingChuangTiao1"></div>

@@ -175,6 +175,7 @@ function Record() {
                 limit: rowsPerPage,
                 userCreditNo: kaPianItem == 0 ? null : kaPianItem,
             })).then((res) => {
+                setLoadingShow(false)
                 setTimeout(() => {
                     setIsLoading(false)
                 }, 500)
@@ -201,6 +202,7 @@ function Record() {
 
 
     useEffect(() => {
+        setLoadingShow(true)
         handleTransferRecord()
     }, [type, timeItem, kaPianItem]);
 
@@ -229,12 +231,7 @@ function Record() {
     };
 
 
-    const [loadingShow, setLoadingShow] = useState(true);
-    useEffect(() => {
-        setTimeout(() => {
-            setLoadingShow(true);
-        }, 1500);
-    }, []);
+    const [loadingShow, setLoadingShow] = useState(false);
 
     return (
         <div>
@@ -336,7 +333,7 @@ function Record() {
             /> */}
 
 
-            {loadingShow &&
+            {!loadingShow &&
                 <div>
                     <motion.div
                         variants={container}
@@ -596,7 +593,7 @@ function Record() {
                 </div>
             }
             {
-                !loadingShow &&
+                loadingShow &&
                 <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }}>
                     <div className="loadingChuang1">
                         <div className="loadingChuangTiao1"></div>

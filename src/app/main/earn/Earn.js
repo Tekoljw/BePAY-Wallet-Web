@@ -73,7 +73,10 @@ function Earn(props) {
     const widgets = useSelector(selectWidgets);
 
     useEffect(() => {
-        dispatch(getWidgets());
+        setLoadingShow(true);
+        dispatch(getWidgets()).then(()=>{
+            setLoadingShow(false);
+        });
     }, [dispatch]);
 
 
@@ -145,17 +148,12 @@ function Earn(props) {
     };
 
 
-    const [loadingShow, setLoadingShow] = useState(true);
-    useEffect(() => {
-        setTimeout(() => {
-            setLoadingShow(true);
-        }, 1500);
-    }, []);
+    const [loadingShow, setLoadingShow] = useState(false);
 
     return (
         <div className=''>
             {
-                loadingShow &&
+                !loadingShow &&
                 <div style={{ width: "100%" }}>
                     <motion.div
                         variants={container}
@@ -1162,7 +1160,7 @@ function Earn(props) {
                 </div>
             }
             {
-                !loadingShow &&
+                loadingShow &&
                 <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }}>
                     <div className="loadingChuang1">
                         <div className="loadingChuangTiao1"></div>
