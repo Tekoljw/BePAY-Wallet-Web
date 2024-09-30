@@ -458,6 +458,27 @@ export const createPin = createAsyncThunk(
     }
 );
 
+
+// 手机修改PIN
+export const changePin = createAsyncThunk(
+    'pin/setPaymentPassword',
+    async (settings, { dispatch, getState }) => {
+        let data = {
+            codeType: 13,
+            smsCode: settings.smsCode,
+            nationCode: settings.nationCode ?? '',
+            password: settings.password ?? '',
+        }
+        const resultData = await React.$api("security.setPaymentPassword", data);
+        if (resultData.errno === 0) {
+            dispatch(showMessage({ message: t('success'), code: 1 }));
+            return true
+        } else {
+            dispatch(showMessage({ message: t('error_22'), code: 2 }));
+        }
+    }
+);
+
 // 验证PIN
 export const verifyPin = createAsyncThunk(
     'pin/verifyPaymentPassword',

@@ -24,8 +24,9 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import Autocomplete from "@mui/material/Autocomplete/Autocomplete";
 import phoneCode from "../../../phone/phoneCode";
-import { createPin } from "app/store/wallet/walletThunk";
+import { createPin, changePin } from "app/store/wallet/walletThunk";
 import history from "../../../@history/@history";
+import { sendEmail, sendSms, bindPhone, bindEmail } from "../../store/user/userThunk";
 
 const container = {
     show: {
@@ -50,13 +51,14 @@ const item = {
 };
 
 
-
-
-
 function ResetPin(props) {
     const resetTabValueParam = props?.resetTabValueParam ?? 0
     const { t } = useTranslation('mainPage');
+    const [selectedCountryCode, setSelectedCountryCode] = useState("");
     const schema = yup.object().shape({
+        nationCode: yup.string().required('You must enter your nationCode'),
+        phone: yup.string().required('You must enter a phone'),
+        smsCode: yup.string().required('You must enter a smsCode'),
         oldPassword: yup
             .string()
             .required('Please enter your old password.')
@@ -68,20 +70,38 @@ function ResetPin(props) {
             .min(6, t("signUp_8")),
         passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
     });
+
+
     const { control, formState, handleSubmit, reset } = useForm({
         mode: 'onChange',
         defaultValues,
         resolver: yupResolver(schema),
     });
 
+    const [tmpPhoneCode, setTmpPhoneCode] = useState('');
     const { isValid, dirtyFields, errors } = formState;
     const [resetTabValue, setResetTabValue] = useState(resetTabValueParam);
     const [selectId, setSelectId] = useState(0);
+
     const dispatch = useDispatch();
     const [time, setTime] = useState(null);
+    const timeRef = useRef();
+
+    //倒计时
+    useEffect(() => {
+        if (time && time !== 0)
+            timeRef.current = setTimeout(() => {
+                setTime(time => time - 1)
+            }, 1000);
+
+        return () => {
+            clearTimeout(timeRef.current)
+        }
+    }, [time]);
+
     async function sendCode() {
         const data = {
-            codeType: 11,
+            codeType: 13,
             email: control._formValues.email,
         };
         const sendRes = await dispatch(sendEmail(data));
@@ -90,16 +110,25 @@ function ResetPin(props) {
         }
     }
 
-    async function onSubmit() {
-        await dispatch(resetPass(control._formValues));
+    async function sendPhoneCode() {
+        setSelectedCountryCode(control._formValues.nationCode);
+        const data = {
+            codeType: 13,
+            nationCode: control._formValues.nationCode,
+            phone: control._formValues.email,
+        };
+        const sendRes = await dispatch(sendSms(data));
+        if (sendRes?.payload) {
+            setTime(1)
+        }
     }
 
-    const handleEditPin = async () => {
-        await dispatch(editPin(control._formValues));
-    }
 
-    const resetPin = async () => {
-        await dispatch(createPin(control._formValues))
+    const handlePin = async () => {
+        // await dispatch(editPin(control._formValues));
+        if (selectId === 1) {
+            await dispatch(changePin(control._formValues));
+        }
     }
 
     const changePhoneTab = (tab) => {
@@ -155,90 +184,91 @@ function ResetPin(props) {
                     </Tabs>
                 </div>
 
-                {resetTabValue === 0 && <form
-                    name="registerForm"
-                    noValidate
-                    className="flex flex-col justify-center w-full mt-32"
-                    onSubmit={handleSubmit(handleEditPin)}
-                >
-                    <Controller
-                        name="oldPassword"
-                        control={control}
-                        render={({ field }) => (
-                            <TextField
-                                {...field}
-                                className="mb-24"
-                                label="Old PIN Code"
-                                type="password"
-                                error={!!errors.oldPassword}
-                                helperText={errors?.oldPassword?.message}
-                                variant="outlined"
-                                required
-                                fullWidth
-                            />
-                        )}
-                    />
-
-                    <Controller
-                        name="password"
-                        control={control}
-                        render={({ field }) => (
-                            <TextField
-                                {...field}
-                                className="mb-24"
-                                label="New PIN Code"
-                                type="password"
-                                error={!!errors.password}
-                                helperText={errors?.password?.message}
-                                variant="outlined"
-                                required
-                                fullWidth
-                            />
-                        )}
-                    />
-
-                    <Controller
-                        name="passwordConfirm"
-                        control={control}
-                        render={({ field }) => (
-                            <TextField
-                                {...field}
-                                className="mb-24"
-                                label="New PIN Code(Confirm)"
-                                type="password"
-                                error={!!errors.passwordConfirm}
-                                helperText={errors?.passwordConfirm?.message}
-                                variant="outlined"
-                                required
-                                fullWidth
-                            />
-                        )}
-                    />
-
-                    <div style={{ textAlign: "center"}}>
-                        <a className="text-md font-medium" onClick={() => {
-                            changePhoneTab('');
-                            history.push('/wallet/home/wallet')
-                        }}>
-                            {t('re_tied_email_4')}
-                        </a>
-                    </div>
-
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        className=" w-full mt-24"
-                        aria-label="Register"
-                        disabled={_.isEmpty(dirtyFields) || !isValid}
-                        type="submit"
-                        size="large"
-                        onClick={() => {
-                            handleEditPin()
-                        }}
+                {resetTabValue === 0 &&
+                    <form
+                        name="registerForm"
+                        noValidate
+                        className="flex flex-col justify-center w-full mt-32"
+                        onSubmit={handleSubmit(handlePin)}
                     >
-                        Reset your PIN Code
-                    </Button>
-                </form>}
+                        <Controller
+                            name="oldPassword"
+                            control={control}
+                            render={({ field }) => (
+                                <TextField
+                                    {...field}
+                                    className="mb-24"
+                                    label="Old PIN Code"
+                                    type="password"
+                                    error={!!errors.oldPassword}
+                                    helperText={errors?.oldPassword?.message}
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                />
+                            )}
+                        />
+
+                        <Controller
+                            name="password"
+                            control={control}
+                            render={({ field }) => (
+                                <TextField
+                                    {...field}
+                                    className="mb-24"
+                                    label="New PIN Code"
+                                    type="password"
+                                    error={!!errors.password}
+                                    helperText={errors?.password?.message}
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                />
+                            )}
+                        />
+
+                        <Controller
+                            name="passwordConfirm"
+                            control={control}
+                            render={({ field }) => (
+                                <TextField
+                                    {...field}
+                                    className="mb-24"
+                                    label="New PIN Code(Confirm)"
+                                    type="password"
+                                    error={!!errors.passwordConfirm}
+                                    helperText={errors?.passwordConfirm?.message}
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                />
+                            )}
+                        />
+
+                        <div style={{ textAlign: "center" }}>
+                            <a className="text-md font-medium" onClick={() => {
+                                changePhoneTab('');
+                                history.push('/wallet/home/wallet')
+                            }}>
+                                {t('re_tied_email_4')}
+                            </a>
+                        </div>
+
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            className=" w-full mt-24"
+                            aria-label="Register"
+                            disabled={_.isEmpty(dirtyFields) || !isValid}
+                            type="submit"
+                            size="large"
+                            onClick={() => {
+                                handleEditPin()
+                            }}
+                        >
+                            Reset your PIN Code
+                        </Button>
+                    </form>}
 
                 {resetTabValue === 1 &&
                     <div>
@@ -264,15 +294,14 @@ function ResetPin(props) {
                         {selectId === 0 &&
                             <div>
                                 <div className=''>
-                                    <Paper
-                                        className="w-full tongYongChuang3 flex justify-content-center "
-                                    >
+                                    <Paper className="w-full tongYongChuang3 flex justify-content-center ">
                                         <div className="w-full  mx-auto sm:mx-0">
                                             <form
                                                 name="registerForm"
                                                 noValidate
                                                 className="flex flex-col justify-center w-full mt-32"
                                             >
+
                                                 <Controller
                                                     name="email"
                                                     control={control}
@@ -369,7 +398,8 @@ function ResetPin(props) {
                                                         />
                                                     )}
                                                 />
-                                                <div style={{ textAlign: "center"}}>
+
+                                                <div style={{ textAlign: "center" }}>
                                                     <a className="text-md font-medium" onClick={() => {
                                                         changePhoneTab('');
                                                         history.push('/wallet/home/wallet')
@@ -408,7 +438,7 @@ function ResetPin(props) {
                                                 name="registerForm"
                                                 noValidate
                                                 className="flex flex-col justify-center w-full mt-32"
-                                                onSubmit={handleSubmit(resetPin)}
+                                                onSubmit={handlePin(handlePin)}
                                             >
                                                 <Controller
                                                     name="nationCode"
@@ -467,7 +497,7 @@ function ResetPin(props) {
                                                                 style={{
                                                                     color: !!errors.phone && '#f44336'
                                                                 }}
-                                                            >Phone*</InputLabel>
+                                                            >{t('signIn_4')}</InputLabel>
                                                             <OutlinedInput
                                                                 {...field}
                                                                 label={t('signIn_4')}
@@ -480,7 +510,7 @@ function ResetPin(props) {
                                                                     <InputAdornment position="end">
                                                                         {time <= 0 && <IconButton
                                                                             aria-label="toggle password visibility"
-                                                                            onClick={sendCode}
+                                                                            onClick={sendPhoneCode}
                                                                             // onMouseDown={handleMouseDownPassword}
                                                                             edge="end"
                                                                             sx={{
@@ -556,7 +586,7 @@ function ResetPin(props) {
                                                     )}
                                                 />
 
-                                                <div style={{ textAlign: "center"}}>
+                                                <div style={{ textAlign: "center" }}>
                                                     <a className="text-md font-medium" onClick={() => {
                                                         changePhoneTab('');
                                                         history.push('/wallet/home/wallet')
@@ -568,13 +598,11 @@ function ResetPin(props) {
                                                 <Button
                                                     variant="contained"
                                                     color="secondary"
-                                                    className=" w-full mt-24"
+                                                    className=" w-full mt-24 testRed"
                                                     aria-label="Register"
                                                     // disabled={_.isEmpty(dirtyFields) || !isValid}
                                                     disabled={
-                                                        _.isEmpty(dirtyFields) ||
-                                                        !isValid ||
-                                                        (selectedCountryCode !== "" && selectedCountryCode !== control._formValues.nationCode)
+                                                        _.isEmpty(dirtyFields) || selectedCountryCode === ""
                                                     }
                                                     type="submit"
                                                     size="large"

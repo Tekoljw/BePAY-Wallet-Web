@@ -539,7 +539,6 @@ function ClassicSignUpPage() {
                             {/*        </FormControl>*/}
                             {/*    )}*/}
                             {/*/>*/}
-
                             <a className="text-md font-medium cursor-pointer" onClick={() => { setOpenChangeNetwork(true) }}>
                                 {t('signUp_6')}
                             </a>

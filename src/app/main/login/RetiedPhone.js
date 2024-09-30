@@ -36,7 +36,6 @@ const defaultValues = {
 };
 
 function RetiedPhone() {
-
     const { t } = useTranslation('mainPage');
     const [selectedCountryCode, setSelectedCountryCode] = useState("");
     const schema = yup.object().shape({
