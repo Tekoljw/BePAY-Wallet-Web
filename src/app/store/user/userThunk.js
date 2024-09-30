@@ -16,6 +16,7 @@ import { requestUserLoginData } from "../../util/tools/loginFunction";
 import { changeLanguage } from "app/store/i18nSlice";
 import userLoginType from "../../define/userLoginType";
 import { sendLogInfo } from "app/store/log/logThunk";
+import {getSymbols} from "app/store/config/configThunk";
 
 // 检查用户是否已经登录
 export const checkLoginState = createAsyncThunk(
@@ -929,7 +930,7 @@ export const transferRecords = createAsyncThunk(
     }
 );
 
-// 获取内部记账信息
+// 获取内部记账币种余额
 export const centerGetTokenBalanceList = createAsyncThunk(
     'user/centerGetTokenBalanceList',
     async (settings, { dispatch, getState }) => {
@@ -938,6 +939,9 @@ export const centerGetTokenBalanceList = createAsyncThunk(
             dispatch(updateWallet(balanceList));
         } else {
             dispatch(showMessage({ message: t('error_2'), code: 2 }));
+        }
+        if(settings.requestSymbol){ //需要请求币种信息
+            dispatch(getSymbols());
         }
     }
 );

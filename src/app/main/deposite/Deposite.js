@@ -25,7 +25,7 @@ import { DialogActions } from '@mui/material';
 import '../../../styles/home.css';
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
-import { selectConfig } from "../../store/config";
+import {selectConfig, setNftConfig} from "../../store/config";
 import {
     arrayLookup, getOpenAppId, getOpenAppIndex,
     setPhoneTab, handleCopyText, getUserLoginType,
@@ -214,7 +214,6 @@ function Deposite() {
     const [walletAddressList, setWalletAddressList] = useState([]);
     const [selectWalletAddressIndex, setSelectWalletAddressIndex] = useState(null);
     const [walletAddress, setWalletAddress] = useState('');
-    const walletData = useSelector(selectUserData).wallet;
     // const [walletConfig, setWalletConfig] = useState([]);
     const [symbolWallet, setSymbolWallet] = useState([]);
     const [defineMapSelected, setDefineMapSelected] = useState(0);
@@ -228,20 +227,22 @@ function Deposite() {
     });
     const [submitDisabled, setSubmitDisabled] = useState(false);
     const [isGetWalletAddress, setIsGetWalletAddress] = useState(false);
-    const config = useSelector(selectConfig);
     const userData = useSelector(selectUserData);
+    const walletData = userData.wallet;
+    // 法币余额数据
+    const fiatData = userData.fiat;
+    const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || 'USD');
+    const config = useSelector(selectConfig);
+    const nftConfig = config.nftConfig;
+    const networks = config.networks;
+    const symbolsData = config.symbols;
+    const bankCodeList = config.payment?.bankCode || [];
     const currentLanguage = useSelector(selectCurrentLanguage);
     const currencys = useSelector(selectConfig).payment.currency || [];
-    const bankCodeList = config.payment?.bankCode || [];
-    // 法币余额数据
-    const fiatData = useSelector(selectUserData).fiat;
-    const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || 'USD');
     // const [currencyBalance, setCurrencyBalance] = useState(fiatData[0]?.balance || 0);
     const [openUpdateBtnShow, setOpenUpdateBtnShow] = useState(false);
     const [fiatsSelected, setFiatsSelected] = useState(0);
     const [openAnimateModal, setOpenAnimateModal] = useState(false);
-    const networks = config.networks;
-    const symbolsData = config.symbols;
     const [cryptoDisplayData, setCryptoDisplayData] = useState([]);
     const [networkData, setNetworkData] = useState([]);
     const [networkId, setNetworkId] = useState(0);
@@ -259,7 +260,6 @@ function Deposite() {
     const regWallet = localStorage.getItem('walletname')
     const walletImage = config.walletConfig[regWallet]?.img;
     const loginType = getUserLoginType(userData);
-    const [nftConfig, setNftConfig] = useState({});
     const [nftId, setNftId] = useState('');
     const [isConfirmTransfer, setIsConfirmTransfer] = useState(false);
     const [tokenId, setTokenId] = useState('');
@@ -520,7 +520,6 @@ function Deposite() {
                     amount: weight,
                     currencyCode: currencyCode
                 })
-                const loginType = getUserLoginType(userData);
                 switch (loginType) {
                     case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP: { //telegramWebApp
                         if (judgeIosOrAndroid() === "ios") {
@@ -555,7 +554,7 @@ function Deposite() {
         let filterSymbolData = {};
         if(selectNetworkId && selectNetworkId > 0){
             //筛选币种
-            filterSymbolData = symbolsData.filter(i => i.networkId == selectNetworkId);
+            filterSymbolData = symbolsData.filter(i => i.networkId === selectNetworkId);
         }else{
             filterSymbolData = symbolsData;
         }
@@ -579,7 +578,7 @@ function Deposite() {
             if (tmpShow === '') {
                 tmpShow = arrayLookup(symbolsData, 'symbol', item, 'userShow');
             }
-            if (tmpShow === true && item != 'eBGT') {
+            if (tmpShow === true && item !== 'eBGT') {
                 // 兑换成USDT的汇率
                 let symbolRate = arrayLookup(symbolsData, 'symbol', item, 'rate') || 0;
                 var balance = getSymbolMoney(item);
@@ -636,17 +635,6 @@ function Deposite() {
         setNetworkData(tmpNetworks);
         // console.log(arrayLookup(filterSymbolData, 'symbol', 'USDD', 'address') );
     };
-
-    //用户钱包发生变化时更新币种余额
-    useEffect(() => {
-        var tmpSymbolWallet = [];
-        symbolWallet.forEach((item, index) => {
-            item.balance = getSymbolMoney(item.symbol);
-            tmpSymbolWallet.push(item);
-        });
-        //重新刷新钱包余额
-        setSymbolWallet(tmpSymbolWallet);
-    }, [userData.wallet]);
 
     //所有币种和所有网络发生变化需要处理的逻辑
     useEffect(() => {
@@ -851,29 +839,18 @@ function Deposite() {
         setRanges([t('home_deposite_1'), t('home_deposite_2')]);
     }, [currentLanguage.id]);
 
+    useEffect(() => {
+        if (!nftId && nftConfig[Object.keys(nftConfig)[0]]) {
+            setNftId(nftConfig[Object.keys(nftConfig)[0]].id);
+        }
+    }, [nftConfig]);
+
     // 切换NFT
     const handleChangeNft = (event) => {
         if (nftConfig[event.target.value]) {
             setNftId(event.target.value);
         }
     };
-
-    // 获取NFT数据
-    const getNftConfigData = () => {
-        dispatch(getNftConfig()).then(res => {
-            let result = res.payload;
-            if (result && result.data) {
-                let tmpNftConfig = {};
-                result.data.map(item => {
-                    tmpNftConfig[item.id] = item;
-                })
-                setNftConfig(tmpNftConfig);
-                if (!nftId) {
-                    setNftId(tmpNftConfig[Object.keys(tmpNftConfig)[0]].id);
-                }
-            }
-        })
-    }
 
     // nft授权转账
     const doNftTransfer = (param) => {
@@ -897,13 +874,8 @@ function Deposite() {
             } else {
                 dispatch(showMessage({ message: t('error_39'), code: 2 }));
             }
-
         })
     }
-
-    useEffect(() => {
-        getNftConfigData();
-    }, []);
 
     useEffect(() => {
         if (isConfirmTransfer) {
@@ -945,6 +917,7 @@ function Deposite() {
         let tmpFiatsData = {};
         let tmpFiats = [];
         let displayFiatData = [];
+        //根据支付方式来处理是否显示法币
         if (paymentFiat?.length > 0) {
             paymentFiat.map((item, index) => {
                 if (displayFiatData.indexOf(item.currencyCode) === -1 && item.userShow === true) {
@@ -963,6 +936,7 @@ function Deposite() {
             });
         }
 
+        //需要展示的法币
         displayFiatData.forEach((item) => {
             // var tmpShow = arrayLookup(fiatDisplayData, 'name', item, 'show');
             var tmpShow = tmpFiatDisplayData[item]?.show;
@@ -993,7 +967,7 @@ function Deposite() {
     };
 
     const tidyFiatWalletData = () => {
-        fiatsFormatAmount();
+
     };
 
     useEffect(() => {
@@ -1004,7 +978,7 @@ function Deposite() {
         if (!mounted.current) {
             mounted.current = true;
         } else {
-            tidyFiatWalletData();
+            fiatsFormatAmount();
         }
     }, [fiatData, fiatDisplayData, paymentFiat]);
 

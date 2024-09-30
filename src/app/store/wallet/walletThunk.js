@@ -6,6 +6,8 @@ import { automaticConnectWeb3 } from "../user/userThunk";
 import utils_web3 from "../../util/web3"
 import { setTransferStats } from '../user'
 import BN from "bn.js";
+import {getSymbols, paymentConfig} from "app/store/config/configThunk";
+import {setBorrowConfig, setNftConfig} from "app/store/config";
 
 export const WalletConfigDefineMap = {
     "ETH": {
@@ -45,6 +47,9 @@ export const centerGetUserFiat = createAsyncThunk(
             dispatch(updateFiat(balanceList));
         } else {
             dispatch(showMessage({ message: t('error_2'), code: 2 }));
+        }
+        if(settings.requestPayment){ //需要请求支付方式
+            dispatch(paymentConfig());
         }
     }
 );
@@ -397,6 +402,7 @@ export const getNftConfig = createAsyncThunk(
 
         const resultData = await React.$api("nft.config");
         if (resultData.errno === 0) {
+            dispatch(setNftConfig(resultData));
             return resultData;
         }
     }
