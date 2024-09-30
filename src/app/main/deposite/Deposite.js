@@ -259,7 +259,6 @@ function Deposite() {
     // const regWallet = toRegWallet(userData.profile?.user?.regWallet);
     const regWallet = localStorage.getItem('walletname')
     const walletImage = config.walletConfig[regWallet]?.img;
-    const loginType = getUserLoginType(userData);
     const [nftId, setNftId] = useState('');
     const [isConfirmTransfer, setIsConfirmTransfer] = useState(false);
     const [tokenId, setTokenId] = useState('');
@@ -520,6 +519,7 @@ function Deposite() {
                     amount: weight,
                     currencyCode: currencyCode
                 })
+                const loginType = getUserLoginType(userData);
                 switch (loginType) {
                     case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP: { //telegramWebApp
                         if (judgeIosOrAndroid() === "ios") {
@@ -775,7 +775,8 @@ function Deposite() {
     };
 
     useEffect(() => {
-        if (loginType !== "telegram_web_app") {
+        const loginType = getUserLoginType(userData);
+        if (loginType !== userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP) {
             getSettingSymbol().then((res) => {
                 var currencyType = res.data?.data?.setting?.currencyType
                 console.log(currencyType, 'currencyType.....');
@@ -801,7 +802,7 @@ function Deposite() {
                     setRanges(tmpRanges);
                     setCryptoSelect(tmpCryptoSelect);
                     setFiatSelect(tmpFiatSelect);
-                } else if (userData.profile?.loginType !== "unknown") {
+                } else if (loginType !== "unknown") {
                     var tmpRanges = [
                         t('home_deposite_2'), t('home_deposite_1')
                         // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
@@ -817,7 +818,7 @@ function Deposite() {
                         tmpCryptoSelect = 0;
                         tmpFiatSelect = 1;
                     } else {
-                        if (userData.profile?.loginType === "web3_wallet") {
+                        if (loginType === "web3_wallet") {
                             tmpRanges = [
                                 t('home_deposite_1'), t('home_deposite_2')
                                 // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
@@ -832,6 +833,9 @@ function Deposite() {
                     setFiatSelect(tmpFiatSelect);
                 }
             })
+        }else{
+            setCryptoSelect(0);
+            setFiatSelect(1);
         }
     }, [userData.profile]);
 
