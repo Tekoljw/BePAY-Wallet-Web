@@ -52,7 +52,7 @@ import InputLabel from "@mui/material/InputLabel/InputLabel";
 import AnimateModal from "../../components/FuniModal";
 import Enable2FA from "../2fa/Enable2FA";
 import FuseLoading from '@fuse/core/FuseLoading';
-import {selectCurrentLanguage} from "app/store/i18nSlice";
+import { selectCurrentLanguage } from "app/store/i18nSlice";
 import userLoginType from "../../define/userLoginType";
 
 const container = {
@@ -977,7 +977,7 @@ function Withdraw(props) {
                     setFiatSelect(tmpFiatSelect);
                 }
             })
-        }else{
+        } else {
             //默认选中虚拟币
             setCryptoSelect(0);
             setFiatSelect(1);
@@ -1180,17 +1180,17 @@ function Withdraw(props) {
                                                         }}
                                                     />
                                                     <div className='flex pasteSty  items-center'>
-                                                        <div className='paste-btn' onClick={() => {
-                                                            navigator.clipboard.readText().then(clipText => {
-                                                                changeAddress('address', clipText)
-                                                            })
-                                                        }}>{t('home_withdraw_11')}</div>
                                                         <img className='pasteJianTou' src="wallet/assets/images/withdraw/pasteJianTou.png" alt="" onClick={() => {
                                                             setOpenPasteWindow(true)
                                                             openPasteFunc()
                                                         }} />
                                                     </div>
                                                 </FormControl>
+                                                <img className='nianTieIcon' src="wallet/assets/images/withdraw/zhanTie.png" alt="" onClick={() => {
+                                                    navigator.clipboard.readText().then(clipText => {
+                                                        changeAddress('address', clipText)
+                                                    })
+                                                }} />
                                                 {
                                                     isMobileMedia &&
                                                     <img className='shaoMiaoIcon ' src="wallet/assets/images/withdraw/code.png" alt="" onClick={() => {
@@ -1203,7 +1203,7 @@ function Withdraw(props) {
                                                 {t('home_withdraw_3')}
                                             </Typography>
                                             <div className="flex items-center py-16 justify-between" style={{}}>
-                                                <FormControl sx={{ width: '68%', borderColor: '#94A3B8' }} variant="outlined">
+                                                <FormControl sx={{ width: '80%', borderColor: '#94A3B8' }} variant="outlined">
                                                     <TextField
                                                         error={ismore(inputVal.amount)}
                                                         helperText={ismore(inputVal.amount) ? t('home_deposite_28') : ''}
@@ -1225,7 +1225,7 @@ function Withdraw(props) {
                                                     />
                                                 </FormControl>
                                                 <div
-                                                    className={clsx('mx-8 withdraw-input-item-right py-16 cursor-pointer text-center touchnGoListDi amount-tab-item', amountTab === 'HIGHER' && 'withdraw-input-item-right-active')}
+                                                    className={clsx('withdraw-input-item-right py-16 cursor-pointer text-center touchnGoListDi amount-tab-item', amountTab === 'HIGHER' && 'withdraw-input-item-right-active')}
                                                     onClick={() => {
                                                         setAmountTab('HIGHER')
                                                     }}
@@ -1233,7 +1233,7 @@ function Withdraw(props) {
                                                     {t('home_withdraw_12')}
                                                 </div>
                                                 <div
-                                                    className={clsx('mx-8 withdraw-input-item-right py-16 cursor-pointer text-center touchnGoListDi amount-tab-item', amountTab === 'LOW' && 'withdraw-input-item-right-active')}
+                                                    className={clsx('withdraw-input-item-right py-16 cursor-pointer text-center touchnGoListDi amount-tab-item', amountTab === 'LOW' && 'withdraw-input-item-right-active')}
                                                     onClick={() => {
                                                         setAmountTab('LOW')
                                                     }}
