@@ -512,10 +512,10 @@ function Swap() {
                 setTiJiaoState(1);
                 dispatch(centerGetTokenBalanceList());
                 dispatch(centerGetUserFiat());
-                setTimeout(() => {
-                  // userData = useSelector(selectUserData);
-                  symbolsFormatAmount();
-                }, 10000)
+                // setTimeout(() => {
+                // userData = useSelector(selectUserData);
+                // }, 10000)
+                symbolsFormatAmount();
               }, 1200);
             } else {
               setTimeout(() => {
