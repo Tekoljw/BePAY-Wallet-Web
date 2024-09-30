@@ -726,11 +726,7 @@ function Withdraw(props) {
     };
 
     useEffect(() => {
-        if (!mounted.current) {
-            mounted.current = true;
-        } else {
-            symbolsFormatAmount();
-        }
+        symbolsFormatAmount();
     }, [cryptoDisplayData, symbolsData, networks]);
 
     useEffect(() => {
