@@ -939,7 +939,7 @@ export const centerGetTokenBalanceList = createAsyncThunk(
 );
 
 
-// 内部转账
+// 内部转账(虚拟币)
 export const sendTips = createAsyncThunk(
     'user/sendTips',
     async (settings, { dispatch, getState }) => {
