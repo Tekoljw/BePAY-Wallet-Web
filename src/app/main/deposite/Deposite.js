@@ -40,14 +40,14 @@ import {
     WalletConfigDefineMap,
     checkWalletAddress,
     getNftConfig,
-    centerGetNftList, getFiatDisplay
+    centerGetNftList, getFiatDisplay, centerGetUserFiat
 } from "app/store/wallet/walletThunk";
 import { goCenterTransfer, getOwner } from "app/store/nft/nftThunk";
 import QRCode from "qrcode.react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { getCryptoDisplay } from "../../store/wallet/walletThunk";
-import { getDecenterWalletBalance } from "../../store/user/userThunk";
+import {centerGetTokenBalanceList, getDecenterWalletBalance} from "../../store/user/userThunk";
 import FuseLoading from '@fuse/core/FuseLoading';
 import { useTranslation } from "react-i18next";
 import { makeOrder, getDepositeFiatOrderStatus } from "../../store/payment/paymentThunk";
@@ -536,6 +536,7 @@ function Deposite() {
                         break;
                     }
                 }
+                dispatch(centerGetUserFiat());
                 fbq('track', 'InitiateCheckout');
             }
             if (result.status === 'wait') {
@@ -572,70 +573,75 @@ function Deposite() {
             }
         });
 
-        let tmpSymbols = [];
-        // 美元汇率
-        let dollarCurrencyRate = arrayLookup(config.payment.currency, 'currencyCode', 'USD', 'exchangeRate') || 0;
-        displayData.forEach((item, index) => {
-            var tmpShow = arrayLookup(cryptoDisplayData, 'name', item, 'show');
-            if (tmpShow === '') {
-                tmpShow = arrayLookup(symbolsData, 'symbol', item, 'userShow');
-            }
-            if (tmpShow === true && item !== 'eBGT') {
-                // 兑换成USDT的汇率
-                let symbolRate = arrayLookup(symbolsData, 'symbol', item, 'rate') || 0;
-                var balance = getSymbolMoney(item);
-                tmpSymbols.push({
-                    avatar: arrayLookup(symbolsData, 'symbol', item, 'avatar') || '',
-                    address: arrayLookup(filterSymbolData, 'symbol', item, 'address') || '',
-                    decimals: arrayLookup(symbolsData, 'symbol', item, 'decimals') || '',
-                    isManualNotify: arrayLookup(symbolsData, 'symbol', item, 'isManualNotify') || '',
-                    type: arrayLookup(symbolsData, 'symbol', item, 'type') ?? '',
-                    symbol: item,
-                    balance: balance, // 余额
-                    dollarFiat: (balance * symbolRate * dollarCurrencyRate).toFixed(2), // 换算成美元
-                    currencyAmount: (balance * symbolRate * currencyRate).toFixed(2), // 换算成当前选择法币
-                    tradeLock: arrayLookup(walletData.inner, 'symbol', item, 'tradeLock') || 0,
-                    withdrawLock: arrayLookup(walletData.inner, 'symbol', item, 'withdrawLock') || 0
-                });
-            }
-        });
-
-        const sortUseLen = (a, b) => {
-            return a.networkLen - b.networkLen;
-        };
-
-        let tmpNetworks = {};
-        tmpSymbols.forEach((item, index) => {
-            var tmpNetIds = [];
-            var tmpNetData = [];
-            symbolsData?.map((symbolData) => {
-                if (tmpNetIds.indexOf(symbolData.networkId) === -1 && symbolData.symbol === item.symbol) {
-                    tmpNetIds.push(symbolData.networkId);
+        if(displayData.length > 0){
+            let tmpSymbols = [];
+            // 美元汇率
+            let dollarCurrencyRate = arrayLookup(config.payment.currency, 'currencyCode', 'USD', 'exchangeRate') || 0;
+            displayData.forEach((item, index) => {
+                var tmpShow = arrayLookup(cryptoDisplayData, 'name', item, 'show');
+                if (tmpShow === '') {
+                    tmpShow = arrayLookup(symbolsData, 'symbol', item, 'userShow');
+                }
+                if (tmpShow === true && item !== 'eBGT') {
+                    // 兑换成USDT的汇率
+                    let symbolRate = arrayLookup(symbolsData, 'symbol', item, 'rate') || 0;
+                    var balance = getSymbolMoney(item);
+                    tmpSymbols.push({
+                        avatar: arrayLookup(symbolsData, 'symbol', item, 'avatar') || '',
+                        address: arrayLookup(filterSymbolData, 'symbol', item, 'address') || '',
+                        decimals: arrayLookup(symbolsData, 'symbol', item, 'decimals') || '',
+                        isManualNotify: arrayLookup(symbolsData, 'symbol', item, 'isManualNotify') || '',
+                        type: arrayLookup(symbolsData, 'symbol', item, 'type') ?? '',
+                        symbol: item,
+                        balance: balance, // 余额
+                        dollarFiat: (balance * symbolRate * dollarCurrencyRate).toFixed(2), // 换算成美元
+                        currencyAmount: (balance * symbolRate * currencyRate).toFixed(2), // 换算成当前选择法币
+                        tradeLock: arrayLookup(walletData.inner, 'symbol', item, 'tradeLock') || 0,
+                        withdrawLock: arrayLookup(walletData.inner, 'symbol', item, 'withdrawLock') || 0
+                    });
                 }
             });
 
-            for (var i = 0; i < tmpNetIds.length; i++) {
-                if (arrayLookup(networks, 'id', tmpNetIds[i], 'symbol')) {
-                    tmpNetData.push({
-                        id: tmpNetIds[i],
-                        symbol: arrayLookup(networks, 'id', tmpNetIds[i], 'symbol'),
-                        avatar: arrayLookup(networks, 'id', tmpNetIds[i], 'avatar'),
-                        network: arrayLookup(networks, 'id', tmpNetIds[i], 'network'),
-                        text: 1,
-                        desc: 2,
-                        networkLen: arrayLookup(networks, 'id', tmpNetIds[i], 'network').length || 0,
-                    })
-                }
-            }
+            const sortUseLen = (a, b) => {
+                return a.networkLen - b.networkLen;
+            };
 
-            tmpNetData.sort(sortUseLen);
-            tmpNetworks[item.symbol] = tmpNetData;
-        });
-        tmpSymbols.sort(sortUseAge);
-        // console.log(tmpSymbols,'........');
-        setSymbolWallet(tmpSymbols.filter(i => i.symbol !== 'eUSDT'));
-        setNetworkData(tmpNetworks);
-        // console.log(arrayLookup(filterSymbolData, 'symbol', 'USDD', 'address') );
+            let tmpNetworks = {};
+            tmpSymbols.forEach((item, index) => {
+                var tmpNetIds = [];
+                var tmpNetData = [];
+                symbolsData?.map((symbolData) => {
+                    if (tmpNetIds.indexOf(symbolData.networkId) === -1 && symbolData.symbol === item.symbol) {
+                        tmpNetIds.push(symbolData.networkId);
+                    }
+                });
+
+                for (var i = 0; i < tmpNetIds.length; i++) {
+                    if (arrayLookup(networks, 'id', tmpNetIds[i], 'symbol')) {
+                        tmpNetData.push({
+                            id: tmpNetIds[i],
+                            symbol: arrayLookup(networks, 'id', tmpNetIds[i], 'symbol'),
+                            avatar: arrayLookup(networks, 'id', tmpNetIds[i], 'avatar'),
+                            network: arrayLookup(networks, 'id', tmpNetIds[i], 'network'),
+                            text: 1,
+                            desc: 2,
+                            networkLen: arrayLookup(networks, 'id', tmpNetIds[i], 'network').length || 0,
+                        })
+                    }
+                }
+
+                tmpNetData.sort(sortUseLen);
+                tmpNetworks[item.symbol] = tmpNetData;
+            });
+            tmpSymbols.sort(sortUseAge);
+            // console.log(tmpSymbols,'........');
+            setSymbolWallet(tmpSymbols.filter(i => i.symbol !== 'eUSDT'));
+            setNetworkData(tmpNetworks);
+            // console.log(arrayLookup(filterSymbolData, 'symbol', 'USDD', 'address') );
+        }else{
+            setSymbolWallet([]);
+            setNetworkData([]);
+        }
     };
 
     //所有币种和所有网络发生变化需要处理的逻辑
@@ -645,7 +651,7 @@ function Deposite() {
         } else {
             symbolsFormatAmount();
         }
-    }, [cryptoDisplayData, symbolsData, networks]);
+    }, [cryptoDisplayData, symbolsData, networks, walletData]);
 
     //网络数据发生变化需要处理的逻辑
     useEffect(() => {

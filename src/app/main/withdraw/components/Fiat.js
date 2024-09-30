@@ -17,14 +17,23 @@ import Checkbox from '@mui/material/Checkbox';
 
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../../store/user";
-import { getListBank } from "../../../store/user/userThunk";
+import {centerGetTokenBalanceList, getListBank} from "../../../store/user/userThunk";
 import { makeWithdrawOrder, getFiatFee, payoutBank, payoutPayWays } from "../../../store/payment/paymentThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../../components/StyledAccordionSelect";
 import { selectConfig } from "../../../store/config";
 import {arrayLookup, getNowTime, getUserLoginType} from "../../../util/tools/function";
 import { openScan, closeScan } from "../../../util/tools/scanqrcode";
-import { getWithDrawConfig, WalletConfigDefineMap, evalTokenTransferFee, getWithdrawHistoryAddress, getWithdrawTransferStats, createPin, verifyPin } from "app/store/wallet/walletThunk";
+import {
+    getWithDrawConfig,
+    WalletConfigDefineMap,
+    evalTokenTransferFee,
+    getWithdrawHistoryAddress,
+    getWithdrawTransferStats,
+    createPin,
+    verifyPin,
+    centerGetUserFiat
+} from "app/store/wallet/walletThunk";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
 import Dialog from "@mui/material/Dialog/Dialog";
 import history from '@history';
@@ -217,6 +226,7 @@ function Fiat(props) {
                         setTimeout(() => {
                             setZhuanQuan(false);
                             setTiJiaoState(1);
+                            dispatch(centerGetUserFiat());
                         }, 1200);
                     } else {
                         setOpenSuccess(false)
@@ -278,6 +288,7 @@ function Fiat(props) {
                         setTimeout(() => {
                             setZhuanQuan(false);
                             setTiJiaoState(1);
+                            dispatch(centerGetUserFiat());
                         }, 1200);
                     } else {
                         setOpenSuccess(false)
