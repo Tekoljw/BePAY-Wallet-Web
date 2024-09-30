@@ -649,7 +649,7 @@ function Card(props) {
 
     //获取Config
     const getCardConfig = () => {
-        setLoadingShow(true)
+        setLoadingShow(false)
         dispatch(getCreditConfig()).then((res) => {
             setLoadingShow(false)
             let result = res.payload

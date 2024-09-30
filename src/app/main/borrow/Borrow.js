@@ -140,7 +140,7 @@ function Borrow() {
     }
 
     useEffect(() => {
-        setLoadingShow(true)
+        setLoadingShow(false)
         if (symbols) {
             initSymbol()
             setLoadingShow(false)

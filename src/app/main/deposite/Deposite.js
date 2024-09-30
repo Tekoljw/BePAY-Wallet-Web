@@ -419,7 +419,7 @@ function Deposite() {
     };
 
     useEffect(() => {
-        setLoadingShow(true);
+        setLoadingShow(false);
         dispatch(getCryptoDisplay()).then((res) => {
             setLoadingShow(false);
             let result = res.payload;

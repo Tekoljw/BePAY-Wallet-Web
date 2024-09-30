@@ -305,7 +305,7 @@ function Wallet() {
   const [openAnimateModal, setOpenAnimateModal] = useState(false);
   const [cryptoSelect, setCryptoSelect] = useState(0);
   const [fiatSelect, setFiatSelect] = useState(1);
-  const [loadingShow, setLoadingShow] = useState(true);
+  const [loadingShow, setLoadingShow] = useState(false);
 
   const mounted = useRef();
   // let fiats = [];
@@ -330,11 +330,11 @@ function Wallet() {
     }, 800);
 }
 
-  useEffect(() => {
-    if (symbols.length > 0) {
-      setLoadingShow(false);
-    }
-  }, [symbols]);
+  // useEffect(() => {
+  //   if (symbols.length > 0) {
+  //     setLoadingShow(false);
+  //   }
+  // }, [symbols]);
 
   const handleSelectedSymbol = (type, symbol) => {
     setSelectedSymbol(symbol);

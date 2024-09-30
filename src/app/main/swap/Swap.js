@@ -574,7 +574,7 @@ function Swap() {
   }, [hasData, swapData]);
 
   useEffect(() => {
-    setLoadingShow(true)
+    setLoadingShow(false)
     setPhoneTab('swap');
     dispatch(getSwapConfig()).then((res) => {
       setLoadingShow(false)
