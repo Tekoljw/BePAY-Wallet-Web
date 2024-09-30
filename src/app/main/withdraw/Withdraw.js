@@ -53,6 +53,7 @@ import AnimateModal from "../../components/FuniModal";
 import Enable2FA from "../2fa/Enable2FA";
 import FuseLoading from '@fuse/core/FuseLoading';
 import {selectCurrentLanguage} from "app/store/i18nSlice";
+import userLoginType from "../../define/userLoginType";
 
 const container = {
     show: {
@@ -239,7 +240,6 @@ function Withdraw(props) {
     const [cryptoDisplayData, setCryptoDisplayData] = useState([]);
     const [networkData, setNetworkData] = useState([]);
     const [networkId, setNetworkId] = useState(0);
-    const loginType = getUserLoginType(userData);
     const config = useSelector(selectConfig);
     const networks = config.networks;
     const symbolsData = config.symbols;
@@ -613,7 +613,6 @@ function Withdraw(props) {
                 setTransactionFee(0);
                 return
             }
-
         });
     };
 
@@ -924,7 +923,8 @@ function Withdraw(props) {
     }
 
     useEffect(() => {
-        if (loginType !== "telegram_web_app") {
+        const loginType = getUserLoginType(userData);
+        if (loginType !== userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP) {
             getSettingSymbol().then((res) => {
                 var currencyType = res.data?.data?.setting?.currencyType
                 console.log(currencyType);
@@ -979,6 +979,10 @@ function Withdraw(props) {
                     setFiatSelect(tmpFiatSelect);
                 }
             })
+        }else{
+            //默认选中虚拟币
+            setCryptoSelect(0);
+            setFiatSelect(1);
         }
         setHasPin(userData.profile?.user?.hasSetPaymentPassword ?? false)
 
