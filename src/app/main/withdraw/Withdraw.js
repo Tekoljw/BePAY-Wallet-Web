@@ -635,7 +635,7 @@ function Withdraw(props) {
     };
     useEffect(() => {
         setPhoneTab('withdraw');
-        setLoadingShow(true);
+        setLoadingShow(false);
         dispatch(getWithdrawHistoryAddress()).then((res) => {
             setLoadingShow(false);
             if (res.payload?.data?.length > 0) {

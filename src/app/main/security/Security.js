@@ -64,7 +64,7 @@ function Security(props) {
 
     const [loadingShow, setLoadingShow] = useState(false);
     useEffect(() => {
-        setLoadingShow(true);
+        setLoadingShow(false);
         setTimeout(() => {
             setLoadingShow(false);
         }, 500);

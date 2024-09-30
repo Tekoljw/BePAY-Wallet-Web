@@ -114,6 +114,7 @@ function Swap() {
   // const fiatData = useSelector(selectUserData).fiat;
   // const walletData = useSelector(selectUserData).wallet;
   const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || "USD");
+  const [loadingShow, setLoadingShow] = useState(false);
 
   const [priceData, setPriceData] = useState({
     pair: "",
@@ -573,8 +574,10 @@ function Swap() {
   }, [hasData, swapData]);
 
   useEffect(() => {
+    setLoadingShow(false)
     setPhoneTab('swap');
     dispatch(getSwapConfig()).then((res) => {
+      setLoadingShow(false)
       res.payload?.errno === 0 && dispatch(setSwapConfig(res.payload));
     });
   }, []);
@@ -593,488 +596,518 @@ function Swap() {
   }, [symbol]);
 
   return (
-    <div className='mt-12'>
+    <div>
+          { !loadingShow && <div className='mt-12'>
+            {/*<div*/}
+            {/*  className="flex justify-center items-center wallet-top radius999"*/}
+            {/*  style={{ marginBottom: "12px" }}*/}
+            {/*>*/}
+            {/*  <Tabs*/}
+            {/*    component={motion.div}*/}
+            {/*    variants={item}*/}
+            {/*    value={walletType}*/}
+            {/*    onChange={(ev, value) => {*/}
+            {/*      setWalletType(value);*/}
+            {/*    }}*/}
+            {/*    indicatorColor="secondary"*/}
+            {/*    textColor="inherit"*/}
+            {/*    variant="scrollable"*/}
+            {/*    scrollButtons={false}*/}
+            {/*    className="wallet-show-type"*/}
+            {/*    classes={{*/}
+            {/*      indicator:*/}
+            {/*        "flex justify-between bg-transparent w-full h-full min-h-28 radius999",*/}
+            {/*    }}*/}
+            {/*    TabIndicatorProps={{*/}
+            {/*      children: (*/}
+            {/*        <Box className="w-full h-full rounded-full huaKuaBgColor0 min-h-28 radius999" />*/}
+            {/*      ),*/}
+            {/*    }}*/}
+            {/*    sx={{*/}
+            {/*      // padding: '1rem 1.2rem',*/}
+            {/*      flex: 1,*/}
+            {/*    }}*/}
+            {/*  >*/}
 
-      {/*<div*/}
-      {/*  className="flex justify-center items-center wallet-top radius999"*/}
-      {/*  style={{ marginBottom: "12px" }}*/}
-      {/*>*/}
-      {/*  <Tabs*/}
-      {/*    component={motion.div}*/}
-      {/*    variants={item}*/}
-      {/*    value={walletType}*/}
-      {/*    onChange={(ev, value) => {*/}
-      {/*      setWalletType(value);*/}
-      {/*    }}*/}
-      {/*    indicatorColor="secondary"*/}
-      {/*    textColor="inherit"*/}
-      {/*    variant="scrollable"*/}
-      {/*    scrollButtons={false}*/}
-      {/*    className="wallet-show-type"*/}
-      {/*    classes={{*/}
-      {/*      indicator:*/}
-      {/*        "flex justify-between bg-transparent w-full h-full min-h-28 radius999",*/}
-      {/*    }}*/}
-      {/*    TabIndicatorProps={{*/}
-      {/*      children: (*/}
-      {/*        <Box className="w-full h-full rounded-full huaKuaBgColor0 min-h-28 radius999" />*/}
-      {/*      ),*/}
-      {/*    }}*/}
-      {/*    sx={{*/}
-      {/*      // padding: '1rem 1.2rem',*/}
-      {/*      flex: 1,*/}
-      {/*    }}*/}
-      {/*  >*/}
+            {/*    {walletTypeTab.map((key, label) => {*/}
 
-      {/*    {walletTypeTab.map((key, label) => {*/}
+            {/*      if (label == 0) {*/}
+            {/*        return (*/}
+            {/*          <Tab*/}
+            {/*            style={{ fontSize: '1.4rem' }}*/}
+            {/*            className="text-16 font-semibold min-h-28 min-w-64 px-32 mt-4 txtColorTitle text-nowrap opacity-100 zindex radius999 "*/}
+            {/*            disableRipple*/}
+            {/*            key={key}*/}
+            {/*            icon={*/}
+            {/*              <img*/}
+            {/*                className="mr-8"*/}
+            {/*                width="22"*/}
+            {/*                src="/wallet/assets/images/logo/loading-img.png"*/}
+            {/*                alt=""*/}
+            {/*              />*/}
+            {/*            }*/}
+            {/*            iconPosition="start"*/}
+            {/*            label={key}*/}
+            {/*            sx={{*/}
+            {/*              color: "#FFFFFF",*/}
+            {/*              width: "50%",*/}
+            {/*            }}*/}
+            {/*          />*/}
+            {/*        );*/}
 
-      {/*      if (label == 0) {*/}
-      {/*        return (*/}
-      {/*          <Tab*/}
-      {/*            style={{ fontSize: '1.4rem' }}*/}
-      {/*            className="text-16 font-semibold min-h-28 min-w-64 px-32 mt-4 txtColorTitle text-nowrap opacity-100 zindex radius999 "*/}
-      {/*            disableRipple*/}
-      {/*            key={key}*/}
-      {/*            icon={*/}
-      {/*              <img*/}
-      {/*                className="mr-8"*/}
-      {/*                width="22"*/}
-      {/*                src="/wallet/assets/images/logo/loading-img.png"*/}
-      {/*                alt=""*/}
-      {/*              />*/}
-      {/*            }*/}
-      {/*            iconPosition="start"*/}
-      {/*            label={key}*/}
-      {/*            sx={{*/}
-      {/*              color: "#FFFFFF",*/}
-      {/*              width: "50%",*/}
-      {/*            }}*/}
-      {/*          />*/}
-      {/*        );*/}
+            {/*      } else {*/}
+            {/*        if (decentralized == 1) {*/}
+            {/*          return (*/}
+            {/*            <Tab*/}
+            {/*              style={{ fontSize: '1.4rem' }}*/}
+            {/*              className="text-16 font-semibold min-h-28 min-w-64 px-32 mt-4 txtColorTitle text-nowrap opacity-100 zindex radius999 "*/}
+            {/*              disableRipple*/}
+            {/*              key={key}*/}
+            {/*              icon={*/}
+            {/*                <img*/}
+            {/*                  className="mr-8"*/}
+            {/*                  width="22"*/}
+            {/*                  src={(() => {*/}
+            {/*                    switch (walletloginname) {*/}
+            {/*                      case "BitKeep":*/}
+            {/*                        return "/wallet/assets/images/login/icon-right-14.png";*/}
+            {/*                      case "MetaMask":*/}
+            {/*                        return "/wallet/assets/images/login/icon-right-1.png";*/}
+            {/*                      case "WalletConnect":*/}
+            {/*                        return "/wallet/assets/images/login/icon-right-5.png";*/}
+            {/*                      case "coinbase":*/}
+            {/*                        return "/wallet/assets/images/login/icon-right-10.png";*/}
+            {/*                      case "TrustWallet":*/}
+            {/*                        return "/wallet/assets/images/login/icon-right-12.png";*/}
+            {/*                      case "Coinbase":*/}
+            {/*                        return "/wallet/assets/images/login/icon-right-4.png";*/}
+            {/*                      case "Polygon":*/}
+            {/*                        return "/wallet/assets/images/login/icon-right-13.png";*/}
+            {/*                      case "Bitski":*/}
+            {/*                        return "/wallet/assets/images/login/icon-right-15.png";*/}
+            {/*                      case "CLedger":*/}
+            {/*                        return "/wallet/assets/images/login/icon-right-16.png";*/}
+            {/*                      case "Binance Smart":*/}
+            {/*                        return "/wallet/assets/images/login/icon-right-17.png";*/}
+            {/*                      case "BeingFi Wallet":*/}
+            {/*                        return "/wallet/assets/images/menu/LOGO.png ";*/}
+            {/*                      default:*/}
+            {/*                        return "/wallet/assets/images/menu/icon-wallet-active.png ";*/}
+            {/*                    }*/}
+            {/*                  })()}*/}
+            {/*                  alt=""*/}
+            {/*                />*/}
+            {/*              }*/}
+            {/*              iconPosition="start"*/}
+            {/*              label={walletloginname}*/}
+            {/*              sx={{*/}
+            {/*                color: "#FFFFFF",*/}
+            {/*                width: "50%",*/}
+            {/*              }}*/}
+            {/*            />*/}
+            {/*          );*/}
+            {/*        } else {*/}
+            {/*          return (*/}
+            {/*            <Tab*/}
+            {/*              style={{ fontSize: '1.4rem' }}*/}
+            {/*              className="text-16 font-semibold min-h-28 min-w-64 px-32 mt-4 txtColorTitle text-nowrap opacity-100 zindex radius999 "*/}
+            {/*              disableRipple*/}
+            {/*              key={key}*/}
+            {/*              icon={*/}
+            {/*                <img*/}
+            {/*                  className="mr-8"*/}
+            {/*                  width="22"*/}
+            {/*                  src="/wallet/assets/images/menu/icon-wallet-active.png"*/}
+            {/*                  alt=""*/}
+            {/*                />*/}
+            {/*              }*/}
+            {/*              iconPosition="start"*/}
+            {/*              label={'Wallet Connect'}*/}
+            {/*              sx={{*/}
+            {/*                color: "#FFFFFF",*/}
+            {/*                width: "50%",*/}
+            {/*              }}*/}
+            {/*            />*/}
+            {/*          );*/}
+            {/*        }*/}
+            {/*      }*/}
+            {/*    })}*/}
+            {/*  </Tabs>*/}
+            {/*</div>*/}
 
-      {/*      } else {*/}
-      {/*        if (decentralized == 1) {*/}
-      {/*          return (*/}
-      {/*            <Tab*/}
-      {/*              style={{ fontSize: '1.4rem' }}*/}
-      {/*              className="text-16 font-semibold min-h-28 min-w-64 px-32 mt-4 txtColorTitle text-nowrap opacity-100 zindex radius999 "*/}
-      {/*              disableRipple*/}
-      {/*              key={key}*/}
-      {/*              icon={*/}
-      {/*                <img*/}
-      {/*                  className="mr-8"*/}
-      {/*                  width="22"*/}
-      {/*                  src={(() => {*/}
-      {/*                    switch (walletloginname) {*/}
-      {/*                      case "BitKeep":*/}
-      {/*                        return "/wallet/assets/images/login/icon-right-14.png";*/}
-      {/*                      case "MetaMask":*/}
-      {/*                        return "/wallet/assets/images/login/icon-right-1.png";*/}
-      {/*                      case "WalletConnect":*/}
-      {/*                        return "/wallet/assets/images/login/icon-right-5.png";*/}
-      {/*                      case "coinbase":*/}
-      {/*                        return "/wallet/assets/images/login/icon-right-10.png";*/}
-      {/*                      case "TrustWallet":*/}
-      {/*                        return "/wallet/assets/images/login/icon-right-12.png";*/}
-      {/*                      case "Coinbase":*/}
-      {/*                        return "/wallet/assets/images/login/icon-right-4.png";*/}
-      {/*                      case "Polygon":*/}
-      {/*                        return "/wallet/assets/images/login/icon-right-13.png";*/}
-      {/*                      case "Bitski":*/}
-      {/*                        return "/wallet/assets/images/login/icon-right-15.png";*/}
-      {/*                      case "CLedger":*/}
-      {/*                        return "/wallet/assets/images/login/icon-right-16.png";*/}
-      {/*                      case "Binance Smart":*/}
-      {/*                        return "/wallet/assets/images/login/icon-right-17.png";*/}
-      {/*                      case "BeingFi Wallet":*/}
-      {/*                        return "/wallet/assets/images/menu/LOGO.png ";*/}
-      {/*                      default:*/}
-      {/*                        return "/wallet/assets/images/menu/icon-wallet-active.png ";*/}
-      {/*                    }*/}
-      {/*                  })()}*/}
-      {/*                  alt=""*/}
-      {/*                />*/}
-      {/*              }*/}
-      {/*              iconPosition="start"*/}
-      {/*              label={walletloginname}*/}
-      {/*              sx={{*/}
-      {/*                color: "#FFFFFF",*/}
-      {/*                width: "50%",*/}
-      {/*              }}*/}
-      {/*            />*/}
-      {/*          );*/}
-      {/*        } else {*/}
-      {/*          return (*/}
-      {/*            <Tab*/}
-      {/*              style={{ fontSize: '1.4rem' }}*/}
-      {/*              className="text-16 font-semibold min-h-28 min-w-64 px-32 mt-4 txtColorTitle text-nowrap opacity-100 zindex radius999 "*/}
-      {/*              disableRipple*/}
-      {/*              key={key}*/}
-      {/*              icon={*/}
-      {/*                <img*/}
-      {/*                  className="mr-8"*/}
-      {/*                  width="22"*/}
-      {/*                  src="/wallet/assets/images/menu/icon-wallet-active.png"*/}
-      {/*                  alt=""*/}
-      {/*                />*/}
-      {/*              }*/}
-      {/*              iconPosition="start"*/}
-      {/*              label={'Wallet Connect'}*/}
-      {/*              sx={{*/}
-      {/*                color: "#FFFFFF",*/}
-      {/*                width: "50%",*/}
-      {/*              }}*/}
-      {/*            />*/}
-      {/*          );*/}
-      {/*        }*/}
-      {/*      }*/}
-      {/*    })}*/}
-      {/*  </Tabs>*/}
-      {/*</div>*/}
-
-      {walletType === 0 && (
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate="show"
-          className="swap-container"
-          style={{ paddingInline: "1.5rem " }}
-        >
-          <div
-            className="mb-16 flex items-center justify-between color-76819B"
-            style={{ marginBottom: "0.6rem" }}
-          >
-            <Typography className="text-20">{t("home_wallet_13")}</Typography>
-            <div className="text-14 flex" style={{ color: "#FFFFFF" }}>
-              <Typography
-                className={clsx(
-                  "cursor-pointer text-14 mx-8 txtColorTitle",
-                  percentage === 1 && "colro-12C1A2"
-                )}
-                onClick={() => {
-                  handleClick(1);
-                }}
+            {walletType === 0 && (
+              <motion.div
+                variants={container}
+                initial="hidden"
+                animate="show"
+                className="swap-container"
+                style={{ paddingInline: "1.5rem " }}
               >
-                25%
-              </Typography>
-              <Typography
-                className={clsx(
-                  "cursor-pointer text-14 mx-8 txtColorTitle",
-                  percentage === 2 && "colro-12C1A2"
-                )}
-                onClick={() => {
-                  handleClick(2);
-                }}
-              >
-                50%
-              </Typography>
-              <Typography
-                className={clsx(
-                  "cursor-pointer text-14 mx-8 txtColorTitle",
-                  percentage === 3 && "colro-12C1A2"
-                )}
-                onClick={() => {
-                  handleClick(3);
-                }}
-              >
-                75%
-              </Typography>
-              <Typography
-                className={clsx(
-                  "cursor-pointer text-14 mx-8 txtColorTitle",
-                  percentage === 4 && "colro-12C1A2"
-                )}
-                onClick={() => {
-                  handleClick(4);
-                }}
-              >
-                100%
-              </Typography>
-            </div>
-          </div>
+                <div
+                  className="mb-16 flex items-center justify-between color-76819B"
+                  style={{ marginBottom: "0.6rem" }}
+                >
+                  <Typography className="text-20">{t("home_wallet_13")}</Typography>
+                  <div className="text-14 flex" style={{ color: "#FFFFFF" }}>
+                    <Typography
+                      className={clsx(
+                        "cursor-pointer text-14 mx-8 txtColorTitle",
+                        percentage === 1 && "colro-12C1A2"
+                      )}
+                      onClick={() => {
+                        handleClick(1);
+                      }}
+                    >
+                      25%
+                    </Typography>
+                    <Typography
+                      className={clsx(
+                        "cursor-pointer text-14 mx-8 txtColorTitle",
+                        percentage === 2 && "colro-12C1A2"
+                      )}
+                      onClick={() => {
+                        handleClick(2);
+                      }}
+                    >
+                      50%
+                    </Typography>
+                    <Typography
+                      className={clsx(
+                        "cursor-pointer text-14 mx-8 txtColorTitle",
+                        percentage === 3 && "colro-12C1A2"
+                      )}
+                      onClick={() => {
+                        handleClick(3);
+                      }}
+                    >
+                      75%
+                    </Typography>
+                    <Typography
+                      className={clsx(
+                        "cursor-pointer text-14 mx-8 txtColorTitle",
+                        percentage === 4 && "colro-12C1A2"
+                      )}
+                      onClick={() => {
+                        handleClick(4);
+                      }}
+                    >
+                      100%
+                    </Typography>
+                  </div>
+                </div>
 
-          <Box
-            className="w-full rounded-16 border flex flex-col "
-            sx={{
-              backgroundColor: "#1E293B",
-              border: "none",
-            }}
-          >
-            {symbolWallet.length > 0 && (
-              <StyledAccordionSelect
-                symbol={symbolWallet}
-                currencyCode="USD"
-                setSymbol={setSymbol}
-              />
+                <Box
+                  className="w-full rounded-16 border flex flex-col "
+                  sx={{
+                    backgroundColor: "#1E293B",
+                    border: "none",
+                  }}
+                >
+                  {symbolWallet.length > 0 && (
+                    <StyledAccordionSelect
+                      symbol={symbolWallet}
+                      currencyCode="USD"
+                      setSymbol={setSymbol}
+                    />
+                  )}
+                </Box>
+
+                <div className="flex items-center justify-content-center -mb-56 -mt-4 position-re">
+                  <div className="cursor-pointer swap-btn flex items-center justify-content-center">
+                    <img src="wallet/assets/images/swap/arrow-down.png" alt="" />
+                  </div>
+                </div>
+
+                <Typography
+                  className="text-20 font-medium my-16 color-76819B"
+                  style={{ position: "relative", top: "0.8rem" }}
+                >
+                  {t("home_wallet_14")}
+                </Typography>
+                <Box
+                  className="w-full rounded-16 border flex flex-col"
+                  sx={{
+                    backgroundColor: "#1E293B",
+                    border: "none",
+                  }}
+                >
+                  {swapCoinConfig[symbol]?.length > 0 && (
+                    <StyledAccordionSelect
+                      symbol={swapCoinConfig[symbol]}
+                      currencyCode="USD"
+                      setSymbol={setFormatSymbol}
+                    />
+                  )}
+                </Box>
+
+                <Typography
+                  className="text-20 font-medium my-16 color-76819B"
+                  style={{ position: "relative", top: "0.1rem" }}
+                >
+                  {t("home_withdraw_3")}{" "}
+                </Typography>
+                <Box
+                  className="w-full rounded-16 border flex flex-col"
+                  sx={{
+                    backgroundColor: "#1E293B",
+                    border: "none",
+                  }}
+                >
+                  <FormControl
+                    sx={{ width: "100%", borderColor: "#1E293B" }}
+                    variant="outlined"
+                  >
+                    <TextField
+                      error={ismore(inputVal.amount)}
+                      helperText={
+                        ismore(inputVal.amount) ? t('home_deposite_28') : ""
+                      }
+                      type="number"
+                      step="0.000001"
+                      id="outlined-adornment-address send-tips-container-address"
+                      value={inputVal.amount}
+                      onChange={handleChangeInputVal("amount")}
+                      aria-describedby="outlined-weight-helper-text"
+                      inputProps={{
+                        "aria-label": "address",
+                      }}
+                    />
+                  </FormControl>
+                </Box>
+
+                <Typography
+                  className="my-8 text-14 color-76819B text-center"
+                  style={{ margin: "1.5rem 0" }}
+                >
+                  {t("home_wallet_15")}
+                  <span className="color-ffffff">
+                    &nbsp; {inputVal.amount}
+                    {symbol} &nbsp;
+                  </span>
+                  {t("home_wallet_16")}
+                </Typography>
+
+                <Box
+                  className="w-full rounded-16 border flex flex-col my-16"
+                  sx={{
+                    backgroundColor: "#1E293B",
+                    border: "none",
+                  }}
+                  style={{ marginTop: 0 }}
+                >
+                  <StyledAccordion
+                    component={motion.div}
+                    variants={item}
+                    classes={{
+                      root: "FaqPage-panel shadow",
+                    }}
+                    expanded={expanded === 2}
+                    onChange={toggleAccordion(2)}
+                  >
+                    <div
+                      className="items-center p-12 flex-grow"
+                      style={{ width: "100%" }}
+                    >
+                      <div className="flex items-center my-4">
+                        <div className="px-12 font-medium color-76819B">
+                          <Typography className="text-14 font-medium">
+                            {t("home_wallet_17")}:
+                            <span className="color-ffffff">
+                              {priceData.qty_base} {symbol} ~ {priceData.qty_quote}{" "}
+                              {formatSymbol}
+                            </span>
+                          </Typography>
+                        </div>
+                      </div>
+                      <div className="flex items-center my-4">
+                        <div className="px-12 font-medium color-76819B">
+                          <Typography className="text-14 font-medium">
+                            {t("home_wallet_18")}:
+                            <span className="color-ffffff">0.5%</span>
+                          </Typography>
+                        </div>
+                      </div>
+                      <div className="flex items-center my-4">
+                        <div className="px-12 font-medium color-76819B">
+                          <Typography className="text-14 font-medium">
+                            {t("home_wallet_19")}:
+                            <span className="color-ffffff">0 {symbol}</span>
+                          </Typography>
+                        </div>
+                      </div>
+                      <div className="flex items-center my-4">
+                        <div className="px-12 font-medium color-76819B">
+                          <Typography className="text-14 font-medium">
+                            {t("home_wallet_20")}:
+                            <span className="color-ffffff">0</span>
+                          </Typography>
+                        </div>
+                      </div>
+                    </div>
+                  </StyledAccordion>
+                </Box>
+
+                <Box component={motion.div} variants={item}>
+                  <Button
+                    style={{ width: "100%", margin: "2.9rem auto", display: "block" }}
+                    disabled={ismore(inputVal.amount)}
+                    className="m-28 px-48 text-lg btnColorTitleBig"
+                    color="secondary"
+                    variant="contained"
+                    sx={{ backgroundColor: "#0D9488", color: "#ffffff" }}
+                    onClick={() => {
+                      onSubmit();
+                    }}
+                  >
+                    {t("home_wallet_21")}
+                  </Button>
+                </Box>
+              </motion.div>
             )}
-          </Box>
-
-          <div className="flex items-center justify-content-center -mb-56 -mt-4 position-re">
-            <div className="cursor-pointer swap-btn flex items-center justify-content-center">
-              <img src="wallet/assets/images/swap/arrow-down.png" alt="" />
-            </div>
-          </div>
-
-          <Typography
-            className="text-20 font-medium my-16 color-76819B"
-            style={{ position: "relative", top: "0.8rem" }}
-          >
-            {t("home_wallet_14")}
-          </Typography>
-          <Box
-            className="w-full rounded-16 border flex flex-col"
-            sx={{
-              backgroundColor: "#1E293B",
-              border: "none",
-            }}
-          >
-            {swapCoinConfig[symbol]?.length > 0 && (
-              <StyledAccordionSelect
-                symbol={swapCoinConfig[symbol]}
-                currencyCode="USD"
-                setSymbol={setFormatSymbol}
-              />
+            {decentralized != -1 && walletType == 1 && (
+              <Routes>
+                <Route index element={<UniSwapPage />} />
+              </Routes>
             )}
-          </Box>
+            {decentralized == -1 && walletType !== 0 && (
+              <>
+                <Web3Login />
+              </>
+            )}
+            {decentralized != -1 &&
+              walletType == 1 &&
+              userData.profile?.loginType !== "web3_wallet" && (
+                <>
+                  {" "}
+                  {/*<Web3Login />*/}
+                </>
+              )}
 
-          <Typography
-            className="text-20 font-medium my-16 color-76819B"
-            style={{ position: "relative", top: "0.1rem" }}
-          >
-            {t("home_withdraw_3")}{" "}
-          </Typography>
-          <Box
-            className="w-full rounded-16 border flex flex-col"
-            sx={{
-              backgroundColor: "#1E293B",
-              border: "none",
-            }}
-          >
-            <FormControl
-              sx={{ width: "100%", borderColor: "#1E293B" }}
-              variant="outlined"
-            >
-              <TextField
-                error={ismore(inputVal.amount)}
-                helperText={
-                  ismore(inputVal.amount) ? t('home_deposite_28') : ""
-                }
-                type="number"
-                step="0.000001"
-                id="outlined-adornment-address send-tips-container-address"
-                value={inputVal.amount}
-                onChange={handleChangeInputVal("amount")}
-                aria-describedby="outlined-weight-helper-text"
-                inputProps={{
-                  "aria-label": "address",
-                }}
-              />
-            </FormControl>
-          </Box>
-
-          <Typography
-            className="my-8 text-14 color-76819B text-center"
-            style={{ margin: "1.5rem 0" }}
-          >
-            {t("home_wallet_15")}
-            <span className="color-ffffff">
-              &nbsp; {inputVal.amount}
-              {symbol} &nbsp;
-            </span>
-            {t("home_wallet_16")}
-          </Typography>
-
-          <Box
-            className="w-full rounded-16 border flex flex-col my-16"
-            sx={{
-              backgroundColor: "#1E293B",
-              border: "none",
-            }}
-            style={{ marginTop: 0 }}
-          >
-            <StyledAccordion
-              component={motion.div}
-              variants={item}
-              classes={{
-                root: "FaqPage-panel shadow",
+            <BootstrapDialog
+              onClose={() => {
+                closePinFunc();
               }}
-              expanded={expanded === 2}
-              onChange={toggleAccordion(2)}
+              aria-labelledby="customized-dialog-title"
+              open={openSuccessWindow}
+              className="dialog-container"
             >
-              <div
-                className="items-center p-12 flex-grow"
-                style={{ width: "100%" }}
-              >
-                <div className="flex items-center my-4">
-                  <div className="px-12 font-medium color-76819B">
-                    <Typography className="text-14 font-medium">
-                      {t("home_wallet_17")}:
-                      <span className="color-ffffff">
-                        {priceData.qty_base} {symbol} ~ {priceData.qty_quote}{" "}
-                        {formatSymbol}
-                      </span>
+              <div id="PINSty" className="PINSty" style={{ bottom: "0%" }}>
+                <motion.div
+                  variants={container}
+                  initial="hidden"
+                  animate="show"
+                  style={{}}
+                >
+                  <div className='dialog-box'>
+                    <Typography id="customized-dialog-title" className="text-24 dialog-title-text" style={{ textAlign: "center", marginTop: "10px" }}>{t('menu_5')}
+                      <img src="wallet/assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => {
+                        closePinFunc();
+                      }} />
                     </Typography>
                   </div>
-                </div>
-                <div className="flex items-center my-4">
-                  <div className="px-12 font-medium color-76819B">
-                    <Typography className="text-14 font-medium">
-                      {t("home_wallet_18")}:
-                      <span className="color-ffffff">0.5%</span>
-                    </Typography>
+
+                  <div className='daGouDingWei' style={{ position: "relative" }}>
+                    <motion.div variants={item} className=' daGouDingWei1' style={{ position: "absolute", width: "100px", height: "100px", paddingTop: "10px" }}>
+                      <div className='daGouDingWei1' style={{ position: "absolute" }}>
+                        {
+                          !(tiJiaoState === 2) && <img style={{ margin: "0 auto", width: "60px", height: "60px" }} src='wallet/assets/images/wallet/naoZhong2.png'></img>
+                        }
+                        {
+                          tiJiaoState === 2 && <img style={{ margin: "0 auto", width: "60px", height: "60px" }} src='wallet/assets/images/wallet/naoZhong2_1.png'></img>
+                        }
+                      </div>
+                      <div className='daGouDingWei1' style={{ marginLeft: "58px", position: "absolute" }}>
+                        {
+                          zhuanQuan && <img className='chuKuanDongHua' style={{ width: "22px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong3.png'></img>
+                        }
+                        {
+                          !zhuanQuan && tiJiaoState === 1 && <img className='daGouFangDa' style={{ width: "23px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong4.png'></img>
+                        }
+                        {
+                          !zhuanQuan && tiJiaoState === 2 && <img className='daGouFangDa' style={{ width: "23px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong5.png'></img>
+                        }
+                      </div>
+                    </motion.div>
                   </div>
-                </div>
-                <div className="flex items-center my-4">
-                  <div className="px-12 font-medium color-76819B">
-                    <Typography className="text-14 font-medium">
-                      {t("home_wallet_19")}:
-                      <span className="color-ffffff">0 {symbol}</span>
-                    </Typography>
+
+                  <div style={{ margin: "0 auto", textAlign: "center", marginTop: "84px", height: "23px", fontSize: "16px", color: "#2ECB71" }}>
+                    {
+                      tiJiaoState === 1 && !zhuanQuan && <motion.div variants={item} style={{ height: "23px", lineHeight: "23px" }}>
+                        ● {t('errorMsg_1')}
+                      </motion.div>
+                    }
+                    {
+                      tiJiaoState === 2 && !zhuanQuan && <motion.div variants={item} style={{ height: "23px", lineHeight: "23px", color: "#EE124B" }}>
+                        ● {t('error_36')}
+                      </motion.div>
+                    }
                   </div>
-                </div>
-                <div className="flex items-center my-4">
-                  <div className="px-12 font-medium color-76819B">
-                    <Typography className="text-14 font-medium">
-                      {t("home_wallet_20")}:
-                      <span className="color-ffffff">0</span>
-                    </Typography>
-                  </div>
-                </div>
+                  <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "8px", fontSize: "24px" }}> {lookData.newNum} {formatSymbol}</motion.div>
+                  <motion.div variants={item} className='mx-20  mt-24' style={{ borderTop: "1px solid #2C3950" }}>
+                  </motion.div>
+                  <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                    <div style={{ color: "#888B92" }}>{t('home_Type')}</div>
+                    <div>{formatSymbol}</div>
+                  </motion.div>
+
+                  {
+                    <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                      <div style={{ color: "#888B92" }}>{t('card_184')}</div>
+                      <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}> {inputVal.amount} {symbol}</div>
+                    </motion.div>
+                  }
+
+                  <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                    <div style={{ color: "#888B92" }}>{t('home_borrow_18')}</div>
+                    <div>{lookData.fee} {formatSymbol} </div>
+                  </motion.div>
+
+                  {
+                    <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                      <div style={{ color: "#888B92" }}>{t('home_ID')}</div>
+                      <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{lookData.id}</div>
+                    </motion.div>
+                  }
+
+                  <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                    <div style={{ color: "#888B92" }}>{t('home_Time')}</div>
+                    <div>{getNowTime()}</div>
+                  </motion.div>
+                  <div className="mb-24"></div>
+                </motion.div>
               </div>
-            </StyledAccordion>
-          </Box>
+            </BootstrapDialog>
 
-          <Box component={motion.div} variants={item}>
-            <Button
-              style={{ width: "100%", margin: "2.9rem auto", display: "block" }}
-              disabled={ismore(inputVal.amount)}
-              className="m-28 px-48 text-lg btnColorTitleBig"
-              color="secondary"
-              variant="contained"
-              sx={{ backgroundColor: "#0D9488", color: "#ffffff" }}
-              onClick={() => {
-                onSubmit();
-              }}
-            >
-              {t("home_wallet_21")}
-            </Button>
-          </Box>
-        </motion.div>
-      )}
-      {decentralized != -1 && walletType == 1 && (
-        <Routes>
-          <Route index element={<UniSwapPage />} />
-        </Routes>
-      )}
-      {decentralized == -1 && walletType !== 0 && (
-        <>
-          <Web3Login />
-        </>
-      )}
-      {decentralized != -1 &&
-        walletType == 1 &&
-        userData.profile?.loginType !== "web3_wallet" && (
-          <>
-            {" "}
-            {/*<Web3Login />*/}
-          </>
-        )}
+          </div>
+          }
+          {
+                loadingShow &&
+                <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }}>
+                    <div className="loadingChuang1">
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                    </div>
 
-      <BootstrapDialog
-        onClose={() => {
-          closePinFunc();
-        }}
-        aria-labelledby="customized-dialog-title"
-        open={openSuccessWindow}
-        className="dialog-container"
-      >
-        <div id="PINSty" className="PINSty" style={{ bottom: "0%" }}>
-          <motion.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-            style={{}}
-          >
-            <div className='dialog-box'>
-              <Typography id="customized-dialog-title" className="text-24 dialog-title-text" style={{ textAlign: "center", marginTop: "10px" }}>{t('menu_5')}
-                <img src="wallet/assets/images/logo/icon-close.png" className='dialog-close-btn' onClick={() => {
-                  closePinFunc();
-                }} />
-              </Typography>
-            </div>
+                    <div className="loadingChuang1">
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                    </div>
 
-            <div className='daGouDingWei' style={{ position: "relative" }}>
-              <motion.div variants={item} className=' daGouDingWei1' style={{ position: "absolute", width: "100px", height: "100px", paddingTop: "10px" }}>
-                <div className='daGouDingWei1' style={{ position: "absolute" }}>
-                  {
-                    !(tiJiaoState === 2) && <img style={{ margin: "0 auto", width: "60px", height: "60px" }} src='wallet/assets/images/wallet/naoZhong2.png'></img>
-                  }
-                  {
-                    tiJiaoState === 2 && <img style={{ margin: "0 auto", width: "60px", height: "60px" }} src='wallet/assets/images/wallet/naoZhong2_1.png'></img>
-                  }
+                    <div className="loadingChuang1">
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+                        <div className="loadingChuangTiao1"></div>
+                        <div className="loadingChuangTiao2"></div>
+
+                    </div>
                 </div>
-                <div className='daGouDingWei1' style={{ marginLeft: "58px", position: "absolute" }}>
-                  {
-                    zhuanQuan && <img className='chuKuanDongHua' style={{ width: "22px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong3.png'></img>
-                  }
-                  {
-                    !zhuanQuan && tiJiaoState === 1 && <img className='daGouFangDa' style={{ width: "23px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong4.png'></img>
-                  }
-                  {
-                    !zhuanQuan && tiJiaoState === 2 && <img className='daGouFangDa' style={{ width: "23px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong5.png'></img>
-                  }
-                </div>
-              </motion.div>
-            </div>
-
-            <div style={{ margin: "0 auto", textAlign: "center", marginTop: "84px", height: "23px", fontSize: "16px", color: "#2ECB71" }}>
-              {
-                tiJiaoState === 1 && !zhuanQuan && <motion.div variants={item} style={{ height: "23px", lineHeight: "23px" }}>
-                  ● {t('errorMsg_1')}
-                </motion.div>
-              }
-              {
-                tiJiaoState === 2 && !zhuanQuan && <motion.div variants={item} style={{ height: "23px", lineHeight: "23px", color: "#EE124B" }}>
-                  ● {t('error_36')}
-                </motion.div>
-              }
-            </div>
-            <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "8px", fontSize: "24px" }}> {lookData.newNum} {formatSymbol}</motion.div>
-            <motion.div variants={item} className='mx-20  mt-24' style={{ borderTop: "1px solid #2C3950" }}>
-            </motion.div>
-            <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
-              <div style={{ color: "#888B92" }}>{t('home_Type')}</div>
-              <div>{formatSymbol}</div>
-            </motion.div>
-
-            {
-              <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
-                <div style={{ color: "#888B92" }}>{t('card_184')}</div>
-                <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}> {inputVal.amount} {symbol}</div>
-              </motion.div>
             }
-
-            <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
-              <div style={{ color: "#888B92" }}>{t('home_borrow_18')}</div>
-              <div>{lookData.fee} {formatSymbol} </div>
-            </motion.div>
-
-            {
-              <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
-                <div style={{ color: "#888B92" }}>{t('home_ID')}</div>
-                <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{lookData.id}</div>
-              </motion.div>
-            }
-
-            <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
-              <div style={{ color: "#888B92" }}>{t('home_Time')}</div>
-              <div>{getNowTime()}</div>
-            </motion.div>
-            <div className="mb-24"></div>
-          </motion.div>
-        </div>
-      </BootstrapDialog>
-
     </div>
   );
 }

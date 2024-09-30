@@ -73,7 +73,7 @@ function Earn(props) {
     const widgets = useSelector(selectWidgets);
 
     useEffect(() => {
-        setLoadingShow(true);
+        setLoadingShow(false);
         dispatch(getWidgets()).then(()=>{
             setLoadingShow(false);
         });
