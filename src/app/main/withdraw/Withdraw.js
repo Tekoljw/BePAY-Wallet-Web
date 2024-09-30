@@ -1303,16 +1303,16 @@ function Withdraw(props) {
                                                         aria-describedby="outlined-weight-helper-text"
                                                     />
                                                     <div className='flex pasteSty  items-center'>
-                                                        <div className='paste-btn' onClick={() => {
-                                                            navigator.clipboard.readText().then(clipText => {
-                                                                setInputIDVal(clipText)
-                                                            });
-                                                        }}>{t('home_withdraw_11')}</div>
                                                         <img className='pasteJianTou' src="wallet/assets/images/withdraw/pasteJianTou.png" alt="" onClick={() => {
                                                             setOpenPasteWindow(true)
                                                         }} />
                                                     </div>
                                                 </FormControl>
+                                                <img className='nianTieIcon' src="wallet/assets/images/withdraw/zhanTie.png" alt="" onClick={() => {
+                                                    navigator.clipboard.readText().then(clipText => {
+                                                        setInputIDVal(clipText)
+                                                    })
+                                                }} />
                                                 {
                                                     isMobileMedia &&
                                                     <img className='shaoMiaoIcon ' src="wallet/assets/images/withdraw/code.png" alt="" onClick={() => {
