@@ -305,7 +305,7 @@ function Wallet() {
   const [openAnimateModal, setOpenAnimateModal] = useState(false);
   const [cryptoSelect, setCryptoSelect] = useState(0);
   const [fiatSelect, setFiatSelect] = useState(1);
-  const [loadingShow, setLoadingShow] = useState(false);
+  const [loadingShow, setLoadingShow] = useState(true);
 
   const mounted = useRef();
   // let fiats = [];
@@ -332,7 +332,7 @@ function Wallet() {
 
   useEffect(() => {
     if (symbols.length > 0) {
-      setLoadingShow(true);
+      setLoadingShow(false);
     }
   }, [symbols]);
 
@@ -1387,7 +1387,7 @@ function Wallet() {
   return (
     <div style={{ position: "relative" }}>
       {
-        loadingShow && <motion.div variants={container} initial="hidden" animate="show">
+        !loadingShow && <motion.div variants={container} initial="hidden" animate="show">
           <Box
             component={motion.div}
             variants={item}
@@ -3216,7 +3216,7 @@ function Wallet() {
         </motion.div >
       }
       {
-        !loadingShow &&
+        loadingShow &&
         <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }}>
           <div className="loadingChuang1">
             <div className="loadingChuangTiao1"></div>

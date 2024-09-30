@@ -62,11 +62,12 @@ function Security(props) {
 
 
 
-    const [loadingShow, setLoadingShow] = useState(true);
+    const [loadingShow, setLoadingShow] = useState(false);
     useEffect(() => {
+        setLoadingShow(true);
         setTimeout(() => {
-            setLoadingShow(true);
-        }, 1500);
+            setLoadingShow(false);
+        }, 500);
     }, []);
 
     useEffect(() => {
@@ -77,7 +78,7 @@ function Security(props) {
     return (
         <div>
             {
-                loadingShow &&
+                !loadingShow &&
                 <div>
                     <motion.div
                         variants={container}
@@ -128,7 +129,7 @@ function Security(props) {
                 </div>
             }
             {
-                !loadingShow &&
+                loadingShow &&
                 <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }}>
                     <div className="loadingChuang1">
                         <div className="loadingChuangTiao1"></div>

@@ -649,7 +649,9 @@ function Card(props) {
 
     //获取Config
     const getCardConfig = () => {
+        setLoadingShow(true)
         dispatch(getCreditConfig()).then((res) => {
+            setLoadingShow(false)
             let result = res.payload
             if (result) {
                 let tmpConfig = { 2: [], 3: [] }
@@ -983,18 +985,12 @@ function Card(props) {
     }
 
 
-    const [loadingShow, setLoadingShow] = useState(true);
-
-    useEffect(() => {
-        setTimeout(() => {
-            setLoadingShow(true);
-        }, 1500);
-    }, []);
+    const [loadingShow, setLoadingShow] = useState(false);
 
     return (
         <div style={{ position: "relative" }}>
 
-            {loadingShow && !openYanZheng && 
+            {!loadingShow && !openYanZheng && 
                 <div style={{ position: "absolute", width: "100%" }}>
                     <motion.div
                         variants={container}
@@ -1701,7 +1697,7 @@ function Card(props) {
                 </div>
             }
             {
-                !loadingShow &&
+                loadingShow &&
                 <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }}>
                     <div className="loadingChuang1">
                         <div className="loadingChuangTiao1"></div>
