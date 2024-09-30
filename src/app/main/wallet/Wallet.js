@@ -65,6 +65,7 @@ import { useTranslation } from "react-i18next";
 import openType from './opentype.json'
 import { symbol } from "prop-types";
 import { Image } from "@mui/icons-material";
+import userLoginType from "../../define/userLoginType";
 const container = {
   show: {
     transition: {
@@ -483,7 +484,7 @@ function Wallet() {
   useEffect(() => {
     if (JSON.stringify(userData.profile) !== '{}') {
       const curLoginType = getUserLoginType(userData);
-      if (curLoginType !== "telegram_web_app") {
+      if (curLoginType !== userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP) {
         getSettingSymbol().then((res) => {
           var currencyType = res.data?.data?.setting?.currencyType
           if (currencyType) {
@@ -1324,6 +1325,13 @@ function Wallet() {
       setNftDisplayData(result.data);
     });
   };
+
+  useEffect(() => {
+    if (loginType === userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP) {
+      //隐藏导航条
+      setWalletConnectShow(true);
+    }
+  }, [loginType]);
 
   const setWalletDisplaySubmit = (symbol, show) => {
     let tmpWalletDisplay = [...walletDisplayData];
