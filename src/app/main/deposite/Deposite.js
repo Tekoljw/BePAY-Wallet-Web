@@ -536,7 +536,6 @@ function Deposite() {
                         break;
                     }
                 }
-                dispatch(centerGetUserFiat());
                 fbq('track', 'InitiateCheckout');
             }
             if (result.status === 'wait') {
