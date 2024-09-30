@@ -66,7 +66,7 @@ import openType from './opentype.json'
 import { symbol } from "prop-types";
 import { Image } from "@mui/icons-material";
 import userLoginType from "../../define/userLoginType";
-import { centerGetTokenBalanceList } from "app/store/user/userThunk";
+import { centerGetTokenBalanceList, userProfile} from "app/store/user/userThunk";
 import { centerGetUserFiat } from "app/store/wallet/walletThunk";
 
 const container = {
@@ -1042,6 +1042,7 @@ function Wallet() {
     setPhoneTab('wallet');
     setTimeout(() => {
       initWalletData()
+      dispatch(userProfile());
       dispatch(centerGetTokenBalanceList());
       dispatch(centerGetUserFiat());
     }, 500)
