@@ -420,7 +420,7 @@ const locale = {
     card_59: "နိုင်ငံခြားရောက်နေသည် ဆက်သွယ်ရန်နိုင်ငံခြားနံပါတ် ငွေစာရင်းနေရာ ကိုယ်ရေးပုံ",
     card_60: "သုံးလိုက်တယ်စောင့်",
     card_61: "လက်ကျန်ငွေအနုတ်မရှိပါ",
-    card_62: "သင်၏ငွေပိုင်းအနုတ်မရှိပါနောက်ကဒ်ဖြည့်ချိန်လွတ်ပါ၊ ငွေလက်ကျန်ငွေအသစ်မှာအသင်းထိုက်ပါ",
+    card_62: "သင့်ပိုက်ဆံအိတ် လက်ကျန်ငွေမလုံလောက်ပါ၊ ချက်ချင်းပြန်လည်ဖြည့်စွက်ပါ။",
     card_63: "ငွေဖြည့်ချိန်လွတ်ပါ",
     card_64: "အနိမ့်တိုးပေါ်နှိပ်ပါ",
     card_65: "PIN ကုဒ်ထည့်ပါ",
@@ -572,7 +572,7 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-    
+    card_221:"နေ့စဉ် လဲလှယ်မှု ကန့်သတ်ချက် ပြည့်မြောက်ခဲ့သည်",
 
     
 

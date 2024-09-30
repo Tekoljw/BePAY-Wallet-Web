@@ -423,7 +423,7 @@ const locale = {
     card_59: "Paszport Informacje kontaktowe Adres zamieszkania Zdjęcie osobiste",
     card_60: "Około trzech tygodni",
     card_61: "Niewystarczające saldo",
-    card_62: "Twój stan konta jest niewystarczający do opłacenia opłaty za wydanie karty, proszę przejdź do doładowania.",
+    card_62: "Twój stan konta w portfelu jest niewystarczający, proszę doładuj",
     card_63: "Doładowanie",
     card_64: "Proszę wyrównać kod QR z ramką skanowania",
     card_65: "Proszę podać PIN",
@@ -575,7 +575,7 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-    
+    card_221:"Osiągnięto dzienny limit wymiany",
     
 
     

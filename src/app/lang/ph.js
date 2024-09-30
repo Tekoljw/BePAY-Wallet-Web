@@ -423,7 +423,7 @@ const locale = {
     card_59: "Pasaporte Detalye ng Pagkontak Address ng Bill Larawan ng Indibidwal",
     card_60: "Mga tatlong linggo o kasing layo",
     card_61: "Kulang ang balansya",
-    card_62: "Hindi sapat ang balanse sa iyong wallet para bayaran ang bayad sa pagbukas ng kard, mangyaring magdagdag ng pondo.",
+    card_62: "Hindi sapat ang balanse ng iyong wallet, mangyaring mag-recharge",
     card_63: "Mag-load",
     card_64: "I-align ang QR code sa scan frame.",
     card_65: "Pakipasok ang PIN code.",
@@ -575,7 +575,7 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-    
+    card_221:"Naabot na ang pang-araw-araw na limitasyon sa pag-redeem",
     
 
     

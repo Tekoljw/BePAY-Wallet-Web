@@ -422,7 +422,7 @@ const locale = {
     card_59: "Paspor,Informasi kontak,Alamat tagihan,Foto pribadi",
     card_60: "sekitar tiga minggu",
     card_61: "Saldo tidak mencukupi",
-    card_62: "Saldo dompet Anda tidak mencukupi untuk membayar biaya penerbitan kartu, silakan melakukan pengisian ulang.",
+    card_62: "Saldo dompet Anda tidak mencukupi, silakan isi ulang",
     card_63: "Isi ulang",
     card_64: "Selaraskan kode QR dengan kotak pemindai",
     card_65: "Masukkan PIN",
@@ -574,7 +574,7 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-    
+    card_221:"Batas penukaran harian tercapai",
 
     
 

@@ -422,7 +422,7 @@ const locale = {
     card_59: "Passport Maklumat Hubungan Alamat Bil Gambar Peribadi",
     card_60: "Lebih kurang tiga minggu",
     card_61: "Baki tidak mencukupi",
-    card_62: "Baki dompet anda tidak mencukupi untuk membayar yuran pendaftaran kad. Sila pergi ke top up.",
+    card_62: "Baki dompet anda tidak mencukupi, sila tambah nilai",
     card_63: "isi semula",
     card_64: "Selaraskan kod dua dimensi dengan petak imbas.",
     card_65: "Sila masukkan nombor PIN.",
@@ -574,7 +574,7 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-    
+    card_221:"Had penebusan harian tercapai",
     
 
     

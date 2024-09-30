@@ -422,7 +422,7 @@ const locale = {
     card_59: "காப்புறுதி, தொடர்பு வசதி, கணக்கு விவரம், தனிப்பட்ட புகைப்படம்",
     card_60: "மூன்று வாரங்கள் சுழற்றும்",
     card_61: "தொகை போதாது",
-    card_62: "உங்கள் பணப்பை தொகை போதாது. அட்டை திறந்த கட்டணம் கட்டணம் செலுத்த முடியாது. ரீசார்ஜ் செய்யுங்கள்",
+    card_62: "உங்கள் பணப்பையை மீதம் குறைவாக உள்ளது, தயவுசெய்து ரீசார்ஜ் செய்யவும்",
     card_63: "ரீசார்ஜ்",
     card_64: "இரு அளவு குறியீடு மற்றும் ஸ்கேனிங் பெட்டியை ஒத்திசைக்கவும்",
     card_65: "PIN குறியீட்டை உள்ளிடவும்",
@@ -574,7 +574,7 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-    
+    card_221:"நாளாந்தர மீட்பு வரம்பை அடைந்துவிட்டது",
     
 
     

@@ -422,7 +422,7 @@ const locale = {
     card_59: "Passaporte, informações de contato, endereço de fatura, foto pessoal",
     card_60: "Aproximadamente três semanas",
     card_61: "Saldo insuficiente",
-    card_62: "Seu saldo na carteira não é suficiente para pagar a taxa de emissão do cartão. Por favor, recarregue.",
+    card_62: "Seu saldo de carteira é insuficiente, por favor, recarregue",
     card_63: "Recarregar",
     card_64: "Alinhe o código QR com a moldura de digitalização",
     card_65: "Por favor, digite o código PIN",
@@ -574,7 +574,7 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-
+    card_221:"Limite diário de resgate atingido",
     
 
     

@@ -428,7 +428,7 @@ const locale = {
     card_59: "护照、联系方式、账单地址、个人照片",
     card_60: "三周左右",
     card_61: "余额不足",
-    card_62: "您的钱包余额不足无法支付开卡费用,请前往充值",
+    card_62: "您的钱包余额不足，请前往充值",
     card_63: "充值",
     card_64: "将二维码与扫描框对齐",
     card_65: "请输入PIN码",
@@ -582,7 +582,7 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"亚马逊AWS, Chatgpt, OpenAI, Godaddy, 星链, TalkTT, Zoom, 甲骨文, QR Code, 华为, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, 沃达丰, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-
+    card_221:"已达到当日兑换上限"
 
     
 

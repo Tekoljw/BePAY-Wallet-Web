@@ -422,7 +422,7 @@ const locale = {
     card_59: "Pasaporte Información de contacto Dirección de facturación Foto personal ",
     card_60: "Aproximadamente tres semanas",
     card_61: "Saldo insuficiente",
-    card_62: "Su saldo en el monedero es insuficiente para cubrir la tarifa de activación de la tarjeta. Por favor, recargue su saldo.",
+    card_62: "Su saldo de billetera es insuficiente, por favor recargue",
     card_63: "Recargar",
     card_64: "Alinee el código QR con el marco de escaneo",
     card_65: "Por favor, ingrese el código PIN",
@@ -574,7 +574,7 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-    
+    card_221:"Límite de canje diario alcanzado",
 
     
 

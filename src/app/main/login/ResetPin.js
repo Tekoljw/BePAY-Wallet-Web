@@ -40,8 +40,6 @@ const defaultValues = {
     oldPassword: '',
     password: '',
     passwordConfirm: '',
-    paymentPassword: '',
-    codeType: 13
 };
 
 
@@ -56,9 +54,6 @@ function ResetPin(props) {
     const { t } = useTranslation('mainPage');
     const [selectedCountryCode, setSelectedCountryCode] = useState("");
     const schema = yup.object().shape({
-        nationCode: yup.string().required('You must enter your nationCode'),
-        phone: yup.string().required('You must enter a phone'),
-        smsCode: yup.string().required('You must enter a smsCode'),
         oldPassword: yup
             .string()
             .required('Please enter your old password.')
@@ -119,15 +114,14 @@ function ResetPin(props) {
         };
         const sendRes = await dispatch(sendSms(data));
         if (sendRes?.payload) {
-            setTime(1)
+            setTime(60)
         }
     }
 
 
     const handlePin = async () => {
-        // await dispatch(editPin(control._formValues));
-        if (selectId === 1) {
-            await dispatch(changePin(control._formValues));
+        if (resetTabValue === 0) {
+            await dispatch(editPin(control._formValues));
         }
     }
 
@@ -263,7 +257,7 @@ function ResetPin(props) {
                             type="submit"
                             size="large"
                             onClick={() => {
-                                handleEditPin()
+                                handlePin()
                             }}
                         >
                             Reset your PIN Code
@@ -598,11 +592,10 @@ function ResetPin(props) {
                                                 <Button
                                                     variant="contained"
                                                     color="secondary"
-                                                    className=" w-full mt-24 testRed"
+                                                    className=" w-full mt-24 "
                                                     aria-label="Register"
-                                                    // disabled={_.isEmpty(dirtyFields) || !isValid}
                                                     disabled={
-                                                        _.isEmpty(dirtyFields) || selectedCountryCode === ""
+                                                        _.isEmpty(dirtyFields) || !isValid || (selectedCountryCode !== "" && selectedCountryCode !== control._formValues.nationCode)
                                                     }
                                                     type="submit"
                                                     size="large"

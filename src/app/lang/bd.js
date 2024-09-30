@@ -434,7 +434,7 @@ const locale = {
     card_59: "পাসপোর্ট যোগাযোগের উপায় বিল ঠিকানা ব্যক্তিগত ছবি",
     card_60: "প্রায় তিন সপ্তাহ",
     card_61: "মোটামোটি অপর্যাপ্ত",
-    card_62: "আপনার মানিব্যাগ ব্যর্থ অবশ্যই কার্ড খোলার মূল্য পরিশোধ করতে, চার্জ দিতে চলে যান",
+    card_62: "আপনার ওয়ালেট ব্যালেন্স পর্যাপ্ত নয়, দয়া করে রিচার্জ করুন।",
     card_63: "রিচার্জ",
     card_64: "দুটি মাত্রামিকে স্ক্যানিং ফ্রেমের সাথে সামঞ্জস্যপূর্ণ করুন",
     card_65: "পিন কোড লিখুন",
@@ -586,8 +586,7 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-    
-
+    card_221:"দৈনিক রিডেম্পশন সীমা পূরণ হয়েছে",
     
 
 

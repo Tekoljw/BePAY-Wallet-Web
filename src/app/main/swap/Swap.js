@@ -40,8 +40,8 @@ import zhHK from "date-fns/locale/zh-HK";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
 import Dialog from "@mui/material/Dialog/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
-import {centerGetTokenBalanceList} from "app/store/user/userThunk";
-import {centerGetUserFiat} from "app/store/wallet/walletThunk";
+import { centerGetTokenBalanceList } from "app/store/user/userThunk";
+import { centerGetUserFiat } from "app/store/wallet/walletThunk";
 import { showMessage } from 'app/store/fuse/messageSlice';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -108,8 +108,8 @@ function Swap() {
   const [zhuanQuan, setZhuanQuan] = useState(true);
   const [tiJiaoState, setTiJiaoState] = useState(0);
   const [formatSymbol, setFormatSymbol] = useState("");
-  const [fiatData ,setFiatData] = useState([]);
-  const [walletData ,setWalletData] = useState([]);
+  const [fiatData, setFiatData] = useState([]);
+  const [walletData, setWalletData] = useState([]);
   let userData = useSelector(selectUserData);
   // const fiatData = useSelector(selectUserData).fiat;
   // const walletData = useSelector(selectUserData).wallet;
@@ -512,17 +512,19 @@ function Swap() {
                 setTiJiaoState(1);
                 dispatch(centerGetTokenBalanceList());
                 dispatch(centerGetUserFiat());
-                setTimeout(()=>{
+                setTimeout(() => {
                   // userData = useSelector(selectUserData);
                   symbolsFormatAmount();
-                },10000)
+                }, 10000)
               }, 1200);
             } else {
               setTimeout(() => {
                 setZhuanQuan(false);
                 setTiJiaoState(2);
               }, 1200);
-              dispatch(showMessage({ message: result2.errmsg, code: 2 }));
+              if (result2.errmsg.includes("daily swap amount limit")) {
+                dispatch(showMessage({ message: t('card_221'), code: 2 }));
+              }
             }
           });
         }
@@ -536,7 +538,6 @@ function Swap() {
         })
       ).then((res) => {
         let result = res.payload
-        console.log(res, "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
         lookData.id = result.data.orderId;
         lookData.newNum = (result.data.targetAmount).toFixed(2);
         lookData.fee = (result.data.premium).toFixed(6);

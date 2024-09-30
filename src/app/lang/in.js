@@ -420,7 +420,7 @@ const locale = {
     card_59: "पासपोर्ट, संपर्क विवरण, बिल पता, व्यक्तिगत फोटो",
     card_60: "तीन हफ्ते बाद",
     card_61: "शेष अपर्याप्त है",
-    card_62: "आपके वॉलेट में शेष राशि अपर्याप्त है, कार्ड शुल्क भुगतान नहीं किया जा सकता है, कृपया रिचार्ज करें।",
+    card_62: "आपके वॉलेट का बैलेंस अपर्याप्त है, कृपया रिचार्ज करें।",
     card_63: "रिचार्ज",
     card_64: "बारकोड को व्यूफ़ाइंडर के साथ संरेखित करें",
     card_65: "कृपया पिन कोड डालें",
@@ -572,7 +572,7 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-
+    card_221:"दैनिक रिडेम्पशन सीमा पूरी हो गई है",
     
 
     

@@ -422,7 +422,7 @@ const locale = {
     card_59: "Passeport Coordonnées Adresse de facturation Photo personnelle",
     card_60: "Environ trois semaines",
     card_61: "Solde insuffisant",
-    card_62: "Votre solde de portefeuille est insuffisant pour payer les frais d'ouverture de carte. Veuillez recharger votre compte.",
+    card_62: "Le solde de votre portefeuille est insuffisant, veuillez recharger",
     card_63: "Recharger",
     card_64: "Alignez le code QR avec le cadre de scan",
     card_65: "Veuillez entrer le code PIN",
@@ -574,7 +574,7 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-
+    card_221:"Limite de rachat quotidien atteinte",
     
 
     

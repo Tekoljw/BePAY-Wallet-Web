@@ -421,7 +421,7 @@ const locale = {
     card_59: "پاسپورٹ، رابطہ کرنے کا طریقہ، بل کا پتہ، شخصی تصویر",
     card_60: "تقریباً تین ہفتے",
     card_61: "بیلنس ناکافی",
-    card_62: "آپ کے والیٹ کا بیلنس ناکافی ہے، کارڈ کھولنے کی فیس ادا نہیں کی جا سکتی، براہ کرم ری چارج کے لیے جائیں۔",
+    card_62: "آپ کے بٹوے کا بیلنس ناکافی ہے، براہ کرم ریچارج کریں۔",
     card_63: "ری چارج",
     card_64: "QR کوڈ کو اسکیننگ باکس سے مطابقت دیں",
     card_65: "براہ کرم پن کوڈ درج کریں",
@@ -573,7 +573,7 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-    
+    card_221:"یومیہ ریڈیمپشن کی حد تک پہنچ گئی ہے",
     
     
 

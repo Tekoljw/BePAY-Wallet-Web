@@ -122,12 +122,6 @@ function Card(props) {
         }, 0);
     };
 
-    const openPasteFunc = () => {
-        setTimeout(() => {
-            document.getElementById('PasteSty').classList.add('PinMoveAni');
-        }, 0);
-    };
-
     const openGoogleCodeFunc = () => {
         setOpenGoogleCode(true);
         setTimeout(() => {
@@ -155,14 +149,6 @@ function Card(props) {
         }, 300);
     };
 
-    const closePasteFunc = () => {
-        document.getElementById('PasteSty').classList.remove('PinMoveAni');
-        document.getElementById('PasteSty').classList.add('PinMoveOut');
-        setTimeout(() => {
-            setOpenPasteWindow(false);
-        }, 300);
-    };
-
     // 判断是否绑定了PIN
     const isBindPin = () => {
         if (hasPin) {
@@ -173,7 +159,12 @@ function Card(props) {
                 setTextSelect(false)
                 setShowGuangBiao(false)
             }
-            openInputPin()
+            if (transferMoney < symbolWallet[0].balance) {
+                openInputPin()
+            } else {
+                setOpenChongZhi(true)
+                setPin('')
+            }
             return true
         }
         openCreatePin()
@@ -653,7 +644,6 @@ function Card(props) {
     }, [timer]);
 
 
-
     //获取Config
     const getCardConfig = () => {
         dispatch(getCreditConfig()).then((res) => {
@@ -662,107 +652,33 @@ function Card(props) {
                 let tmpConfig = { 2: [], 3: [] }
                 let tmpConfigList = {}
                 let tmpLanguageList = []
-                let tmpShenQinInfoMaster = []
-                let tmpShenQinInfoMaster2 = []
-                let tmpShenQinInfoVisa = []
-                let tmpShenQinInfoVisa2 = []
                 result.map((item) => {
                     if (item.state === 1) {
                         if (item.creditType === 2) {
                             tmpConfig[2].push(item)
                             if (item.creditConfigName.includes("支付")) {
                                 tmpLanguageList.push(t('card_190'));
-                                if (item.cardOrganizations.includes("Master")) {
-                                    tmpShenQinInfoMaster.push(t('card_201'));
-                                    tmpShenQinInfoMaster2.push(t('card_202'));
-                                } else {
-                                    tmpShenQinInfoVisa.push(t('card_211'));
-                                    tmpShenQinInfoVisa2.push(t('card_212'));
-                                }
                             } else if (item.creditConfigName.includes("购物")) {
                                 tmpLanguageList.push(t('card_191'));
-                                if (item.cardOrganizations.includes("Master")) {
-                                    tmpShenQinInfoMaster.push(t('card_203'));
-                                    tmpShenQinInfoMaster2.push(t('card_204'));
-                                } else {
-                                    tmpShenQinInfoVisa.push(t('card_213'));
-                                    tmpShenQinInfoVisa2.push(t('card_214'));
-                                }
                             } else if (item.creditConfigName.includes("消费")) {
                                 tmpLanguageList.push(t('card_192'));
-                                if (item.cardOrganizations.includes("Master")) {
-                                    tmpShenQinInfoMaster.push(t('card_205'));
-                                    tmpShenQinInfoMaster2.push(t('card_206'));
-                                } else {
-                                    tmpShenQinInfoVisa.push(t('card_215'));
-                                    tmpShenQinInfoVisa2.push(t('card_216'));
-                                }
                             } else if (item.creditConfigName.includes("投放")) {
                                 tmpLanguageList.push(t('card_193'));
-                                if (item.cardOrganizations.includes("Master")) {
-                                    tmpShenQinInfoMaster.push(t('card_207'));
-                                    tmpShenQinInfoMaster2.push(t('card_208'));
-                                } else {
-                                    tmpShenQinInfoVisa.push(t('card_217'));
-                                    tmpShenQinInfoVisa2.push(t('card_218'));
-                                }
                             } else if (item.creditConfigName.includes("采购")) {
                                 tmpLanguageList.push(t('card_194'));
-                                if (item.cardOrganizations.includes("Master")) {
-                                    tmpShenQinInfoMaster.push(t('card_209'));
-                                    tmpShenQinInfoMaster2.push(t('card_210'));
-                                } else {
-                                    tmpShenQinInfoVisa.push(t('card_219'));
-                                    tmpShenQinInfoVisa2.push(t('card_220'));
-                                }
                             }
                         } else if (item.creditType === 3) {
                             tmpConfig[3].push(item)
                             if (item.creditConfigName.includes("支付")) {
                                 tmpLanguageList.push(t('card_190'));
-                                if (item.cardOrganizations.includes("Master")) {
-                                    tmpShenQinInfoMaster.push(t('card_201'));
-                                    tmpShenQinInfoMaster2.push(t('card_202'));
-                                } else {
-                                    tmpShenQinInfoVisa.push(t('card_211'));
-                                    tmpShenQinInfoVisa2.push(t('card_212'));
-                                }
                             } else if (item.creditConfigName.includes("购物")) {
                                 tmpLanguageList.push(t('card_191'));
-                                if (item.cardOrganizations.includes("Master")) {
-                                    tmpShenQinInfoMaster.push(t('card_203'));
-                                    tmpShenQinInfoMaster2.push(t('card_204'));
-                                } else {
-                                    tmpShenQinInfoVisa.push(t('card_213'));
-                                    tmpShenQinInfoVisa2.push(t('card_214'));
-                                }
                             } else if (item.creditConfigName.includes("消费")) {
                                 tmpLanguageList.push(t('card_192'));
-                                if (item.cardOrganizations.includes("Master")) {
-                                    tmpShenQinInfoMaster.push(t('card_205'));
-                                    tmpShenQinInfoMaster2.push(t('card_206'));
-                                } else {
-                                    tmpShenQinInfoVisa.push(t('card_215'));
-                                    tmpShenQinInfoVisa2.push(t('card_216'));
-                                }
                             } else if (item.creditConfigName.includes("投放")) {
                                 tmpLanguageList.push(t('card_193'));
-                                if (item.cardOrganizations.includes("Master")) {
-                                    tmpShenQinInfoMaster.push(t('card_207'));
-                                    tmpShenQinInfoMaster2.push(t('card_208'));
-                                } else {
-                                    tmpShenQinInfoVisa.push(t('card_217'));
-                                    tmpShenQinInfoVisa2.push(t('card_218'));
-                                }
                             } else if (item.creditConfigName.includes("采购")) {
                                 tmpLanguageList.push(t('card_194'));
-                                if (item.cardOrganizations.includes("Master")) {
-                                    tmpShenQinInfoMaster.push(t('card_209'));
-                                    tmpShenQinInfoMaster2.push(t('card_210'));
-                                } else {
-                                    tmpShenQinInfoVisa.push(t('card_219'));
-                                    tmpShenQinInfoVisa2.push(t('card_220'));
-                                }
                             }
                         }
                         tmpConfigList[item.configId] = item
@@ -917,8 +833,6 @@ function Card(props) {
                 })
                 setCardList(tmpCardList)
                 setCardListObj(tmpCardListObj)
-                console.log(tmpCardList, "tmpCardList")
-                console.log(tmpCardListObj, "tmpCardListObj")
                 setTimeout(() => {
                     setTimer(timer + 1)
                 }, 1000)
@@ -2189,7 +2103,6 @@ function Card(props) {
                                         formControlSx={{ backgroundColor: '#374252!important' }}
                                     />}
                                 </Box>
-
                                 <div className='flex justify-between mt-12'>
                                     <div className='flex'>
                                         <div className='' style={{ color: "#94A3B8" }}>{t('card_29')}</div>
@@ -3264,7 +3177,8 @@ function Card(props) {
                         <div className='flex mt-20 justify-between' style={{ borderBottom: "1px solid #2C3950" }}>
                             <div className='text-16'>{t('card_33')}</div>
                             <div className='flex pb-20 '>
-                                <div className='text-16 ml-10'>{cardConfigList[cardConfigID]?.applyCreditFee}</div>
+                                {/* <div className='text-16 ml-10'>{cardConfigList[cardConfigID]?.applyCreditFee}</div> */}
+                                <div className='text-16 ml-10 '>28 USDT</div>
                                 <div className='text-16'>&nbsp;{cardConfigList[cardConfigID]?.cardSymbol}</div>
                             </div>
                         </div>

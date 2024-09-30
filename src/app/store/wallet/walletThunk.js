@@ -6,8 +6,8 @@ import { automaticConnectWeb3 } from "../user/userThunk";
 import utils_web3 from "../../util/web3"
 import { setTransferStats } from '../user'
 import BN from "bn.js";
-import {getSymbols, paymentConfig} from "app/store/config/configThunk";
-import {setBorrowConfig, setNftConfig} from "app/store/config";
+import { getSymbols, paymentConfig } from "app/store/config/configThunk";
+import { setBorrowConfig, setNftConfig } from "app/store/config";
 
 export const WalletConfigDefineMap = {
     "ETH": {
@@ -46,9 +46,9 @@ export const centerGetUserFiat = createAsyncThunk(
         if (balanceList.errno === 0) {
             dispatch(updateFiat(balanceList));
         } else {
-            dispatch(showMessage({ message: t('error_2'), code: 2 }));
+            dispatch(showMessage({ message: 'error', code: 2 }));
         }
-        if(settings.requestPayment){ //需要请求支付方式
+        if (settings.requestPayment) { //需要请求支付方式
             dispatch(paymentConfig());
         }
     }
@@ -176,7 +176,7 @@ export const getAddressListDesc = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData.data;
         }
-        showMessage({ message: t('error_39'), code: 2 });
+        dispatch(showMessage({ message: 'error', code: 2 }));
     }
 );
 
@@ -196,7 +196,7 @@ export const checkWalletAddress = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData;
         }
-        dispatch(showMessage({ message: t('error_40'), code: 2 }));
+        dispatch(showMessage({ message: 'error', code: 2 }));
     }
 );
 
@@ -441,10 +441,12 @@ export const nftWithdraw = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData.data;
         } else {
-            dispatch(showMessage({ message: t('error_22'), code: 2 }));
+            dispatch(showMessage({ message: 'error', code: 2 }));
         }
     }
 );
+
+
 
 // 创建PIN
 export const createPin = createAsyncThunk(
@@ -459,10 +461,13 @@ export const createPin = createAsyncThunk(
         if (resultData.errno === 0) {
             return true
         } else {
-            dispatch(showMessage({ message: t('error_22'), code: 2 }));
+            dispatch(showMessage({ message: 'error', code: 2 }));
         }
     }
 );
+
+
+
 
 
 // 手机修改PIN
@@ -477,10 +482,10 @@ export const changePin = createAsyncThunk(
         }
         const resultData = await React.$api("security.setPaymentPassword", data);
         if (resultData.errno === 0) {
-            dispatch(showMessage({ message: t('success'), code: 1 }));
+            dispatch(showMessage({ message: 'success', code: 1 }));
             return true
         } else {
-            dispatch(showMessage({ message: t('error_22'), code: 2 }));
+            dispatch(showMessage({ message: 'error', code: 2 }));
         }
     }
 );

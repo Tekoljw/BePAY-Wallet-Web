@@ -424,7 +424,7 @@ const locale = {
     card_59: "جواز السفرمعلومات الاتصالعنوان الفاتورةصورة شخصية",
     card_60: "حوالي ثلاثة أسابيع",
     card_61: "الرصيد غير كافٍ",
-    card_62: "لا يمكنك الدفع برسوم إصدار البطاقة بسبب عدم كفاية رصيد المحفظة، يرجى الانتقال إلى عملية الشحن.",
+    card_62: "رصيد محفظتك غير كافٍ، يرجى إعادة الشحن",
     card_63: "شحن",
     card_64: "محاذاة رمز الاستجابة السريعة مع إطار المسح",
     card_65: "رمز التعريف الشخصي",
@@ -576,7 +576,8 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-
+    
+    card_221:"تم الوصول إلى الحد الأقصى للاسترداد اليومي",
     
 
     

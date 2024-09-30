@@ -412,7 +412,7 @@ const locale = {
     card_59: "hộ chiếu,thông tin liên lạc,địa chỉ thanh toán,ảnh cá nhân",
     card_60: "khoảng ba tuần",
     card_61: "số dư không đủ",
-    card_62: "Số dư ví của bạn không đủ để thanh toán phí mở thẻ, vui lòng nạp tiền thêm.",
+    card_62: "Số dư ví của bạn không đủ, vui lòng nạp tiền",
     card_63: "nạp tiền",
     card_64: "căn chỉnh mã QR với khung quét",
     card_65: "vui lòng nhập mã PIN",
@@ -564,7 +564,9 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-    
+    card_221:"Đã đạt giới hạn đổi trong ngày",
+
+
     };
 
 export default locale;

@@ -422,7 +422,7 @@ const locale = {
     card_59: "パスポート 連絡先 請求書の住所 個人写真",
     card_60: "約3週間",
     card_61: "残高不足",
-    card_62: "ウォレット残高が不足しており、カード発行手数料を支払えません。チャージしてください。",
+    card_62: "ウォレットの残高が不足しています。チャージしてください",
     card_63: "チャージする",
     card_64: "QRコードをスキャン枠に合わせてください",
     card_65: "PINコードを入力してください",
@@ -574,7 +574,7 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-    
+    card_221:"当日交換限度に達しました",
     
 
     

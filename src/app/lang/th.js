@@ -420,7 +420,7 @@ const locale = {
     card_59: "หนังสือเดินทาง ข้อมูลติดต่อ ที่อยู่ในใบแจ้งบัญชี รูปถ่ายส่วนตัว",
     card_60: "ประมาณสามสัปดาห์",
     card_61: "ยอดเงินไม่เพียงพอ",
-    card_62: "ยอดเงินในกระเป๋าเงินของคุณไม่เพียงพอที่จะชำระค่าธรรมเนียมการเปิดบัตร กรุณาเติมเงิน",
+    card_62: "ยอดเงินในกระเป๋าของคุณไม่เพียงพอ กรุณาเติมเงิน",
     card_63: "เติมเงิน",
     card_64: "จับความสอดคล้องระหว่างคิวอาร์โค้ดกับกรอบสแกน",
     card_65: "โปรดใส่รหัส PIN",
@@ -572,7 +572,7 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-    
+    card_221:"ถึงขีดจำกัดการแลกเปลี่ยนประจำวันแล้ว",
     
 
     

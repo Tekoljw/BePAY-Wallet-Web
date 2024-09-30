@@ -425,7 +425,7 @@ const locale = {
     card_59: "Reisepass Kontaktinformationen Rechnungsadresse persönliches Foto",
     card_60: "ungefähr drei Wochen",
     card_61: "Kontostand zu niedrig",
-    card_62: "Ihr Wallet-Guthaben reicht nicht aus, um die Kartengebühr zu bezahlen. Bitte gehen Sie zur Aufladung.",
+    card_62: "Ihr Wallet-Guthaben ist unzureichend, bitte laden Sie es auf",
     card_63: "aufladen",
     card_64: "Richten Sie den QR-Code mit dem Scan-Rahmen aus.",
     card_65: "Bitte geben Sie Ihre PIN ein.",
@@ -577,7 +577,7 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-    
+    card_221:"Tägliches Einlöselimit erreicht",
     
 
     

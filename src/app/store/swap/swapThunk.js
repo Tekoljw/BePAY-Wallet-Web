@@ -50,7 +50,7 @@ export const getSwapPrice = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData;
         } else {
-            dispatch(showMessage({ message: t('error_2'), code: 2 }));
+            dispatch(showMessage({ message: "error", code: 2 }));
         }
     }
 );

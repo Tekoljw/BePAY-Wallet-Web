@@ -424,7 +424,7 @@ const locale = {
     card_59: "여권  연락처  청구 주소 개인 사진",
     card_60: "약 3주",
     card_61: "잔액 부족",
-    card_62: "귀하의 지갑 잔액이 부족하여 카드 개설 비용을 지불할 수 없습니다. 충전해 주세요.",
+    card_62: "지갑 잔액이 부족합니다. 충전해 주세요",
     card_63: "충전",
     card_64: "QR 코드를 스캔 프레임에 맞추세요.",
     card_65: "PIN 코드를 입력하세요.",
@@ -576,7 +576,7 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-    
+    card_221:"일일 교환 한도에 도달했습니다",
     
 
     

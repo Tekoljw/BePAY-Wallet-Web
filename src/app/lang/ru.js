@@ -420,7 +420,7 @@ const locale = {
     card_59: "паспорт контактная информация адрес для выставления счетов фотография ",
     card_60: "примерно три недели",
     card_61: "недостаточно средств",
-    card_62: "Ваш баланс кошелька недостаточен для оплаты комиссии за выпуск карты. Пожалуйста, пополните счёт.",
+    card_62: "Баланс вашего кошелька недостаточен, пожалуйста, пополните",
     card_63: "пополнение счёта",
     card_64: "Выравните QR-код со сканирующим окном",
     card_65: "Введите PIN-код",
@@ -572,7 +572,7 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-
+    card_221:"Достигнут дневной лимит обмена",
     
 
     

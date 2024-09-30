@@ -420,7 +420,7 @@ const locale = {
     card_59: "Pasaport, iletişim bilgileri, fatura adresi, kişisel fotoğraf",
     card_60: "Yaklaşık üç hafta",
     card_61: "Bakiye yetersiz",
-    card_62: "Cüzdan bakiyeniz kart açma ücretini ödemek için yetersiz. Lütfen yükleme yapın.",
+    card_62: "Cüzdan bakiyeniz yetersiz, lütfen yükleme yapın",
     card_63: "Yükleme",
     card_64: "QR kodunu tarama çerçevesiyle hizalayın",
     card_65: "PIN kodunu girin",
@@ -572,7 +572,7 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-    
+    card_221:"Günlük kullanım limiti aşıldı",
 
     
 

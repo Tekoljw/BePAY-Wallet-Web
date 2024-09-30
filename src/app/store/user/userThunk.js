@@ -16,7 +16,11 @@ import { requestUserLoginData } from "../../util/tools/loginFunction";
 import { changeLanguage } from "app/store/i18nSlice";
 import userLoginType from "../../define/userLoginType";
 import { sendLogInfo } from "app/store/log/logThunk";
-import {getSymbols} from "app/store/config/configThunk";
+import { getSymbols } from "app/store/config/configThunk";
+import { useTranslation } from "react-i18next";
+
+
+
 
 // 检查用户是否已经登录
 export const checkLoginState = createAsyncThunk(
@@ -50,7 +54,7 @@ export const checkLoginState = createAsyncThunk(
             //请求对应的数据
             requestUserLoginData(dispatch);
         } else { //其他错误
-            dispatch(showMessage({ message: t('error_0'), code: 2 }));
+            dispatch(showMessage({ message: 'error', code: 2 }));
         }
     }
 );
@@ -63,7 +67,7 @@ export const userProfile = createAsyncThunk(
         if (userProfile.errno === 0) {
             dispatch(updateUser(userProfile));
         } else {
-            dispatch(showMessage({ message: t('error_2'), code: 2 }));
+            dispatch(showMessage({ message: 'error', code: 2 }));
         }
     }
 );
@@ -80,7 +84,7 @@ export const setCurrencySelect = createAsyncThunk(
         if (setCurrencySelect.errno === 0) {
             // dispatch(updateUser(setCurrencySelect));
         } else {
-            dispatch(showMessage({ message: t('error_1'), code: 2 }));
+            dispatch(showMessage({ message: 'error', code: 2 }));
         }
     }
 );
@@ -91,7 +95,7 @@ export const getCurrencySelect = createAsyncThunk(
         if (getCurrencySelect.errno === 0) {
             // dispatch(updateUser(getCurrencySelect));
         } else {
-            dispatch(showMessage({ message: t('error_1'), code: 2 }));
+            dispatch(showMessage({ message: 'error', code: 2 }));
         }
     }
 );
@@ -118,7 +122,7 @@ export const doLogin = createAsyncThunk(
         const userBindWallet = user.userInfo.bindWallet ?? false;
         if (userBindWallet) {
             if (user.profile?.user?.address !== address) {
-                dispatch(showMessage({ message: t('error_29'), code: 2 }));
+                dispatch(showMessage({ message: 'error', code: 2 }));
                 return false;
             }
         }
@@ -147,7 +151,7 @@ export const doLogin = createAsyncThunk(
                 })
             }
         } else {
-            dispatch(showMessage({ message: t('error_0'), code: 2 }));
+            dispatch(showMessage({ message: userLoginData.errmsg, code: 2 }));
         }
     }
 );
@@ -177,7 +181,7 @@ export const mobileLogin = createAsyncThunk(
                 })
             }
         } else {
-            dispatch(showMessage({ message: t('error_0'), code: 2 }));
+            dispatch(showMessage({ message: userLoginData.errmsg, code: 2 }));
         }
     }
 );
@@ -198,7 +202,7 @@ export const facebookLoginApi = createAsyncThunk(
                 })
             }
         } else {
-            dispatch(showMessage({ message: t('error_0'), code: 2 }));
+            dispatch(showMessage({ message: userLoginData.errmsg, code: 2 }));
         }
     }
 );
@@ -219,7 +223,7 @@ export const telegramLoginApi = createAsyncThunk(
                 })
             }
         } else {
-            dispatch(showMessage({ message: t('error_0'), code: 2 }));
+            dispatch(showMessage({ message: userLoginData.errmsg, code: 2 }));
         }
     }
 );
@@ -241,7 +245,7 @@ export const telegramWebAppLoginApi = createAsyncThunk(
                 })
             }
         } else {
-            dispatch(showMessage({ message: t('error_0'), code: 2 }));
+            dispatch(showMessage({ message: userLoginData.errmsg, code: 2 }));
         }
     }
 );
@@ -262,7 +266,7 @@ export const googleLoginApi = createAsyncThunk(
                 })
             }
         } else {
-            dispatch(showMessage({ message: t('error_0'), code: 2 }));
+            dispatch(showMessage({ message: 'error', code: 2 }));
         }
     }
 );
@@ -296,7 +300,7 @@ export const sendSms = createAsyncThunk(
             return true
         } else {
             const msg = res?.errmsg;
-            dispatch(showMessage({ message: t('error_31'), code: 2 }));
+            dispatch(showMessage({ message: 'error', code: 2 }));
             return false
         }
     }
@@ -316,7 +320,7 @@ export const sendEmail = createAsyncThunk(
             return true
         } else {
             const msg = res?.errmsg;
-            dispatch(showMessage({ message: t('error_31'), code: 2 }));
+            dispatch(showMessage({ message: 'error', code: 2 }));
             return false
         }
     }
@@ -353,7 +357,7 @@ export const bindEmail = createAsyncThunk(
             dispatch(getUserData());
             return true
         } else {
-            dispatch(showMessage({ message: t('error_32'), code: 2 }));
+            dispatch(showMessage({ message: 'error', code: 2 }));
         }
     }
 );
@@ -374,7 +378,7 @@ export const signUp = createAsyncThunk(
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userSignUpData));
         } else {
-            dispatch(showMessage({ message: t('error_33'), code: 2 }));
+            dispatch(showMessage({ message: 'error', code: 2 }));
         }
     }
 );
@@ -394,7 +398,7 @@ export const emailSignUp = createAsyncThunk(
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userSignUpData));
         } else {
-            dispatch(showMessage({ message: t('error_33'), code: 2 }));
+            dispatch(showMessage({ message: 'error', code: 2 }));
         }
     }
 );
@@ -412,10 +416,12 @@ export const resetPass = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             history.push('/wallet/login');
         } else {
-            dispatch(showMessage({ message: t('error_34'), code: 2 }));
+            dispatch(showMessage({ message: 'error', code: 2 }));
         }
     }
 );
+
+
 
 export const editPin = createAsyncThunk(
     'user/editPin',
@@ -429,7 +435,7 @@ export const editPin = createAsyncThunk(
         if (userResetPassData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
         } else {
-            dispatch(showMessage({ message: t('error_34'), code: 2 }));
+            dispatch(showMessage({ message: 'error', code: 2 }));
         }
     }
 );
@@ -447,9 +453,9 @@ export const changePhone = createAsyncThunk(
         const userResetPassData = await React.$api("user.changePhone", data);
         if (userResetPassData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
-            history.push('/wallet/home');;
+            history.push('/wallet/home');
         } else {
-            dispatch(showMessage({ message: t('error_34'), code: 2 }));
+            dispatch(showMessage({ message: 'error', code: 2 }));
         }
     }
 );
@@ -468,7 +474,7 @@ export const changeEmail = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             history.push('/wallet/home');;
         } else {
-            dispatch(showMessage({ message: t('error_34'), code: 2 }));
+            dispatch(showMessage({ message: 'error', code: 2 }));
         }
     }
 );
@@ -489,7 +495,7 @@ export const forgotPass = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             history.push('/wallet/login');
         } else {
-            dispatch(showMessage({ message: t('error_34'), code: 2 }));
+            dispatch(showMessage({ message: 'error', code: 2 }));
         }
     }
 );
@@ -506,7 +512,7 @@ export const doSetNetwork = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             return true
         }
-        dispatch(showMessage({ message: t('error_35'), code: 2 }));
+        dispatch(showMessage({ message: 'error', code: 2 }));
     }
 );
 
@@ -647,9 +653,6 @@ export const selNetwork = createAsyncThunk(
                     } catch (switchError) {
                         console.log(switchError);
                         if (switchError.code === 4902) {
-
-                            console.log(symbol);
-
                             try {
                                 let res = await provider.request({
                                     method: 'wallet_addEthereumChain',
@@ -667,11 +670,6 @@ export const selNetwork = createAsyncThunk(
                                     ],
                                 });
 
-                                console.log(res);
-
-
-                                console.log('222222222222222222222222');
-
                                 await provider.request({
                                     method: 'wallet_switchEthereumChain',
                                     params: [{ chainId: "0x" + chainId.toString(16) }],
@@ -685,7 +683,6 @@ export const selNetwork = createAsyncThunk(
                                 console.log(addError);
                             }
                         }
-                        // handle other "switch" errors
                     }
 
                     break;
@@ -739,11 +736,6 @@ export const selNetwork = createAsyncThunk(
                                         },
                                     ],
                                 });
-
-                                console.log(res);
-
-
-                                console.log('222222222222222222222222');
 
                                 await provider.request({
                                     method: 'wallet_switchEthereumChain',
@@ -838,7 +830,7 @@ export const doBindWallet = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             return true
         } else {
-            dispatch(showMessage({ message: t('error_32'), code: 2 }));
+            dispatch(showMessage({ message: 'error', code: 2 }));
             return false
         }
     }
@@ -888,7 +880,7 @@ export const getUserData = createAsyncThunk(
             }
             return userData
         } else {
-            dispatch(showMessage({ message: t('error_2'), code: 1 }));
+            dispatch(showMessage({ message: 'error_2', code: 2 }));
         }
     }
 );
@@ -898,7 +890,7 @@ export const transferRecords = createAsyncThunk(
     'user/transferRecords',
     async (settings, { dispatch, getState }) => {
 
-        if(settings.userCreditNo){ //存在信用卡号，是查询信用卡消费信息
+        if (settings.userCreditNo) { //存在信用卡号，是查询信用卡消费信息
             let data = {
                 userCreditNo: settings.userCreditNo,
                 month: settings.month,
@@ -910,9 +902,9 @@ export const transferRecords = createAsyncThunk(
                 return tranferList.data
                 dispatch(updateTransfer(tranferList));
             } else {
-                dispatch(showMessage({ message: t('error_2'), code: 2 }));
+                dispatch(showMessage({ message: 'error', code: 2 }));
             }
-        }else{
+        } else {
             let data = {
                 recordType: settings.logType,
                 month: settings.month,
@@ -924,7 +916,7 @@ export const transferRecords = createAsyncThunk(
                 return tranferList.data
                 dispatch(updateTransfer(tranferList));
             } else {
-                dispatch(showMessage({ message: t('error_2'), code: 2 }));
+                dispatch(showMessage({ message: 'error', code: 2 }));
             }
         }
     }
@@ -938,9 +930,9 @@ export const centerGetTokenBalanceList = createAsyncThunk(
         if (balanceList.errno === 0) {
             dispatch(updateWallet(balanceList));
         } else {
-            dispatch(showMessage({ message: t('error_2'), code: 2 }));
+            dispatch(showMessage({ message: 'error', code: 2 }));
         }
-        if(settings.requestSymbol){ //需要请求币种信息
+        if (settings.requestSymbol) { //需要请求币种信息
             dispatch(getSymbols());
         }
     }
@@ -962,9 +954,9 @@ export const sendTips = createAsyncThunk(
         if (sendTipsRes.errno === 0) {
             // dispatch(showMessage({ message: 'success', code: 1 }));
             return sendTipsRes;
-        } else if(sendTipsRes.errno === -2) {
+        } else if (sendTipsRes.errno === -2) {
             return sendTipsRes;
-        } else{
+        } else {
             dispatch(showMessage({ message: sendTipsRes.errmsg, code: 2 }));
             return false;
         }
@@ -994,10 +986,10 @@ export const tokenTransfer = createAsyncThunk(
             // }));
             // dispatch(showMessage({ message: 'pending...', code: 1 }));
             return transferRes.data
-        } else if(transferRes.errno === -2){
+        } else if (transferRes.errno === -2) {
             return transferRes
-        }else {
-            dispatch(showMessage({ message: t('error_36'), code: 2 }));
+        } else {
+            dispatch(showMessage({ message: 'error', code: 2 }));
             return false
         }
     }
@@ -1022,11 +1014,11 @@ export const getTransferOrder = createAsyncThunk(
                         return true
                     } else if (result.data[0].orderStatus === 72) {
                         clearInterval(timer);
-                        dispatch(showMessage({ message: t('error_2'), code: 2 }));
+                        dispatch(showMessage({ message: 'error', code: 2 }));
                     }
                 }
             } else {
-                dispatch(showMessage({ message: t('error_2'), code: 2 }));
+                dispatch(showMessage({ message: 'error', code: 2 }));
             }
         }, 5000);
     }
@@ -1069,7 +1061,7 @@ export const getDecenterWalletBalance = createAsyncThunk(
 
             // console.log(networkChainId);
             if (currNetworkChainId != networkChainId) {
-                dispatch(showMessage({ message: t('error_37'), code: 2 }));
+                dispatch(showMessage({ message: 'error', code: 2 }));
                 return false;
             }
             if (type === 0) {
@@ -1150,7 +1142,7 @@ export const getListBank = createAsyncThunk(
         if (result.errno === 0) {
             return result.data
         } else {
-            dispatch(showMessage({ message: t('error_38'), code: 2 }));
+            dispatch(showMessage({ message: 'error', code: 2 }));
         }
     }
 );

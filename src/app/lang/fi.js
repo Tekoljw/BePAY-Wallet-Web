@@ -421,7 +421,7 @@ const locale = {
     card_59: "passi yhteystiedot laskutusosoite henkilökuva",
     card_60: "noin kolme viikkoa",
     card_61: "saldo ei riitä",
-    card_62: "Lompakkonne saldo ei riitä kortin avaamismaksun maksamiseen. Ole hyvä ja siirry lataamaan saldoa.",
+    card_62: "Lompakkosi saldo on riittämätön, ole hyvä ja lataa lisää",
     card_63: "ladata",
     card_64: "Tasaa QR-koodi skannausruudukon kanssa",
     card_65: "Syötä PIN-koodi",
@@ -573,7 +573,7 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-    
+    card_221:"Päivittäinen lunastusraja saavutettu",
     
 
     

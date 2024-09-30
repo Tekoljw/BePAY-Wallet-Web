@@ -428,7 +428,7 @@ const locale = {
     card_59: "Passport,Contact information,Billing address,Personal photo",
     card_60: "Approximately three weeks",
     card_61: "Insufficient balance",
-    card_62: "Your wallet balance is insufficient to cover the card issuance fee. Please top up your wallet.",
+    card_62: "Your wallet balance is insufficient, please recharge",
     card_63: "Top up",
     card_64: "Align the QR code with the scanning frame",
     card_65: "Please enter your PIN",
@@ -580,7 +580,11 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-    
+    card_221:"Daily redemption limit reached",
+
+
+
+
 };
 
 export default locale;

@@ -425,7 +425,7 @@ const locale = {
     card_59: "पासपोर्ट  संपर्क संदर्भ बिल पत्ता व्यक्तिगत फोटो",
     card_60: "तीन अर्धावट",
     card_61: "शिल्लक अपेक्षित नाही",
-    card_62: "आपल्या पर्सात शिल्लक अपेक्षित नाही, कार्ड व्यापारासाठी शुल्क देऊ शकत नाही, कृपया चार्ज करण्यासाठी जाऊन द्या.",
+    card_62: "तुमचे वॉलेट शिल्लक अपुरी आहे, कृपया रिचार्ज करा",
     card_63: "रिचार्ज",
     card_64: "दोन डिमेंशनल कोड स्कॅनिंगबरोबर आकारावर आणा",
     card_65: "कृपया पिन कोड प्रविष्ट करा",
@@ -577,7 +577,7 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-    
+    card_221:"दैनंदिन विमोचन मर्यादा गाठली आहे",
     
 
     
