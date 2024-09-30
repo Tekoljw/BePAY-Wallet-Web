@@ -42,6 +42,8 @@ import Kyc from "../kyc/Kyc";
 import _ from 'lodash';
 import { selectCurrentLanguage } from "app/store/i18nSlice";
 import Enable2FA from "../2fa/Enable2FA";
+import { centerGetTokenBalanceList } from "app/store/user/userThunk";
+import { centerGetUserFiat } from "app/store/wallet/walletThunk";
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -906,6 +908,8 @@ function Card(props) {
                         setTiJiaoState(1);
                         setUpdateCard(true)
                         setTimer(timer + 1)
+                        dispatch(centerGetTokenBalanceList());
+                        dispatch(centerGetUserFiat());
                         // setOpenSuccess(true);
                         // closeRecordFunc()
                         // myFunction();
