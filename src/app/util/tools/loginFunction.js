@@ -5,7 +5,7 @@ import {centerGetTokenBalanceList, getUserData, telegramLoginApi} from "app/stor
 import {getContactAddress, getSymbols, paymentConfig} from "app/store/config/configThunk";
 import {getBorrowConfig} from "app/store/borrow/borrowThunk";
 import {getPoolConfig} from "app/store/pool/poolThunk";
-import {centerGetUserFiat, getWithdrawTransferStats} from "app/store/wallet/walletThunk";
+import {centerGetUserFiat, getNftConfig, getWithdrawTransferStats} from "app/store/wallet/walletThunk";
 
 //telegram 登录
 export const loginTelegram = (thirdPartId) => {
@@ -26,13 +26,12 @@ const telegramCallbackFn = (data) => {
 //请求用户登录基础数据
 export const requestUserLoginData = (dispatch) => {
     dispatch(getUserData());
-    dispatch(getSymbols());
+    dispatch(centerGetTokenBalanceList({requestSymbol:true}));
+    dispatch(centerGetUserFiat({requestPayment:true}));
     dispatch(getContactAddress());
-    dispatch(paymentConfig());
     dispatch(getBorrowConfig());
     dispatch(getPoolConfig());
-    dispatch(centerGetTokenBalanceList());
-    dispatch(centerGetUserFiat());
+    dispatch(getNftConfig());
     dispatch(getWithdrawTransferStats());
 };
 

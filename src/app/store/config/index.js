@@ -19,6 +19,7 @@ const initialState = {
     contactAddress: {},
     symbols: [],
     payment: {},
+    nftConfig: {},
     swapConfig: {},
     borrowConfig: {},
     poolType: 1,
@@ -104,6 +105,10 @@ const configSlice = createSlice({
             let res = action.payload;
             state.symbols = res.data;
         },
+        setNftConfig: (state, action) => {
+            let res = action.payload;
+            state.nftConfig = res.data;
+        },
         setPaymentConfig: (state, action) => {
             let res = action.payload;
             state.payment = res.data;
@@ -157,6 +162,7 @@ export const {
     setConfig,
     setNetworks,
     setContactAddress,
+    setNftConfig,
     setSwapConfig,
     setBorrowConfig,
     setPoolConfig,

@@ -151,8 +151,6 @@ const item = {
     show: { opacity: 1, y: 0 },
 };
 
-
-
 function Withdraw(props) {
     const navigate = useNavigate()
     const { t } = useTranslation('mainPage');
@@ -230,12 +228,22 @@ function Withdraw(props) {
     const [withDrawOrderID, setWithDrawOrderID] = useState('');
     const [openLoad, setOpenLoad] = useState(false);
     const [openPaste, setOpenPaste] = useState(false);
-    const walletData = useSelector(selectUserData).wallet;
-    const transferStats = useSelector(selectUserData).transferStats;
+    const userData = useSelector(selectUserData);
+    const fiatData = userData.fiat;
+    const walletData = userData.wallet;
+    const transferStats = userData.transferStats;
+    const hasAuthGoogle = userData.userInfo?.hasAuthGoogle
+
+    const currentLanguage = useSelector(selectCurrentLanguage);
+    const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || 'USD');
+    const [cryptoDisplayData, setCryptoDisplayData] = useState([]);
+    const [networkData, setNetworkData] = useState([]);
+    const [networkId, setNetworkId] = useState(0);
+    const loginType = getUserLoginType(userData);
     const config = useSelector(selectConfig);
-    const symbols = config.symbols;
+    const networks = config.networks;
+    const symbolsData = config.symbols;
     const mounted = useRef();
-    const hasAuthGoogle = useSelector(selectUserData).userInfo?.hasAuthGoogle
     const [smallTabValue, setSmallTabValue] = useState(0);
     const [resetTabValue, setResetTabValue] = useState(0);
 
@@ -355,7 +363,7 @@ function Withdraw(props) {
             tmpBAppendFee = bAppendFee;
         }
 
-        const rate = arrayLookup(symbols, 'symbol', symbol, 'rate');
+        const rate = arrayLookup(symbolsData, 'symbol', symbol, 'rate');
         let conversionAmount = rate * amount;
 
         // if (conversionAmount >= transferState.limitSingle && googleCode.length < 6) {
@@ -444,7 +452,7 @@ function Withdraw(props) {
             return
         }
         // closePinFunc()
-        const rate = arrayLookup(symbols, 'symbol', symbol, 'rate');
+        const rate = arrayLookup(symbolsData, 'symbol', symbol, 'rate');
         let conversionAmount = rate * inputVal.amount;
         // if (conversionAmount >= transferState.limitSingle && googleCode.length < 6) {
         //     if (!hasAuthGoogle) {
@@ -572,7 +580,7 @@ function Withdraw(props) {
     };
 
     const evalFee = (coinName, networkId, priceLevel) => {
-        let decimals = (arrayLookup(symbols, 'symbol', coinName, 'decimals') || 18) - 4;
+        let decimals = (arrayLookup(symbolsData, 'symbol', coinName, 'decimals') || 18) - 4;
         console.log('decimals', decimals)
         dispatch(evalTokenTransferFee({
             coinName: coinName,
@@ -632,19 +640,6 @@ function Withdraw(props) {
             }
         });
     }, []);
-
-    const userData = useSelector(selectUserData);
-    const fiatData = useSelector(selectUserData).fiat;
-    const currentLanguage = useSelector(selectCurrentLanguage);
-    const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || 'USD');
-
-    const networks = config.networks;
-    const symbolsData = config.symbols;
-    const [cryptoDisplayData, setCryptoDisplayData] = useState([]);
-    const [networkData, setNetworkData] = useState([]);
-    const [networkId, setNetworkId] = useState(0);
-
-    const loginType = getUserLoginType(userData);
 
     const defaultValues = {
         email: '',
@@ -730,17 +725,6 @@ function Withdraw(props) {
         let balance = arrayLookup(arr, 'symbol', symbol, 'balance') || 0;
         return balance.toFixed(6)
     };
-
-    //用户钱包发生变化时更新币种余额
-    useEffect(() => {
-        let tmpSymbolWallet = [];
-        symbolWallet.forEach((item, index) => {
-            item.balance = getSymbolMoney(item.symbol);
-            tmpSymbolWallet.push(item);
-        });
-        //重新刷新钱包余额
-        setSymbolWallet(tmpSymbolWallet);
-    }, [userData.wallet]);
 
     useEffect(() => {
         if (!mounted.current) {
