@@ -41,6 +41,7 @@ import { borderBottom } from '@mui/system';
 import Kyc from "../kyc/Kyc";
 import _ from 'lodash';
 import { selectCurrentLanguage } from "app/store/i18nSlice";
+import Enable2FA from "../2fa/Enable2FA";
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -112,6 +113,8 @@ function Card(props) {
     const [showGuangBiao, setShowGuangBiao] = useState(false);
     const [correctPin, setCorrectPin] = useState(false);
     const hasAuthGoogle = useSelector(selectUserData).userInfo?.hasAuthGoogle
+    const [openYanZheng, setOpenYanZheng] = useState(false);
+    const [openGoogleAnimateModal, setOpenGoogleAnimateModal] = useState(false);
 
     const [pin, setPin] = useState('');
     const [hasPin, setHasPin] = useState(false)
@@ -130,8 +133,8 @@ function Card(props) {
     };
 
     const closePinFunc = () => {
-        document.getElementById('PINSty').classList.remove('PinMoveAni');
-        document.getElementById('PINSty').classList.add('PinMoveOut');
+        document.getElementById('PINSty') && document.getElementById('PINSty').classList.remove('PinMoveAni');
+        document.getElementById('PINSty') && document.getElementById('PINSty').classList.add('PinMoveOut');
         setTimeout(() => {
             setOpenPinWindow(false);
             setOpenSuccess(true);
@@ -864,6 +867,9 @@ function Card(props) {
         } else {
             doFun = creditCardCryptoWithdraw
         }
+        if(googleCode.length === 6){
+            setOpenRecordWindow(true)
+        }
         setOpenPinWindow(false)
         setOpenSuccess(false);
         setZhuanQuan(true);
@@ -884,7 +890,7 @@ function Card(props) {
                 setOpenSuccess(true);
                 if (!hasAuthGoogle) {
                     closePinFunc()
-                    setOpenAnimateModal(true)
+                    setOpenGoogleAnimateModal(true)
                     return;
                 }
                 openGoogleCodeFunc()
@@ -929,9 +935,9 @@ function Card(props) {
     // 输入金额
     const handleDoMoney = (text) => {
         let tmpText = transferMoney.toString()
-        // if (tmpText == 0) {
-        //     tmpText = ''
-        // }
+        if (tmpText == 0 && tmpText[1] !== '.') {
+            tmpText = ''
+        }
         if (text === -1) {
             tmpText = tmpText.slice(0, -1)
         } else if (text === '.') {
@@ -946,6 +952,11 @@ function Card(props) {
         }
 
         setTransferMoney(tmpText === '0' ? '' : tmpText);
+    }
+
+    const verifiedVAuthEvt = () => {
+        setOpenYanZheng(false);
+        setOpenGoogleCode(true);
     }
 
     useEffect(() => {
@@ -983,7 +994,7 @@ function Card(props) {
     return (
         <div style={{ position: "relative" }}>
 
-            {loadingShow &&
+            {loadingShow && !openYanZheng && 
                 <div style={{ position: "absolute", width: "100%" }}>
                     <motion.div
                         variants={container}
@@ -2871,6 +2882,25 @@ function Card(props) {
                 </div>
             </BootstrapDialog>
 
+            {openYanZheng && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
+                    className='mt-12'
+                    id="topGo"
+                >
+                    <div className='flex mb-10' onClick={() => {
+                        setOpenYanZheng(false);
+                        myFunction;
+                    }}   >
+                        <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
+                    </div>
+                    <Enable2FA verifiedVAuth={() => verifiedVAuthEvt()} />
+                    <div style={{ height: "5rem" }}></div>
+                </motion.div>
+            </div>}
+
             {/* pin码界面 */}
             <BootstrapDialog
                 onClose={() => {
@@ -3227,6 +3257,63 @@ function Card(props) {
 
                 </div>
             </BootstrapDialog>
+
+            <AnimateModal
+                className="faBiDiCard tanChuanDiSe"
+                open={openGoogleAnimateModal}
+                onClose={() => setOpenGoogleAnimateModal(false)}
+            >
+                <div className='flex justify-center' style={{ width: "100%" }}>
+                    <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
+                    <div className='TanHaoCardZi '>
+                        {t('card_180')}
+                    </div>
+                </div>
+
+                <Box
+                    className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard"
+                    sx={{
+                        backgroundColor: "#2C394D",
+                        padding: "1.5rem",
+                        overflow: "hidden",
+                        margin: "1rem auto 0rem auto"
+                    }}
+                >
+                    <div className="dialog-select-fiat danChuangTxt">
+                        {t('card_181')}
+                    </div>
+                </Box>
+
+                <div className='flex mt-12 mb-28 px-15 justify-between' >
+                    <LoadingButton
+                        disabled={false}
+                        className="boxCardBtn"
+                        color="secondary"
+                        loading={false}
+                        variant="contained"
+                        onClick={() => {
+                            setOpenGoogleAnimateModal(false)
+                            setOpenYanZheng(true);
+                        }}
+                    >
+                        {t('card_182')}
+                    </LoadingButton>
+
+
+                    <LoadingButton
+                        disabled={false}
+                        className="boxCardBtn"
+                        color="secondary"
+                        loading={false}
+                        variant="contained"
+                        onClick={() => {
+                            setOpenGoogleAnimateModal(false)
+                        }}
+                    >
+                        {t('home_pools_15')}
+                    </LoadingButton>
+                </div>
+            </AnimateModal>
         </div>
     )
 }

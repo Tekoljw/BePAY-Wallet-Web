@@ -956,9 +956,9 @@ export const sendTips = createAsyncThunk(
             return sendTipsRes;
         } else if (sendTipsRes.errno === -2) {
             return sendTipsRes;
-        } else {
-            dispatch(showMessage({ message: sendTipsRes.errmsg, code: 2 }));
-            return false;
+        } else{
+            // dispatch(showMessage({ message: sendTipsRes.errmsg, code: 2 }));
+            return sendTipsRes;
         }
     }
 );
@@ -988,9 +988,9 @@ export const tokenTransfer = createAsyncThunk(
             return transferRes.data
         } else if (transferRes.errno === -2) {
             return transferRes
-        } else {
-            dispatch(showMessage({ message: 'error', code: 2 }));
-            return false
+        }else {
+            // dispatch(showMessage({ message: t('error_36'), code: 2 }));
+            return transferRes
         }
     }
 );

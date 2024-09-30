@@ -431,6 +431,7 @@ function Withdraw(props) {
                         setZhuanQuan(false);
                         setTiJiaoState(2);
                     }, 1200);
+                    dispatch(showMessage({ message: result.errmsg, code: 2 }));
                 }
             }
 
@@ -523,6 +524,7 @@ function Withdraw(props) {
                     setZhuanQuan(false);
                     setTiJiaoState(2);
                 }, 1200);
+                dispatch(showMessage({ message: resData.errmsg, code: 2 }));
             }
         });
     };
