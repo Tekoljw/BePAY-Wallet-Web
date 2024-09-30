@@ -297,8 +297,31 @@ function Card(props) {
         window.localStorage.setItem('phoneTab', tab);
     }
 
-    const handleImgClick = (e, action) => {
+    const handleImgClick = (e, action, cardItem) => {
         e.stopPropagation(); // 阻止事件冒泡
+        const tmpCardList = { 2: [], 3: [] }
+        if(smallTabValue === 0){
+            if(cardList[2].length > 0 ){
+                cardList[2].forEach((card, i)=>{
+                    if(cardItem.id === card.id) {
+                        tmpCardList[2].push({...item, showFrontCard: !cardItem.showFrontCard})
+                    }else {
+                        tmpCardList[2].push(item)
+                    }
+                })
+            }
+        } else if(smallTabValue === 1){
+            if(cardList[3].length > 0 ){
+                cardList[3].forEach((card, i)=>{
+                    if(cardItem.id === card.id) {
+                        tmpCardList[3].push({...item, showFrontCard: !cardItem.showFrontCard})
+                    }else {
+                        tmpCardList[3].push(item)
+                    }
+                })
+            }
+        }
+        setCardList(tmpCardList)
         action(); // 执行传入的动作函数
     };
 
@@ -832,9 +855,9 @@ function Card(props) {
             if (result) {
                 result.map((item) => {
                     if (item.creditType === 2) {
-                        tmpCardList[2].push(item)
+                        tmpCardList[2].push({...item, showFrontCard: true})
                     } else if (item.creditType === 3) {
-                        tmpCardList[3].push(item)
+                        tmpCardList[3].push({...item, showFrontCard: true})
                     }
                     tmpCardListObj[item.id] = item
                 })
@@ -1159,7 +1182,7 @@ function Card(props) {
                                                             >
                                                                 <div className='flex justify-center container' style={{ position: "relative" }}>
                                                                     <div className="responsive-div creditcard" id="responsive-div">
-                                                                        <div className={clsx("", fanZhuan && "xiaoShi")}>
+                                                                        <div className={clsx("", cardItem.showFrontCard && "xiaoShi")}>
                                                                             <div className="responsive-div-content card4Bg cardZhiDi" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }} onClick={() => {
                                                                             }}  >
                                                                                 <div className={clsx("cardNumber", kaBeiButton && "xiaoShi")}> <span id="cardNumberOne" >{cardItem?.userCreditNo?.replace(/(.{4})/g, '$1 ')}</span> </div>
@@ -1171,7 +1194,7 @@ function Card(props) {
                                                                                         {cardItem?.state == 10 && (
                                                                                             <div className='kaBeiZi flex'>
                                                                                                 <img id="cardIconWOne"
-                                                                                                    onClick={(e) => handleImgClick(e, FanKa)}
+                                                                                                    onClick={(e) => handleImgClick(e, FanKa, cardItem)}
                                                                                                     className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id="zhangDanZiOne" className='zhangDanZi'>{t('card_15')}</span>
                                                                                             </div>
                                                                                         )}
@@ -1180,7 +1203,7 @@ function Card(props) {
                                                                             </div>
                                                                         </div>
 
-                                                                        <div className={clsx("", !fanZhuan && "xiaoShi")} >
+                                                                        <div className={clsx("", !cardItem.showFrontCard && "xiaoShi")} >
                                                                             <div className="responsive-div-content card41Bg cardZhiDi flipped2" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.backUrl})`, backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat' }} onClick={() => {
                                                                             }}  >
                                                                                 <div className='cardAnQuanMa '>{cardItem.userCreditKey}</div>
@@ -1188,7 +1211,7 @@ function Card(props) {
                                                                                     <div className={clsx("", kaBeiButton2 && "xiaoShi")}>
                                                                                         <div className='kaBeiZi flex flipped2'>
                                                                                             <img id="cardIconWTwo"
-                                                                                                onClick={(e) => handleImgClick(e, FanKaBei)}
+                                                                                                onClick={(e) => handleImgClick(e, FanKaBei, cardItem)}
                                                                                                 className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id="zhangDanZiTwo" className='zhangDanZi'>{t('card_14')}</span>
                                                                                         </div>
                                                                                     </div>
