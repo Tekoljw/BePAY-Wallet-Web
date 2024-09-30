@@ -482,7 +482,8 @@ function Wallet() {
 
   useEffect(() => {
     if (JSON.stringify(userData.profile) !== '{}') {
-      if (loginType !== "telegram_web_app") {
+      const curLoginType = getUserLoginType(userData);
+      if (curLoginType !== "telegram_web_app") {
         getSettingSymbol().then((res) => {
           var currencyType = res.data?.data?.setting?.currencyType
           if (currencyType) {
@@ -506,7 +507,7 @@ function Wallet() {
             setRanges(tmpRanges);
             setCryptoSelect(tmpCryptoSelect);
             setFiatSelect(tmpFiatSelect);
-          } else if (loginType !== "unknown") {
+          } else if (curLoginType !== "unknown") {
             var tmpRanges = [
               t('home_deposite_2'), t('home_deposite_1')
               // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
@@ -522,7 +523,7 @@ function Wallet() {
               tmpCryptoSelect = 0;
               tmpFiatSelect = 1;
             } else {
-              if (loginType === "web3_wallet") {
+              if (curLoginType === "web3_wallet") {
                 tmpRanges = [
                   t('home_deposite_1'), t('home_deposite_2')
                   // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
@@ -539,6 +540,7 @@ function Wallet() {
       }
     } else { //telegram小程序的标题语言处理
       setRanges([t('home_deposite_1'), t('home_deposite_2')]);
+      setWalletConnectShow(true);
     }
     // dispatch(getCurrencySelect());
   }, [userData.profile]);
@@ -1373,14 +1375,6 @@ function Wallet() {
       setwalletTypeTab([oppenappid, "Wallet Connect"]);
     }
   }, [userData.profile?.user?.regWallet]);
-
-
-  useEffect(() => {
-    if (loginType === "telegram_web_app") {
-      setWalletConnectShow(true);
-    }
-  }, [loginType]);
-
 
   return (
     <div style={{ position: "relative" }}>

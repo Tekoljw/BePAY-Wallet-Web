@@ -980,6 +980,7 @@ function Withdraw(props) {
                 }
             })
         }else{
+            //默认选中虚拟币
             setCryptoSelect(0);
             setFiatSelect(1);
         }

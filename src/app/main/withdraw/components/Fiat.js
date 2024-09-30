@@ -43,6 +43,7 @@ import AnimateModal from "../../../components/FuniModal";
 import InputLabel from '@mui/material/InputLabel';
 import FuseLoading from '@fuse/core/FuseLoading';
 import { fontSize } from '@mui/system';
+import userLoginType from "../../../define/userLoginType";
 
 
 const container = {
@@ -112,7 +113,6 @@ function Fiat(props) {
     const [accountType, setAccountType] = useState('CPF');
     const [openChangeCurrency, setOpenChangeCurrency] = useState(false);
     const userData = useSelector(selectUserData);
-    const loginType = getUserLoginType(userData);;
     const [openAnimateModal, setOpenAnimateModal] = useState(false);
     const [isLoadingBtn, setIsLoadingBtn] = useState(false);
     const [openGoogleCode, setOpenGoogleCode] = useState(false);
@@ -533,7 +533,8 @@ function Fiat(props) {
     };
 
     useEffect(() => {
-        if (loginType !== "telegram_web_app") {
+        const loginType = getUserLoginType(userData);
+        if (loginType !== userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP) {
             getSettingSymbol().then((res) => {
                 var currencyType = res.data?.data?.setting?.currencyType
                 console.log(currencyType);
@@ -557,7 +558,7 @@ function Fiat(props) {
                     setRanges(tmpRanges);
                     setCryptoSelect(tmpCryptoSelect);
                     setFiatSelect(tmpFiatSelect);
-                } else if (userData.profile?.loginType !== "unknown") {
+                } else if (loginType !== "unknown") {
                     var tmpRanges = [
                         t('home_deposite_2'), t('home_deposite_1')
                         // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
@@ -573,7 +574,7 @@ function Fiat(props) {
                         tmpCryptoSelect = 0;
                         tmpFiatSelect = 1;
                     } else {
-                        if (userData.profile?.loginType === "web3_wallet") {
+                        if (loginType === "web3_wallet") {
                             tmpRanges = [
                                 t('home_deposite_1'), t('home_deposite_2')
                                 // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
