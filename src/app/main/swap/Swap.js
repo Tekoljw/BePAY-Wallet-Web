@@ -473,6 +473,11 @@ function Swap() {
   };
 
   const onSubmit = () => {
+    if(inputVal.amount == 0) {
+      showMessage({ message: 'Amount must be greater than 0', code: 2 })
+      return
+    }
+    openPinFunc();
     if (arrayLookup(symbolsData, "symbol", symbol, "symbol")) {
       dispatch(
         getSwapPrice({
@@ -512,10 +517,10 @@ function Swap() {
                 setTiJiaoState(1);
                 dispatch(centerGetTokenBalanceList());
                 dispatch(centerGetUserFiat());
-                // setTimeout(() => {
-                // userData = useSelector(selectUserData);
-                // }, 10000)
-                symbolsFormatAmount();
+                setTimeout(() => {
+                  // userData = useSelector(selectUserData);
+                  symbolsFormatAmount();
+                }, 1000)
               }, 1200);
             } else {
               setTimeout(() => {
@@ -948,7 +953,6 @@ function Swap() {
               variant="contained"
               sx={{ backgroundColor: "#0D9488", color: "#ffffff" }}
               onClick={() => {
-                openPinFunc();
                 onSubmit();
               }}
             >

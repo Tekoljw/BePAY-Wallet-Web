@@ -161,7 +161,10 @@ function Fiat(props) {
     }
 
     const getEntryType = (currencyCode) => {
-        var result = payoutList[currencyCode][entryType].wayCode;
+        let result = ''
+        if(payoutList && payoutList[currencyCode] && payoutList[currencyCode][entryType]) {
+            result = payoutList[currencyCode][entryType].wayCode;
+        }
 
         return result
     }
@@ -221,6 +224,7 @@ function Fiat(props) {
                             setZhuanQuan(false);
                             setTiJiaoState(2);
                         }, 1200);
+                        dispatch(showMessage({ message: result.data.msg, code: 2 }));
                     }
                 } else if (result.errno === -2) {
                     if (!hasAuthGoogle) {
@@ -236,6 +240,7 @@ function Fiat(props) {
                         setZhuanQuan(false);
                         setTiJiaoState(2);
                     }, 1200);
+                    dispatch(showMessage({ message: result.errmsg, code: 2 }));
                 }
             });
         } else {
@@ -280,6 +285,7 @@ function Fiat(props) {
                             setZhuanQuan(false);
                             setTiJiaoState(2);
                         }, 1200);
+                        dispatch(showMessage({ message: result.data.msg, code: 2 }));
                     }
                 } else if (result.errno === -2) {
                     if (!hasAuthGoogle) {
@@ -294,6 +300,7 @@ function Fiat(props) {
                         setZhuanQuan(false);
                         setTiJiaoState(2);
                     }, 1200);
+                    dispatch(showMessage({ message: result.errmsg, code: 2 }));
                 }
             });
         }
@@ -960,7 +967,7 @@ function Fiat(props) {
 
                                 {smallTabValue == 0 &&
                                     <div>
-                                        {currencyCode === 'IDR' && <div>
+                                        {(currencyCode === 'IDR'  || currencyCode === 'INR') && <div>
                                             <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
                                                 <Typography className="text-16 ">{t('home_withdraw_22')}</Typography>
                                             </div>
@@ -1049,31 +1056,36 @@ function Fiat(props) {
                                                 </div>
                                             </div>
 
-                                            <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
-                                                <Typography className="text-16 ">Description</Typography>
-                                            </div>
-                                            <div className="flex items-center justify-between">
-                                                <FormControl sx={{ width: isMobileMedia ? '100%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
-                                                    <OutlinedInput
-                                                        id="outlined-adornment-address send-tips-container-address"
-                                                        value={inputVal.description}
-                                                        onChange={handleChangeInputVal('description')}
-                                                        aria-describedby="outlined-weight-helper-text"
-                                                        inputProps={{
-                                                            'aria-label': 'description',
-                                                        }}
-                                                        placeholder={t('home_withdraw_27')}
-                                                    />
-                                                </FormControl>
+                                            {
+                                                currencyCode === 'IDR' &&
+                                                <div>
+                                                    <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
+                                                        <Typography className="text-16 ">Description</Typography>
+                                                    </div>
+                                                    <div className="flex items-center justify-between">
+                                                        <FormControl sx={{ width: isMobileMedia ? '100%' : '89%', borderColor: '#94A3B8' }} variant="outlined">
+                                                            <OutlinedInput
+                                                                id="outlined-adornment-address send-tips-container-address"
+                                                                value={inputVal.description}
+                                                                onChange={handleChangeInputVal('description')}
+                                                                aria-describedby="outlined-weight-helper-text"
+                                                                inputProps={{
+                                                                    'aria-label': 'description',
+                                                                }}
+                                                                placeholder={t('home_withdraw_27')}
+                                                            />
+                                                        </FormControl>
 
-                                                <div onClick={() => { setOpenWithdrawLog(true) }} className="ml-10 flex items-center justify-content-center cursor-pointer">
-                                                    <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
+                                                        <div onClick={() => { setOpenWithdrawLog(true) }} className="ml-10 flex items-center justify-content-center cursor-pointer">
+                                                            <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/withdraw/info.png" alt="" />
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                             }
 
                                         </div>}
 
-                                        {currencyCode === 'MMK' && <div>
+                                        {(currencyCode === 'MMK' || currencyCode === 'VND' || currencyCode === 'TBH' || currencyCode === 'MYR') && <div>
                                             <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
                                                 <Typography className="text-16 ">{t('home_withdraw_22')}</Typography>
                                             </div>
@@ -1178,7 +1190,7 @@ function Fiat(props) {
 
                                         {bankList[currencyCode]?.length > 0 && <>
                                             <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
-                                                <Typography className="text-16 ">{t('home_withdraw_28')}</Typography>
+                                                <Typography className="text-16 ">Bank Name</Typography>
                                             </div>
                                             <div>
                                                 <FormControl sx={{
