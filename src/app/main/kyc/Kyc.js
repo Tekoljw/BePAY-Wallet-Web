@@ -154,7 +154,7 @@ function Kyc(props) {
             nationCode: inputVal.nationCode,
             phone: approveData.phone,
             smsCode: approveData.code,
-        })).then((res)=>{
+        })).then((res) => {
             let result = res.payload;
             if (result.errno === 0) {
                 dispatch(showMessage({ message: 'Success', code: 1 }));
@@ -173,7 +173,7 @@ function Kyc(props) {
             email: approveData.email,
             smsCode: approveData.code,
             password: approveData.password,
-        })).then((res)=>{
+        })).then((res) => {
             let result = res.payload;
             if (result.errno === 0) {
                 dispatch(showMessage({ message: 'Success', code: 1 }));
@@ -444,7 +444,7 @@ function Kyc(props) {
     const refreshKycInfo = () => {
         dispatch(getKycInfo()).then((value) => {
             if (!isNeedAudit() || !value.payload) return;
-            let resultData = {...value.payload.data};
+            let resultData = { ...value.payload.data };
 
             if (!resultData || Object.entries(resultData).length < 1) return;
 
@@ -544,7 +544,7 @@ function Kyc(props) {
         );
 
     };
-    
+
 
     useEffect(() => {
         refreshKycInfo();
@@ -565,15 +565,15 @@ function Kyc(props) {
 
     useEffect(() => {
         setPageState(1);
-        
+
         if (kycInfo.init) {
-            if(!kycInfo.havePhone() && !kycInfo.haveEmail()){
+            if (!kycInfo.havePhone() && !kycInfo.haveEmail()) {
                 setOpenAnimateModal(true)
             } else {
                 if (kycInfo.havePhone()) {
                     setPageState(2);
                     setTabValue(1);
-                }else if (kycInfo.haveEmail()) {
+                } else if (kycInfo.haveEmail()) {
                     setPageState(1);
                 }
             }
@@ -1089,17 +1089,6 @@ function Kyc(props) {
                                 </div>
 
                                 <div className="flex items-center justify-between">
-                                    {/* <Typography
-                                        style={{
-                                            width: "35%",
-                                            overflow: "hidden",
-                                            wordBreak: "break-all"
-                                        }}
-                                        className="text-16 mx-12 cursor-pointer"
-                                    >
-                                        IdType
-                                    </Typography> */}
-
                                     <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
                                         <InputLabel id="demo-simple-select-label">{t('kyc_15')} *</InputLabel>
                                         <Select
@@ -1119,6 +1108,23 @@ function Kyc(props) {
                                         {idTypeError && (
                                             <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
                                         )}
+                                    </FormControl>
+                                </div>
+
+
+                                <div className="flex items-center justify-between mb-24 ">
+                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
+                                        <InputLabel id="demo-simple-select-label">{t('kyc_20')}</InputLabel>
+                                        <OutlinedInput
+                                            id="outlined-adornment-address"
+                                            label="UsSsn"
+                                            value={inputVal.usSsn}
+                                            onChange={handleChangeInputVal('usSsn')}
+                                            aria-describedby="outlined-weight-helper-text"
+                                            inputProps={{
+                                                'aria-label': 'usSsn',
+                                            }}
+                                        />
                                     </FormControl>
                                 </div>
 
@@ -1262,31 +1268,6 @@ function Kyc(props) {
                                     </div>
                                 </div>
 
-                                <div className="flex items-center justify-between mb-24">
-                                    {/* <Typography
-                                        style={{
-                                            width: "35%",
-                                            overflow: "hidden",
-                                            wordBreak: "break-all"
-                                        }}
-                                        className="text-16 mx-12 cursor-pointer"
-                                    >
-                                        UsSsn
-                                    </Typography> */}
-                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_20')}</InputLabel>
-                                        <OutlinedInput
-                                            id="outlined-adornment-address"
-                                            label="UsSsn"
-                                            value={inputVal.usSsn}
-                                            onChange={handleChangeInputVal('usSsn')}
-                                            aria-describedby="outlined-weight-helper-text"
-                                            inputProps={{
-                                                'aria-label': 'usSsn',
-                                            }}
-                                        />
-                                    </FormControl>
-                                </div>
 
                                 {/*{Object.keys(inputVal).map((key, index) => {*/}
                                 {/*    return (*/}

@@ -17,12 +17,12 @@ import Checkbox from '@mui/material/Checkbox';
 
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../../store/user";
-import {centerGetTokenBalanceList, getListBank} from "../../../store/user/userThunk";
+import { centerGetTokenBalanceList, getListBank } from "../../../store/user/userThunk";
 import { makeWithdrawOrder, getFiatFee, payoutBank, payoutPayWays } from "../../../store/payment/paymentThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../../components/StyledAccordionSelect";
 import { selectConfig } from "../../../store/config";
-import {arrayLookup, getNowTime, getUserLoginType} from "../../../util/tools/function";
+import { arrayLookup, getNowTime, getUserLoginType } from "../../../util/tools/function";
 import { openScan, closeScan } from "../../../util/tools/scanqrcode";
 import {
     getWithDrawConfig,
@@ -171,7 +171,7 @@ function Fiat(props) {
 
     const getEntryType = (currencyCode) => {
         let result = ''
-        if(payoutList && payoutList[currencyCode] && payoutList[currencyCode][entryType]) {
+        if (payoutList && payoutList[currencyCode] && payoutList[currencyCode][entryType]) {
             result = payoutList[currencyCode][entryType].wayCode;
         }
 
@@ -442,6 +442,7 @@ function Fiat(props) {
         setPin('')
         setOpenPinWindow(true)
         getDivHeight("pinDivHeight");
+        showIcon()
         openPinFunc()
     }
 
@@ -624,6 +625,22 @@ function Fiat(props) {
         setEntryType(event.target.value);
     };
 
+    const [typeIcon, setTypeIcon] = useState('');
+
+    const showIcon = () => {
+        let entryType = getEntryType(currencyCode);
+        payoutList[currencyCode]?.length > 0 && payoutList[currencyCode].map((row) => {
+            if (entryType == row.wayCode) {
+                if (row.url) {
+                    setTypeIcon(row.url)
+                }else {
+                    setTypeIcon('https://scource-static.funibet.com/funibox/icon/onePay.png')
+                }
+            }
+        })
+    };
+
+
     const handleChangeBankId = (event) => {
         setBankId(event.target.value);
     };
@@ -659,6 +676,9 @@ function Fiat(props) {
             }
         })
     }
+
+
+
 
     //从大到小排列
     // const sortUseAge = (a, b) => {
@@ -834,6 +854,9 @@ function Fiat(props) {
         setPercentage(index)
     };
 
+
+
+
     return (
         <div>
             <div>
@@ -978,7 +1001,7 @@ function Fiat(props) {
 
                                 {smallTabValue == 0 &&
                                     <div>
-                                        {(currencyCode === 'IDR'  || currencyCode === 'INR') && <div>
+                                        {(currencyCode === 'IDR' || currencyCode === 'INR') && <div>
                                             <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
                                                 <Typography className="text-16 ">{t('home_withdraw_22')}</Typography>
                                             </div>
@@ -1092,7 +1115,7 @@ function Fiat(props) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                             }
+                                            }
 
                                         </div>}
 
@@ -1382,17 +1405,17 @@ function Fiat(props) {
                                                         aria-describedby="outlined-weight-helper-text"
                                                     />
                                                     <div className='flex pasteSty  items-center'>
-                                                        <div className='paste-btn' onClick={() => {
-                                                            const clipPromise = navigator.clipboard.readText();
-                                                            clipPromise.then(clipText => {
-                                                                handleChangeUserIDVal(clipText)
-                                                            })
-                                                        }}>{t('home_withdraw_11')}</div>
                                                         <img className='pasteJianTou' src="wallet/assets/images/withdraw/pasteJianTou.png" alt="" onClick={() => {
                                                             setOpenPasteWindow(true)
                                                         }} />
                                                     </div>
                                                 </FormControl>
+                                                <img className='nianTieIcon' src="wallet/assets/images/withdraw/zhanTie.png" alt="" onClick={() => {
+                                                    const clipPromise = navigator.clipboard.readText();
+                                                    clipPromise.then(clipText => {
+                                                        setInputIDVal(clipText)
+                                                    })
+                                                }} />
                                                 {
                                                     isMobileMedia &&
                                                     <img className='shaoMiaoIcon' src="wallet/assets/images/withdraw/code.png" alt="" onClick={() => {
@@ -1509,8 +1532,10 @@ function Fiat(props) {
                                     </div>
 
                                     {smallTabValue == 0 && <div className='' style={{ fontSize: "20px", textAlign: "center", color: "#909FB4", width: "100%" }}>Name {inputVal.accountName} </div>}
-                                    <div className='py-4' style={{ fontSize: smallTabValue == 0 ? "20px" : "20px", textAlign: "center", color: "#909FB4", width: "100%", overflow: "hidden" }}>{smallTabValue == 0 ? "NO." : "UserID"}   {smallTabValue == 0 ? inputVal.accountNo : inputVal.userId} </div>
 
+                                    <div className='py-4 ml-10 flex justify-center' style={{ fontSize: "20px", textAlign: "center", color: "#909FB4", width: "100%", overflow: "hidden" }}>
+                                        {smallTabValue == 0 && <img className='mt-4 mr-10' style={{ width: "20px", height: "20px", borderRadius: "5px" }} src={typeIcon} />}
+                                        <div> {smallTabValue == 0 ? "NO." : "UserID"}   {smallTabValue == 0 ? inputVal.accountNo : inputVal.userId} </div></div>
                                     <div className='flex justify-center mt-10' style={{ width: "100%", overflow: "hidden", borderBottom: "1px solid #2C3950", paddingBottom: "2rem" }}>
                                         {fiats && fiats[fiatsSelected] && <img className='MoneyWithdraw' src={fiats[fiatsSelected].avatar}></img>}
 
@@ -1523,8 +1548,6 @@ function Fiat(props) {
                                                 setShowGuangBiao(!textSelect)
                                             }} />
                                         </div>
-
-
                                     </div>
                                     <div className='flex justify-between mt-10'>
                                         <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[0] ? '●' : ''}</div></div>

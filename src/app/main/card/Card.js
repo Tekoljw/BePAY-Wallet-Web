@@ -1629,8 +1629,8 @@ function Card(props) {
                                                                 </div>
 
                                                                 <div className='flex justify-between items-center mt-10'>
-                                                                    {/* <div className='openingFee' >{t('card_33')} {configItem.applyCreditFee} {configItem.cardSymbol} </div> */}
-                                                                    <div className='openingFee' >{t('card_33')} 28 USDT</div>
+                                                                    <div className='openingFee' >{t('card_33')} {configItem.applyCreditFee} {configItem.cardSymbol} </div>
+                                                                    {/* <div className='openingFee' >{t('card_33')} 28 USDT</div> */}
                                                                     <div className='openCardBtn' onClick={() => {
                                                                         setOpenXiangQing(true);
                                                                         setClickShenQinCard(true);
@@ -1768,8 +1768,8 @@ function Card(props) {
                             <div className='flex justify-between mt-10'>
                                 <div className='quanYiHuiZi'>{t('card_33')}</div>
                                 <div className='flex'>
-                                    {/* <div className='quanYiZi quanYiHui mr-10'>100 USD</div><div className='quanYiZi quanYiLv'>{cardConfigList[cardConfigID]?.applyCreditFee} {cardConfigList[cardConfigID]?.cardSymbol}</div> */}
-                                    <div className='quanYiZi quanYiHui mr-10'>100 USDT</div><div className='quanYiZi quanYiLv'>28 USDT</div>
+                                    <div className='quanYiZi quanYiHui mr-10'>100 USD</div><div className='quanYiZi quanYiLv'>{cardConfigList[cardConfigID]?.applyCreditFee} {cardConfigList[cardConfigID]?.cardSymbol}</div>
+                                    {/* <div className='quanYiZi quanYiHui mr-10'>100 USDT</div><div className='quanYiZi quanYiLv'>28 USDT</div> */}
                                 </div>
                             </div>
 
@@ -3207,8 +3207,7 @@ function Card(props) {
                         <div className='flex mt-20 justify-between' style={{ borderBottom: "1px solid #2C3950" }}>
                             <div className='text-16'>{t('card_33')}</div>
                             <div className='flex pb-20 '>
-                                {/* <div className='text-16 ml-10'>{cardConfigList[cardConfigID]?.applyCreditFee}</div> */}
-                                <div className='text-16 ml-10 '>28 USDT</div>
+                                <div className='text-16 ml-10'>{cardConfigList[cardConfigID]?.applyCreditFee}</div>
                                 <div className='text-16'>&nbsp;{cardConfigList[cardConfigID]?.cardSymbol}</div>
                             </div>
                         </div>
