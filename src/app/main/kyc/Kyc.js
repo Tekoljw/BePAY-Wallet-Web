@@ -1320,29 +1320,28 @@ function Kyc(props) {
                                 {/*        </div>*/}
                                 {/*    )*/}
                                 {/*})}*/}
-                                <div className='flex justify-between'>
+                                <div className='flex justify-between' style={{ height: "70px" }}>
                                     <Button
                                         disabled={!isCanSave()}
-                                        className="text-lg mb-24 btnColorTitleBig button-reset2"
+                                        className="text-lg btnColorTitleBig button-reset2"
                                         color="secondary"
                                         variant="contained"
-                                        style={{ marginBottom: '2.4rem', fontSize: "1.6rem", width: "100%" }}
+                                        style={{ fontSize: "1.6rem", width: "100%" }}
                                         onClick={() => { onSave() }}
                                     >
                                         {t('kyc_22')}
                                     </Button>
 
-                                    {/* <Button
+                                    {/* <Button 
                                         disabled={!isCanSumbit()}
-                                        className="text-lg mb-24 btnColorTitleBig button-reset2"
+                                        className="text-lg btnColorTitleBig button-reset2"
                                         color="secondary"
                                         variant="contained"
-                                        style={{ marginBottom: '2.4rem', fontSize: "1.6rem", width: "47%" }}
+                                        style={{fontSize: "1.6rem", width: "47%" }}
                                         onClick={() => { onSubmit() }}
                                     >
                                         {t('kyc_23')}
                                     </Button> */}
-
                                 </div>
                             </>}
 
