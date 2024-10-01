@@ -42,7 +42,7 @@ import Kyc from "../kyc/Kyc";
 import _ from 'lodash';
 import { selectCurrentLanguage } from "app/store/i18nSlice";
 import Enable2FA from "../2fa/Enable2FA";
-import { centerGetTokenBalanceList } from "app/store/user/userThunk";
+import { centerGetTokenBalanceList, userProfile } from "app/store/user/userThunk";
 import { centerGetUserFiat } from "app/store/wallet/walletThunk";
 
 
@@ -341,6 +341,9 @@ function Card(props) {
 
     useEffect(() => {
         setPhoneTab('card');
+        dispatch(userProfile());
+        dispatch(centerGetTokenBalanceList());
+        dispatch(centerGetUserFiat());
     }, []);
 
 

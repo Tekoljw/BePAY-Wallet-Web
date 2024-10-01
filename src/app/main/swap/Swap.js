@@ -19,7 +19,7 @@ import {
 } from "../../store/swap/swapThunk";
 import { useDispatch, useSelector } from "react-redux";
 import "../../../styles/home.css";
-import StyledAccordionSelect from "../../components/StyledAccordionSelect";
+import SwapStyledAccordionSelect from "../../components/SwapStyledAccordionSelect";
 import { arrayLookup, setPhoneTab, getNowTime } from "../../util/tools/function";
 import { selectConfig, setSwapConfig } from "app/store/config";
 import { selectUserData } from "app/store/user";
@@ -115,6 +115,8 @@ function Swap() {
   // const walletData = useSelector(selectUserData).wallet;
   const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || "USD");
   const [loadingShow, setLoadingShow] = useState(false);
+  const [rateArr, setRateArr] = useState([]);
+  const [ convertRate, setConvertRate] = useState(0)
 
   const [priceData, setPriceData] = useState({
     pair: "",
@@ -567,6 +569,7 @@ function Swap() {
     setHasData(
       symbolWallet.length === 0 && symbolsData.length > 0 && networks.length > 0
     );
+    assembleRateChange()
   }, [cryptoDisplayData, symbolsData, networks]);
 
   useEffect(() => {
@@ -592,8 +595,22 @@ function Swap() {
     setFormatSymbol('');
     if (swapCoinConfig[symbol]) {
       setFormatSymbol(swapCoinConfig[symbol][0].symbol);
+      assembleRateChange()
+      fromToRate(symbol, swapCoinConfig[symbol][0].symbol)
     }
   }, [symbol]);
+
+  const assembleRateChange = () => {
+      const symbolArrRate = _.map(config.symbols, ( symbol )=> { return { key: symbol.symbol, rate: symbol.rate} });
+      const fiatArrRate = _.map(userData.fiat, (fa)=> { return {key: fa.currencyCode, rate: (1/fa.exchangeRate).toFixed(20)}});
+      setRateArr([...symbolArrRate, ...fiatArrRate]);
+  }
+
+  const fromToRate = (fromSymbol, toSymbol) => {
+    const fromSymbolRate = _.get(_.find(rateArr, {key: fromSymbol }), 'rate', 0);
+    const toSymbolRate = _.get(_.find(rateArr, {key: toSymbol }), 'rate', 0);
+    setConvertRate((toSymbolRate/fromSymbolRate) ? (Number(toSymbolRate/fromSymbolRate)) : Number(toSymbolRate/fromSymbolRate))
+  };
 
   return (
     <div>
@@ -804,7 +821,9 @@ function Swap() {
                   }}
                 >
                   {symbolWallet.length > 0 && (
-                    <StyledAccordionSelect
+                    <SwapStyledAccordionSelect
+                      isInputNum={true}
+                      inputNum={inputVal?.amount || 0 }
                       symbol={symbolWallet}
                       currencyCode="USD"
                       setSymbol={setSymbol}
@@ -832,8 +851,9 @@ function Swap() {
                   }}
                 >
                   {swapCoinConfig[symbol]?.length > 0 && (
-                    <StyledAccordionSelect
+                    <SwapStyledAccordionSelect
                       symbol={swapCoinConfig[symbol]}
+                      swapNum={1/convertRate*(inputVal.amount) || 0 }
                       currencyCode="USD"
                       setSymbol={setFormatSymbol}
                     />
@@ -911,10 +931,9 @@ function Swap() {
                       <div className="flex items-center my-4">
                         <div className="px-12 font-medium color-76819B">
                           <Typography className="text-14 font-medium">
-                            {t("home_wallet_17")}:
-                            <span className="color-ffffff">
-                              {priceData.qty_base} {symbol} ~ {priceData.qty_quote}{" "}
-                              {formatSymbol}
+                            {t("home_wallet_17")} : 
+                            <span className="color-ffffff" style={{ marginLeft: '5px'}}>
+                               {symbol} : {formatSymbol} = 1 : {convertRate}
                             </span>
                           </Typography>
                         </div>
@@ -939,7 +958,7 @@ function Swap() {
                         <div className="px-12 font-medium color-76819B">
                           <Typography className="text-14 font-medium">
                             {t("home_wallet_20")}:
-                            <span className="color-ffffff">0</span>
+                            <span className="color-ffffff">{ Number(1/convertRate*(inputVal.amount)*0.03) || 0 } {formatSymbol}</span>
                           </Typography>
                         </div>
                       </div>
