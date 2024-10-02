@@ -84,7 +84,6 @@ function SwapStyledAccordionSelect(props) {
     };
 
     const currenyPaytoken = (currentSymbol, currentBalance) => {
-        debugger
         const symbolRate = _.get(_.find(rateArr, {key: currentSymbol }), 'rate', 0);
         const currencyRate = arrayLookup(config.payment.currency, 'currencyCode', currencyCode, 'exchangeRate');
         return (currentBalance * symbolRate).toFixed(2)
@@ -121,7 +120,7 @@ function SwapStyledAccordionSelect(props) {
 
 
     const handleChange = (event) => {
-        setSelected(event.target.value);
+        setSelected(event.target.value)
     };
     // function remove(symbol,item){
     //     var newarr = [];
@@ -196,7 +195,7 @@ function SwapStyledAccordionSelect(props) {
                                     </div>
                                     <div style={{ marginLeft: 'auto' }}>
                                         <div className="px-12 font-medium" style={{ textAlign: 'right' }}>
-                                            <Typography className="text-18 font-medium">{ isInputNum ? inputNum : swapNum }</Typography>
+                                            <Typography className="text-18 font-medium">{ isInputNum ? inputNum : row.swapVal }</Typography>
                                             {currencyCode && <Typography className="text-14" style={{ color: '#94A3B8' }}>{row.balance}</Typography>}
 
                                         </div>

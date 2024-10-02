@@ -286,7 +286,6 @@ function Swap() {
 
   // 整理symbol数据
   const arrangeSymbolAmountDataFrom = (data) => {
-
     let currencyRate =
       arrayLookup(
         config.payment.currency,
@@ -323,6 +322,7 @@ function Swap() {
             arrayLookup(walletData.inner, "symbol", item.quote_coin, "tradeLock") || 0,
           withdrawLock:
             arrayLookup(walletData.inner, "symbol", item.quote_coin, "withdrawLock") || 0,
+          swapVal: 1/fromToRate(item.base_coin, item.quote_coin)*(inputVal.amount) || 0
         });
       });
 
@@ -330,6 +330,8 @@ function Swap() {
     });
     return resultSymbolDataFormat
   }
+
+
 
 
   const symbolsFormatAmount = async () => {
@@ -574,7 +576,7 @@ function Swap() {
 
   useEffect(() => {
     hasData && symbolsFormatAmount();
-  }, [hasData, swapData]);
+  }, [hasData, swapData, inputVal.amount]);
 
   useEffect(() => {
     setLoadingShow(false)
@@ -594,11 +596,17 @@ function Swap() {
   useEffect(() => {
     setFormatSymbol('');
     if (swapCoinConfig[symbol]) {
-      setFormatSymbol(swapCoinConfig[symbol][0].symbol);
       assembleRateChange()
-      fromToRate(symbol, swapCoinConfig[symbol][0].symbol)
+      setFormatSymbol(swapCoinConfig[symbol][0].symbol);
+      currentFromToRate(symbol, swapCoinConfig[symbol][0].symbol)
     }
   }, [symbol]);
+
+  useEffect(() => {
+    if (swapCoinConfig[symbol]) {
+      currentFromToRate(symbol, formatSymbol)
+    }
+  }, [formatSymbol]);
 
   const assembleRateChange = () => {
       const symbolArrRate = _.map(config.symbols, ( symbol )=> { return { key: symbol.symbol, rate: symbol.rate} });
@@ -609,7 +617,13 @@ function Swap() {
   const fromToRate = (fromSymbol, toSymbol) => {
     const fromSymbolRate = _.get(_.find(rateArr, {key: fromSymbol }), 'rate', 0);
     const toSymbolRate = _.get(_.find(rateArr, {key: toSymbol }), 'rate', 0);
-    setConvertRate((toSymbolRate/fromSymbolRate) ? (Number(toSymbolRate/fromSymbolRate)) : Number(toSymbolRate/fromSymbolRate))
+    return ((toSymbolRate/fromSymbolRate) ? (Number(toSymbolRate/fromSymbolRate)) : Number(toSymbolRate/fromSymbolRate))
+  };
+
+  const currentFromToRate = (fromSymbol, toSymbol) => {
+    const fromSymbolRate = _.get(_.find(rateArr, {key: fromSymbol }), 'rate', 0);
+    const toSymbolRate = _.get(_.find(rateArr, {key: toSymbol }), 'rate', 0);
+    setConvertRate((fromSymbolRate/toSymbolRate) ? (Number(fromSymbolRate/toSymbolRate)) : Number(fromSymbolRate/toSymbolRate))
   };
 
   return (
@@ -853,7 +867,6 @@ function Swap() {
                   {swapCoinConfig[symbol]?.length > 0 && (
                     <SwapStyledAccordionSelect
                       symbol={swapCoinConfig[symbol]}
-                      swapNum={1/convertRate*(inputVal.amount) || 0 }
                       currencyCode="USD"
                       setSymbol={setFormatSymbol}
                     />
@@ -958,7 +971,7 @@ function Swap() {
                         <div className="px-12 font-medium color-76819B">
                           <Typography className="text-14 font-medium">
                             {t("home_wallet_20")}:
-                            <span className="color-ffffff">{ Number(1/convertRate*(inputVal.amount)*0.03) || 0 } {formatSymbol}</span>
+                            <span className="color-ffffff">{ Number(convertRate*(inputVal.amount)*0.03) || 0 } {formatSymbol}</span>
                           </Typography>
                         </div>
                       </div>
