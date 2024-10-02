@@ -79,9 +79,9 @@ function Card(props) {
     const [ranges, setRanges] = useState([t('card_2'), t('card_9')]);
     const [huaZhuanRanges, setHuaZhuanRanges] = useState([t('card_170'), t('card_171')]);
     const [smallTabValue, setSmallTabValue] = useState(0);
-    // const [kaBeiButton, setKaBeiButton] = useState(false);
-    // const [kaBeiButton2, setKaBeiButton2] = useState(true);
-    // const [fanZhuan, setFanZhuan] = useState(false);
+    const [kaBeiButton, setKaBeiButton] = useState(false);
+    const [kaBeiButton2, setKaBeiButton2] = useState(true);
+    const [fanZhuan, setFanZhuan] = useState(false);
     const [openXiangQing, setOpenXiangQing] = useState(false);
     const [openKyc, setOpenKyc] = useState(false);
     const [openAnimateModal, setOpenAnimateModal] = useState(false);
