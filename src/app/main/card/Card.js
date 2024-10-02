@@ -291,6 +291,7 @@ function Card(props) {
 
     useEffect(() => {
         setRanges([t('card_2'), t('card_9')]);
+        setHuaZhuanRanges([t('card_170'), t('card_171')]);
     }, [currentLanguage.id]);
 
     const changePhoneTab = (tab) => {
@@ -910,9 +911,10 @@ function Card(props) {
                         setZhuanQuan(false);
                         setTiJiaoState(1);
                         setUpdateCard(true)
-                        setTimer(timer + 1)
                         dispatch(centerGetTokenBalanceList());
                         dispatch(centerGetUserFiat());
+                        setUpdateCard(true)
+                        setTimer(timer + 1)
                         // setOpenSuccess(true);
                         // closeRecordFunc()
                         // myFunction();
@@ -2081,7 +2083,7 @@ function Card(props) {
                                         margin: "1rem 1.2rem",
                                     }}
                                 >
-                                    {Object.entries(huaZhuanRanges).map(([key, label]) => (
+                                    {Object.entries(huaZhuanRanges)?.map(([key, label]) => (
                                         <Tab
                                             className="text-14 font-semibold min-h-36 min-w-64 mx4 px-12 opacity1 txtColorTitle zindex"
                                             disableRipple
