@@ -659,7 +659,7 @@ function Card(props) {
         if (symbols) {
             initSymbol()
         }
-    }, [symbols]);
+    }, [symbols, walletData]);
 
 
 
@@ -965,7 +965,6 @@ function Card(props) {
                         setTiJiaoState(1);
                         setUpdateCard(true)
                         dispatch(centerGetTokenBalanceList());
-                        dispatch(centerGetUserFiat());
                         setUpdateCard(true)
                         setTimer(timer + 1)
                         // setOpenSuccess(true);
