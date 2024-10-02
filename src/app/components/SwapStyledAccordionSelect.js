@@ -15,6 +15,7 @@ import FormControl from "@mui/material/FormControl";
 import { arrayLookup } from "../util/tools/function";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { useTranslation } from "react-i18next";
 import * as _ from 'lodash'
 
 const container = {
@@ -66,6 +67,7 @@ function SwapStyledAccordionSelect(props) {
     const [symbolName, setSymbolName] = useState(arrayLookup(config.symbols, 'symbol', symbol[selected]?.symbol, 'name'));
     const [expanded, setExpanded] = useState(isExpand);
     const [rateArr, setRateArr] = useState([]);
+    const { t } = useTranslation("mainPage");
 
     const toggleAccordion = (panel) => (event, _expanded) => {
         setExpanded(_expanded ? panel : false);
@@ -190,7 +192,7 @@ function SwapStyledAccordionSelect(props) {
                                         }} src={row.avatar} alt="" />
                                         <div className="px-12 font-medium">
                                             <Typography className="text-18 font-medium">{row.symbol}</Typography>
-                                            <Typography className="text-14" style={{ color: '#94A3B8' }}>Balance</Typography>
+                                            <Typography className="text-14" style={{ color: '#94A3B8' }}>{t("home_record_9")}</Typography>
                                         </div>
                                     </div>
                                     <div style={{ marginLeft: 'auto' }}>
