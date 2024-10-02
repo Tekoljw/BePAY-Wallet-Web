@@ -75,26 +75,26 @@ function Kyc(props) {
     const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down(isMobileMedia ? 'lg' : 'sm'));
     const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobile);
     const [inputVal, setInputVal] = useState({
-        email: '',
-        phoneCountry: '',
-        phoneNumber: '',
-        firstName: '',
-        middleName: '',
-        lastName: '',
-        birthDate: '',
-        country: '',
-        state: '',
-        city: '',
         address: '',
         addressTwo: '',
-        zipcode: '',
+        birthDate: '',
+        city: '',
+        country: '',
+        email: '',
+        firstName: '',
+        idBackUrl: '',
+        idFrontUrl: '',
         idNo: '',
         idType: '',
-        idFrontUrl: '',
-        idBackUrl: '',
-        selfPhotoUrl: '',
+        lastName: '',
+        middleName: '',
+        phoneCountry: '',
+        phoneNumber: '',
         proofOfAddressUrl: '',
+        selfPhotoUrl: '',
+        state: '',
         usSsn: '',
+        zipcode: '',
     });
 
 
@@ -210,19 +210,51 @@ function Kyc(props) {
     const [emailError, setEmailError] = useState(false);
     const [openAnimateModal, setOpenAnimateModal] = useState(false);
 
+
+
+
+
     //文凯改
     const handleChangeInputVal = (prop) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
-        if (inputVal.email === '') {
+        if (event.target.value === '') {
             setEmailError(true);
         } else {
             setEmailError(false);
         }
     };
 
+    const [showSaveBtn, setShowSaveBtn] = useState(true);
+
+    useEffect(() => {
+        showBtnFunc();
+    }, [inputVal]);
+
+
+    const showBtnFunc = () => {
+        handleBlur();
+        handleBlur2();
+        handleBlur3();
+        handleBlur4();
+        handleBlur7();
+        handleBlur8();
+        handleBlur9();
+        handleBlur10();
+        handleBlur11();
+        handleBlur14();
+        handleBlur15();
+        handleBlur16();
+        handleBlur17();
+        if (!idTypeError && !idNoError && !addressError && !cityError && !stateError && !countryError && !birthDateError && !firstNameError && !phoneNumberError && !phoneCountryError && !emailError && !idFrontUrlError && !idBackUrlError) {
+            setShowSaveBtn(false)
+        } else
+            setShowSaveBtn(true)
+    };
+
+
     const handleChangeInputVal2 = (prop) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
-        if (inputVal.phoneCountry === '') {
+        if (event.target.value === '') {
             setPhoneCountryError(true);
         } else {
             setPhoneCountryError(false);
@@ -231,7 +263,7 @@ function Kyc(props) {
 
     const handleChangeInputVal3 = (prop) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
-        if (inputVal.phoneNumber === '') {
+        if (event.target.value === '') {
             setPhoneNumberError(true);
         } else {
             setPhoneNumberError(false);
@@ -240,7 +272,7 @@ function Kyc(props) {
 
     const handleChangeInputVal4 = (prop) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
-        if (inputVal.firstName === '') {
+        if (event.target.value === '') {
             setFirstNameError(true);
         } else {
             setFirstNameError(false);
@@ -249,18 +281,18 @@ function Kyc(props) {
 
 
     const handleChangeInputVal8 = (prop) => (event) => {
-        setInputVal({ ...inputVal, [prop]: event.target.value });
-        if (inputVal.country === '') {
+        if (event.target.value === '') {
             setCountryError(true);
         } else {
             setCountryError(false);
         }
+        setInputVal({ ...inputVal, [prop]: event.target.value });
     };
 
 
     const handleChangeInputVal9 = (prop) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
-        if (inputVal.state === '') {
+        if (event.target.value === '') {
             setStateError(true);
         } else {
             setStateError(false);
@@ -269,7 +301,7 @@ function Kyc(props) {
 
     const handleChangeInputVal10 = (prop) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
-        if (inputVal.city === '') {
+        if (event.target.value === '') {
             setCityError(true);
         } else {
             setCityError(false);
@@ -279,7 +311,7 @@ function Kyc(props) {
 
     const handleChangeInputVal11 = (prop) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
-        if (inputVal.address === '') {
+        if (event.target.value === '') {
             setAddressError(true);
         } else {
             setAddressError(false);
@@ -288,7 +320,7 @@ function Kyc(props) {
 
     const handleChangeInputVal14 = (prop) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
-        if (inputVal.idNo === '') {
+        if (event.target.value === '') {
             setIdNoError(true);
         } else {
             setIdNoError(false);
@@ -297,7 +329,7 @@ function Kyc(props) {
 
     const handleChangeInputVal15 = (prop) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
-        if (inputVal.idType === '') {
+        if (event.target.value === '') {
             setIdTypeError(true);
         } else {
             setIdTypeError(false);
@@ -308,6 +340,8 @@ function Kyc(props) {
     const handleBlur = () => {
         if (inputVal.email === '') {
             setEmailError(true);
+        } else {
+            setEmailError(false);
         }
     };
 
@@ -315,6 +349,8 @@ function Kyc(props) {
     const handleBlur2 = () => {
         if (inputVal.phoneCountry === '') {
             setPhoneCountryError(true);
+        } else {
+            setPhoneCountryError(false);
         }
     };
 
@@ -322,66 +358,88 @@ function Kyc(props) {
     const handleBlur3 = () => {
         if (inputVal.phoneNumber === '') {
             setPhoneNumberError(true);
+        } else {
+            setPhoneNumberError(false);
         }
     };
 
     const handleBlur4 = () => {
         if (inputVal.firstName === '') {
             setFirstNameError(true);
+        } else {
+            setFirstNameError(false);
         }
     };
 
     const handleBlur7 = () => {
         if (inputVal.birthDate === '') {
             setBirthDateError(true);
+        } else {
+            setBirthDateError(false);
         }
     };
 
     const handleBlur8 = () => {
         if (inputVal.country === '') {
             setCountryError(true);
+        } else {
+            setCountryError(false);
         }
     };
 
     const handleBlur9 = () => {
         if (inputVal.state === '') {
             setStateError(true);
+        } else {
+            setStateError(false);
         }
     };
 
     const handleBlur10 = () => {
         if (inputVal.city === '') {
             setCityError(true);
+        } else {
+            setCityError(false);
         }
     };
 
     const handleBlur11 = () => {
         if (inputVal.address === '') {
             setAddressError(true);
+        } else {
+            setAddressError(false);
         }
     };
 
     const handleBlur14 = () => {
         if (inputVal.idNo === '') {
             setIdNoError(true);
+        } else {
+            setIdNoError(false)
         }
     };
 
     const handleBlur15 = () => {
         if (inputVal.idType === '') {
             setIdTypeError(true);
+        } else {
+            setIdTypeError(false)
         }
     };
 
     const handleBlur16 = () => {
         if (inputVal.idFrontUrl === '') {
             setIdFrontUrlError(true);
+        } else {
+            setIdFrontUrlError(false);
         }
     };
 
     const handleBlur17 = () => {
         if (inputVal.idBackUrl === '') {
             setIdBackUrlError(true);
+        } else {
+            setIdBackUrlError(false);
         }
     };
 
@@ -414,7 +472,7 @@ function Kyc(props) {
             file: file
         }));
         setInputVal({ ...inputVal, [keyName]: uploadRes.payload.url });
-        if (inputVal.idFrontUrl === '') {
+        if (uploadRes.payload.url === '') {
             setIdFrontUrlError(true);
         } else {
             setIdFrontUrlError(false);
@@ -427,7 +485,7 @@ function Kyc(props) {
             file: file
         }));
         setInputVal({ ...inputVal, [keyName]: uploadRes.payload.url });
-        if (inputVal.idBackUrl === '') {
+        if (uploadRes.payload.url === '') {
             setIdBackUrlError(true);
         } else {
             setIdBackUrlError(false);
@@ -453,16 +511,15 @@ function Kyc(props) {
             Object.keys(inputVal).map((prop, index) => {
                 copyData[prop] = resultData[prop];
             });
-
             setInputVal(copyData);
         });
     };
+
 
     const isAlreadySumbit = () => {
         if (kycInfo) {
             return kycInfo.isAlreadySumbit();
         }
-
         return false;
     };
 
@@ -512,15 +569,15 @@ function Kyc(props) {
 
 
     const onSave = () => {
-        if (!isCanSave(true)) {
-            return;
-        }
-
-        if (!idTypeError && !idNoError && !addressError && !cityError && !stateError && !countryError && !birthDateError && !firstNameError && !phoneNumberError && !phoneCountryError && !emailError) {
+        // if (!isCanSave(true)) {
+        //     return;
+        // }
+        if (!idTypeError && !idNoError && !addressError && !cityError && !stateError && !countryError && !birthDateError && !firstNameError && !phoneNumberError && !phoneCountryError && !emailError && !idFrontUrlError && !idBackUrlError) {
             dispatch(updateKycInfo(inputVal)).then(
                 (value) => {
                     if (value.payload) {
                         refreshKycInfo();
+                        dispatch(showMessage({ message: "Success", code: 1 }));
                     }
                 }
             );
@@ -876,24 +933,13 @@ function Kyc(props) {
                                 </div>
 
                                 <div className="flex items-center justify-between">
-                                    {/* <Typography
-                                        style={{
-                                            width: "35%",
-                                            overflow: "hidden",
-                                            wordBreak: "break-all"
-                                        }}
-                                        className="text-16 mx-12 cursor-pointer"
-                                    >
-                                        Country
-                                    </Typography> */}
                                     <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_8')} *</InputLabel>
+                                        <InputLabel htmlFor="outlined-adornment-address">{t('kyc_8')}*</InputLabel>
                                         <OutlinedInput
                                             id="outlined-adornment-address"
-                                            label="Country"
+                                            label="country"
                                             value={inputVal.country}
                                             onChange={handleChangeInputVal8('country')}
-                                            // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
                                             aria-describedby="outlined-weight-helper-text"
                                             inputProps={{
                                                 'aria-label': 'country',
@@ -1322,7 +1368,7 @@ function Kyc(props) {
                                 {/*})}*/}
                                 <div className='flex justify-between' style={{ height: "70px" }}>
                                     <Button
-                                        disabled={!isCanSave()}
+                                        disabled={showSaveBtn}
                                         className="text-lg btnColorTitleBig button-reset2"
                                         color="secondary"
                                         variant="contained"
