@@ -66,6 +66,7 @@ import openType from './opentype.json'
 import { symbol } from "prop-types";
 import { Image } from "@mui/icons-material";
 import userLoginType from "../../define/userLoginType";
+import { selectCurrentLanguage } from "app/store/i18nSlice";
 import { centerGetTokenBalanceList, userProfile} from "app/store/user/userThunk";
 import { centerGetUserFiat } from "app/store/wallet/walletThunk";
 
@@ -184,6 +185,11 @@ function Wallet() {
   const [walletDisplayData, setwalletDisplayData] = useState([]);
   const [networkData, setNetworkData] = useState([]);
   const [copyTiShi, setCopyTiShi] = useState(false);
+  const currentLanguage = useSelector(selectCurrentLanguage);
+
+  useEffect(() => {
+    setRanges([t('home_deposite_1'), t('home_deposite_2')]);
+}, [currentLanguage.id]);
 
   useEffect(() => {
     setwalletDisplayData(userData.walletDisplay);
