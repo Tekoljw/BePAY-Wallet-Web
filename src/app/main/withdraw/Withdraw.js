@@ -352,6 +352,7 @@ function Withdraw(props) {
     });
 
     const handleSubmit = () => {
+        setIsLoadingBtn(true)
         var amount = inputVal.amount;
         var tmpBAppendFee = false;
         if (bAppendFee) {
@@ -402,14 +403,19 @@ function Withdraw(props) {
             priceLevel: amountTab,
             bAppendFee: tmpBAppendFee,
         };
-        setOpenLoad(true);
 
         dispatch(tokenTransfer(data)).then((res) => {
-            setOpenLoad(false);
+            setIsLoadingBtn(false)
             let result = res.payload
             setGoogleCode('');
             // setOpenPinWindow(false);
-            if (result.errno == 0) {
+            if (res.errno == 0) {
+                setOpenSuccess(false);
+                setTimeout(() => {
+                    setZhuanQuan(false);
+                    setTiJiaoState(1);
+                    setWithDrawOrderID(result);
+                }, 1200);
                 dispatch(centerGetTokenBalanceList());
             } else if (result.errno == -2) {
                 if (!hasAuthGoogle) {
@@ -420,21 +426,12 @@ function Withdraw(props) {
                 openGoogleCodeFunc()
                 return
             } else {
-                if (result) {
-                    setOpenSuccess(false);
-                    setTimeout(() => {
-                        setZhuanQuan(false);
-                        setTiJiaoState(1);
-                        setWithDrawOrderID(result);
-                    }, 1200);
-                } else {
-                    setOpenSuccess(false);
-                    setTimeout(() => {
-                        setZhuanQuan(false);
-                        setTiJiaoState(2);
-                    }, 1200);
-                    dispatch(showMessage({ message: result.errmsg, code: 2 }));
-                }
+                setOpenSuccess(false);
+                setTimeout(() => {
+                    setZhuanQuan(false);
+                    setTiJiaoState(2);
+                }, 1200);
+                dispatch(showMessage({ message: result.errmsg, code: 2 }));
             }
 
         });
