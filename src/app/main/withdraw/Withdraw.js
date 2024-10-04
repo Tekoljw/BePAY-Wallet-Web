@@ -409,12 +409,12 @@ function Withdraw(props) {
             let result = res.payload
             setGoogleCode('');
             // setOpenPinWindow(false);
-            if (res.errno == 0) {
+            if (result.errno == 0) {
                 setOpenSuccess(false);
                 setTimeout(() => {
                     setZhuanQuan(false);
                     setTiJiaoState(1);
-                    setWithDrawOrderID(result);
+                    setWithDrawOrderID(result.data);
                 }, 1200);
                 dispatch(centerGetTokenBalanceList());
             } else if (result.errno == -2) {
