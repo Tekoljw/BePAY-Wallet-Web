@@ -179,6 +179,7 @@ const locale = {
     home_withdraw_27: "账户",
     home_withdraw_28: "账号类型",
     home_withdraw_29: "CPF账号",
+    home_withdraw_30: "银行名称",
 
     home_deposite_1: '加密货币',
     home_deposite_2: '法币',

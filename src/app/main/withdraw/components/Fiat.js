@@ -1224,7 +1224,7 @@ function Fiat(props) {
 
                                         {bankList[currencyCode]?.length > 0 && <>
                                             <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
-                                                <Typography className="text-16 ">Bank Name</Typography>
+                                                <Typography className="text-16 ">{t('home_withdraw_30')}</Typography>
                                             </div>
                                             <div>
                                                 <FormControl sx={{

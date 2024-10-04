@@ -1042,6 +1042,10 @@ input[type='number'] {
     animation: alphaCard 0.3s forwards;
 }
 
+.alphaCard_1{
+    animation: alphaCard_1 1s ease-in-out;
+}
+
 
 @keyframes shrink {
     0% {
@@ -1058,6 +1062,16 @@ input[type='number'] {
 }
 
 @keyframes alphaCard {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes alphaCard_1 {
     from {
         opacity: 0;
     }
@@ -1473,6 +1487,16 @@ input[type='number'] {
     /* 背景图片初始尺寸 */
     background-repeat: no-repeat;
     /* 背景图片不重复 */
+    /* opacity: 0;
+    transition: opacity 0.5s ease-in-out */
+}
+
+.card4Bg.fade-in{
+    opacity: 1;
+}
+
+.card4Bg.fade-out{
+    opacity: 0;
 }
 
 .card41Bg {

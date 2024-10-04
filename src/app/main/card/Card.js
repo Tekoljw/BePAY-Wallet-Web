@@ -329,8 +329,9 @@ function Card(props) {
                         // }, 200);
                         // await delay(2000);
                         targetCardItem.kaBeiButton2 = false;
-                        document.getElementById('cardIconWTwo'+ i) && document.getElementById('cardIconWTwo'+ i).classList.add('alphaCard');
-                        document.getElementById('zhangDanZiTwo'+ i) && document.getElementById('zhangDanZiTwo'+ i).classList.add('alphaCard');
+                        document.querySelector(`#responsive-div${i} .card4Bg`).classList.add('alphaCard_1');
+                        // document.getElementById('cardIconWTwo'+ i) && document.getElementById('cardIconWTwo'+ i).classList.add('alphaCard');
+                        // document.getElementById('zhangDanZiTwo'+ i) && document.getElementById('zhangDanZiTwo'+ i).classList.add('alphaCard');
                         // setTimeout(() => {
                         //     targetCardItem.kaBeiButton2 = true;
                         //     document.getElementById('cardIconWTwo') && document.getElementById('cardIconWTwo').classList.add('alphaCard');
@@ -370,9 +371,10 @@ function Card(props) {
                         // }, 200);
                         targetCardItem.showFrontCard = false;
                         targetCardItem.kaBeiButton = false;
-                        document.getElementById('cardIconWOne'+ i) && document.getElementById('cardIconWOne'+ i).classList.add('alphaCard');
-                        document.getElementById('zhangDanZiOne'+ i) && document.getElementById('zhangDanZiOne'+ i).classList.add('alphaCard');
-                        document.getElementById('cardNumberOne'+ i) && document.getElementById('cardNumberOne'+ i).classList.add('alphaCard');
+                        document.querySelector(`#responsive-div${i} .card41Bg`).classList.add('alphaCard_1');
+                        // document.getElementById('cardIconWOne'+ i) && document.getElementById('cardIconWOne'+ i).classList.add('alphaCard');
+                        // document.getElementById('zhangDanZiOne'+ i) && document.getElementById('zhangDanZiOne'+ i).classList.add('alphaCard');
+                        // document.getElementById('cardNumberOne'+ i) && document.getElementById('cardNumberOne'+ i).classList.add('alphaCard');
                         // setTimeout(() => {
                         //     targetCardItem.kaBeiButton = false;
                         //     document.getElementById('cardIconWOne') && document.getElementById('cardIconWOne').classList.add('alphaCard');
