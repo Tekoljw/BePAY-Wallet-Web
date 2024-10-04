@@ -587,6 +587,8 @@ const locale = {
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"দৈনিক রিডেম্পশন সীমা পূরণ হয়েছে",
+    card_222:"দয়া করে সমস্ত প্রয়োজনীয় তথ্য পূরণ করুন",    
+
     
 
 

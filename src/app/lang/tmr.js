@@ -575,7 +575,7 @@ const locale = {
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"நாளாந்தர மீட்பு வரம்பை அடைந்துவிட்டது",
-    
+    card_222:"தேவையான புலங்களை அனைத்தையும் பூர்த்தி செய்யவும்",
 
     
 

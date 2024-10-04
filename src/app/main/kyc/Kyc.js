@@ -201,7 +201,6 @@ function Kyc(props) {
     const [cityError, setCityError] = useState(false);
     const [stateError, setStateError] = useState(false);
     const [countryError, setCountryError] = useState(false);
-    const [birthDateError, setBirthDateError] = useState(false);
     const [firstNameError, setFirstNameError] = useState(false);
     const [phoneNumberError, setPhoneNumberError] = useState(false);
     const [phoneCountryError, setPhoneCountryError] = useState(false);
@@ -209,9 +208,6 @@ function Kyc(props) {
     const [idBackUrlError, setIdBackUrlError] = useState(false);
     const [emailError, setEmailError] = useState(false);
     const [openAnimateModal, setOpenAnimateModal] = useState(false);
-
-
-
 
 
     //文凯改
@@ -236,7 +232,6 @@ function Kyc(props) {
         handleBlur2();
         handleBlur3();
         handleBlur4();
-        handleBlur7();
         handleBlur8();
         handleBlur9();
         handleBlur10();
@@ -245,7 +240,7 @@ function Kyc(props) {
         handleBlur15();
         handleBlur16();
         handleBlur17();
-        if (!idTypeError && !idNoError && !addressError && !cityError && !stateError && !countryError && !birthDateError && !firstNameError && !phoneNumberError && !phoneCountryError && !emailError && !idFrontUrlError && !idBackUrlError) {
+        if (inputVal.email !== '' && inputVal.idNo !== '' && inputVal.address !== '' && inputVal.city !== '' && inputVal.state !== '' && inputVal.country !== '' && inputVal.birthDate !== '' && inputVal.firstName !== '' && inputVal.phoneCountry !== '' && inputVal.phoneNumber !== '' && inputVal.idType !== '' && inputVal.idFrontUrl !== '' && inputVal.idBackUrl !== '') {
             setShowSaveBtn(false)
         } else
             setShowSaveBtn(true)
@@ -278,7 +273,6 @@ function Kyc(props) {
             setFirstNameError(false);
         }
     };
-
 
     const handleChangeInputVal8 = (prop) => (event) => {
         if (event.target.value === '') {
@@ -371,13 +365,6 @@ function Kyc(props) {
         }
     };
 
-    const handleBlur7 = () => {
-        if (inputVal.birthDate === '') {
-            setBirthDateError(true);
-        } else {
-            setBirthDateError(false);
-        }
-    };
 
     const handleBlur8 = () => {
         if (inputVal.country === '') {
@@ -448,11 +435,6 @@ function Kyc(props) {
             newValue = getymd(newValue)
         }
         setInputVal({ ...inputVal, [prop]: newValue });
-        if (inputVal.birthDate === '') {
-            setBirthDateError(true);
-        } else {
-            setBirthDateError(false);
-        }
     };
 
 
@@ -492,22 +474,14 @@ function Kyc(props) {
         }
     };
 
-    const isNeedAudit = () => {
-        if (kycInfo) {
-            return kycInfo.isNeedAudit();
-        }
-        return true;
-    };
 
+    //刷新KYC
     const refreshKycInfo = () => {
         dispatch(getKycInfo()).then((value) => {
-            if (!isNeedAudit() || !value.payload) return;
             let resultData = { ...value.payload.data };
-
+            console.log(value, "ssssssssssssssssssssssssssssssssss");
             if (!resultData || Object.entries(resultData).length < 1) return;
-
             let copyData = {};
-
             Object.keys(inputVal).map((prop, index) => {
                 copyData[prop] = resultData[prop];
             });
@@ -528,7 +502,6 @@ function Kyc(props) {
         // if (typeof inputVal.birthDate === 'object') {
         //     handleChangeDate('birthDate', inputVal.birthDate);
         // }
-
         // 格式验证
         if (inputVal.birthDate != '') {
             if (! /^[1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/.test(inputVal.birthDate)) {
@@ -543,69 +516,30 @@ function Kyc(props) {
         return true;
     };
 
-    const isCanSumbit = (bShowMsg) => {
-        if (isAlreadySumbit()) return false;
-        if (!isCanSave(bShowMsg)) return false;
-
-        let chkKeys = Object.keys(inputVal);
-        for (let i = 0; i < chkKeys.length; i++) {
-            // 忽略可选字段
-            if (chkKeys[i] == "middleName"
-                || chkKeys[i] == "addressTwo"
-                || chkKeys[i] == "usSsn"
-                || chkKeys[i] == "proofOfAddressUrl"
-            ) {
-                continue;
-            }
-
-            if (inputVal[chkKeys[i]] == "") {
-                console.log(chkKeys[i])
-                return false;
-            }
-        }
-
-        return true;
-    };
-
-
     const onSave = () => {
-        // if (!isCanSave(true)) {
-        //     return;
-        // }
-        if (!idTypeError && !idNoError && !addressError && !cityError && !stateError && !countryError && !birthDateError && !firstNameError && !phoneNumberError && !phoneCountryError && !emailError && !idFrontUrlError && !idBackUrlError) {
-            dispatch(updateKycInfo(inputVal)).then(
-                (value) => {
-                    if (value.payload) {
-                        refreshKycInfo();
-                        dispatch(showMessage({ message: "Success", code: 1 }));
+        if (inputVal.email !== undefined && inputVal.idNo !== undefined && inputVal.address !== undefined && inputVal.city !== undefined && inputVal.state !== undefined && inputVal.country !== undefined && inputVal.firstName !== undefined && inputVal.phoneCountry !== undefined && inputVal.phoneNumber !== undefined && inputVal.idType !== undefined && inputVal.idFrontUrl !== undefined && inputVal.idBackUrl !== undefined) {
+            if (inputVal.email !== '' && inputVal.idNo !== '' && inputVal.address !== '' && inputVal.city !== '' && inputVal.state !== '' && inputVal.country !== '' && inputVal.firstName !== '' && inputVal.phoneCountry !== '' && inputVal.phoneNumber !== '' && inputVal.idType !== '' && inputVal.idFrontUrl !== '' && inputVal.idBackUrl !== '') {
+                console.log(inputVal, "tttttttttttttttttttttttttttttttttttttt");
+                dispatch(updateKycInfo(inputVal)).then(
+                    (value) => {
+                        console.log(value, "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
+                        if (value.payload) {
+                            refreshKycInfo();
+                            dispatch(showMessage({ message: "Success", code: 1 }));
+                        }
                     }
-                }
-            );
-        } else {
-            dispatch(showMessage({ message: "提交失败,必填项不能为空", code: 2 }));
-        }
-    };
-
-    const onSubmit = () => {
-
-        if (!isCanSumbit(true)) {
-            return;
-        }
-
-        dispatch(submitKycInfo(inputVal)).then(
-            (value) => {
-                if (value.payload) {
-                    refreshKycInfo();
-                }
+                );
+            } else {
+                dispatch(showMessage({ message: t('card_222'), code: 2 }));
             }
-        );
-
+        } else {
+            dispatch(showMessage({ message: t('card_222'), code: 2 }));
+        }
     };
 
 
     useEffect(() => {
         refreshKycInfo();
-
         return () => {
             try {
                 window.zE('webWidget', 'hide');
@@ -620,61 +554,42 @@ function Kyc(props) {
         }
     }, [user.profile]);
 
+    // useEffect(() => {
+    //     setPageState(1);
+    //     if (kycInfo.init) {
+    //         if (!kycInfo.havePhone() && !kycInfo.haveEmail()) {
+    //             setOpenAnimateModal(true)
+    //         } else {
+    //             if (kycInfo.havePhone()) {
+    //                 setPageState(2);
+    //                 setTabValue(1);
+    //             } else if (kycInfo.haveEmail()) {
+    //                 setPageState(1);
+    //             }
+    //         }
+    //         setOpenAnimateModal(false)
+    //         let copyData = {};
+    //         Object.keys(inputVal).map((prop, index) => {
+    //             copyData[prop] = kycInfo[prop];
+    //         });
+    //         setInputVal(copyData);
+    //         setPageState(0);
+    //     }
+    // }, [kycInfo]);
+
     useEffect(() => {
-        setPageState(1);
-
         if (kycInfo.init) {
-            if (!kycInfo.havePhone() && !kycInfo.haveEmail()) {
-                setOpenAnimateModal(true)
-            } else {
-                if (kycInfo.havePhone()) {
-                    setPageState(2);
-                    setTabValue(1);
-                } else if (kycInfo.haveEmail()) {
-                    setPageState(1);
-                }
-            }
-
-            setOpenAnimateModal(false)
-
             let copyData = {};
-
             Object.keys(inputVal).map((prop, index) => {
                 copyData[prop] = kycInfo[prop];
             });
-
+            console.log(copyData, "ggggggggggggggggggggggggggggggg");
             setInputVal(copyData);
-            setPageState(0);
         }
     }, [kycInfo]);
 
     return (
         <>
-            {/* <Root
-            header={
-                <Hidden smUp={isMobileMedia ? false : true} lgUp={!isMobileMedia ? false : true}>
-                    <IconButton
-                        onClick={() => {
-                            setLeftSidebarOpen(true);
-                        }}
-                        aria-label="open left sidebar"
-                        size="large"
-                    >
-                        <FuseSvgIcon>heroicons-outline:menu</FuseSvgIcon>
-                    </IconButton>
-                </Hidden>
-            }
-            content={
-                
-            }
-            leftSidebarOpen={leftSidebarOpen}
-            leftSidebarOnClose={() => {
-                setLeftSidebarOpen(false);
-            }}
-            leftSidebarContent={<HomeSidebarContent tab={'kyc'} />}
-            scroll={isMobile ? 'normal' : 'content'}
-        /> */}
-
             <div>
                 <motion.div
                     variants={container}
@@ -683,1037 +598,476 @@ function Kyc(props) {
                     className="tongYongChuang4"
                     style={{ margin: "20px auto " }}
                 >
-                    {/* <div style={{ color: '#ffffff', display: 'flex' }} onClick={() => {history.push('/wallet/home');;}} className="items-center my-8">
-                        <FuseSvgIcon className="text-48" size={16} color="action">heroicons-outline:chevron-left</FuseSvgIcon>
-                        <Typography className="text-16 mx-8">Back</Typography>
+                    <Box
+                        component={motion.div}
+                        variants={item}
+                        className="w-full rounded-16 border mb-28 flex flex-col "
+                        sx={{
+                            border: 'none'
+                        }}
+                    >
+                        <div className="flex items-center justify-between ">
+                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                                <InputLabel id="demo-simple-select-label">{t('kyc_27')} *</InputLabel>
+                                <OutlinedInput
+                                    id="outlined-adornment-address"
+                                    label="Email"
+                                    value={inputVal.email}
+                                    onChange={handleChangeInputVal('email')}
+                                    aria-describedby="outlined-weight-helper-text"
+                                    inputProps={{
+                                        'aria-label': 'email',
+                                    }}
+                                    error={emailError}
+                                    onBlur={handleBlur}
+                                />
+                                {emailError && (
+                                    <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                )}
+                            </FormControl>
+                        </div>
 
-                    </div> */}
-                    {/* <Typography onClick={() => { history.push('/wallet/home');; }}
-                            className={clsx("mt-32 text-20 font-extrabold tracking-tight leading-tight flex items-center justify-content-start back-modal-title cursor-pointer btnColorTitleBig", pageState === 0 && 'kyc-back-modal-title kyc-back-modal-title-bg')}>
-                            <img className='back-modal-title-img' src="wallet/assets/images/logo/icon-back.png" alt="back icon" />
-                            Back
-                        </Typography> */}
+                        <div className="flex items-center justify-between">
+                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                                <InputLabel id="demo-simple-select-label">{t('kyc_2')} *</InputLabel>
+                                <OutlinedInput
+                                    id="outlined-adornment-address"
+                                    label="PhoneCountry"
+                                    value={inputVal.phoneCountry}
+                                    onChange={handleChangeInputVal2('phoneCountry')}
+                                    aria-describedby="outlined-weight-helper-text"
+                                    inputProps={{
+                                        'aria-label': 'phoneCountry',
+                                    }}
+                                    error={phoneCountryError}
+                                    onBlur={handleBlur2}
+                                />
+                                {phoneCountryError && (
+                                    <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                )}
+                            </FormControl>
+                        </div>
 
-                    {/* <div className="flex items-baseline mt-2 font-medium text-14" style={{ marginBottom: '2rem', marginTop: 0 }}>
-                        {
-                            pageState === 0 ?
-                                <Typography>{t('Kyc_34')}
-                                    <span className="ml-4 color-16c2a3">
-                                        {t('Kyc_35')}
-                                    </span>
-                                </Typography> :
-                                <Typography>{t('kyc_25')}
-                                    <span className="ml-4 color-16c2a3">
-                                        {t('kyc_26')}
-                                    </span>
-                                </Typography>
-                        }
-                    </div> */}
+                        <div className="flex items-center justify-between">
+                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                                <InputLabel id="demo-simple-select-label">{t('kyc_3')} *</InputLabel>
+                                <OutlinedInput
+                                    id="outlined-adornment-address"
+                                    label="PhoneNumber"
+                                    value={inputVal.phoneNumber}
+                                    onChange={handleChangeInputVal3('phoneNumber')}
+                                    aria-describedby="outlined-weight-helper-text"
+                                    inputProps={{
+                                        'aria-label': 'phoneNumber',
+                                    }}
+                                    error={phoneNumberError}
+                                    onBlur={handleBlur3}
+                                />
+                                {phoneNumberError && (
+                                    <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                )}
+                            </FormControl>
+                        </div>
 
-                    {pageState === 0 && <>
-                        <Box
-                            component={motion.div}
-                            variants={item}
-                            className="w-full rounded-16 border mb-28 flex flex-col "
-                            sx={{
-                                border: 'none'
-                            }}
-                        >
-                            {isNeedAudit() && <>
-                                <div className="flex items-center justify-between ">
-                                    {/* <Typography
-                                        style={{
-                                            width: "35%",
-                                            overflow: "hidden",
-                                            wordBreak: "break-all"
-                                        }}
-                                        className="text-16 mx-12 cursor-pointer"
-                                    >
-                                        Email
-                                    </Typography> */}
-                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_27')} *</InputLabel>
-                                        <OutlinedInput
-                                            id="outlined-adornment-address"
-                                            label="Email"
-                                            value={inputVal.email}
-                                            onChange={handleChangeInputVal('email')}
-                                            // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
-                                            aria-describedby="outlined-weight-helper-text"
-                                            inputProps={{
-                                                'aria-label': 'email',
-                                            }}
-                                            error={emailError}
-                                            onBlur={handleBlur}
-                                        />
-                                        {emailError && (
-                                            <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
-                                        )}
-                                    </FormControl>
-                                </div>
+                        <div className="flex items-center justify-between">
+                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                                <InputLabel id="demo-simple-select-label">{t('kyc_4')} *</InputLabel>
+                                <OutlinedInput
+                                    id="outlined-adornment-address"
+                                    label="FirstName"
+                                    value={inputVal.firstName}
+                                    onChange={handleChangeInputVal4('firstName')}
+                                    aria-describedby="outlined-weight-helper-text"
+                                    inputProps={{
+                                        'aria-label': 'firstName',
+                                    }}
+                                    error={firstNameError}
+                                    onBlur={handleBlur4}
+                                />
+                                {firstNameError && (
+                                    <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                )}
+                            </FormControl>
+                        </div>
 
-                                <div className="flex items-center justify-between">
-                                    {/* <Typography
-                                        style={{
-                                            width: "35%",
-                                            overflow: "hidden",
-                                            wordBreak: "break-all"
-                                        }}
-                                        className="text-16 mx-12 cursor-pointer"
-                                    >
-                                        PhoneCountry
-                                    </Typography> */}
-                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_2')} *</InputLabel>
-                                        <OutlinedInput
-                                            id="outlined-adornment-address"
-                                            label="PhoneCountry"
-                                            value={inputVal.phoneCountry}
-                                            onChange={handleChangeInputVal2('phoneCountry')}
-                                            // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
-                                            aria-describedby="outlined-weight-helper-text"
-                                            inputProps={{
-                                                'aria-label': 'phoneCountry',
-                                            }}
-                                            error={phoneCountryError}
-                                            onBlur={handleBlur2}
-                                        />
-                                        {phoneCountryError && (
-                                            <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
-                                        )}
-                                    </FormControl>
-                                </div>
+                        <div className="flex items-center justify-between">
+                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                                <InputLabel id="demo-simple-select-label">{t('kyc_5')} </InputLabel>
+                                <OutlinedInput
+                                    id="outlined-adornment-address"
+                                    label="MiddleName"
+                                    value={inputVal.middleName}
+                                    onChange={handleChangeInputVal('middleName')}
+                                    aria-describedby="outlined-weight-helper-text"
+                                    inputProps={{
+                                        'aria-label': 'middleName',
+                                    }}
+                                />
+                            </FormControl>
+                        </div>
 
-                                <div className="flex items-center justify-between">
-                                    {/* <Typography
-                                        style={{
-                                            width: "35%",
-                                            overflow: "hidden",
-                                            wordBreak: "break-all"
-                                        }}
-                                        className="text-16 mx-12 cursor-pointer"
-                                    >
-                                        PhoneNumber
-                                    </Typography> */}
-                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_3')} *</InputLabel>
-                                        <OutlinedInput
-                                            id="outlined-adornment-address"
-                                            label="PhoneNumber"
-                                            value={inputVal.phoneNumber}
-                                            onChange={handleChangeInputVal3('phoneNumber')}
-                                            // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
-                                            aria-describedby="outlined-weight-helper-text"
-                                            inputProps={{
-                                                'aria-label': 'phoneNumber',
-                                            }}
-                                            error={phoneNumberError}
-                                            onBlur={handleBlur3}
-                                        />
-                                        {phoneNumberError && (
-                                            <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
-                                        )}
-                                    </FormControl>
-                                </div>
+                        <div className="flex items-center justify-between">
+                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                                <InputLabel id="demo-simple-select-label">{t('kyc_6')} </InputLabel>
+                                <OutlinedInput
+                                    id="outlined-adornment-address"
+                                    label="LastName"
+                                    value={inputVal.lastName}
+                                    onChange={handleChangeInputVal('lastName')}
+                                    aria-describedby="outlined-weight-helper-text"
+                                    inputProps={{
+                                        'aria-label': 'lastName',
+                                    }}
+                                />
+                            </FormControl>
+                        </div>
 
-                                <div className="flex items-center justify-between">
-                                    {/* <Typography
-                                        style={{
-                                            width: "35%",
-                                            overflow: "hidden",
-                                            wordBreak: "break-all"
-                                        }}
-                                        className="text-16 mx-12 cursor-pointer"
-                                    >
-                                        FirstName
-                                    </Typography> */}
-                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_4')} *</InputLabel>
-                                        <OutlinedInput
-                                            id="outlined-adornment-address"
-                                            label="FirstName"
-                                            value={inputVal.firstName}
-                                            onChange={handleChangeInputVal4('firstName')}
-                                            // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
-                                            aria-describedby="outlined-weight-helper-text"
-                                            inputProps={{
-                                                'aria-label': 'firstName',
-                                            }}
-                                            error={firstNameError}
-                                            onBlur={handleBlur4}
-                                        />
-                                        {firstNameError && (
-                                            <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
-                                        )}
-                                    </FormControl>
-                                </div>
+                        <div className="flex items-center justify-between">
+                            <Stack
+                                sx={{ width: '100%', borderColor: '#94A3B8' }}
+                                spacing={3}
+                                className="mb-24"
+                            >
+                                <MobileDatePicker
+                                    label="BirthDate"
+                                    inputFormat="yyyy-MM-dd"
+                                    value={inputVal.birthDate}
+                                    onChange={handleChangeDate('birthDate')}
+                                    renderInput={(params) => <TextField {...params} />}
+                                />
+                            </Stack>
+                        </div>
 
-                                <div className="flex items-center justify-between">
-                                    {/* <Typography
-                                        style={{
-                                            width: "35%",
-                                            overflow: "hidden",
-                                            wordBreak: "break-all"
-                                        }}
-                                        className="text-16 mx-12 cursor-pointer"
-                                    >
-                                        MiddleName
-                                    </Typography> */}
-                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_5')} </InputLabel>
-                                        <OutlinedInput
-                                            id="outlined-adornment-address"
-                                            label="MiddleName"
-                                            value={inputVal.middleName}
-                                            onChange={handleChangeInputVal('middleName')}
-                                            // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
-                                            aria-describedby="outlined-weight-helper-text"
-                                            inputProps={{
-                                                'aria-label': 'middleName',
-                                            }}
-                                        />
-                                    </FormControl>
-                                </div>
+                        <div className="flex items-center justify-between">
+                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                                <InputLabel htmlFor="outlined-adornment-address">{t('kyc_8')}*</InputLabel>
+                                <OutlinedInput
+                                    id="outlined-adornment-address"
+                                    label="country"
+                                    value={inputVal.country}
+                                    onChange={handleChangeInputVal8('country')}
+                                    aria-describedby="outlined-weight-helper-text"
+                                    inputProps={{
+                                        'aria-label': 'country',
+                                    }}
+                                    error={countryError}
+                                    onBlur={handleBlur8}
+                                />
+                                {countryError && (
+                                    <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                )}
+                            </FormControl>
+                        </div>
 
-                                <div className="flex items-center justify-between">
-                                    {/* <Typography
-                                        style={{
-                                            width: "35%",
-                                            overflow: "hidden",
-                                            wordBreak: "break-all"
-                                        }}
-                                        className="text-16 mx-12 cursor-pointer"
-                                    >
-                                        LastName
-                                    </Typography> */}
-                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_6')} </InputLabel>
-                                        <OutlinedInput
-                                            id="outlined-adornment-address"
-                                            label="LastName"
-                                            value={inputVal.lastName}
-                                            onChange={handleChangeInputVal('lastName')}
-                                            // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
-                                            aria-describedby="outlined-weight-helper-text"
-                                            inputProps={{
-                                                'aria-label': 'lastName',
-                                            }}
-                                        />
-                                    </FormControl>
-                                </div>
+                        <div className="flex items-center justify-between">
+                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                                <InputLabel id="demo-simple-select-label">{t('kyc_9')} *</InputLabel>
+                                <OutlinedInput
+                                    id="outlined-adornment-address"
+                                    label="State"
+                                    value={inputVal.state}
+                                    onChange={handleChangeInputVal9('state')}
+                                    aria-describedby="outlined-weight-helper-text"
+                                    inputProps={{
+                                        'aria-label': 'state',
+                                    }}
+                                    error={stateError}
+                                    onBlur={handleBlur9}
+                                />
+                                {stateError && (
+                                    <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                )}
+                            </FormControl>
+                        </div>
 
-                                <div className="flex items-center justify-between">
-                                    {/* <Typography
-                                        style={{
-                                            width: "35%",
-                                            overflow: "hidden",
-                                            wordBreak: "break-all"
-                                        }}
-                                        className="text-16 mx-12 cursor-pointer"
-                                    >
-                                        BirthDate
-                                    </Typography> */}
-                                    <Stack
-                                        sx={{ width: '100%', borderColor: '#94A3B8' }}
-                                        spacing={3}
-                                        className="mb-24"
-                                    >
-                                        <MobileDatePicker
-                                            label="BirthDate *"
-                                            inputFormat="yyyy-MM-dd"
-                                            value={inputVal.birthDate}
-                                            onChange={handleChangeDate('birthDate')}
-                                            renderInput={(params) => <TextField {...params} />}
-                                            onBlur={handleBlur7}
-                                        />
-                                        {birthDateError && (
-                                            <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
-                                        )}
-                                    </Stack>
-                                </div>
+                        <div className="flex items-center justify-between">
+                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                                <InputLabel id="demo-simple-select-label">{t('kyc_10')} *</InputLabel>
+                                <OutlinedInput
+                                    id="outlined-adornment-address"
+                                    label="City"
+                                    value={inputVal.city}
+                                    onChange={handleChangeInputVal10('city')}
+                                    aria-describedby="outlined-weight-helper-text"
+                                    error={cityError}
+                                    onBlur={handleBlur10}
+                                    inputProps={{
+                                        'aria-label': 'city',
+                                    }}
+                                />
+                                {cityError && (
+                                    <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                )}
+                            </FormControl>
+                        </div>
 
-                                <div className="flex items-center justify-between">
-                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel htmlFor="outlined-adornment-address">{t('kyc_8')}*</InputLabel>
-                                        <OutlinedInput
-                                            id="outlined-adornment-address"
-                                            label="country"
-                                            value={inputVal.country}
-                                            onChange={handleChangeInputVal8('country')}
-                                            aria-describedby="outlined-weight-helper-text"
-                                            inputProps={{
-                                                'aria-label': 'country',
-                                            }}
-                                            error={countryError}
-                                            onBlur={handleBlur8}
-                                        />
-                                        {countryError && (
-                                            <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
-                                        )}
-                                    </FormControl>
-                                </div>
+                        <div className="flex items-center justify-between">
+                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                                <InputLabel id="demo-simple-select-label">{t('kyc_11')} *</InputLabel>
+                                <OutlinedInput
+                                    id="outlined-adornment-address"
+                                    label="Address"
+                                    value={inputVal.address}
+                                    onChange={handleChangeInputVal11('address')}
+                                    aria-describedby="outlined-weight-helper-text"
+                                    error={addressError}
+                                    onBlur={handleBlur11}
+                                    inputProps={{
+                                        'aria-label': 'address',
+                                    }}
+                                />
+                                {addressError && (
+                                    <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                )}
+                            </FormControl>
+                        </div>
 
-                                <div className="flex items-center justify-between">
-                                    {/* <Typography
-                                        style={{
-                                            width: "35%",
-                                            overflow: "hidden",
-                                            wordBreak: "break-all"
-                                        }}
-                                        className="text-16 mx-12 cursor-pointer"
-                                    >
-                                        State
-                                    </Typography> */}
-                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_9')} *</InputLabel>
-                                        <OutlinedInput
-                                            id="outlined-adornment-address"
-                                            label="State"
-                                            value={inputVal.state}
-                                            onChange={handleChangeInputVal9('state')}
-                                            // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
-                                            aria-describedby="outlined-weight-helper-text"
-                                            inputProps={{
-                                                'aria-label': 'state',
-                                            }}
-                                            error={stateError}
-                                            onBlur={handleBlur9}
-                                        />
-                                        {stateError && (
-                                            <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
-                                        )}
-                                    </FormControl>
-                                </div>
+                        <div className="flex items-center justify-between">
+                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                                <InputLabel id="demo-simple-select-label">{t('kyc_12')}</InputLabel>
+                                <OutlinedInput
+                                    id="outlined-adornment-address"
+                                    label="AddressTwo"
+                                    value={inputVal.addressTwo}
+                                    onChange={handleChangeInputVal('addressTwo')}
+                                    aria-describedby="outlined-weight-helper-text"
+                                    inputProps={{
+                                        'aria-label': 'addressTwo',
+                                    }}
+                                />
+                            </FormControl>
+                        </div>
 
-                                <div className="flex items-center justify-between">
-                                    {/* <Typography
-                                        style={{
-                                            width: "35%",
-                                            overflow: "hidden",
-                                            wordBreak: "break-all"
-                                        }}
-                                        className="text-16 mx-12 cursor-pointer"
-                                    >
-                                        City
-                                    </Typography> */}
-                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_10')} *</InputLabel>
-                                        <OutlinedInput
-                                            id="outlined-adornment-address"
-                                            label="City"
-                                            value={inputVal.city}
-                                            onChange={handleChangeInputVal10('city')}
-                                            // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
-                                            aria-describedby="outlined-weight-helper-text"
-                                            error={cityError}
-                                            onBlur={handleBlur10}
-                                            inputProps={{
-                                                'aria-label': 'city',
-                                            }}
-                                        />
-                                        {cityError && (
-                                            <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
-                                        )}
-                                    </FormControl>
-                                </div>
+                        <div className="flex items-center justify-between">
+                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                                <InputLabel id="demo-simple-select-label">{t('kyc_13')}</InputLabel>
+                                <OutlinedInput
+                                    id="outlined-adornment-address"
+                                    label="Zipcode"
+                                    value={inputVal.zipcode}
+                                    onChange={handleChangeInputVal('zipcode')}
+                                    aria-describedby="outlined-weight-helper-text"
+                                    inputProps={{
+                                        'aria-label': 'zipcode',
+                                    }}
+                                />
+                            </FormControl>
+                        </div>
 
-                                <div className="flex items-center justify-between">
-                                    {/* <Typography
-                                        style={{
-                                            width: "35%",
-                                            overflow: "hidden",
-                                            wordBreak: "break-all"
-                                        }}
-                                        className="text-16 mx-12 cursor-pointer"
-                                    >
-                                        Address
-                                    </Typography> */}
-                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_11')} *</InputLabel>
-                                        <OutlinedInput
-                                            id="outlined-adornment-address"
-                                            label="Address"
-                                            value={inputVal.address}
-                                            onChange={handleChangeInputVal11('address')}
-                                            // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
-                                            aria-describedby="outlined-weight-helper-text"
-                                            error={addressError}
-                                            onBlur={handleBlur11}
-                                            inputProps={{
-                                                'aria-label': 'address',
-                                            }}
-                                        />
-                                        {addressError && (
-                                            <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
-                                        )}
-                                    </FormControl>
-                                </div>
+                        <div className="flex items-center justify-between">
+                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                                <InputLabel id="demo-simple-select-label">{t('kyc_14')} *</InputLabel>
+                                <OutlinedInput
+                                    id="outlined-adornment-address"
+                                    label="IdNo"
+                                    value={inputVal.idNo}
+                                    onChange={handleChangeInputVal14('idNo')}
+                                    error={idNoError}
+                                    onBlur={handleBlur14}
+                                    aria-describedby="outlined-weight-helper-text"
+                                    inputProps={{
+                                        'aria-label': 'idNo',
+                                    }}
+                                />
+                                {idNoError && (
+                                    <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                )}
+                            </FormControl>
+                        </div>
 
-                                <div className="flex items-center justify-between">
-                                    {/* <Typography
-                                        style={{
-                                            width: "35%",
-                                            overflow: "hidden",
-                                            wordBreak: "break-all"
-                                        }}
-                                        className="text-16 mx-12 cursor-pointer"
-                                    >
-                                        AddressTwo
-                                    </Typography> */}
-                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_12')}</InputLabel>
-                                        <OutlinedInput
-                                            id="outlined-adornment-address"
-                                            label="AddressTwo"
-                                            value={inputVal.addressTwo}
-                                            onChange={handleChangeInputVal('addressTwo')}
-                                            // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
-                                            aria-describedby="outlined-weight-helper-text"
-                                            inputProps={{
-                                                'aria-label': 'addressTwo',
-                                            }}
-                                        />
-                                    </FormControl>
-                                </div>
-
-                                <div className="flex items-center justify-between">
-                                    {/* <Typography
-                                        style={{
-                                            width: "35%",
-                                            overflow: "hidden",
-                                            wordBreak: "break-all"
-                                        }}
-                                        className="text-16 mx-12 cursor-pointer"
-                                    >
-                                        Zipcode
-                                    </Typography> */}
-                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_13')}</InputLabel>
-                                        <OutlinedInput
-                                            id="outlined-adornment-address"
-                                            label="Zipcode"
-                                            value={inputVal.zipcode}
-                                            onChange={handleChangeInputVal('zipcode')}
-                                            // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
-                                            aria-describedby="outlined-weight-helper-text"
-                                            inputProps={{
-                                                'aria-label': 'zipcode',
-                                            }}
-                                        />
-                                    </FormControl>
-                                </div>
-
-                                <div className="flex items-center justify-between">
-                                    {/* <Typography
-                                        style={{
-                                            width: "35%",
-                                            overflow: "hidden",
-                                            wordBreak: "break-all"
-                                        }}
-                                        className="text-16 mx-12 cursor-pointer"
-                                    >
-                                        IdNo
-                                    </Typography> */}
-                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_14')} *</InputLabel>
-                                        <OutlinedInput
-                                            id="outlined-adornment-address"
-                                            label="IdNo"
-                                            value={inputVal.idNo}
-                                            onChange={handleChangeInputVal14('idNo')}
-                                            error={idNoError}
-                                            onBlur={handleBlur14}
-                                            aria-describedby="outlined-weight-helper-text"
-                                            inputProps={{
-                                                'aria-label': 'idNo',
-                                            }}
-                                        />
-                                        {idNoError && (
-                                            <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
-                                        )}
-                                    </FormControl>
-                                </div>
-
-                                <div className="flex items-center justify-between">
-                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_15')} *</InputLabel>
-                                        <Select
-                                            labelId="demo-simple-select-label"
-                                            id="demo-simple-select"
-                                            value={inputVal.idType}
-                                            label="IdType"
-                                            onChange={handleChangeInputVal15('idType')}
-                                            error={idTypeError}
-                                            onBlur={handleBlur15}
-                                        >
-                                            <MenuItem value={'id_card'}>{t('Kyc_36')}</MenuItem>{/*身份证*/}
-                                            <MenuItem value={'passport'}>{t('Kyc_37')}</MenuItem>{/*护照*/}
-                                            <MenuItem value={'dl'}>{t('Kyc_38')}</MenuItem>{/*驾照*/}
-                                            <MenuItem value={'residence_permit'}>{t('Kyc_39')}</MenuItem>{/*居住证*/}
-                                        </Select>
-                                        {idTypeError && (
-                                            <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
-                                        )}
-                                    </FormControl>
-                                </div>
+                        <div className="flex items-center justify-between">
+                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                                <InputLabel id="demo-simple-select-label">{t('kyc_15')} *</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={inputVal.idType}
+                                    label="IdType"
+                                    onChange={handleChangeInputVal15('idType')}
+                                    error={idTypeError}
+                                    onBlur={handleBlur15}
+                                >
+                                    <MenuItem value={'id_card'}>{t('Kyc_36')}</MenuItem>{/*身份证*/}
+                                    <MenuItem value={'passport'}>{t('Kyc_37')}</MenuItem>{/*护照*/}
+                                    <MenuItem value={'dl'}>{t('Kyc_38')}</MenuItem>{/*驾照*/}
+                                    <MenuItem value={'residence_permit'}>{t('Kyc_39')}</MenuItem>{/*居住证*/}
+                                </Select>
+                                {idTypeError && (
+                                    <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                )}
+                            </FormControl>
+                        </div>
 
 
-                                <div className="flex items-center justify-between mb-24 ">
-                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
-                                        <InputLabel id="demo-simple-select-label">{t('kyc_20')}</InputLabel>
-                                        <OutlinedInput
-                                            id="outlined-adornment-address"
-                                            label="UsSsn"
-                                            value={inputVal.usSsn}
-                                            onChange={handleChangeInputVal('usSsn')}
-                                            aria-describedby="outlined-weight-helper-text"
-                                            inputProps={{
-                                                'aria-label': 'usSsn',
-                                            }}
-                                        />
-                                    </FormControl>
-                                </div>
+                        <div className="flex items-center justify-between mb-24 ">
+                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
+                                <InputLabel id="demo-simple-select-label">{t('kyc_20')}</InputLabel>
+                                <OutlinedInput
+                                    id="outlined-adornment-address"
+                                    label="UsSsn"
+                                    value={inputVal.usSsn}
+                                    onChange={handleChangeInputVal('usSsn')}
+                                    aria-describedby="outlined-weight-helper-text"
+                                    inputProps={{
+                                        'aria-label': 'usSsn',
+                                    }}
+                                />
+                            </FormControl>
+                        </div>
 
-                                <div className="mb-24">
-                                    <Typography className="text-16 upload-title">
-                                        {t('kyc_16')}
-                                    </Typography>
-                                    <div className="flex flex-wrap items-center justify-content-start">
-                                        {inputVal.idFrontUrl &&
-                                            <div className='kyc-file-box flex items-center justify-center'>
-                                                <img style={{ width: "100%", height: '100%', display: 'block' }} src={baseImgUrl + inputVal.idFrontUrl} alt="" />
-                                            </div>
-                                        }
-                                        <div className='kyc-file-box flex items-center justify-center'>
-                                            <Box
-                                                className="px-48 text-lg flex items-center justify-center cursor-pointer"
-                                                color="secondary"
-                                                variant="contained"
-                                                sx={{ color: '#ffffff' }}
-                                                style={{ backgroundColor: 'transparent', borderRaduis: '8px !important', width: "100%", height: '100%', padding: 0 }}
-                                                component="label"
-                                                onClick={() => { setKeyName('idFrontUrl') }}
-                                            >
-                                                <img style={{ display: 'block' }} src='wallet/assets/images/kyc/icon-upload.png' alt="" />
-                                                <input
-                                                    accept="image/*"
-                                                    className="hidden"
-                                                    id="button-file"
-                                                    type="file"
-                                                    onChange={(e) => { uploadChange(e.target.files[0]) }}
-                                                    onBlur={handleBlur16}
-                                                />
-                                            </Box>
-                                        </div>
+                        <div className="mb-24">
+                            <Typography className="text-16 upload-title">
+                                {t('kyc_16')}*
+                            </Typography>
+                            <div className="flex flex-wrap items-center justify-content-start">
+                                {inputVal.idFrontUrl &&
+                                    <div className='kyc-file-box flex items-center justify-center'>
+                                        <img style={{ width: "100%", height: '100%', display: 'block' }} src={baseImgUrl + inputVal.idFrontUrl} alt="" />
                                     </div>
-                                    {idFrontUrlError && (
-                                        <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
-                                    )}
-                                </div>
-
-                                <div className="mb-24">
-                                    <Typography className="text-16 upload-title">
-                                        {t('kyc_17')}
-                                    </Typography>
-                                    <div className="flex flex-wrap items-center justify-content-start">
-                                        {inputVal.idBackUrl &&
-                                            <div className='kyc-file-box flex items-center justify-center'>
-                                                <img style={{ width: "100%", height: '100%', display: 'block' }} src={baseImgUrl + inputVal.idBackUrl} alt="" />
-                                            </div>
-                                        }
-                                        <div className='kyc-file-box flex items-center justify-center'>
-                                            <Box
-                                                className="px-48 text-lg flex items-center justify-center cursor-pointer"
-                                                color="secondary"
-                                                variant="contained"
-                                                sx={{ color: '#ffffff' }}
-                                                style={{ backgroundColor: 'transparent', borderRaduis: '8px !important', width: "100%", height: '100%', padding: 0 }}
-                                                component="label"
-                                                onClick={() => { setKeyName('idBackUrl') }}
-                                            >
-                                                <img style={{ display: 'block' }} src='wallet/assets/images/kyc/icon-upload.png' alt="" />
-                                                <input
-                                                    accept="image/*"
-                                                    className="hidden"
-                                                    id="button-file"
-                                                    type="file"
-                                                    onChange={(e) => { uploadChange2(e.target.files[0]) }}
-                                                    onBlur={handleBlur17}
-                                                />
-                                            </Box>
-                                        </div>
-                                    </div>
-                                    {idBackUrlError && (
-                                        <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
-                                    )}
-                                </div>
-
-                                <div className="mb-24">
-                                    <Typography className="text-16 upload-title">
-                                        {t('kyc_18')}
-                                    </Typography>
-                                    <div className="flex flex-wrap items-center justify-content-start">
-                                        {inputVal.selfPhotoUrl &&
-                                            <div className='kyc-file-box flex items-center justify-center'>
-                                                <img style={{ width: "100%", height: '100%', display: 'block' }} src={baseImgUrl + inputVal.selfPhotoUrl} alt="" />
-                                            </div>
-                                        }
-                                        <div className='kyc-file-box flex items-center justify-center'>
-                                            <Box
-                                                className="px-48 text-lg flex items-center justify-center cursor-pointer"
-                                                color="secondary"
-                                                variant="contained"
-                                                sx={{ color: '#ffffff' }}
-                                                style={{ backgroundColor: 'transparent', borderRaduis: '8px !important', width: "100%", height: '100%', padding: 0 }}
-                                                component="label"
-                                                onClick={() => { setKeyName('selfPhotoUrl') }}
-                                            >
-                                                <img style={{ display: 'block' }} src='wallet/assets/images/kyc/icon-upload.png' alt="" />
-                                                <input
-                                                    accept="image/*"
-                                                    className="hidden"
-                                                    id="button-file"
-                                                    type="file"
-                                                    onChange={(e) => { uploadChange(e.target.files[0]) }}
-                                                />
-                                            </Box>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="mb-24">
-                                    <Typography className="text-16 upload-title">
-                                        {t('kyc_19')}
-                                    </Typography>
-                                    <div className="flex flex-wrap items-center justify-content-start">
-                                        {inputVal.proofOfAddressUrl &&
-                                            <div className='kyc-file-box flex items-center justify-center'>
-                                                <img style={{ width: "100%", height: '100%', display: 'block' }} src={baseImgUrl + inputVal.proofOfAddressUrl} alt="" />
-                                            </div>
-                                        }
-                                        <div className='kyc-file-box flex items-center justify-center'>
-                                            <Box
-                                                className="px-48 text-lg flex items-center justify-center cursor-pointer"
-                                                color="secondary"
-                                                variant="contained"
-                                                sx={{ color: '#ffffff' }}
-                                                style={{ backgroundColor: 'transparent', borderRaduis: '8px !important', width: "100%", height: '100%', padding: 0 }}
-                                                component="label"
-                                                onClick={() => { setKeyName('proofOfAddressUrl') }}
-                                            >
-                                                <img style={{ display: 'block' }} src='wallet/assets/images/kyc/icon-upload.png' alt="" />
-                                                <input
-                                                    accept="image/*"
-                                                    className="hidden"
-                                                    id="button-file"
-                                                    type="file"
-                                                    onChange={(e) => { uploadChange(e.target.files[0]) }}
-                                                />
-                                            </Box>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                {/*{Object.keys(inputVal).map((key, index) => {*/}
-                                {/*    return (*/}
-                                {/*        <div className="flex items-center justify-between my-12" key={index}>*/}
-                                {/*            <Typography*/}
-                                {/*                style={{*/}
-                                {/*                    width: "35%",*/}
-                                {/*                    overflow: "hidden",*/}
-                                {/*                    wordBreak: "break-all"*/}
-                                {/*                }}*/}
-                                {/*                className="text-16 mx-12 cursor-pointer"*/}
-                                {/*            >*/}
-                                {/*                {key}*/}
-                                {/*            </Typography>*/}
-                                {/*            {key.search('Url') === -1 &&*/}
-                                {/*            <FormControl sx={{ width: '75%', borderColor: '#94A3B8' }} variant="outlined">*/}
-                                {/*                <OutlinedInput*/}
-                                {/*                    id="outlined-adornment-address"*/}
-                                {/*                    value={inputVal[key]}*/}
-                                {/*                    onChange={handleChangeInputVal(key)}*/}
-                                {/*                    // endAdornment={<InputAdornment position="end">Max</InputAdornment>}*/}
-                                {/*                    aria-describedby="outlined-weight-helper-text"*/}
-                                {/*                    inputProps={{*/}
-                                {/*                        'aria-label': 'address',*/}
-                                {/*                    }}*/}
-                                {/*                />*/}
-                                {/*            </FormControl>*/}
-                                {/*            }*/}
-                                {/*            {key.search('Url') !== -1 &&*/}
-                                {/*            <Button*/}
-                                {/*                className="px-48 text-lg"*/}
-                                {/*                color="secondary"*/}
-                                {/*                variant="contained"*/}
-                                {/*                sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}*/}
-                                {/*                style={{borderRaduis: '8px !important', width: "75%" }}*/}
-                                {/*                component="label"*/}
-                                {/*                onClick={() => {setKeyName(key)}}*/}
-                                {/*            >*/}
-                                {/*                上传文件*/}
-                                {/*                <input*/}
-                                {/*                    accept="image/*"*/}
-                                {/*                    className="hidden"*/}
-                                {/*                    id="button-file"*/}
-                                {/*                    type="file"*/}
-                                {/*                    onChange={(e) => { uploadChange(e.target.files[0]) }}*/}
-                                {/*                />*/}
-                                {/*            </Button>*/}
-
-                                {/*            }*/}
-                                {/*        </div>*/}
-                                {/*    )*/}
-                                {/*})}*/}
-                                <div className='flex justify-between' style={{ height: "70px" }}>
-                                    <Button
-                                        disabled={showSaveBtn}
-                                        className="text-lg btnColorTitleBig button-reset2"
-                                        color="secondary"
-                                        variant="contained"
-                                        style={{ fontSize: "1.6rem", width: "100%" }}
-                                        onClick={() => { onSave() }}
-                                    >
-                                        {t('kyc_22')}
-                                    </Button>
-
-                                    {/* <Button 
-                                        disabled={!isCanSumbit()}
-                                        className="text-lg btnColorTitleBig button-reset2"
-                                        color="secondary"
-                                        variant="contained"
-                                        style={{fontSize: "1.6rem", width: "47%" }}
-                                        onClick={() => { onSubmit() }}
-                                    >
-                                        {t('kyc_23')}
-                                    </Button> */}
-                                </div>
-                            </>}
-
-                            {isNeedAudit() === false && <>
-                                <Typography className="text-16 cursor-pointer">
-                                    {t('Kyc_40')}
-                                </Typography>
-                            </>}
-
-                        </Box>
-                    </>}
-
-                    {
-                        (pageState === 1 || pageState === 2) &&
-                        <Tabs
-                            component={motion.div}
-                            value={tabValue}
-                            onChange={(ev, value) => {
-                                setTabValue(value);
-                                setPageState(value + 1)
-                            }}
-                            indicatorColor="secondary"
-                            textColor="inherit"
-                            variant="scrollable"
-                            scrollButtons={false}
-                            className="min-h-32"
-                            style={{ padding: '0 0', margin: '1.5rem 0 2.4rem', borderColor: 'transparent', backgroundColor: '#181f2b', width: '144px', borderRadius: '20px', height: '3.2rem' }}
-                            classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
-                            TabIndicatorProps={{
-                                children: (
+                                }
+                                <div className='kyc-file-box flex items-center justify-center'>
                                     <Box
-                                        sx={{ bgcolor: 'text.disabled' }}
-                                        className="w-full h-full rounded-full huaKuaBgColor1"
-                                    />
-                                ),
-                            }}
-                            sx={{
-                                borderBottom: '1px solid #374252',
-                                padding: '1rem 1.2rem'
-                            }}
-                        >
-                            {Object.entries(ranges).map(([key, label]) => (
-                                <Tab
-                                    className="text-14 font-semibold min-h-32 min-w-72 px-8 txtColorTitle zindex opacity-100 "
-                                    disableRipple
-                                    key={key}
-                                    label={label}
-                                    sx={{
-                                        color: '#FFFFFF', height: '3.2rem'
-                                    }}
-                                />
-                            ))}
-                        </Tabs>
-                    }
-
-                    {pageState === 1 && <>
-                        <div className="flex items-center justify-between my-12">
-                            {/* <Typography
-                                style={{
-                                    width: "35%",
-                                    overflow: "hidden",
-                                    wordBreak: "break-all"
-                                }}
-                                className="text-16 mx-12 cursor-pointer"
-                            >
-                                Email
-                            </Typography> */}
-                            <FormControl variant="outlined" sx={{ width: '100%', borderColor: '#94A3B8' }} className="mb-24">
-                                <InputLabel>{t('kyc_27')}</InputLabel>
-                                <OutlinedInput
-                                    label="Email"
-                                    type="text"
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    value={approveData.email}
-                                    onChange={handleApproveData('email')}
-                                    endAdornment={
-                                        <InputAdornment position="end">
-                                            {time <= 0 && <IconButton
-                                                aria-label="toggle password visibility"
-                                                onClick={() => {
-                                                    sendCode('email')
-                                                }}
-                                                // onMouseDown={handleMouseDownPassword}
-                                                edge="end"
-                                                sx={{
-                                                    fontSize: '1.4rem',
-                                                    borderRadius: '5px'
-                                                }}
-                                            >
-                                                {t('kyc_28')}
-                                            </IconButton>}
-
-                                            {time > 0 &&
-                                                <div>
-                                                    {time} s
-                                                </div>
-                                            }
-                                        </InputAdornment>
-                                    }
-                                />
-                            </FormControl>
-                        </div>
-                        <div className="flex items-center justify-between my-12">
-                            {/* <Typography
-                                style={{
-                                    width: "35%",
-                                    overflow: "hidden",
-                                    wordBreak: "break-all"
-                                }}
-                                className="text-16 mx-12 cursor-pointer"
-                            >
-                                Code
-                            </Typography> */}
-                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                <InputLabel id="demo-simple-select-label">{t('kyc_29')}</InputLabel>
-                                <OutlinedInput
-                                    id="outlined-adornment-address"
-                                    label="Email"
-                                    value={approveData.code}
-                                    onChange={handleApproveData('code')}
-                                    // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
-                                    aria-describedby="outlined-weight-helper-text"
-                                    inputProps={{
-                                        'aria-label': 'email',
-                                    }}
-                                />
-                            </FormControl>
-                        </div>
-                        <div className="flex items-center justify-between my-12">
-                            {/* <Typography
-                                style={{
-                                    width: "35%",
-                                    overflow: "hidden",
-                                    wordBreak: "break-all"
-                                }}
-                                className="text-16 mx-12 cursor-pointer"
-                            >
-                                Password
-                            </Typography> */}
-                            {user.profile?.sysPass && <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                <InputLabel id="demo-simple-select-label">{t('kyc_30')}</InputLabel>
-                                <OutlinedInput
-                                    id="outlined-adornment-address"
-                                    label="Password"
-                                    value={approveData.password}
-                                    onChange={handleApproveData('password')}
-                                    // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
-                                    aria-describedby="outlined-weight-helper-text"
-                                    inputProps={{
-                                        'aria-label': 'email',
-                                    }}
-                                />
-                            </FormControl>}
-                        </div>
-
-                        <Button
-                            className="px-48 text-lg my-12 btnColorTitleBig mt-24 button-reset3"
-                            color="secondary"
-                            variant="contained"
-                            onClick={() => { onSubmitEmail() }}
-                        >
-                            {t('Kyc_31')}
-                        </Button>
-                    </>}
-
-                    {pageState === 2 && <>
-                        <div className="flex items-center justify-between my-12">
-                            {/* <Typography
-                                style={{
-                                    width: "35%",
-                                    overflow: "hidden",
-                                    wordBreak: "break-all"
-                                }}
-                                className="text-16 mx-12 cursor-pointer"
-                            >
-                                NationCode
-                            </Typography> */}
-                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                <Autocomplete
-                                    // disablePortal
-                                    options={phoneCode.list}
-                                    autoHighlight
-                                    onInputChange={(event, newInputValue) => {
-                                        setTmpPhoneCode(newInputValue.replace(/\+/g, ""));
-                                    }}
-                                    filterOptions={(options) => {
-                                        const reg = new RegExp(tmpPhoneCode, 'i');
-                                        const array = options.filter((item) => {
-                                            return reg.test(item.phone_code) || reg.test(item.local_name)
-                                        });
-                                        return array;
-                                    }}
-                                    onChange={(res, option) => {
-                                        handleChangeApproveDataVal('nationCode', option.phone_code);
-                                        // setApproveData();
-                                        // control._formValues.nationCode = option.phone_code
-                                    }}
-                                    getOptionLabel={(option) => { return inputVal.nationCode }}
-                                    renderOption={(props, option) => (
-                                        <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                                            <img
-                                                loading="lazy"
-                                                width="20"
-                                                src={`/wallet/assets/images/country/${option.country_code}.png`}
-                                                alt=""
-                                            />
-                                            {option.local_name} ({option.country_code}) +{option.phone_code}
-                                        </Box>
-                                    )}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            label="nationCode"
-                                            inputProps={{
-                                                ...params.inputProps,
-                                                autoComplete: 'nationCode', // disable autocomplete and autofill
-                                            }}
+                                        className="px-48 text-lg flex items-center justify-center cursor-pointer"
+                                        color="secondary"
+                                        variant="contained"
+                                        sx={{ color: '#ffffff' }}
+                                        style={{ backgroundColor: 'transparent', borderRaduis: '8px !important', width: "100%", height: '100%', padding: 0 }}
+                                        component="label"
+                                        onClick={() => { setKeyName('idFrontUrl') }}
+                                    >
+                                        <img style={{ display: 'block' }} src='wallet/assets/images/kyc/icon-upload.png' alt="" />
+                                        <input
+                                            accept="image/*"
+                                            className="hidden"
+                                            id="button-file"
+                                            type="file"
+                                            onChange={(e) => { uploadChange(e.target.files[0]) }}
+                                            onBlur={handleBlur16}
                                         />
-                                    )}
-                                />
-                            </FormControl>
+                                    </Box>
+                                </div>
+                            </div>
+                            {idFrontUrlError && (
+                                <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                            )}
                         </div>
-                        <div className="flex items-center justify-between my-12">
-                            {/* <Typography
-                                style={{
-                                    width: "35%",
-                                    overflow: "hidden",
-                                    wordBreak: "break-all"
-                                }}
-                                className="text-16 mx-12 cursor-pointer"
+
+                        <div className="mb-24">
+                            <Typography className="text-16 upload-title">
+                                {t('kyc_17')}*
+                            </Typography>
+                            <div className="flex flex-wrap items-center justify-content-start">
+                                {inputVal.idBackUrl &&
+                                    <div className='kyc-file-box flex items-center justify-center'>
+                                        <img style={{ width: "100%", height: '100%', display: 'block' }} src={baseImgUrl + inputVal.idBackUrl} alt="" />
+                                    </div>
+                                }
+                                <div className='kyc-file-box flex items-center justify-center'>
+                                    <Box
+                                        className="px-48 text-lg flex items-center justify-center cursor-pointer"
+                                        color="secondary"
+                                        variant="contained"
+                                        sx={{ color: '#ffffff' }}
+                                        style={{ backgroundColor: 'transparent', borderRaduis: '8px !important', width: "100%", height: '100%', padding: 0 }}
+                                        component="label"
+                                        onClick={() => { setKeyName('idBackUrl') }}
+                                    >
+                                        <img style={{ display: 'block' }} src='wallet/assets/images/kyc/icon-upload.png' alt="" />
+                                        <input
+                                            accept="image/*"
+                                            className="hidden"
+                                            id="button-file"
+                                            type="file"
+                                            onChange={(e) => { uploadChange2(e.target.files[0]) }}
+                                            onBlur={handleBlur17}
+                                        />
+                                    </Box>
+                                </div>
+                            </div>
+                            {idBackUrlError && (
+                                <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                            )}
+                        </div>
+
+                        <div className="mb-24">
+                            <Typography className="text-16 upload-title">
+                                {t('kyc_18')}
+                            </Typography>
+                            <div className="flex flex-wrap items-center justify-content-start">
+                                {inputVal.selfPhotoUrl &&
+                                    <div className='kyc-file-box flex items-center justify-center'>
+                                        <img style={{ width: "100%", height: '100%', display: 'block' }} src={baseImgUrl + inputVal.selfPhotoUrl} alt="" />
+                                    </div>
+                                }
+                                <div className='kyc-file-box flex items-center justify-center'>
+                                    <Box
+                                        className="px-48 text-lg flex items-center justify-center cursor-pointer"
+                                        color="secondary"
+                                        variant="contained"
+                                        sx={{ color: '#ffffff' }}
+                                        style={{ backgroundColor: 'transparent', borderRaduis: '8px !important', width: "100%", height: '100%', padding: 0 }}
+                                        component="label"
+                                        onClick={() => { setKeyName('selfPhotoUrl') }}
+                                    >
+                                        <img style={{ display: 'block' }} src='wallet/assets/images/kyc/icon-upload.png' alt="" />
+                                        <input
+                                            accept="image/*"
+                                            className="hidden"
+                                            id="button-file"
+                                            type="file"
+                                            onChange={(e) => { uploadChange(e.target.files[0]) }}
+                                        />
+                                    </Box>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="mb-24">
+                            <Typography className="text-16 upload-title">
+                                {t('kyc_19')}
+                            </Typography>
+                            <div className="flex flex-wrap items-center justify-content-start">
+                                {inputVal.proofOfAddressUrl &&
+                                    <div className='kyc-file-box flex items-center justify-center'>
+                                        <img style={{ width: "100%", height: '100%', display: 'block' }} src={baseImgUrl + inputVal.proofOfAddressUrl} alt="" />
+                                    </div>
+                                }
+                                <div className='kyc-file-box flex items-center justify-center'>
+                                    <Box
+                                        className="px-48 text-lg flex items-center justify-center cursor-pointer"
+                                        color="secondary"
+                                        variant="contained"
+                                        sx={{ color: '#ffffff' }}
+                                        style={{ backgroundColor: 'transparent', borderRaduis: '8px !important', width: "100%", height: '100%', padding: 0 }}
+                                        component="label"
+                                        onClick={() => { setKeyName('proofOfAddressUrl') }}
+                                    >
+                                        <img style={{ display: 'block' }} src='wallet/assets/images/kyc/icon-upload.png' alt="" />
+                                        <input
+                                            accept="image/*"
+                                            className="hidden"
+                                            id="button-file"
+                                            type="file"
+                                            onChange={(e) => { uploadChange(e.target.files[0]) }}
+                                        />
+                                    </Box>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='flex justify-between' style={{ height: "70px" }}>
+                            <Button
+                                disabled={showSaveBtn}
+                                className="text-lg btnColorTitleBig button-reset2"
+                                color="secondary"
+                                variant="contained"
+                                style={{ fontSize: "1.6rem", width: "100%" }}
+                                onClick={() => { onSave() }}
                             >
-                                Phone
-                            </Typography> */}
-                            <FormControl variant="outlined" sx={{ width: '100%', borderColor: '#94A3B8' }} className="mb-24">
-                                <InputLabel>{t('Kyc_32')}</InputLabel>
-                                <OutlinedInput
-                                    label="Phone"
-                                    type="number"
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    value={approveData.phone}
-                                    onChange={handleApproveData('phone')}
-                                    endAdornment={
-                                        <InputAdornment position="end">
-                                            {time <= 0 && <IconButton
-                                                aria-label="toggle password visibility"
-                                                onClick={() => {
-                                                    sendCode('phone')
-                                                }}
-                                                // onMouseDown={handleMouseDownPassword}
-                                                edge="end"
-                                                sx={{
-                                                    fontSize: '1.4rem',
-                                                    borderRadius: '5px'
-                                                }}
-                                            >
-                                                {t('kyc_28')}
-                                            </IconButton>}
-
-                                            {time > 0 &&
-                                                <div>
-                                                    {time} s
-                                                </div>
-                                            }
-                                        </InputAdornment>
-                                    }
-                                />
-                            </FormControl>
+                                {t('kyc_22')}
+                            </Button>
                         </div>
-                        <div className="flex items-center justify-between my-12">
-                            {/* <Typography
-                                style={{
-                                    width: "35%",
-                                    overflow: "hidden",
-                                    wordBreak: "break-all"
-                                }}
-                                className="text-16 mx-12 cursor-pointer"
-                            >
-                                Code
-                            </Typography> */}
-                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                <InputLabel id="demo-simple-select-label">{t('kyc_29')}</InputLabel>
-                                <OutlinedInput
-                                    id="outlined-adornment-address"
-                                    label="Email"
-                                    value={approveData.code}
-                                    onChange={handleApproveData('code')}
-                                    // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
-                                    aria-describedby="outlined-weight-helper-text"
-                                    inputProps={{
-                                        'aria-label': 'email',
-                                    }}
-                                />
-                            </FormControl>
-                        </div>
-
-                        {user.profile?.sysPass && <div className="flex items-center justify-between my-12">
-                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                <InputLabel id="demo-simple-select-label">{t('kyc_30')}</InputLabel>
-                                <OutlinedInput
-                                    id="outlined-adornment-address"
-                                    label="Password"
-                                    value={approveData.password}
-                                    onChange={handleApproveData('password')}
-                                    // endAdornment={<InputAdornment position="end">Max</InputAdornment>}
-                                    aria-describedby="outlined-weight-helper-text"
-                                    inputProps={{
-                                        'aria-label': 'email',
-                                    }}
-                                />
-                            </FormControl>
-                        </div>}
-
-
-                        <Button
-                            className="px-48 text-lg my-12 btnColorTitleBig mt-24 button-reset3"
-                            color="secondary"
-                            variant="contained"
-                            onClick={() => { onSubmitPhone() }}
-                        >
-                            {t('Kyc_31')}
-                        </Button>
-                    </>}
+                    </Box>
                 </motion.div>
 
                 <AnimateModal
@@ -1774,8 +1128,6 @@ function Kyc(props) {
                 </AnimateModal>
             </div>
         </>
-
-
 
     )
 }

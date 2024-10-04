@@ -582,8 +582,8 @@ const locale = {
     card_218:"Yandex, Select Media",
     card_219:"亚马逊AWS, Chatgpt, OpenAI, Godaddy, 星链, TalkTT, Zoom, 甲骨文, QR Code, 华为, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, 沃达丰, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-    card_221:"已达到当日兑换上限"
-
+    card_221:"已达到当日兑换上限",
+    card_222:"请填写所有的必填项", 
     
 
 

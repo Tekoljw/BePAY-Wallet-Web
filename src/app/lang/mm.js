@@ -573,7 +573,7 @@ const locale = {
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"နေ့စဉ် လဲလှယ်မှု ကန့်သတ်ချက် ပြည့်မြောက်ခဲ့သည်",
-
+    card_222:"ကျေးဇူးပြုပြီးလိုအပ်သောအချက်အလက်အားလုံးဖြည့်ပါ",
     
 
     

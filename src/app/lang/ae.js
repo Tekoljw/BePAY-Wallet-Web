@@ -578,9 +578,9 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     
     card_221:"تم الوصول إلى الحد الأقصى للاسترداد اليومي",
-    
+    card_222:"يرجى ملء جميع الحقول المطلوبة",    
 
-    
+
 
 };
 

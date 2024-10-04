@@ -13,7 +13,7 @@ export const getKycInfo = createAsyncThunk(
         if (settings === undefined) {
             settings = settings || {};
         }
-        
+
         let unloginerror = settings.unloginerror ?? true;
         const kycData = await React.$api("payment.kycInfo");
         if (kycData.errno === 0) {
@@ -27,7 +27,7 @@ export const getKycInfo = createAsyncThunk(
             if (!unloginerror && kycData.errmsg === 'unlogin') {
                 return false
             }
-            dispatch(showMessage({ message: t('error_20'), code: 2 }));
+            dispatch(showMessage({ message: kycData.errmsg, code: 2 }));
         }
     }
 );
@@ -37,40 +37,39 @@ export const updateKycInfo = createAsyncThunk(
     '/payment/kycUpdate',
     async (settings, { dispatch, getState }) => {
         settings = settings || {};
-
         const { config } = getState();
         const kycInfo = config.kycInfo;
-
         let data = {
-            firstName: settings.firstName == kycInfo.firstName ? undefined : settings.firstName,
-            middleName: settings.middleName == kycInfo.middleName ? undefined : settings.middleName,
-            lastName: settings.lastName == kycInfo.lastName ? undefined : settings.lastName,
-            birthDate: settings.birthDate == kycInfo.birthDate ? undefined : settings.birthDate,
-            country: settings.country == kycInfo.country ? undefined : settings.country,
-            state: settings.state == kycInfo.state ? undefined : settings.state,
-            city: settings.city == kycInfo.city ? undefined : settings.city,
-            address: settings.address == kycInfo.address ? undefined : settings.address,
-            addressTwo: settings.addressTwo == kycInfo.addressTwo ? undefined : settings.addressTwo,
-            zipcode: settings.zipcode == kycInfo.zipcode ? undefined : settings.zipcode,
-            idNo: settings.idNo == kycInfo.idNo ? undefined : settings.idNo,
-            idType: settings.idType == kycInfo.idType ? undefined : settings.idType,
-            idFrontUrl: settings.idFrontUrl == kycInfo.idFrontUrl ? undefined : settings.idFrontUrl,
-            idBackUrl: settings.idBackUrl == kycInfo.idBackUrl ? undefined : settings.idBackUrl,
-            selfPhotoUrl: settings.selfPhotoUrl == kycInfo.selfPhotoUrl ? undefined : settings.selfPhotoUrl,
-            proofOfAddressUrl: settings.proofOfAddressUrl == kycInfo.proofOfAddressUrl ? undefined : settings.proofOfAddressUrl,
-            usSsn: settings.usSsn == kycInfo.usSsn ? undefined : settings.usSsn,
+            email: settings.email,
+            phoneCountry: settings.phoneCountry,
+            phoneNumber: settings.phoneNumber,
+            firstName: settings.firstName,
+            middleName: settings.middleName,
+            lastName: settings.lastName,
+            birthDate: settings.birthDate,
+            country: settings.country,
+            state: settings.state,
+            city: settings.city,
+            address: settings.address,
+            addressTwo: settings.addressTwo,
+            zipcode: settings.zipcode,
+            idNo: settings.idNo,
+            idType: settings.idType,
+            idFrontUrl: settings.idFrontUrl,
+            idBackUrl: settings.idBackUrl,
+            selfPhotoUrl: settings.selfPhotoUrl,
+            proofOfAddressUrl: settings.proofOfAddressUrl,
+            usSsn: settings.usSsn,
         };
-
+        console.log(data, "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
         const kycData = await React.$api("payment.kycUpdate", data);
-
         if (kycData.errno === 0) {
             // 直接返回处理
             dispatch(showMessage({ message: 'saved', code: 1 }));
             return true;
         } else {
-            dispatch(showMessage({ message: t('error_2'), code: 2 }));
+            dispatch(showMessage({ message: kycData.errmsg, code: 2 }));
         }
-
         return false;
     }
 );
@@ -85,7 +84,7 @@ export const submitKycInfo = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             return true;
         } else {
-            dispatch(showMessage({ message: t('error_21'), code: 2 }));
+            dispatch(showMessage({ message: kycData.errmsg, code: 2 }));
         }
 
         return false;

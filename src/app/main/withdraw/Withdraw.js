@@ -352,6 +352,7 @@ function Withdraw(props) {
     });
 
     const handleSubmit = () => {
+        setIsLoadingBtn(true)
         var amount = inputVal.amount;
         var tmpBAppendFee = false;
         if (bAppendFee) {
@@ -402,16 +403,21 @@ function Withdraw(props) {
             priceLevel: amountTab,
             bAppendFee: tmpBAppendFee,
         };
-        setOpenLoad(true);
 
         dispatch(tokenTransfer(data)).then((res) => {
-            setOpenLoad(false);
+            setIsLoadingBtn(false)
             let result = res.payload
             setGoogleCode('');
             // setOpenPinWindow(false);
-            if (result.errno == 0) {
+            if (result.errno == 0) { //成功
+                setOpenSuccess(false);
+                setTimeout(() => {
+                    setZhuanQuan(false);
+                    setTiJiaoState(1);
+                    setWithDrawOrderID(result.data);
+                }, 1200);
                 dispatch(centerGetTokenBalanceList());
-            } else if (result.errno == -2) {
+            } else if (result.errno == -2) { //需要google验证
                 if (!hasAuthGoogle) {
                     closePinFunc()
                     setOpenAnimateModal(true);
@@ -420,21 +426,12 @@ function Withdraw(props) {
                 openGoogleCodeFunc()
                 return
             } else {
-                if (result) {
-                    setOpenSuccess(false);
-                    setTimeout(() => {
-                        setZhuanQuan(false);
-                        setTiJiaoState(1);
-                        setWithDrawOrderID(result);
-                    }, 1200);
-                } else {
-                    setOpenSuccess(false);
-                    setTimeout(() => {
-                        setZhuanQuan(false);
-                        setTiJiaoState(2);
-                    }, 1200);
-                    dispatch(showMessage({ message: result.errmsg, code: 2 }));
-                }
+                setOpenSuccess(false);
+                setTimeout(() => {
+                    setZhuanQuan(false);
+                    setTiJiaoState(2);
+                }, 1200);
+                dispatch(showMessage({ message: t('error_22'), code: 2 }));
             }
 
         });
@@ -527,7 +524,7 @@ function Withdraw(props) {
                     setZhuanQuan(false);
                     setTiJiaoState(2);
                 }, 1200);
-                dispatch(showMessage({ message: resData.errmsg, code: 2 }));
+                dispatch(showMessage({ message: t('error_22'), code: 2 }));
             }
         });
     };
