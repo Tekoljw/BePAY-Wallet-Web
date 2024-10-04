@@ -985,7 +985,7 @@ export const tokenTransfer = createAsyncThunk(
             //     orderId: transferRes.data
             // }));
             // dispatch(showMessage({ message: 'pending...', code: 1 }));
-            return transferRes.data
+            return transferRes
         } else if (transferRes.errno === -2) {
             return transferRes
         }else {
