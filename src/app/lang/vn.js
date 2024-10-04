@@ -565,6 +565,9 @@ const locale = {
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"Đã đạt giới hạn đổi trong ngày",
+    card_222:"Vui lòng điền vào tất cả các trường bắt buộc",
+
+
 
 
     };

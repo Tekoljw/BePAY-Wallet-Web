@@ -576,7 +576,7 @@ const locale = {
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"Naabot na ang pang-araw-araw na limitasyon sa pag-redeem",
-    
+    card_222:"Pakisuyong punan ang lahat ng kinakailangang mga patlang",
 
     
 

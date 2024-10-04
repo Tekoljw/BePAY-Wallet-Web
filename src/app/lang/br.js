@@ -575,7 +575,8 @@ const locale = {
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"Limite diário de resgate atingido",
-    
+    card_222:"Por favor, preencha todos os campos obrigatórios",    
+
 
     
  };

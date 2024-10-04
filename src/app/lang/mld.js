@@ -578,7 +578,7 @@ const locale = {
     card_219:"AWS, Chatgpt, OpenAI, Godaddy, Starlink, TalkTT, Zoom, Oracle, QR Code, Huawei, ",
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"दैनंदिन विमोचन मर्यादा गाठली आहे",
-    
+    card_222:"कृपया सर्व आवश्यक फील्ड भरा",
 
     
 
