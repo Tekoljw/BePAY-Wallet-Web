@@ -318,7 +318,7 @@ function Card(props) {
         const tmpCardList = { 2: [], 3: [] }
         if(smallTabValue === 0){
             if(cardList[2].length > 0 ){
-                cardList[2].forEach( async(card, i)=>{
+                cardList[2].forEach( (card, i)=>{
                     if(cardItem.id === card.id) {
                         const targetCardItem = {...card, kaBeiButton: true};
                         document.getElementById('responsive-div'+ i) && document.getElementById('responsive-div'+ i).classList.add('flipped');
@@ -329,8 +329,9 @@ function Card(props) {
                         // }, 200);
                         // await delay(2000);
                         targetCardItem.kaBeiButton2 = false;
-                        document.getElementById('cardIconWTwo'+ i) && document.getElementById('cardIconWTwo'+ i).classList.add('alphaCard');
-                        document.getElementById('zhangDanZiTwo'+ i) && document.getElementById('zhangDanZiTwo'+ i).classList.add('alphaCard');
+                        document.querySelector(`#responsive-div${i} .card4Bg`).classList.add('alphaCard_1');
+                        // document.getElementById('cardIconWTwo'+ i) && document.getElementById('cardIconWTwo'+ i).classList.add('alphaCard');
+                        // document.getElementById('zhangDanZiTwo'+ i) && document.getElementById('zhangDanZiTwo'+ i).classList.add('alphaCard');
                         // setTimeout(() => {
                         //     targetCardItem.kaBeiButton2 = true;
                         //     document.getElementById('cardIconWTwo') && document.getElementById('cardIconWTwo').classList.add('alphaCard');
@@ -370,9 +371,10 @@ function Card(props) {
                         // }, 200);
                         targetCardItem.showFrontCard = false;
                         targetCardItem.kaBeiButton = false;
-                        document.getElementById('cardIconWOne'+ i) && document.getElementById('cardIconWOne'+ i).classList.add('alphaCard');
-                        document.getElementById('zhangDanZiOne'+ i) && document.getElementById('zhangDanZiOne'+ i).classList.add('alphaCard');
-                        document.getElementById('cardNumberOne'+ i) && document.getElementById('cardNumberOne'+ i).classList.add('alphaCard');
+                        document.querySelector(`#responsive-div${i} .card41Bg`).classList.add('alphaCard_1');
+                        // document.getElementById('cardIconWOne'+ i) && document.getElementById('cardIconWOne'+ i).classList.add('alphaCard');
+                        // document.getElementById('zhangDanZiOne'+ i) && document.getElementById('zhangDanZiOne'+ i).classList.add('alphaCard');
+                        // document.getElementById('cardNumberOne'+ i) && document.getElementById('cardNumberOne'+ i).classList.add('alphaCard');
                         // setTimeout(() => {
                         //     targetCardItem.kaBeiButton = false;
                         //     document.getElementById('cardIconWOne') && document.getElementById('cardIconWOne').classList.add('alphaCard');
@@ -1217,7 +1219,7 @@ function Card(props) {
                                                                 <div className='flex justify-center container' style={{ position: "relative" }}>
                                                                     <div className="responsive-div creditcard" id={'responsive-div'+ i}>
                                                                         <div className={clsx("", cardItem.showFrontCard && "xiaoShi")}>
-                                                                            <div className="responsive-div-content card4Bg cardZhiDi" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }} onClick={() => {
+                                                                            <div className="responsive-div-content card4Bg cardZhiDi alphaCard_1" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }} onClick={() => {
                                                                             }}  >
                                                                                 <div className={clsx("cardNumber", cardItem.kaBeiButton && "xiaoShi")}> <span id={'cardNumberOne'+ i} >{cardItem?.userCreditNo?.replace(/(.{4})/g, '$1 ')}</span> </div>
                                                                                 <div className={clsx("cardExpired ", cardItem.kaBeiButton && "xiaoShi")}>
@@ -1238,7 +1240,7 @@ function Card(props) {
                                                                         </div>
 
                                                                         <div className={clsx("", !cardItem.showFrontCard && "xiaoShi")} >
-                                                                            <div className="responsive-div-content card41Bg cardZhiDi flipped2" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.backUrl})`, backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat' }} onClick={() => {
+                                                                            <div className="responsive-div-content card41Bg cardZhiDi flipped2 alphaCard_1" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.backUrl})`, backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat' }} onClick={() => {
                                                                             }}  >
                                                                                 <div className='cardAnQuanMa '>{cardItem.userCreditKey}</div>
                                                                                 <div className='cardBeiMian flipped2 '>
