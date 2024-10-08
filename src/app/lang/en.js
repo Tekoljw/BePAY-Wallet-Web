@@ -583,6 +583,14 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"Daily redemption limit reached",
     card_222:"Please fill in all required fields", 
+    kyc_50:"Change PIN",
+    kyc_51:"Forgot PIN",
+    kyc_52:"New PIN",
+    kyc_53:"PIN(Confirm)",
+    kyc_54:"old PIN",
+    kyc_55: "Invalid email address",
+
+
 
 
 

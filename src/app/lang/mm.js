@@ -574,10 +574,15 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"နေ့စဉ် လဲလှယ်မှု ကန့်သတ်ချက် ပြည့်မြောက်ခဲ့သည်",
     card_222:"ကျေးဇူးပြုပြီးလိုအပ်သောအချက်အလက်အားလုံးဖြည့်ပါ",
-    
+    kyc_50:"PIN ကိုပြောင်းပါ",
+    kyc_51:"PIN မေ့နေပါသလား",
+    kyc_52:"အသစ် PIN",
+    kyc_53:"PIN (အတည်ပြု)",
+    kyc_54:"အဟောင်း PIN",
+    kyc_55: "မမှန်ကန်သော အီးမေးလ်လိပ်စာ",
+
 
     
-
     
     
 

@@ -577,10 +577,14 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"Naabot na ang pang-araw-araw na limitasyon sa pag-redeem",
     card_222:"Pakisuyong punan ang lahat ng kinakailangang mga patlang",
+    kyc_50:"Palitan ang PIN",
+    kyc_51:"Nalimutan ang PIN",
+    kyc_52:"Bagong PIN",
+    kyc_53:"PIN (Kumpirmahin)",
+    kyc_54:"lumang PIN",
+    kyc_55: "Di-wastong email address",
 
-    
 
-    
 
     
     

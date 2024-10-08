@@ -576,10 +576,16 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"当日交換限度に達しました",
     card_222:"必須項目をすべて入力してください",
+    kyc_50:"PINを変更する",
+    kyc_51:"PINを忘れた",
+    kyc_52:"新しいPIN",
+    kyc_53:"PIN（確認）",
+    kyc_54:"旧PIN",
+    kyc_55: "無効なメールアドレス",
 
-    
 
-    
+
+
 
     
     

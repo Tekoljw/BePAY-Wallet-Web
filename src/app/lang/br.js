@@ -576,9 +576,15 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"Limite diário de resgate atingido",
     card_222:"Por favor, preencha todos os campos obrigatórios",    
+    kyc_50:"Alterar PIN",
+    kyc_51:"Esqueceu o PIN",
+    kyc_52:"Novo PIN",
+    kyc_53:"PIN (Confirmar)",
+    kyc_54:"PIN antigo",
+    kyc_55: "Endereço de e-mail inválido",
 
 
-    
+
  };
 export default locale;
     

@@ -575,9 +575,14 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"已達到當日兌換上限",
     card_222:"請填寫所有的必填項", 
-    
+    kyc_50:"修改PIN",
+    kyc_51:"忘記PIN",
+    kyc_52:"新PIN",
+    kyc_53:"PIN（確認）",
+    kyc_54:"舊PIN",
+    kyc_55: "無效的電子郵件地址",
 
-    
+
 
     
     

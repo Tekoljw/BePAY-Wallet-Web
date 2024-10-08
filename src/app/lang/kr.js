@@ -578,10 +578,14 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"일일 교환 한도에 도달했습니다",
     card_222:"모든 필수 항목을 작성해 주세요",
+    kyc_50:"PIN 변경",
+    kyc_51:"PIN을 잊으셨나요",
+    kyc_52:"새 PIN",
+    kyc_53:"PIN (확인)",
+    kyc_54:"기존 PIN",
+    kyc_55: "잘못된 이메일 주소",
 
-    
 
-    
 
     
     

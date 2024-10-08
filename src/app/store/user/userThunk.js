@@ -320,7 +320,7 @@ export const sendEmail = createAsyncThunk(
             return true
         } else {
             const msg = res?.errmsg;
-            dispatch(showMessage({ message: 'error', code: 2 }));
+            dispatch(showMessage({ message: res.errmsg, code: 2 }));
             return false
         }
     }
@@ -956,7 +956,7 @@ export const sendTips = createAsyncThunk(
             return sendTipsRes;
         } else if (sendTipsRes.errno === -2) {
             return sendTipsRes;
-        } else{
+        } else {
             // dispatch(showMessage({ message: sendTipsRes.errmsg, code: 2 }));
             return sendTipsRes;
         }
@@ -988,7 +988,7 @@ export const tokenTransfer = createAsyncThunk(
             return transferRes
         } else if (transferRes.errno === -2) {
             return transferRes
-        }else {
+        } else {
             // dispatch(showMessage({ message: t('error_36'), code: 2 }));
             return transferRes
         }

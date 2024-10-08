@@ -575,10 +575,15 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"Päivittäinen lunastusraja saavutettu",
     card_222:"Ole hyvä ja täytä kaikki pakolliset kentät", 
+    kyc_50:"Vaihda PIN-koodi",
+    kyc_51:"Unohdit PIN-koodisi",
+    kyc_52:"Uusi PIN-koodi",
+    kyc_53:"PIN (Vahvista)",
+    kyc_54:"vanha PIN",
+    kyc_55: "Virheellinen sähköpostiosoite",
 
-    
 
-    
+
 
     
     

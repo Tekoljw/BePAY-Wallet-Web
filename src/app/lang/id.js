@@ -576,9 +576,14 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"Batas penukaran harian tercapai",
     card_222:"Harap isi semua kolom yang wajib diisi", 
-    
+    kyc_50:"Ubah PIN",
+    kyc_51:"Lupa PIN",
+    kyc_52:"PIN Baru",
+    kyc_53:"PIN (Konfirmasi)",
+    kyc_54:"PIN lama",
+    kyc_55: "Alamat email tidak valid",
 
-    
+
 
     
     

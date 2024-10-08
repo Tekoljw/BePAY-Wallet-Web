@@ -479,7 +479,6 @@ function Kyc(props) {
     const refreshKycInfo = () => {
         dispatch(getKycInfo()).then((value) => {
             let resultData = { ...value.payload.data };
-            console.log(value, "ssssssssssssssssssssssssssssssssss");
             if (!resultData || Object.entries(resultData).length < 1) return;
             let copyData = {};
             Object.keys(inputVal).map((prop, index) => {
@@ -519,10 +518,8 @@ function Kyc(props) {
     const onSave = () => {
         if (inputVal.email !== undefined && inputVal.idNo !== undefined && inputVal.address !== undefined && inputVal.city !== undefined && inputVal.state !== undefined && inputVal.country !== undefined && inputVal.firstName !== undefined && inputVal.phoneCountry !== undefined && inputVal.phoneNumber !== undefined && inputVal.idType !== undefined && inputVal.idFrontUrl !== undefined && inputVal.idBackUrl !== undefined) {
             if (inputVal.email !== '' && inputVal.idNo !== '' && inputVal.address !== '' && inputVal.city !== '' && inputVal.state !== '' && inputVal.country !== '' && inputVal.firstName !== '' && inputVal.phoneCountry !== '' && inputVal.phoneNumber !== '' && inputVal.idType !== '' && inputVal.idFrontUrl !== '' && inputVal.idBackUrl !== '') {
-                console.log(inputVal, "tttttttttttttttttttttttttttttttttttttt");
                 dispatch(updateKycInfo(inputVal)).then(
                     (value) => {
-                        console.log(value, "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
                         if (value.payload) {
                             refreshKycInfo();
                             dispatch(showMessage({ message: "Success", code: 1 }));
@@ -583,7 +580,6 @@ function Kyc(props) {
             Object.keys(inputVal).map((prop, index) => {
                 copyData[prop] = kycInfo[prop];
             });
-            console.log(copyData, "ggggggggggggggggggggggggggggggg");
             setInputVal(copyData);
         }
     }, [kycInfo]);
@@ -602,9 +598,7 @@ function Kyc(props) {
                         component={motion.div}
                         variants={item}
                         className="w-full rounded-16 border mb-28 flex flex-col "
-                        sx={{
-                            border: 'none'
-                        }}
+                        sx={{ border: 'none' }}
                     >
                         <div className="flex items-center justify-between ">
                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
@@ -684,9 +678,7 @@ function Kyc(props) {
                                     error={firstNameError}
                                     onBlur={handleBlur4}
                                 />
-                                {firstNameError && (
-                                    <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
-                                )}
+                                {firstNameError && (<FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>)}
                             </FormControl>
                         </div>
 

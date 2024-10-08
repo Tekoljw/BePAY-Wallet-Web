@@ -27,6 +27,7 @@ import phoneCode from "../../../phone/phoneCode";
 import { createPin, changePin } from "app/store/wallet/walletThunk";
 import history from "../../../@history/@history";
 import { sendEmail, sendSms, bindPhone, bindEmail } from "../../store/user/userThunk";
+import { styled, FormHelperText } from "@mui/material";
 
 const container = {
     show: {
@@ -35,6 +36,7 @@ const container = {
         },
     },
 };
+
 
 const defaultValues = {
     oldPassword: '',
@@ -47,6 +49,7 @@ const item = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0 },
 };
+
 
 
 function ResetPin(props) {
@@ -77,6 +80,11 @@ function ResetPin(props) {
     const { isValid, dirtyFields, errors } = formState;
     const [resetTabValue, setResetTabValue] = useState(resetTabValueParam);
     const [selectId, setSelectId] = useState(0);
+    const [emailError, setEmailError] = useState(false);
+    const [smsError, setSmsError] = useState(false);
+    const [newPinError1, setNewPinError1] = useState(false);
+    const [newPinError2, setNewPinError2] = useState(false);
+    const [submitBtnShow, setSubmitBtnShow] = useState(true);
 
     const dispatch = useDispatch();
     const [time, setTime] = useState(null);
@@ -94,14 +102,21 @@ function ResetPin(props) {
         }
     }, [time]);
 
+
+
     async function sendCode() {
-        const data = {
-            codeType: 13,
-            email: control._formValues.email,
-        };
-        const sendRes = await dispatch(sendEmail(data));
-        if (sendRes.payload) {
-            setTime(60)
+        if (inputVal.email.includes("@")) {
+            console.log(inputVal.email, "kkkkkkkkkkkkkkkkkkkk");
+            const data = {
+                codeType: 13,
+                email: inputVal.email,
+            };
+            const sendRes = await dispatch(sendEmail(data));
+            if (sendRes.payload) {
+                setTime(60)
+            }
+        } else {
+            dispatch(showMessage({ message: t('kyc_55'), code: 2 }));
         }
     }
 
@@ -118,7 +133,6 @@ function ResetPin(props) {
         }
     }
 
-
     const handlePin = async () => {
         if (resetTabValue === 0) {
             await dispatch(editPin(control._formValues));
@@ -128,6 +142,91 @@ function ResetPin(props) {
     const changePhoneTab = (tab) => {
         window.localStorage.setItem('phoneTab', tab);
     }
+    const [inputVal, setInputVal] = useState({
+        email: '',
+        sms: '',
+        newPin: '',
+        twoNewPin: '',
+    });
+
+
+    useEffect(() => {
+        if (inputVal.email !== '' && inputVal.sms !== '' && inputVal.newPin !== '' && inputVal.twoNewPin !== '') {
+            setSubmitBtnShow(false);
+        } else {
+            setSubmitBtnShow(true);
+        }
+    }, [inputVal]);
+
+
+
+    const handleBlur = () => {
+        if (inputVal.email === '') {
+            setEmailError(true);
+        } else {
+            setEmailError(false);
+        }
+    };
+
+    const handleBlur2 = () => {
+        if (inputVal.sms === '') {
+            setSmsError(true);
+        } else {
+            setSmsError(false);
+        }
+    };
+
+    const handleBlur3 = () => {
+        if (inputVal.newPin === '') {
+            setNewPinError1(true);
+        } else {
+            setNewPinError1(false);
+        }
+    };
+
+    const handleBlur4 = () => {
+        if (inputVal.twoNewPin === '') {
+            setNewPinError2(true);
+        } else {
+            setNewPinError2(false);
+        }
+    };
+
+    const handleChangeInputVal = (prop) => (event) => {
+        setInputVal({ ...inputVal, [prop]: event.target.value });
+        if (event.target.value === '') {
+            setEmailError(true);
+        } else {
+            setEmailError(false);
+        }
+    };
+
+    const handleChangeInputVal2 = (prop) => (event) => {
+        setInputVal({ ...inputVal, [prop]: event.target.value });
+        if (event.target.value === '') {
+            setSmsError(true);
+        } else {
+            setSmsError(false);
+        }
+    };
+
+    const handleChangeInputVal3 = (prop) => (event) => {
+        setInputVal({ ...inputVal, [prop]: event.target.value });
+        if (event.target.value === '') {
+            setNewPinError1(true);
+        } else {
+            setNewPinError1(false);
+        }
+    };
+
+    const handleChangeInputVal4 = (prop) => (event) => {
+        setInputVal({ ...inputVal, [prop]: event.target.value });
+        if (event.target.value === '') {
+            setNewPinError2(true);
+        } else {
+            setNewPinError2(false);
+        }
+    };
 
     return (
         <div
@@ -164,7 +263,7 @@ function ResetPin(props) {
                             padding: '1rem 1rem',
                         }}
                     >
-                        {Object.entries(["Edit PIN", 'Forget PIN']).map(([key, label]) => (
+                        {Object.entries([t('kyc_50'), t('kyc_51')]).map(([key, label]) => (
                             <Tab
                                 className="text-16 font-semibold min-h-32 min-w-60 mx4 px-12 txtColorTitle opacity-100 zindex"
                                 disableRipple
@@ -192,7 +291,7 @@ function ResetPin(props) {
                                 <TextField
                                     {...field}
                                     className="mb-24"
-                                    label="Old PIN Code"
+                                    label={t('kyc_54')}
                                     type="password"
                                     error={!!errors.oldPassword}
                                     helperText={errors?.oldPassword?.message}
@@ -210,7 +309,7 @@ function ResetPin(props) {
                                 <TextField
                                     {...field}
                                     className="mb-24"
-                                    label="New PIN Code"
+                                    label={t('kyc_52')}
                                     type="password"
                                     error={!!errors.password}
                                     helperText={errors?.password?.message}
@@ -228,7 +327,7 @@ function ResetPin(props) {
                                 <TextField
                                     {...field}
                                     className="mb-24"
-                                    label="New PIN Code(Confirm)"
+                                    label={t('kyc_53')}
                                     type="password"
                                     error={!!errors.passwordConfirm}
                                     helperText={errors?.passwordConfirm?.message}
@@ -260,7 +359,7 @@ function ResetPin(props) {
                                 handlePin()
                             }}
                         >
-                            Reset your PIN Code
+                            {t('kyc_23')}
                         </Button>
                     </form>}
 
@@ -288,110 +387,122 @@ function ResetPin(props) {
                         {selectId === 0 &&
                             <div>
                                 <div className=''>
-                                    <Paper className="w-full tongYongChuang3 flex justify-content-center ">
+                                    <div className="w-full tongYongChuang3 flex justify-content-center ">
                                         <div className="w-full  mx-auto sm:mx-0">
-                                            <form
-                                                name="registerForm"
-                                                noValidate
-                                                className="flex flex-col justify-center w-full mt-32"
-                                            >
-
-                                                <Controller
-                                                    name="email"
-                                                    control={control}
-                                                    render={({ field }) => (
-                                                        <FormControl variant="outlined" className="mb-24">
-                                                            <InputLabel
-                                                                style={{
-                                                                    color: !!errors.email && '#f44336'
-                                                                }}
-                                                            >{t('signIn_5')}*</InputLabel>
-                                                            <OutlinedInput
-                                                                {...field}
-                                                                label={t('signIn_5')}
-                                                                type="text"
-                                                                variant="outlined"
-                                                                required
-                                                                fullWidth
-                                                                error={!!errors.email}
-                                                                endAdornment={
-                                                                    <InputAdornment position="end">
-                                                                        {time <= 0 && <IconButton
-                                                                            aria-label="toggle password visibility"
-                                                                            onClick={sendCode}
-                                                                            edge="end"
-                                                                            sx={{
-                                                                                fontSize: '1.4rem',
-                                                                                borderRadius: '5px'
-                                                                            }}
-                                                                        >
-                                                                            {t('forgot_3')}
-                                                                        </IconButton>}
-
-                                                                        {time > 0 &&
-                                                                            <div>
-                                                                                {time} s
-                                                                            </div>
-                                                                        }
-                                                                    </InputAdornment>
-                                                                }
-                                                            />
-                                                            {!!errors.email &&
-                                                                <div
-                                                                    style={{
-                                                                        fontSize: '1.2rem',
-                                                                        color: '#f44336',
-                                                                        fontWeight: 400,
-                                                                        lineHeight: 1.66,
-                                                                        textAlign: 'left',
-                                                                        marginTop: '3px',
-                                                                        marginRight: '14px',
-                                                                        marginBottom: 0,
-                                                                        marginLeft: '14px',
+                                            <div className="flex flex-col justify-center w-full mt-32"  >
+                                                <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                                                    <InputLabel id="demo-simple-select-label">{t('kyc_27')} *</InputLabel>
+                                                    <OutlinedInput
+                                                        id="outlined-adornment-address"
+                                                        label="email"
+                                                        value={inputVal.email}
+                                                        onChange={handleChangeInputVal('email')}
+                                                        aria-describedby="outlined-weight-helper-text"
+                                                        inputProps={{ 'aria-label': 'email' }}
+                                                        error={emailError}
+                                                        onBlur={handleBlur}
+                                                        endAdornment={
+                                                            <InputAdornment position="end">
+                                                                {time <= 0 && <IconButton
+                                                                    aria-label="toggle password visibility"
+                                                                    onClick={sendCode}
+                                                                    edge="end"
+                                                                    sx={{
+                                                                        fontSize: '1.4rem',
+                                                                        borderRadius: '5px'
                                                                     }}
                                                                 >
-                                                                    {errors?.email?.message}
-                                                                </div>
-                                                            }
-                                                        </FormControl>
-                                                    )}
-                                                />
+                                                                    {t('forgot_3')}
+                                                                </IconButton>}
+                                                                {time > 0 && <div> {time}s </div>}
+                                                            </InputAdornment>
+                                                        }
+                                                    />
+                                                    {emailError && (<FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>)}
+                                                </FormControl>
 
-                                                <Controller
-                                                    name="smsCode"
-                                                    control={control}
-                                                    render={({ field }) => (
-                                                        <TextField
-                                                            {...field}
-                                                            className="mb-24"
-                                                            label={t('signIn_8')}
-                                                            type="number"
-                                                            error={!!errors.smsCode}
-                                                            helperText={errors?.smsCode?.message}
-                                                            variant="outlined"
-                                                            required
-                                                            fullWidth
+                                                <div className="flex items-center justify-between">
+                                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                                                        <InputLabel id="demo-simple-select-label">{t('signIn_8')}</InputLabel>
+                                                        <OutlinedInput
+                                                            id="outlined-adornment-address"
+                                                            label="sms"
+                                                            value={inputVal.sms}
+                                                            onChange={handleChangeInputVal2('sms')}
+                                                            aria-describedby="outlined-weight-helper-text"
+                                                            inputProps={{
+                                                                'aria-label': 'sms',
+                                                                inputMode: 'numeric',
+                                                                pattern: '[0-9]*',
+                                                                onKeyDown: (e) => {
+                                                                    if (e.key !== 'Backspace' && e.key !== 'Delete' && !/^\d+$/.test(e.key)) {
+                                                                        e.preventDefault();  // 阻止非数字输入
+                                                                    }
+                                                                },
+                                                            }}
+                                                            error={smsError}
+                                                            onBlur={handleBlur2}
                                                         />
-                                                    )}
-                                                />
+                                                        {smsError && (<FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>)}
+                                                    </FormControl>
+                                                </div>
 
-                                                <Controller
-                                                    name="password"
-                                                    control={control}
-                                                    render={({ field }) => (
-                                                        <TextField
-                                                            {...field}
-                                                            className="mb-24"
-                                                            label={t('signIn_9')}
-                                                            type="password"
-                                                            error={!!errors.password}
-                                                            helperText={errors?.password?.message}
-                                                            variant="outlined"
-                                                            required
-                                                            fullWidth
+
+                                                <div className="flex items-center justify-between">
+                                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                                                        <InputLabel id="demo-simple-select-label">{t('kyc_52')}</InputLabel>
+                                                        <OutlinedInput
+                                                            id="outlined-adornment-address"
+                                                            label="newPin"
+                                                            value={inputVal.newPin}
+                                                            onChange={handleChangeInputVal3('newPin')}
+                                                            aria-describedby="outlined-weight-helper-text"
+                                                            inputProps={{
+                                                                'aria-label': 'newPin',
+                                                                inputMode: 'numeric',
+                                                                pattern: '[0-9]*',
+                                                                onKeyDown: (e) => {
+                                                                    if (e.key !== 'Backspace' && e.key !== 'Delete' && !/^\d+$/.test(e.key)) {
+                                                                        e.preventDefault();  // 阻止非数字输入
+                                                                    }
+                                                                },
+                                                            }}
+                                                            error={newPinError1}
+                                                            onBlur={handleBlur3}
                                                         />
-                                                    )}
-                                                />
+                                                        {newPinError1 && (<FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>)}
+                                                    </FormControl>
+                                                </div>
+
+
+
+                                                <div className="flex items-center justify-between">
+                                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                                                        <InputLabel id="demo-simple-select-label">{t('kyc_53')}</InputLabel>
+                                                        <OutlinedInput
+                                                            id="outlined-adornment-address"
+                                                            label="PIN(Confirm)"
+                                                            value={inputVal.twoNewPin}
+                                                            onChange={handleChangeInputVal4('twoNewPin')}
+                                                            aria-describedby="outlined-weight-helper-text"
+                                                            inputProps={{
+                                                                'aria-label': 'PIN(Confirm)',
+                                                                inputMode: 'numeric',
+                                                                pattern: '[0-9]*',
+                                                                onKeyDown: (e) => {
+                                                                    if (e.key !== 'Backspace' && e.key !== 'Delete' && !/^\d+$/.test(e.key)) {
+                                                                        e.preventDefault();  // 阻止非数字输入
+                                                                    }
+                                                                },
+                                                            }}
+                                                            error={newPinError2}
+                                                            onBlur={handleBlur4}
+                                                        />
+                                                        {newPinError2 && (<FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>)}
+                                                    </FormControl>
+                                                </div>
+
+
 
                                                 <div style={{ textAlign: "center" }}>
                                                     <a className="text-md font-medium" onClick={() => {
@@ -407,15 +518,16 @@ function ResetPin(props) {
                                                     color="secondary"
                                                     className=" w-full mt-24"
                                                     aria-label="Register"
-                                                    disabled={_.isEmpty(dirtyFields) || !isValid}
+                                                    disabled={submitBtnShow}
                                                     type="submit"
                                                     size="large"
                                                 >
-                                                    Reset
+                                                    {t('kyc_23')}
                                                 </Button>
-                                            </form>
+
+                                            </div>
                                         </div>
-                                    </Paper>
+                                    </div>
                                 </div>
                             </div>
                         }

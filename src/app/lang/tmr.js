@@ -576,10 +576,14 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"நாளாந்தர மீட்பு வரம்பை அடைந்துவிட்டது",
     card_222:"தேவையான புலங்களை அனைத்தையும் பூர்த்தி செய்யவும்",
+    kyc_50:"PIN மாற்றவும்",
+    kyc_51:"PIN மறந்துவிட்டீர்களா",
+    kyc_52:"புதிய PIN",
+    kyc_53:"PIN (உறுதிப்படுத்தவும்)",
+    kyc_54:"பழைய PIN",
+    kyc_55: "தவறான மின்னஞ்சல் முகவரி",
 
-    
 
-    
 
     
     

@@ -579,10 +579,15 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"दैनंदिन विमोचन मर्यादा गाठली आहे",
     card_222:"कृपया सर्व आवश्यक फील्ड भरा",
+    kyc_50:"पिन बदला",
+    kyc_51:"पीआयएन विसरलात का",
+    kyc_52:"नवीन PIN",
+    kyc_53:"पिन (निश्‍चित करा)",
+    kyc_54:"जुना PIN",
+    kyc_55: "अवैध ईमेल पत्ता",
 
-    
 
-    
+
 
     
     

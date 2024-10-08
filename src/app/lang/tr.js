@@ -574,10 +574,14 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"Günlük kullanım limiti aşıldı",
     card_222:"Lütfen tüm zorunlu alanları doldurun",
-    
+    kyc_50:"PIN'i Değiştir",
+    kyc_51:"PIN'i Unuttunuz",
+    kyc_52:"Yeni PIN",
+    kyc_53:"PIN (Onayla)",
+    kyc_54:"eski PIN",
+    kyc_55: "Geçersiz e-posta adresi",
 
-    
-    
+
 
 
 
