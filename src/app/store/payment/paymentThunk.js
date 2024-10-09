@@ -211,7 +211,7 @@ export const getFiatFee = createAsyncThunk(
         if (result.errno === 0) {
             return result.data
         } else {
-            dispatch(showMessage({ message: t('error_23'), code: 2 }));
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
             return false
         }
     }
@@ -225,7 +225,7 @@ export const makeOrder = createAsyncThunk(
         if (result.errno === 0) {
             return result.data
         } else {
-            dispatch(showMessage({ message: t('error_24'), code: 2 }));
+            dispatch(showMessage({ message: makeOrder.errmsg, code: 2 }));
         }
     }
 );
@@ -239,7 +239,7 @@ export const payoutBank = createAsyncThunk(
         if (result.errno === 0) {
             return result.data
         } else {
-            dispatch(showMessage({ message: t('error_25'), code: 2 }));
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
         }
     }
 );
@@ -252,7 +252,7 @@ export const payoutPayWays = createAsyncThunk(
         if (result.errno === 0) {
             return result.data
         } else {
-            dispatch(showMessage({ message: t('error_22'), code: 2 }));
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
         }
     }
 );

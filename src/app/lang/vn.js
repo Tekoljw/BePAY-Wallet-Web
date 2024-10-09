@@ -572,6 +572,12 @@ const locale = {
     kyc_53:"PIN (Xác nhận)",
     kyc_54:"PIN cũ",
     kyc_55: "Địa chỉ email không hợp lệ",
+    kyc_56: "Điện thoại",
+    kyc_57: "Phương pháp xác thực",
+
+
+    
+
 
 
 

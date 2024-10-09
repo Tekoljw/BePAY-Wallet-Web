@@ -202,7 +202,7 @@ export const getPoolConfig = createAsyncThunk(
             dispatch(setPoolConfig(configData));
             return configData.data;
         } else {
-            dispatch(showMessage({ message: t('error_2'), code: 2 }));
+            dispatch(showMessage({ message: configData.errmsg, code: 2 }));
         }
     }
 );
@@ -226,7 +226,7 @@ export const getPoolOrderList = createAsyncThunk(
             // dispatch(showMessage({ message: 'success' }));
             return resultData.data;
         } else {
-            dispatch(showMessage({ message: t('error_26'), code: 2 }));
+            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
         }
     }
 );
@@ -248,7 +248,7 @@ export const directPoolToken = createAsyncThunk(
             // dispatch(showMessage({ message: 'success' }));
             return resultData.data;
         } else {
-            dispatch(showMessage({ message: t('error_27'), code: 2 }));
+            dispatch(showMessage({ message: directPoolToken.errmsg, code: 2 }));
         }
     }
 );
@@ -271,11 +271,11 @@ export const goPoolToken = createAsyncThunk(
         const symbolecimals = arrayLookup(config.symbols, 'symbol', symbol, 'decimals');
 
         if (symbolAddress.length === 0) {
-            dispatch(showMessage({ message: t('error_28'), code: 2 }));
+            dispatch(showMessage({ message: "error_105", code: 2 }));
             return false
         }
         if (type === 0) {
-            dispatch(showMessage({ message: t('error_28'), code: 2 }));
+            dispatch(showMessage({ message: "error_106", code: 2 }));
             return false
         }
 
@@ -306,7 +306,7 @@ export const goPoolToken = createAsyncThunk(
                 poolId: poolId
             }));
         } catch (e) {
-            dispatch(showMessage({ message: t('error_27'), code: 2 }));
+            dispatch(showMessage({ message: e.errmsg, code: 2 }));
         }
     }
 );
@@ -327,7 +327,7 @@ export const afterPoolToken = createAsyncThunk(
             // dispatch(showMessage({ message: 'success' }));
             return resultData.data;
         } else {
-            dispatch(showMessage({ message: t('error_13'), code: 2 }));
+            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
         }
     }
 );
@@ -348,7 +348,7 @@ export const takeBackPoolToken = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             // return resultData.data;
         } else {
-            dispatch(showMessage({ message: t('error_13'), code: 2 }));
+            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
         }
     }
 );

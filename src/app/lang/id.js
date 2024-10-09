@@ -582,8 +582,11 @@ const locale = {
     kyc_53:"PIN (Konfirmasi)",
     kyc_54:"PIN lama",
     kyc_55: "Alamat email tidak valid",
+    kyc_56: "ponsel",
+    kyc_57: "Metode verifikasi",
 
 
+    
 
     
     

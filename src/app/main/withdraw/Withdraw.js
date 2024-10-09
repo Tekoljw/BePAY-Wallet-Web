@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import '../../../styles/home.css';
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
-import {centerGetTokenBalanceList, sendTips, tokenTransfer} from "../../store/user/userThunk";
+import { centerGetTokenBalanceList, sendTips, tokenTransfer } from "../../store/user/userThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { selectConfig } from "../../store/config";
@@ -178,6 +178,7 @@ function Withdraw(props) {
     const [isLoadingBtn, setIsLoadingBtn] = useState(false);
     const [zhuanQuan, setZhuanQuan] = useState(true);
     const [tiJiaoState, setTiJiaoState] = useState(0);
+    const [selectId, setSelectId] = useState(0);
 
     const handleChangeInputVal = (prop, value) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
@@ -662,7 +663,7 @@ function Withdraw(props) {
                 displayData.push(item.symbol);
             }
         });
-        if(displayData.length > 0){
+        if (displayData.length > 0) {
             let tmpSymbols = [];
             // 美元汇率
             let dollarCurrencyRate = arrayLookup(config.payment.currency, 'currencyCode', 'USD', 'exchangeRate') || 0;
@@ -722,7 +723,7 @@ function Withdraw(props) {
             console.log(tmpSymbols);
             setSymbolWallet(tmpSymbols.filter(i => i.symbol !== 'eUSDT'));
             setNetworkData(tmpNetworks);
-        }else{
+        } else {
             setSymbolWallet([]);
             setNetworkData([]);
         }
@@ -1187,7 +1188,7 @@ function Withdraw(props) {
                                                         }} />
                                                     </div>
                                                 </FormControl>
-                                                <img className='nianTieIcon' src="wallet/assets/images/withdraw/zhanTie.png" alt="" onClick={() => {
+                                                <img className='nianTieIcon ' src="wallet/assets/images/withdraw/zhanTie.png" alt="" onClick={() => {
                                                     navigator.clipboard.readText().then(clipText => {
                                                         changeAddress('address', clipText)
                                                     })
@@ -1460,12 +1461,39 @@ function Withdraw(props) {
                             <div id="GoogleCodeSty" className="PINSty">
                                 <div className='pinWindow'>
                                     <div className='flex'>
-                                        <div className='PINTitle2'>{t('card_180')}</div>
+                                        <div className='PINTitle2'>{t('kyc_57')}</div>
                                         <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                             closeGoogleCodeFunc()
                                         }} />
                                     </div>
-                                    <div className='PINTitle'>{t('card_176')}</div>
+                                    <div className='PINTitle' style={{ color: "#909fb4" }}>{t('card_176')}</div>
+
+                                    <div className='flex justify-between'>
+                                        <div
+                                            onClick={() => { setSelectId(0) }}
+                                            className={clsx('selectPin', selectId === 0 && 'activePinZi')}
+                                        >
+                                            <img style={{ width: '2rem', borderRadius: '0.5rem', float: "left" }} src="wallet/assets/images/menu/email.png" alt="" />
+                                            <div style={{ float: "left" }} className="px-6">{t('signIn_5')} </div>
+                                        </div>
+
+                                        <div
+                                            onClick={() => { setSelectId(1) }}
+                                            className={clsx('selectPin', selectId === 1 && 'activePinZi')}
+                                        >
+                                            <img style={{ width: '2rem', borderRadius: '0.5rem', float: "left" }} src="wallet/assets/images/menu/phone.png" alt="" />
+                                            <div style={{ float: "left" }} className="px-6">{t('kyc_56')}</div>
+                                        </div>
+
+                                        <div
+                                            onClick={() => { setSelectId(2) }}
+                                            className={clsx('selectPin', selectId === 2 && 'activePinZi')}
+                                        >
+                                            <img style={{ width: '2rem', borderRadius: '0.5rem', float: "left" }} src="wallet/assets/images/menu/google.png" alt="" />
+                                            <div style={{ float: "left" }} className="px-6"> Google</div>
+                                        </div>
+                                    </div>
+
                                     <div className='flex justify-between mt-32 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
                                         <div className='PinNum color-box'
                                             onTouchStart={changeToBlack}

@@ -582,8 +582,11 @@ const locale = {
     kyc_53:"PIN (Sahkan)",
     kyc_54:"PIN lama",
     kyc_55: "Alamat e-mel tidak sah",
+    kyc_56: "bimbit",
+    kyc_57: "Kaedah pengesahan",
 
 
+    
 
     
     

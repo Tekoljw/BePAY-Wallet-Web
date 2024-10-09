@@ -587,10 +587,13 @@ const locale = {
     kyc_51:"Forgot PIN",
     kyc_52:"New PIN",
     kyc_53:"PIN(Confirm)",
-    kyc_54:"old PIN",
-    kyc_55: "Invalid email address",
+    kyc_54:"Old PIN",
+    kyc_55:"Invalid email address",
+    kyc_56: "phone",
+    kyc_57: "Select Verification method",
 
 
+    
 
 
 

@@ -585,8 +585,11 @@ const locale = {
     kyc_53:"PIN (Bestätigen)",
     kyc_54:"alter PIN",
     kyc_55: "Ungültige E-Mail-Adresse",
+    kyc_56: "Handy",
+    kyc_57: "Verifizierungsmethode",
 
 
+    
 
     
     

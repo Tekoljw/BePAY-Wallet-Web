@@ -581,8 +581,11 @@ const locale = {
     kyc_53:"PIN (Vahvista)",
     kyc_54:"vanha PIN",
     kyc_55: "Virheellinen sähköpostiosoite",
+    kyc_56: "matkapuhelin",
+    kyc_57: "Varmennusmenetelmä",
 
 
+    
 
 
     

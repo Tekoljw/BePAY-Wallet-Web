@@ -77,7 +77,7 @@ export const updateUserData = (user) => async (dispatch, getState) => {
       dispatch(showMessage({ message: 'User data saved with api', code: 1 }));
     })
     .catch((error) => {
-      dispatch(showMessage({ message: t('error_2'), code: 2 }));
+      dispatch(showMessage({ message: t('error_100'), code: 2 }));
     });
 };
 

@@ -583,8 +583,11 @@ const locale = {
     kyc_53:"PIN (Kumpirmahin)",
     kyc_54:"lumang PIN",
     kyc_55: "Di-wastong email address",
+    kyc_56: "telepono",
+    kyc_57: "Paraan ng beripikasyon",
 
 
+    
 
     
     

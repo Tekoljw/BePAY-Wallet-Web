@@ -1138,8 +1138,8 @@ input[type='number'] {
 
 .selectPin {
     display: inline-block;
-    margin: 1rem 1.5rem 0rem 0rem;
-    padding: 0.8rem;
+    margin: 1rem 0rem 0rem 0rem;
+    padding: 1rem;
     border-radius: 0.5rem;
     border: 1px solid #374252;
     color: #94A3B8;

@@ -27,7 +27,7 @@ export const getSwapConfig = createAsyncThunk(
             // dispatch(setSwapConfig(configData));
             return configData;
         } else {
-            dispatch(showMessage({ message: t('error_2'), code: 2 }));
+            dispatch(showMessage({ message: configData.errmsg, code: 2 }));
         }
     }
 );
@@ -50,7 +50,7 @@ export const getSwapPrice = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData;
         } else {
-            dispatch(showMessage({ message: "error", code: 2 }));
+            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
         }
     }
 );
@@ -123,7 +123,7 @@ export const getSwapOrderDetail = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData;
         } else {
-            dispatch(showMessage({ message: t('error_2'), code: 2 }));
+            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
         }
     }
 );

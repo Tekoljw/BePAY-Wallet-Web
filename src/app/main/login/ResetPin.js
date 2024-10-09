@@ -37,20 +37,16 @@ const container = {
     },
 };
 
-
 const defaultValues = {
     oldPassword: '',
     password: '',
     passwordConfirm: '',
 };
 
-
 const item = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0 },
 };
-
-
 
 function ResetPin(props) {
     const resetTabValueParam = props?.resetTabValueParam ?? 0
@@ -103,10 +99,8 @@ function ResetPin(props) {
     }, [time]);
 
 
-
     async function sendCode() {
         if (inputVal.email.includes("@")) {
-            console.log(inputVal.email, "kkkkkkkkkkkkkkkkkkkk");
             const data = {
                 codeType: 13,
                 email: inputVal.email,
@@ -142,22 +136,41 @@ function ResetPin(props) {
     const changePhoneTab = (tab) => {
         window.localStorage.setItem('phoneTab', tab);
     }
+
+
     const [inputVal, setInputVal] = useState({
         email: '',
-        sms: '',
-        newPin: '',
+        smsCode: '',
+        password: '',
         twoNewPin: '',
+        codeType: '',
     });
 
 
     useEffect(() => {
-        if (inputVal.email !== '' && inputVal.sms !== '' && inputVal.newPin !== '' && inputVal.twoNewPin !== '') {
+        if (inputVal.email !== '' && inputVal.smsCode !== '' && inputVal.password !== '' && inputVal.twoNewPin !== '') {
             setSubmitBtnShow(false);
         } else {
             setSubmitBtnShow(true);
         }
+        if (inputVal.password !== inputVal.twoNewPin) {
+            setNewPinError2(true);
+        }
     }, [inputVal]);
 
+
+    const sumbitBtnFunc = () => {
+        if (selectId === 0) {
+            inputVal.codeType = 13;
+            dispatch(changePin(inputVal)).then((res) => {
+                let result = res.payload
+                if (result) {
+                    changePhoneTab('withdraw');
+                    history.push('/wallet/home/wallet')
+                }
+            })
+        }
+    };
 
 
     const handleBlur = () => {
@@ -202,16 +215,29 @@ function ResetPin(props) {
     };
 
     const handleChangeInputVal2 = (prop) => (event) => {
-        setInputVal({ ...inputVal, [prop]: event.target.value });
+        const value = event.target.value;
+        const numericValue = value.replace(/\D/g, ''); // 使用正则表达式，移除所有非数字字符
+        setInputVal((prevState) => ({
+            ...prevState,
+            [prop]: numericValue
+        }));
+
         if (event.target.value === '') {
             setSmsError(true);
         } else {
             setSmsError(false);
         }
+
     };
 
     const handleChangeInputVal3 = (prop) => (event) => {
-        setInputVal({ ...inputVal, [prop]: event.target.value });
+        const value = event.target.value;
+        const numericValue = value.replace(/\D/g, ''); // 使用正则表达式，移除所有非数字字符
+        setInputVal((prevState) => ({
+            ...prevState,
+            [prop]: numericValue
+        }));
+
         if (event.target.value === '') {
             setNewPinError1(true);
         } else {
@@ -220,7 +246,12 @@ function ResetPin(props) {
     };
 
     const handleChangeInputVal4 = (prop) => (event) => {
-        setInputVal({ ...inputVal, [prop]: event.target.value });
+        const value = event.target.value;
+        const numericValue = value.replace(/\D/g, ''); // 使用正则表达式，移除所有非数字字符
+        setInputVal((prevState) => ({
+            ...prevState,
+            [prop]: numericValue
+        }));
         if (event.target.value === '') {
             setNewPinError2(true);
         } else {
@@ -391,7 +422,7 @@ function ResetPin(props) {
                                         <div className="w-full  mx-auto sm:mx-0">
                                             <div className="flex flex-col justify-center w-full mt-32"  >
                                                 <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                                    <InputLabel id="demo-simple-select-label">{t('kyc_27')} *</InputLabel>
+                                                    <InputLabel id="demo-simple-select-label">{t('kyc_27')}</InputLabel>
                                                     <OutlinedInput
                                                         id="outlined-adornment-address"
                                                         label="email"
@@ -426,19 +457,14 @@ function ResetPin(props) {
                                                         <InputLabel id="demo-simple-select-label">{t('signIn_8')}</InputLabel>
                                                         <OutlinedInput
                                                             id="outlined-adornment-address"
-                                                            label="sms"
-                                                            value={inputVal.sms}
-                                                            onChange={handleChangeInputVal2('sms')}
+                                                            label="smsCode"
+                                                            value={inputVal.smsCode}
+                                                            onChange={handleChangeInputVal2('smsCode')}
                                                             aria-describedby="outlined-weight-helper-text"
                                                             inputProps={{
-                                                                'aria-label': 'sms',
+                                                                'aria-label': 'smsCode',
                                                                 inputMode: 'numeric',
                                                                 pattern: '[0-9]*',
-                                                                onKeyDown: (e) => {
-                                                                    if (e.key !== 'Backspace' && e.key !== 'Delete' && !/^\d+$/.test(e.key)) {
-                                                                        e.preventDefault();  // 阻止非数字输入
-                                                                    }
-                                                                },
                                                             }}
                                                             error={smsError}
                                                             onBlur={handleBlur2}
@@ -453,19 +479,14 @@ function ResetPin(props) {
                                                         <InputLabel id="demo-simple-select-label">{t('kyc_52')}</InputLabel>
                                                         <OutlinedInput
                                                             id="outlined-adornment-address"
-                                                            label="newPin"
-                                                            value={inputVal.newPin}
-                                                            onChange={handleChangeInputVal3('newPin')}
+                                                            label="password"
+                                                            value={inputVal.password}
+                                                            onChange={handleChangeInputVal3('password')}
                                                             aria-describedby="outlined-weight-helper-text"
                                                             inputProps={{
-                                                                'aria-label': 'newPin',
+                                                                'aria-label': 'password',
                                                                 inputMode: 'numeric',
                                                                 pattern: '[0-9]*',
-                                                                onKeyDown: (e) => {
-                                                                    if (e.key !== 'Backspace' && e.key !== 'Delete' && !/^\d+$/.test(e.key)) {
-                                                                        e.preventDefault();  // 阻止非数字输入
-                                                                    }
-                                                                },
                                                             }}
                                                             error={newPinError1}
                                                             onBlur={handleBlur3}
@@ -489,11 +510,6 @@ function ResetPin(props) {
                                                                 'aria-label': 'PIN(Confirm)',
                                                                 inputMode: 'numeric',
                                                                 pattern: '[0-9]*',
-                                                                onKeyDown: (e) => {
-                                                                    if (e.key !== 'Backspace' && e.key !== 'Delete' && !/^\d+$/.test(e.key)) {
-                                                                        e.preventDefault();  // 阻止非数字输入
-                                                                    }
-                                                                },
                                                             }}
                                                             error={newPinError2}
                                                             onBlur={handleBlur4}
@@ -521,8 +537,11 @@ function ResetPin(props) {
                                                     disabled={submitBtnShow}
                                                     type="submit"
                                                     size="large"
+                                                    onClick={() => {
+                                                        sumbitBtnFunc();
+                                                    }}
                                                 >
-                                                    {t('kyc_23')}
+                                                    {t('kyc_50')}
                                                 </Button>
 
                                             </div>
@@ -535,6 +554,7 @@ function ResetPin(props) {
                         {selectId === 1 &&
                             <div>
                                 <div className=''>
+
                                     <Paper
                                         className="w-full tongYongChuang3 flex justify-content-center "
                                     >
@@ -712,7 +732,7 @@ function ResetPin(props) {
                                                     type="submit"
                                                     size="large"
                                                 >
-                                                    {t('re_tied_phone_3')}
+                                                    {t('kyc_50')}
                                                 </Button>
                                             </form>
                                         </div>

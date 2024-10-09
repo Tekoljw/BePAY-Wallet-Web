@@ -92,7 +92,7 @@ export const sendTransaction = createAsyncThunk(
                     dispatch(afterActive({ txId: txHash, configId: activatyId }));
                     console.log('txHash ==> ', txHash)
                 }).catch((error) => {
-                    dispatch(showMessage({ message: t('error_18'), code: 2 }));
+                    dispatch(showMessage({ message: error.errmsg, code: 2 }));
                     console.log('error ==> ', error)
                 });
                 return true
@@ -148,7 +148,7 @@ export const foxSendTransaction = createAsyncThunk(
     async (settings, { dispatch, getState }) => {
 
 
-        console.log(settings,'settings.............................');
+        console.log(settings, 'settings.............................');
         const { config, user } = getState();
         let notPool = settings.notPool;
         let amount = settings.amount || 0;
@@ -169,14 +169,14 @@ export const foxSendTransaction = createAsyncThunk(
             return false
         }
 
-  
+
         // 转换金额
         amount = new BN(10).pow(new BN(symbolecimals)).mul(new BN(amount * 1000000)).div(new BN(1000000));
         // 基础币直接调用转账
         if (type === 0) {
             try {
                 amount = '0x' + amount.toString(16);
-            
+
                 const etherPro = await walletEthereum.ether();
                 console.log('进来了,111');
 
@@ -187,27 +187,27 @@ export const foxSendTransaction = createAsyncThunk(
                 console.log(toAddress);
                 console.log(amount);
 
-                    etherPro.request({
-                        method: 'eth_sendTransaction',
-                        params: [{
-                            from: user.userInfo.address,
-                            to: toAddress,
-                            value: amount,
-                        }],
-                    }).then((txHash) => {    
-                        dispatch(showMessage({ message: 'success', code: 1 }));
-                        if (!notPool) {
-                            dispatch(afterActive({ txId: txHash, configId: activatyId }));
-                        }
-                        console.log('txHash ==> ', txHash)
-                        return txHash
-                    }).catch((error) => {
-                        dispatch(showMessage({ message: t('error_18'), code: 2 }));
-                        console.log('error ==> ', error)
-                    });
-                    return true
+                etherPro.request({
+                    method: 'eth_sendTransaction',
+                    params: [{
+                        from: user.userInfo.address,
+                        to: toAddress,
+                        value: amount,
+                    }],
+                }).then((txHash) => {
+                    dispatch(showMessage({ message: 'success', code: 1 }));
+                    if (!notPool) {
+                        dispatch(afterActive({ txId: txHash, configId: activatyId }));
+                    }
+                    console.log('txHash ==> ', txHash)
+                    return txHash
+                }).catch((error) => {
+                    dispatch(showMessage({ message: error.errmsg, code: 2 }));
+                    console.log('error ==> ', error)
+                });
+                return true
             } catch (e) {
-                dispatch(showMessage({ message: t('error_18'), code: 2 }));
+                dispatch(showMessage({ message: e.errmsg, code: 2 }));
                 return false
             }
         }
@@ -215,8 +215,6 @@ export const foxSendTransaction = createAsyncThunk(
 
 
         try {
-            console.log('进来了222');
-
 
             // 代币合约
             const symbolConstructObj = await utils.contractAt(utils.contractAbi('USGT'), symbolAddress);
@@ -231,7 +229,7 @@ export const foxSendTransaction = createAsyncThunk(
             }
             return transferRes.tx;
         } catch (e) {
-            dispatch(showMessage({ message: t('error_18'), code: 2 }));
+            dispatch(showMessage({ message: e.errmsg, code: 2 }));
             return false
         }
     }
@@ -250,7 +248,7 @@ export const manualCryptoNotify = createAsyncThunk(
         };
         const resultData = await React.$api("payment.manualCryptoNotify", data);
         if (resultData.errno !== 0) {
-            dispatch(showMessage({ message: t('error_2'), code: 2 }));
+            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
         } else {
             // console.log(resultData)
         }
@@ -272,7 +270,7 @@ export const afterActive = createAsyncThunk(
         if (resultData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
         } else {
-            dispatch(showMessage({ message: t('error_2'), code: 2 }));
+            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
         }
     }
 
@@ -291,7 +289,7 @@ export const directActive = createAsyncThunk(
         if (resultData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
         } else {
-            dispatch(showMessage({ message: t('error_2'), code: 2 }));
+            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
         }
     }
 );
@@ -309,7 +307,7 @@ export const releaseActive = createAsyncThunk(
         if (resultData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
         } else {
-            dispatch(showMessage({ message: t('error_1'), code: 2 }));
+            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
         }
     }
 

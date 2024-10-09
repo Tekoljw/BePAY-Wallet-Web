@@ -582,8 +582,11 @@ const locale = {
     kyc_53:"PIN (Confirmar)",
     kyc_54:"PIN antigo",
     kyc_55: "Endereço de e-mail inválido",
+    kyc_56: "celular",
+    kyc_57: "Método de verificação",
 
 
+    
 
  };
 export default locale;

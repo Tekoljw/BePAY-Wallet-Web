@@ -580,8 +580,11 @@ const locale = {
     kyc_53:"PIN (Onayla)",
     kyc_54:"eski PIN",
     kyc_55: "Geçersiz e-posta adresi",
+    kyc_56: "telefonu",
+    kyc_57: "Doğrulama yöntemi",
 
 
+    
 
 
 

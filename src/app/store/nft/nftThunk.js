@@ -37,8 +37,7 @@ export const goMintNft = createAsyncThunk(
       dispatch(showMessage({ message: 'Nft Mint Success', code: 1 }));
       return true
     } catch (e) {
-      console.log(e.message, 'errorMsg')
-      dispatch(showMessage({ message: t('error_15'), code: 2 }));
+      dispatch(showMessage({ message: e.errmsg, code: 2 }));
       return false
     }
   }
@@ -54,7 +53,7 @@ export const getGenesisRobotConfig = createAsyncThunk(
       // dispatch(showMessage({ message: 'success' }));
       return resultData.data;
     } else {
-      dispatch(showMessage({ message: t('error_2'), code: 2 }));
+      dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
       return false
     }
   }
@@ -75,7 +74,7 @@ export const mintGenesisRobot = createAsyncThunk(
       // dispatch(showMessage({ message: 'success' }));
       return resultData.data;
     } else {
-      dispatch(showMessage({ message: t('error_15'), code: 2 }));
+      dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
       return false
     }
   }
@@ -94,7 +93,7 @@ export const queryContractResult = createAsyncThunk(
     if (resultData.errno === 0) {
       return resultData.data || '';
     } else {
-      dispatch(showMessage({ message: t('error_2'), code: 2 }));
+      dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
       return false
     }
   }
@@ -102,85 +101,85 @@ export const queryContractResult = createAsyncThunk(
 
 // 中心化Nft质押
 export const centerNftPool = createAsyncThunk(
-    'nft/centerNftPool',
-    async (settings, { dispatch, getState }) => {
+  'nft/centerNftPool',
+  async (settings, { dispatch, getState }) => {
 
-        const data = {
-            activityId: settings?.activityId || '',
-            amount: settings?.amount || 0,
-            pledgeNftId: settings?.pledgeNftId || '',
-        }
-        const resultData = await React.$api("activity.participate", data);
-
-        if (resultData.errno === 0) {
-            dispatch(showMessage({ message: 'Success', code: 1 }));
-            return resultData.data || '';
-        } else {
-            dispatch(showMessage({ message: t('error_16'), code: 2 }));
-            return false
-        }
+    const data = {
+      activityId: settings?.activityId || '',
+      amount: settings?.amount || 0,
+      pledgeNftId: settings?.pledgeNftId || '',
     }
+    const resultData = await React.$api("activity.participate", data);
+
+    if (resultData.errno === 0) {
+      dispatch(showMessage({ message: 'Success', code: 1 }));
+      return resultData.data || '';
+    } else {
+      dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+      return false
+    }
+  }
 );
 
 // 获取nft所有者
 export const getOwner = createAsyncThunk(
-    'nft/getOwner',
+  'nft/getOwner',
 
-    async (settings, { dispatch, getState }) => {
-        const nftToken = settings.nftToken || '';
-        const tokenId = settings.tokenId;
-        const { user } = getState();
+  async (settings, { dispatch, getState }) => {
+    const nftToken = settings.nftToken || '';
+    const tokenId = settings.tokenId;
+    const { user } = getState();
 
-        // Nft 合约
-        const nftConstruct = utils.contractAbi('GenesisRobotNftToken');
-        const nftConstructObj = await utils.contractAt(nftConstruct, nftToken);
-        console.log(nftConstructObj);
+    // Nft 合约
+    const nftConstruct = utils.contractAbi('GenesisRobotNftToken');
+    const nftConstructObj = await utils.contractAt(nftConstruct, nftToken);
+    console.log(nftConstructObj);
 
-        try {
-            const owner = (await nftConstructObj.ownerOf(tokenId)).toUpperCase();
+    try {
+      const owner = (await nftConstructObj.ownerOf(tokenId)).toUpperCase();
 
-            // console.log(owner,'owner.....................');
+      // console.log(owner,'owner.....................');
 
-            let currentUserAddress = user.profile.user.address.toUpperCase();
+      let currentUserAddress = user.profile.user.address.toUpperCase();
 
-            if (currentUserAddress === owner) {
-                return true
-            } else {
-                dispatch(showMessage({ message: t('error_19'), code: 2 }));
-                return false
-            }
-        } catch (e) {
-            dispatch(showMessage({ message: t('error_17'), code: 2 }));
-            return false
-        }
+      if (currentUserAddress === owner) {
+        return true
+      } else {
+        dispatch(showMessage({ message: t('error_101'), code: 2 }));
+        return false
+      }
+    } catch (e) {
+      dispatch(showMessage({ message: e.errmsg, code: 2 }));
+      return false
     }
+  }
 );
 
 // nft授权转账
 export const goCenterTransfer = createAsyncThunk(
-    'nft/goCenterTransfer',
-    async (settings, { dispatch, getState }) => {
-        const { user } = getState();
-        const userAddress = user.profile.user.address;
-        const nftToken = settings.nftToken || '';
-        const toAddress = settings.toAddress || '';
-        const tokenId = parseInt(settings.tokenId);
+  'nft/goCenterTransfer',
+  async (settings, { dispatch, getState }) => {
+    const { user } = getState();
+    const userAddress = user.profile.user.address;
+    const nftToken = settings.nftToken || '';
+    const toAddress = settings.toAddress || '';
+    const tokenId = parseInt(settings.tokenId);
 
-        // Nft 合约
-        const nftConstruct = utils.contractAbi('GenesisRobotNftToken');
-        const nftConstructObj = await utils.contractAt(nftConstruct, nftToken);
+    // Nft 合约
+    const nftConstruct = utils.contractAbi('GenesisRobotNftToken');
+    const nftConstructObj = await utils.contractAt(nftConstruct, nftToken);
 
-        try {
-            const safeTransferFromObj = await nftConstructObj.safeTransferFrom(userAddress, toAddress, tokenId, {
-                from: userAddress
-            });
-            if (safeTransferFromObj.tx) {
-                dispatch(showMessage({ message: 'wait......', code: 3 }));
-                return safeTransferFromObj.tx
-            }
-        } catch (e) {
-            dispatch(showMessage({ message: t('error_18'), code: 2 }));
-            return false
-        }
+    try {
+      const safeTransferFromObj = await nftConstructObj.safeTransferFrom(userAddress, toAddress, tokenId, {
+        from: userAddress
+      });
+      if (safeTransferFromObj.tx) {
+        dispatch(showMessage({ message: 'wait......', code: 3 }));
+        return safeTransferFromObj.tx
+      }
+    } catch (e) {
+      dispatch(showMessage({ message: e.errmsg, code: 2 }));
+      return false
     }
+  }
 );
