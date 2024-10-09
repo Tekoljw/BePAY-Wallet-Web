@@ -396,14 +396,15 @@ function ResetPin(props) {
 
                 {resetTabValue === 1 &&
                     <div>
-                        <div className="mt-20"> Choose verification method</div>
+                        <div className="mt-20"> {t('kyc_57')} </div>
                         <div className='mt-10'>
                             <div
                                 onClick={() => { setSelectId(0) }}
                                 className={clsx('selectPin', selectId === 0 && 'activePinZi')}
+                                style={{ marginRight: "2rem" }}
                             >
                                 <img style={{ width: '2rem', borderRadius: '0.5rem', float: "left" }} src="wallet/assets/images/menu/email.png" alt="" />
-                                <div style={{ float: "left" }} className="px-6"> Email</div>
+                                <div style={{ float: "left" }} className="px-6">{t('signIn_5')}</div>
                             </div>
 
                             <div
@@ -411,7 +412,7 @@ function ResetPin(props) {
                                 className={clsx('selectPin', selectId === 1 && 'activePinZi')}
                             >
                                 <img style={{ width: '2rem', borderRadius: '0.5rem', float: "left" }} src="wallet/assets/images/menu/phone.png" alt="" />
-                                <div style={{ float: "left" }} className="px-6"> Phone</div>
+                                <div style={{ float: "left" }} className="px-6">{t('kyc_56')}</div>
                             </div>
                         </div>
 
@@ -483,6 +484,7 @@ function ResetPin(props) {
                                                             value={inputVal.password}
                                                             onChange={handleChangeInputVal3('password')}
                                                             aria-describedby="outlined-weight-helper-text"
+                                                            type="password"
                                                             inputProps={{
                                                                 'aria-label': 'password',
                                                                 inputMode: 'numeric',
@@ -506,6 +508,7 @@ function ResetPin(props) {
                                                             value={inputVal.twoNewPin}
                                                             onChange={handleChangeInputVal4('twoNewPin')}
                                                             aria-describedby="outlined-weight-helper-text"
+                                                            type="password"
                                                             inputProps={{
                                                                 'aria-label': 'PIN(Confirm)',
                                                                 inputMode: 'numeric',
