@@ -225,7 +225,7 @@ export const makeOrder = createAsyncThunk(
         if (result.errno === 0) {
             return result.data
         } else {
-            dispatch(showMessage({ message: makeOrder.errmsg, code: 2 }));
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
         }
     }
 );
@@ -239,7 +239,7 @@ export const payoutBank = createAsyncThunk(
         if (result.errno === 0) {
             return result.data
         } else {
-            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            dispatch(showMessage({ message: result.errmsg, code: 2 }))
         }
     }
 );

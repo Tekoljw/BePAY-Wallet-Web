@@ -1938,7 +1938,7 @@ function Deposite() {
                                                     })}
                                                 </div>}
 
-                                                <div className='ml-2' style={{ fontSize: "13px" }} >{t('home_borrow_16')}  {bankItem?.ifRate * weight + bankItem?.basicFee} </div>
+                                                <div className='ml-2' style={{ fontSize: "13px" }} >{t('home_borrow_16')}  { (bankItem?.ifRate * weight + bankItem?.basicFee)?.toFixed(2)} </div>
 
                                                 <div className="my-16 flex items-center justify-content-center">
                                                     <LoadingButton

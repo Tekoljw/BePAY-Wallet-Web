@@ -118,6 +118,7 @@ function Card(props) {
     const hasAuthGoogle = useSelector(selectUserData).userInfo?.hasAuthGoogle
     const [openYanZheng, setOpenYanZheng] = useState(false);
     const [openGoogleAnimateModal, setOpenGoogleAnimateModal] = useState(false);
+    const [maxValue, setMaxValue] = useState(0);
 
     const [pin, setPin] = useState('');
     const [hasPin, setHasPin] = useState(false)
@@ -1016,6 +1017,7 @@ function Card(props) {
             tmpText = tmpText + text
         }
 
+        setMaxValue(0)
         setTransferMoney(tmpText === '0' ? '' : tmpText);
     }
 
@@ -1032,14 +1034,23 @@ function Card(props) {
     useEffect(() => {
         if (cardID) {
             let tmpTransferFee = 0
-            tmpTransferFee = Number(transferMoney) * Number(cardConfigList[cardConfigID].creditRate) + Number(cardConfigList[cardConfigID].basicFee)
+            tmpTransferFee = Number(maxValue ? maxValue: transferMoney) * Number(cardConfigList[cardConfigID].creditRate) + Number(cardConfigList[cardConfigID].basicFee)
             setTransferFee(tmpTransferFee)
         }
     }, [transferMoney])
 
-    const setMaxValue = () => {
-        const balance = _.get(_.find(symbolList, { 'symbol': symbol }), 'balance', 0)
-        setTransferMoney(balance)
+    const setMaxValueClick = () => {
+        let balance = 0;
+        if(huaZhuanValue === 0 ){
+            balance = _.get(_.find(symbolList, { 'symbol': symbol }), 'balance', 0)
+        }else if(huaZhuanValue === 1){
+            balance = cardListObj[cardID] && cardListObj[cardID].amount && cardListObj[cardID].amount.toFixed(2);
+        }
+        
+        let tmpTransferFee = 0
+        tmpTransferFee = Number(balance) * Number(cardConfigList[cardConfigID].creditRate) + Number(cardConfigList[cardConfigID].basicFee)
+        setTransferMoney(balance - tmpTransferFee)
+        setMaxValue(balance)
     }
 
     const backCardPageEvt = () => {
@@ -1327,6 +1338,8 @@ function Card(props) {
                                                                                     if (cardItem && cardItem.state == 9) return;
                                                                                     setOpenRecordWindow(true)
                                                                                     setCardID(cardItem.id)
+                                                                                    setTransferFee(0)
+                                                                                    setMaxValue(0)
                                                                                     setCardConfigID(cardItem.creditConfigId)
                                                                                     openRecordFunc()
                                                                                 }}>
@@ -2117,7 +2130,12 @@ function Card(props) {
 
                                 <Tabs
                                     value={huaZhuanValue}
-                                    onChange={(ev, value) => setHuaZhuanValue(value)}
+                                    onChange={(ev, value) => {
+                                        setHuaZhuanValue(value)
+                                        setMaxValue(0)
+                                        setTransferMoney(0)
+                                        setTransferFee(0)
+                                    }}
                                     indicatorColor="secondary"
                                     textColor="inherit"
                                     variant="scrollable"
@@ -2188,7 +2206,7 @@ function Card(props) {
                                     <div className='w-full h-44 border' style={{ borderRadius: "0.5rem", backgroundColor: "#151C2A", position: "absolute", top: "0%", right: "0%" }}>
                                     </div>
                                     <div className='text-16 ' style={{ position: "absolute", top: "0%", left: "4%", width: "82%", height: "4.4rem", lineHeight: "4.4rem" }}>{transferMoney}</div>
-                                    <div className='' style={{ position: "absolute", top: "0%", right: "4%", height: "4.4rem", lineHeight: "4.4rem" }} onClick={setMaxValue}>Max</div>
+                                    <div className='' style={{ position: "absolute", top: "0%", right: "4%", height: "4.4rem", lineHeight: "4.4rem" }} onClick={setMaxValueClick}>Max</div>
                                 </div>
 
                                 <div className='flex justify-between mt-16'>
