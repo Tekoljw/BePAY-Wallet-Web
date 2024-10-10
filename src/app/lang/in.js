@@ -584,8 +584,8 @@ const locale = {
     kyc_57: "सत्यापन विधि",
     Kyc_58:"देश कोड या फोन नंबर खाली नहीं हो सकता",
     Kyc_59:"भेजें",
-
-
+    Kyc_60:"Google Authenticator में देखें",
+    Kyc_61:"Google Authenticator",
 
     
 

@@ -584,8 +584,8 @@ const locale = {
     kyc_57: "Doğrulama yöntemi",
     Kyc_58:"Ülke kodu veya telefon numarası boş olamaz",
     Kyc_59:"Gönder",
-
-
+    Kyc_60:"Google Authenticator'da Görüntüle",
+    Kyc_61:"Google Authenticator",
 
     
 

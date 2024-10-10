@@ -587,8 +587,8 @@ const locale = {
     kyc_57: "Paraan ng beripikasyon",
     Kyc_58:"Ang country code o numero ng telepono ay hindi maaaring walang laman",
     Kyc_59:"Ipadala sa",
-
-
+    Kyc_60:"Tingnan sa Google Authenticator",
+    Kyc_61:"Google Authenticator",
 
     
 

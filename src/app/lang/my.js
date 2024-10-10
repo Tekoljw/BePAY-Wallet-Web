@@ -586,8 +586,8 @@ const locale = {
     kyc_57: "Kaedah pengesahan",
     Kyc_58:"Kod negara atau nombor telefon tidak boleh kosong",
     Kyc_59:"Hantar ke",
-
-
+    Kyc_60:"Lihat dalam Google Authenticator",
+    Kyc_61:"Google Authenticator",
 
     
 

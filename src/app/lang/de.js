@@ -589,8 +589,8 @@ const locale = {
     kyc_57: "Verifizierungsmethode",
     Kyc_58:"Ländercode oder Telefonnummer darf nicht leer sein",
     Kyc_59:"Senden an",
-
-    
+    Kyc_60:"In Google Authenticator anzeigen",
+    Kyc_61:"Google Authenticator",
 
     
     

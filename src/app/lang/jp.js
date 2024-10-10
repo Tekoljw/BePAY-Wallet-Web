@@ -586,8 +586,8 @@ const locale = {
     kyc_57: "検証方法",
     Kyc_58:"国コードまたは電話番号は空にできません",
     Kyc_59:"送信先",
-
-
+    Kyc_60:"Google Authenticator で表示",
+    Kyc_61:"Google Authenticator",
 
     
 

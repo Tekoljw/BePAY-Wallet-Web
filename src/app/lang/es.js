@@ -586,8 +586,8 @@ const locale = {
     kyc_57: "Método de verificación",
     Kyc_58:"El código de país o el número de teléfono no puede estar vacío",
     Kyc_59:"Enviar a",
-
-
+    Kyc_60:"Ver en Google Authenticator",
+    Kyc_61:"Google Authenticator",
 
     
 

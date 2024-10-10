@@ -586,8 +586,8 @@ const locale = {
     kyc_57: "சரிபார்ப்பு முறை",
     Kyc_58:"நாட்டுக் குறியீடு அல்லது தொலைபேசி எண் காலியாக இருக்கக் கூடாது",
     Kyc_59:"அனுப்ப",
-
-
+    Kyc_60:"Google Authenticator இல் பார்க்கவும்",
+    Kyc_61:"Google Authenticator",
 
     
 

@@ -584,8 +584,8 @@ const locale = {
     kyc_57: "အတည်ပြုနည်းလမ်း",
     Kyc_58:"နိုင်ငံကုဒ် သို့မဟုတ် ဖုန်းနံပါတ်အား အလွတ်မထားရ",
     Kyc_59:"ပို့ရန်",
-
-
+    Kyc_60:"Google Authenticator တွင် ကြည့်ရှုပါ",
+    Kyc_61:"Google Authenticator",
 
     
 

@@ -585,8 +585,8 @@ const locale = {
     kyc_57: "選擇驗證方式",
     Kyc_58:"國家代碼或手機號碼不能為空",
     Kyc_59:"發送至",
-
-
+    Kyc_60:"在Google Authenticator中查看",
+    Kyc_61:"Google Authenticator",
 
     
 

@@ -588,8 +588,8 @@ const locale = {
     kyc_57: "검증 방식",
     Kyc_58:"국가 코드 또는 전화번호는 비워 둘 수 없습니다",
     Kyc_59:"보내기",
-
-
+    Kyc_60:"Google Authenticator에서 보기",
+    Kyc_61:"Google Authenticator",
 
     
 

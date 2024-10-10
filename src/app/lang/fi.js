@@ -585,8 +585,8 @@ const locale = {
     kyc_57: "Varmennusmenetelmä",
     Kyc_58:"Maatunnus tai puhelinnumero ei voi olla tyhjä",
     Kyc_59:"Lähetä",
-
-
+    Kyc_60:"Näytä Google Authenticatorissa",
+    Kyc_61:"Google Authenticator",
 
     
 

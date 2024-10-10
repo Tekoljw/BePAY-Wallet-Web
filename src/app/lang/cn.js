@@ -592,7 +592,9 @@ const locale = {
     kyc_57: "选择验证方式",
     Kyc_58:"国家代码或手机号不能为空",
     Kyc_59:"发送至",
-
+    Kyc_60:"在谷歌验证器中查看",
+    Kyc_61:"谷歌验证器",
+    Kyc_61:"Google Authenticator",
 
     
 

@@ -598,8 +598,8 @@ const locale = {
     kyc_57: "যাচাইকরণ পদ্ধতি",
     Kyc_58:"দেশ কোড বা ফোন নম্বর খালি থাকতে পারবে না",
     Kyc_59:"পাঠান",
-
-
+    Kyc_60:"Google Authenticator এ দেখুন",
+    Kyc_61:"Google Authenticator",
 
     
 
