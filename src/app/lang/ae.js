@@ -591,6 +591,7 @@ const locale = {
     Kyc_58:"لا يمكن أن يكون رمز البلد أو رقم الهاتف فارغًا",
     Kyc_59:"إرسال إلى",
     Kyc_60:"عرض في Google Authenticator",
+    Kyc_61:"Google Authenticator",
 
 
 
