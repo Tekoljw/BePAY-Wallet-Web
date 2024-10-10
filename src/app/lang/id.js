@@ -584,7 +584,12 @@ const locale = {
     kyc_55: "Alamat email tidak valid",
     kyc_56: "ponsel",
     kyc_57: "Metode verifikasi",
+    Kyc_58:"Kode negara atau nomor telepon tidak boleh kosong",
+    Kyc_59:"Kirim ke",
 
+
+
+    
 
     
 

@@ -477,6 +477,7 @@ export const changePin = createAsyncThunk(
             smsCode: settings.smsCode ?? '',
             nationCode: settings.nationCode ?? '',
             paymentPassword: settings.password ?? '',
+            phone: settings.phone ?? '',
         }
         const resultData = await React.$api("security.setPaymentPassword", data);
         if (resultData.errno === 0) {

@@ -81,6 +81,10 @@ function ResetPin(props) {
     const [newPinError1, setNewPinError1] = useState(false);
     const [newPinError2, setNewPinError2] = useState(false);
     const [submitBtnShow, setSubmitBtnShow] = useState(true);
+    const [phoneNumberError, setPhoneNumberError] = useState(false);
+    const [smsError2, setSmsError2] = useState(false);
+    const [newPinError3, setNewPinError3] = useState(false);
+    const [newPinError4, setNewPinError4] = useState(false);
 
     const dispatch = useDispatch();
     const [time, setTime] = useState(null);
@@ -115,15 +119,19 @@ function ResetPin(props) {
     }
 
     async function sendPhoneCode() {
-        setSelectedCountryCode(control._formValues.nationCode);
-        const data = {
-            codeType: 13,
-            nationCode: control._formValues.nationCode,
-            phone: control._formValues.email,
-        };
-        const sendRes = await dispatch(sendSms(data));
-        if (sendRes?.payload) {
-            setTime(60)
+        if (inputVal2.nationCode !== "" && inputVal2.phone !== "") {
+            setSelectedCountryCode(inputVal2.nationCode);
+            const data = {
+                codeType: 13,
+                nationCode: inputVal2.nationCode,
+                phone: inputVal2.phone,
+            };
+            const sendRes = await dispatch(sendSms(data));
+            if (sendRes?.payload) {
+                setTime(60)
+            }
+        } else {
+            dispatch(showMessage({ message: t('Kyc_58'), code: 2 }));
         }
     }
 
@@ -146,6 +154,14 @@ function ResetPin(props) {
         codeType: '',
     });
 
+    const [inputVal2, setInputVal2] = useState({
+        phone: '',
+        nationCode: '',
+        smsCode: '',
+        password: '',
+        twoNewPin: '',
+        codeType: '',
+    });
 
     useEffect(() => {
         if (inputVal.email !== '' && inputVal.smsCode !== '' && inputVal.password !== '' && inputVal.twoNewPin !== '') {
@@ -159,10 +175,32 @@ function ResetPin(props) {
     }, [inputVal]);
 
 
+
+    useEffect(() => {
+        if (inputVal2.nationCode !== '' && inputVal2.phone !== '' && inputVal2.smsCode !== '' && inputVal2.password !== '' && inputVal2.twoNewPin !== '') {
+            setSubmitBtnShow(false);
+        } else {
+            setSubmitBtnShow(true);
+        }
+        if (inputVal.password !== inputVal.twoNewPin) {
+            setNewPinError2(true);
+        }
+    }, [inputVal2]);
+
+
     const sumbitBtnFunc = () => {
         if (selectId === 0) {
             inputVal.codeType = 13;
             dispatch(changePin(inputVal)).then((res) => {
+                let result = res.payload
+                if (result) {
+                    changePhoneTab('withdraw');
+                    history.push('/wallet/home/wallet')
+                }
+            })
+        } else if (selectId === 1) {
+            inputVal2.codeType = 13;
+            dispatch(changePin(inputVal2)).then((res) => {
                 let result = res.payload
                 if (result) {
                     changePhoneTab('withdraw');
@@ -205,6 +243,15 @@ function ResetPin(props) {
         }
     };
 
+
+    const handleBlur5 = () => {
+        if (inputVal2.phone === '') {
+            setPhoneNumberError(true);
+        } else {
+            setPhoneNumberError(false);
+        }
+    };
+
     const handleChangeInputVal = (prop) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
         if (event.target.value === '') {
@@ -227,7 +274,6 @@ function ResetPin(props) {
         } else {
             setSmsError(false);
         }
-
     };
 
     const handleChangeInputVal3 = (prop) => (event) => {
@@ -258,6 +304,99 @@ function ResetPin(props) {
             setNewPinError2(false);
         }
     };
+
+
+
+    const handleChangeInputVal5 = (prop) => (event) => {
+        const value = event.target.value;
+        const numericValue = value.replace(/\D/g, ''); // 使用正则表达式，移除所有非数字字符
+        setInputVal2((prevState) => ({
+            ...prevState,
+            [prop]: numericValue
+        }));
+
+        if (event.target.value === '') {
+            setPhoneNumberError(true);
+        } else {
+            setPhoneNumberError(false);
+        }
+    };
+
+
+    const handleChangeInputVal6 = (prop) => (event) => {
+        const value = event.target.value;
+        const numericValue = value.replace(/\D/g, ''); // 使用正则表达式，移除所有非数字字符
+        setInputVal2((prevState) => ({
+            ...prevState,
+            [prop]: numericValue
+        }));
+
+        if (event.target.value === '') {
+            setSmsError2(true);
+        } else {
+            setSmsError2(false);
+        }
+    };
+
+
+    const handleChangeInputVal7 = (prop) => (event) => {
+        const value = event.target.value;
+        const numericValue = value.replace(/\D/g, ''); // 使用正则表达式，移除所有非数字字符
+        setInputVal2((prevState) => ({
+            ...prevState,
+            [prop]: numericValue
+        }));
+
+        if (event.target.value === '') {
+            setNewPinError3(true);
+        } else {
+            setNewPinError3(false);
+        }
+    };
+
+
+    const handleBlur6 = () => {
+        if (inputVal2.smsCode === '') {
+            setSmsError2(true);
+        } else {
+            setSmsError2(false);
+        }
+    };
+
+
+    const handleBlur7 = () => {
+        if (inputVal2.newPin === '') {
+            setNewPinError3(true);
+        } else {
+            setNewPinError3(false);
+        }
+    };
+
+
+    const handleChangeInputVal8 = (prop) => (event) => {
+        const value = event.target.value;
+        const numericValue = value.replace(/\D/g, ''); // 使用正则表达式，移除所有非数字字符
+        setInputVal2((prevState) => ({
+            ...prevState,
+            [prop]: numericValue
+        }));
+
+        if (event.target.value === '') {
+            setNewPinError4(true);
+        } else {
+            setNewPinError4(false);
+        }
+    };
+
+
+    const handleBlur8 = () => {
+        if (inputVal2.twoNewPin === '') {
+            setNewPinError4(true);
+        } else {
+            setNewPinError4(false);
+        }
+    };
+
 
     return (
         <div
@@ -421,7 +560,8 @@ function ResetPin(props) {
                                 <div className=''>
                                     <div className="w-full tongYongChuang3 flex justify-content-center ">
                                         <div className="w-full  mx-auto sm:mx-0">
-                                            <div className="flex flex-col justify-center w-full mt-32"  >
+                                            <div className="flex flex-col justify-center w-full mt-32" >
+
                                                 <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
                                                     <InputLabel id="demo-simple-select-label">{t('kyc_27')}</InputLabel>
                                                     <OutlinedInput
@@ -453,6 +593,7 @@ function ResetPin(props) {
                                                     {emailError && (<FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>)}
                                                 </FormControl>
 
+
                                                 <div className="flex items-center justify-between">
                                                     <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
                                                         <InputLabel id="demo-simple-select-label">{t('signIn_8')}</InputLabel>
@@ -481,7 +622,7 @@ function ResetPin(props) {
                                                         <OutlinedInput
                                                             id="outlined-adornment-address"
                                                             label="password"
-                                                            value={inputVal.password}
+                                                            value={inputVal2.password}
                                                             onChange={handleChangeInputVal3('password')}
                                                             aria-describedby="outlined-weight-helper-text"
                                                             type="password"
@@ -546,7 +687,6 @@ function ResetPin(props) {
                                                 >
                                                     {t('kyc_50')}
                                                 </Button>
-
                                             </div>
                                         </div>
                                     </div>
@@ -557,24 +697,18 @@ function ResetPin(props) {
                         {selectId === 1 &&
                             <div>
                                 <div className=''>
-
-                                    <Paper
+                                    <div
                                         className="w-full tongYongChuang3 flex justify-content-center "
                                     >
                                         <div className="w-full  mx-auto sm:mx-0">
 
-                                            <form
-                                                name="registerForm"
-                                                noValidate
-                                                className="flex flex-col justify-center w-full mt-32"
-                                                onSubmit={handlePin(handlePin)}
-                                            >
+                                            <div className="flex flex-col justify-center w-full mt-32"  >
+
                                                 <Controller
                                                     name="nationCode"
                                                     control={control}
                                                     render={({ field }) => (
                                                         <Autocomplete
-                                                            // disablePortal
                                                             className="mb-24"
                                                             options={phoneCode.list}
                                                             autoHighlight
@@ -589,9 +723,11 @@ function ResetPin(props) {
                                                                 return array;
                                                             }}
                                                             onChange={(res, option) => {
-                                                                control._formValues.nationCode = option.phone_code
+                                                                if (option) {
+                                                                    inputVal2.nationCode = option.phone_code
+                                                                }
                                                             }}
-                                                            getOptionLabel={(option) => { return control._formValues.nationCode }}
+                                                            getOptionLabel={(option) => { return inputVal2.nationCode }}
                                                             renderOption={(props, option) => (
                                                                 <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
                                                                     <img
@@ -617,103 +753,109 @@ function ResetPin(props) {
                                                     )}
                                                 />
 
-                                                <Controller
-                                                    name="phone"
-                                                    control={control}
-                                                    render={({ field }) => (
-                                                        <FormControl variant="outlined" className="mb-24">
-                                                            <InputLabel
-                                                                style={{
-                                                                    color: !!errors.phone && '#f44336'
-                                                                }}
-                                                            >{t('signIn_4')}</InputLabel>
-                                                            <OutlinedInput
-                                                                {...field}
-                                                                label={t('signIn_4')}
-                                                                type="number"
-                                                                variant="outlined"
-                                                                required
-                                                                fullWidth
-                                                                error={!!errors.phone}
-                                                                endAdornment={
-                                                                    <InputAdornment position="end">
-                                                                        {time <= 0 && <IconButton
-                                                                            aria-label="toggle password visibility"
-                                                                            onClick={sendPhoneCode}
-                                                                            // onMouseDown={handleMouseDownPassword}
-                                                                            edge="end"
-                                                                            sx={{
-                                                                                fontSize: '1.4rem',
-                                                                                borderRadius: '5px'
-                                                                            }}
-                                                                        >
-                                                                            {t('forgot_3')}
-                                                                        </IconButton>}
-
-                                                                        {time > 0 &&
-                                                                            <div>
-                                                                                {time} s
-                                                                            </div>
-                                                                        }
-                                                                    </InputAdornment>
-                                                                }
-                                                            />
-                                                            {!!errors.phone &&
-                                                                <div
-                                                                    style={{
-                                                                        fontSize: '1.2rem',
-                                                                        color: '#f44336',
-                                                                        fontWeight: 400,
-                                                                        lineHeight: 1.66,
-                                                                        textAlign: 'left',
-                                                                        marginTop: '3px',
-                                                                        marginRight: '14px',
-                                                                        marginBottom: 0,
-                                                                        marginLeft: '14px',
+                                                <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                                                    <InputLabel id="demo-simple-select-label">{t('signIn_4')}</InputLabel>
+                                                    <OutlinedInput
+                                                        id="outlined-adornment-address"
+                                                        label="phone"
+                                                        value={inputVal2.phone}
+                                                        onChange={handleChangeInputVal5('phone')}
+                                                        aria-describedby="outlined-weight-helper-text"
+                                                        inputProps={{
+                                                            'aria-label': 'phone',
+                                                            inputMode: 'numeric',
+                                                            pattern: '[0-9]*',
+                                                        }}
+                                                        error={phoneNumberError}
+                                                        onBlur={handleBlur5}
+                                                        endAdornment={
+                                                            <InputAdornment position="end">
+                                                                {time <= 0 && <IconButton
+                                                                    aria-label="toggle password visibility"
+                                                                    onClick={sendPhoneCode}
+                                                                    edge="end"
+                                                                    sx={{
+                                                                        fontSize: '1.4rem',
+                                                                        borderRadius: '5px'
                                                                     }}
                                                                 >
-                                                                    {errors?.phone?.message}
-                                                                </div>
-                                                            }
-                                                        </FormControl>
-                                                    )}
-                                                />
+                                                                    {t('forgot_3')}
+                                                                </IconButton>}
+                                                                {time > 0 && <div> {time}s </div>}
+                                                            </InputAdornment>
+                                                        }
+                                                    />
+                                                    {phoneNumberError && (<FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>)}
+                                                </FormControl>
 
-                                                <Controller
-                                                    name="smsCode"
-                                                    control={control}
-                                                    render={({ field }) => (
-                                                        <TextField
-                                                            {...field}
-                                                            className="mb-24"
-                                                            label={t('signIn_7')}
-                                                            type="number"
-                                                            error={!!errors.smsCode}
-                                                            helperText={errors?.smsCode?.message}
-                                                            variant="outlined"
-                                                            required
-                                                            fullWidth
+                                                <div className="flex items-center justify-between">
+                                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                                                        <InputLabel id="demo-simple-select-label">{t('signIn_7')}</InputLabel>
+                                                        <OutlinedInput
+                                                            id="outlined-adornment-address"
+                                                            label="smsCode"
+                                                            value={inputVal2.smsCode}
+                                                            onChange={handleChangeInputVal6('smsCode')}
+                                                            aria-describedby="outlined-weight-helper-text"
+                                                            inputProps={{
+                                                                'aria-label': 'smsCode',
+                                                                inputMode: 'numeric',
+                                                                pattern: '[0-9]*',
+                                                            }}
+                                                            error={smsError2}
+                                                            onBlur={handleBlur6}
                                                         />
-                                                    )}
-                                                />
+                                                        {smsError2 && (<FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>)}
+                                                    </FormControl>
+                                                </div>
 
-                                                <Controller
-                                                    name="password"
-                                                    control={control}
-                                                    render={({ field }) => (
-                                                        <TextField
-                                                            {...field}
-                                                            className="mb-24"
-                                                            label={t('signIn_9')}
+
+                                                <div className="flex items-center justify-between">
+                                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                                                        <InputLabel id="demo-simple-select-label">{t('kyc_52')}</InputLabel>
+                                                        <OutlinedInput
+                                                            id="outlined-adornment-address"
+                                                            label="password"
+                                                            value={inputVal2.password}
+                                                            onChange={handleChangeInputVal7('password')}
+                                                            aria-describedby="outlined-weight-helper-text"
                                                             type="password"
-                                                            error={!!errors.password}
-                                                            helperText={errors?.password?.message}
-                                                            variant="outlined"
-                                                            required
-                                                            fullWidth
+                                                            inputProps={{
+                                                                'aria-label': 'password',
+                                                                inputMode: 'numeric',
+                                                                pattern: '[0-9]*',
+                                                            }}
+                                                            error={newPinError3}
+                                                            onBlur={handleBlur7}
                                                         />
-                                                    )}
-                                                />
+                                                        {newPinError3 && (<FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>)}
+                                                    </FormControl>
+                                                </div>
+
+
+                                                <div className="flex items-center justify-between">
+                                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                                                        <InputLabel id="demo-simple-select-label">{t('kyc_53')}</InputLabel>
+                                                        <OutlinedInput
+                                                            id="outlined-adornment-address"
+                                                            label="PIN(Confirm)"
+                                                            value={inputVal2.twoNewPin}
+                                                            onChange={handleChangeInputVal8('twoNewPin')}
+                                                            aria-describedby="outlined-weight-helper-text"
+                                                            type="password"
+                                                            inputProps={{
+                                                                'aria-label': 'PIN(Confirm)',
+                                                                inputMode: 'numeric',
+                                                                pattern: '[0-9]*',
+                                                            }}
+                                                            error={newPinError4}
+                                                            onBlur={handleBlur8}
+                                                        />
+                                                        {newPinError4 && (<FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>)}
+                                                    </FormControl>
+                                                </div>
+
+
 
                                                 <div style={{ textAlign: "center" }}>
                                                     <a className="text-md font-medium" onClick={() => {
@@ -727,19 +869,22 @@ function ResetPin(props) {
                                                 <Button
                                                     variant="contained"
                                                     color="secondary"
-                                                    className=" w-full mt-24 "
+                                                    className=" w-full mt-24"
                                                     aria-label="Register"
-                                                    disabled={
-                                                        _.isEmpty(dirtyFields) || !isValid || (selectedCountryCode !== "" && selectedCountryCode !== control._formValues.nationCode)
-                                                    }
+                                                    disabled={submitBtnShow}
                                                     type="submit"
                                                     size="large"
+                                                    onClick={() => {
+                                                        sumbitBtnFunc();
+                                                    }}
                                                 >
                                                     {t('kyc_50')}
                                                 </Button>
-                                            </form>
+                                            </div>
+
+
                                         </div>
-                                    </Paper>
+                                    </div>
                                 </div>
                             </div>
                         }

@@ -574,7 +574,12 @@ const locale = {
     kyc_55: "Địa chỉ email không hợp lệ",
     kyc_56: "Điện thoại",
     kyc_57: "Phương pháp xác thực",
+    Kyc_58:"Mã quốc gia hoặc số điện thoại không được để trống",
+    Kyc_59:"Gửi đến",
 
+
+
+    
 
     
 

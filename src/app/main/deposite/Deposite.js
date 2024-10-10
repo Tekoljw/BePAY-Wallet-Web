@@ -25,7 +25,7 @@ import { DialogActions } from '@mui/material';
 import '../../../styles/home.css';
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
-import {selectConfig, setNftConfig} from "../../store/config";
+import { selectConfig, setNftConfig } from "../../store/config";
 import {
     arrayLookup, getOpenAppId, getOpenAppIndex,
     setPhoneTab, handleCopyText, getUserLoginType,
@@ -47,7 +47,7 @@ import QRCode from "qrcode.react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { getCryptoDisplay } from "../../store/wallet/walletThunk";
-import {centerGetTokenBalanceList, getDecenterWalletBalance} from "../../store/user/userThunk";
+import { centerGetTokenBalanceList, getDecenterWalletBalance } from "../../store/user/userThunk";
 import FuseLoading from '@fuse/core/FuseLoading';
 import { useTranslation } from "react-i18next";
 import { makeOrder, getDepositeFiatOrderStatus } from "../../store/payment/paymentThunk";
@@ -65,7 +65,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import userLoginType from "../../define/userLoginType";
 import { borderTop, width } from '@mui/system';
 import * as _ from 'lodash'
-import {selectCurrentLanguage} from "app/store/i18nSlice";
+import { selectCurrentLanguage } from "app/store/i18nSlice";
 
 
 const marks = [
@@ -295,7 +295,7 @@ function Deposite() {
     const handleChangeTransferVal2 = (prop, value) => {
         setInputVal({ ...transferFormData, [prop]: value });
     };
-        // 创建处理输入框变化的函数
+    // 创建处理输入框变化的函数
     const handleInputChange = (e) => {
         // 限制输入框的值只保留六位小数
         const value = parseFloat(e.target.value);
@@ -554,10 +554,10 @@ function Deposite() {
     //格式化币种和网络
     const symbolsFormatAmount = (selectNetworkId) => {
         let filterSymbolData = {};
-        if(selectNetworkId && selectNetworkId > 0){
+        if (selectNetworkId && selectNetworkId > 0) {
             //筛选币种
             filterSymbolData = symbolsData.filter(i => i.networkId === selectNetworkId);
-        }else{
+        } else {
             filterSymbolData = symbolsData;
         }
 
@@ -572,7 +572,7 @@ function Deposite() {
             }
         });
 
-        if(displayData.length > 0){
+        if (displayData.length > 0) {
             let tmpSymbols = [];
             // 美元汇率
             let dollarCurrencyRate = arrayLookup(config.payment.currency, 'currencyCode', 'USD', 'exchangeRate') || 0;
@@ -637,7 +637,7 @@ function Deposite() {
             setSymbolWallet(tmpSymbols.filter(i => i.symbol !== 'eUSDT'));
             setNetworkData(tmpNetworks);
             // console.log(arrayLookup(filterSymbolData, 'symbol', 'USDD', 'address') );
-        }else{
+        } else {
             setSymbolWallet([]);
             setNetworkData([]);
         }
@@ -667,7 +667,7 @@ function Deposite() {
         setSelectWalletAddressIndex(null);
         if (networkData[symbol]) {
             setNetworkId(networkData[symbol][0]?.id);
-        }else{
+        } else {
             setNetworkId(0);
         }
     }, [symbol]);
@@ -840,7 +840,7 @@ function Deposite() {
                     setFiatSelect(tmpFiatSelect);
                 }
             })
-        }else{
+        } else {
             //默认选中虚拟币
             setCryptoSelect(0);
             setFiatSelect(1);
@@ -1895,7 +1895,7 @@ function Deposite() {
                                             <div>
                                                 <FormControl className="my-16 " sx={{ width: '100%' }} variant="outlined">
                                                     <OutlinedInput
-                                                        type='number'
+                                                        type='text'
                                                         disabled={false}
                                                         id="outlined-adornment-weight send-tips-container-amount"
                                                         value={weight}
@@ -1909,15 +1909,19 @@ function Deposite() {
                                                         aria-describedby="outlined-weight-helper-text"
                                                         inputProps={{
                                                             'aria-label': 'weight',
+                                                            inputMode: 'numeric',
+                                                            pattern: '[0-9]*',
                                                         }}
                                                         onChange={(event) => {
                                                             if (event.target.value === '') {
                                                                 setWeight('')
                                                                 return
                                                             }
-                                                            if (event.target.value <= bankItem.maxValue) {
-                                                                setWeight(event.target.value);
+                                                            let numericValue = event.target.value.replace(/[^0-9.]/g, '');
+                                                            if (numericValue.startsWith('0') && numericValue.length > 1 && numericValue[1] !== '.') {
+                                                                numericValue = numericValue.replace(/^0+/, '');
                                                             }
+                                                            setWeight(numericValue);
                                                         }}
                                                     />
                                                 </FormControl>

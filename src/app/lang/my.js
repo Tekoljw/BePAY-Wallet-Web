@@ -584,7 +584,12 @@ const locale = {
     kyc_55: "Alamat e-mel tidak sah",
     kyc_56: "bimbit",
     kyc_57: "Kaedah pengesahan",
+    Kyc_58:"Kod negara atau nombor telefon tidak boleh kosong",
+    Kyc_59:"Hantar ke",
 
+
+
+    
 
     
 

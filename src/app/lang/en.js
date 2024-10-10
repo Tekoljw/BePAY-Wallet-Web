@@ -591,7 +591,12 @@ const locale = {
     kyc_55:"Invalid email address",
     kyc_56: "phone",
     kyc_57: "Select Verification method",
+    Kyc_58:"nationCode or phone cannot empty",
+    Kyc_59:"Send to",
 
+
+
+    
 
     
 

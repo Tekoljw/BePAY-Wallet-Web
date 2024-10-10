@@ -585,7 +585,12 @@ const locale = {
     kyc_55: "Di-wastong email address",
     kyc_56: "telepono",
     kyc_57: "Paraan ng beripikasyon",
+    Kyc_58:"Ang country code o numero ng telepono ay hindi maaaring walang laman",
+    Kyc_59:"Ipadala sa",
 
+
+
+    
 
     
 

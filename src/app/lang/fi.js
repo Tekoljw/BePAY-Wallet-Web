@@ -583,7 +583,12 @@ const locale = {
     kyc_55: "Virheellinen sähköpostiosoite",
     kyc_56: "matkapuhelin",
     kyc_57: "Varmennusmenetelmä",
+    Kyc_58:"Maatunnus tai puhelinnumero ei voi olla tyhjä",
+    Kyc_59:"Lähetä",
 
+
+
+    
 
     
 

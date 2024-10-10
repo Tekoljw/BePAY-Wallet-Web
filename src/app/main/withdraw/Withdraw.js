@@ -1466,7 +1466,7 @@ function Withdraw(props) {
                                             closeGoogleCodeFunc()
                                         }} />
                                     </div>
-                                    <div className='PINTitle' style={{ color: "#909fb4" }}>{t('card_176')}</div>
+                           
 
                                     <div className='flex justify-between'>
                                         <div
@@ -1494,7 +1494,9 @@ function Withdraw(props) {
                                         </div>
                                     </div>
 
-                                    <div className='flex justify-between mt-32 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
+                                    <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> 发送至 <span style={{ color:"#909fb4" }}>+8613301828202</span> <span style={{ color:"#2dd4bf", textDecoration:"underline" }}>接收</span> </div>
+
+                                    <div className='flex justify-between mt-24 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
                                         <div className='PinNum color-box'
                                             onTouchStart={changeToBlack}
                                             onTouchEnd={changeToWhite}

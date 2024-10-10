@@ -587,7 +587,8 @@ const locale = {
     kyc_55: "Ungültige E-Mail-Adresse",
     kyc_56: "Handy",
     kyc_57: "Verifizierungsmethode",
-
+    Kyc_58:"Ländercode oder Telefonnummer darf nicht leer sein",
+    Kyc_59:"Senden an",
 
     
 

@@ -72,7 +72,7 @@ function ForgotPass() {
         passwordConfirm: yup.string().oneOf([yup.ref('password'), null], t('signUp_9')),
     });
 
-    const ranges = [t('signIn_5'),t('signIn_4') ];
+    const ranges = [t('signIn_5'), t('signIn_4')];
     const [tabValue, setTabValue] = useState(0);
     const { control, formState, handleSubmit, reset } = useForm({
         mode: 'onChange',
@@ -333,7 +333,11 @@ function ForgotPass() {
                                             return array;
                                         }}
                                         onChange={(res, option) => {
-                                            control._formValues.nationCode = option.phone_code
+                                            if (option) {
+                                                if (option) {
+                                                    control._formValues.nationCode = option.phone_code
+                                                } 
+                                            }
                                         }}
                                         getOptionLabel={(option) => { return control._formValues.nationCode }}
                                         renderOption={(props, option) => (
@@ -383,7 +387,7 @@ function ForgotPass() {
                                                 <InputAdornment position="end">
                                                     {time <= 0 && <IconButton
                                                         aria-label="toggle password visibility"
-                                                        onClick={() => {sendCode(false)}}
+                                                        onClick={() => { sendCode(false) }}
                                                         // onMouseDown={handleMouseDownPassword}
                                                         edge="end"
                                                         sx={{
@@ -496,7 +500,7 @@ function ForgotPass() {
                             }
                             type="submit"
                             size="large"
-                            
+
                         >
                             {t('forgot_5')}
                         </Button>

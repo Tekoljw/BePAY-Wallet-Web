@@ -142,7 +142,9 @@ function RetiedPhone() {
                                         return array;
                                     }}
                                     onChange={(res, option) => {
-                                        control._formValues.nationCode = option.phone_code
+                                        if (option) {
+                                            control._formValues.nationCode = option.phone_code
+                                        } 
                                     }}
                                     getOptionLabel={(option) => {return control._formValues.nationCode}}
                                     renderOption={(props, option) => (

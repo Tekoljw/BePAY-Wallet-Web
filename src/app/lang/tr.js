@@ -582,7 +582,12 @@ const locale = {
     kyc_55: "Geçersiz e-posta adresi",
     kyc_56: "telefonu",
     kyc_57: "Doğrulama yöntemi",
+    Kyc_58:"Ülke kodu veya telefon numarası boş olamaz",
+    Kyc_59:"Gönder",
 
+
+
+    
 
     
 
