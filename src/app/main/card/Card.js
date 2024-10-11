@@ -44,7 +44,7 @@ import { selectCurrentLanguage } from "app/store/i18nSlice";
 import Enable2FA from "../2fa/Enable2FA";
 import { centerGetTokenBalanceList, userProfile } from "app/store/user/userThunk";
 import { centerGetUserFiat } from "app/store/wallet/walletThunk";
-import delay from 'delay';
+import moment from 'moment';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -119,6 +119,8 @@ function Card(props) {
     const [openYanZheng, setOpenYanZheng] = useState(false);
     const [openGoogleAnimateModal, setOpenGoogleAnimateModal] = useState(false);
     const [maxValue, setMaxValue] = useState(0);
+    const [pinForFanKa, setPinForFanKa] = useState(false);
+    const [currentCardItem, setCurrentCardItem] = useState(null);
 
     const [pin, setPin] = useState('');
     const [hasPin, setHasPin] = useState(false)
@@ -172,6 +174,16 @@ function Card(props) {
                 setOpenChongZhi(true)
                 setPin('')
             }
+            return true
+        }
+        openCreatePin()
+        return false
+    }
+
+    // 判断是否绑定了PIN
+    const checkBindPin = () => {
+        if (hasPin) {
+            openInputPin()
             return true
         }
         openCreatePin()
@@ -316,47 +328,54 @@ function Card(props) {
 
 
     const FanKa = (cardItem) => {
-        const tmpCardList = { 2: [], 3: [] }
-        if(smallTabValue === 0){
-            if(cardList[2].length > 0 ){
-                cardList[2].forEach( (card, i)=>{
-                    if(cardItem.id === card.id) {
-                        const targetCardItem = {...card, kaBeiButton: true};
-                        document.getElementById('responsive-div'+ i) && document.getElementById('responsive-div'+ i).classList.add('flipped');
-                        // await delay(2000);
-                        targetCardItem.showFrontCard = true;
-                        // setTimeout(() => {
-                        //     targetCardItem.showFrontCard = true;
-                        // }, 200);
-                        // await delay(2000);
-                        targetCardItem.kaBeiButton2 = false;
-                        document.querySelector(`#responsive-div${i} .card4Bg`).classList.add('alphaCard_1');
-                        // document.getElementById('cardIconWTwo'+ i) && document.getElementById('cardIconWTwo'+ i).classList.add('alphaCard');
-                        // document.getElementById('zhangDanZiTwo'+ i) && document.getElementById('zhangDanZiTwo'+ i).classList.add('alphaCard');
-                        // setTimeout(() => {
-                        //     targetCardItem.kaBeiButton2 = true;
-                        //     document.getElementById('cardIconWTwo') && document.getElementById('cardIconWTwo').classList.add('alphaCard');
-                        //     document.getElementById('zhangDanZiTwo') && document.getElementById('zhangDanZiTwo').classList.add('alphaCard');
-                        // }, 400);
-                        tmpCardList[2].push(targetCardItem)
-                    } else {
-                        tmpCardList[2].push(card)
-                    }
-                })
+        const pinObj =  window.localStorage.getItem('checkedPin') && JSON.parse(window.localStorage.getItem('checkedPin'))
+        if(pinObj && pinObj.checked && pinObj.expired &&  (pinObj.expired - new Date().getTime() > 0) ) {
+            const tmpCardList = { 2: [], 3: [] }
+            if(smallTabValue === 0){
+                if(cardList[2].length > 0 ){
+                    cardList[2].forEach( (card, i)=>{
+                        if(cardItem.id === card.id) {
+                            const targetCardItem = {...card, kaBeiButton: true};
+                            document.getElementById('responsive-div'+ i) && document.getElementById('responsive-div'+ i).classList.add('flipped');
+                            // await delay(2000);
+                            targetCardItem.showFrontCard = true;
+                            // setTimeout(() => {
+                            //     targetCardItem.showFrontCard = true;
+                            // }, 200);
+                            // await delay(2000);
+                            targetCardItem.kaBeiButton2 = false;
+                            document.querySelector(`#responsive-div${i} .card4Bg`).classList.add('alphaCard_1');
+                            // document.getElementById('cardIconWTwo'+ i) && document.getElementById('cardIconWTwo'+ i).classList.add('alphaCard');
+                            // document.getElementById('zhangDanZiTwo'+ i) && document.getElementById('zhangDanZiTwo'+ i).classList.add('alphaCard');
+                            // setTimeout(() => {
+                            //     targetCardItem.kaBeiButton2 = true;
+                            //     document.getElementById('cardIconWTwo') && document.getElementById('cardIconWTwo').classList.add('alphaCard');
+                            //     document.getElementById('zhangDanZiTwo') && document.getElementById('zhangDanZiTwo').classList.add('alphaCard');
+                            // }, 400);
+                            tmpCardList[2].push(targetCardItem)
+                        } else {
+                            tmpCardList[2].push(card)
+                        }
+                    })
+                }
+            } else if(smallTabValue === 1){
+                // 实体卡暂未处理
+                if(cardList[3].length > 0 ){
+                    cardList[3].forEach((card, i)=>{
+                        if(cardItem.id === card.id) {
+                            tmpCardList[3].push({...card, showFrontCard: !cardItem.showFrontCard})
+                        }else {
+                            tmpCardList[3].push(card)
+                        }
+                    })
+                }
             }
-        } else if(smallTabValue === 1){
-            // 实体卡暂未处理
-            if(cardList[3].length > 0 ){
-                cardList[3].forEach((card, i)=>{
-                    if(cardItem.id === card.id) {
-                        tmpCardList[3].push({...card, showFrontCard: !cardItem.showFrontCard})
-                    }else {
-                        tmpCardList[3].push(card)
-                    }
-                })
-            }
+            setCardList(tmpCardList)
+        }else {
+            setCurrentCardItem(cardItem);
+            setPinForFanKa(true)
+            checkBindPin()
         }
-        setCardList(tmpCardList)
     };
 
     const FanKaBei = (cardItem) => {
@@ -2998,7 +3017,7 @@ function Card(props) {
                             </div>
                             {/* <div className='PINTitle'>{t('home_wallet_14')}{smallTabValue == 0 ? t('card_189') : t('card_7')}（ <span className='quanYiLv'> {smallTabValue == 0 ? inputVal.address : inputIDVal} </span> ） {t('transfer_1')}</div> */}
 
-                            <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
+                            { !pinForFanKa && <div className='flex justify-center' style={{ borderBottom: "1px solid #2C3950", paddingBottom: "3rem" }}>
                                 {/* <img className='MoneyWithdraw' style={{ borderRadius: '50%'}} src={ arrayLookup(symbolsData, 'symbol', symbol, 'avatar') || '' }></img> */}
                                 {/* <div className='PINTitle3'>{symbol}</div> */}
                                 <img className='MoneyWithdraw' src="wallet/assets/images/withdraw/USDT.png" />
@@ -3012,6 +3031,7 @@ function Card(props) {
                                     }} />
                                 </div>
                             </div>
+                            }
 
                             <div className='flex justify-between mt-10'>
                                 <div className='PinNum'><div style={{ color: "#ffffff" }}>{pin[0] ? '●' : ''}</div></div>
@@ -3104,7 +3124,16 @@ function Card(props) {
                                         onTouchCancel={changeToWhite}
                                         onClick={() => {
                                             if (pin && pin.length === 6 && correctPin) {
-                                                handleTransferCrypto()
+                                                if(pinForFanKa) {
+                                                    window.localStorage.setItem('checkedPin', JSON.stringify({
+                                                        checked: true, 
+                                                        expired: moment().add(7, 'days').valueOf()
+                                                    }))
+                                                    closePinFunc()
+                                                    FanKa(currentCardItem)
+                                                }else {
+                                                    handleTransferCrypto()
+                                                }
                                             }
                                         }}>{t('card_30')}</div>
                                 }

@@ -212,6 +212,7 @@ function Deposite() {
     const [symbol, setSymbol] = useState('');
     const [walletName, setWalletName] = useState('');
     const [walletAddressList, setWalletAddressList] = useState([]);
+    const [walletAddressListBak, setWalletAddressListBak] = useState([]);
     const [selectWalletAddressIndex, setSelectWalletAddressIndex] = useState(null);
     const [walletAddress, setWalletAddress] = useState('');
     // const [walletConfig, setWalletConfig] = useState([]);
@@ -357,6 +358,7 @@ function Deposite() {
                     tmpList.push({ ...item, disabled: true })
                 })
                 setWalletAddressList(tmpList)
+                setWalletAddressListBak(tmpList)
             }
         })
     }
@@ -454,6 +456,9 @@ function Deposite() {
 
                 if (result?.data?.address) {
                     setWalletAddressList([...walletAddressList, {
+                        address: result?.data?.address ?? '',
+                    }])
+                    setWalletAddressListBak([...walletAddressList, {
                         address: result?.data?.address ?? '',
                     }])
                 }
@@ -664,6 +669,7 @@ function Deposite() {
         setIsGetWalletAddress(false);
         setWalletAddress('');
         setWalletAddressList([]);
+        setWalletAddressListBak([]);
         setSelectWalletAddressIndex(null);
         if (networkData[symbol]) {
             setNetworkId(networkData[symbol][0]?.id);
@@ -684,7 +690,7 @@ function Deposite() {
         return balance.toFixed(6)
     };
 
-    const handleEditAddressDesc = (currentIndex, editData) => {
+    const handleEditAddressDesc = (currentIndex, editData, isBlur) => {
         let tmpList = []
         walletAddressList.map(async (item, index) => {
             if (index === currentIndex) {
@@ -692,7 +698,7 @@ function Deposite() {
                     ...item, ...editData
                 })
 
-                if (editData.disabled === true) {
+                if ((editData.editMode === true || isBlur) && walletAddressListBak[index].addressDesc != item.addressDesc) {
                     dispatch(getAddressListDesc({
                         addressDesc: item.addressDesc,
                         address: item.address,
@@ -1209,7 +1215,7 @@ function Deposite() {
                                             <div>
                                                 <div className='flex ml-10'>
                                                     <img onClick={() => {
-                                                        handleEditAddressDesc(index, { disabled: !addressItem.disabled })
+                                                        handleEditAddressDesc(index, { eidtMode: !addressItem.eidtMode })
                                                     }} className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
                                                     <OutlinedInput
                                                         className='diZhiShuRu'
@@ -1218,12 +1224,18 @@ function Deposite() {
                                                             '& .MuiOutlinedInput-notchedOutline': {
                                                                 border: 'none',
                                                             },
+                                                            color: addressItem.eidtMode ? '#ffffff' : '#94A3B8'
                                                         }}
-                                                        disabled={addressItem.disabled}
                                                         value={addressItem.addressDesc}
                                                         inputProps={{ 'aria-label': 'weight' }}
+                                                        onFocus={(event)=>{
+                                                            handleEditAddressDesc(index, { eidtMode: true })
+                                                        }}
                                                         onChange={(event) => {
-                                                            handleEditAddressDesc(index, { addressDesc: event.target.value })
+                                                            handleEditAddressDesc(index, { addressDesc: event.target.value, eidtMode: true })
+                                                        }}
+                                                        onBlur={ (event) => {
+                                                            handleEditAddressDesc(index, { addressDesc: event.target.value, eidtMode: false}, true)
                                                         }}
                                                     />
                                                 </div>
