@@ -209,6 +209,8 @@ function Kyc(props) {
     const [emailError, setEmailError] = useState(false);
     const [openAnimateModal, setOpenAnimateModal] = useState(false);
 
+    const [emailInput, setEmailInput] = useState(false);
+
 
     //文凯改
     const handleChangeInputVal = (prop) => (event) => {
@@ -581,8 +583,21 @@ function Kyc(props) {
                 copyData[prop] = kycInfo[prop];
             });
             setInputVal(copyData);
+            changeBiState(copyData);
         }
+
     }, [kycInfo]);
+
+
+    const changeBiState = (copyData) => {
+        // if (copyData.email) {
+        //     setEmailInput(true)
+        // } else {
+        //     setEmailInput(false)
+        // }
+    };
+
+    
 
     return (
         <>
@@ -614,6 +629,7 @@ function Kyc(props) {
                                     }}
                                     error={emailError}
                                     onBlur={handleBlur}
+                                    disabled={emailInput}
                                 />
                                 {emailError && (
                                     <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
