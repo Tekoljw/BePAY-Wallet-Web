@@ -208,11 +208,94 @@ function Kyc(props) {
     const [idBackUrlError, setIdBackUrlError] = useState(false);
     const [emailError, setEmailError] = useState(false);
     const [openAnimateModal, setOpenAnimateModal] = useState(false);
+    const [showSaveBtn, setShowSaveBtn] = useState(true);
 
     const [emailInput, setEmailInput] = useState(false);
+    const [emailInputShow, setEmailInputShow] = useState(false);
+    const emailInputRef = useRef(null);  // 用于存储输入框的引用
+
+    const [phoneCountryInput, setPhoneCountryInput] = useState(false);
+    const [phoneCountryInputShow, setPhoneCountryInputShow] = useState(false);
+    const phoneCountryInputRef = useRef(null);
+
+    const [phoneNumberInput, setPhoneNumberInput] = useState(false);
+    const [phoneNumberInputShow, setPhoneNumberInputShow] = useState(false);
+    const phoneNumberInputRef = useRef(null);
+
+    const [firstNameInput, setFirstNameInput] = useState(false);
+    const [firstNameInputShow, setFirstNameInputShow] = useState(false);
+    const firstNameInputRef = useRef(null);
+
+    const [lastNameInput, setLastNameInput] = useState(false);
+    const [lastNameInputShow, setLastNameInputShow] = useState(false);
+    const lastNameInputRef = useRef(null);
+
+    const [countryInput, setCountryInput] = useState(false);
+    const [countryInputShow, setCountryInputShow] = useState(false);
+    const countryInputRef = useRef(null);
+
+    const [middleNameInput, setMiddleNameInput] = useState(false);
+    const [middleNameInputShow, setMiddleNameInputShow] = useState(false);
+    const middleNameInputRef = useRef(null);
 
 
     //文凯改
+    const changeBiState = (copyData) => {
+        if (copyData.email) {
+            setEmailInput(true)
+            setEmailInputShow(true)
+        } else {
+            setEmailInput(false)
+            setEmailInputShow(false)
+        }
+        if (copyData.phoneCountry) {
+            setPhoneCountryInput(true)
+            setPhoneCountryInputShow(true)
+        } else {
+            setPhoneCountryInput(false)
+            setPhoneCountryInputShow(false)
+        }
+        if (copyData.phoneNumber) {
+            setPhoneNumberInput(true)
+            setPhoneNumberInputShow(true)
+        } else {
+            setPhoneNumberInput(false)
+            setPhoneNumberInputShow(false)
+        }
+        if (copyData.firstName) {
+            setFirstNameInput(true)
+            setFirstNameInputShow(true)
+        } else {
+            setFirstNameInput(false)
+            setFirstNameInputShow(false)
+        }
+        if (copyData.lastName) {
+            setLastNameInput(true)
+            setLastNameInputShow(true)
+        } else {
+            setLastNameInput(false)
+            setLastNameInputShow(false)
+        }
+        if (copyData.country) {
+            setCountryInput(true)
+            setCountryInputShow(true)
+        } else {
+            setCountryInput(false)
+            setCountryInputShow(false)
+        }
+
+        if (copyData.middleName) {
+            setMiddleNameInput(true)
+            setMiddleNameInputShow(true)
+        } else {
+            setMiddleNameInput(false)
+            setMiddleNameInputShow(false)
+        }
+        
+    };
+
+
+
     const handleChangeInputVal = (prop) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
         if (event.target.value === '') {
@@ -222,26 +305,265 @@ function Kyc(props) {
         }
     };
 
-    const [showSaveBtn, setShowSaveBtn] = useState(true);
-
     useEffect(() => {
+        if (inputVal.email === '') {
+            setEmailError(true);
+        } else {
+            setEmailError(false);
+        }
+        if (inputVal.phoneCountry === '') {
+            setPhoneCountryError(true);
+        } else {
+            setPhoneCountryError(false);
+        }
+        if (inputVal.phoneNumber === '') {
+            setPhoneNumberError(true);
+        } else {
+            setPhoneNumberError(false);
+        }
+        if (inputVal.firstName === '') {
+            setFirstNameError(true);
+        } else {
+            setFirstNameError(false);
+        }
+        if (inputVal.country === '') {
+            setCountryError(true);
+        } else {
+            setCountryError(false);
+        }
+
+
         showBtnFunc();
     }, [inputVal]);
 
 
+    const handleBlur = () => {
+        if (inputVal.email === '') {
+            setEmailError(true);
+        } else {
+            setEmailError(false);
+        }
+        if (inputVal.email) {
+            setEmailInput(true)
+            setEmailInputShow(true)
+            setEmailInput(true); // 开启禁用状态
+            emailInputRef.current.blur();// 取消到输入框
+        } else {
+            setEmailInput(false)
+            setEmailInputShow(false)
+        }
+    };
+
+
+    const handleBlur2 = () => {
+        if (inputVal.phoneCountry === '') {
+            setPhoneCountryError(true);
+        } else {
+            setPhoneCountryError(false);
+        }
+        if (inputVal.phoneCountry) {
+            setPhoneCountryInput(true)
+            setPhoneCountryInputShow(true)
+            setPhoneCountryInput(true);
+            phoneCountryInputRef.current.blur();// 取消到输入框
+        } else {
+            setPhoneCountryInput(false)
+            setPhoneCountryInputShow(false)
+        }
+
+    };
+
+
+    const handleBlur3 = () => {
+        if (inputVal.phoneNumber === '') {
+            setPhoneNumberError(true);
+        } else {
+            setPhoneNumberError(false);
+        }
+        if (inputVal.phoneNumber) {
+            setPhoneNumberInput(true)
+            setPhoneNumberInputShow(true)
+            setPhoneNumberInput(true);
+            phoneNumberInputRef.current.blur();// 取消到输入框
+        } else {
+            setPhoneNumberInput(false)
+            setPhoneNumberInputShow(false)
+        }
+
+    };
+
+    const handleBlur4 = () => {
+        if (inputVal.firstName === '') {
+            setFirstNameError(true);
+        } else {
+            setFirstNameError(false);
+        }
+        if (inputVal.firstName) {
+            setFirstNameInput(true)
+            setFirstNameInputShow(true)
+            setFirstNameInput(true);
+            firstNameInputRef.current.blur();// 取消到输入框
+        } else {
+            setFirstNameInput(false)
+            setFirstNameInputShow(false)
+        }
+    };
+
+
+    const handleBlur5 = () => {
+        if (inputVal.middleName) {
+            setMiddleNameInput(true)
+            setMiddleNameInputShow(true)
+            setMiddleNameInput(true);
+            middleNameInputRef.current.blur();// 取消到输入框
+        } else {
+            setMiddleNameInput(false)
+            setMiddleNameInputShow(false)
+        }
+    };
+
+    const handleBlur6 = () => {
+        if (inputVal.lastName) {
+            setLastNameInput(true)
+            setLastNameInputShow(true)
+            setLastNameInput(true);
+            lastNameInputRef.current.blur();// 取消到输入框
+        } else {
+            setLastNameInput(false)
+            setLastNameInputShow(false)
+        }
+    };
+
+
+
+    const handleBlur8 = () => {
+        if (inputVal.country === '') {
+            setCountryError(true);
+        } else {
+            setCountryError(false);
+        }
+        if (inputVal.country) {
+            setCountryInput(true)
+            setCountryInputShow(true)
+        } else {
+            setCountryInput(false)
+            setCountryInputShow(false)
+        }
+        setCountryInput(true);
+        countryInputRef.current.blur();// 取消到输入框
+    };
+
+    const handleBlur9 = () => {
+        if (inputVal.state === '') {
+            setStateError(true);
+        } else {
+            setStateError(false);
+        }
+    };
+
+    const handleBlur10 = () => {
+        if (inputVal.city === '') {
+            setCityError(true);
+        } else {
+            setCityError(false);
+        }
+    };
+
+    const handleBlur11 = () => {
+        if (inputVal.address === '') {
+            setAddressError(true);
+        } else {
+            setAddressError(false);
+        }
+    };
+
+    const handleBlur14 = () => {
+        if (inputVal.idNo === '') {
+            setIdNoError(true);
+        } else {
+            setIdNoError(false)
+        }
+    };
+
+    const handleBlur15 = () => {
+        if (inputVal.idType === '') {
+            setIdTypeError(true);
+        } else {
+            setIdTypeError(false)
+        }
+    };
+
+    const handleBlur16 = () => {
+        if (inputVal.idFrontUrl === '') {
+            setIdFrontUrlError(true);
+        } else {
+            setIdFrontUrlError(false);
+        }
+    };
+
+    const handleBlur17 = () => {
+        if (inputVal.idBackUrl === '') {
+            setIdBackUrlError(true);
+        } else {
+            setIdBackUrlError(false);
+        }
+    };
+
+
+    const editEmail = () => {
+        setEmailInput(false);  // 取消禁用状态
+        setTimeout(() => {
+            emailInputRef.current.focus();  // 聚焦到输入框
+        }, 0);
+    };
+
+
+    const editPhoneCount = () => {
+        setPhoneCountryInput(false);  // 取消禁用状态
+        setTimeout(() => {
+            phoneCountryInputRef.current.focus();  // 聚焦到输入框
+        }, 0);
+    };
+
+
+    const editPhoneNumber = () => {
+        setPhoneNumberInput(false);  // 取消禁用状态
+        setTimeout(() => {
+            phoneNumberInputRef.current.focus();  // 聚焦到输入框
+        }, 0);
+    };
+
+    const editFirstName = () => {
+        setFirstNameInput(false);  // 取消禁用状态
+        setTimeout(() => {
+            firstNameInputRef.current.focus();  // 聚焦到输入框
+        }, 0);
+    };
+
+    const editCountry = () => {
+        setCountryInput(false);  // 取消禁用状态
+        setTimeout(() => {
+            countryInputRef.current.focus();  // 聚焦到输入框
+        }, 0);
+    };
+
+
+    const editMiddleName = () => {
+        setMiddleNameInput(false);  // 取消禁用状态
+        setTimeout(() => {
+            middleNameInputRef.current.focus();  // 聚焦到输入框
+        }, 0);
+    };
+
+    const editLastName = () => {
+        setLastNameInput(false);  // 取消禁用状态
+        setTimeout(() => {
+            lastNameInputRef.current.focus();  // 聚焦到输入框
+        }, 0);
+    };
+
+
     const showBtnFunc = () => {
-        handleBlur();
-        handleBlur2();
-        handleBlur3();
-        handleBlur4();
-        handleBlur8();
-        handleBlur9();
-        handleBlur10();
-        handleBlur11();
-        handleBlur14();
-        handleBlur15();
-        handleBlur16();
-        handleBlur17();
         if (inputVal.email !== '' && inputVal.idNo !== '' && inputVal.address !== '' && inputVal.city !== '' && inputVal.state !== '' && inputVal.country !== '' && inputVal.birthDate !== '' && inputVal.firstName !== '' && inputVal.phoneCountry !== '' && inputVal.phoneNumber !== '' && inputVal.idType !== '' && inputVal.idFrontUrl !== '' && inputVal.idBackUrl !== '') {
             setShowSaveBtn(false)
         } else
@@ -332,105 +654,6 @@ function Kyc(props) {
         }
     };
 
-
-    const handleBlur = () => {
-        if (inputVal.email === '') {
-            setEmailError(true);
-        } else {
-            setEmailError(false);
-        }
-    };
-
-
-    const handleBlur2 = () => {
-        if (inputVal.phoneCountry === '') {
-            setPhoneCountryError(true);
-        } else {
-            setPhoneCountryError(false);
-        }
-    };
-
-
-    const handleBlur3 = () => {
-        if (inputVal.phoneNumber === '') {
-            setPhoneNumberError(true);
-        } else {
-            setPhoneNumberError(false);
-        }
-    };
-
-    const handleBlur4 = () => {
-        if (inputVal.firstName === '') {
-            setFirstNameError(true);
-        } else {
-            setFirstNameError(false);
-        }
-    };
-
-
-    const handleBlur8 = () => {
-        if (inputVal.country === '') {
-            setCountryError(true);
-        } else {
-            setCountryError(false);
-        }
-    };
-
-    const handleBlur9 = () => {
-        if (inputVal.state === '') {
-            setStateError(true);
-        } else {
-            setStateError(false);
-        }
-    };
-
-    const handleBlur10 = () => {
-        if (inputVal.city === '') {
-            setCityError(true);
-        } else {
-            setCityError(false);
-        }
-    };
-
-    const handleBlur11 = () => {
-        if (inputVal.address === '') {
-            setAddressError(true);
-        } else {
-            setAddressError(false);
-        }
-    };
-
-    const handleBlur14 = () => {
-        if (inputVal.idNo === '') {
-            setIdNoError(true);
-        } else {
-            setIdNoError(false)
-        }
-    };
-
-    const handleBlur15 = () => {
-        if (inputVal.idType === '') {
-            setIdTypeError(true);
-        } else {
-            setIdTypeError(false)
-        }
-    };
-
-    const handleBlur16 = () => {
-        if (inputVal.idFrontUrl === '') {
-            setIdFrontUrlError(true);
-        } else {
-            setIdFrontUrlError(false);
-        }
-    };
-
-    const handleBlur17 = () => {
-        if (inputVal.idBackUrl === '') {
-            setIdBackUrlError(true);
-        } else {
-            setIdBackUrlError(false);
-        }
-    };
 
     const handleChangeDate = (prop) => (newValue) => {
         if (prop === 'birthDate' && typeof newValue === "object") {
@@ -585,19 +808,11 @@ function Kyc(props) {
             setInputVal(copyData);
             changeBiState(copyData);
         }
-
     }, [kycInfo]);
 
 
-    const changeBiState = (copyData) => {
-        // if (copyData.email) {
-        //     setEmailInput(true)
-        // } else {
-        //     setEmailInput(false)
-        // }
-    };
 
-    
+
 
     return (
         <>
@@ -624,16 +839,23 @@ function Kyc(props) {
                                     value={inputVal.email}
                                     onChange={handleChangeInputVal('email')}
                                     aria-describedby="outlined-weight-helper-text"
-                                    inputProps={{
-                                        'aria-label': 'email',
-                                    }}
+                                    inputProps={{ 'aria-label': 'email' }}
                                     error={emailError}
                                     onBlur={handleBlur}
                                     disabled={emailInput}
+                                    inputRef={emailInputRef}
+                                    endAdornment={
+                                        emailInputShow && <InputAdornment onClick={() => editEmail()} position="end">
+                                            {<IconButton edge="end">
+                                                <img
+                                                    src="wallet/assets/images/kyc/bianJiBi.png"
+                                                    style={{ width: '24px', height: '24px' }}
+                                                />
+                                            </IconButton>}
+                                        </InputAdornment>
+                                    }
                                 />
-                                {emailError && (
-                                    <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
-                                )}
+                                {emailError && (<FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>)}
                             </FormControl>
                         </div>
 
@@ -651,6 +873,18 @@ function Kyc(props) {
                                     }}
                                     error={phoneCountryError}
                                     onBlur={handleBlur2}
+                                    disabled={phoneCountryInput}
+                                    inputRef={phoneCountryInputRef}
+                                    endAdornment={
+                                        phoneCountryInputShow && <InputAdornment onClick={() => editPhoneCount()} position="end">
+                                            {<IconButton edge="end">
+                                                <img
+                                                    src="wallet/assets/images/kyc/bianJiBi.png"
+                                                    style={{ width: '24px', height: '24px' }}
+                                                />
+                                            </IconButton>}
+                                        </InputAdornment>
+                                    }
                                 />
                                 {phoneCountryError && (
                                     <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
@@ -672,6 +906,18 @@ function Kyc(props) {
                                     }}
                                     error={phoneNumberError}
                                     onBlur={handleBlur3}
+                                    disabled={phoneNumberInput}
+                                    inputRef={phoneNumberInputRef}
+                                    endAdornment={
+                                        phoneNumberInputShow && <InputAdornment onClick={() => editPhoneNumber()} position="end">
+                                            {<IconButton edge="end">
+                                                <img
+                                                    src="wallet/assets/images/kyc/bianJiBi.png"
+                                                    style={{ width: '24px', height: '24px' }}
+                                                />
+                                            </IconButton>}
+                                        </InputAdornment>
+                                    }
                                 />
                                 {phoneNumberError && (
                                     <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
@@ -693,6 +939,18 @@ function Kyc(props) {
                                     }}
                                     error={firstNameError}
                                     onBlur={handleBlur4}
+                                    disabled={firstNameInput}
+                                    inputRef={firstNameInputRef}
+                                    endAdornment={
+                                        firstNameInputShow && <InputAdornment onClick={() => editFirstName()} position="end">
+                                            {<IconButton edge="end">
+                                                <img
+                                                    src="wallet/assets/images/kyc/bianJiBi.png"
+                                                    style={{ width: '24px', height: '24px' }}
+                                                />
+                                            </IconButton>}
+                                        </InputAdornment>
+                                    }
                                 />
                                 {firstNameError && (<FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>)}
                             </FormControl>
@@ -710,6 +968,19 @@ function Kyc(props) {
                                     inputProps={{
                                         'aria-label': 'middleName',
                                     }}
+                                    onBlur={handleBlur5}
+                                    disabled={middleNameInput}
+                                    inputRef={middleNameInputRef}
+                                    endAdornment={
+                                        middleNameInputShow && <InputAdornment onClick={() => editMiddleName()} position="end">
+                                            {<IconButton edge="end">
+                                                <img
+                                                    src="wallet/assets/images/kyc/bianJiBi.png"
+                                                    style={{ width: '24px', height: '24px' }}
+                                                />
+                                            </IconButton>}
+                                        </InputAdornment>
+                                    }
                                 />
                             </FormControl>
                         </div>
@@ -726,6 +997,19 @@ function Kyc(props) {
                                     inputProps={{
                                         'aria-label': 'lastName',
                                     }}
+                                    onBlur={handleBlur6}
+                                    disabled={lastNameInput}
+                                    inputRef={lastNameInputRef}
+                                    endAdornment={
+                                        lastNameInputShow && <InputAdornment onClick={() => editLastName()} position="end">
+                                            {<IconButton edge="end">
+                                                <img
+                                                    src="wallet/assets/images/kyc/bianJiBi.png"
+                                                    style={{ width: '24px', height: '24px' }}
+                                                />
+                                            </IconButton>}
+                                        </InputAdornment>
+                                    }
                                 />
                             </FormControl>
                         </div>
@@ -760,6 +1044,18 @@ function Kyc(props) {
                                     }}
                                     error={countryError}
                                     onBlur={handleBlur8}
+                                    disabled={countryInput}
+                                    inputRef={countryInputRef}
+                                    endAdornment={
+                                        countryInputShow && <InputAdornment onClick={() => editCountry()} position="end">
+                                            {<IconButton edge="end">
+                                                <img
+                                                    src="wallet/assets/images/kyc/bianJiBi.png"
+                                                    style={{ width: '24px', height: '24px' }}
+                                                />
+                                            </IconButton>}
+                                        </InputAdornment>
+                                    }
                                 />
                                 {countryError && (
                                     <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
