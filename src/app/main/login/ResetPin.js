@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import _ from '@lodash';
 import Paper from '@mui/material/Paper';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { resetPass, editPin } from '../../store/user/userThunk';
 import { useTranslation } from "react-i18next";
 import { showMessage } from 'app/store/fuse/messageSlice';
@@ -28,6 +28,7 @@ import { createPin, changePin } from "app/store/wallet/walletThunk";
 import history from "../../../@history/@history";
 import { sendEmail, sendSms, bindPhone, bindEmail } from "../../store/user/userThunk";
 import { styled, FormHelperText } from "@mui/material";
+import { selectUserData } from "../../store/user";
 
 const container = {
     show: {
@@ -85,7 +86,7 @@ function ResetPin(props) {
     const [smsError2, setSmsError2] = useState(false);
     const [newPinError3, setNewPinError3] = useState(false);
     const [newPinError4, setNewPinError4] = useState(false);
-
+    const userData = useSelector(selectUserData);
     const dispatch = useDispatch();
     const [time, setTime] = useState(null);
     const timeRef = useRef();
@@ -104,34 +105,42 @@ function ResetPin(props) {
 
 
     async function sendCode() {
-        if (inputVal.email.includes("@")) {
-            const data = {
-                codeType: 13,
-                email: inputVal.email,
-            };
-            const sendRes = await dispatch(sendEmail(data));
-            if (sendRes.payload) {
-                setTime(60)
+        if (userData?.profile?.user?.bindEmail === true) {
+            if (inputVal.email.includes("@") && inputVal.email === userData.profile.user.email) {
+                const data = {
+                    codeType: 13,
+                    email: inputVal.email,
+                };
+                const sendRes = await dispatch(sendEmail(data));
+                if (sendRes.payload) {
+                    setTime(60)
+                }
+            } else {
+                dispatch(showMessage({ message: t('kyc_55'), code: 2 }));
             }
         } else {
-            dispatch(showMessage({ message: t('kyc_55'), code: 2 }));
+            dispatch(showMessage({ message: t('kyc_62'), code: 3 }));
         }
     }
 
     async function sendPhoneCode() {
-        if (inputVal2.nationCode !== "" && inputVal2.phone !== "") {
-            setSelectedCountryCode(inputVal2.nationCode);
-            const data = {
-                codeType: 13,
-                nationCode: inputVal2.nationCode,
-                phone: inputVal2.phone,
-            };
-            const sendRes = await dispatch(sendSms(data));
-            if (sendRes?.payload) {
-                setTime(60)
+        if (userData?.profile?.user?.bindMobile === true) {
+            if (inputVal2.nationCode === userData.profile.nation && inputVal2.phone === userData.profile.phone) {
+                setSelectedCountryCode(inputVal2.nationCode);
+                const data = {
+                    codeType: 13,
+                    nationCode: inputVal2.nationCode,
+                    phone: inputVal2.phone,
+                };
+                const sendRes = await dispatch(sendSms(data));
+                if (sendRes?.payload) {
+                    setTime(60)
+                }
+            } else {
+                dispatch(showMessage({ message: t('Kyc_58'), code: 2 }));
             }
         } else {
-            dispatch(showMessage({ message: t('Kyc_58'), code: 2 }));
+            dispatch(showMessage({ message: t('kyc_63'), code: 3 }));
         }
     }
 
@@ -162,6 +171,12 @@ function ResetPin(props) {
         twoNewPin: '',
         codeType: '',
     });
+
+    const [bandData, setBandData] = useState({
+        phone: '',
+        email: '',
+    });
+
 
     useEffect(() => {
         if (inputVal.email !== '' && inputVal.smsCode !== '' && inputVal.password !== '' && inputVal.twoNewPin !== '') {
@@ -622,7 +637,7 @@ function ResetPin(props) {
                                                         <OutlinedInput
                                                             id="outlined-adornment-address"
                                                             label="password"
-                                                            value={inputVal2.password}
+                                                            value={inputVal.password}
                                                             onChange={handleChangeInputVal3('password')}
                                                             aria-describedby="outlined-weight-helper-text"
                                                             type="password"

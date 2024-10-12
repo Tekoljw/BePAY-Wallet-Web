@@ -588,6 +588,10 @@ const locale = {
     Kyc_59:"Kirim ke",
     Kyc_60:"Lihat di Google Authenticator",
     Kyc_61:"Google Authenticator",
+    Kyc_62:"Email belum ditautkan",
+    Kyc_63:"Tidak terhubung ke ponsel",
+
+
 
     
 

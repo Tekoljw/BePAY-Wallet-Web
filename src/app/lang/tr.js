@@ -586,6 +586,10 @@ const locale = {
     Kyc_59:"Gönder",
     Kyc_60:"Google Authenticator'da Görüntüle",
     Kyc_61:"Google Authenticator",
+    Kyc_62:"E-posta bağlanmadı",
+    Kyc_63:"Telefona bağlanmadı",
+
+
 
     
 

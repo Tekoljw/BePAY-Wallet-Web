@@ -588,6 +588,10 @@ const locale = {
     Kyc_59:"அனுப்ப",
     Kyc_60:"Google Authenticator இல் பார்க்கவும்",
     Kyc_61:"Google Authenticator",
+    Kyc_62:"மின்னஞ்சல் இணைக்கப்படவில்லை",
+    Kyc_63:"தொலைபேசியில் இணைக்கப்படவில்லை",
+
+
 
     
 

@@ -589,6 +589,10 @@ const locale = {
     Kyc_59:"Wyślij do",
     Kyc_60:"Wyświetl w Google Authenticator",
     Kyc_61:"Google Authenticator",
+    Kyc_62:"E-mail nie jest powiązany",
+    Kyc_63:"Nie połączono z telefonem",
+
+
 
     
 

@@ -586,6 +586,10 @@ const locale = {
     Kyc_59:"भेजें",
     Kyc_60:"Google Authenticator में देखें",
     Kyc_61:"Google Authenticator",
+    Kyc_62:"ईमेल लिंक नहीं है",
+    Kyc_63:"फोन से लिंक नहीं किया गया",
+
+
 
     
 

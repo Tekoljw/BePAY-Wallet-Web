@@ -578,10 +578,9 @@ const locale = {
     Kyc_59:"Gửi đến",
     Kyc_60:"Xem trong Google Authenticator",
     Kyc_61:"Google Authenticator",
+    Kyc_62:"Email chưa được liên kết",
+    Kyc_63:"Chưa liên kết với điện thoại",
 
-    
-
-    
 
 
 

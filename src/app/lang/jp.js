@@ -588,6 +588,10 @@ const locale = {
     Kyc_59:"送信先",
     Kyc_60:"Google Authenticator で表示",
     Kyc_61:"Google Authenticator",
+    Kyc_62:"メールがリンクされていません",
+    Kyc_63:"電話がリンクされていない",
+
+
 
     
 

@@ -594,7 +594,12 @@ const locale = {
     Kyc_59:"发送至",
     Kyc_60:"在谷歌验证器中查看",
     Kyc_61:"谷歌验证器",
-    Kyc_61:"Google Authenticator",
+    Kyc_62:"没有绑定过邮箱",
+    Kyc_63:"没有绑定过手机",
+
+
+
+    
 
     
 
