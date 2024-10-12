@@ -238,6 +238,36 @@ function Kyc(props) {
     const [middleNameInputShow, setMiddleNameInputShow] = useState(false);
     const middleNameInputRef = useRef(null);
 
+    const [stateInput, setStateInput] = useState(false);
+    const [stateInputShow, setStateInputShow] = useState(false);
+    const stateInputRef = useRef(null);
+
+    const [cityInput, setCityInput] = useState(false);
+    const [cityInputShow, setCityInputShow] = useState(false);
+    const cityInputRef = useRef(null);
+
+    const [addressInput, setAddressInput] = useState(false);
+    const [addressInputShow, setAddressInputShow] = useState(false);
+    const addressInputRef = useRef(null);
+
+    const [addressTwoInput, setAddressTwoInput] = useState(false);
+    const [addressTwoInputShow, setAddressTwoInputShow] = useState(false);
+    const addressTwoInputRef = useRef(null);
+
+    
+    const [zipCodeInput, setZipCodeInput] = useState(false);
+    const [zipCodeInputShow, setZipCodeInputShow] = useState(false);
+    const zipCodeInputRef = useRef(null);
+
+
+    const [idNoInput, setIdNoInput] = useState(false);
+    const [idNoInputShow, setIdNoInputShow] = useState(false);
+    const idNoInputRef = useRef(null);
+
+    const [usSsnInput, setUsSsnInput] = useState(false);
+    const [usSsnInputShow, setUsSsnInputShow] = useState(false);
+    const usSsnInputRef = useRef(null);
+
 
     //文凯改
     const changeBiState = (copyData) => {
@@ -291,9 +321,64 @@ function Kyc(props) {
             setMiddleNameInput(false)
             setMiddleNameInputShow(false)
         }
-        
-    };
 
+        if (copyData.state) {
+            setStateInput(true)
+            setStateInputShow(true)
+        } else {
+            setStateInput(false)
+            setStateInputShow(false)
+        }
+
+        if (copyData.city) {
+            setCityInput(true)
+            setCityInputShow(true)
+        } else {
+            setCityInput(false)
+            setCityInputShow(false)
+        }
+
+        if (copyData.address) {
+            setAddressInput(true)
+            setAddressInputShow(true)
+        } else {
+            setAddressInput(false)
+            setAddressInputShow(false)
+        }
+
+        if (copyData.addressTwo) {
+            setAddressTwoInput(true)
+            setAddressTwoInputShow(true)
+        } else {
+            setAddressTwoInput(false)
+            setAddressTwoInputShow(false)
+        }
+
+        if (copyData.zipcode) {
+            setZipCodeInput(true)
+            setZipCodeInputShow(true)
+        } else {
+            setZipCodeInput(false)
+            setZipCodeInputShow(false)
+        }
+
+        if (copyData.idNo) {
+            setIdNoInput(true)
+            setIdNoInputShow(true)
+        } else {
+            setIdNoInput(false)
+            setIdNoInputShow(false)
+        }
+
+        if (copyData.usSsn) {
+            setUsSsnInput(true)
+            setUsSsnInputShow(true)
+        } else {
+            setIdNoInput(false)
+            setIdNoInputShow(false)
+        }
+
+    };
 
 
     const handleChangeInputVal = (prop) => (event) => {
@@ -331,8 +416,29 @@ function Kyc(props) {
         } else {
             setCountryError(false);
         }
+        if (inputVal.state === '') {
+            setStateError(true);
+        } else {
+            setStateError(false);
+        }
 
+        if (inputVal.city === '') {
+            setCityError(true);
+        } else {
+            setCityError(false);
+        }
 
+        if (inputVal.address === '') {
+            setAddressError(true);
+        } else {
+            setAddressError(false);
+        }
+        
+        if (inputVal.idNo === '') {
+            setIdNoError(true);
+        } else {
+            setIdNoError(false);
+        }
         showBtnFunc();
     }, [inputVal]);
 
@@ -344,7 +450,6 @@ function Kyc(props) {
             setEmailError(false);
         }
         if (inputVal.email) {
-            setEmailInput(true)
             setEmailInputShow(true)
             setEmailInput(true); // 开启禁用状态
             emailInputRef.current.blur();// 取消到输入框
@@ -364,13 +469,11 @@ function Kyc(props) {
         if (inputVal.phoneCountry) {
             setPhoneCountryInput(true)
             setPhoneCountryInputShow(true)
-            setPhoneCountryInput(true);
             phoneCountryInputRef.current.blur();// 取消到输入框
         } else {
             setPhoneCountryInput(false)
             setPhoneCountryInputShow(false)
         }
-
     };
 
 
@@ -383,13 +486,11 @@ function Kyc(props) {
         if (inputVal.phoneNumber) {
             setPhoneNumberInput(true)
             setPhoneNumberInputShow(true)
-            setPhoneNumberInput(true);
             phoneNumberInputRef.current.blur();// 取消到输入框
         } else {
             setPhoneNumberInput(false)
             setPhoneNumberInputShow(false)
         }
-
     };
 
     const handleBlur4 = () => {
@@ -401,7 +502,6 @@ function Kyc(props) {
         if (inputVal.firstName) {
             setFirstNameInput(true)
             setFirstNameInputShow(true)
-            setFirstNameInput(true);
             firstNameInputRef.current.blur();// 取消到输入框
         } else {
             setFirstNameInput(false)
@@ -414,7 +514,6 @@ function Kyc(props) {
         if (inputVal.middleName) {
             setMiddleNameInput(true)
             setMiddleNameInputShow(true)
-            setMiddleNameInput(true);
             middleNameInputRef.current.blur();// 取消到输入框
         } else {
             setMiddleNameInput(false)
@@ -422,18 +521,17 @@ function Kyc(props) {
         }
     };
 
+
     const handleBlur6 = () => {
         if (inputVal.lastName) {
             setLastNameInput(true)
             setLastNameInputShow(true)
-            setLastNameInput(true);
             lastNameInputRef.current.blur();// 取消到输入框
         } else {
             setLastNameInput(false)
             setLastNameInputShow(false)
         }
     };
-
 
 
     const handleBlur8 = () => {
@@ -445,12 +543,12 @@ function Kyc(props) {
         if (inputVal.country) {
             setCountryInput(true)
             setCountryInputShow(true)
+            countryInputRef.current.blur();// 取消到输入框
         } else {
             setCountryInput(false)
             setCountryInputShow(false)
         }
-        setCountryInput(true);
-        countryInputRef.current.blur();// 取消到输入框
+
     };
 
     const handleBlur9 = () => {
@@ -459,13 +557,31 @@ function Kyc(props) {
         } else {
             setStateError(false);
         }
+        if (inputVal.state) {
+            setStateInput(true)
+            setStateInputShow(true)
+            stateInputRef.current.blur();// 取消到输入框
+        } else {
+            setStateInput(false)
+            setStateInputShow(false)
+        }
     };
+
 
     const handleBlur10 = () => {
         if (inputVal.city === '') {
             setCityError(true);
         } else {
             setCityError(false);
+        }
+
+        if (inputVal.city) {
+            setCityInput(true)
+            setCityInputShow(true)
+            cityInputRef.current.blur();// 取消到输入框
+        } else {
+            setCityInput(false)
+            setCityInputShow(false)
         }
     };
 
@@ -475,13 +591,54 @@ function Kyc(props) {
         } else {
             setAddressError(false);
         }
+        if (inputVal.address) {
+            setAddressInput(true)
+            setAddressInputShow(true)
+            addressInputRef.current.blur();// 取消到输入框
+        } else {
+            setAddressInput(false)
+            setAddressInputShow(false)
+        }
     };
+
+    const handleBlur12 = () => {
+        if (inputVal.addressTwo) {
+            setAddressTwoInput(true)
+            setAddressTwoInputShow(true)
+            addressTwoInputRef.current.blur();// 取消到输入框
+        } else {
+            setAddressTwoInput(false)
+            setAddressTwoInputShow(false)
+        }
+    };
+
+
+    const handleBlur13 = () => {
+        if (inputVal.zipcode) {
+            setZipCodeInput(true)
+            setZipCodeInputShow(true)
+            zipCodeInputRef.current.blur();// 取消到输入框
+        } else {
+            setZipCodeInput(false)
+            setZipCodeInputShow(false)
+        }
+    };
+
+
 
     const handleBlur14 = () => {
         if (inputVal.idNo === '') {
             setIdNoError(true);
         } else {
             setIdNoError(false)
+        }
+        if (inputVal.idNo) {
+            setIdNoInput(true)
+            setIdNoInputShow(true)
+            idNoInputRef.current.blur();// 取消到输入框
+        } else {
+            setIdNoInput(false)
+            setIdNoInputShow(false)
         }
     };
 
@@ -501,6 +658,7 @@ function Kyc(props) {
         }
     };
 
+
     const handleBlur17 = () => {
         if (inputVal.idBackUrl === '') {
             setIdBackUrlError(true);
@@ -508,6 +666,18 @@ function Kyc(props) {
             setIdBackUrlError(false);
         }
     };
+
+    const handleBlur22 = () => {
+        if (inputVal.usSsn) {
+            setUsSsnInput(true)
+            setUsSsnInputShow(true)
+            usSsnInputRef.current.blur();// 取消到输入框
+        } else {
+            setUsSsnInput(false)
+            setUsSsnInputShow(false)
+        }
+    };
+
 
 
     const editEmail = () => {
@@ -561,6 +731,56 @@ function Kyc(props) {
             lastNameInputRef.current.focus();  // 聚焦到输入框
         }, 0);
     };
+
+    const editState = () => {
+        setStateInput(false);  // 取消禁用状态
+        setTimeout(() => {
+            stateInputRef.current.focus();  // 聚焦到输入框
+        }, 0);
+    };
+
+    const editCity = () => {
+        setCityInput(false);  // 取消禁用状态
+        setTimeout(() => {
+            cityInputRef.current.focus();  // 聚焦到输入框
+        }, 0);
+    };
+
+    const editAddress = () => {
+        setAddressInput(false);  // 取消禁用状态
+        setTimeout(() => {
+            addressInputRef.current.focus();  // 聚焦到输入框
+        }, 0);
+    };
+
+    const editAddressTwo = () => {
+        setAddressTwoInput(false);  // 取消禁用状态
+        setTimeout(() => {
+            addressTwoInputRef.current.focus();  // 聚焦到输入框
+        }, 0);
+    };
+
+    const editZipCode = () => {
+        setZipCodeInput(false);  // 取消禁用状态
+        setTimeout(() => {
+            zipCodeInputRef.current.focus();  // 聚焦到输入框
+        }, 0);
+    };
+
+    const editIdNo = () => {
+        setIdNoInput(false);  // 取消禁用状态
+        setTimeout(() => {
+            idNoInputRef.current.focus();  // 聚焦到输入框
+        }, 0);
+    };
+
+    const editUsSsn = () => {
+        setUsSsnInput(false);  // 取消禁用状态
+        setTimeout(() => {
+            usSsnInputRef.current.focus();  // 聚焦到输入框
+        }, 0);
+    };
+
 
 
     const showBtnFunc = () => {
@@ -1077,6 +1297,18 @@ function Kyc(props) {
                                     }}
                                     error={stateError}
                                     onBlur={handleBlur9}
+                                    disabled={stateInput}
+                                    inputRef={stateInputRef}
+                                    endAdornment={
+                                        stateInputShow && <InputAdornment onClick={() => editState()} position="end">
+                                            {<IconButton edge="end">
+                                                <img
+                                                    src="wallet/assets/images/kyc/bianJiBi.png"
+                                                    style={{ width: '24px', height: '24px' }}
+                                                />
+                                            </IconButton>}
+                                        </InputAdornment>
+                                    }
                                 />
                                 {stateError && (
                                     <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
@@ -1098,6 +1330,18 @@ function Kyc(props) {
                                     inputProps={{
                                         'aria-label': 'city',
                                     }}
+                                    disabled={cityInput}
+                                    inputRef={cityInputRef}
+                                    endAdornment={
+                                        cityInputShow && <InputAdornment onClick={() => editCity()} position="end">
+                                            {<IconButton edge="end">
+                                                <img
+                                                    src="wallet/assets/images/kyc/bianJiBi.png"
+                                                    style={{ width: '24px', height: '24px' }}
+                                                />
+                                            </IconButton>}
+                                        </InputAdornment>
+                                    }
                                 />
                                 {cityError && (
                                     <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
@@ -1119,6 +1363,18 @@ function Kyc(props) {
                                     inputProps={{
                                         'aria-label': 'address',
                                     }}
+                                    disabled={addressInput}
+                                    inputRef={addressInputRef}
+                                    endAdornment={
+                                        addressInputShow && <InputAdornment onClick={() => editAddress()} position="end">
+                                            {<IconButton edge="end">
+                                                <img
+                                                    src="wallet/assets/images/kyc/bianJiBi.png"
+                                                    style={{ width: '24px', height: '24px' }}
+                                                />
+                                            </IconButton>}
+                                        </InputAdornment>
+                                    }
                                 />
                                 {addressError && (
                                     <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
@@ -1138,6 +1394,19 @@ function Kyc(props) {
                                     inputProps={{
                                         'aria-label': 'addressTwo',
                                     }}
+                                    onBlur={handleBlur12}
+                                    disabled={addressTwoInput}
+                                    inputRef={addressTwoInputRef}
+                                    endAdornment={
+                                        addressTwoInputShow && <InputAdornment onClick={() => editAddressTwo()} position="end">
+                                            {<IconButton edge="end">
+                                                <img
+                                                    src="wallet/assets/images/kyc/bianJiBi.png"
+                                                    style={{ width: '24px', height: '24px' }}
+                                                />
+                                            </IconButton>}
+                                        </InputAdornment>
+                                    }
                                 />
                             </FormControl>
                         </div>
@@ -1154,6 +1423,19 @@ function Kyc(props) {
                                     inputProps={{
                                         'aria-label': 'zipcode',
                                     }}
+                                    onBlur={handleBlur13}
+                                    disabled={zipCodeInput}
+                                    inputRef={zipCodeInputRef}
+                                    endAdornment={
+                                        zipCodeInputShow && <InputAdornment onClick={() => editZipCode()} position="end">
+                                            {<IconButton edge="end">
+                                                <img
+                                                    src="wallet/assets/images/kyc/bianJiBi.png"
+                                                    style={{ width: '24px', height: '24px' }}
+                                                />
+                                            </IconButton>}
+                                        </InputAdornment>
+                                    }
                                 />
                             </FormControl>
                         </div>
@@ -1172,6 +1454,18 @@ function Kyc(props) {
                                     inputProps={{
                                         'aria-label': 'idNo',
                                     }}
+                                    disabled={idNoInput}
+                                    inputRef={idNoInputRef}
+                                    endAdornment={
+                                        idNoInputShow && <InputAdornment onClick={() => editIdNo()} position="end">
+                                            {<IconButton edge="end">
+                                                <img
+                                                    src="wallet/assets/images/kyc/bianJiBi.png"
+                                                    style={{ width: '24px', height: '24px' }}
+                                                />
+                                            </IconButton>}
+                                        </InputAdornment>
+                                    }
                                 />
                                 {idNoError && (
                                     <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
@@ -1215,6 +1509,19 @@ function Kyc(props) {
                                     inputProps={{
                                         'aria-label': 'usSsn',
                                     }}
+                                    onBlur={handleBlur22}
+                                    disabled={usSsnInput}
+                                    inputRef={usSsnInputRef}
+                                    endAdornment={
+                                        usSsnInputShow && <InputAdornment onClick={() => editUsSsn()} position="end">
+                                            {<IconButton edge="end">
+                                                <img
+                                                    src="wallet/assets/images/kyc/bianJiBi.png"
+                                                    style={{ width: '24px', height: '24px' }}
+                                                />
+                                            </IconButton>}
+                                        </InputAdornment>
+                                    }
                                 />
                             </FormControl>
                         </div>
