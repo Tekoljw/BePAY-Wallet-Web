@@ -119,7 +119,7 @@ function ResetPin(props) {
                 dispatch(showMessage({ message: t('kyc_55'), code: 2 }));
             }
         } else {
-            dispatch(showMessage({ message: t('kyc_62'), code: 3 }));
+            dispatch(showMessage({ message: t('Kyc_62'), code: 3 }));
         }
     }
 
@@ -140,7 +140,7 @@ function ResetPin(props) {
                 dispatch(showMessage({ message: t('Kyc_58'), code: 2 }));
             }
         } else {
-            dispatch(showMessage({ message: t('kyc_63'), code: 3 }));
+            dispatch(showMessage({ message: t('Kyc_63'), code: 3 }));
         }
     }
 
