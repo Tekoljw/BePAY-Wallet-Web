@@ -324,6 +324,17 @@ function Earn(props) {
                         </div>
                     </motion.div>
 
+                    <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className=''
+                        style={{ height: "160px" }}
+                    >
+                    </motion.div>
+
+
+
 
                     <AnimateModal
                         className="checkInDi"
@@ -1073,7 +1084,7 @@ function Earn(props) {
                                 </div>
                             </div>
 
-                            <div className='mt-28' style={{ paddingInline: "1.5rem" }}>
+                            <div className='mt-24' style={{ paddingInline: "1.5rem" }}>
                                 <Accordion className='gongNengTan10' style={{ border: "1px solid #374252" }}>
                                     <AccordionSummary
                                         expandIcon={<ExpandMoreIcon />}
@@ -1138,7 +1149,7 @@ function Earn(props) {
                                 </Accordion>
                             </div>
 
-                            <div className='mt-28' style={{ paddingInline: "1.5rem" }}>
+                            <div className='mt-24' style={{ paddingInline: "1.5rem" }}>
                                 <Accordion className='gongNengTan10' style={{ border: "1px solid #374252" }}>
                                     <AccordionSummary
                                         expandIcon={<ExpandMoreIcon />}
@@ -1202,7 +1213,7 @@ function Earn(props) {
                                 </Accordion>
                             </div>
 
-                            <div className='mt-28' style={{ paddingInline: "1.5rem" }}>
+                            <div className='mt-24' style={{ paddingInline: "1.5rem" }}>
                                 <Accordion className='gongNengTan10' style={{ border: "1px solid #374252" }}>
                                     <AccordionSummary
                                         expandIcon={<ExpandMoreIcon />}
@@ -1266,7 +1277,7 @@ function Earn(props) {
                                 </Accordion>
                             </div>
 
-                            <div className='mt-28' style={{ paddingInline: "1.5rem" }}>
+                            <div className='mt-24' style={{ paddingInline: "1.5rem" }}>
                                 <Accordion className='gongNengTan10' style={{ border: "1px solid #374252" }}>
                                     <AccordionSummary
                                         expandIcon={<ExpandMoreIcon />}
@@ -1281,6 +1292,134 @@ function Earn(props) {
                                                 </div>
                                                 <div>
                                                     <div className='ml-8 fenChengZi'>合约挖矿分成<br /> <p className='fenChengZi2 mt-4'>直接邀请：1人，间接邀请：9人。</p> </div>
+                                                </div>
+                                            </div>
+                                            <div className='flex earnDepositeDi'>
+                                                <div className='flex  align-item' style={{ height: "100%" }}>
+                                                    <div style={{}}>1.0</div>
+                                                </div>
+                                                <div className='flex  align-item' style={{ height: "100%" }}>
+                                                    <img className='ml-10 mr-6' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </AccordionSummary>
+                                    <div className='earnBg'>
+                                        <AccordionDetails >
+                                            <div className=''>
+                                                <div className='flex' style={{ width: "100%", height: "" }}>
+                                                    <div className='' style={{ width: "30%", textAlign: "left" }}></div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>今日</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>昨日</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>本月</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>上月</div>
+                                                </div>
+                                                <div className='flex mt-4' style={{ width: "100%", height: "" }}>
+                                                    <div className='' style={{ width: "30%", textAlign: "left" }}>提成USDT</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>6</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>0.5</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>7.5</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>1</div>
+                                                </div>
+                                                <div className='flex mt-4' style={{ width: "100%", height: "" }}>
+                                                    <div className='' style={{ width: "30%", textAlign: "left" }}>直接邀请人数</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>1</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>0</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>1</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>0</div>
+                                                </div>
+                                                <div className='flex mt-4' style={{ width: "100%", height: "" }}>
+                                                    <div className='' style={{ width: "30%", textAlign: "left" }}>间接邀请人数</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>9</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>1</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>10</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>0</div>
+                                                </div>
+                                            </div>
+                                        </AccordionDetails>
+                                    </div>
+                                </Accordion>
+                            </div>
+
+                            <div className='mt-24' style={{ paddingInline: "1.5rem" }}>
+                                <Accordion className='gongNengTan10' style={{ border: "1px solid #374252" }}>
+                                    <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon />}
+                                        aria-controls="panel1-content"
+                                        id="panel1-header"
+                                        className='gongNengTan20'
+                                    >
+                                        <div className='flex justify-between w-full' style={{ height: "40px" }}>
+                                            <div className='flex'>
+                                                <div className='flex  align-item' style={{ height: "100%" }}>
+                                                    <img className='mr-10' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/menu/buyCrypto-active.png" alt="" />
+                                                </div>
+                                                <div>
+                                                    <div className='ml-8 fenChengZi'>支付手续费佣金<br /> <p className='fenChengZi2 mt-4'>直接邀请：1人，间接邀请：9人。</p> </div>
+                                                </div>
+                                            </div>
+                                            <div className='flex earnDepositeDi'>
+                                                <div className='flex  align-item' style={{ height: "100%" }}>
+                                                    <div style={{}}>1.0</div>
+                                                </div>
+                                                <div className='flex  align-item' style={{ height: "100%" }}>
+                                                    <img className='ml-10 mr-6' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </AccordionSummary>
+                                    <div className='earnBg'>
+                                        <AccordionDetails >
+                                            <div className=''>
+                                                <div className='flex' style={{ width: "100%", height: "" }}>
+                                                    <div className='' style={{ width: "30%", textAlign: "left" }}></div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>今日</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>昨日</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>本月</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>上月</div>
+                                                </div>
+                                                <div className='flex mt-4' style={{ width: "100%", height: "" }}>
+                                                    <div className='' style={{ width: "30%", textAlign: "left" }}>提成USDT</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>6</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>0.5</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>7.5</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>1</div>
+                                                </div>
+                                                <div className='flex mt-4' style={{ width: "100%", height: "" }}>
+                                                    <div className='' style={{ width: "30%", textAlign: "left" }}>直接邀请人数</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>1</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>0</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>1</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>0</div>
+                                                </div>
+                                                <div className='flex mt-4' style={{ width: "100%", height: "" }}>
+                                                    <div className='' style={{ width: "30%", textAlign: "left" }}>间接邀请人数</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>9</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>1</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>10</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>0</div>
+                                                </div>
+                                            </div>
+                                        </AccordionDetails>
+                                    </div>
+                                </Accordion>
+                            </div>
+
+                            <div className='mt-24' style={{ paddingInline: "1.5rem" }}>
+                                <Accordion className='gongNengTan10' style={{ border: "1px solid #374252" }}>
+                                    <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon />}
+                                        aria-controls="panel1-content"
+                                        id="panel1-header"
+                                        className='gongNengTan20'
+                                    >
+                                        <div className='flex justify-between w-full' style={{ height: "40px" }}>
+                                            <div className='flex'>
+                                                <div className='flex  align-item' style={{ height: "100%" }}>
+                                                    <img className='mr-10' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/menu/icon-borrow-active.png" alt="" />
+                                                </div>
+                                                <div>
+                                                    <div className='ml-8 fenChengZi'>换汇手续费佣金<br /> <p className='fenChengZi2 mt-4'>直接邀请：1人，间接邀请：9人。</p> </div>
                                                 </div>
                                             </div>
                                             <div className='flex earnDepositeDi'>
