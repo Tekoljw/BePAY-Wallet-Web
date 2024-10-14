@@ -476,7 +476,7 @@ const locale = {
     card_120: "Krypto-Handels-Mining",
     card_121: "Handelsvertrag",
     card_122: "Sofortlieferung",
-    card_123: "alle Transaktionsgebühren",
+    card_123: "Compensar todas las tarifas de transacción",
     card_124: "Entschädigung",
     card_125: "Einladungsprämie",
     card_126: "Freunde einladen",

@@ -323,7 +323,7 @@ function Spin(props) {
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
-                src="wallet/assets/images/symbol/USGT.PNG"
+                src="wallet/assets/images/symbol/USDT.PNG"
               ></img>
             </div>
 
@@ -340,7 +340,7 @@ function Spin(props) {
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
-                src="wallet/assets/images/symbol/USGT.PNG"
+                src="wallet/assets/images/symbol/USDT.PNG"
               ></img>
             </div>
 
@@ -357,7 +357,7 @@ function Spin(props) {
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
-                src="wallet/assets/images/symbol/USGT.PNG"
+                src="wallet/assets/images/symbol/USDT.PNG"
               ></img>
             </div>
 
@@ -374,7 +374,7 @@ function Spin(props) {
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
-                src="wallet/assets/images/symbol/USGT.PNG"
+                src="wallet/assets/images/symbol/USDT.PNG"
               ></img>
             </div>
 
@@ -391,7 +391,7 @@ function Spin(props) {
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
-                src="wallet/assets/images/symbol/USGT.PNG"
+                src="wallet/assets/images/symbol/USDT.PNG"
               ></img>
             </div>
 
@@ -408,7 +408,7 @@ function Spin(props) {
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
-                src="wallet/assets/images/symbol/USGT.PNG"
+                src="wallet/assets/images/symbol/USDT.PNG"
               ></img>
             </div>
 
@@ -425,7 +425,7 @@ function Spin(props) {
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
-                src="wallet/assets/images/symbol/USGT.PNG"
+                src="wallet/assets/images/symbol/USDT.PNG"
               ></img>
             </div>
 
@@ -442,7 +442,7 @@ function Spin(props) {
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
-                src="wallet/assets/images/symbol/USGT.PNG"
+                src="wallet/assets/images/symbol/USDT.PNG"
               ></img>
             </div>
 
@@ -459,7 +459,7 @@ function Spin(props) {
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
-                src="wallet/assets/images/symbol/USGT.PNG"
+                src="wallet/assets/images/symbol/USDT.PNG"
               ></img>
             </div>
 
@@ -476,7 +476,7 @@ function Spin(props) {
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
-                src="wallet/assets/images/symbol/USGT.PNG"
+                src="wallet/assets/images/symbol/USDT.PNG"
               ></img>
             </div>
 
@@ -493,7 +493,7 @@ function Spin(props) {
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
-                src="wallet/assets/images/symbol/USGT.PNG"
+                src="wallet/assets/images/symbol/USDT.PNG"
               ></img>
             </div>
 
@@ -510,7 +510,7 @@ function Spin(props) {
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
-                src="wallet/assets/images/symbol/USGT.PNG"
+                src="wallet/assets/images/symbol/USDT.PNG"
               ></img>
             </div>
 
@@ -527,7 +527,7 @@ function Spin(props) {
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
-                src="wallet/assets/images/symbol/USGT.PNG"
+                src="wallet/assets/images/symbol/USDT.PNG"
               ></img>
             </div>
 
@@ -544,7 +544,7 @@ function Spin(props) {
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
-                src="wallet/assets/images/symbol/USGT.PNG"
+                src="wallet/assets/images/symbol/USDT.PNG"
               ></img>
             </div>
 
@@ -561,7 +561,7 @@ function Spin(props) {
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
-                src="wallet/assets/images/symbol/USGT.PNG"
+                src="wallet/assets/images/symbol/USDT.PNG"
               ></img>
             </div>
 
@@ -578,7 +578,7 @@ function Spin(props) {
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
-                src="wallet/assets/images/symbol/USGT.PNG"
+                src="wallet/assets/images/symbol/USDT.PNG"
               ></img>
             </div>
           </div>
