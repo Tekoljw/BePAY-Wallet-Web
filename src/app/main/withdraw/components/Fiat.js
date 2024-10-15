@@ -837,9 +837,10 @@ function Fiat(props) {
 
     useEffect(() => {
         if (inputVal.amount > 0) {
+            let entryType = getEntryType(currencyCode);
             dispatch(getFiatFee({
                 currency: currencyCode,
-                wayCode: '',
+                wayCode: entryType,
                 amount: inputVal.amount
             })).then((res) => {
                 let result = res.payload;
