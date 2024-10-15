@@ -15,6 +15,7 @@ import openType from '../wallet/opentype.json'
 import {
   getSwapConfig,
   getSwapPrice,
+  getSwapFee,
   getSwapCrypto, getSwapFiat,
 } from "../../store/swap/swapThunk";
 import { useDispatch, useSelector } from "react-redux";
@@ -116,7 +117,8 @@ function Swap() {
   const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || "USD");
   const [loadingShow, setLoadingShow] = useState(false);
   const [rateArr, setRateArr] = useState([]);
-  const [ convertRate, setConvertRate] = useState(0)
+  const [ convertRate, setConvertRate] = useState(0);
+  const [swapFee, setSwapFee] = useState(0);
 
   const [priceData, setPriceData] = useState({
     pair: "",
@@ -585,6 +587,10 @@ function Swap() {
       setLoadingShow(false)
       res.payload?.errno === 0 && dispatch(setSwapConfig(res.payload));
     });
+    dispatch(getSwapFee()).then((res)=>{
+      const result = res.payload;
+      setSwapFee(result.data);
+    })
   }, []);
 
   useEffect(() => {
@@ -971,7 +977,7 @@ function Swap() {
                         <div className="px-12 font-medium color-76819B">
                           <Typography className="text-14 font-medium">
                             {t("home_wallet_20")}:
-                            <span className="color-ffffff">{ Number(convertRate*(inputVal.amount)*0.03) || 0 } {formatSymbol}</span>
+                            <span className="color-ffffff">{ Number(convertRate*(inputVal.amount)*(swapFee? swapFee: 0.03)) || 0 } {formatSymbol}</span>
                           </Typography>
                         </div>
                       </div>

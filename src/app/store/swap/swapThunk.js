@@ -55,6 +55,22 @@ export const getSwapPrice = createAsyncThunk(
     }
 );
 
+
+// 获取兑换手续费
+export const getSwapFee = createAsyncThunk(
+    '/swap/swapFee',
+    async (settings, { dispatch, getState }) => {
+
+        const resultData = await React.$api("swap.swapFee", {});
+
+        if (resultData.errno === 0) {
+            return resultData;
+        } else {
+            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+        }
+    }
+);
+
 export const getSwapFiat = createAsyncThunk(
     '/swap/fiat',
     async (settings, { dispatch, getState }) => {
