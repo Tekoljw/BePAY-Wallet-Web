@@ -540,6 +540,7 @@ function ResetPin(props) {
                             disabled={_.isEmpty(dirtyFields) || !isValid}
                             type="submit"
                             size="large"
+                            sx={{ paddingTop: "2px!important", paddingBottom: "2px!important", fontSize: "20px!important" }}
                             onClick={() => {
                                 handlePin()
                             }}
@@ -696,6 +697,7 @@ function ResetPin(props) {
                                                     disabled={submitBtnShow}
                                                     type="submit"
                                                     size="large"
+                                                    sx={{ paddingTop: "2px!important", paddingBottom: "2px!important", fontSize: "20px!important" }}
                                                     onClick={() => {
                                                         sumbitBtnFunc();
                                                     }}
@@ -889,6 +891,7 @@ function ResetPin(props) {
                                                     disabled={submitBtnShow}
                                                     type="submit"
                                                     size="large"
+                                                    sx={{ paddingTop: "2px!important", paddingBottom: "2px!important", fontSize: "20px!important" }}
                                                     onClick={() => {
                                                         sumbitBtnFunc();
                                                     }}

@@ -923,12 +923,12 @@ function Fiat(props) {
                                                         borderRadius: '99px'
                                                     }} src={row.avatar} alt="" />
                                                     <div className="px-12 font-medium">
-                                                        <Typography className="text-16 font-medium">{row.currencyCode}</Typography>
+                                                        <Typography className="text-18 font-medium">{row.currencyCode}</Typography>
                                                     </div>
                                                 </div>
                                                 <div style={{ marginLeft: 'auto' }}>
                                                     <div className="px-12 font-medium" style={{ textAlign: 'right' }}>
-                                                        <Typography className="text-16 font-medium">{row.balance}</Typography>
+                                                        <Typography className="text-18 font-medium">{row.balance}</Typography>
 
                                                     </div>
                                                 </div>

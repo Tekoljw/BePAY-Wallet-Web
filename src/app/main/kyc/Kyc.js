@@ -254,7 +254,7 @@ function Kyc(props) {
     const [addressTwoInputShow, setAddressTwoInputShow] = useState(false);
     const addressTwoInputRef = useRef(null);
 
-    
+
     const [zipCodeInput, setZipCodeInput] = useState(false);
     const [zipCodeInputShow, setZipCodeInputShow] = useState(false);
     const zipCodeInputRef = useRef(null);
@@ -433,7 +433,7 @@ function Kyc(props) {
         } else {
             setAddressError(false);
         }
-        
+
         if (inputVal.idNo === '') {
             setIdNoError(true);
         } else {
@@ -1672,7 +1672,7 @@ function Kyc(props) {
                                 className="text-lg btnColorTitleBig button-reset2"
                                 color="secondary"
                                 variant="contained"
-                                style={{ fontSize: "1.6rem", width: "100%" }}
+                                style={{ paddingTop: "2px!important", paddingBottom: "2px!important", fontSize: "20px!important", width: "100%" }}
                                 onClick={() => { onSave() }}
                             >
                                 {t('kyc_22')}

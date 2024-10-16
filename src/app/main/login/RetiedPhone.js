@@ -292,6 +292,7 @@ function RetiedPhone() {
                               }
                             type="submit"
                             size="large"
+                            sx={{ paddingTop: "2px!important", paddingBottom: "2px!important", fontSize: "20px!important" }}
                         >
                             {t('re_tied_phone_3')}
                         </Button>

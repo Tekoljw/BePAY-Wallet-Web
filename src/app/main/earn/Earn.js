@@ -26,6 +26,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { lineHeight } from '@mui/system';
+import clsx from 'clsx';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -147,8 +148,8 @@ function Earn(props) {
         }, 300);
     };
 
-
     const [loadingShow, setLoadingShow] = useState(false);
+    const textRef = useRef(null);
 
     return (
         <div className=''>
@@ -267,9 +268,9 @@ function Earn(props) {
                                 <div className='huangDiZi'>
                                     <img className='logoCC2 mb-4' src="wallet/assets/images/earn/logo2.png" />
                                     <div className='tuoYuanDi'>
-                                        <div className='' style={{ color: "#ffffff", fontSize: "20px" }}>{t('card_121')} <span style={{ color: "#8100D3" }}>{t('card_122')}</span> </div>
+                                        <div className='' style={{ color: "#ffffff", textAlign: "center", fontSize: "20px", whiteSpace: 'nowrap', overflow: 'hidden' }}><span style={{ color: "#8100D3" }}>{t('card_122')}</span> </div>
                                     </div>
-                                    <div><span style={{ color: "#FFC600", fontWeight: "bold", fontSize: "29px" }}>100%</span><span style={{ color: "#ffffff", fontWeight: "bold", fontSize: "14px" }}>{t('card_123')}</span></div>
+                                    <div><span style={{ color: "#FFC600", fontWeight: "bold", fontSize: "29px" }}>100% </span><span style={{ color: "#ffffff", fontWeight: "bold", fontSize: "14px" }}>{t('card_123')}</span></div>
                                 </div>
                                 <img className='earnYouTu2 mt-16' src="wallet/assets/images/earn/bi2.png" />
                             </div>

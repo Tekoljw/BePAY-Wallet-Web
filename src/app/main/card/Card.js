@@ -1224,7 +1224,7 @@ function Card(props) {
                                             >
                                                 {Object.entries([t('card_12'), t('card_13')]).map(([key, label]) => (
                                                     <Tab
-                                                        className="text-14 font-semibold min-h-32 min-w-64 mx4 px-12 txtColorTitle opacity-100 zindex"
+                                                        className="text-16 font-semibold min-h-32 min-w-64 mx4 px-12 txtColorTitle opacity-100 zindex"
                                                         disableRipple
                                                         key={key}
                                                         label={label}
@@ -1673,7 +1673,7 @@ function Card(props) {
                                         >
                                             {Object.entries([t('card_12'), t('card_13')]).map(([key, label]) => (
                                                 <Tab
-                                                    className="text-14 font-semibold min-h-32 min-w-64 mx4 px-12 txtColorTitle opacity-100 zindex"
+                                                    className="text-16 font-semibold min-h-32 min-w-64 mx4 px-12 txtColorTitle opacity-100 zindex"
                                                     disableRipple
                                                     key={key}
                                                     label={label}
@@ -1976,7 +1976,7 @@ function Card(props) {
                             loading={isLoadingBtn}
                             variant="contained"
                             sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
-                            style={{ width: '100%', height: '4rem', fontSize: "18px", margin: '1rem auto 2.8rem', display: 'block', lineHeight: "inherit" }}
+                            style={{ width: '100%', height: '4rem', fontSize: "20px", margin: '1rem auto 2.8rem', display: 'block', lineHeight: "inherit" }}
                             onClick={() => {
                                 // setOpenApplyWindow(true)
                                 // openApplyFunc()
@@ -3403,7 +3403,6 @@ function Card(props) {
                     >
                         {t('card_182')}
                     </LoadingButton>
-
 
                     <LoadingButton
                         disabled={false}
