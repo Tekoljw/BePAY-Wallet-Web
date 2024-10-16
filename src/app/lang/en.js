@@ -45,6 +45,8 @@ const locale = {
     menu_16: 'KYC',
     menu_17: 'Security',
     menu_18: 'Credit card',
+    menu_19: 'Bind Email',
+    menu_20: 'Bind Phone',
 
     home_2fa_1: 'Step 1',
     home_2fa_2: 'Download and ',
