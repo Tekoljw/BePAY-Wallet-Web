@@ -69,6 +69,7 @@ function Security(props) {
     }, []);
 
     useEffect(() => {
+        debugger
         let langArr = [t('menu_12'), t('menu_13'), t('menu_14'), t('menu_15'), t('menu_16'), "PIN"];
         if(!userData.userInfo.bindEmail) {
             langArr[1] = t('menu_19')
@@ -77,7 +78,7 @@ function Security(props) {
             langArr[2] = t('menu_20')
         }
         setRanges(langArr);
-    }, [currentLanguage.id]);
+    }, [currentLanguage.id, userData.profile]);
 
 
     return (
