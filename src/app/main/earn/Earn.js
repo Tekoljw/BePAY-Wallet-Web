@@ -875,7 +875,7 @@ function Earn(props) {
                             </div>
                             <div className='flex justifyContent'>
                                 <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/card/usd.png"></img>
-                                <div className='text-16 ml-6'>{t('card_152')}USD</div>
+                                <div className='text-18 ml-6' style={{ fontWeight:"600" }} >{t('card_152')} USD</div>
                             </div>
                             <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "center", color: "#00FF96" }}>10000.00</div>
                             <div className='flex  justify-between mt-12'>
@@ -895,7 +895,7 @@ function Earn(props) {
                                 </div>
                             </div>
                             <VisitorsOverviewWidget />
-                            <div className='txtBrightness text-16 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>{t('card_156')}</div>
+                            <div className='txtBrightness text-20 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>{t('card_156')}</div>
                         </div>
                     </BootstrapDialog>
 
@@ -948,7 +948,7 @@ function Earn(props) {
                                     <div className='mt-6' style={{ textAlign: "center" }}>5.26%</div>
                                 </div>
                             </div>
-                            <div className='txtBrightness text-16 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>{t('card_156')}</div>
+                            <div className='txtBrightness text-20 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>{t('card_156')}</div>
                         </div>
                     </BootstrapDialog>
 
@@ -993,7 +993,7 @@ function Earn(props) {
                                     <div className='mt-6' style={{ textAlign: "center" }}>100.00</div>
                                 </div>
                             </div>
-                            <div className='txtBrightness text-16 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>{t('card_130')}</div>
+                            <div className='txtBrightness text-20 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>{t('card_130')}</div>
                         </div>
                     </BootstrapDialog>
 

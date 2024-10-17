@@ -1212,14 +1212,14 @@ function Deposite() {
                                                         }}
                                                         value={addressItem.addressDesc}
                                                         inputProps={{ 'aria-label': 'weight' }}
-                                                        onFocus={(event)=>{
+                                                        onFocus={(event) => {
                                                             handleEditAddressDesc(index, { eidtMode: true })
                                                         }}
                                                         onChange={(event) => {
                                                             handleEditAddressDesc(index, { addressDesc: event.target.value, eidtMode: true })
                                                         }}
-                                                        onBlur={ (event) => {
-                                                            handleEditAddressDesc(index, { addressDesc: event.target.value, eidtMode: false}, true)
+                                                        onBlur={(event) => {
+                                                            handleEditAddressDesc(index, { addressDesc: event.target.value, eidtMode: false }, true)
                                                         }}
                                                     />
                                                 </div>
@@ -1851,7 +1851,7 @@ function Deposite() {
                             <div className='px-10 mt-12'><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8", fontSize: "1.3rem" }}>{t('card_177')}</span></div>
                         </motion.div>
 
-                        <Typography className="text-16 px-16 my-10">{t('home_deposite_17')}</Typography>
+                        <Typography className="text-16 pl-10 my-10">{t('home_deposite_17')}</Typography>
 
                         {bankCodeList.length > 0 && bankCodeList?.map((bankItem) => {
                             if (currencyCode === bankItem.currency) {
@@ -1868,19 +1868,20 @@ function Deposite() {
                                     >
                                         <AccordionSummary
                                             expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
+                                            sx={{ paddingLeft: "10px", paddingRight: "10px" }}
                                         >
                                             <div className="flex items-center py-4 flex-grow" style={{ width: '100%' }}>
                                                 <div className="flex items-center">
                                                     <img style={{
-                                                        width: '3rem',
+                                                        width: '2.8rem',
                                                         borderRadius: "5px"
                                                     }} src={bankItem.url || "wallet/assets/images/deposite/touchngo.png"} alt="" />
-                                                    <div className="px-12 font-medium">
-                                                        <Typography className="text-18 font-medium">{bankItem.payName}</Typography>
+                                                    <div className="px-10 font-medium">
+                                                        <Typography className="text-16 font-medium">{bankItem.payName}</Typography>
                                                     </div>
                                                 </div>
                                                 <div style={{ marginLeft: 'auto' }}>
-                                                    <div className="px-12 font-medium" style={{ textAlign: 'right' }}>
+                                                    <div className="pr-10 font-medium" style={{ textAlign: 'right' }}>
                                                         <Typography className="text-14" style={{ color: '#94A3B8' }}>{t('home_deposite_18')}:{formatAmount(bankItem.minValue)} - {formatAmount(bankItem.maxValue)}</Typography>
                                                     </div>
                                                 </div>
@@ -1934,7 +1935,7 @@ function Deposite() {
                                                     })}
                                                 </div>}
 
-                                                <div className='ml-2' style={{ fontSize: "13px" }} >{t('home_borrow_16')}  { (bankItem?.ifRate * weight + bankItem?.basicFee)?.toFixed(2)} </div>
+                                                <div className='ml-2' style={{ fontSize: "13px" }} >{t('home_borrow_16')}  {(bankItem?.ifRate * weight + bankItem?.basicFee)?.toFixed(2)} </div>
 
                                                 <div className="my-16 flex items-center justify-content-center">
                                                     <LoadingButton
@@ -1943,7 +1944,7 @@ function Deposite() {
                                                         color="secondary"
                                                         variant="contained"
                                                         loading={openLoad}
-                                                        sx={{ backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1rem' }}
+                                                        sx={{ paddingTop: "6px!important", paddingBottom: "6px!important", fontSize: "16px!important", backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1rem' }}
                                                         onClick={() => {
                                                             setOpenLoad(true);
                                                             fiatRecharge(bankItem.id);

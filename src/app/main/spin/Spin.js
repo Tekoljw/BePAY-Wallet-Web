@@ -156,7 +156,7 @@ function Spin(props) {
     // 测试数据
 
     let doTurnResult = {
-        ItemID: 5
+      ItemID: 5
     };
 
     var oTurntable = document.getElementById("spin");
@@ -599,7 +599,7 @@ function Spin(props) {
         <img
           className={clsx(
             "spinZhuanBtnImgX positionAb Zindex txtBrightness btnPointer ")}
-          style={{ top: "159px", bottom: "0px", left: "128px", right: "0px",zIndex:"9999" }}
+          style={{ top: "159px", bottom: "0px", left: "128px", right: "0px", zIndex: "9999" }}
           onClick={() => {
             spinRata();
           }}
@@ -751,13 +751,7 @@ function Spin(props) {
                   <div style={{ color: "#8997B9" }}>
                     奖励
                   </div>
-                  <div>
-                    胜利
-                    <span style={{ color: "#45CB1D" }}>
-                      0
-                    </span>
-                    &nbsp;
-                    <span style={{ color: "#ffffff" }}>USDT</span> <br />
+                  <div> 胜利  <span style={{ color: "#45CB1D" }}> 0</span>&nbsp;<span style={{ color: "#ffffff" }}>USDT</span> <br />
                     <span
                       style={{
                         fontSize: "16px",
@@ -788,7 +782,7 @@ function Spin(props) {
         symbolImg={"wallet/assets/images/symbol/USD.png"}
         balance={1.00}
       />
-      
+
     </>
   );
 }

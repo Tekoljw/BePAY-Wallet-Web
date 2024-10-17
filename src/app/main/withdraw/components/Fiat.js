@@ -633,7 +633,7 @@ function Fiat(props) {
             if (entryType == row.wayCode) {
                 if (row.url) {
                     setTypeIcon(row.url)
-                }else {
+                } else {
                     setTypeIcon('https://scource-static.funibet.com/funibox/icon/onePay.png')
                 }
             }
@@ -1535,8 +1535,9 @@ function Fiat(props) {
                                     {smallTabValue == 0 && <div className='' style={{ fontSize: "20px", textAlign: "center", color: "#909FB4", width: "100%" }}>Name {inputVal.accountName} </div>}
 
                                     <div className='py-4 ml-10 flex justify-center' style={{ fontSize: "20px", textAlign: "center", color: "#909FB4", width: "100%", overflow: "hidden" }}>
-                                        {smallTabValue == 0 && <img className='mt-4 mr-10' style={{ width: "20px", height: "20px", borderRadius: "5px" }} src={typeIcon} />}
-                                        <div> {smallTabValue == 0 ? "NO." : "UserID"}   {smallTabValue == 0 ? inputVal.accountNo : inputVal.userId} </div></div>
+                                        {smallTabValue == 0 && <img className='mt-4 mr-10' style={{ width: "20px", height: "20px", borderRadius: "5px", marginLeft: "-30px" }} src={typeIcon} />}
+                                        <div> {smallTabValue == 0 ? "NO." : "UserID"} {smallTabValue == 0 ? inputVal.accountNo : inputVal.userId} </div>
+                                    </div>
                                     <div className='flex justify-center mt-10' style={{ width: "100%", overflow: "hidden", borderBottom: "1px solid #2C3950", paddingBottom: "2rem" }}>
                                         {fiats && fiats[fiatsSelected] && <img className='MoneyWithdraw' src={fiats[fiatsSelected].avatar}></img>}
 

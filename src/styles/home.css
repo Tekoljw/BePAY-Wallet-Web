@@ -2504,9 +2504,9 @@ input[type='number'] {
 .tianJiaKaPian {
     background-color: #374252;
     margin: 1.5rem auto 1.5rem auto;
-    width: calc(100% - 2rem);
+    width: calc(100% - 0rem);
     height: 6rem;
-    border-radius: 1.5rem;
+    border-radius: 1rem;
 }
 
 
