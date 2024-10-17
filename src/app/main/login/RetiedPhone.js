@@ -3,13 +3,13 @@ import { Controller, useForm } from 'react-hook-form';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import _ from '@lodash';
 import Paper from '@mui/material/Paper';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import {
-    changePhone, sendSms
+    bindPhone,
+    changePhone, sendSms, getUserData
 } from '../../store/user/userThunk';
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel/InputLabel";
@@ -22,6 +22,8 @@ import phoneCode from "../../../phone/phoneCode";
 import Box from "@mui/material/Box";
 import {useTranslation} from "react-i18next";
 import history from "../../../@history/@history";
+import { selectUserData } from "../../store/user";
+import { showMessage } from 'app/store/fuse/messageSlice';
 
 /**
  * Form Validation Schema
@@ -60,6 +62,7 @@ function RetiedPhone() {
     const dispatch = useDispatch();
 
     const [ tmpPhoneCode, setTmpPhoneCode ] = useState('');
+    const userData = useSelector(selectUserData);
 
     const [time,setTime] = useState(null);
     const timeRef = useRef();
@@ -93,7 +96,19 @@ function RetiedPhone() {
     }
 
     async function onSubmit() {
-        await dispatch(changePhone(control._formValues));
+        if(userData && userData.userInfo && userData.userInfo.bindMobile){
+            await dispatch(changePhone(control._formValues));
+        }else{
+            await dispatch(bindPhone(control._formValues)).then((res) => {
+                let result = res.payload;
+                if (result.errno === 0) {
+                    dispatch(showMessage({ message: 'Success', code: 1 }));
+                    dispatch(getUserData());
+                } else {
+                    dispatch(showMessage({ message: result.errmsg, code: 2 }));
+                }
+            });
+        }
     }
 
     return (
@@ -109,12 +124,13 @@ function RetiedPhone() {
                 <div className="w-full  mx-auto sm:mx-0">
     
 
-                    <div className="flex items-baseline mt-2 font-medium">
-                        <Typography>{t('re_tied_phone_2')}</Typography>
-                        {/*<Link className="ml-4" to="/login">*/}
-                        {/*    Sign in*/}
-                        {/*</Link>*/}
-                    </div>
+                    { userData && userData.userInfo && userData.userInfo.bindMobile &&  <div className="flex items-baseline mt-2 font-medium">
+                            <Typography>{t('re_tied_phone_2')}</Typography>
+                            {/*<Link className="ml-4" to="/login">*/}
+                            {/*    Sign in*/}
+                            {/*</Link>*/}
+                        </div>
+                    }
 
                     <form
                         name="registerForm"

@@ -45,6 +45,8 @@ const locale = {
     menu_16: 'KYC',
     menu_17: '安全',
     menu_18: '信用卡',
+    menu_19: '绑定电子邮件',
+    menu_20: '绑定绑定电话',
 
     home_2fa_1: '第一步',
     home_2fa_2: '下载并',

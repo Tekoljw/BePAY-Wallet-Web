@@ -43,9 +43,7 @@ const item = {
     show: { opacity: 1, y: 0 },
 };
 
-const backCardPageEvt = () => {
-
-}
+const backCardPageEvt = () => {}
 
 function Security(props) {
     const { t } = useTranslation('mainPage');
@@ -71,8 +69,16 @@ function Security(props) {
     }, []);
 
     useEffect(() => {
-        setRanges([t('menu_12'), t('menu_13'), t('menu_14'), t('menu_15'), t('menu_16'), "PIN"]);
-    }, [currentLanguage.id]);
+        debugger
+        let langArr = [t('menu_12'), t('menu_13'), t('menu_14'), t('menu_15'), t('menu_16'), "PIN"];
+        if(!userData.userInfo.bindEmail) {
+            langArr[1] = t('menu_19')
+        }
+        if(!userData.userInfo.bindMobile) {
+            langArr[2] = t('menu_20')
+        }
+        setRanges(langArr);
+    }, [currentLanguage.id, userData.profile]);
 
 
     return (
