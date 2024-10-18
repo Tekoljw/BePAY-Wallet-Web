@@ -1016,6 +1016,70 @@ input[type='number'] {
     z-index: 9998;
 }
 
+.xszfSty {
+    width: 100%;
+    aspect-ratio: 430 / 448;
+    border-radius: 1rem;
+    margin-top: 1.4rem;
+}
+
+.xszfSty2 {
+    width: 100%;
+    aspect-ratio: 430 / 296;
+    border-radius: 1rem;
+    margin-top: 1.4rem;
+}
+
+.xszfSty3 {
+    width: 100%;
+    aspect-ratio: 430 / 400;
+    border-radius: 1rem;
+    margin-top: 1.4rem;
+}
+
+.xszfSty4 {
+    width: 100%;
+    aspect-ratio: 430 / 326;
+    border-radius: 1rem;
+    margin-top: 1.4rem;
+}
+
+.dzqbSty {
+    width: 100%;
+    aspect-ratio: 430 / 256;
+    border-radius: 1rem;
+    margin-top: 1.4rem;
+}
+
+.xxzfSty1 {
+    width: 100%;
+    aspect-ratio: 430 / 262;
+    border-radius: 1rem;
+    margin-top: 1.4rem;
+}
+
+.xxzfSty2 {
+    width: 100%;
+    aspect-ratio: 430 / 187;
+    border-radius: 1rem;
+    margin-top: 1.4rem;
+}
+
+.xxzfSty3 {
+    width: 100%;
+    aspect-ratio: 430 / 220;
+    border-radius: 1rem;
+    margin-top: 1.4rem;
+}
+
+.xxzfSty4 {
+    width: 100%;
+    aspect-ratio: 430 / 266;
+    border-radius: 1rem;
+    margin-top: 1.4rem;
+}
+
+
 
 .flipped {
     -webkit-transform: rotateY(180deg);
