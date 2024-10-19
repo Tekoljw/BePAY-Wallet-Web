@@ -876,7 +876,7 @@ function Card(props) {
         return "";
     }
     const applyOrChangeCard = () => {
-        if(currentCardItem) {
+        if (currentCardItem) {
             setIsLoadingBtn(true)
             dispatch(creditCardUpdate({
                 creditType: currUserCardInfo.creditType,
@@ -892,7 +892,7 @@ function Card(props) {
                 // setTimer(timer + 1)
                 // myFunction();
             })
-        }else{
+        } else {
             applyCard()
         }
     }
@@ -1541,106 +1541,107 @@ function Card(props) {
                                                         <div className='zhangDanZi' >{t('card_25')}</div>
                                                     </div>
 
-                                                    <div className='text-16 mt-28 ml-10'>如何使用信用卡？</div>
+                                                    {/* <div>
+                                                        <div className='text-16 mt-28 ml-10'>如何使用信用卡？</div>
 
-                                                    <StyledAccordion
-                                                        component={motion.div}
-                                                        variants={item}
-                                                        classes={{
-                                                            root: clsx('FaqPage-panel shadow'),
-                                                        }}
-                                                    >
-                                                        <AccordionSummary
-                                                            expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
-                                                            sx={{ paddingLeft: "10px", paddingRight: "10px" }}
+                                                        <StyledAccordion
+                                                            component={motion.div}
+                                                            variants={item}
+                                                            classes={{
+                                                                root: clsx('FaqPage-panel shadow'),
+                                                            }}
                                                         >
-                                                            <div className="flex items-center py-4 flex-grow" style={{ width: '100%' }}>
-                                                                <FuseSvgIcon className="mr-8">
-                                                                    heroicons-outline:information-circle
-                                                                </FuseSvgIcon>
-                                                                线上付款，直接使用
-                                                            </div>
-                                                        </AccordionSummary>
+                                                            <AccordionSummary
+                                                                expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
+                                                                sx={{ paddingLeft: "10px", paddingRight: "10px" }}
+                                                            >
+                                                                <div className="flex items-center py-4 flex-grow" style={{ width: '100%' }}>
+                                                                    <FuseSvgIcon className="mr-8">
+                                                                        heroicons-outline:information-circle
+                                                                    </FuseSvgIcon>
+                                                                    线上付款，直接使用
+                                                                </div>
+                                                            </AccordionSummary>
 
-                                                        <AccordionDetails style={{ paddingInline: "15px" }}>
-                                                            <div> ① 线上付款时通常需要填写卡号、到期年月、安全码。 </div>
-                                                            <img className='xszfSty' src="wallet/assets/images/card/xszf1.png" />
-                                                            <div className='mt-28'> ② 将卡片的卡号填入付款页面 </div>
-                                                            <img className='xszfSty2' src="wallet/assets/images/card/xszf2.png" />
-                                                            <div className='mt-28'> ② 将卡片的有效年月填入付款页面 </div>
-                                                            <img className='xszfSty2' src="wallet/assets/images/card/xszf3.png" />
-                                                            <div className='mt-28'> ③ 将卡片的安全码填入付款页面 </div>
-                                                            <img className='xszfSty2' src="wallet/assets/images/card/xszf4.png" />
-                                                        </AccordionDetails>
-                                                    </StyledAccordion>
+                                                            <AccordionDetails style={{ paddingInline: "15px" }}>
+                                                                <div> ① 线上付款时通常需要填写卡号、到期年月、安全码。 </div>
+                                                                <img className='xszfSty' src="wallet/assets/images/card/xszf1.png" />
+                                                                <div className='mt-28'> ② 将卡片的卡号填入付款页面 </div>
+                                                                <img className='xszfSty2' src="wallet/assets/images/card/xszf2.png" />
+                                                                <div className='mt-28'> ② 将卡片的有效年月填入付款页面 </div>
+                                                                <img className='xszfSty2' src="wallet/assets/images/card/xszf3.png" />
+                                                                <div className='mt-28'> ③ 将卡片的安全码填入付款页面 </div>
+                                                                <img className='xszfSty2' src="wallet/assets/images/card/xszf4.png" />
+                                                            </AccordionDetails>
+                                                        </StyledAccordion>
 
-                                                    <StyledAccordion
-                                                        component={motion.div}
-                                                        variants={item}
-                                                        classes={{
-                                                            root: clsx('FaqPage-panel shadow'),
-                                                        }}
-                                                    >
-                                                        <AccordionSummary
-                                                            expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
-                                                            sx={{ paddingLeft: "10px", paddingRight: "10px" }}
+                                                        <StyledAccordion
+                                                            component={motion.div}
+                                                            variants={item}
+                                                            classes={{
+                                                                root: clsx('FaqPage-panel shadow'),
+                                                            }}
                                                         >
-                                                            <div className="flex items-center py-4 flex-grow" style={{ width: '100%' }}>
-                                                                <FuseSvgIcon className="mr-8">
-                                                                    heroicons-outline:information-circle
-                                                                </FuseSvgIcon>
-                                                                绑定至电子钱包
-                                                            </div>
-                                                        </AccordionSummary>
+                                                            <AccordionSummary
+                                                                expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
+                                                                sx={{ paddingLeft: "10px", paddingRight: "10px" }}
+                                                            >
+                                                                <div className="flex items-center py-4 flex-grow" style={{ width: '100%' }}>
+                                                                    <FuseSvgIcon className="mr-8">
+                                                                        heroicons-outline:information-circle
+                                                                    </FuseSvgIcon>
+                                                                    绑定至电子钱包
+                                                                </div>
+                                                            </AccordionSummary>
 
-                                                        <AccordionDetails style={{ paddingInline: "15px" }}>
-                                                            <div>
-                                                                <div> ① 打开电子钱包（如微信），选择添加卡片。 </div>
-                                                                <img className='dzqbSty' src="wallet/assets/images/card/dzqb1.png" />
-                                                                <div className='mt-28'> ② 填写beingFi信用卡的卡号。 </div>
-                                                                <img className='xszfSty3' src="wallet/assets/images/card/dzqb2.png" />
-                                                                <div className='mt-28'> ③ 填写卡片的有效年月及安全码。 </div>
-                                                                <img className='xszfSty4' src="wallet/assets/images/card/dzqb3.png" />
-                                                                <div className='mt-28'> ④ 添加成功后即可在微信付款时使用。</div>
-                                                            </div>
-                                                        </AccordionDetails>
-                                                    </StyledAccordion>
+                                                            <AccordionDetails style={{ paddingInline: "15px" }}>
+                                                                <div>
+                                                                    <div> ① 打开电子钱包（如微信），选择添加卡片。 </div>
+                                                                    <img className='dzqbSty' src="wallet/assets/images/card/dzqb1.png" />
+                                                                    <div className='mt-28'> ② 填写beingFi信用卡的卡号。 </div>
+                                                                    <img className='xszfSty3' src="wallet/assets/images/card/dzqb2.png" />
+                                                                    <div className='mt-28'> ③ 填写卡片的有效年月及安全码。 </div>
+                                                                    <img className='xszfSty4' src="wallet/assets/images/card/dzqb3.png" />
+                                                                    <div className='mt-28'> ④ 添加成功后即可在微信付款时使用。</div>
+                                                                </div>
+                                                            </AccordionDetails>
+                                                        </StyledAccordion>
 
-                                                    <StyledAccordion
-                                                        component={motion.div}
-                                                        variants={item}
-                                                        classes={{
-                                                            root: clsx('FaqPage-panel shadow'),
-                                                        }}
-                                                    >
-                                                        <AccordionSummary
-                                                            expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
-                                                            sx={{ paddingLeft: "10px", paddingRight: "10px" }}
+                                                        <StyledAccordion
+                                                            component={motion.div}
+                                                            variants={item}
+                                                            classes={{
+                                                                root: clsx('FaqPage-panel shadow'),
+                                                            }}
                                                         >
-                                                            <div className="flex items-center py-4 flex-grow" style={{ width: '100%' }}>
-                                                                <FuseSvgIcon className="mr-8">
-                                                                    heroicons-outline:information-circle
-                                                                </FuseSvgIcon>
-                                                                绑定至手机，线下POS刷卡
-                                                            </div>
-                                                        </AccordionSummary>
+                                                            <AccordionSummary
+                                                                expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
+                                                                sx={{ paddingLeft: "10px", paddingRight: "10px" }}
+                                                            >
+                                                                <div className="flex items-center py-4 flex-grow" style={{ width: '100%' }}>
+                                                                    <FuseSvgIcon className="mr-8">
+                                                                        heroicons-outline:information-circle
+                                                                    </FuseSvgIcon>
+                                                                    绑定至手机，线下POS刷卡
+                                                                </div>
+                                                            </AccordionSummary>
 
-                                                        <AccordionDetails style={{ paddingInline: "15px" }}>
-                                                            <div>
-                                                                <div> ① 打开iphone钱包，选择添加卡片。 </div>
-                                                                <img className='xxzfSty1' src="wallet/assets/images/card/xxzf1.png" />
-                                                                <div className='mt-28'> ② 选择添加其他卡。 </div>
-                                                                <img className='xxzfSty2' src="wallet/assets/images/card/xxzf2.png" />
-                                                                <div className='mt-28'> ③ 填写卡片的卡号。 </div>
-                                                                <img className='xxzfSty3' src="wallet/assets/images/card/xxzf3.png" />
-                                                                <div className='mt-28'> ④ 填写卡片的姓名、有效年月及安全码。</div>
-                                                                <img className='xxzfSty4' src="wallet/assets/images/card/xxzf4.png" />
-                                                                <div className='mt-28'> ⑤ 绑定成功后即可在线下使用。</div>
-                                                                <img className='xxzfSty4' src="wallet/assets/images/card/xxzf5.jpg" />
-                                                            </div>
-                                                        </AccordionDetails>
-                                                    </StyledAccordion>
-
+                                                            <AccordionDetails style={{ paddingInline: "15px" }}>
+                                                                <div>
+                                                                    <div> ① 打开iphone钱包，选择添加卡片。 </div>
+                                                                    <img className='xxzfSty1' src="wallet/assets/images/card/xxzf1.png" />
+                                                                    <div className='mt-28'> ② 选择添加其他卡。 </div>
+                                                                    <img className='xxzfSty2' src="wallet/assets/images/card/xxzf2.png" />
+                                                                    <div className='mt-28'> ③ 填写卡片的卡号。 </div>
+                                                                    <img className='xxzfSty3' src="wallet/assets/images/card/xxzf3.png" />
+                                                                    <div className='mt-28'> ④ 填写卡片的姓名、有效年月及安全码。</div>
+                                                                    <img className='xxzfSty4' src="wallet/assets/images/card/xxzf4.png" />
+                                                                    <div className='mt-28'> ⑤ 绑定成功后即可在线下使用。</div>
+                                                                    <img className='xxzfSty4' src="wallet/assets/images/card/xxzf5.jpg" />
+                                                                </div>
+                                                            </AccordionDetails>
+                                                        </StyledAccordion>
+                                                    </div> */}
                                                 </div>
 
                                             }
