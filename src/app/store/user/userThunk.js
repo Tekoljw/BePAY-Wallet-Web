@@ -333,7 +333,7 @@ export const bindPhone = createAsyncThunk(
         let data = {
             nationCode: settings.nationCode,
             phone: settings.phone,
-            password: settings.password,
+            // password: settings.password,
             smsCode: settings.smsCode,
         };
         const result = await React.$api("user.bindPhone", data);
@@ -347,8 +347,8 @@ export const bindEmail = createAsyncThunk(
     async (settings, { dispatch, getState }) => {
         let data = {
             email: settings.email,
-            smsCode: settings.smsCode,
-            password: settings.password,
+            smsCode: settings.smsCode
+            // password: settings.password,
         };
         const result = await React.$api("user.bindEmail", data);
         return result;
@@ -447,8 +447,8 @@ export const changePhone = createAsyncThunk(
         let data = {
             nationCode: settings.nationCode,
             phone: settings.phone,
-            smsCode: settings.smsCode,
-            password: settings.password,
+            smsCode: settings.smsCode
+            // password: settings.password,
         };
         const userResetPassData = await React.$api("user.changePhone", data);
         if (userResetPassData.errno === 0) {
@@ -466,8 +466,8 @@ export const changeEmail = createAsyncThunk(
     async (settings, { dispatch, getState }) => {
         let data = {
             email: settings.email,
-            smsCode: settings.smsCode,
-            password: settings.password,
+            smsCode: settings.smsCode
+            // password: settings.password,
         };
         const userResetPassData = await React.$api("user.changeEmail", data);
         if (userResetPassData.errno === 0) {
@@ -949,6 +949,7 @@ export const sendTips = createAsyncThunk(
             amount: settings.amount,
             symbol: settings.symbol,
             checkCode: settings.checkCode,
+            codeType: settings.codeType
         };
         const sendTipsRes = await React.$api("transfer.sendTips", data);
         if (sendTipsRes.errno === 0) {
@@ -977,6 +978,7 @@ export const tokenTransfer = createAsyncThunk(
             walletName: settings.walletName,
             priceLevel: settings.priceLevel,
             bAppendFee: settings.bAppendFee,
+            codeType: settings.codeType
         };
         const transferRes = await React.$api("wallet.tokenTransfer", data);
 

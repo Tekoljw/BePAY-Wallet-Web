@@ -34,7 +34,6 @@ const defaultValues = {
     nationCode: '',
     phone: '',
     smsCode: '',
-    password: ''
 };
 
 function RetiedPhone() {
@@ -44,12 +43,12 @@ function RetiedPhone() {
         nationCode: yup.string().required('You must enter your nationCode'),
         phone: yup.string().required('You must enter a phone'),
         smsCode: yup.string().required('You must enter a smsCode'),
-        password: yup
-            .string()
-            .required('Please enter your password.')
-            .min(6,t("signUp_8"))
-            // .min(6, 'Password is too short - should be 6 chars minimum.')
-            .max(16, 'Password is too long - should be 16 chars maximum.'),
+        // password: yup
+        //     .string()
+        //     .required('Please enter your password.')
+        //     .min(6,t("signUp_8"))
+        //     // .min(6, 'Password is too short - should be 6 chars minimum.')
+        //     .max(16, 'Password is too long - should be 16 chars maximum.'),
     });
     const { control, formState, handleSubmit, reset } = useForm({
         mode: 'onChange',
@@ -268,7 +267,7 @@ function RetiedPhone() {
                             )}
                         />
 
-                        <Controller
+                        {/* <Controller
                             name="password"
                             control={control}
                             render={({ field }) => (
@@ -284,7 +283,7 @@ function RetiedPhone() {
                                     fullWidth
                                 />
                             )}
-                        />
+                        /> */}
 
                         <div style={{ textAlign: "center"}}>
                             <a className="text-md font-medium" onClick={() => {

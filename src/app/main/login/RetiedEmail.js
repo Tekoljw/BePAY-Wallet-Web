@@ -31,19 +31,18 @@ import { showMessage } from 'app/store/fuse/messageSlice';
 const defaultValues = {
     email: '',
     smsCode: '',
-    password: '',
 };
 
 function RetiedEmail() {
     const { t } = useTranslation('mainPage');
     const schema = yup.object().shape({
         smsCode: yup.string().required('You must enter a smsCode'),
-        password: yup
-            .string()
-            .required('Please enter your password.')
-            // .min(6, 'Password is too short - should be 6 chars minimum.')
-            .min(6, t("signUp_8"))
-            .max(16, 'Password is too long - should be 16 chars maximum.'),
+        // password: yup
+        //     .string()
+        //     .required('Please enter your password.')
+        //     // .min(6, 'Password is too short - should be 6 chars minimum.')
+        //     .min(6, t("signUp_8"))
+        //     .max(16, 'Password is too long - should be 16 chars maximum.'),
     });
     const { control, formState, handleSubmit, reset } = useForm({
         mode: 'onChange',
@@ -203,7 +202,7 @@ function RetiedEmail() {
                                 />
                             )}
                         />
-
+{/* 
                         <Controller
                             name="password"
                             control={control}
@@ -220,7 +219,7 @@ function RetiedEmail() {
                                     fullWidth
                                 />
                             )}
-                        />
+                        /> */}
 
                         <div style={{ textAlign: "center"}}>
                             <a className="text-md font-medium" onClick={() => {

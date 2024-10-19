@@ -69,7 +69,6 @@ function Security(props) {
     }, []);
 
     useEffect(() => {
-        debugger
         let langArr = [t('menu_12'), t('menu_13'), t('menu_14'), t('menu_15'), t('menu_16'), "PIN"];
         if(!userData.userInfo.bindEmail) {
             langArr[1] = t('menu_19')

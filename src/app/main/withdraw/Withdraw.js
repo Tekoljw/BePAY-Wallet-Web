@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import '../../../styles/home.css';
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
-import { centerGetTokenBalanceList, sendTips, tokenTransfer } from "../../store/user/userThunk";
+import { centerGetTokenBalanceList, sendTips, tokenTransfer, sendEmail, sendSms,  bindPhone, bindEmail } from "../../store/user/userThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { selectConfig } from "../../store/config";
@@ -54,6 +54,7 @@ import Enable2FA from "../2fa/Enable2FA";
 import FuseLoading from '@fuse/core/FuseLoading';
 import { selectCurrentLanguage } from "app/store/i18nSlice";
 import userLoginType from "../../define/userLoginType";
+import Kyc from "../kyc/Kyc";
 
 const container = {
     show: {
@@ -178,7 +179,9 @@ function Withdraw(props) {
     const [isLoadingBtn, setIsLoadingBtn] = useState(false);
     const [zhuanQuan, setZhuanQuan] = useState(true);
     const [tiJiaoState, setTiJiaoState] = useState(0);
-    const [selectId, setSelectId] = useState(0);
+    const [twiceVerifyType, setTwiceVerifyType] = useState(0);
+    const [typeBinded, setTypeBined] = useState(false);
+    const [openKyc, setOpenKyc] = useState(false);
 
     const handleChangeInputVal = (prop, value) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
@@ -234,7 +237,10 @@ function Withdraw(props) {
     const fiatData = userData.fiat;
     const walletData = userData.wallet;
     const transferStats = userData.transferStats;
-    const hasAuthGoogle = userData.userInfo?.hasAuthGoogle
+    const hasAuthGoogle = userData.userInfo?.hasAuthGoogle;
+    const hasAuthEmail = userData.userInfo?.bindEmail;
+    const hasAuthPhone =  userData.userInfo?.bindMobile;
+
 
     const currentLanguage = useSelector(selectCurrentLanguage);
     const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || 'USD');
@@ -403,6 +409,7 @@ function Withdraw(props) {
             networkId: networkId,
             priceLevel: amountTab,
             bAppendFee: tmpBAppendFee,
+            codeType: twiceVerifyType ===0 ? 2 :  twiceVerifyType ===1 ? 1 : 0
         };
 
         dispatch(tokenTransfer(data)).then((res) => {
@@ -419,11 +426,13 @@ function Withdraw(props) {
                 }, 1200);
                 dispatch(centerGetTokenBalanceList());
             } else if (result.errno == -2) { //需要google验证
-                if (!hasAuthGoogle) {
-                    closePinFunc()
-                    setOpenAnimateModal(true);
-                    return;
-                }
+                setTwiceVerifyType(0);
+                setTypeBined(hasAuthEmail ? true: false);
+                // if (!hasAuthGoogle) {
+                //     closePinFunc()
+                //     setOpenAnimateModal(true);
+                //     return;
+                // }
                 openGoogleCodeFunc()
                 return
             } else {
@@ -487,12 +496,12 @@ function Withdraw(props) {
         //     openGoogleCodeFunc()
         //     return
         // }
-
         let data = {
             userId: inputIDVal,
             amount: inputVal.amount,
             symbol: symbol,
-            checkCode: googleCode
+            checkCode: googleCode,
+            codeType: twiceVerifyType ===0 ? 2 :  twiceVerifyType ===1 ? 1 : 0
         };
 
         setOpenLoad(true);
@@ -862,6 +871,7 @@ function Withdraw(props) {
     }
 
     const handleDoGoogleCode = (text) => {
+        if(!typeBinded) return;
         let tmpCode = googleCode
         if (text === -1) {
             tmpCode = tmpCode.slice(0, -1)
@@ -993,6 +1003,44 @@ function Withdraw(props) {
             const start = text.slice(0, Math.floor(maxLength / 2));
             const end = text.slice(-Math.floor(maxLength / 2));
             element.innerText = `${start}...${end}`;
+        }
+    }
+
+    const bindTwiceVerifyType = () =>{
+        if(twiceVerifyType === 0 || twiceVerifyType === 1){
+            closeGoogleCodeFunc()
+            closePinFunc()
+            setOpenKyc(true)
+            return
+        } else {
+            closeGoogleCodeFunc()
+            closePinFunc()
+            setOpenAnimateModal(true)
+            return;
+        }
+    }
+
+    const backCardPageEvt = () => {
+        setOpenKyc(false);
+        myFunction;
+        setOpenGoogleCode(true);
+    }
+
+    const reciveCode = async()=> {
+        let sendRes = {};
+        if (twiceVerifyType === 0) {
+            const data = {
+                codeType: 14,
+                email: userData.userInfo.email
+            };
+            sendRes = await dispatch(sendEmail(data));
+        } else {
+            const data = {
+                codeType: 14,
+                nationCode: userData.userInfo.nation,
+                phone: userData.userInfo.phone
+            };
+            sendRes = await dispatch(sendSms(data));
         }
     }
 
@@ -1456,31 +1504,35 @@ function Withdraw(props) {
 
                                     <div className='flex justify-between'>
                                         <div
-                                            onClick={() => { setSelectId(0) }}
-                                            className={clsx('selectPin', selectId === 0 && 'activePinZi')}
+                                            onClick={() => { setTwiceVerifyType(0); setTypeBined(hasAuthEmail? true: false) }}
+                                            className={clsx('selectPin',  twiceVerifyType=== 0 && 'activePinZi')}
                                         >
                                             <img style={{ width: '2rem', borderRadius: '0.5rem', float: "left" }} src="wallet/assets/images/menu/email.png" alt="" />
                                             <div style={{ float: "left" }} className="px-6">{t('signIn_5')} </div>
                                         </div>
 
                                         <div
-                                            onClick={() => { setSelectId(1) }}
-                                            className={clsx('selectPin', selectId === 1 && 'activePinZi')}
+                                            onClick={() => { setTwiceVerifyType(1); setTypeBined(hasAuthPhone? true: false)}}
+                                            className={clsx('selectPin', twiceVerifyType === 1 && 'activePinZi')}
                                         >
                                             <img style={{ width: '2rem', borderRadius: '0.5rem', float: "left" }} src="wallet/assets/images/menu/phone.png" alt="" />
                                             <div style={{ float: "left" }} className="px-6">{t('kyc_56')}</div>
                                         </div>
 
                                         <div
-                                            onClick={() => { setSelectId(2) }}
-                                            className={clsx('selectPin', selectId === 2 && 'activePinZi')}
+                                            onClick={() => { setTwiceVerifyType(2);setTypeBined(hasAuthGoogle? true: false) }}
+                                            className={clsx('selectPin', twiceVerifyType === 2 && 'activePinZi')}
                                         >
                                             <img style={{ width: '2rem', borderRadius: '0.5rem', float: "left" }} src="wallet/assets/images/menu/google.png" alt="" />
                                             <div style={{ float: "left" }} className="px-6"> Google</div>
                                         </div>
                                     </div>
 
-                                    <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> 发送至 <span style={{ color:"#909fb4" }}>+8613301828202</span> <span style={{ color:"#2dd4bf", textDecoration:"underline" }}>接收</span> </div>
+                                    { typeBinded ? ( (twiceVerifyType == 0 ||  twiceVerifyType == 1 ) ? 
+                                        <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> 发送至 <span style={{ color:"#909fb4" }}>{ twiceVerifyType ===0 ? `邮箱 ${userData?.userInfo?.email}` : `手机号 ${ '+' + userData?.userInfo?.nation + userData?.userInfo?.phone}`}</span> <span style={{ color:"#2dd4bf", textDecoration:"underline"}}  onClick={ ()=> reciveCode()}>接收</span> 
+                                        </div>: <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> 请在google验证器查看</div>)
+                                     : <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> 您还没有绑定{ twiceVerifyType ===0 ? '邮箱' :  twiceVerifyType ===1 ? '手机号': 'Google验证' } <span style={{ color:"#2dd4bf", textDecoration:"underline" }} onClick={ ()=> bindTwiceVerifyType()} >立即绑定</span> </div>
+                                    }
 
                                     <div className='flex justify-between mt-24 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
                                         <div className='PinNum color-box'
@@ -1495,7 +1547,7 @@ function Withdraw(props) {
                                     </div>
                                 </div>
 
-                                <div className='jianPanSty'>
+                                <div className={clsx('jianPanSty', typeBinded ? '' : 'disabled_jianPanSty')}>
                                     <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
                                         <div id="createPin1" className='jianPanNumBtn borderRight borderBottom color-box'
                                             onTouchStart={changeToBlack}
@@ -2197,6 +2249,25 @@ function Withdraw(props) {
 
                 </div>
             </BootstrapDialog>
+
+            {openKyc && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
+                    className='mt-12'
+                    id="topGo"
+                >
+                    <div className='flex mb-10' onClick={() => {
+                        setOpenKyc(false);
+                        myFunction;
+                    }}   >
+                        <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
+                    </div>
+                    <Kyc backCardPage={backCardPageEvt} />
+                    <div style={{ height: "5rem" }}></div>
+                </motion.div>
+            </div>}
 
             <AnimateModal
                 className="faBiDiCard tanChuanDiSe"

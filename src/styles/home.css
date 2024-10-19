@@ -633,6 +633,10 @@ input[type='number'] {
     width: 100%;
 }
 
+.disabled_jianPanSty{
+    color: rgb(144, 159, 180) !important;
+}
+
 
 .jianPanBtn {
     width: 25%;
