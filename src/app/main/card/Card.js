@@ -875,7 +875,27 @@ function Card(props) {
         }
         return "";
     }
-
+    const applyOrChangeCard = () => {
+        if(currentCardItem) {
+            setIsLoadingBtn(true)
+            dispatch(creditCardUpdate({
+                creditType: currUserCardInfo.creditType,
+                userCreditId: currUserCardInfo.id,
+                updateType: 0,
+                ignoreMessage: true
+            })).then((res) => {
+                applyCard();
+                // setOpenAnimateModal(false);
+                // setOpenCardBtnShow(false);
+                // // getCardList();
+                // setUpdateCard(true)
+                // setTimer(timer + 1)
+                // myFunction();
+            })
+        }else{
+            applyCard()
+        }
+    }
     // 申请卡
     const applyCard = () => {
         setIsLoadingBtn(true)
@@ -892,6 +912,7 @@ function Card(props) {
             setIsLoadingBtn(false)
             setOpenXiangQing(false);
             setClickShenQinCard(false);
+            setCurrentCardItem(null);
             setTabValue(0);
             closeChangeBi();
             myFunction();
@@ -1352,6 +1373,7 @@ function Card(props) {
                                                                                     <div className='gongNengZiW mt-4 text-14'>{t('card_31')}</div>
                                                                                 </div>
                                                                                 <div className='gongNengLanW' onClick={() => {
+                                                                                    setCurrentCardItem(cardItem)
                                                                                     setOpenAnimateHuanKa(true);
                                                                                 }}>
                                                                                     <img className='gongNengTuBiao' src="wallet/assets/images/menu/gengHuanKaPian.png"></img>
@@ -1693,6 +1715,7 @@ function Card(props) {
                                                                                     <div className='gongNengZiW mt-4 text-14'>{t('card_31')}</div>
                                                                                 </div>
                                                                                 <div className='gongNengLanW' onClick={() => {
+                                                                                    setCurrentCardItem(cardItem)
                                                                                     setOpenAnimateHuanKa(true);
                                                                                 }}>
                                                                                     <img className='gongNengTuBiao' src="wallet/assets/images/menu/gengHuanKaPian.png"></img>
@@ -1817,7 +1840,7 @@ function Card(props) {
                                                                 <div className="responsive-div-content card1Bg" style={{ background: `url(${configItem?.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }} onClick={() => {
                                                                     setOpenXiangQing(true);
                                                                     setClickShenQinCard(true);
-                                                                    setCardConfigID(configItem.configId);
+                                                                    setCardConfigID(currentCardItem.creditConfigId);
                                                                     myFunction;
                                                                 }}   >
                                                                 </div>
@@ -1943,6 +1966,7 @@ function Card(props) {
                     <div className='flex' onClick={() => {
                         setOpenXiangQing(false);
                         setClickShenQinCard(false);
+                        setCurrentCardItem(null);
                         myFunction;
                     }}   >
                         <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
@@ -2228,6 +2252,7 @@ function Card(props) {
                                 setOpenCardBtnShow(false);
                                 setTabValue(1);
                                 setOpenXiangQing(true);
+                                setCardConfigID(currentCardItem.creditConfigId);
                                 myFunction;
                             }, 1500);
                         }}
@@ -3469,7 +3494,7 @@ function Card(props) {
                             loading={isLoadingBtn}
                             variant="contained"
                             onClick={() => {
-                                applyCard()
+                                applyOrChangeCard()
                             }}
                         >
                             {t('card_36')}
