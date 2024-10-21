@@ -2274,7 +2274,7 @@ function Withdraw(props) {
                 open={openAnimateModal}
                 onClose={() => setOpenAnimateModal(false)}
             >
-                <div className='flex justify-center' style={{ width: "100%" }}>
+                <div className='flex justify-center mb-16' style={{ width: "100%" }}>
                     <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                     <div className='TanHaoCardZi '>
                         {t('card_180')}
@@ -2282,12 +2282,12 @@ function Withdraw(props) {
                 </div>
 
                 <Box
-                    className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard"
+                    className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard flex justify-center"
                     sx={{
                         backgroundColor: "#2C394D",
                         padding: "1.5rem",
                         overflow: "hidden",
-                        margin: "1rem auto 0rem auto"
+                        margin: "0rem auto 0rem auto"
                     }}
                 >
                     <div className="dialog-select-fiat danChuangTxt">
@@ -2295,7 +2295,7 @@ function Withdraw(props) {
                     </div>
                 </Box>
 
-                <div className='flex mt-12 mb-28 px-15 justify-between' >
+                <div className='flex mt-16 mb-28 px-15 justify-between' >
                     <LoadingButton
                         disabled={false}
                         className="boxCardBtn"
