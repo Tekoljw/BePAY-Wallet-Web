@@ -162,7 +162,7 @@ function Borrow() {
                         style={{ padding: "1.4rem 1.5rem 2.4rem 1.5rem" }}
                     >
                         <div className="mb-16 flex items-center justify-between color-76819B" style={{ marginBottom: '0.8rem' }}>
-                            <Typography className="text-20 font-medium">{t('home_borrow_1')} </Typography>
+                            <Typography className="text-16 font-medium" style={{ marginTop: '-1rem' }}>{t('home_borrow_1')} </Typography>
                             <div className="text-14 flex" style={{ color: '#FFFFFF', marginBottom: "1rem" }}>
                                 <Typography className={clsx("cursor-pointer text-14 mx-8 txtColorTitle", percentage === 1 && 'colro-12C1A2')} onClick={() => { handleClick(1) }}>25%</Typography>
                                 <Typography className={clsx("cursor-pointer text-14 mx-8 txtColorTitle", percentage === 2 && 'colro-12C1A2')} onClick={() => { handleClick(2) }}>50%</Typography>
@@ -200,7 +200,7 @@ function Borrow() {
                             variants={item}
                             className="flex items-center justify-content-center -mb-56 -mt-4 position-re"
                         >
-                            <div className="cursor-pointer borrow-btn flex items-center justify-content-center double-borrow-btn">
+                            <div className=" cursor-pointer borrow-btn flex items-center justify-content-center double-borrow-btn">
                                 {/* <FuseSvgIcon className="list-item-icon" sx={{ color: '#76819B' }} size={52}>
                                 feather:chevrons-down
                             </FuseSvgIcon> */}
@@ -208,7 +208,7 @@ function Borrow() {
                             </div>
                         </motion.div>
 
-                        <Typography className="font-medium my-16 color-76819B" style={{ marginBottom: '0.8rem', marginTop: '2rem', fontSize: "18px" }}>{t('home_borrow_2')} </Typography>
+                        <Typography className="font-medium my-16 color-76819B" style={{ marginBottom: '0.8rem', marginTop: '2rem', fontSize: "16px" }}>{t('home_borrow_2')} </Typography>
                         <Box
                             className="w-full rounded-16 border flex flex-col"
                             sx={{
@@ -320,7 +320,7 @@ function Borrow() {
 
 
                         <Button
-                            style={{ width: '100%', margin: '2.9rem auto', display: 'block' }}
+                            style={{ width: '100%', fontSize: "20px", height: "28px", lineHeight: "28px", margin: '2.9rem auto', display: 'block' }}
                             className='m-28 px-48 text-lg btnColorTitleBig'
                             color="secondary"
                             variant="contained"

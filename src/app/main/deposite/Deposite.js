@@ -25,7 +25,7 @@ import { DialogActions } from '@mui/material';
 import '../../../styles/home.css';
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
-import {selectConfig, setNftConfig} from "../../store/config";
+import { selectConfig, setNftConfig } from "../../store/config";
 import {
     arrayLookup, getOpenAppId, getOpenAppIndex,
     setPhoneTab, handleCopyText, getUserLoginType,
@@ -47,7 +47,7 @@ import QRCode from "qrcode.react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { getCryptoDisplay } from "../../store/wallet/walletThunk";
-import {centerGetTokenBalanceList, getDecenterWalletBalance} from "../../store/user/userThunk";
+import { centerGetTokenBalanceList, getDecenterWalletBalance } from "../../store/user/userThunk";
 import FuseLoading from '@fuse/core/FuseLoading';
 import { useTranslation } from "react-i18next";
 import { makeOrder, getDepositeFiatOrderStatus } from "../../store/payment/paymentThunk";
@@ -65,7 +65,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import userLoginType from "../../define/userLoginType";
 import { borderTop, width } from '@mui/system';
 import * as _ from 'lodash'
-import {selectCurrentLanguage} from "app/store/i18nSlice";
+import { selectCurrentLanguage } from "app/store/i18nSlice";
 
 
 const marks = [
@@ -212,6 +212,7 @@ function Deposite() {
     const [symbol, setSymbol] = useState('');
     const [walletName, setWalletName] = useState('');
     const [walletAddressList, setWalletAddressList] = useState([]);
+    const [walletAddressListBak, setWalletAddressListBak] = useState([]);
     const [selectWalletAddressIndex, setSelectWalletAddressIndex] = useState(null);
     const [walletAddress, setWalletAddress] = useState('');
     // const [walletConfig, setWalletConfig] = useState([]);
@@ -295,7 +296,7 @@ function Deposite() {
     const handleChangeTransferVal2 = (prop, value) => {
         setInputVal({ ...transferFormData, [prop]: value });
     };
-        // 创建处理输入框变化的函数
+    // 创建处理输入框变化的函数
     const handleInputChange = (e) => {
         // 限制输入框的值只保留六位小数
         const value = parseFloat(e.target.value);
@@ -357,6 +358,7 @@ function Deposite() {
                     tmpList.push({ ...item, disabled: true })
                 })
                 setWalletAddressList(tmpList)
+                setWalletAddressListBak(tmpList)
             }
         })
     }
@@ -454,6 +456,9 @@ function Deposite() {
 
                 if (result?.data?.address) {
                     setWalletAddressList([...walletAddressList, {
+                        address: result?.data?.address ?? '',
+                    }])
+                    setWalletAddressListBak([...walletAddressList, {
                         address: result?.data?.address ?? '',
                     }])
                 }
@@ -554,10 +559,10 @@ function Deposite() {
     //格式化币种和网络
     const symbolsFormatAmount = (selectNetworkId) => {
         let filterSymbolData = {};
-        if(selectNetworkId && selectNetworkId > 0){
+        if (selectNetworkId && selectNetworkId > 0) {
             //筛选币种
             filterSymbolData = symbolsData.filter(i => i.networkId === selectNetworkId);
-        }else{
+        } else {
             filterSymbolData = symbolsData;
         }
 
@@ -572,7 +577,7 @@ function Deposite() {
             }
         });
 
-        if(displayData.length > 0){
+        if (displayData.length > 0) {
             let tmpSymbols = [];
             // 美元汇率
             let dollarCurrencyRate = arrayLookup(config.payment.currency, 'currencyCode', 'USD', 'exchangeRate') || 0;
@@ -637,7 +642,7 @@ function Deposite() {
             setSymbolWallet(tmpSymbols.filter(i => i.symbol !== 'eUSDT'));
             setNetworkData(tmpNetworks);
             // console.log(arrayLookup(filterSymbolData, 'symbol', 'USDD', 'address') );
-        }else{
+        } else {
             setSymbolWallet([]);
             setNetworkData([]);
         }
@@ -664,10 +669,11 @@ function Deposite() {
         setIsGetWalletAddress(false);
         setWalletAddress('');
         setWalletAddressList([]);
+        setWalletAddressListBak([]);
         setSelectWalletAddressIndex(null);
         if (networkData[symbol]) {
             setNetworkId(networkData[symbol][0]?.id);
-        }else{
+        } else {
             setNetworkId(0);
         }
     }, [symbol]);
@@ -684,7 +690,7 @@ function Deposite() {
         return balance.toFixed(6)
     };
 
-    const handleEditAddressDesc = (currentIndex, editData) => {
+    const handleEditAddressDesc = (currentIndex, editData, isBlur) => {
         let tmpList = []
         walletAddressList.map(async (item, index) => {
             if (index === currentIndex) {
@@ -692,7 +698,7 @@ function Deposite() {
                     ...item, ...editData
                 })
 
-                if (editData.disabled === true) {
+                if ((editData.editMode === true || isBlur) && walletAddressListBak[index].addressDesc != item.addressDesc) {
                     dispatch(getAddressListDesc({
                         addressDesc: item.addressDesc,
                         address: item.address,
@@ -824,7 +830,7 @@ function Deposite() {
                     setFiatSelect(tmpFiatSelect);
                 }
             })
-        }else{
+        } else {
             //默认选中虚拟币
             setCryptoSelect(0);
             setFiatSelect(1);
@@ -1193,7 +1199,7 @@ function Deposite() {
                                             <div>
                                                 <div className='flex ml-10'>
                                                     <img onClick={() => {
-                                                        handleEditAddressDesc(index, { disabled: !addressItem.disabled })
+                                                        handleEditAddressDesc(index, { eidtMode: !addressItem.eidtMode })
                                                     }} className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
                                                     <OutlinedInput
                                                         className='diZhiShuRu'
@@ -1202,12 +1208,18 @@ function Deposite() {
                                                             '& .MuiOutlinedInput-notchedOutline': {
                                                                 border: 'none',
                                                             },
+                                                            color: addressItem.eidtMode ? '#ffffff' : '#94A3B8'
                                                         }}
-                                                        disabled={addressItem.disabled}
                                                         value={addressItem.addressDesc}
                                                         inputProps={{ 'aria-label': 'weight' }}
+                                                        onFocus={(event) => {
+                                                            handleEditAddressDesc(index, { eidtMode: true })
+                                                        }}
                                                         onChange={(event) => {
-                                                            handleEditAddressDesc(index, { addressDesc: event.target.value })
+                                                            handleEditAddressDesc(index, { addressDesc: event.target.value, eidtMode: true })
+                                                        }}
+                                                        onBlur={(event) => {
+                                                            handleEditAddressDesc(index, { addressDesc: event.target.value, eidtMode: false }, true)
                                                         }}
                                                     />
                                                 </div>
@@ -1839,7 +1851,7 @@ function Deposite() {
                             <div className='px-10 mt-12'><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8", fontSize: "1.3rem" }}>{t('card_177')}</span></div>
                         </motion.div>
 
-                        <Typography className="text-16 px-16 my-10">{t('home_deposite_17')}</Typography>
+                        <Typography className="text-16 pl-10 my-10">{t('home_deposite_17')}</Typography>
 
                         {bankCodeList.length > 0 && bankCodeList?.map((bankItem) => {
                             if (currencyCode === bankItem.currency) {
@@ -1856,19 +1868,20 @@ function Deposite() {
                                     >
                                         <AccordionSummary
                                             expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
+                                            sx={{ paddingLeft: "10px", paddingRight: "10px" }}
                                         >
                                             <div className="flex items-center py-4 flex-grow" style={{ width: '100%' }}>
                                                 <div className="flex items-center">
                                                     <img style={{
-                                                        width: '3rem',
+                                                        width: '2.8rem',
                                                         borderRadius: "5px"
                                                     }} src={bankItem.url || "wallet/assets/images/deposite/touchngo.png"} alt="" />
-                                                    <div className="px-12 font-medium">
-                                                        <Typography className="text-18 font-medium">{bankItem.payName}</Typography>
+                                                    <div className="px-10 font-medium">
+                                                        <Typography className="text-16 font-medium">{bankItem.payName}</Typography>
                                                     </div>
                                                 </div>
                                                 <div style={{ marginLeft: 'auto' }}>
-                                                    <div className="px-12 font-medium" style={{ textAlign: 'right' }}>
+                                                    <div className="pr-10 font-medium" style={{ textAlign: 'right' }}>
                                                         <Typography className="text-14" style={{ color: '#94A3B8' }}>{t('home_deposite_18')}:{formatAmount(bankItem.minValue)} - {formatAmount(bankItem.maxValue)}</Typography>
                                                     </div>
                                                 </div>
@@ -1879,7 +1892,7 @@ function Deposite() {
                                             <div>
                                                 <FormControl className="my-16 " sx={{ width: '100%' }} variant="outlined">
                                                     <OutlinedInput
-                                                        type='number'
+                                                        type='text'
                                                         disabled={false}
                                                         id="outlined-adornment-weight send-tips-container-amount"
                                                         value={weight}
@@ -1893,15 +1906,19 @@ function Deposite() {
                                                         aria-describedby="outlined-weight-helper-text"
                                                         inputProps={{
                                                             'aria-label': 'weight',
+                                                            inputMode: 'numeric',
+                                                            pattern: '[0-9]*',
                                                         }}
                                                         onChange={(event) => {
                                                             if (event.target.value === '') {
                                                                 setWeight('')
                                                                 return
                                                             }
-                                                            if (event.target.value <= bankItem.maxValue) {
-                                                                setWeight(event.target.value);
+                                                            let numericValue = event.target.value.replace(/[^0-9.]/g, '');
+                                                            if (numericValue.startsWith('0') && numericValue.length > 1 && numericValue[1] !== '.') {
+                                                                numericValue = numericValue.replace(/^0+/, '');
                                                             }
+                                                            setWeight(numericValue);
                                                         }}
                                                     />
                                                 </FormControl>
@@ -1918,7 +1935,7 @@ function Deposite() {
                                                     })}
                                                 </div>}
 
-                                                <div className='ml-2' style={{ fontSize: "13px" }} >{t('home_borrow_16')}  {bankItem?.ifRate * weight + bankItem?.basicFee} </div>
+                                                <div className='ml-2' style={{ fontSize: "13px" }} >{t('home_borrow_16')}  {(bankItem?.ifRate * weight + bankItem?.basicFee)?.toFixed(2)} </div>
 
                                                 <div className="my-16 flex items-center justify-content-center">
                                                     <LoadingButton
@@ -1927,7 +1944,7 @@ function Deposite() {
                                                         color="secondary"
                                                         variant="contained"
                                                         loading={openLoad}
-                                                        sx={{ backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1rem' }}
+                                                        sx={{ paddingTop: "6px!important", paddingBottom: "6px!important", fontSize: "16px!important", backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1rem' }}
                                                         onClick={() => {
                                                             setOpenLoad(true);
                                                             fiatRecharge(bankItem.id);

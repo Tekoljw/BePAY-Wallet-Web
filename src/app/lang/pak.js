@@ -472,7 +472,7 @@ const locale = {
     card_120: "معاہدے کی تجارت کے ذریعے مائننگ",
     card_121: "معاہدے کی تجارت",
     card_122: "موجودہ سامان فراہم کرنا",
-    card_123: "تمام تجارتی فیسیں",
+    card_123: "تمام لین دین کی فیسوں کا ازالہ کریں",
     card_124: "ہرجانہ",
     card_125: "دعوتی انعام",
     card_126: "دوستوں کو مدعو کریں",
@@ -575,10 +575,26 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"یومیہ ریڈیمپشن کی حد تک پہنچ گئی ہے",
     card_222:"براہ کرم تمام ضروری خانوں کو پُر کریں",
-    
+    kyc_50:"پن تبدیل کریں",
+    kyc_51:"PIN بھول گئے؟",
+    kyc_52:"نیا پن",
+    kyc_53:"پن (تصدیق کریں)",
+    kyc_54:"پرانا پن",
+    kyc_55: "غلط ای میل ایڈریس",
+    kyc_56: "موبائل فون",
+    kyc_57: "تصدیقی طریقہ",
+    Kyc_58:"ملک کا کوڈ یا فون نمبر خالی نہیں ہو سکتا",
+    Kyc_59:"ارسال کریں",
+    Kyc_60:"Google Authenticator میں دیکھیں",
+    Kyc_61:"Google Authenticator",
+    Kyc_62:"ای میل منسلک نہیں ہے",
+    Kyc_63:"فون سے لنک نہیں کیا گی",
+
+
 
     
 
+    
     
 
     

@@ -38,7 +38,7 @@ export const getBorrowConfig = createAsyncThunk(
             dispatch(setBorrowConfig(configData));
             return configData.data;
         } else {
-            dispatch(showMessage({ message: t('error_11'), code: 2 }));
+            dispatch(showMessage({ message: configData.errmsg, code: 2 }));
         }
     }
 );
@@ -61,7 +61,7 @@ export const getBorrowOrderList = createAsyncThunk(
             // dispatch(showMessage({ message: 'success' }));
             return resultData.data;
         } else {
-            dispatch(showMessage({ message: t('error_12'), code: 2 }));
+            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
         }
     }
 );
@@ -83,7 +83,7 @@ export const afterBorrowToken = createAsyncThunk(
             // dispatch(showMessage({ message: 'success' }));
             return resultData.data;
         } else {
-            dispatch(showMessage({ message: t('error_13'), code: 2 }));
+            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
         }
     }
 );
@@ -105,7 +105,7 @@ export const afterRepayToken = createAsyncThunk(
             // dispatch(showMessage({ message: 'success' }));
             return resultData.data;
         } else {
-            dispatch(showMessage({ message: t('error_13'), code: 2 }));
+            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
         }
     }
 );
@@ -126,7 +126,7 @@ export const directRepayToken = createAsyncThunk(
             // dispatch(showMessage({ message: 'success' }));
             return resultData.data;
         } else {
-            dispatch(showMessage({ message: t('error_13'), code: 2 }));
+            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
         }
     }
 );

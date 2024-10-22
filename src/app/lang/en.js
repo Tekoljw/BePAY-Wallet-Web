@@ -45,6 +45,8 @@ const locale = {
     menu_16: 'KYC',
     menu_17: 'Security',
     menu_18: 'Credit card',
+    menu_19: 'Bind Email',
+    menu_20: 'Bind Phone',
 
     home_2fa_1: 'Step 1',
     home_2fa_2: 'Download and ',
@@ -179,6 +181,7 @@ const locale = {
     home_withdraw_27: "Account",
     home_withdraw_28: "Account type",
     home_withdraw_29: "CPF account",
+    home_withdraw_30: "Bank Name",
 
     home_deposite_1: 'Crypto',
     home_deposite_2: 'Fiat',
@@ -478,11 +481,11 @@ const locale = {
     card_119: "divide",
     card_120: "contract trading mining",
     card_121: "trade contract",
-    card_122: "offer spot goods",
-    card_123: "all trading fees",
+    card_122: "Instant delivery",
+    card_123: "Compensate all transaction fees",
     card_124: "compensation",
     card_125: "referral reward",
-    card_126: "invite friends to join",
+    card_126: "Invite friends",
     card_127: "receive cash reward!",
     card_128: "total revenue",
     card_129: "daily earnings",
@@ -508,7 +511,7 @@ const locale = {
     card_149: "October",
     card_150: "November",
     card_151: "December",
-    card_152: "total wallet assets",
+    card_152: "Total wallet assets",
     card_153: "yesterday's earnings",
     card_154: "cumulative earnings",
     card_155: "24-hour annualized",
@@ -582,6 +585,26 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"Daily redemption limit reached",
     card_222:"Please fill in all required fields", 
+    kyc_50:"Change PIN",
+    kyc_51:"Forgot PIN",
+    kyc_52:"New PIN",
+    kyc_53:"PIN(Confirm)",
+    kyc_54:"Old PIN",
+    kyc_55:"Invalid email address",
+    kyc_56: "phone",
+    kyc_57: "Select Verification method",
+    Kyc_58:"nationCode or phone cannot empty",
+    Kyc_59:"Send to",
+    Kyc_60:"View in Google Authenticator",
+    Kyc_61:"Google Authenticator",
+    Kyc_62:"Email not linked",
+    Kyc_63:"Not linked to a phone",
+
+
+
+    
+
+    
 
 
 

@@ -474,10 +474,10 @@ const locale = {
     card_120: "Górnictwo kontraktów",
     card_121: "Kontrakt handlowy",
     card_122: "Przekazanie towaru",
-    card_123: "Wszystkie opłaty transakcyjne",
+    card_123: "Zrekompensować wszystkie opłaty transakcyjne",
     card_124: "Rekompensata",
     card_125: "Nagroda za zaproszenie",
-    card_126: "Zaproszenie znajomych do dołączenia",
+    card_126: "Zaproś znajomych",
     card_127: "Otrzymaj nagrodę pieniężną!",
     card_128: "Całkowity zysk",
     card_129: "Dzisiejszy zysk",
@@ -577,6 +577,22 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"Osiągnięto dzienny limit wymiany",
     card_222:"Proszę wypełnić wszystkie wymagane pola",
+    kyc_50:"Zmień PIN",
+    kyc_51:"Zapomniałeś PIN",
+    kyc_52:"Nowy PIN",
+    kyc_53:"PIN (Potwierdź)",
+    kyc_54:"stary PIN",
+    kyc_55: "Nieprawidłowy adres e-mail",
+    kyc_56: "komórkowy",
+    kyc_57: "Metoda weryfikacji",
+    Kyc_58:"Kod kraju lub numer telefonu nie może być pusty",
+    Kyc_59:"Wyślij do",
+    Kyc_60:"Wyświetl w Google Authenticator",
+    Kyc_61:"Google Authenticator",
+    Kyc_62:"E-mail nie jest powiązany",
+    Kyc_63:"Nie połączono z telefonem",
+
+
 
     
 

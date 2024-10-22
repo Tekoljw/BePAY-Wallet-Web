@@ -46,7 +46,7 @@ export const centerGetUserFiat = createAsyncThunk(
         if (balanceList.errno === 0) {
             dispatch(updateFiat(balanceList));
         } else {
-            dispatch(showMessage({ message: 'error', code: 2 }));
+            dispatch(showMessage({ message: balanceList.errmsg, code: 2 }));
         }
         if (settings.requestPayment) { //需要请求支付方式
             dispatch(paymentConfig());
@@ -176,7 +176,7 @@ export const getAddressListDesc = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData.data;
         }
-        dispatch(showMessage({ message: 'error', code: 2 }));
+        dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
     }
 );
 
@@ -196,7 +196,7 @@ export const checkWalletAddress = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData;
         }
-        dispatch(showMessage({ message: 'error', code: 2 }));
+        dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
     }
 );
 
@@ -441,7 +441,7 @@ export const nftWithdraw = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData.data;
         } else {
-            dispatch(showMessage({ message: 'error', code: 2 }));
+            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
         }
     }
 );
@@ -461,31 +461,30 @@ export const createPin = createAsyncThunk(
         if (resultData.errno === 0) {
             return true
         } else {
-            dispatch(showMessage({ message: 'error', code: 2 }));
+            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
         }
     }
 );
 
 
-
-
-
-// 手机修改PIN
+//修改PIN
 export const changePin = createAsyncThunk(
     'pin/setPaymentPassword',
     async (settings, { dispatch, getState }) => {
         let data = {
-            codeType: 13,
-            smsCode: settings.smsCode,
+            email: settings.email ?? '',
+            codeType: settings.codeType ?? '',
+            smsCode: settings.smsCode ?? '',
             nationCode: settings.nationCode ?? '',
-            password: settings.password ?? '',
+            paymentPassword: settings.password ?? '',
+            phone: settings.phone ?? '',
         }
         const resultData = await React.$api("security.setPaymentPassword", data);
         if (resultData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
             return true
         } else {
-            dispatch(showMessage({ message: 'error', code: 2 }));
+            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
         }
     }
 );

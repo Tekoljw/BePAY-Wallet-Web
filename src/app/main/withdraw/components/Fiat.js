@@ -633,7 +633,7 @@ function Fiat(props) {
             if (entryType == row.wayCode) {
                 if (row.url) {
                     setTypeIcon(row.url)
-                }else {
+                } else {
                     setTypeIcon('https://scource-static.funibet.com/funibox/icon/onePay.png')
                 }
             }
@@ -837,9 +837,10 @@ function Fiat(props) {
 
     useEffect(() => {
         if (inputVal.amount > 0) {
+            let entryType = getEntryType(currencyCode);
             dispatch(getFiatFee({
                 currency: currencyCode,
-                wayCode: '',
+                wayCode: entryType,
                 amount: inputVal.amount
             })).then((res) => {
                 let result = res.payload;
@@ -922,12 +923,12 @@ function Fiat(props) {
                                                         borderRadius: '99px'
                                                     }} src={row.avatar} alt="" />
                                                     <div className="px-12 font-medium">
-                                                        <Typography className="text-16 font-medium">{row.currencyCode}</Typography>
+                                                        <Typography className="text-18 font-medium">{row.currencyCode}</Typography>
                                                     </div>
                                                 </div>
                                                 <div style={{ marginLeft: 'auto' }}>
                                                     <div className="px-12 font-medium" style={{ textAlign: 'right' }}>
-                                                        <Typography className="text-16 font-medium">{row.balance}</Typography>
+                                                        <Typography className="text-18 font-medium">{row.balance}</Typography>
 
                                                     </div>
                                                 </div>
@@ -1224,7 +1225,7 @@ function Fiat(props) {
 
                                         {bankList[currencyCode]?.length > 0 && <>
                                             <div className="flex " style={{ padding: "16px 16px 16px 0px" }} >
-                                                <Typography className="text-16 ">Bank Name</Typography>
+                                                <Typography className="text-16 ">{t('home_withdraw_30')}</Typography>
                                             </div>
                                             <div>
                                                 <FormControl sx={{
@@ -1534,8 +1535,9 @@ function Fiat(props) {
                                     {smallTabValue == 0 && <div className='' style={{ fontSize: "20px", textAlign: "center", color: "#909FB4", width: "100%" }}>Name {inputVal.accountName} </div>}
 
                                     <div className='py-4 ml-10 flex justify-center' style={{ fontSize: "20px", textAlign: "center", color: "#909FB4", width: "100%", overflow: "hidden" }}>
-                                        {smallTabValue == 0 && <img className='mt-4 mr-10' style={{ width: "20px", height: "20px", borderRadius: "5px" }} src={typeIcon} />}
-                                        <div> {smallTabValue == 0 ? "NO." : "UserID"}   {smallTabValue == 0 ? inputVal.accountNo : inputVal.userId} </div></div>
+                                        {smallTabValue == 0 && <img className='mt-4 mr-10' style={{ width: "20px", height: "20px", borderRadius: "5px", marginLeft: "-30px" }} src={typeIcon} />}
+                                        <div> {smallTabValue == 0 ? "NO." : "UserID"} {smallTabValue == 0 ? inputVal.accountNo : inputVal.userId} </div>
+                                    </div>
                                     <div className='flex justify-center mt-10' style={{ width: "100%", overflow: "hidden", borderBottom: "1px solid #2C3950", paddingBottom: "2rem" }}>
                                         {fiats && fiats[fiatsSelected] && <img className='MoneyWithdraw' src={fiats[fiatsSelected].avatar}></img>}
 
@@ -2141,7 +2143,7 @@ function Fiat(props) {
                     open={openAnimateModal}
                     onClose={() => setOpenAnimateModal(false)}
                 >
-                    <div className='flex justify-center' style={{ width: "100%" }}>
+                    <div className='flex justify-center mb-16' style={{ width: "100%" }}>
                         <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                         <div className='TanHaoCardZi '>
                             {t('card_180')}
@@ -2149,12 +2151,12 @@ function Fiat(props) {
                     </div>
 
                     <Box
-                        className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard"
+                        className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard flex justify-center"
                         sx={{
                             backgroundColor: "#2C394D",
                             padding: "1.5rem",
                             overflow: "hidden",
-                            margin: "1rem auto 0rem auto"
+                            margin: "0rem auto 0rem auto"
                         }}
                     >
                         <div className="dialog-select-fiat danChuangTxt">
@@ -2162,7 +2164,7 @@ function Fiat(props) {
                         </div>
                     </Box>
 
-                    <div className='flex mt-12 mb-28 px-15 justify-between' >
+                    <div className='flex mt-16 mb-28 px-15 justify-between' >
                         <LoadingButton
                             disabled={false}
                             className="boxCardBtn"

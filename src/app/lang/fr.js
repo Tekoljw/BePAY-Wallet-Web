@@ -473,10 +473,10 @@ const locale = {
     card_120: "Minage par trading de contrats",
     card_121: "Contrat de trading",
     card_122: "Livraison de biens physiques",
-    card_123: "Frais de transaction totaux",
+    card_123: "Compenser tous les frais de transaction",
     card_124: "Compensation",
     card_125: "bonus de parrainage",
-    card_126: "inviter des amis à rejoindre",
+    card_126: "Inviter des amis",
     card_127: "obtenir une récompense en argent!",
     card_128: "revenu total",
     card_129: "revenu du jour",
@@ -576,10 +576,27 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"Limite de rachat quotidien atteinte",
     card_222:"Veuillez remplir tous les champs obligatoires", 
+    kyc_50:"Modifier le code PIN",
+    kyc_51:"PIN oublié",
+    kyc_52:"Nouveau code PIN",
+    kyc_53:"PIN (Confirmer)",
+    kyc_54:"ancien code PIN",
+    kyc_55: "Adresse e-mail invalide",
+    kyc_56: "portable",
+    kyc_57: "Méthode de vérification",
+    Kyc_58:"Le code du pays ou le numéro de téléphone ne peut pas être vide",
+    Kyc_59:"Envoyer à",
+    Kyc_60:"Voir dans Google Authenticator",
+    Kyc_61:"Google Authenticator",
+    Kyc_62:"E-mail non lié",
+    Kyc_63:"Non lié à un téléphone",
+
+
 
     
 
     
+
     
 
 

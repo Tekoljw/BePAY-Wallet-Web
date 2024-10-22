@@ -474,10 +474,10 @@ const locale = {
     card_120: "Contract trading mining",
     card_121: "Trading contract",
     card_122: "Bigyan ng spot goods",
-    card_123: "Mga bayarin sa lahat ng transaksyon",
+    card_123: "Bayaran ang lahat ng bayad sa transaksyon",
     card_124: "Kompensasyon",
     card_125: "Rekomendasyon na gantimpala",
-    card_126: "Imbitahan ang mga kaibigan na sumali",
+    card_126: "Mag-imbita ng mga kaibigan",
     card_127: "Makakuha ng cash reward!",
     card_128: "Total na kita",
     card_129: "Ngayong araw na kita",
@@ -577,6 +577,22 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"Naabot na ang pang-araw-araw na limitasyon sa pag-redeem",
     card_222:"Pakisuyong punan ang lahat ng kinakailangang mga patlang",
+    kyc_50:"Palitan ang PIN",
+    kyc_51:"Nalimutan ang PIN",
+    kyc_52:"Bagong PIN",
+    kyc_53:"PIN (Kumpirmahin)",
+    kyc_54:"lumang PIN",
+    kyc_55: "Di-wastong email address",
+    kyc_56: "telepono",
+    kyc_57: "Paraan ng beripikasyon",
+    Kyc_58:"Ang country code o numero ng telepono ay hindi maaaring walang laman",
+    Kyc_59:"Ipadala sa",
+    Kyc_60:"Tingnan sa Google Authenticator",
+    Kyc_61:"Google Authenticator",
+    Kyc_62:"Hindi naka-link ang email",
+    Kyc_63:"Hindi naka-link sa telepono",
+
+
 
     
 

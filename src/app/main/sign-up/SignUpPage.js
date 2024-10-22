@@ -117,7 +117,7 @@ function ClassicSignUpPage() {
 
     const { isValid, dirtyFields, errors } = formState;
     const [tmpPhoneCode, setTmpPhoneCode] = useState('');
-    const ranges = [ t('signIn_5'), t('signIn_4') ];
+    const ranges = [t('signIn_5'), t('signIn_4')];
     const [tabValue, setTabValue] = useState(0);
 
     const dispatch = useDispatch();
@@ -305,7 +305,9 @@ function ClassicSignUpPage() {
                                             return array;
                                         }}
                                         onChange={(res, option) => {
-                                            control._formValues.nationCode = option.phone_code
+                                            if (option) {
+                                                control._formValues.nationCode = option.phone_code
+                                            }
                                         }}
                                         getOptionLabel={(option) => { return control._formValues.nationCode }}
                                         renderOption={(props, option) => (

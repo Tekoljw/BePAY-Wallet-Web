@@ -471,11 +471,11 @@ const locale = {
     card_119: "瓜分",
     card_120: "合約交易挖礦",
     card_121: "交易合約",
-    card_122: "送現貨",
-    card_123: "所有交易手續費",
+    card_122: "交易合約送現貨",
+    card_123: "補償所有交易手續費",
     card_124: "補償",
     card_125: "邀請獎勵",
-    card_126: "邀請好友加入",
+    card_126: "邀請好友",
     card_127: "獲得現金獎勵！",
     card_128: "總收益",
     card_129: "今日收益",
@@ -575,6 +575,23 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"已達到當日兌換上限",
     card_222:"請填寫所有的必填項", 
+    kyc_50:"修改PIN",
+    kyc_51:"忘記PIN",
+    kyc_52:"新PIN",
+    kyc_53:"PIN（確認）",
+    kyc_54:"舊PIN",
+    kyc_55: "無效的電子郵件地址",
+    kyc_56: "手機",
+    kyc_57: "選擇驗證方式",
+    Kyc_58:"國家代碼或手機號碼不能為空",
+    Kyc_59:"發送至",
+    Kyc_60:"在Google Authenticator中查看",
+    Kyc_61:"Google Authenticator",
+    Kyc_62:"沒有綁定過郵箱",
+    Kyc_63:"沒有綁定過手機",
+
+
+
     
 
     

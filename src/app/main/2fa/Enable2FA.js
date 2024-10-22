@@ -69,12 +69,12 @@ function Enable2FA(props) {
         }
         setOpenLoad(true);
         let data = { checkCode: googleCode };
-        dispatch(verifyGAuth(data)).then((res)=>{
+        dispatch(verifyGAuth(data)).then((res) => {
             setOpenLoad(false);
             const result = res.payload;
             if (result?.errno === 0 && result?.data === true) {
                 dispatch(showMessage({ message: 'success', code: 1 }));
-                 props.verifiedVAuth()
+                props.verifiedVAuth()
             } else {
                 dispatch(showMessage({ message: t('error_32'), code: 2 }));
                 return false
@@ -205,8 +205,8 @@ function Enable2FA(props) {
                     variants={item}
                 >
                     <Typography className="text-16 px-16 my-16 font-medium text-center pad-l-r-10 margin-t-b-10" style={{ color: '#94a3b8' }}>{t('card_180')}</Typography>
-                    <OtpPass googleTextKey={googleText.key} setGoogleCode={setGoogleCode} resizeLayout={(value)=> resizeLayoutEvt(value)}/>
-                    <div className="mb-24 mt-4 flex items-center justify-content-center">
+                    <OtpPass googleTextKey={googleText.key} setGoogleCode={setGoogleCode} resizeLayout={(value) => resizeLayoutEvt(value)} />
+                    <div className="mb-24 mt-4 flex  items-center justify-content-center">
                         <LoadingButton
                             disabled={openLoad}
                             className="px-48 text-lg btnColorTitleBig"
@@ -214,7 +214,7 @@ function Enable2FA(props) {
                             color="secondary"
                             loading={openLoad}
                             variant="contained"
-                            sx={{ width: "100%", backgroundColor: '#0D9488', color: '#ffffff', margin: '0 1.4rem' }}
+                            sx={{ width: "100%", backgroundColor: '#0D9488', color: '#ffffff', paddingTop: "2px!important", paddingBottom: "2px!important", margin: '0 1.4rem', fontSize: "20px!important" }}
                             onClick={() => { handleSubmit() }}
                         >
                             {t('home_2fa_11')}

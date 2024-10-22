@@ -3,13 +3,13 @@ import { Controller, useForm } from 'react-hook-form';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import _ from '@lodash';
 import Paper from '@mui/material/Paper';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import {
-    changePhone, sendSms
+    bindPhone,
+    changePhone, sendSms, getUserData
 } from '../../store/user/userThunk';
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel/InputLabel";
@@ -22,6 +22,8 @@ import phoneCode from "../../../phone/phoneCode";
 import Box from "@mui/material/Box";
 import {useTranslation} from "react-i18next";
 import history from "../../../@history/@history";
+import { selectUserData } from "../../store/user";
+import { showMessage } from 'app/store/fuse/messageSlice';
 
 /**
  * Form Validation Schema
@@ -32,7 +34,6 @@ const defaultValues = {
     nationCode: '',
     phone: '',
     smsCode: '',
-    password: ''
 };
 
 function RetiedPhone() {
@@ -42,12 +43,12 @@ function RetiedPhone() {
         nationCode: yup.string().required('You must enter your nationCode'),
         phone: yup.string().required('You must enter a phone'),
         smsCode: yup.string().required('You must enter a smsCode'),
-        password: yup
-            .string()
-            .required('Please enter your password.')
-            .min(6,t("signUp_8"))
-            // .min(6, 'Password is too short - should be 6 chars minimum.')
-            .max(16, 'Password is too long - should be 16 chars maximum.'),
+        // password: yup
+        //     .string()
+        //     .required('Please enter your password.')
+        //     .min(6,t("signUp_8"))
+        //     // .min(6, 'Password is too short - should be 6 chars minimum.')
+        //     .max(16, 'Password is too long - should be 16 chars maximum.'),
     });
     const { control, formState, handleSubmit, reset } = useForm({
         mode: 'onChange',
@@ -60,6 +61,7 @@ function RetiedPhone() {
     const dispatch = useDispatch();
 
     const [ tmpPhoneCode, setTmpPhoneCode ] = useState('');
+    const userData = useSelector(selectUserData);
 
     const [time,setTime] = useState(null);
     const timeRef = useRef();
@@ -93,7 +95,19 @@ function RetiedPhone() {
     }
 
     async function onSubmit() {
-        await dispatch(changePhone(control._formValues));
+        if(userData && userData.userInfo && userData.userInfo.bindMobile){
+            await dispatch(changePhone(control._formValues));
+        }else{
+            await dispatch(bindPhone(control._formValues)).then((res) => {
+                let result = res.payload;
+                if (result.errno === 0) {
+                    dispatch(showMessage({ message: 'Success', code: 1 }));
+                    dispatch(getUserData());
+                } else {
+                    dispatch(showMessage({ message: result.errmsg, code: 2 }));
+                }
+            });
+        }
     }
 
     return (
@@ -109,12 +123,13 @@ function RetiedPhone() {
                 <div className="w-full  mx-auto sm:mx-0">
     
 
-                    <div className="flex items-baseline mt-2 font-medium">
-                        <Typography>{t('re_tied_phone_2')}</Typography>
-                        {/*<Link className="ml-4" to="/login">*/}
-                        {/*    Sign in*/}
-                        {/*</Link>*/}
-                    </div>
+                    { userData && userData.userInfo && userData.userInfo.bindMobile &&  <div className="flex items-baseline mt-2 font-medium">
+                            <Typography>{t('re_tied_phone_2')}</Typography>
+                            {/*<Link className="ml-4" to="/login">*/}
+                            {/*    Sign in*/}
+                            {/*</Link>*/}
+                        </div>
+                    }
 
                     <form
                         name="registerForm"
@@ -142,7 +157,9 @@ function RetiedPhone() {
                                         return array;
                                     }}
                                     onChange={(res, option) => {
-                                        control._formValues.nationCode = option.phone_code
+                                        if (option) {
+                                            control._formValues.nationCode = option.phone_code
+                                        } 
                                     }}
                                     getOptionLabel={(option) => {return control._formValues.nationCode}}
                                     renderOption={(props, option) => (
@@ -250,7 +267,7 @@ function RetiedPhone() {
                             )}
                         />
 
-                        <Controller
+                        {/* <Controller
                             name="password"
                             control={control}
                             render={({ field }) => (
@@ -266,7 +283,7 @@ function RetiedPhone() {
                                     fullWidth
                                 />
                             )}
-                        />
+                        /> */}
 
                         <div style={{ textAlign: "center"}}>
                             <a className="text-md font-medium" onClick={() => {
@@ -290,6 +307,7 @@ function RetiedPhone() {
                               }
                             type="submit"
                             size="large"
+                            sx={{ paddingTop: "2px!important", paddingBottom: "2px!important", fontSize: "20px!important" }}
                         >
                             {t('re_tied_phone_3')}
                         </Button>

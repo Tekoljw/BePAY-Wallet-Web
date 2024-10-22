@@ -45,6 +45,8 @@ const locale = {
     menu_16: 'KYC',
     menu_17: '安全',
     menu_18: '信用卡',
+    menu_19: '绑定电子邮件',
+    menu_20: '绑定绑定电话',
 
     home_2fa_1: '第一步',
     home_2fa_2: '下载并',
@@ -179,6 +181,7 @@ const locale = {
     home_withdraw_27: "账户",
     home_withdraw_28: "账号类型",
     home_withdraw_29: "CPF账号",
+    home_withdraw_30: "银行名称",
 
     home_deposite_1: '加密货币',
     home_deposite_2: '法币',
@@ -319,9 +322,6 @@ const locale = {
     Kyc_38: "驾照",
     Kyc_39: "居住证",
     Kyc_40: "您已完成KYC实名认证",
-
-
-
 
 
     error_0: "登录失败",
@@ -478,11 +478,11 @@ const locale = {
     card_119: "瓜分",
     card_120: "合约交易挖矿",
     card_121: "交易合约",
-    card_122: "送现货",
-    card_123: "所有交易手续费",
+    card_122: "交易合约送现货",
+    card_123: "补偿所有交易手续费",
     card_124: "补偿",
     card_125: "邀请奖励",
-    card_126: "邀请好友加入",
+    card_126: "邀请好友",
     card_127: "获得现金奖励！",
     card_128: "总收益",
     card_129: "今日收益",
@@ -563,29 +563,47 @@ const locale = {
     card_200: "最小值",
     card_201: "苹果, 腾讯, YouTube, 微软, Telegram, Line, KakaoTalk, 暴雪, EA, 米哈游, Pixivfanbox, 12306, 滴滴, 美团, 中国联通, 库卡, Steam, Trip, 领英, 高德, ",
     card_202: "Skype, Humble Bundle, GameStop, Deliveroo, Grab, Ultra Mobile, Kickstarter, 和记电讯, Foodpanda, Bolt, T-Mobile, Gumroad, Supercell, Giffgaff, WeMade, Spaceship, ENC Mobile, Xsolla, Ubox, 2co, Agoda, itch, Niantic",
-    card_203:"亚马逊, 阿里巴巴, 淘宝, 虾皮, Shopify, Shopline, Lazada, 拼多多, 敦煌网, ",
-    card_204:"全球速卖通, Mercari, MeShop, 易贝网, Etsy, Temu, Vinted",
-    card_205:"沃尔玛, Zara, 麦当劳, 百胜中国（肯德基、必胜客）, 瑞幸咖啡, ",
-    card_206:"全家便利店, Kindle, 永辉超市, JDSports",
-    card_207:"Facebook, 谷歌, TikTok, Twitter, 百度, 快手, ",
-    card_208:"Yandex, Select Media",
-    card_209:"亚马逊AWS, Chatgpt, OpenAI, Godaddy, 星链, TalkTT, Zoom, 甲骨文, QR Code, 华为, ",
-    card_210:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, 沃达丰, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-   
-    card_211:"苹果, 腾讯, YouTube, Twitter, 微软, Telegram, Line, KakaoTalk, 暴雪, EA, OnlyFans, 美团, Steam, 库卡, Pixivfanbox, Trip, 12306, 中国联通, 中国电信, Booking, 高德, 滴滴, Grab, Ultra Mobile, 菜鸟, ",
-    card_212:"叮咚买菜, Gojek, Niantic, Go Taxi, T-Mobile, Skype, Foodpanda, 和记电讯, Humble Bundle, Deliveroo, Helium Mobile, Kickstarter, Bolt, Wolt, 沃达丰, Supercell, Giffgaff, DPD, WeMade, Spaceship, ENC Mobile, Tello, Glovo, DonationAlerts, Careem, Lime",
-    card_213:"亚马逊, 阿里巴巴, 淘宝, Lazada, 虾皮, 拼多多, Shopify, 敦煌网, ",
-    card_214:"全球速卖通, Mercari, MeShop, 易贝网, Etsy, Temu, Noon, iHerb",
-    card_215:"沃尔玛, 麦当劳, Zara, 百胜中国（肯德基、必胜客）, 星巴克, 瑞幸咖啡, 耐克, 罗森, 梅西百货, ",
-    card_216:"阿迪达斯, 全家超市, 维多利亚的秘密, 7-11, 李维斯, Coach, 纽巴伦, CK（Calvin Klein）, 家得宝, JDSports",
-    card_217:"Facebook, 谷歌, TikTok, Twitter, 百度, 快手,  ",
-    card_218:"Yandex, Select Media",
-    card_219:"亚马逊AWS, Chatgpt, OpenAI, Godaddy, 星链, TalkTT, Zoom, 甲骨文, QR Code, 华为, ",
-    card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, 沃达丰, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
-    card_221:"已达到当日兑换上限",
-    card_222:"请填写所有的必填项", 
+    card_203: "亚马逊, 阿里巴巴, 淘宝, 虾皮, Shopify, Shopline, Lazada, 拼多多, 敦煌网, ",
+    card_204: "全球速卖通, Mercari, MeShop, 易贝网, Etsy, Temu, Vinted",
+    card_205: "沃尔玛, Zara, 麦当劳, 百胜中国（肯德基、必胜客）, 瑞幸咖啡, ",
+    card_206: "全家便利店, Kindle, 永辉超市, JDSports",
+    card_207: "Facebook, 谷歌, TikTok, Twitter, 百度, 快手, ",
+    card_208: "Yandex, Select Media",
+    card_209: "亚马逊AWS, Chatgpt, OpenAI, Godaddy, 星链, TalkTT, Zoom, 甲骨文, QR Code, 华为, ",
+    card_210: "Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, 沃达丰, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
+
+    card_211: "苹果, 腾讯, YouTube, Twitter, 微软, Telegram, Line, KakaoTalk, 暴雪, EA, OnlyFans, 美团, Steam, 库卡, Pixivfanbox, Trip, 12306, 中国联通, 中国电信, Booking, 高德, 滴滴, Grab, Ultra Mobile, 菜鸟, ",
+    card_212: "叮咚买菜, Gojek, Niantic, Go Taxi, T-Mobile, Skype, Foodpanda, 和记电讯, Humble Bundle, Deliveroo, Helium Mobile, Kickstarter, Bolt, Wolt, 沃达丰, Supercell, Giffgaff, DPD, WeMade, Spaceship, ENC Mobile, Tello, Glovo, DonationAlerts, Careem, Lime",
+    card_213: "亚马逊, 阿里巴巴, 淘宝, Lazada, 虾皮, 拼多多, Shopify, 敦煌网, ",
+    card_214: "全球速卖通, Mercari, MeShop, 易贝网, Etsy, Temu, Noon, iHerb",
+    card_215: "沃尔玛, 麦当劳, Zara, 百胜中国（肯德基、必胜客）, 星巴克, 瑞幸咖啡, 耐克, 罗森, 梅西百货, ",
+    card_216: "阿迪达斯, 全家超市, 维多利亚的秘密, 7-11, 李维斯, Coach, 纽巴伦, CK（Calvin Klein）, 家得宝, JDSports",
+    card_217: "Facebook, 谷歌, TikTok, Twitter, 百度, 快手,  ",
+    card_218: "Yandex, Select Media",
+    card_219: "亚马逊AWS, Chatgpt, OpenAI, Godaddy, 星链, TalkTT, Zoom, 甲骨文, QR Code, 华为, ",
+    card_220: "Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, 沃达丰, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
+    card_221: "已达到当日兑换上限",
+    card_222: "请填写所有的必填项",
+    kyc_50: "修改PIN",
+    kyc_51: "忘记PIN",
+    kyc_52: "新PIN",
+    kyc_53: "PIN（确认）",
+    kyc_54: "旧PIN",
+    kyc_55: "无效的邮箱地址",
+    kyc_56: "手机",
+    kyc_57: "选择验证方式",
+    Kyc_58:"国家代码或手机号不能为空",
+    Kyc_59:"发送至",
+    Kyc_60:"在谷歌验证器中查看",
+    Kyc_61:"谷歌验证器",
+    Kyc_62:"没有绑定过邮箱",
+    Kyc_63:"没有绑定过手机",
+
+
+
     
 
+    
 
 
 

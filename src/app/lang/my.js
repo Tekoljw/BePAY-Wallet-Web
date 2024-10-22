@@ -473,10 +473,10 @@ const locale = {
     card_120: "perlombongan perdagangan kontrak",
     card_121: "kontrak perdagangan",
     card_122: "pemberian barang fizikal",
-    card_123: "semua caj transaksi",
+    card_123: "Membayar balik semua yuran transaksi",
     card_124: "kompensasi",
     card_125: "hadiah jemputan",
-    card_126: "menjemput rakan untuk menyertai",
+    card_126: "Jemput rakan",
     card_127: "mendapat ganjaran tunai!",
     card_128: "jumlah pendapatan",
     card_129: "pendapatan hari ini",
@@ -576,6 +576,22 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"Had penebusan harian tercapai",
     card_222:"Sila isi semua ruang yang diperlukan",
+    kyc_50:"Tukar PIN",
+    kyc_51:"Lupa PIN",
+    kyc_52:"PIN Baru",
+    kyc_53:"PIN (Sahkan)",
+    kyc_54:"PIN lama",
+    kyc_55: "Alamat e-mel tidak sah",
+    kyc_56: "bimbit",
+    kyc_57: "Kaedah pengesahan",
+    Kyc_58:"Kod negara atau nombor telefon tidak boleh kosong",
+    Kyc_59:"Hantar ke",
+    Kyc_60:"Lihat dalam Google Authenticator",
+    Kyc_61:"Google Authenticator",
+    Kyc_62:"E-mel tidak dipautkan",
+    Kyc_63:"Tidak dipautkan ke telefon",
+
+
 
     
 

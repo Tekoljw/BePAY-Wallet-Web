@@ -471,10 +471,10 @@ const locale = {
     card_120: "Sözleşme ticareti",
     card_121: "İşlem sözleşmesi",
     card_122: "spot ürün gönderimi",
-    card_123: "tüm işlem ücretleri",
+    card_123: "Tüm işlem ücretlerini telafi etmek",
     card_124: "tazminat",
     card_125: "davet ödülü",
-    card_126: "arkadaşlarını davet et",
+    card_126: "Arkadaşları davet et",
     card_127: "nakit ödül kazanmak!",
     card_128: "toplam kazanç",
     card_129: "bugünkü kazanç",
@@ -574,9 +574,25 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"Günlük kullanım limiti aşıldı",
     card_222:"Lütfen tüm zorunlu alanları doldurun",
-    
+    kyc_50:"PIN'i Değiştir",
+    kyc_51:"PIN'i Unuttunuz",
+    kyc_52:"Yeni PIN",
+    kyc_53:"PIN (Onayla)",
+    kyc_54:"eski PIN",
+    kyc_55: "Geçersiz e-posta adresi",
+    kyc_56: "telefonu",
+    kyc_57: "Doğrulama yöntemi",
+    Kyc_58:"Ülke kodu veya telefon numarası boş olamaz",
+    Kyc_59:"Gönder",
+    Kyc_60:"Google Authenticator'da Görüntüle",
+    Kyc_61:"Google Authenticator",
+    Kyc_62:"E-posta bağlanmadı",
+    Kyc_63:"Telefona bağlanmadı",
+
+
 
     
+
     
 
 

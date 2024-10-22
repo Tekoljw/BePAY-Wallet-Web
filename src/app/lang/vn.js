@@ -463,10 +463,10 @@ const locale = {
     card_120: "khai thác giao dịch hợp đồng",
     card_121: "hợp đồng giao dịch",
     card_122: "tặng hàng thực",
-    card_123: "tất cả các phí giao dịch",
+    card_123: "Bồi thường tất cả các phí giao dịch",
     card_124: "bồi thường",
     card_125: "phần thưởng mời bạn",
-    card_126: "mời bạn bè tham gia",
+    card_126: "Mời bạn bè",
     card_127: "nhận thưởng bằng tiền mặt!",
     card_128: "tổng thu nhập",
     card_129: "lợi nhuận hôm nay",
@@ -566,6 +566,22 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"Đã đạt giới hạn đổi trong ngày",
     card_222:"Vui lòng điền vào tất cả các trường bắt buộc",
+    kyc_50:"Thay đổi PIN",
+    kyc_51:"Quên PIN",
+    kyc_52:"PIN Mới",
+    kyc_53:"PIN (Xác nhận)",
+    kyc_54:"PIN cũ",
+    kyc_55: "Địa chỉ email không hợp lệ",
+    kyc_56: "Điện thoại",
+    kyc_57: "Phương pháp xác thực",
+    Kyc_58:"Mã quốc gia hoặc số điện thoại không được để trống",
+    Kyc_59:"Gửi đến",
+    Kyc_60:"Xem trong Google Authenticator",
+    Kyc_61:"Google Authenticator",
+    Kyc_62:"Email chưa được liên kết",
+    Kyc_63:"Chưa liên kết với điện thoại",
+
+
 
 
 

@@ -546,6 +546,11 @@ export default {
             method: "post",
         },
 
+        swapFee: {
+            url: '/swap/swapFee',
+            method: 'post'
+        },
+
         crypto: {
             url: "/swap/crypto",
             method: "post",

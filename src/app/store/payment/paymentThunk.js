@@ -211,7 +211,7 @@ export const getFiatFee = createAsyncThunk(
         if (result.errno === 0) {
             return result.data
         } else {
-            dispatch(showMessage({ message: t('error_23'), code: 2 }));
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
             return false
         }
     }
@@ -225,7 +225,7 @@ export const makeOrder = createAsyncThunk(
         if (result.errno === 0) {
             return result.data
         } else {
-            dispatch(showMessage({ message: t('error_24'), code: 2 }));
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
         }
     }
 );
@@ -239,7 +239,7 @@ export const payoutBank = createAsyncThunk(
         if (result.errno === 0) {
             return result.data
         } else {
-            dispatch(showMessage({ message: t('error_25'), code: 2 }));
+            dispatch(showMessage({ message: result.errmsg, code: 2 }))
         }
     }
 );
@@ -252,7 +252,7 @@ export const payoutPayWays = createAsyncThunk(
         if (result.errno === 0) {
             return result.data
         } else {
-            dispatch(showMessage({ message: t('error_22'), code: 2 }));
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
         }
     }
 );
@@ -293,10 +293,12 @@ export const creditCardUpdate = createAsyncThunk(
     async (settings, { dispatch, getState }) => {
         const result = await React.$api("credit.creditCardUpdate", settings);
         if (result.errno === 0) {
-            if (result.data.status === 'success') {
-                dispatch(showMessage({ message: result.errmsg, code: 1 }));
-            } else {
-                dispatch(showMessage({ message: result.data.msg, code: 2 }));
+            if(!settings.ignoreMessage){
+                if (result.data.status === 'success') {
+                    dispatch(showMessage({ message: result.errmsg, code: 1 }));
+                } else {
+                    dispatch(showMessage({ message: result.data.msg, code: 2 }));
+                }
             }
         } else {
             dispatch(showMessage({ message: result.errmsg, code: 2 }));

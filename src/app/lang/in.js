@@ -471,10 +471,10 @@ const locale = {
     card_120: "संपर्क व्यापार खनन",
     card_121: "वाणिज्यिक अनुबंध",
     card_122: "तुरंत उपलब्ध सामग्री भेजना",
-    card_123: "सभी लेन-देन शुल्क",
+    card_123: "सभी लेनदेन शुल्क की क्षतिपूर्ति करें",
     card_124: "मुआवजा",
     card_125: "आमंत्रण पुरस्कार",
-    card_126: "मित्रों को शामिल होने के लिए आमंत्रित करें",
+    card_126: "दोस्तों को आमंत्रित करें",
     card_127: "नकद पुरस्कार प्राप्त करें！",
     card_128: "कुल लाभ",
     card_129: "आज का लाभ",
@@ -574,10 +574,28 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"दैनिक रिडेम्पशन सीमा पूरी हो गई है",
     card_222:"कृपया सभी आवश्यक फ़ील्ड भरें", 
+    kyc_50:"पिन बदलें",
+    kyc_51:"पीआईएन भूल गए",
+    kyc_52:"नया पिन",
+    kyc_53:"पिन (पुष्टि करें)",
+    kyc_54:"पुराना पिन",
+    kyc_55: "अमान्य ईमेल पता",
+    kyc_56: "मोबाइल फोन",
+    kyc_57: "सत्यापन विधि",
+    Kyc_58:"देश कोड या फोन नंबर खाली नहीं हो सकता",
+    Kyc_59:"भेजें",
+    Kyc_60:"Google Authenticator में देखें",
+    Kyc_61:"Google Authenticator",
+    Kyc_62:"ईमेल लिंक नहीं है",
+    Kyc_63:"फोन से लिंक नहीं किया गया",
+
+
+
     
 
     
-    
+
+
     };
 
 export default locale;

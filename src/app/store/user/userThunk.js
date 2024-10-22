@@ -54,7 +54,7 @@ export const checkLoginState = createAsyncThunk(
             //请求对应的数据
             requestUserLoginData(dispatch);
         } else { //其他错误
-            dispatch(showMessage({ message: 'error', code: 2 }));
+            dispatch(showMessage({ message: loginState.errmsg, code: 2 }));
         }
     }
 );
@@ -67,7 +67,7 @@ export const userProfile = createAsyncThunk(
         if (userProfile.errno === 0) {
             dispatch(updateUser(userProfile));
         } else {
-            dispatch(showMessage({ message: 'error', code: 2 }));
+            dispatch(showMessage({ message: userProfile.errmsg, code: 2 }));
         }
     }
 );
@@ -84,7 +84,7 @@ export const setCurrencySelect = createAsyncThunk(
         if (setCurrencySelect.errno === 0) {
             // dispatch(updateUser(setCurrencySelect));
         } else {
-            dispatch(showMessage({ message: 'error', code: 2 }));
+            dispatch(showMessage({ message: setCurrencySelect.errmsg, code: 2 }));
         }
     }
 );
@@ -95,7 +95,7 @@ export const getCurrencySelect = createAsyncThunk(
         if (getCurrencySelect.errno === 0) {
             // dispatch(updateUser(getCurrencySelect));
         } else {
-            dispatch(showMessage({ message: 'error', code: 2 }));
+            dispatch(showMessage({ message: getCurrencySelect.errmsg, code: 2 }));
         }
     }
 );
@@ -122,7 +122,7 @@ export const doLogin = createAsyncThunk(
         const userBindWallet = user.userInfo.bindWallet ?? false;
         if (userBindWallet) {
             if (user.profile?.user?.address !== address) {
-                dispatch(showMessage({ message: 'error', code: 2 }));
+                dispatch(showMessage({ message: userBindWallet.errmsg, code: 2 }));
                 return false;
             }
         }
@@ -266,7 +266,7 @@ export const googleLoginApi = createAsyncThunk(
                 })
             }
         } else {
-            dispatch(showMessage({ message: 'error', code: 2 }));
+            dispatch(showMessage({ message: userLoginData.errmsg, code: 2 }));
         }
     }
 );
@@ -300,7 +300,7 @@ export const sendSms = createAsyncThunk(
             return true
         } else {
             const msg = res?.errmsg;
-            dispatch(showMessage({ message: 'error', code: 2 }));
+            dispatch(showMessage({ message: res.errmsg, code: 2 }));
             return false
         }
     }
@@ -320,7 +320,7 @@ export const sendEmail = createAsyncThunk(
             return true
         } else {
             const msg = res?.errmsg;
-            dispatch(showMessage({ message: 'error', code: 2 }));
+            dispatch(showMessage({ message: res.errmsg, code: 2 }));
             return false
         }
     }
@@ -333,7 +333,7 @@ export const bindPhone = createAsyncThunk(
         let data = {
             nationCode: settings.nationCode,
             phone: settings.phone,
-            password: settings.password,
+            // password: settings.password,
             smsCode: settings.smsCode,
         };
         const result = await React.$api("user.bindPhone", data);
@@ -347,8 +347,8 @@ export const bindEmail = createAsyncThunk(
     async (settings, { dispatch, getState }) => {
         let data = {
             email: settings.email,
-            smsCode: settings.smsCode,
-            password: settings.password,
+            smsCode: settings.smsCode
+            // password: settings.password,
         };
         const result = await React.$api("user.bindEmail", data);
         return result;
@@ -357,7 +357,7 @@ export const bindEmail = createAsyncThunk(
             dispatch(getUserData());
             return true
         } else {
-            dispatch(showMessage({ message: 'error', code: 2 }));
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
         }
     }
 );
@@ -378,7 +378,7 @@ export const signUp = createAsyncThunk(
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userSignUpData));
         } else {
-            dispatch(showMessage({ message: 'error', code: 2 }));
+            dispatch(showMessage({ message: userSignUpData.errmsg, code: 2 }));
         }
     }
 );
@@ -398,7 +398,7 @@ export const emailSignUp = createAsyncThunk(
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userSignUpData));
         } else {
-            dispatch(showMessage({ message: 'error', code: 2 }));
+            dispatch(showMessage({ message: userSignUpData.errmsg, code: 2 }));
         }
     }
 );
@@ -416,13 +416,13 @@ export const resetPass = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             history.push('/wallet/login');
         } else {
-            dispatch(showMessage({ message: 'error', code: 2 }));
+            dispatch(showMessage({ message: userResetPassData.errmsg, code: 2 }));
         }
     }
 );
 
 
-
+//修改PIN
 export const editPin = createAsyncThunk(
     'user/editPin',
     async (settings, { dispatch, getState }) => {
@@ -435,7 +435,7 @@ export const editPin = createAsyncThunk(
         if (userResetPassData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
         } else {
-            dispatch(showMessage({ message: 'error', code: 2 }));
+            dispatch(showMessage({ message: userResetPassData.errmsg, code: 2 }));
         }
     }
 );
@@ -447,34 +447,34 @@ export const changePhone = createAsyncThunk(
         let data = {
             nationCode: settings.nationCode,
             phone: settings.phone,
-            smsCode: settings.smsCode,
-            password: settings.password,
+            smsCode: settings.smsCode
+            // password: settings.password,
         };
         const userResetPassData = await React.$api("user.changePhone", data);
         if (userResetPassData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
             history.push('/wallet/home');
         } else {
-            dispatch(showMessage({ message: 'error', code: 2 }));
+            dispatch(showMessage({ message: userResetPassData.errmsg, code: 2 }));
         }
     }
 );
 
-// 修改手机
+// 修改邮箱
 export const changeEmail = createAsyncThunk(
     'user/changeEmail',
     async (settings, { dispatch, getState }) => {
         let data = {
             email: settings.email,
-            smsCode: settings.smsCode,
-            password: settings.password,
+            smsCode: settings.smsCode
+            // password: settings.password,
         };
         const userResetPassData = await React.$api("user.changeEmail", data);
         if (userResetPassData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
             history.push('/wallet/home');;
         } else {
-            dispatch(showMessage({ message: 'error', code: 2 }));
+            dispatch(showMessage({ message: userResetPassData.errmsg, code: 2 }));
         }
     }
 );
@@ -495,7 +495,7 @@ export const forgotPass = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             history.push('/wallet/login');
         } else {
-            dispatch(showMessage({ message: 'error', code: 2 }));
+            dispatch(showMessage({ message: userForgotData.errmsg, code: 2 }));
         }
     }
 );
@@ -512,7 +512,7 @@ export const doSetNetwork = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             return true
         }
-        dispatch(showMessage({ message: 'error', code: 2 }));
+        dispatch(showMessage({ message: doSetNetwork.errmsg, code: 2 }));
     }
 );
 
@@ -830,7 +830,7 @@ export const doBindWallet = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             return true
         } else {
-            dispatch(showMessage({ message: 'error', code: 2 }));
+            dispatch(showMessage({ message: sendResult.errmsg, code: 2 }));
             return false
         }
     }
@@ -880,7 +880,7 @@ export const getUserData = createAsyncThunk(
             }
             return userData
         } else {
-            dispatch(showMessage({ message: 'error_2', code: 2 }));
+            dispatch(showMessage({ message: userData.errmsg, code: 2 }));
         }
     }
 );
@@ -902,7 +902,7 @@ export const transferRecords = createAsyncThunk(
                 return tranferList.data
                 dispatch(updateTransfer(tranferList));
             } else {
-                dispatch(showMessage({ message: 'error', code: 2 }));
+                dispatch(showMessage({ message: tranferList.errmsg, code: 2 }));
             }
         } else {
             let data = {
@@ -916,7 +916,7 @@ export const transferRecords = createAsyncThunk(
                 return tranferList.data
                 dispatch(updateTransfer(tranferList));
             } else {
-                dispatch(showMessage({ message: 'error', code: 2 }));
+                dispatch(showMessage({ message: tranferList.errmsg, code: 2 }));
             }
         }
     }
@@ -930,7 +930,7 @@ export const centerGetTokenBalanceList = createAsyncThunk(
         if (balanceList.errno === 0) {
             dispatch(updateWallet(balanceList));
         } else {
-            dispatch(showMessage({ message: 'error', code: 2 }));
+            dispatch(showMessage({ message: balanceList.errmsg, code: 2 }));
         }
         if (settings.requestSymbol) { //需要请求币种信息
             dispatch(getSymbols());
@@ -949,6 +949,7 @@ export const sendTips = createAsyncThunk(
             amount: settings.amount,
             symbol: settings.symbol,
             checkCode: settings.checkCode,
+            codeType: settings.codeType
         };
         const sendTipsRes = await React.$api("transfer.sendTips", data);
         if (sendTipsRes.errno === 0) {
@@ -956,7 +957,7 @@ export const sendTips = createAsyncThunk(
             return sendTipsRes;
         } else if (sendTipsRes.errno === -2) {
             return sendTipsRes;
-        } else{
+        } else {
             // dispatch(showMessage({ message: sendTipsRes.errmsg, code: 2 }));
             return sendTipsRes;
         }
@@ -977,6 +978,7 @@ export const tokenTransfer = createAsyncThunk(
             walletName: settings.walletName,
             priceLevel: settings.priceLevel,
             bAppendFee: settings.bAppendFee,
+            codeType: settings.codeType
         };
         const transferRes = await React.$api("wallet.tokenTransfer", data);
 
@@ -988,8 +990,8 @@ export const tokenTransfer = createAsyncThunk(
             return transferRes
         } else if (transferRes.errno === -2) {
             return transferRes
-        }else {
-            // dispatch(showMessage({ message: t('error_36'), code: 2 }));
+        } else {
+            // dispatch(showMessage({ message: transferRes.errmsg, code: 2 }));
             return transferRes
         }
     }
@@ -1014,11 +1016,11 @@ export const getTransferOrder = createAsyncThunk(
                         return true
                     } else if (result.data[0].orderStatus === 72) {
                         clearInterval(timer);
-                        dispatch(showMessage({ message: 'error', code: 2 }));
+                        dispatch(showMessage({ message: result.errmsg, code: 2 }));
                     }
                 }
             } else {
-                dispatch(showMessage({ message: 'error', code: 2 }));
+                dispatch(showMessage({ message: result.errmsg, code: 2 }));
             }
         }, 5000);
     }
@@ -1061,7 +1063,7 @@ export const getDecenterWalletBalance = createAsyncThunk(
 
             // console.log(networkChainId);
             if (currNetworkChainId != networkChainId) {
-                dispatch(showMessage({ message: 'error', code: 2 }));
+                dispatch(showMessage({ message: 'error_107', code: 2 }));
                 return false;
             }
             if (type === 0) {
@@ -1142,7 +1144,7 @@ export const getListBank = createAsyncThunk(
         if (result.errno === 0) {
             return result.data
         } else {
-            dispatch(showMessage({ message: 'error', code: 2 }));
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
         }
     }
 );
