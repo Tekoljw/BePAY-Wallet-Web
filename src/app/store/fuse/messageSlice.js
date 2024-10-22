@@ -17,11 +17,15 @@ const messageSlice = createSlice({
   initialState,
   reducers: {
     showMessage: (state, action) => {
-      state.state = true;
-      state.options = {
-        ...initialState.options,
-        ...action.payload,
-      };
+      if(action.payload && action.payload.message && action.payload.message !== ""){
+        state.state = true;
+        state.options = {
+          ...initialState.options,
+          ...action.payload,
+        };
+      }else{ //隐藏
+        state.state = null;
+      }
     },
     hideMessage: (state, action) => {
       state.state = null;

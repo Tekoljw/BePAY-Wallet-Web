@@ -72,6 +72,10 @@ service.interceptors.response.use(
             const { t } = useTranslation('mainPage');
             const error_tips_code = 'server_error_' + res.errno;
             dispatch(showMessage({ message: t(error_tips_code), code: 2 }));
+            return {
+                errno: 400,
+                errmsg: "",
+            }
         }else{
             return res;
         }
