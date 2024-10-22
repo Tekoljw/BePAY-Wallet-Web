@@ -17,7 +17,7 @@ import InputLabel from "@mui/material/InputLabel/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
-import {default as React, useEffect, useRef, useState} from "react";
+import { default as React, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import history from "../../../@history/@history";
 import { selectUserData } from "../../store/user";
@@ -72,9 +72,12 @@ function RetiedEmail() {
 
     async function sendCode() {
         const data = {
-            codeType: 11,
+            codeType: 10,
             email: control._formValues.email,
         };
+        if (userData && userData.userInfo && userData.userInfo.bindEmail) {
+            data.codeType = 11
+        }
         const sendRes = await dispatch(sendEmail(data));
         if (sendRes.payload) {
             setTime(60)
@@ -86,14 +89,16 @@ function RetiedEmail() {
     }
 
     async function onSubmit() {
-        if(userData && userData.userInfo && userData.userInfo.bindEmail){
-            await dispatch(changeEmail(control._formValues));   
-        }else{
+        if (userData && userData.userInfo && userData.userInfo.bindEmail) {
+            await dispatch(changeEmail(control._formValues));
+        } else {
             await dispatch(bindEmail(control._formValues)).then((res) => {
                 let result = res.payload;
                 if (result.errno === 0) {
                     dispatch(showMessage({ message: 'Success', code: 1 }));
                     dispatch(getUserData());
+                    changePhoneTab('withdraw');
+                    history.push('/wallet/home/wallet')
                 } else {
                     dispatch(showMessage({ message: result.errmsg, code: 2 }));
                 }
@@ -109,12 +114,12 @@ function RetiedEmail() {
                 className="w-full tongYongChuang4 flex justify-content-center "
             >
                 <div className="w-full  mx-auto sm:mx-0">
-                    { userData && userData.userInfo && userData.userInfo.bindEmail && <div className="flex items-baseline mt-2 font-medium">
+                    {userData && userData.userInfo && userData.userInfo.bindEmail && <div className="flex items-baseline mt-2 font-medium">
                         <Typography>{t('re_tied_email_2')}</Typography>
                         {/*<Link className="ml-4" to="/login">*/}
                         {/*    Sign in*/}
                         {/*</Link>*/}
-                        </div>
+                    </div>
                     }
 
                     <form
@@ -202,7 +207,7 @@ function RetiedEmail() {
                                 />
                             )}
                         />
-{/* 
+                        {/* 
                         <Controller
                             name="password"
                             control={control}
@@ -221,7 +226,7 @@ function RetiedEmail() {
                             )}
                         /> */}
 
-                        <div style={{ textAlign: "center"}}>
+                        <div style={{ textAlign: "center" }}>
                             <a className="text-md font-medium" onClick={() => {
                                 changePhoneTab('');
                                 history.push('/wallet/home/wallet')
@@ -241,15 +246,15 @@ function RetiedEmail() {
                             sx={{ paddingTop: "2px!important", paddingBottom: "2px!important", fontSize: "20px!important" }}
                         >
                             {t('re_tied_email_5')}
-                         </Button> : <Button
-                                variant="contained"
-                                color="secondary"
-                                className=" w-full mt-24"
-                                aria-label="Register"
-                                disabled={_.isEmpty(dirtyFields) || !isValid}
-                                type="submit"
-                                size="large"
-                            >
+                        </Button> : <Button
+                            variant="contained"
+                            color="secondary"
+                            className=" w-full mt-24"
+                            aria-label="Register"
+                            disabled={_.isEmpty(dirtyFields) || !isValid}
+                            type="submit"
+                            size="large"
+                        >
                             {t('menu_19')} </Button>
                         }
                     </form>

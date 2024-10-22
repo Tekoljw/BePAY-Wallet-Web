@@ -127,6 +127,7 @@ function Fiat(props) {
     const [openGoogleCode, setOpenGoogleCode] = useState(false);
     const [googleCode, setGoogleCode] = useState('');
     const [openSuccess, setOpenSuccess] = useState(true);
+    const [chuKuanState, setChuKuanState] = useState(false);
 
     const startScanQRCode = () => {
         openScan((result, err) => {
@@ -206,6 +207,7 @@ function Fiat(props) {
     const handleSubmit = () => {
         setOpenLoad(true)
         setIsLoadingBtn(true)
+        setChuKuanState(true)
         if (smallTabValue === 1) {
             let data = {
                 currency: currencyCode,
@@ -253,7 +255,8 @@ function Fiat(props) {
                     dispatch(showMessage({ message: result.errmsg, code: 2 }));
                 }
             });
-        } else {
+        }
+        else {
             let entryType = getEntryType(currencyCode)
             let bankName = ''
             if (entryType === 'MMK_TRANSFER_KBZ') {
@@ -734,6 +737,7 @@ function Fiat(props) {
             setIsLoadingBtn(false);
             setZhuanQuan(true);
             setTiJiaoState(0);
+            setChuKuanState(false);
         }, 300);
     };
 
@@ -753,7 +757,6 @@ function Fiat(props) {
         } else {
             tmpCode = tmpCode + text
         }
-
         setGoogleCode(tmpCode)
     }
 
@@ -805,7 +808,9 @@ function Fiat(props) {
 
         tmpFiats.sort(sortUseAge);
         setFiats(tmpFiats);
-        setCurrencyCode(tmpFiats[0].currencyCode)
+        if (chuKuanState == false) {
+            setCurrencyCode(tmpFiats[0].currencyCode)
+        }
     };
 
     const tidyWalletData = () => {
