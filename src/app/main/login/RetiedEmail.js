@@ -72,7 +72,7 @@ function RetiedEmail() {
 
     async function sendCode() {
         const data = {
-            codeType: 10,
+            codeType: userData && userData.userInfo && userData.userInfo.bindEmail ? 11: 10,
             email: control._formValues.email,
         };
         if (userData && userData.userInfo && userData.userInfo.bindEmail) {

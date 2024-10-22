@@ -306,6 +306,25 @@ export const creditCardUpdate = createAsyncThunk(
     }
 );
 
+// 换卡
+export const exchangeCreditCard = createAsyncThunk(
+    '/credit/exchangeCreditCard',
+    async (settings, { dispatch, getState }) => {
+        const result = await React.$api("credit.exchangeCreditCard", settings);
+        if (result.errno === 0) {
+            if(!settings.ignoreMessage){
+                if (result.data.status === 'success') {
+                    dispatch(showMessage({ message: result.errmsg, code: 1 }));
+                } else {
+                    dispatch(showMessage({ message: result.data.msg, code: 2 }));
+                }
+            }
+        } else {
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+        }
+    }
+);
+
 // 获取信用卡列表
 export const getUserCreditCard = createAsyncThunk(
     'credit/getUserCreditCard',
