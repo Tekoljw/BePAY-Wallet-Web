@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import '../../../styles/home.css';
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
-import { centerGetTokenBalanceList, sendTips, tokenTransfer, sendEmail, sendSms,  bindPhone, bindEmail } from "../../store/user/userThunk";
+import { centerGetTokenBalanceList, sendTips, tokenTransfer, sendEmail, sendSms, userProfile, bindPhone, bindEmail } from "../../store/user/userThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { selectConfig } from "../../store/config";
@@ -194,11 +194,11 @@ function Withdraw(props) {
     const [showGuangBiao, setShowGuangBiao] = useState(false);
 
     const changeToBlack = (target) => {
-        document.getElementById(target.target.id).classList.add('pinJianPanColor1');
+        document.getElementById(target.target.id) && document.getElementById(target.target.id).classList && document.getElementById(target.target.id).classList.add('pinJianPanColor1');
     };
 
     const changeToWhite = (target) => {
-        document.getElementById(target.target.id).classList.remove('pinJianPanColor1');
+        document.getElementById(target.target.id) &&  document.getElementById(target.target.id).classList && document.getElementById(target.target.id).classList.remove('pinJianPanColor1');
     };
 
     const [inputIDVal, setInputIDVal] = useState('');
@@ -507,6 +507,7 @@ function Withdraw(props) {
         setOpenLoad(true);
         dispatch(sendTips(data)).then((res) => {
             setIsLoadingBtn(false)
+            setOpenLoad(false);
             setGoogleCode('');
             let resData = res.payload;
             if (resData.errno == 0) {
@@ -518,16 +519,15 @@ function Withdraw(props) {
                     dispatch(centerGetTokenBalanceList());
                 }, 1200);
             } else if (resData.errno == -2) {
-                if (!hasAuthGoogle) {
-                    closePinFunc()
-                    setTimeout(() => {
-                        setOpenAnimateModal(true);
-                    }, 300)
-                    return;
-                } else {
-                    openGoogleCodeFunc()
-                    return
-                }
+                setTwiceVerifyType(0);
+                setTypeBined(hasAuthEmail ? true: false);
+                // if (!hasAuthGoogle) {
+                //     closePinFunc()
+                //     setOpenAnimateModal(true);
+                //     return;
+                // }
+                openGoogleCodeFunc()
+                return
             } else {
                 setOpenSuccess(false);
                 setTimeout(() => {
@@ -890,9 +890,13 @@ function Withdraw(props) {
         if (tabValue === cryptoSelect) {
             setOpenYanZheng(false);
             setOpenGoogleCode(true);
+            dispatch(userProfile());
+            setTypeBined(true);
         } else if (tabValue === fiatSelect) {
             setOpenYanZheng(false);
             setFiatVerifiedAuth(true);
+            dispatch(userProfile());
+            setTypeBined(true);
         }
     }
 
@@ -1022,6 +1026,8 @@ function Withdraw(props) {
 
     const backCardPageEvt = () => {
         setOpenKyc(false);
+        dispatch(userProfile());
+        setTypeBined(true);
         myFunction;
         setOpenGoogleCode(true);
     }

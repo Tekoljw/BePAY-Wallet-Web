@@ -658,6 +658,10 @@ export default {
             url: "/credit/creditCardCryptoWithdraw",
             method: "post",
         },
+        exchangeCreditCard: {
+            url: "/credit/exchangeCreditCard",
+            method: "post",
+        }
     },
 
     log: {

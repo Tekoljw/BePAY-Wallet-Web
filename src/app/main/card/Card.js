@@ -33,7 +33,8 @@ import {
     creditCardCryptoDeposit,
     creditCardCryptoWithdraw,
     getCreditConfig,
-    getUserCreditCard
+    getUserCreditCard,
+    exchangeCreditCard
 } from "app/store/payment/paymentThunk";
 import { createPin, verifyPin } from "app/store/wallet/walletThunk";
 import { showMessage } from "app/store/fuse/messageSlice";
@@ -42,7 +43,7 @@ import Kyc from "../kyc/Kyc";
 import _ from 'lodash';
 import { selectCurrentLanguage } from "app/store/i18nSlice";
 import Enable2FA from "../2fa/Enable2FA";
-import { centerGetTokenBalanceList, userProfile } from "app/store/user/userThunk";
+import { centerGetTokenBalanceList, userProfile, sendEmail, sendSms } from "app/store/user/userThunk";
 import { centerGetUserFiat } from "app/store/wallet/walletThunk";
 import moment from 'moment';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
@@ -131,7 +132,11 @@ function Card(props) {
     const [textSelect, setTextSelect] = useState(false);
     const [showGuangBiao, setShowGuangBiao] = useState(false);
     const [correctPin, setCorrectPin] = useState(false);
-    const hasAuthGoogle = useSelector(selectUserData).userInfo?.hasAuthGoogle
+    const hasAuthGoogle = userData.userInfo?.hasAuthGoogle;
+    const hasAuthEmail = userData.userInfo?.bindEmail;
+    const hasAuthPhone = userData.userInfo?.bindMobile;
+    const [twiceVerifyType, setTwiceVerifyType] = useState(0);
+    const [typeBinded, setTypeBined] = useState(false);
     const [openYanZheng, setOpenYanZheng] = useState(false);
     const [openGoogleAnimateModal, setOpenGoogleAnimateModal] = useState(false);
     const [maxValue, setMaxValue] = useState(0);
@@ -497,8 +502,8 @@ function Card(props) {
     };
 
     const closeChangeBi = () => {
-        document.getElementById('openChangeBi').classList.remove('PinMoveAni');
-        document.getElementById('openChangeBi').classList.add('PinMoveOut');
+        document.getElementById('openChangeBi') && document.getElementById('openChangeBi').classList && document.getElementById('openChangeBi').classList.remove('PinMoveAni');
+        document.getElementById('openChangeBi') && document.getElementById('openChangeBi').classList && document.getElementById('openChangeBi').classList.add('PinMoveOut');
         setTimeout(() => {
             setOpenChangeBi(false)
         }, 300);
@@ -507,7 +512,7 @@ function Card(props) {
     const openChangeBiFunc = () => {
         setOpenChangeBi(true);
         setTimeout(() => {
-            document.getElementById('openChangeBi').classList.add('PinMoveAni');
+            document.getElementById('openChangeBi') && document.getElementById('openChangeBi').classList && document.getElementById('openChangeBi').classList.add('PinMoveAni');
         }, 0);
     };
 
@@ -548,11 +553,11 @@ function Card(props) {
 
 
     const changeToBlack = (target) => {
-        document.getElementById(target.target.id).classList.add('pinJianPanColor1');
+        document.getElementById(target.target.id) && document.getElementById(target.target.id).classList && document.getElementById(target.target.id).classList.add('pinJianPanColor1');
     };
 
     const changeToWhite = (target) => {
-        document.getElementById(target.target.id).classList.remove('pinJianPanColor1');
+        document.getElementById(target.target.id) && document.getElementById(target.target.id).classList && document.getElementById(target.target.id).classList.remove('pinJianPanColor1');
     };
 
 
@@ -879,26 +884,27 @@ function Card(props) {
         }
         return "";
     }
-    const applyOrChangeCard = () => {
-        if (currentCardItem) {
-            setIsLoadingBtn(true)
-            dispatch(creditCardUpdate({
-                creditType: currUserCardInfo.creditType,
-                userCreditId: currUserCardInfo.id,
-                updateType: 0,
-                ignoreMessage: true
-            })).then((res) => {
-                applyCard();
-                // setOpenAnimateModal(false);
-                // setOpenCardBtnShow(false);
-                // // getCardList();
-                // setUpdateCard(true)
-                // setTimer(timer + 1)
-                // myFunction();
-            })
-        } else {
-            applyCard()
-        }
+    const exChangeCard = () => {
+        setOpenCardBtnShow(true)
+        dispatch(exchangeCreditCard({
+            creditType: currUserCardInfo.creditType,
+            userCreditId: currUserCardInfo.id
+        })).then((res) => {
+            setUpdateCard(true)
+            setTimer(timer + 1)
+            setOpenCardBtnShow(false)
+            setCurrentCardItem(null);
+            setTabValue(0);
+            closeChangeBi();
+            setOpenAnimateHuanKa(false);
+            myFunction();
+            // setOpenAnimateModal(false);
+            // setOpenCardBtnShow(false);
+            // // getCardList();
+            // setUpdateCard(true)
+            // setTimer(timer + 1)
+            // myFunction();
+        })
     }
     // 申请卡
     const applyCard = () => {
@@ -1002,7 +1008,8 @@ function Card(props) {
             symbol: symbol,
             chain: 'trc',
             amount: transferMoney,
-            checkCode: googleCode
+            checkCode: googleCode,
+            codeType: twiceVerifyType === 0 ? 2 : twiceVerifyType === 1 ? 1 : 0
         })).then((res) => {
             setIsLoadingBtn(false)
             let result = res.payload
@@ -1011,11 +1018,18 @@ function Card(props) {
             if (result.errno == -2) {
                 setOpenRecordWindow(false)
                 setOpenSuccess(true);
-                if (!hasAuthGoogle) {
-                    closePinFunc()
-                    setOpenGoogleAnimateModal(true)
-                    return;
-                }
+                // if (!hasAuthGoogle) {
+                //     closePinFunc()
+                //     setOpenGoogleAnimateModal(true)
+                //     return;
+                // }
+                setTwiceVerifyType(0);
+                setTypeBined(hasAuthEmail ? true : false);
+                // if (!hasAuthGoogle) {
+                //     closePinFunc()
+                //     setOpenAnimateModal(true);
+                //     return;
+                // }
                 openGoogleCodeFunc()
                 return
             } else if (result.errno === 0) {
@@ -1083,6 +1097,8 @@ function Card(props) {
     const verifiedVAuthEvt = () => {
         setOpenYanZheng(false);
         setOpenGoogleCode(true);
+        dispatch(userProfile());
+        setTypeBined(true);
     }
 
     useEffect(() => {
@@ -1115,6 +1131,38 @@ function Card(props) {
     const backCardPageEvt = () => {
         history.push(`/wallet/home/card`)
         setOpenKyc(false)
+    }
+
+    const reciveCode = async () => {
+        let sendRes = {};
+        if (twiceVerifyType === 0) {
+            const data = {
+                codeType: 14,
+                email: userData.userInfo.email
+            };
+            sendRes = await dispatch(sendEmail(data));
+        } else {
+            const data = {
+                codeType: 14,
+                nationCode: userData.userInfo.nation,
+                phone: userData.userInfo.phone
+            };
+            sendRes = await dispatch(sendSms(data));
+        }
+    }
+
+    const bindTwiceVerifyType = () => {
+        if (twiceVerifyType === 0 || twiceVerifyType === 1) {
+            closeGoogleCodeFunc()
+            closePinFunc()
+            setOpenKyc(true)
+            return
+        } else {
+            closeGoogleCodeFunc()
+            closePinFunc()
+            setOpenAnimateModal(true)
+            return;
+        }
     }
 
 
@@ -2241,8 +2289,7 @@ function Card(props) {
                     </div>
                 </Box>
 
-                <div className='flex mt-16 mb-28 px-15 position-re' >
-
+                <div className='flex mt-16 mb-20 px-15 position-re' style={{ height: "40px" }} >
                     <LoadingButton
                         disabled={false}
                         className="boxCardBtn position-ab"
@@ -2251,15 +2298,16 @@ function Card(props) {
                         variant="contained"
                         style={{ bottom: "0%", left: "0%", right: "0%", margin: "0 auto" }}
                         onClick={() => {
-                            setOpenCardBtnShow(true);
-                            setTimeout(() => {
-                                setOpenAnimateHuanKa(false);
-                                setOpenCardBtnShow(false);
-                                setTabValue(1);
-                                setOpenXiangQing(true);
-                                setCardConfigID(currentCardItem.creditConfigId);
-                                myFunction;
-                            }, 1500);
+                            // setOpenCardBtnShow(true);
+                            exChangeCard()
+                            // setTimeout(() => {
+                            //     setOpenAnimateHuanKa(false);
+                            //     setOpenCardBtnShow(false);
+                            //     setTabValue(1);
+                            //     setOpenXiangQing(true);
+                            //     setCardConfigID(currentCardItem.creditConfigId);
+                            //     myFunction;
+                            // }, 1500);
                         }}
                     >
                         {t('card_77')}
@@ -3013,12 +3061,44 @@ function Card(props) {
                 <div id="GoogleCodeSty" className="PINSty">
                     <div className='pinWindow'>
                         <div className='flex'>
-                            <div className='PINTitle2'>{t('card_180')}</div>
+                            <div className='PINTitle2'>{t('kyc_57')}</div>
                             <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                 closeGoogleCodeFunc()
                             }} />
                         </div>
-                        <div className='PINTitle'>{t('card_176')}</div>
+                        {/* <div className='PINTitle'>{t('card_176')}</div> */}
+                        <div className='flex justify-between'>
+                            <div
+                                onClick={() => { setTwiceVerifyType(0); setTypeBined(hasAuthEmail ? true : false) }}
+                                className={clsx('selectPin', twiceVerifyType === 0 && 'activePinZi')}
+                            >
+                                <img style={{ width: '2rem', borderRadius: '0.5rem', float: "left" }} src="wallet/assets/images/menu/email.png" alt="" />
+                                <div style={{ float: "left" }} className="px-6">{t('signIn_5')} </div>
+                            </div>
+
+                            <div
+                                onClick={() => { setTwiceVerifyType(1); setTypeBined(hasAuthPhone ? true : false) }}
+                                className={clsx('selectPin', twiceVerifyType === 1 && 'activePinZi')}
+                            >
+                                <img style={{ width: '2rem', borderRadius: '0.5rem', float: "left" }} src="wallet/assets/images/menu/phone.png" alt="" />
+                                <div style={{ float: "left" }} className="px-6">{t('kyc_56')}</div>
+                            </div>
+
+                            <div
+                                onClick={() => { setTwiceVerifyType(2); setTypeBined(hasAuthGoogle ? true : false) }}
+                                className={clsx('selectPin', twiceVerifyType === 2 && 'activePinZi')}
+                            >
+                                <img style={{ width: '2rem', borderRadius: '0.5rem', float: "left" }} src="wallet/assets/images/menu/google.png" alt="" />
+                                <div style={{ float: "left" }} className="px-6"> Google</div>
+                            </div>
+                        </div>
+
+                        {typeBinded ? ((twiceVerifyType == 0 || twiceVerifyType == 1) ?
+                            <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}> 发送至 <span style={{ color: "#909fb4" }}>{twiceVerifyType === 0 ? `邮箱 ${userData?.userInfo?.email}` : `手机号 ${'+' + userData?.userInfo?.nation + userData?.userInfo?.phone}`}</span> <span style={{ color: "#2dd4bf", textDecoration: "underline" }} onClick={() => reciveCode()}>接收</span>
+                            </div> : <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}> 请在google验证器查看</div>)
+                            : <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}> 您还没有绑定{twiceVerifyType === 0 ? '邮箱' : twiceVerifyType === 1 ? '手机号' : 'Google验证'} <span style={{ color: "#2dd4bf", textDecoration: "underline" }} onClick={() => bindTwiceVerifyType()} >立即绑定</span> </div>
+                        }
+
                         <div className='flex justify-between mt-32 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
                             <div className='PinNum color-box'
                                 onTouchStart={changeToBlack}
@@ -3499,7 +3579,7 @@ function Card(props) {
                             loading={isLoadingBtn}
                             variant="contained"
                             onClick={() => {
-                                applyOrChangeCard()
+                                applyCard()
                             }}
                         >
                             {t('card_36')}

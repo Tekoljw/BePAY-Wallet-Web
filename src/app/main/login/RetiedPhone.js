@@ -80,7 +80,7 @@ function RetiedPhone() {
     async function sendCode() {
         setSelectedCountryCode(control._formValues.nationCode);
         const data = {
-            codeType: 5,
+            codeType: userData && userData.userInfo && userData.userInfo.bindMobile ? 5: 10,
             nationCode: control._formValues.nationCode,
             phone: control._formValues.phone,
         };
