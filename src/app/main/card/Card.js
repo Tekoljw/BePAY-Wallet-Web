@@ -2340,6 +2340,7 @@ function Card(props) {
                         {t('card_108')}
                     </div>
                 </Box>
+                <div style={{ textAlign: "center", padding: "0rem 1.5rem" }}>{t('home_borrow_18')}: 2U</div>
 
                 <div className='flex mt-16 mb-20 px-15 position-re' style={{ height: "40px" }} >
                     <LoadingButton
