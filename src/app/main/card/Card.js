@@ -1058,7 +1058,7 @@ function Card(props) {
                 setZhuanQuan(false);
                 setOpenSuccess(true);
                 setTiJiaoState(2);
-                dispatch(showMessage({ message: result.data.errmsg, code: 2 }));
+                dispatch(showMessage({ message: result.errmsg, code: 2 }));
             }
         })
     }
@@ -1298,554 +1298,556 @@ function Card(props) {
                                     </div>
                                 </motion.div>
 
-                                <div className='cardSelectBg'>
-                                    <div className='cardSelectBgPadding '>
-                                        {!openKyc && <div style={{ padding: '1rem 1.5rem 1.5rem 1.5rem' }} >
-                                            <Tabs
-                                                component={motion.div}
-                                                variants={item}
-                                                value={smallTabValue}
-                                                onChange={(ev, value) => setSmallTabValue(value)}
-                                                indicatorColor="secondary"
-                                                textColor="inherit"
-                                                variant="scrollable"
-                                                scrollButtons={false}
-                                                className="min-h-32"
-                                                style={{ padding: '0 0', margin: '0rem 0rem 1rem 1rem', borderColor: 'transparent', backgroundColor: '#1E293B', width: 'auto', borderRadius: '0px', height: '30px' }}
-                                                classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
-                                                TabIndicatorProps={{
-                                                    children: (
-                                                        <Box
-                                                            sx={{ bgcolor: 'text.disabled' }}
-                                                            className="w-full h-full rounded-full huaKuaBgColorCard"
+                                {
+                                  !openBindEmail && !openBindPhone && <div className='cardSelectBg'>
+                                        <div className='cardSelectBgPadding '>
+                                            {!openKyc && <div style={{ padding: '1rem 1.5rem 1.5rem 1.5rem' }} >
+                                                <Tabs
+                                                    component={motion.div}
+                                                    variants={item}
+                                                    value={smallTabValue}
+                                                    onChange={(ev, value) => setSmallTabValue(value)}
+                                                    indicatorColor="secondary"
+                                                    textColor="inherit"
+                                                    variant="scrollable"
+                                                    scrollButtons={false}
+                                                    className="min-h-32"
+                                                    style={{ padding: '0 0', margin: '0rem 0rem 1rem 1rem', borderColor: 'transparent', backgroundColor: '#1E293B', width: 'auto', borderRadius: '0px', height: '30px' }}
+                                                    classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
+                                                    TabIndicatorProps={{
+                                                        children: (
+                                                            <Box
+                                                                sx={{ bgcolor: 'text.disabled' }}
+                                                                className="w-full h-full rounded-full huaKuaBgColorCard"
+                                                            />
+                                                        ),
+                                                    }}
+                                                    sx={{
+                                                        padding: '1rem 1rem',
+                                                    }}
+                                                >
+                                                    {Object.entries([t('card_12'), t('card_13')]).map(([key, label]) => (
+                                                        <Tab
+                                                            className="text-16 font-semibold min-h-32 min-w-64 mx4 px-12 txtColorTitle opacity-100 zindex"
+                                                            disableRipple
+                                                            key={key}
+                                                            label={label}
+                                                            sx={{
+                                                                color: '#FFFFFF', height: '32px', width: 'auto', marginRight: "1rem"
+                                                            }}
                                                         />
-                                                    ),
-                                                }}
-                                                sx={{
-                                                    padding: '1rem 1rem',
-                                                }}
-                                            >
-                                                {Object.entries([t('card_12'), t('card_13')]).map(([key, label]) => (
-                                                    <Tab
-                                                        className="text-16 font-semibold min-h-32 min-w-64 mx4 px-12 txtColorTitle opacity-100 zindex"
-                                                        disableRipple
-                                                        key={key}
-                                                        label={label}
-                                                        sx={{
-                                                            color: '#FFFFFF', height: '32px', width: 'auto', marginRight: "1rem"
-                                                        }}
-                                                    />
-                                                ))}
-                                            </Tabs>
+                                                    ))}
+                                                </Tabs>
 
-                                            {
-                                                smallTabValue === 0 && <div style={{ margin: "1.5rem 0rem 6rem 0rem" }}>
-                                                    {cardList[2].map((cardItem, i) => {
-                                                        return (
-                                                            <motion.div
-                                                                key={cardItem.id}
-                                                                variants={item}
-                                                                initial="hidden"
-                                                                animate="show"
-                                                                className='cardJianGe'
-                                                            >
-                                                                <div className='flex justify-center container' style={{ position: "relative" }}>
-                                                                    <div className="responsive-div creditcard" id={'responsive-div' + i}>
-                                                                        <div className={clsx("", cardItem.showFrontCard && "xiaoShi")}>
-                                                                            <div className="responsive-div-content card4Bg cardZhiDi alphaCard_1" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }} onClick={() => {
-                                                                            }}  >
-                                                                                <div className={clsx("cardNumber", cardItem.kaBeiButton && "xiaoShi")}> <span id={'cardNumberOne' + i} >{cardItem?.userCreditNo?.replace(/(.{4})/g, '$1 ')}</span> </div>
-                                                                                <div className={clsx("cardExpired ", cardItem.kaBeiButton && "xiaoShi")}>
-                                                                                    <span id={'cardNumberOne' + i} style={{ paddingTop: "2%" }} >{cardItem?.userCreditEndTime?.split('-')[1]}/{cardItem?.userCreditEndTime?.split('-')[0].slice(-2)}</span>
+                                                {
+                                                    smallTabValue === 0 && <div style={{ margin: "1.5rem 0rem 6rem 0rem" }}>
+                                                        {cardList[2].map((cardItem, i) => {
+                                                            return (
+                                                                <motion.div
+                                                                    key={cardItem.id}
+                                                                    variants={item}
+                                                                    initial="hidden"
+                                                                    animate="show"
+                                                                    className='cardJianGe'
+                                                                >
+                                                                    <div className='flex justify-center container' style={{ position: "relative" }}>
+                                                                        <div className="responsive-div creditcard" id={'responsive-div' + i}>
+                                                                            <div className={clsx("", cardItem.showFrontCard && "xiaoShi")}>
+                                                                                <div className="responsive-div-content card4Bg cardZhiDi alphaCard_1" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }} onClick={() => {
+                                                                                }}  >
+                                                                                    <div className={clsx("cardNumber", cardItem.kaBeiButton && "xiaoShi")}> <span id={'cardNumberOne' + i} >{cardItem?.userCreditNo?.replace(/(.{4})/g, '$1 ')}</span> </div>
+                                                                                    <div className={clsx("cardExpired ", cardItem.kaBeiButton && "xiaoShi")}>
+                                                                                        <span id={'cardNumberOne' + i} style={{ paddingTop: "2%" }} >{cardItem?.userCreditEndTime?.split('-')[1]}/{cardItem?.userCreditEndTime?.split('-')[0].slice(-2)}</span>
+                                                                                    </div>
+                                                                                    <div className='cardBeiMian'>
+                                                                                        <div className={clsx("", cardItem.kaBeiButton && "xiaoShi")}>
+                                                                                            {cardItem?.state == 10 && (
+                                                                                                <div className='kaBeiZi flex'>
+                                                                                                    <img id="cardIconWOne"
+                                                                                                        onClick={(e) => handleImgClick(e, FanKa, cardItem)}
+                                                                                                        className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id={'zhangDanZiOne' + i} className='zhangDanZi'>{t('card_15')}</span>
+                                                                                                </div>
+                                                                                            )}
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </div>
-                                                                                <div className='cardBeiMian'>
-                                                                                    <div className={clsx("", cardItem.kaBeiButton && "xiaoShi")}>
-                                                                                        {cardItem?.state == 10 && (
+                                                                            </div>
+
+                                                                            <div className={clsx("", !cardItem.showFrontCard && "xiaoShi")} >
+                                                                                <div className="responsive-div-content card41Bg cardZhiDi flipped2 alphaCard_1" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.backUrl})`, backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat' }} onClick={() => {
+                                                                                }}  >
+                                                                                    <div className='cardAnQuanMa '>{cardItem.userCreditKey}</div>
+                                                                                    <div className='cardBeiMian flipped2 '>
+                                                                                        <div className={clsx("", cardItem.kaBeiButton2 && "xiaoShi")}>
+                                                                                            <div className='kaBeiZi flex flipped2'>
+                                                                                                <img id={'cardIconWTwo' + i}
+                                                                                                    onClick={(e) => handleImgClick(e, FanKaBei, cardItem)}
+                                                                                                    className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id={'zhangDanZiTwo' + i} className='zhangDanZi'>{t('card_14')}</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            {cardItem?.state == 9 && (
+                                                                                <div className='cardErrorBg'>
+                                                                                    <div className='flex justify-center mt-28' style={{ width: "100%" }}>
+                                                                                        <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
+                                                                                        <div className='TanHaoCardZi'>
+                                                                                            {t('card_178')}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div className='cardErrorZi'>{t('card_179')}</div>
+                                                                                    {/* 
+                                                                                        <div className='cardErrorBtn txtColorTitleSmall' onClick={() => {
+                                                                                            changePhoneTab('security');
+                                                                                            history.push('/wallet/home/security', { tabValue: 4 })
+                                                                                        }} >
+                                                                                            联系客服
+                                                                                        </div> */}
+                                                                                </div>
+                                                                            )
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div className='cardGongNengMyDi' style={{ position: "relative" }}>
+                                                                        <Accordion className='gongNengTan1'
+                                                                        // disabled={cardItem?.state == 9}
+                                                                        >
+                                                                            <AccordionSummary
+                                                                                expandIcon={<ExpandMoreIcon />}
+                                                                                aria-controls="panel1-content"
+                                                                                id="panel1-header"
+                                                                                className='gongNengTan2'
+                                                                                onClick={() => {
+                                                                                    // if (cardItem && cardItem.state == 9) return;
+                                                                                    setCurrUserCardInfo(cardItem);
+                                                                                }}
+                                                                            >
+                                                                                <div className='flex justify-between w-full'>
+                                                                                    <div className='flex'>
+                                                                                        <div className=''>{t('home_record_9')}</div>
+                                                                                        <div className='ml-8 yuEZi'>${cardItem.amount ?? '0.00'}</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </AccordionSummary>
+
+                                                                            <AccordionDetails className='gongNengTan3'>
+                                                                                <div className='flex justify-center'>
+                                                                                    <div className='gongNengLanW' onClick={() => {
+                                                                                        setOpenAnimateModal(true);
+                                                                                    }} >
+                                                                                        <img className='gongNengTuBiao' src="wallet/assets/images/menu/guaShi.png"></img>
+                                                                                        <div className='gongNengZiW mt-4 text-14'>{t('card_31')}</div>
+                                                                                    </div>
+                                                                                    <div className='gongNengLanW' onClick={() => {
+                                                                                        setCurrentCardItem(cardItem)
+                                                                                        setOpenAnimateHuanKa(true);
+                                                                                    }}>
+                                                                                        <img className='gongNengTuBiao' src="wallet/assets/images/menu/gengHuanKaPian.png"></img>
+                                                                                        <div className='gongNengZiW mt-4 text-14'>{t('card_32')}</div>
+                                                                                    </div>
+
+                                                                                    <div className='gongNengLanW' onClick={() => {
+                                                                                        setOpenPassWordWindow(true)
+                                                                                        openPassWordFunc()
+                                                                                    }}>
+                                                                                        <img className='gongNengTuBiao' src="wallet/assets/images/menu/miMaGuanLi.png"></img>
+                                                                                        <div className='gongNengZiW mt-4 text-14'>{t('signIn_9')}</div>
+                                                                                    </div>
+
+                                                                                    <div className={clsx("gongNengLanW", cardItem && cardItem.state == 9 && "checkIsPhone")} onClick={() => {
+                                                                                        // setOpenBindWindow(true)
+                                                                                        // openBindFunc()
+                                                                                        if (cardItem && cardItem.state == 9) return;
+                                                                                        setOpenRecordWindow(true)
+                                                                                        setCardID(cardItem.id)
+                                                                                        setTransferFee(0)
+                                                                                        setMaxValue(0)
+                                                                                        setCardConfigID(cardItem.creditConfigId)
+                                                                                        openRecordFunc()
+                                                                                    }}>
+                                                                                        <img className='gongNengTuBiao dingYueSty' src="wallet/assets/images/menu/huaZhuan.png"></img>
+                                                                                        <div className='gongNengZiW mt-4 text-14 dingYueSty'>{t('card_16')}</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                {/*
+                                                                            <div className='mt-24 flex justify-center'>
+                                                                                <div className='gongNengLanW'>
+                                                                                    <img className='gongNengTuBiao' src="wallet/assets/images/menu/daE.png"></img>
+                                                                                    <div className='gongNengZiW mt-4 text-14'>大额预约</div>
+                                                                                </div>
+                                                                                <div className='gongNengLanW'>
+                                                                                    <img className='gongNengTuBiao' src="wallet/assets/images/menu/bangDing.png"></img>
+                                                                                    <div className='gongNengZiW mt-4 text-14'>解除订阅</div>
+                                                                                </div>
+                                                                                <div className='gongNengLanW'>
+                                                                                    <img className='gongNengTuBiao' src="wallet/assets/images/menu/atm.png"></img>
+                                                                                    <div className='gongNengZiW mt-4 text-14'>ATM/POS</div>
+                                                                                </div>
+                                                                            </div> */}
+
+                                                                            </AccordionDetails>
+                                                                        </Accordion>
+                                                                    </div>
+                                                                </motion.div>
+                                                            )
+                                                        })}
+
+                                                        {/*<motion.div variants={item}*/}
+                                                        {/*    initial="hidden"*/}
+                                                        {/*    animate="show"*/}
+                                                        {/*    className='cardJianGe'*/}
+                                                        {/*>*/}
+                                                        {/*    <div className="responsive-div">*/}
+                                                        {/*        <div className="responsive-div-content card5Bg cardZhiDi" >*/}
+                                                        {/*            <div className='cardNumber'>2489 8794 8894 7845</div>*/}
+                                                        {/*            <div className='cardBeiMian'>*/}
+                                                        {/*            </div>*/}
+                                                        {/*        </div>*/}
+
+                                                        {/*        <div className='cardErrorBg'>*/}
+
+                                                        {/*            <div className='flex justify-center mt-16' style={{ width: "100%" }}>*/}
+                                                        {/*                <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />*/}
+                                                        {/*                <div className='TanHaoCardZi'>*/}
+                                                        {/*                    审核失败*/}
+                                                        {/*                </div>*/}
+                                                        {/*            </div>*/}
+                                                        {/*            <div className='cardErrorZi'>您填写的地址有误请重新修改！</div>*/}
+
+                                                        {/*            <div className='cardErrorBtn txtColorTitleSmall' onClick={() => {*/}
+                                                        {/*                changePhoneTab('security');*/}
+                                                        {/*                history.push('/wallet/home/security', { tabValue: 4 })*/}
+                                                        {/*            }} >*/}
+                                                        {/*                重新提交*/}
+                                                        {/*            </div>*/}
+                                                        {/*        </div>*/}
+                                                        {/*    </div>*/}
+
+
+                                                        {/*    <div className='mt-10'>*/}
+                                                        {/*        <div style={{ position: "relative", height: "1.2rem", width: "100%", margin: "0 auto" }}>*/}
+                                                        {/*            <div className='borderYuan' style={{ position: "absolute" }}>*/}
+                                                        {/*                <div className='jinDuDi' ></div>*/}
+                                                        {/*            </div>*/}
+                                                        {/*            <div className='borderYuan' style={{ position: "absolute" }}>*/}
+                                                        {/*                <div className={clsx("jinDuDi1Red")} style={{ width: "25%" }}></div>*/}
+                                                        {/*            </div>*/}
+                                                        {/*            <div style={{ position: "absolute", width: "100%", height: "0.6rem" }}>*/}
+                                                        {/*                <div className='flex justify-between items-center ' style={{ width: "100%", height: "0.6rem", padding: "0rem 0rem" }}>*/}
+                                                        {/*                    <div className='smallYuanDian'></div>*/}
+                                                        {/*                    <div className='smallYuanDianErrorBig'></div>*/}
+                                                        {/*                    <div className='smallYuanDian'></div>*/}
+                                                        {/*                    <div className='smallYuanDian'></div>*/}
+                                                        {/*                    <div className='smallYuanDian'></div>*/}
+                                                        {/*                </div>*/}
+                                                        {/*            </div>*/}
+                                                        {/*        </div>*/}
+                                                        {/*        <div style={{ width: "100%", margin: "0rem auto" }}>*/}
+                                                        {/*            <div className='flex justify-between items-center ' style={{ width: "100%" }}>*/}
+                                                        {/*                <div className=''>申请</div>*/}
+                                                        {/*                <div className='jinDuZiError'>审核</div>*/}
+                                                        {/*                <div className=''>寄送</div>*/}
+                                                        {/*                <div className=''>激活</div>*/}
+                                                        {/*                <div className=''>成功</div>*/}
+                                                        {/*            </div>*/}
+                                                        {/*        </div>*/}
+                                                        {/*    </div>*/}
+                                                        {/*</motion.div>*/}
+
+                                                        {/*<motion.div variants={item}*/}
+                                                        {/*    initial="hidden"*/}
+                                                        {/*    animate="show"*/}
+                                                        {/*    className='cardJianGe'*/}
+                                                        {/*>*/}
+                                                        {/*    <div className="responsive-div">*/}
+                                                        {/*        <div className="responsive-div-content card2Bg cardZhiDi" >*/}
+                                                        {/*            <div className='cardZhuangTaiDi'>*/}
+                                                        {/*                <div className='cardZhuangTai'>审核中</div>*/}
+                                                        {/*            </div>*/}
+                                                        {/*            <div className='cardNumber'>2489 8794 8894 7845</div>*/}
+                                                        {/*            <div className='cardBeiMian'>*/}
+                                                        {/*            </div>*/}
+                                                        {/*        </div>*/}
+                                                        {/*    </div>*/}
+
+                                                        {/*    <div className='mt-10'>*/}
+                                                        {/*        <div style={{ position: "relative", height: "1.2rem", width: "100%", margin: "0 auto" }}>*/}
+                                                        {/*            <div className='borderYuan' style={{ position: "absolute" }}>*/}
+                                                        {/*                <div className='jinDuDi' ></div>*/}
+                                                        {/*            </div>*/}
+                                                        {/*            <div className='borderYuan' style={{ position: "absolute" }}>*/}
+                                                        {/*                <div className={clsx("jinDuDi1")} style={{ width: "25%" }}></div>*/}
+                                                        {/*            </div>*/}
+                                                        {/*            <div style={{ position: "absolute", width: "100%", height: "0.6rem" }}>*/}
+                                                        {/*                <div className='flex justify-between items-center ' style={{ width: "100%", height: "0.6rem", padding: "0rem 0rem" }}>*/}
+                                                        {/*                    <div className='smallYuanDian'></div>*/}
+                                                        {/*                    <div className='smallYuanDianBig yuanDianAni'></div>*/}
+                                                        {/*                    <div className='smallYuanDian'></div>*/}
+                                                        {/*                    <div className='smallYuanDian'></div>*/}
+                                                        {/*                    <div className='smallYuanDian'></div>*/}
+                                                        {/*                </div>*/}
+                                                        {/*            </div>*/}
+                                                        {/*        </div>*/}
+                                                        {/*        <div style={{ width: "100%", margin: "0rem auto" }}>*/}
+                                                        {/*            <div className='flex justify-between items-center ' style={{ width: "100%" }}>*/}
+                                                        {/*                <div className=''>申请</div>*/}
+                                                        {/*                <div className='jinDuZi'>审核</div>*/}
+                                                        {/*                <div className=''>寄送</div>*/}
+                                                        {/*                <div className=''>激活</div>*/}
+                                                        {/*                <div className=''>成功</div>*/}
+                                                        {/*            </div>*/}
+                                                        {/*        </div>*/}
+                                                        {/*    </div>*/}
+                                                        {/*</motion.div>*/}
+
+                                                        <div className='tianJiaKaPian flex items-center pl-16' onClick={() => {
+                                                            setTabValue(1);
+                                                        }}>
+                                                            <img className='cardIconW' src="wallet/assets/images/card/jiaHao.png" alt="" />
+                                                            <div className='zhangDanZi' >{t('card_25')}</div>
+                                                        </div>
+
+                                                        {/* <div>
+                                                            <div className='text-16 mt-28 ml-10'>如何使用信用卡？</div>
+
+                                                            <StyledAccordion
+                                                                component={motion.div}
+                                                                variants={item}
+                                                                classes={{
+                                                                    root: clsx('FaqPage-panel shadow'),
+                                                                }}
+                                                            >
+                                                                <AccordionSummary
+                                                                    expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
+                                                                    sx={{ paddingLeft: "10px", paddingRight: "10px" }}
+                                                                >
+                                                                    <div className="flex items-center py-4 flex-grow" style={{ width: '100%' }}>
+                                                                        <FuseSvgIcon className="mr-8">
+                                                                            heroicons-outline:information-circle
+                                                                        </FuseSvgIcon>
+                                                                        线上付款，直接使用
+                                                                    </div>
+                                                                </AccordionSummary>
+
+                                                                <AccordionDetails style={{ paddingInline: "15px" }}>
+                                                                    <div> ① 线上付款时通常需要填写卡号、到期年月、安全码。 </div>
+                                                                    <img className='xszfSty' src="wallet/assets/images/card/xszf1.png" />
+                                                                    <div className='mt-28'> ② 将卡片的卡号填入付款页面 </div>
+                                                                    <img className='xszfSty2' src="wallet/assets/images/card/xszf2.png" />
+                                                                    <div className='mt-28'> ② 将卡片的有效年月填入付款页面 </div>
+                                                                    <img className='xszfSty2' src="wallet/assets/images/card/xszf3.png" />
+                                                                    <div className='mt-28'> ③ 将卡片的安全码填入付款页面 </div>
+                                                                    <img className='xszfSty2' src="wallet/assets/images/card/xszf4.png" />
+                                                                </AccordionDetails>
+                                                            </StyledAccordion>
+
+                                                            <StyledAccordion
+                                                                component={motion.div}
+                                                                variants={item}
+                                                                classes={{
+                                                                    root: clsx('FaqPage-panel shadow'),
+                                                                }}
+                                                            >
+                                                                <AccordionSummary
+                                                                    expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
+                                                                    sx={{ paddingLeft: "10px", paddingRight: "10px" }}
+                                                                >
+                                                                    <div className="flex items-center py-4 flex-grow" style={{ width: '100%' }}>
+                                                                        <FuseSvgIcon className="mr-8">
+                                                                            heroicons-outline:information-circle
+                                                                        </FuseSvgIcon>
+                                                                        绑定至电子钱包
+                                                                    </div>
+                                                                </AccordionSummary>
+
+                                                                <AccordionDetails style={{ paddingInline: "15px" }}>
+                                                                    <div>
+                                                                        <div> ① 打开电子钱包（如微信），选择添加卡片。 </div>
+                                                                        <img className='dzqbSty' src="wallet/assets/images/card/dzqb1.png" />
+                                                                        <div className='mt-28'> ② 填写beingFi信用卡的卡号。 </div>
+                                                                        <img className='xszfSty3' src="wallet/assets/images/card/dzqb2.png" />
+                                                                        <div className='mt-28'> ③ 填写卡片的有效年月及安全码。 </div>
+                                                                        <img className='xszfSty4' src="wallet/assets/images/card/dzqb3.png" />
+                                                                        <div className='mt-28'> ④ 添加成功后即可在微信付款时使用。</div>
+                                                                    </div>
+                                                                </AccordionDetails>
+                                                            </StyledAccordion>
+
+                                                            <StyledAccordion
+                                                                component={motion.div}
+                                                                variants={item}
+                                                                classes={{
+                                                                    root: clsx('FaqPage-panel shadow'),
+                                                                }}
+                                                            >
+                                                                <AccordionSummary
+                                                                    expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
+                                                                    sx={{ paddingLeft: "10px", paddingRight: "10px" }}
+                                                                >
+                                                                    <div className="flex items-center py-4 flex-grow" style={{ width: '100%' }}>
+                                                                        <FuseSvgIcon className="mr-8">
+                                                                            heroicons-outline:information-circle
+                                                                        </FuseSvgIcon>
+                                                                        绑定至手机，线下POS刷卡
+                                                                    </div>
+                                                                </AccordionSummary>
+
+                                                                <AccordionDetails style={{ paddingInline: "15px" }}>
+                                                                    <div>
+                                                                        <div> ① 打开iphone钱包，选择添加卡片。 </div>
+                                                                        <img className='xxzfSty1' src="wallet/assets/images/card/xxzf1.png" />
+                                                                        <div className='mt-28'> ② 选择添加其他卡。 </div>
+                                                                        <img className='xxzfSty2' src="wallet/assets/images/card/xxzf2.png" />
+                                                                        <div className='mt-28'> ③ 填写卡片的卡号。 </div>
+                                                                        <img className='xxzfSty3' src="wallet/assets/images/card/xxzf3.png" />
+                                                                        <div className='mt-28'> ④ 填写卡片的姓名、有效年月及安全码。</div>
+                                                                        <img className='xxzfSty4' src="wallet/assets/images/card/xxzf4.png" />
+                                                                        <div className='mt-28'> ⑤ 绑定成功后即可在线下使用。</div>
+                                                                        <img className='xxzfSty4' src="wallet/assets/images/card/xxzf5.jpg" />
+                                                                    </div>
+                                                                </AccordionDetails>
+                                                            </StyledAccordion>
+                                                        </div> */}
+                                                    </div>
+
+                                                }
+                                                {
+                                                    smallTabValue === 1 && <div>
+                                                        {cardList[3].map((cardItem) => {
+                                                            return (
+                                                                <motion.div
+                                                                    key={cardItem.id}
+                                                                    variants={item}
+                                                                    initial="hidden"
+                                                                    animate="show"
+                                                                    className='cardJianGe'
+                                                                >
+                                                                    <div className='flex justify-center container' style={{ position: "relative" }}>
+                                                                        <div className="responsive-div creditcard" id="responsive-div">
+                                                                            <div className={clsx("", fanZhuan && "xiaoShi")}>
+                                                                                <div className="responsive-div-content card4Bg cardZhiDi" onClick={() => {
+                                                                                }}  >
+                                                                                    <div className={clsx("cardNumber", kaBeiButton && "xiaoShi")}> <span id="cardNumberOne" >{cardItem?.userCreditNo?.replace(/(.{4})/g, '$1 ')}</span> </div>
+                                                                                    <div className='cardBeiMian'>
+                                                                                        <div className={clsx("", kaBeiButton && "xiaoShi")}>
                                                                                             <div className='kaBeiZi flex'>
                                                                                                 <img id="cardIconWOne"
-                                                                                                    onClick={(e) => handleImgClick(e, FanKa, cardItem)}
-                                                                                                    className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id={'zhangDanZiOne' + i} className='zhangDanZi'>{t('card_15')}</span>
+                                                                                                    onClick={(e) => handleImgClick(e, FanKa)}
+                                                                                                    className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id="zhangDanZiOne" className='zhangDanZi'>{t('card_15')}</span>
                                                                                             </div>
-                                                                                        )}
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
 
-                                                                        <div className={clsx("", !cardItem.showFrontCard && "xiaoShi")} >
-                                                                            <div className="responsive-div-content card41Bg cardZhiDi flipped2 alphaCard_1" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.backUrl})`, backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat' }} onClick={() => {
-                                                                            }}  >
-                                                                                <div className='cardAnQuanMa '>{cardItem.userCreditKey}</div>
-                                                                                <div className='cardBeiMian flipped2 '>
-                                                                                    <div className={clsx("", cardItem.kaBeiButton2 && "xiaoShi")}>
-                                                                                        <div className='kaBeiZi flex flipped2'>
-                                                                                            <img id={'cardIconWTwo' + i}
-                                                                                                onClick={(e) => handleImgClick(e, FanKaBei, cardItem)}
-                                                                                                className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id={'zhangDanZiTwo' + i} className='zhangDanZi'>{t('card_14')}</span>
+                                                                            <div className={clsx("", !fanZhuan && "xiaoShi")} >
+                                                                                <div className="responsive-div-content card41Bg cardZhiDi flipped2" onClick={() => {
+                                                                                }}  >
+                                                                                    <div className='cardBeiMian flipped2'>
+                                                                                        <div className={clsx("", kaBeiButton2 && "xiaoShi")}>
+                                                                                            <div className='kaBeiZi flex flipped2'>
+                                                                                                <img id="cardIconWTwo"
+                                                                                                    onClick={(e) => handleImgClick(e, FanKaBei)}
+                                                                                                    className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id="zhangDanZiTwo" className='zhangDanZi'>{t('card_14')}</span>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        {cardItem?.state == 9 && (
-                                                                            <div className='cardErrorBg'>
-                                                                                <div className='flex justify-center mt-28' style={{ width: "100%" }}>
-                                                                                    <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
-                                                                                    <div className='TanHaoCardZi'>
-                                                                                        {t('card_178')}
+                                                                    </div>
+
+                                                                    <div className='cardGongNengMyDi' style={{ position: "relative" }}>
+                                                                        <Accordion className='gongNengTan1' >
+                                                                            <AccordionSummary
+                                                                                expandIcon={<ExpandMoreIcon />}
+                                                                                aria-controls="panel1-content"
+                                                                                id="panel1-header"
+                                                                                className='gongNengTan2'
+                                                                            >
+                                                                                <div className='flex justify-between w-full'>
+                                                                                    <div className='flex'>
+                                                                                        <div className=''>{t('home_record_9')}</div>
+                                                                                        <div className='ml-8 yuEZi'>$50.00</div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div className='cardErrorZi'>{t('card_179')}</div>
-                                                                                {/* 
-                                                                                    <div className='cardErrorBtn txtColorTitleSmall' onClick={() => {
-                                                                                        changePhoneTab('security');
-                                                                                        history.push('/wallet/home/security', { tabValue: 4 })
+                                                                            </AccordionSummary>
+
+                                                                            <AccordionDetails className='gongNengTan3'>
+                                                                                <div className='flex justify-center'>
+                                                                                    <div className='gongNengLanW' onClick={() => {
+                                                                                        setOpenAnimateModal(true);
                                                                                     }} >
-                                                                                        联系客服
-                                                                                    </div> */}
-                                                                            </div>
-                                                                        )
-                                                                        }
-                                                                    </div>
-                                                                </div>
+                                                                                        <img className='gongNengTuBiao' src="wallet/assets/images/menu/guaShi.png"></img>
+                                                                                        <div className='gongNengZiW mt-4 text-14'>{t('card_31')}</div>
+                                                                                    </div>
+                                                                                    <div className='gongNengLanW' onClick={() => {
+                                                                                        setCurrentCardItem(cardItem)
+                                                                                        setOpenAnimateHuanKa(true);
+                                                                                    }}>
+                                                                                        <img className='gongNengTuBiao' src="wallet/assets/images/menu/gengHuanKaPian.png"></img>
+                                                                                        <div className='gongNengZiW mt-4 text-14'>{t('card_32')}</div>
+                                                                                    </div>
 
-                                                                <div className='cardGongNengMyDi' style={{ position: "relative" }}>
-                                                                    <Accordion className='gongNengTan1'
-                                                                    // disabled={cardItem?.state == 9}
-                                                                    >
-                                                                        <AccordionSummary
-                                                                            expandIcon={<ExpandMoreIcon />}
-                                                                            aria-controls="panel1-content"
-                                                                            id="panel1-header"
-                                                                            className='gongNengTan2'
-                                                                            onClick={() => {
-                                                                                // if (cardItem && cardItem.state == 9) return;
-                                                                                setCurrUserCardInfo(cardItem);
-                                                                            }}
-                                                                        >
-                                                                            <div className='flex justify-between w-full'>
-                                                                                <div className='flex'>
-                                                                                    <div className=''>{t('home_record_9')}</div>
-                                                                                    <div className='ml-8 yuEZi'>${cardItem.amount ?? '0.00'}</div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </AccordionSummary>
+                                                                                    <div className='gongNengLanW' onClick={() => {
+                                                                                        setOpenPassWordWindow(true)
+                                                                                        openPassWordFunc()
+                                                                                    }}>
+                                                                                        <img className='gongNengTuBiao' src="wallet/assets/images/menu/miMaGuanLi.png"></img>
+                                                                                        <div className='gongNengZiW mt-4 text-14'>{t('signIn_9')}</div>
+                                                                                    </div>
 
-                                                                        <AccordionDetails className='gongNengTan3'>
-                                                                            <div className='flex justify-center'>
-                                                                                <div className='gongNengLanW' onClick={() => {
-                                                                                    setOpenAnimateModal(true);
-                                                                                }} >
-                                                                                    <img className='gongNengTuBiao' src="wallet/assets/images/menu/guaShi.png"></img>
-                                                                                    <div className='gongNengZiW mt-4 text-14'>{t('card_31')}</div>
-                                                                                </div>
-                                                                                <div className='gongNengLanW' onClick={() => {
-                                                                                    setCurrentCardItem(cardItem)
-                                                                                    setOpenAnimateHuanKa(true);
-                                                                                }}>
-                                                                                    <img className='gongNengTuBiao' src="wallet/assets/images/menu/gengHuanKaPian.png"></img>
-                                                                                    <div className='gongNengZiW mt-4 text-14'>{t('card_32')}</div>
-                                                                                </div>
-
-                                                                                <div className='gongNengLanW' onClick={() => {
-                                                                                    setOpenPassWordWindow(true)
-                                                                                    openPassWordFunc()
-                                                                                }}>
-                                                                                    <img className='gongNengTuBiao' src="wallet/assets/images/menu/miMaGuanLi.png"></img>
-                                                                                    <div className='gongNengZiW mt-4 text-14'>{t('signIn_9')}</div>
-                                                                                </div>
-
-                                                                                <div className={clsx("gongNengLanW", cardItem && cardItem.state == 9 && "checkIsPhone")} onClick={() => {
-                                                                                    // setOpenBindWindow(true)
-                                                                                    // openBindFunc()
-                                                                                    if (cardItem && cardItem.state == 9) return;
-                                                                                    setOpenRecordWindow(true)
-                                                                                    setCardID(cardItem.id)
-                                                                                    setTransferFee(0)
-                                                                                    setMaxValue(0)
-                                                                                    setCardConfigID(cardItem.creditConfigId)
-                                                                                    openRecordFunc()
-                                                                                }}>
-                                                                                    <img className='gongNengTuBiao dingYueSty' src="wallet/assets/images/menu/huaZhuan.png"></img>
-                                                                                    <div className='gongNengZiW mt-4 text-14 dingYueSty'>{t('card_16')}</div>
-                                                                                </div>
-                                                                            </div>
-                                                                            {/*
-                                                                        <div className='mt-24 flex justify-center'>
-                                                                            <div className='gongNengLanW'>
-                                                                                <img className='gongNengTuBiao' src="wallet/assets/images/menu/daE.png"></img>
-                                                                                <div className='gongNengZiW mt-4 text-14'>大额预约</div>
-                                                                            </div>
-                                                                            <div className='gongNengLanW'>
-                                                                                <img className='gongNengTuBiao' src="wallet/assets/images/menu/bangDing.png"></img>
-                                                                                <div className='gongNengZiW mt-4 text-14'>解除订阅</div>
-                                                                            </div>
-                                                                            <div className='gongNengLanW'>
-                                                                                <img className='gongNengTuBiao' src="wallet/assets/images/menu/atm.png"></img>
-                                                                                <div className='gongNengZiW mt-4 text-14'>ATM/POS</div>
-                                                                            </div>
-                                                                        </div> */}
-
-                                                                        </AccordionDetails>
-                                                                    </Accordion>
-                                                                </div>
-                                                            </motion.div>
-                                                        )
-                                                    })}
-
-                                                    {/*<motion.div variants={item}*/}
-                                                    {/*    initial="hidden"*/}
-                                                    {/*    animate="show"*/}
-                                                    {/*    className='cardJianGe'*/}
-                                                    {/*>*/}
-                                                    {/*    <div className="responsive-div">*/}
-                                                    {/*        <div className="responsive-div-content card5Bg cardZhiDi" >*/}
-                                                    {/*            <div className='cardNumber'>2489 8794 8894 7845</div>*/}
-                                                    {/*            <div className='cardBeiMian'>*/}
-                                                    {/*            </div>*/}
-                                                    {/*        </div>*/}
-
-                                                    {/*        <div className='cardErrorBg'>*/}
-
-                                                    {/*            <div className='flex justify-center mt-16' style={{ width: "100%" }}>*/}
-                                                    {/*                <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />*/}
-                                                    {/*                <div className='TanHaoCardZi'>*/}
-                                                    {/*                    审核失败*/}
-                                                    {/*                </div>*/}
-                                                    {/*            </div>*/}
-                                                    {/*            <div className='cardErrorZi'>您填写的地址有误请重新修改！</div>*/}
-
-                                                    {/*            <div className='cardErrorBtn txtColorTitleSmall' onClick={() => {*/}
-                                                    {/*                changePhoneTab('security');*/}
-                                                    {/*                history.push('/wallet/home/security', { tabValue: 4 })*/}
-                                                    {/*            }} >*/}
-                                                    {/*                重新提交*/}
-                                                    {/*            </div>*/}
-                                                    {/*        </div>*/}
-                                                    {/*    </div>*/}
-
-
-                                                    {/*    <div className='mt-10'>*/}
-                                                    {/*        <div style={{ position: "relative", height: "1.2rem", width: "100%", margin: "0 auto" }}>*/}
-                                                    {/*            <div className='borderYuan' style={{ position: "absolute" }}>*/}
-                                                    {/*                <div className='jinDuDi' ></div>*/}
-                                                    {/*            </div>*/}
-                                                    {/*            <div className='borderYuan' style={{ position: "absolute" }}>*/}
-                                                    {/*                <div className={clsx("jinDuDi1Red")} style={{ width: "25%" }}></div>*/}
-                                                    {/*            </div>*/}
-                                                    {/*            <div style={{ position: "absolute", width: "100%", height: "0.6rem" }}>*/}
-                                                    {/*                <div className='flex justify-between items-center ' style={{ width: "100%", height: "0.6rem", padding: "0rem 0rem" }}>*/}
-                                                    {/*                    <div className='smallYuanDian'></div>*/}
-                                                    {/*                    <div className='smallYuanDianErrorBig'></div>*/}
-                                                    {/*                    <div className='smallYuanDian'></div>*/}
-                                                    {/*                    <div className='smallYuanDian'></div>*/}
-                                                    {/*                    <div className='smallYuanDian'></div>*/}
-                                                    {/*                </div>*/}
-                                                    {/*            </div>*/}
-                                                    {/*        </div>*/}
-                                                    {/*        <div style={{ width: "100%", margin: "0rem auto" }}>*/}
-                                                    {/*            <div className='flex justify-between items-center ' style={{ width: "100%" }}>*/}
-                                                    {/*                <div className=''>申请</div>*/}
-                                                    {/*                <div className='jinDuZiError'>审核</div>*/}
-                                                    {/*                <div className=''>寄送</div>*/}
-                                                    {/*                <div className=''>激活</div>*/}
-                                                    {/*                <div className=''>成功</div>*/}
-                                                    {/*            </div>*/}
-                                                    {/*        </div>*/}
-                                                    {/*    </div>*/}
-                                                    {/*</motion.div>*/}
-
-                                                    {/*<motion.div variants={item}*/}
-                                                    {/*    initial="hidden"*/}
-                                                    {/*    animate="show"*/}
-                                                    {/*    className='cardJianGe'*/}
-                                                    {/*>*/}
-                                                    {/*    <div className="responsive-div">*/}
-                                                    {/*        <div className="responsive-div-content card2Bg cardZhiDi" >*/}
-                                                    {/*            <div className='cardZhuangTaiDi'>*/}
-                                                    {/*                <div className='cardZhuangTai'>审核中</div>*/}
-                                                    {/*            </div>*/}
-                                                    {/*            <div className='cardNumber'>2489 8794 8894 7845</div>*/}
-                                                    {/*            <div className='cardBeiMian'>*/}
-                                                    {/*            </div>*/}
-                                                    {/*        </div>*/}
-                                                    {/*    </div>*/}
-
-                                                    {/*    <div className='mt-10'>*/}
-                                                    {/*        <div style={{ position: "relative", height: "1.2rem", width: "100%", margin: "0 auto" }}>*/}
-                                                    {/*            <div className='borderYuan' style={{ position: "absolute" }}>*/}
-                                                    {/*                <div className='jinDuDi' ></div>*/}
-                                                    {/*            </div>*/}
-                                                    {/*            <div className='borderYuan' style={{ position: "absolute" }}>*/}
-                                                    {/*                <div className={clsx("jinDuDi1")} style={{ width: "25%" }}></div>*/}
-                                                    {/*            </div>*/}
-                                                    {/*            <div style={{ position: "absolute", width: "100%", height: "0.6rem" }}>*/}
-                                                    {/*                <div className='flex justify-between items-center ' style={{ width: "100%", height: "0.6rem", padding: "0rem 0rem" }}>*/}
-                                                    {/*                    <div className='smallYuanDian'></div>*/}
-                                                    {/*                    <div className='smallYuanDianBig yuanDianAni'></div>*/}
-                                                    {/*                    <div className='smallYuanDian'></div>*/}
-                                                    {/*                    <div className='smallYuanDian'></div>*/}
-                                                    {/*                    <div className='smallYuanDian'></div>*/}
-                                                    {/*                </div>*/}
-                                                    {/*            </div>*/}
-                                                    {/*        </div>*/}
-                                                    {/*        <div style={{ width: "100%", margin: "0rem auto" }}>*/}
-                                                    {/*            <div className='flex justify-between items-center ' style={{ width: "100%" }}>*/}
-                                                    {/*                <div className=''>申请</div>*/}
-                                                    {/*                <div className='jinDuZi'>审核</div>*/}
-                                                    {/*                <div className=''>寄送</div>*/}
-                                                    {/*                <div className=''>激活</div>*/}
-                                                    {/*                <div className=''>成功</div>*/}
-                                                    {/*            </div>*/}
-                                                    {/*        </div>*/}
-                                                    {/*    </div>*/}
-                                                    {/*</motion.div>*/}
-
-                                                    <div className='tianJiaKaPian flex items-center pl-16' onClick={() => {
-                                                        setTabValue(1);
-                                                    }}>
-                                                        <img className='cardIconW' src="wallet/assets/images/card/jiaHao.png" alt="" />
-                                                        <div className='zhangDanZi' >{t('card_25')}</div>
-                                                    </div>
-
-                                                    {/* <div>
-                                                        <div className='text-16 mt-28 ml-10'>如何使用信用卡？</div>
-
-                                                        <StyledAccordion
-                                                            component={motion.div}
-                                                            variants={item}
-                                                            classes={{
-                                                                root: clsx('FaqPage-panel shadow'),
-                                                            }}
-                                                        >
-                                                            <AccordionSummary
-                                                                expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
-                                                                sx={{ paddingLeft: "10px", paddingRight: "10px" }}
-                                                            >
-                                                                <div className="flex items-center py-4 flex-grow" style={{ width: '100%' }}>
-                                                                    <FuseSvgIcon className="mr-8">
-                                                                        heroicons-outline:information-circle
-                                                                    </FuseSvgIcon>
-                                                                    线上付款，直接使用
-                                                                </div>
-                                                            </AccordionSummary>
-
-                                                            <AccordionDetails style={{ paddingInline: "15px" }}>
-                                                                <div> ① 线上付款时通常需要填写卡号、到期年月、安全码。 </div>
-                                                                <img className='xszfSty' src="wallet/assets/images/card/xszf1.png" />
-                                                                <div className='mt-28'> ② 将卡片的卡号填入付款页面 </div>
-                                                                <img className='xszfSty2' src="wallet/assets/images/card/xszf2.png" />
-                                                                <div className='mt-28'> ② 将卡片的有效年月填入付款页面 </div>
-                                                                <img className='xszfSty2' src="wallet/assets/images/card/xszf3.png" />
-                                                                <div className='mt-28'> ③ 将卡片的安全码填入付款页面 </div>
-                                                                <img className='xszfSty2' src="wallet/assets/images/card/xszf4.png" />
-                                                            </AccordionDetails>
-                                                        </StyledAccordion>
-
-                                                        <StyledAccordion
-                                                            component={motion.div}
-                                                            variants={item}
-                                                            classes={{
-                                                                root: clsx('FaqPage-panel shadow'),
-                                                            }}
-                                                        >
-                                                            <AccordionSummary
-                                                                expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
-                                                                sx={{ paddingLeft: "10px", paddingRight: "10px" }}
-                                                            >
-                                                                <div className="flex items-center py-4 flex-grow" style={{ width: '100%' }}>
-                                                                    <FuseSvgIcon className="mr-8">
-                                                                        heroicons-outline:information-circle
-                                                                    </FuseSvgIcon>
-                                                                    绑定至电子钱包
-                                                                </div>
-                                                            </AccordionSummary>
-
-                                                            <AccordionDetails style={{ paddingInline: "15px" }}>
-                                                                <div>
-                                                                    <div> ① 打开电子钱包（如微信），选择添加卡片。 </div>
-                                                                    <img className='dzqbSty' src="wallet/assets/images/card/dzqb1.png" />
-                                                                    <div className='mt-28'> ② 填写beingFi信用卡的卡号。 </div>
-                                                                    <img className='xszfSty3' src="wallet/assets/images/card/dzqb2.png" />
-                                                                    <div className='mt-28'> ③ 填写卡片的有效年月及安全码。 </div>
-                                                                    <img className='xszfSty4' src="wallet/assets/images/card/dzqb3.png" />
-                                                                    <div className='mt-28'> ④ 添加成功后即可在微信付款时使用。</div>
-                                                                </div>
-                                                            </AccordionDetails>
-                                                        </StyledAccordion>
-
-                                                        <StyledAccordion
-                                                            component={motion.div}
-                                                            variants={item}
-                                                            classes={{
-                                                                root: clsx('FaqPage-panel shadow'),
-                                                            }}
-                                                        >
-                                                            <AccordionSummary
-                                                                expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
-                                                                sx={{ paddingLeft: "10px", paddingRight: "10px" }}
-                                                            >
-                                                                <div className="flex items-center py-4 flex-grow" style={{ width: '100%' }}>
-                                                                    <FuseSvgIcon className="mr-8">
-                                                                        heroicons-outline:information-circle
-                                                                    </FuseSvgIcon>
-                                                                    绑定至手机，线下POS刷卡
-                                                                </div>
-                                                            </AccordionSummary>
-
-                                                            <AccordionDetails style={{ paddingInline: "15px" }}>
-                                                                <div>
-                                                                    <div> ① 打开iphone钱包，选择添加卡片。 </div>
-                                                                    <img className='xxzfSty1' src="wallet/assets/images/card/xxzf1.png" />
-                                                                    <div className='mt-28'> ② 选择添加其他卡。 </div>
-                                                                    <img className='xxzfSty2' src="wallet/assets/images/card/xxzf2.png" />
-                                                                    <div className='mt-28'> ③ 填写卡片的卡号。 </div>
-                                                                    <img className='xxzfSty3' src="wallet/assets/images/card/xxzf3.png" />
-                                                                    <div className='mt-28'> ④ 填写卡片的姓名、有效年月及安全码。</div>
-                                                                    <img className='xxzfSty4' src="wallet/assets/images/card/xxzf4.png" />
-                                                                    <div className='mt-28'> ⑤ 绑定成功后即可在线下使用。</div>
-                                                                    <img className='xxzfSty4' src="wallet/assets/images/card/xxzf5.jpg" />
-                                                                </div>
-                                                            </AccordionDetails>
-                                                        </StyledAccordion>
-                                                    </div> */}
-                                                </div>
-
-                                            }
-                                            {
-                                                smallTabValue === 1 && <div>
-                                                    {cardList[3].map((cardItem) => {
-                                                        return (
-                                                            <motion.div
-                                                                key={cardItem.id}
-                                                                variants={item}
-                                                                initial="hidden"
-                                                                animate="show"
-                                                                className='cardJianGe'
-                                                            >
-                                                                <div className='flex justify-center container' style={{ position: "relative" }}>
-                                                                    <div className="responsive-div creditcard" id="responsive-div">
-                                                                        <div className={clsx("", fanZhuan && "xiaoShi")}>
-                                                                            <div className="responsive-div-content card4Bg cardZhiDi" onClick={() => {
-                                                                            }}  >
-                                                                                <div className={clsx("cardNumber", kaBeiButton && "xiaoShi")}> <span id="cardNumberOne" >{cardItem?.userCreditNo?.replace(/(.{4})/g, '$1 ')}</span> </div>
-                                                                                <div className='cardBeiMian'>
-                                                                                    <div className={clsx("", kaBeiButton && "xiaoShi")}>
-                                                                                        <div className='kaBeiZi flex'>
-                                                                                            <img id="cardIconWOne"
-                                                                                                onClick={(e) => handleImgClick(e, FanKa)}
-                                                                                                className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id="zhangDanZiOne" className='zhangDanZi'>{t('card_15')}</span>
-                                                                                        </div>
+                                                                                    <div className='gongNengLanW' onClick={() => {
+                                                                                        // setOpenBindWindow(true)
+                                                                                        // openBindFunc()
+                                                                                        if (cardItem && cardItem.state == 9) return;
+                                                                                        setOpenRecordWindow(true)
+                                                                                        setCardID(cardItem.id)
+                                                                                        setCardConfigID(cardItem.creditConfigId)
+                                                                                        openRecordFunc()
+                                                                                    }}>
+                                                                                        <img className='gongNengTuBiao dingYueSty' src="wallet/assets/images/menu/huaZhuan.png"></img>
+                                                                                        <div className='gongNengZiW mt-4 text-14 dingYueSty'>{t('card_16')}</div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div className={clsx("", !fanZhuan && "xiaoShi")} >
-                                                                            <div className="responsive-div-content card41Bg cardZhiDi flipped2" onClick={() => {
-                                                                            }}  >
-                                                                                <div className='cardBeiMian flipped2'>
-                                                                                    <div className={clsx("", kaBeiButton2 && "xiaoShi")}>
-                                                                                        <div className='kaBeiZi flex flipped2'>
-                                                                                            <img id="cardIconWTwo"
-                                                                                                onClick={(e) => handleImgClick(e, FanKaBei)}
-                                                                                                className='cardIconW' src="wallet/assets/images/card/yanJing.png" alt="" /><span id="zhangDanZiTwo" className='zhangDanZi'>{t('card_14')}</span>
-                                                                                        </div>
-                                                                                    </div>
+                                                                                {/*
+                                                                            <div className='mt-24 flex justify-center'>
+                                                                                <div className='gongNengLanW'>
+                                                                                    <img className='gongNengTuBiao' src="wallet/assets/images/menu/daE.png"></img>
+                                                                                    <div className='gongNengZiW mt-4 text-14'>大额预约</div>
                                                                                 </div>
-                                                                            </div>
-                                                                        </div>
+                                                                                <div className='gongNengLanW'>
+                                                                                    <img className='gongNengTuBiao' src="wallet/assets/images/menu/bangDing.png"></img>
+                                                                                    <div className='gongNengZiW mt-4 text-14'>解除订阅</div>
+                                                                                </div>
+                                                                                <div className='gongNengLanW'>
+                                                                                    <img className='gongNengTuBiao' src="wallet/assets/images/menu/atm.png"></img>
+                                                                                    <div className='gongNengZiW mt-4 text-14'>ATM/POS</div>
+                                                                                </div>
+                                                                            </div> */}
+
+                                                                            </AccordionDetails>
+                                                                        </Accordion>
                                                                     </div>
-                                                                </div>
+                                                                </motion.div>
+                                                            )
+                                                        })}
 
-                                                                <div className='cardGongNengMyDi' style={{ position: "relative" }}>
-                                                                    <Accordion className='gongNengTan1' >
-                                                                        <AccordionSummary
-                                                                            expandIcon={<ExpandMoreIcon />}
-                                                                            aria-controls="panel1-content"
-                                                                            id="panel1-header"
-                                                                            className='gongNengTan2'
-                                                                        >
-                                                                            <div className='flex justify-between w-full'>
-                                                                                <div className='flex'>
-                                                                                    <div className=''>{t('home_record_9')}</div>
-                                                                                    <div className='ml-8 yuEZi'>$50.00</div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </AccordionSummary>
-
-                                                                        <AccordionDetails className='gongNengTan3'>
-                                                                            <div className='flex justify-center'>
-                                                                                <div className='gongNengLanW' onClick={() => {
-                                                                                    setOpenAnimateModal(true);
-                                                                                }} >
-                                                                                    <img className='gongNengTuBiao' src="wallet/assets/images/menu/guaShi.png"></img>
-                                                                                    <div className='gongNengZiW mt-4 text-14'>{t('card_31')}</div>
-                                                                                </div>
-                                                                                <div className='gongNengLanW' onClick={() => {
-                                                                                    setCurrentCardItem(cardItem)
-                                                                                    setOpenAnimateHuanKa(true);
-                                                                                }}>
-                                                                                    <img className='gongNengTuBiao' src="wallet/assets/images/menu/gengHuanKaPian.png"></img>
-                                                                                    <div className='gongNengZiW mt-4 text-14'>{t('card_32')}</div>
-                                                                                </div>
-
-                                                                                <div className='gongNengLanW' onClick={() => {
-                                                                                    setOpenPassWordWindow(true)
-                                                                                    openPassWordFunc()
-                                                                                }}>
-                                                                                    <img className='gongNengTuBiao' src="wallet/assets/images/menu/miMaGuanLi.png"></img>
-                                                                                    <div className='gongNengZiW mt-4 text-14'>{t('signIn_9')}</div>
-                                                                                </div>
-
-                                                                                <div className='gongNengLanW' onClick={() => {
-                                                                                    // setOpenBindWindow(true)
-                                                                                    // openBindFunc()
-                                                                                    if (cardItem && cardItem.state == 9) return;
-                                                                                    setOpenRecordWindow(true)
-                                                                                    setCardID(cardItem.id)
-                                                                                    setCardConfigID(cardItem.creditConfigId)
-                                                                                    openRecordFunc()
-                                                                                }}>
-                                                                                    <img className='gongNengTuBiao dingYueSty' src="wallet/assets/images/menu/huaZhuan.png"></img>
-                                                                                    <div className='gongNengZiW mt-4 text-14 dingYueSty'>{t('card_16')}</div>
-                                                                                </div>
-                                                                            </div>
-                                                                            {/*
-                                                                        <div className='mt-24 flex justify-center'>
-                                                                            <div className='gongNengLanW'>
-                                                                                <img className='gongNengTuBiao' src="wallet/assets/images/menu/daE.png"></img>
-                                                                                <div className='gongNengZiW mt-4 text-14'>大额预约</div>
-                                                                            </div>
-                                                                            <div className='gongNengLanW'>
-                                                                                <img className='gongNengTuBiao' src="wallet/assets/images/menu/bangDing.png"></img>
-                                                                                <div className='gongNengZiW mt-4 text-14'>解除订阅</div>
-                                                                            </div>
-                                                                            <div className='gongNengLanW'>
-                                                                                <img className='gongNengTuBiao' src="wallet/assets/images/menu/atm.png"></img>
-                                                                                <div className='gongNengZiW mt-4 text-14'>ATM/POS</div>
-                                                                            </div>
-                                                                        </div> */}
-
-                                                                        </AccordionDetails>
-                                                                    </Accordion>
-                                                                </div>
-                                                            </motion.div>
-                                                        )
-                                                    })}
-
-                                                    <div className='tianJiaKaPian flex items-center pl-16' onClick={() => {
-                                                        setTabValue(1);
-                                                    }}>
-                                                        <img className='cardIconW' src="wallet/assets/images/card/jiaHao.png" alt="" />
-                                                        <div className='zhangDanZi' >{t('card_25')}</div>
+                                                        <div className='tianJiaKaPian flex items-center pl-16' onClick={() => {
+                                                            setTabValue(1);
+                                                        }}>
+                                                            <img className='cardIconW' src="wallet/assets/images/card/jiaHao.png" alt="" />
+                                                            <div className='zhangDanZi' >{t('card_25')}</div>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                }
+                                            </div>
                                             }
                                         </div>
-                                        }
-                                    </div>
                                 </div>
+                                }
                             </div>
                         }
 

@@ -745,8 +745,8 @@ function Fiat(props) {
     };
 
     const closePinFunc = () => {
-        document.getElementById('PINSty').classList.remove('PinMoveAni');
-        document.getElementById('PINSty').classList.add('PinMoveOut');
+        document.getElementById('PINSty') &&  document.getElementById('PINSty').classList && document.getElementById('PINSty').classList.remove('PinMoveAni');
+        document.getElementById('PINSty') &&  document.getElementById('PINSty').classList && document.getElementById('PINSty').classList.add('PinMoveOut');
         setTimeout(() => {
             setOpenPinWindow(false);
             setOpenSuccess(true);
