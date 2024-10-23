@@ -133,7 +133,7 @@ function Card(props) {
     const [correctPin, setCorrectPin] = useState(false);
     const hasAuthGoogle = userData.userInfo?.hasAuthGoogle;
     const hasAuthEmail = userData.userInfo?.bindEmail;
-    const hasAuthPhone =  userData.userInfo?.bindMobile;
+    const hasAuthPhone = userData.userInfo?.bindMobile;
     const [twiceVerifyType, setTwiceVerifyType] = useState(0);
     const [typeBinded, setTypeBined] = useState(false);
     const [openYanZheng, setOpenYanZheng] = useState(false);
@@ -1003,7 +1003,7 @@ function Card(props) {
             chain: 'trc',
             amount: transferMoney,
             checkCode: googleCode,
-            codeType: twiceVerifyType ===0 ? 2 :  twiceVerifyType ===1 ? 1 : 0
+            codeType: twiceVerifyType === 0 ? 2 : twiceVerifyType === 1 ? 1 : 0
         })).then((res) => {
             setIsLoadingBtn(false)
             let result = res.payload
@@ -1018,7 +1018,7 @@ function Card(props) {
                 //     return;
                 // }
                 setTwiceVerifyType(0);
-                setTypeBined(hasAuthEmail ? true: false);
+                setTypeBined(hasAuthEmail ? true : false);
                 // if (!hasAuthGoogle) {
                 //     closePinFunc()
                 //     setOpenAnimateModal(true);
@@ -1127,7 +1127,7 @@ function Card(props) {
         setOpenKyc(false)
     }
 
-    const reciveCode = async()=> {
+    const reciveCode = async () => {
         let sendRes = {};
         if (twiceVerifyType === 0) {
             const data = {
@@ -1145,8 +1145,8 @@ function Card(props) {
         }
     }
 
-    const bindTwiceVerifyType = () =>{
-        if(twiceVerifyType === 0 || twiceVerifyType === 1){
+    const bindTwiceVerifyType = () => {
+        if (twiceVerifyType === 0 || twiceVerifyType === 1) {
             closeGoogleCodeFunc()
             closePinFunc()
             setOpenKyc(true)
@@ -2283,8 +2283,7 @@ function Card(props) {
                     </div>
                 </Box>
 
-                <div className='flex mt-16 mb-28 px-15 position-re' >
-
+                <div className='flex mt-16 mb-20 px-15 position-re' style={{ height: "40px" }} >
                     <LoadingButton
                         disabled={false}
                         className="boxCardBtn position-ab"
@@ -3063,15 +3062,15 @@ function Card(props) {
                         {/* <div className='PINTitle'>{t('card_176')}</div> */}
                         <div className='flex justify-between'>
                             <div
-                                onClick={() => { setTwiceVerifyType(0); setTypeBined(hasAuthEmail? true: false) }}
-                                className={clsx('selectPin',  twiceVerifyType=== 0 && 'activePinZi')}
+                                onClick={() => { setTwiceVerifyType(0); setTypeBined(hasAuthEmail ? true : false) }}
+                                className={clsx('selectPin', twiceVerifyType === 0 && 'activePinZi')}
                             >
                                 <img style={{ width: '2rem', borderRadius: '0.5rem', float: "left" }} src="wallet/assets/images/menu/email.png" alt="" />
                                 <div style={{ float: "left" }} className="px-6">{t('signIn_5')} </div>
                             </div>
 
                             <div
-                                onClick={() => { setTwiceVerifyType(1); setTypeBined(hasAuthPhone? true: false)}}
+                                onClick={() => { setTwiceVerifyType(1); setTypeBined(hasAuthPhone ? true : false) }}
                                 className={clsx('selectPin', twiceVerifyType === 1 && 'activePinZi')}
                             >
                                 <img style={{ width: '2rem', borderRadius: '0.5rem', float: "left" }} src="wallet/assets/images/menu/phone.png" alt="" />
@@ -3079,7 +3078,7 @@ function Card(props) {
                             </div>
 
                             <div
-                                onClick={() => { setTwiceVerifyType(2);setTypeBined(hasAuthGoogle? true: false) }}
+                                onClick={() => { setTwiceVerifyType(2); setTypeBined(hasAuthGoogle ? true : false) }}
                                 className={clsx('selectPin', twiceVerifyType === 2 && 'activePinZi')}
                             >
                                 <img style={{ width: '2rem', borderRadius: '0.5rem', float: "left" }} src="wallet/assets/images/menu/google.png" alt="" />
@@ -3087,10 +3086,10 @@ function Card(props) {
                             </div>
                         </div>
 
-                        { typeBinded ? ( (twiceVerifyType == 0 ||  twiceVerifyType == 1 ) ? 
-                            <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> 发送至 <span style={{ color:"#909fb4" }}>{ twiceVerifyType ===0 ? `邮箱 ${userData?.userInfo?.email}` : `手机号 ${ '+' + userData?.userInfo?.nation + userData?.userInfo?.phone}`}</span> <span style={{ color:"#2dd4bf", textDecoration:"underline"}}  onClick={ ()=> reciveCode()}>接收</span> 
-                            </div>: <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> 请在google验证器查看</div>)
-                            : <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> 您还没有绑定{ twiceVerifyType ===0 ? '邮箱' :  twiceVerifyType ===1 ? '手机号': 'Google验证' } <span style={{ color:"#2dd4bf", textDecoration:"underline" }} onClick={ ()=> bindTwiceVerifyType()} >立即绑定</span> </div>
+                        {typeBinded ? ((twiceVerifyType == 0 || twiceVerifyType == 1) ?
+                            <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}> 发送至 <span style={{ color: "#909fb4" }}>{twiceVerifyType === 0 ? `邮箱 ${userData?.userInfo?.email}` : `手机号 ${'+' + userData?.userInfo?.nation + userData?.userInfo?.phone}`}</span> <span style={{ color: "#2dd4bf", textDecoration: "underline" }} onClick={() => reciveCode()}>接收</span>
+                            </div> : <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}> 请在google验证器查看</div>)
+                            : <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}> 您还没有绑定{twiceVerifyType === 0 ? '邮箱' : twiceVerifyType === 1 ? '手机号' : 'Google验证'} <span style={{ color: "#2dd4bf", textDecoration: "underline" }} onClick={() => bindTwiceVerifyType()} >立即绑定</span> </div>
                         }
 
                         <div className='flex justify-between mt-32 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
