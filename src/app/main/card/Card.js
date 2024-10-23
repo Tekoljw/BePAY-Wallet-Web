@@ -47,6 +47,8 @@ import { centerGetTokenBalanceList, userProfile, sendEmail, sendSms } from "app/
 import { centerGetUserFiat } from "app/store/wallet/walletThunk";
 import moment from 'moment';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
+import RetiedEmail from "../login/RetiedEmail";
+import RetiedPhone from "../login/RetiedPhone";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -2234,7 +2236,7 @@ function Card(props) {
                     }}   >
                         <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                     </div>
-                    <RetiedEmail backPage={ backPageEvt()}/>
+                    <RetiedEmail backPage={ ()=> backPageEvt()}/>
                     <div style={{ height: "5rem" }}></div>
                 </motion.div>
             </div>}
@@ -2253,7 +2255,7 @@ function Card(props) {
                     }}   >
                         <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                     </div>
-                    <RetiedPhone backPage={ backPageEvt()}/>
+                    <RetiedPhone backPage={ ()=> backPageEvt()}/>
                     <div style={{ height: "5rem" }}></div>
                 </motion.div>
             </div>}
@@ -2340,7 +2342,7 @@ function Card(props) {
                         {t('card_108')}
                     </div>
                 </Box>
-                <div style={{ textAlign: "center", padding: "0rem 1.5rem" }}>{t('home_borrow_18')}: 2U</div>
+                <div style={{ textAlign: "center", padding: "0rem 1.5rem", color: '#0D9488', fontWeight: 600 }}>{t('home_borrow_18')}: 2 USD</div>
 
                 <div className='flex mt-16 mb-20 px-15 position-re' style={{ height: "40px" }} >
                     <LoadingButton
