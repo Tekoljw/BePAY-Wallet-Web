@@ -53,7 +53,8 @@ import InputLabel from '@mui/material/InputLabel';
 import FuseLoading from '@fuse/core/FuseLoading';
 import { fontSize } from '@mui/system';
 import userLoginType from "../../../define/userLoginType";
-import Kyc from "../../kyc/Kyc";
+import RetiedEmail from "../../login/RetiedEmail";
+import RetiedPhone from "../../login/RetiedPhone";
 
 
 const container = {
@@ -129,6 +130,8 @@ function Fiat(props) {
     const [googleCode, setGoogleCode] = useState('');
     const [openSuccess, setOpenSuccess] = useState(true);
     const [chuKuanState, setChuKuanState] = useState(false);
+    const [openBindEmail, setOpenBindEmail] = useState(false);
+    const [openBindPhone, setOpenBindPhone] = useState(false);
 
     const startScanQRCode = () => {
         openScan((result, err) => {
@@ -893,10 +896,15 @@ function Fiat(props) {
     }
 
     const bindTwiceVerifyType = () =>{
-        if(twiceVerifyType === 0 || twiceVerifyType === 1){
+        if(twiceVerifyType === 0){
             closeGoogleCodeFunc()
             closePinFunc()
-            setOpenKyc(true)
+            setOpenBindEmail(true)
+            return
+        } else if(twiceVerifyType === 1){
+            closeGoogleCodeFunc()
+            closePinFunc()
+            setOpenBindPhone(true)
             return
         } else {
             closeGoogleCodeFunc()
@@ -906,8 +914,9 @@ function Fiat(props) {
         }
     }
 
-    const backCardPageEvt = () => {
-        setOpenKyc(false);
+    const backPageEvt = () => {
+        setOpenBindPhone(false)
+        setOpenBindEmail(false);
         dispatch(userProfile());
         setTypeBined(true);
         myFunction;
@@ -1922,7 +1931,7 @@ function Fiat(props) {
                     </div>
                 </BootstrapDialog>
 
-                {openKyc && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
+                {openBindEmail && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
                     <motion.div
                         variants={container}
                         initial="hidden"
@@ -1931,12 +1940,31 @@ function Fiat(props) {
                         id="topGo"
                     >
                         <div className='flex mb-10' onClick={() => {
-                            setOpenKyc(false);
+                            setOpenBindEmail(false);
                             myFunction;
                         }}   >
                             <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                         </div>
-                        <Kyc backCardPage={backCardPageEvt} />
+                        <RetiedEmail backPage={ backPageEvt()}/>
+                        <div style={{ height: "5rem" }}></div>
+                    </motion.div>
+                </div>}
+
+                {openBindPhone && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
+                    <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className='mt-12'
+                        id="topGo"
+                    >
+                        <div className='flex mb-10' onClick={() => {
+                            setOpenBindPhone(false);
+                            myFunction;
+                        }}   >
+                            <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
+                        </div>
+                        <RetiedPhone backPage={ backPageEvt()}/>
                         <div style={{ height: "5rem" }}></div>
                     </motion.div>
                 </div>}

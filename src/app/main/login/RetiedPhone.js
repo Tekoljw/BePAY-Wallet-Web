@@ -9,7 +9,8 @@ import Paper from '@mui/material/Paper';
 import { useDispatch, useSelector} from 'react-redux';
 import {
     bindPhone,
-    changePhone, sendSms, getUserData
+    changePhone, sendSms, getUserData,
+    userProfile
 } from '../../store/user/userThunk';
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel/InputLabel";
@@ -80,11 +81,15 @@ function RetiedPhone() {
     async function sendCode() {
         setSelectedCountryCode(control._formValues.nationCode);
         const data = {
-            codeType: userData && userData.userInfo && userData.userInfo.bindMobile ? 5: 10,
+            codeType: userData && userData.userInfo && userData.userInfo.bindMobile ? 5: 5,
             nationCode: control._formValues.nationCode,
             phone: control._formValues.phone,
         };
         const sendRes = await dispatch(sendSms(data));
+        if (!userData.userInfo.bindMobile) {
+            props.backPage()
+        }
+        dispatch(userProfile());
         if (sendRes.payload) {
             setTime(60)
         }

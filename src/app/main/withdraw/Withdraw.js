@@ -54,7 +54,9 @@ import Enable2FA from "../2fa/Enable2FA";
 import FuseLoading from '@fuse/core/FuseLoading';
 import { selectCurrentLanguage } from "app/store/i18nSlice";
 import userLoginType from "../../define/userLoginType";
-import Kyc from "../kyc/Kyc";
+import RetiedEmail from "../login/RetiedEmail";
+import RetiedPhone from "../login/RetiedPhone";
+
 
 const container = {
     show: {
@@ -181,8 +183,8 @@ function Withdraw(props) {
     const [tiJiaoState, setTiJiaoState] = useState(0);
     const [twiceVerifyType, setTwiceVerifyType] = useState(0);
     const [typeBinded, setTypeBined] = useState(false);
-    const [openKyc, setOpenKyc] = useState(false);
-
+    const [openBindEmail, setOpenBindEmail] = useState(false);
+    const [openBindPhone, setOpenBindPhone] = useState(false);
     const handleChangeInputVal = (prop, value) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
         if (prop == 'amount' && event.target.value != '' && event.target.value != 0) {
@@ -1011,10 +1013,15 @@ function Withdraw(props) {
     }
 
     const bindTwiceVerifyType = () =>{
-        if(twiceVerifyType === 0 || twiceVerifyType === 1){
+        if(twiceVerifyType === 0){
             closeGoogleCodeFunc()
             closePinFunc()
-            setOpenKyc(true)
+            setOpenBindEmail(true)
+            return
+        } else if(twiceVerifyType === 1){
+            closeGoogleCodeFunc()
+            closePinFunc()
+            setOpenBindPhone(true)
             return
         } else {
             closeGoogleCodeFunc()
@@ -1024,8 +1031,9 @@ function Withdraw(props) {
         }
     }
 
-    const backCardPageEvt = () => {
-        setOpenKyc(false);
+    const backPageEvt = () => {
+        setOpenBindPhone(false)
+        setOpenBindEmail(false);
         dispatch(userProfile());
         setTypeBined(true);
         myFunction;
@@ -2256,7 +2264,7 @@ function Withdraw(props) {
                 </div>
             </BootstrapDialog>
 
-            {openKyc && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
+            {openBindEmail && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
                 <motion.div
                     variants={container}
                     initial="hidden"
@@ -2265,12 +2273,31 @@ function Withdraw(props) {
                     id="topGo"
                 >
                     <div className='flex mb-10' onClick={() => {
-                        setOpenKyc(false);
+                        setOpenBindEmail(false);
                         myFunction;
                     }}   >
                         <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                     </div>
-                    <Kyc backCardPage={backCardPageEvt} />
+                    <RetiedEmail backPage={ backPageEvt()}/>
+                    <div style={{ height: "5rem" }}></div>
+                </motion.div>
+            </div>}
+
+            {openBindPhone && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
+                    className='mt-12'
+                    id="topGo"
+                >
+                    <div className='flex mb-10' onClick={() => {
+                        setOpenBindPhone(false);
+                        myFunction;
+                    }}   >
+                        <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
+                    </div>
+                    <RetiedPhone backPage={ backPageEvt()}/>
                     <div style={{ height: "5rem" }}></div>
                 </motion.div>
             </div>}

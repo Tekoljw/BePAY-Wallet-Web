@@ -79,6 +79,10 @@ function RetiedEmail() {
             data.codeType = 11
         }
         const sendRes = await dispatch(sendEmail(data));
+        if (!userData.userInfo.bindEmail) {
+            props.backPage()
+        }
+        dispatch(userProfile());
         if (sendRes.payload) {
             setTime(60)
         }
