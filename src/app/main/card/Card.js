@@ -498,8 +498,8 @@ function Card(props) {
     };
 
     const closeChangeBi = () => {
-        document.getElementById('openChangeBi').classList.remove('PinMoveAni');
-        document.getElementById('openChangeBi').classList.add('PinMoveOut');
+        document.getElementById('openChangeBi') && document.getElementById('openChangeBi').classList && document.getElementById('openChangeBi').classList.remove('PinMoveAni');
+        document.getElementById('openChangeBi') && document.getElementById('openChangeBi').classList && document.getElementById('openChangeBi').classList.add('PinMoveOut');
         setTimeout(() => {
             setOpenChangeBi(false)
         }, 300);
@@ -508,7 +508,7 @@ function Card(props) {
     const openChangeBiFunc = () => {
         setOpenChangeBi(true);
         setTimeout(() => {
-            document.getElementById('openChangeBi').classList.add('PinMoveAni');
+            document.getElementById('openChangeBi') && document.getElementById('openChangeBi').classList && document.getElementById('openChangeBi').classList.add('PinMoveAni');
         }, 0);
     };
 
@@ -880,25 +880,27 @@ function Card(props) {
         }
         return "";
     }
-    const applyOrChangeCard = () => {
-        if (currentCardItem) {
-            setIsLoadingBtn(true)
-            dispatch(exchangeCreditCard({
-                creditType: currUserCardInfo.creditType,
-                userCreditId: currUserCardInfo.id,
-                ignoreMessage: true
-            })).then((res) => {
-                applyCard();
-                // setOpenAnimateModal(false);
-                // setOpenCardBtnShow(false);
-                // // getCardList();
-                // setUpdateCard(true)
-                // setTimer(timer + 1)
-                // myFunction();
-            })
-        } else {
-            applyCard()
-        }
+    const exChangeCard = () => {
+        setOpenCardBtnShow(true)
+        dispatch(exchangeCreditCard({
+            creditType: currUserCardInfo.creditType,
+            userCreditId: currUserCardInfo.id
+        })).then((res) => {
+            setUpdateCard(true)
+            setTimer(timer + 1)
+            setOpenCardBtnShow(false)
+            setCurrentCardItem(null);
+            setTabValue(0);
+            closeChangeBi();
+            setOpenAnimateHuanKa(false);
+            myFunction();
+            // setOpenAnimateModal(false);
+            // setOpenCardBtnShow(false);
+            // // getCardList();
+            // setUpdateCard(true)
+            // setTimer(timer + 1)
+            // myFunction();
+        })
     }
     // 申请卡
     const applyCard = () => {
@@ -2292,15 +2294,16 @@ function Card(props) {
                         variant="contained"
                         style={{ bottom: "0%", left: "0%", right: "0%", margin: "0 auto" }}
                         onClick={() => {
-                            setOpenCardBtnShow(true);
-                            setTimeout(() => {
-                                setOpenAnimateHuanKa(false);
-                                setOpenCardBtnShow(false);
-                                setTabValue(1);
-                                setOpenXiangQing(true);
-                                setCardConfigID(currentCardItem.creditConfigId);
-                                myFunction;
-                            }, 1500);
+                            // setOpenCardBtnShow(true);
+                            exChangeCard()
+                            // setTimeout(() => {
+                            //     setOpenAnimateHuanKa(false);
+                            //     setOpenCardBtnShow(false);
+                            //     setTabValue(1);
+                            //     setOpenXiangQing(true);
+                            //     setCardConfigID(currentCardItem.creditConfigId);
+                            //     myFunction;
+                            // }, 1500);
                         }}
                     >
                         {t('card_77')}
@@ -3572,7 +3575,7 @@ function Card(props) {
                             loading={isLoadingBtn}
                             variant="contained"
                             onClick={() => {
-                                applyOrChangeCard()
+                                applyCard()
                             }}
                         >
                             {t('card_36')}
