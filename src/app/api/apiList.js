@@ -546,6 +546,11 @@ export default {
             method: "post",
         },
 
+        swapFee: {
+            url: '/swap/swapFee',
+            method: 'post'
+        },
+
         crypto: {
             url: "/swap/crypto",
             method: "post",
@@ -653,6 +658,10 @@ export default {
             url: "/credit/creditCardCryptoWithdraw",
             method: "post",
         },
+        exchangeCreditCard: {
+            url: "/credit/exchangeCreditCard",
+            method: "post",
+        }
     },
 
     log: {

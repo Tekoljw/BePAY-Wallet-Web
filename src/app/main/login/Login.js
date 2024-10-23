@@ -30,7 +30,7 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import { useState, useEffect } from "react";
-import {getOpenAppId, getThirdPartId, getUrlParam} from "../../util/tools/function";
+import { getOpenAppId, getThirdPartId, getUrlParam } from "../../util/tools/function";
 import phoneCode from '../../../phone/phoneCode';
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -604,8 +604,10 @@ function Login() {
                                                     return array;
                                                 }}
                                                 onChange={(res, option) => {
-                                                    control._formValues.nationCode = option.phone_code;
-                                                    setTmpCode(option.phone_code)
+                                                    if (option) {
+                                                        control._formValues.nationCode = option.phone_code;
+                                                        setTmpCode(option.phone_code)
+                                                    }
                                                 }}
                                                 value={control._formValues.nationCode}
                                                 getOptionLabel={(option) => { return '+' + tmpCode }}

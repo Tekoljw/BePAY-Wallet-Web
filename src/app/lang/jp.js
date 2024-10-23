@@ -473,10 +473,10 @@ const locale = {
     card_120: "契約取引マイニング",
     card_121: "取引契約",
     card_122: "現物を送る",
-    card_123: "すべての取引手数料",
+    card_123: "すべての取引手数料を補償する",
     card_124: "補償",
     card_125: "招待報酬",
-    card_126: "友達を招待して参加させる",
+    card_126: "友達を招待",
     card_127: "現金報酬を得る！",
     card_128: "総収益",
     card_129: "今日の収益",
@@ -576,10 +576,28 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"当日交換限度に達しました",
     card_222:"必須項目をすべて入力してください",
+    kyc_50:"PINを変更する",
+    kyc_51:"PINを忘れた",
+    kyc_52:"新しいPIN",
+    kyc_53:"PIN（確認）",
+    kyc_54:"旧PIN",
+    kyc_55: "無効なメールアドレス",
+    kyc_56: "電話",
+    kyc_57: "検証方法",
+    Kyc_58:"国コードまたは電話番号は空にできません",
+    Kyc_59:"送信先",
+    Kyc_60:"Google Authenticator で表示",
+    Kyc_61:"Google Authenticator",
+    Kyc_62:"メールがリンクされていません",
+    Kyc_63:"電話がリンクされていない",
+
+
 
     
 
     
+
+
 
     
     

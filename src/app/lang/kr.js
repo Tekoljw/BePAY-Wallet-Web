@@ -475,10 +475,10 @@ const locale = {
     card_120: "계약 거래 채굴",
     card_121: "거래 계약",
     card_122: "현물 제공",
-    card_123: "모든 거래 수수료",
+    card_123: "모든 거래 수수료를 보상하다",
     card_124: "보상",
     card_125: "초대 보상",
-    card_126: "친구 초대하기",
+    card_126: "친구 초대",
     card_127: "현금 보상 받기！",
     card_128: "총 수익",
     card_129: "오늘 수익",
@@ -578,6 +578,22 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"일일 교환 한도에 도달했습니다",
     card_222:"모든 필수 항목을 작성해 주세요",
+    kyc_50:"PIN 변경",
+    kyc_51:"PIN을 잊으셨나요",
+    kyc_52:"새 PIN",
+    kyc_53:"PIN (확인)",
+    kyc_54:"기존 PIN",
+    kyc_55: "잘못된 이메일 주소",
+    kyc_56: "휴대전화",
+    kyc_57: "검증 방식",
+    Kyc_58:"국가 코드 또는 전화번호는 비워 둘 수 없습니다",
+    Kyc_59:"보내기",
+    Kyc_60:"Google Authenticator에서 보기",
+    Kyc_61:"Google Authenticator",
+    Kyc_62:"이메일이 연결되지 않았습니다",
+    Kyc_63:"휴대폰이 연결되지 않음",
+
+
 
     
 

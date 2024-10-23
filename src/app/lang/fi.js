@@ -472,10 +472,10 @@ const locale = {
     card_120: "sopimuskaupan louhinta",
     card_121: "kauppasopimus",
     card_122: "ilmainen toimitus",
-    card_123: "kaikki kaupankäynnin palkkiot",
+    card_123: "Korvata kaikki transaktiomaksut",
     card_124: "korvaus",
     card_125: "kutsupalkinto",
-    card_126: "kutsu ystävä liittymään",
+    card_126: "Kutsu ystäviä",
     card_127: "saada rahapalkinto！",
     card_128: "kokonaistuotto",
     card_129: "tämän päivän tuotto",
@@ -575,10 +575,27 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"Päivittäinen lunastusraja saavutettu",
     card_222:"Ole hyvä ja täytä kaikki pakolliset kentät", 
+    kyc_50:"Vaihda PIN-koodi",
+    kyc_51:"Unohdit PIN-koodisi",
+    kyc_52:"Uusi PIN-koodi",
+    kyc_53:"PIN (Vahvista)",
+    kyc_54:"vanha PIN",
+    kyc_55: "Virheellinen sähköpostiosoite",
+    kyc_56: "matkapuhelin",
+    kyc_57: "Varmennusmenetelmä",
+    Kyc_58:"Maatunnus tai puhelinnumero ei voi olla tyhjä",
+    Kyc_59:"Lähetä",
+    Kyc_60:"Näytä Google Authenticatorissa",
+    Kyc_61:"Google Authenticator",
+    Kyc_62:"Sähköpostia ei ole liitetty",
+    Kyc_63:"Ei yhdistetty puhelimeen",
+
+
 
     
 
     
+
 
     
     

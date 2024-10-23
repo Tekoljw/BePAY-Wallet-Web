@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import '../../../styles/home.css';
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
-import {centerGetTokenBalanceList, sendTips, tokenTransfer} from "../../store/user/userThunk";
+import { centerGetTokenBalanceList, sendTips, tokenTransfer, sendEmail, sendSms, userProfile, bindPhone, bindEmail } from "../../store/user/userThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { selectConfig } from "../../store/config";
@@ -54,6 +54,9 @@ import Enable2FA from "../2fa/Enable2FA";
 import FuseLoading from '@fuse/core/FuseLoading';
 import { selectCurrentLanguage } from "app/store/i18nSlice";
 import userLoginType from "../../define/userLoginType";
+import RetiedEmail from "../login/RetiedEmail";
+import RetiedPhone from "../login/RetiedPhone";
+
 
 const container = {
     show: {
@@ -178,7 +181,10 @@ function Withdraw(props) {
     const [isLoadingBtn, setIsLoadingBtn] = useState(false);
     const [zhuanQuan, setZhuanQuan] = useState(true);
     const [tiJiaoState, setTiJiaoState] = useState(0);
-
+    const [twiceVerifyType, setTwiceVerifyType] = useState(0);
+    const [typeBinded, setTypeBined] = useState(false);
+    const [openBindEmail, setOpenBindEmail] = useState(false);
+    const [openBindPhone, setOpenBindPhone] = useState(false);
     const handleChangeInputVal = (prop, value) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
         if (prop == 'amount' && event.target.value != '' && event.target.value != 0) {
@@ -190,11 +196,11 @@ function Withdraw(props) {
     const [showGuangBiao, setShowGuangBiao] = useState(false);
 
     const changeToBlack = (target) => {
-        document.getElementById(target.target.id).classList.add('pinJianPanColor1');
+        document.getElementById(target.target.id) && document.getElementById(target.target.id).classList && document.getElementById(target.target.id).classList.add('pinJianPanColor1');
     };
 
     const changeToWhite = (target) => {
-        document.getElementById(target.target.id).classList.remove('pinJianPanColor1');
+        document.getElementById(target.target.id) &&  document.getElementById(target.target.id).classList && document.getElementById(target.target.id).classList.remove('pinJianPanColor1');
     };
 
     const [inputIDVal, setInputIDVal] = useState('');
@@ -233,7 +239,10 @@ function Withdraw(props) {
     const fiatData = userData.fiat;
     const walletData = userData.wallet;
     const transferStats = userData.transferStats;
-    const hasAuthGoogle = userData.userInfo?.hasAuthGoogle
+    const hasAuthGoogle = userData.userInfo?.hasAuthGoogle;
+    const hasAuthEmail = userData.userInfo?.bindEmail;
+    const hasAuthPhone =  userData.userInfo?.bindMobile;
+
 
     const currentLanguage = useSelector(selectCurrentLanguage);
     const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || 'USD');
@@ -402,6 +411,7 @@ function Withdraw(props) {
             networkId: networkId,
             priceLevel: amountTab,
             bAppendFee: tmpBAppendFee,
+            codeType: twiceVerifyType ===0 ? 2 :  twiceVerifyType ===1 ? 1 : 0
         };
 
         dispatch(tokenTransfer(data)).then((res) => {
@@ -418,11 +428,13 @@ function Withdraw(props) {
                 }, 1200);
                 dispatch(centerGetTokenBalanceList());
             } else if (result.errno == -2) { //需要google验证
-                if (!hasAuthGoogle) {
-                    closePinFunc()
-                    setOpenAnimateModal(true);
-                    return;
-                }
+                setTwiceVerifyType(0);
+                setTypeBined(hasAuthEmail ? true: false);
+                // if (!hasAuthGoogle) {
+                //     closePinFunc()
+                //     setOpenAnimateModal(true);
+                //     return;
+                // }
                 openGoogleCodeFunc()
                 return
             } else {
@@ -486,17 +498,18 @@ function Withdraw(props) {
         //     openGoogleCodeFunc()
         //     return
         // }
-
         let data = {
             userId: inputIDVal,
             amount: inputVal.amount,
             symbol: symbol,
-            checkCode: googleCode
+            checkCode: googleCode,
+            codeType: twiceVerifyType ===0 ? 2 :  twiceVerifyType ===1 ? 1 : 0
         };
 
         setOpenLoad(true);
         dispatch(sendTips(data)).then((res) => {
             setIsLoadingBtn(false)
+            setOpenLoad(false);
             setGoogleCode('');
             let resData = res.payload;
             if (resData.errno == 0) {
@@ -508,16 +521,15 @@ function Withdraw(props) {
                     dispatch(centerGetTokenBalanceList());
                 }, 1200);
             } else if (resData.errno == -2) {
-                if (!hasAuthGoogle) {
-                    closePinFunc()
-                    setTimeout(() => {
-                        setOpenAnimateModal(true);
-                    }, 300)
-                    return;
-                } else {
-                    openGoogleCodeFunc()
-                    return
-                }
+                setTwiceVerifyType(0);
+                setTypeBined(hasAuthEmail ? true: false);
+                // if (!hasAuthGoogle) {
+                //     closePinFunc()
+                //     setOpenAnimateModal(true);
+                //     return;
+                // }
+                openGoogleCodeFunc()
+                return
             } else {
                 setOpenSuccess(false);
                 setTimeout(() => {
@@ -662,7 +674,7 @@ function Withdraw(props) {
                 displayData.push(item.symbol);
             }
         });
-        if(displayData.length > 0){
+        if (displayData.length > 0) {
             let tmpSymbols = [];
             // 美元汇率
             let dollarCurrencyRate = arrayLookup(config.payment.currency, 'currencyCode', 'USD', 'exchangeRate') || 0;
@@ -722,7 +734,7 @@ function Withdraw(props) {
             console.log(tmpSymbols);
             setSymbolWallet(tmpSymbols.filter(i => i.symbol !== 'eUSDT'));
             setNetworkData(tmpNetworks);
-        }else{
+        } else {
             setSymbolWallet([]);
             setNetworkData([]);
         }
@@ -861,6 +873,7 @@ function Withdraw(props) {
     }
 
     const handleDoGoogleCode = (text) => {
+        if(!typeBinded) return;
         let tmpCode = googleCode
         if (text === -1) {
             tmpCode = tmpCode.slice(0, -1)
@@ -879,9 +892,13 @@ function Withdraw(props) {
         if (tabValue === cryptoSelect) {
             setOpenYanZheng(false);
             setOpenGoogleCode(true);
+            dispatch(userProfile());
+            setTypeBined(true);
         } else if (tabValue === fiatSelect) {
             setOpenYanZheng(false);
             setFiatVerifiedAuth(true);
+            dispatch(userProfile());
+            setTypeBined(true);
         }
     }
 
@@ -931,54 +948,40 @@ function Withdraw(props) {
         const loginType = getUserLoginType(userData);
         if (loginType !== userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP) {
             getSettingSymbol().then((res) => {
-                var currencyType = res.data?.data?.setting?.currencyType
-                console.log(currencyType);
+                let currencyType = res.data?.data?.setting?.currencyType
+                console.log(currencyType, 'currencyType.....');
+                let tmpRanges = [
+                    // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
+                    t('home_deposite_1'), t('home_deposite_2')
+                ];
+                let tmpCryptoSelect = 0;
+                let tmpFiatSelect = 1;
+
                 if (currencyType) {
-                    if (currencyType == 1) {
-                        tmpRanges = [
-                            t('home_deposite_1'), t('home_deposite_2')
-                            // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
-                        ];
-                        tmpCryptoSelect = 0;
-                        tmpFiatSelect = 1;
-                    } else {
+                    if (currencyType != 1) {
                         console.log('存在.......');
-                        var tmpRanges = [
+                        tmpRanges = [
+                            // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
                             t('home_deposite_2'), t('home_deposite_1')
-                            // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
                         ];
-                        var tmpCryptoSelect = 1;
-                        var tmpFiatSelect = 0;
+                        tmpCryptoSelect = 1;
+                        tmpFiatSelect = 0;
+
                     }
                     setRanges(tmpRanges);
                     setCryptoSelect(tmpCryptoSelect);
                     setFiatSelect(tmpFiatSelect);
                 } else if (loginType !== "unknown") {
-                    var tmpRanges = [
-                        t('home_deposite_2'), t('home_deposite_1')
-                        // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
-                    ];
-                    var tmpCryptoSelect = 1;
-                    var tmpFiatSelect = 0;
+                    //如果法币余额大于虚拟币
                     if (userData.profile.wallet?.Crypto < userData.profile.wallet?.Fiat) {
-
-                    } else if (userData.profile.wallet?.Crypto > userData.profile.wallet?.Fiat) {
                         tmpRanges = [
-                            t('home_deposite_1'), t('home_deposite_2')
-                            // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
+                            t('home_deposite_2'), t('home_deposite_1')
+                            // t('home_deposite_2'), t('home_deposite_1'), t('home_deposite_3')
                         ];
-                        tmpCryptoSelect = 0;
-                        tmpFiatSelect = 1;
-                    } else {
-                        if (loginType === "web3_wallet") {
-                            tmpRanges = [
-                                t('home_deposite_1'), t('home_deposite_2')
-                                // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
-                            ];
-                            tmpCryptoSelect = 0;
-                            tmpFiatSelect = 1;
-                        }
+                        tmpCryptoSelect = 1;
+                        tmpFiatSelect = 0;
                     }
+
                     setRanges(tmpRanges);
                     setCryptoSelect(tmpCryptoSelect);
                     setFiatSelect(tmpFiatSelect);
@@ -1006,6 +1009,52 @@ function Withdraw(props) {
             const start = text.slice(0, Math.floor(maxLength / 2));
             const end = text.slice(-Math.floor(maxLength / 2));
             element.innerText = `${start}...${end}`;
+        }
+    }
+
+    const bindTwiceVerifyType = () =>{
+        if(twiceVerifyType === 0){
+            closeGoogleCodeFunc()
+            closePinFunc()
+            setOpenBindEmail(true)
+            return
+        } else if(twiceVerifyType === 1){
+            closeGoogleCodeFunc()
+            closePinFunc()
+            setOpenBindPhone(true)
+            return
+        } else {
+            closeGoogleCodeFunc()
+            closePinFunc()
+            setOpenAnimateModal(true)
+            return;
+        }
+    }
+
+    const backPageEvt = () => {
+        setOpenBindPhone(false)
+        setOpenBindEmail(false);
+        dispatch(userProfile());
+        setTypeBined(true);
+        myFunction;
+        setOpenGoogleCode(true);
+    }
+
+    const reciveCode = async()=> {
+        let sendRes = {};
+        if (twiceVerifyType === 0) {
+            const data = {
+                codeType: 14,
+                email: userData.userInfo.email
+            };
+            sendRes = await dispatch(sendEmail(data));
+        } else {
+            const data = {
+                codeType: 14,
+                nationCode: userData.userInfo.nation,
+                phone: userData.userInfo.phone
+            };
+            sendRes = await dispatch(sendSms(data));
         }
     }
 
@@ -1187,7 +1236,7 @@ function Withdraw(props) {
                                                         }} />
                                                     </div>
                                                 </FormControl>
-                                                <img className='nianTieIcon' src="wallet/assets/images/withdraw/zhanTie.png" alt="" onClick={() => {
+                                                <img className='nianTieIcon ' src="wallet/assets/images/withdraw/zhanTie.png" alt="" onClick={() => {
                                                     navigator.clipboard.readText().then(clipText => {
                                                         changeAddress('address', clipText)
                                                     })
@@ -1460,13 +1509,46 @@ function Withdraw(props) {
                             <div id="GoogleCodeSty" className="PINSty">
                                 <div className='pinWindow'>
                                     <div className='flex'>
-                                        <div className='PINTitle2'>{t('card_180')}</div>
+                                        <div className='PINTitle2'>{t('kyc_57')}</div>
                                         <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                             closeGoogleCodeFunc()
                                         }} />
                                     </div>
-                                    <div className='PINTitle'>{t('card_176')}</div>
-                                    <div className='flex justify-between mt-32 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
+                           
+
+                                    <div className='flex justify-between'>
+                                        <div
+                                            onClick={() => { setTwiceVerifyType(0); setTypeBined(hasAuthEmail? true: false) }}
+                                            className={clsx('selectPin',  twiceVerifyType=== 0 && 'activePinZi')}
+                                        >
+                                            <img style={{ width: '2rem', borderRadius: '0.5rem', float: "left" }} src="wallet/assets/images/menu/email.png" alt="" />
+                                            <div style={{ float: "left" }} className="px-6">{t('signIn_5')} </div>
+                                        </div>
+
+                                        <div
+                                            onClick={() => { setTwiceVerifyType(1); setTypeBined(hasAuthPhone? true: false)}}
+                                            className={clsx('selectPin', twiceVerifyType === 1 && 'activePinZi')}
+                                        >
+                                            <img style={{ width: '2rem', borderRadius: '0.5rem', float: "left" }} src="wallet/assets/images/menu/phone.png" alt="" />
+                                            <div style={{ float: "left" }} className="px-6">{t('kyc_56')}</div>
+                                        </div>
+
+                                        <div
+                                            onClick={() => { setTwiceVerifyType(2);setTypeBined(hasAuthGoogle? true: false) }}
+                                            className={clsx('selectPin', twiceVerifyType === 2 && 'activePinZi')}
+                                        >
+                                            <img style={{ width: '2rem', borderRadius: '0.5rem', float: "left" }} src="wallet/assets/images/menu/google.png" alt="" />
+                                            <div style={{ float: "left" }} className="px-6"> Google</div>
+                                        </div>
+                                    </div>
+
+                                    { typeBinded ? ( (twiceVerifyType == 0 ||  twiceVerifyType == 1 ) ? 
+                                        <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> 发送至 <span style={{ color:"#909fb4" }}>{ twiceVerifyType ===0 ? `邮箱 ${userData?.userInfo?.email}` : `手机号 ${ '+' + userData?.userInfo?.nation + userData?.userInfo?.phone}`}</span> <span style={{ color:"#2dd4bf", textDecoration:"underline"}}  onClick={ ()=> reciveCode()}>接收</span> 
+                                        </div>: <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> 请在google验证器查看</div>)
+                                     : <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> 您还没有绑定{ twiceVerifyType ===0 ? '邮箱' :  twiceVerifyType ===1 ? '手机号': 'Google验证' } <span style={{ color:"#2dd4bf", textDecoration:"underline" }} onClick={ ()=> bindTwiceVerifyType()} >立即绑定</span> </div>
+                                    }
+
+                                    <div className='flex justify-between mt-24 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
                                         <div className='PinNum color-box'
                                             onTouchStart={changeToBlack}
                                             onTouchEnd={changeToWhite}
@@ -1479,7 +1561,7 @@ function Withdraw(props) {
                                     </div>
                                 </div>
 
-                                <div className='jianPanSty'>
+                                <div className={clsx('jianPanSty', typeBinded ? '' : 'disabled_jianPanSty')}>
                                     <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
                                         <div id="createPin1" className='jianPanNumBtn borderRight borderBottom color-box'
                                             onTouchStart={changeToBlack}
@@ -2182,12 +2264,50 @@ function Withdraw(props) {
                 </div>
             </BootstrapDialog>
 
+            {openBindEmail && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
+                    className='mt-12'
+                    id="topGo"
+                >
+                    <div className='flex mb-10' onClick={() => {
+                        setOpenBindEmail(false);
+                        myFunction;
+                    }}   >
+                        <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
+                    </div>
+                    <RetiedEmail backPage={ ()=> backPageEvt()}/>
+                    <div style={{ height: "5rem" }}></div>
+                </motion.div>
+            </div>}
+
+            {openBindPhone && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
+                    className='mt-12'
+                    id="topGo"
+                >
+                    <div className='flex mb-10' onClick={() => {
+                        setOpenBindPhone(false);
+                        myFunction;
+                    }}   >
+                        <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
+                    </div>
+                    <RetiedPhone backPage={ ()=> backPageEvt()}/>
+                    <div style={{ height: "5rem" }}></div>
+                </motion.div>
+            </div>}
+
             <AnimateModal
                 className="faBiDiCard tanChuanDiSe"
                 open={openAnimateModal}
                 onClose={() => setOpenAnimateModal(false)}
             >
-                <div className='flex justify-center' style={{ width: "100%" }}>
+                <div className='flex justify-center mb-16' style={{ width: "100%" }}>
                     <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                     <div className='TanHaoCardZi '>
                         {t('card_180')}
@@ -2195,12 +2315,12 @@ function Withdraw(props) {
                 </div>
 
                 <Box
-                    className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard"
+                    className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard flex justify-center"
                     sx={{
                         backgroundColor: "#2C394D",
                         padding: "1.5rem",
                         overflow: "hidden",
-                        margin: "1rem auto 0rem auto"
+                        margin: "0rem auto 0rem auto"
                     }}
                 >
                     <div className="dialog-select-fiat danChuangTxt">
@@ -2208,7 +2328,7 @@ function Withdraw(props) {
                     </div>
                 </Box>
 
-                <div className='flex mt-12 mb-28 px-15 justify-between' >
+                <div className='flex mt-16 mb-28 px-15 justify-between' >
                     <LoadingButton
                         disabled={false}
                         className="boxCardBtn"

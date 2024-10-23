@@ -1,5 +1,7 @@
 // 公共方法
 
+import userLoginType from "../../define/userLoginType";
+
 export const getUrlParam = (param) => {
     const res = window.location.href;
     const URL = res.split('?')[1];
@@ -43,7 +45,7 @@ export const getAutoLoginKey = () => {
 
 //获取用户登录方式
 export const getUserLoginType = (userData) => {
-    return (window.sessionStorage.getItem('loginType') ?? userData?.userInfo?.loginType) || 0;
+    return (window.sessionStorage.getItem('loginType') ?? userData?.userInfo?.loginType) || userLoginType.USER_LOGIN_TYPE_UNKNOWN;
 }
 
 /**

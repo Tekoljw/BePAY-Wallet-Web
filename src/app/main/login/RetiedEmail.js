@@ -7,18 +7,21 @@ import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import _ from '@lodash';
 import Paper from '@mui/material/Paper';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-    changeEmail, sendEmail
+    bindEmail,
+    changeEmail, sendEmail, getUserData, userProfile
 } from '../../store/user/userThunk';
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
-import {default as React, useEffect, useRef, useState} from "react";
+import { default as React, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import history from "../../../@history/@history";
+import { selectUserData } from "../../store/user";
+import { showMessage } from 'app/store/fuse/messageSlice';
 
 /**
  * Form Validation Schema
@@ -28,19 +31,18 @@ import history from "../../../@history/@history";
 const defaultValues = {
     email: '',
     smsCode: '',
-    password: '',
 };
 
-function RetiedEmail() {
+function RetiedEmail(props) {
     const { t } = useTranslation('mainPage');
     const schema = yup.object().shape({
         smsCode: yup.string().required('You must enter a smsCode'),
-        password: yup
-            .string()
-            .required('Please enter your password.')
-            // .min(6, 'Password is too short - should be 6 chars minimum.')
-            .min(6, t("signUp_8"))
-            .max(16, 'Password is too long - should be 16 chars maximum.'),
+        // password: yup
+        //     .string()
+        //     .required('Please enter your password.')
+        //     // .min(6, 'Password is too short - should be 6 chars minimum.')
+        //     .min(6, t("signUp_8"))
+        //     .max(16, 'Password is too long - should be 16 chars maximum.'),
     });
     const { control, formState, handleSubmit, reset } = useForm({
         mode: 'onChange',
@@ -54,6 +56,8 @@ function RetiedEmail() {
 
     const [time, setTime] = useState(null);
     const timeRef = useRef();
+    const userData = useSelector(selectUserData);
+
     //倒计时
     useEffect(() => {
         if (time && time !== 0)
@@ -68,9 +72,12 @@ function RetiedEmail() {
 
     async function sendCode() {
         const data = {
-            codeType: 11,
+            codeType: userData && userData.userInfo && userData.userInfo.bindEmail ? 11: 10,
             email: control._formValues.email,
         };
+        if (userData && userData.userInfo && userData.userInfo.bindEmail) {
+            data.codeType = 11
+        }
         const sendRes = await dispatch(sendEmail(data));
         if (sendRes.payload) {
             setTime(60)
@@ -82,7 +89,23 @@ function RetiedEmail() {
     }
 
     async function onSubmit() {
-        await dispatch(changeEmail(control._formValues));
+        if (userData && userData.userInfo && userData.userInfo.bindEmail) {
+            await dispatch(changeEmail(control._formValues));
+        } else {
+            await dispatch(bindEmail(control._formValues)).then((res) => {
+                let result = res.payload;
+                if (result.errno === 0) {
+                    dispatch(showMessage({ message: 'Success', code: 1 }));
+                    props.backPage()
+                    dispatch(userProfile());
+                    dispatch(getUserData());
+                    // changePhoneTab('withdraw');
+                    // history.push('/wallet/home/wallet')
+                } else {
+                    dispatch(showMessage({ message: result.errmsg, code: 2 }));
+                }
+            });
+        }
     }
 
     return (
@@ -93,12 +116,13 @@ function RetiedEmail() {
                 className="w-full tongYongChuang4 flex justify-content-center "
             >
                 <div className="w-full  mx-auto sm:mx-0">
-                    <div className="flex items-baseline mt-2 font-medium">
+                    {userData && userData.userInfo && userData.userInfo.bindEmail && <div className="flex items-baseline mt-2 font-medium">
                         <Typography>{t('re_tied_email_2')}</Typography>
                         {/*<Link className="ml-4" to="/login">*/}
                         {/*    Sign in*/}
                         {/*</Link>*/}
                     </div>
+                    }
 
                     <form
                         name="registerForm"
@@ -185,7 +209,7 @@ function RetiedEmail() {
                                 />
                             )}
                         />
-
+                        {/* 
                         <Controller
                             name="password"
                             control={control}
@@ -202,9 +226,9 @@ function RetiedEmail() {
                                     fullWidth
                                 />
                             )}
-                        />
+                        /> */}
 
-                        <div style={{ textAlign: "center"}}>
+                        <div style={{ textAlign: "center" }}>
                             <a className="text-md font-medium" onClick={() => {
                                 changePhoneTab('');
                                 history.push('/wallet/home/wallet')
@@ -213,7 +237,18 @@ function RetiedEmail() {
                             </a>
                         </div>
 
-                        <Button
+                        {(userData && userData.userInfo && userData.userInfo.bindEmail) ? <Button
+                            variant="contained"
+                            color="secondary"
+                            className=" w-full mt-24"
+                            aria-label="Register"
+                            disabled={_.isEmpty(dirtyFields) || !isValid}
+                            type="submit"
+                            size="large"
+                            sx={{ paddingTop: "2px!important", paddingBottom: "2px!important", fontSize: "20px!important" }}
+                        >
+                            {t('re_tied_email_5')}
+                        </Button> : <Button
                             variant="contained"
                             color="secondary"
                             className=" w-full mt-24"
@@ -222,8 +257,8 @@ function RetiedEmail() {
                             type="submit"
                             size="large"
                         >
-                            {t('re_tied_email_5')}
-                        </Button>
+                            {t('menu_19')} </Button>
+                        }
                     </form>
                 </div>
             </Paper>

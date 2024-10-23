@@ -476,7 +476,7 @@ const locale = {
     card_120: "Krypto-Handels-Mining",
     card_121: "Handelsvertrag",
     card_122: "Sofortlieferung",
-    card_123: "alle Transaktionsgebühren",
+    card_123: "Compensar todas las tarifas de transacción",
     card_124: "Entschädigung",
     card_125: "Einladungsprämie",
     card_126: "Freunde einladen",
@@ -579,10 +579,22 @@ const locale = {
     card_220:"Claude AI, Webshare, Anthropic, Cloudflare, Tradingview, Namecheap, Deepl, LetsGo Network, Vodafone, Namesilo, Twilio, Aspiegel, Secretary, Openrouter AI, Cambly",
     card_221:"Tägliches Einlöselimit erreicht",
     card_222:"Bitte füllen Sie alle Pflichtfelder aus", 
+    kyc_50:"PIN ändern",
+    kyc_51:"PIN vergessen",
+    kyc_52:"Neue PIN",
+    kyc_53:"PIN (Bestätigen)",
+    kyc_54:"alter PIN",
+    kyc_55: "Ungültige E-Mail-Adresse",
+    kyc_56: "Handy",
+    kyc_57: "Verifizierungsmethode",
+    Kyc_58:"Ländercode oder Telefonnummer darf nicht leer sein",
+    Kyc_59:"Senden an",
+    Kyc_60:"In Google Authenticator anzeigen",
+    Kyc_61:"Google Authenticator",
+    Kyc_62:"Keine E-Mail-Adresse verknüpft",
+    Kyc_63:"Kein Handy verknüpft",
 
-    
 
-    
 
     
     

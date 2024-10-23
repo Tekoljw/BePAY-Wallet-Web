@@ -164,6 +164,7 @@ function ForgotPass() {
                             disabled={_.isEmpty(dirtyFields) || !isValid}
                             type="submit"
                             size="large"
+                            sx={{ paddingTop: "2px!important", paddingBottom: "2px!important", fontSize: "20px!important" }}
                         >
                             {t('reset_pass_6')}
                         </Button>
