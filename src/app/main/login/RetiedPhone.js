@@ -37,7 +37,7 @@ const defaultValues = {
     smsCode: '',
 };
 
-function RetiedPhone() {
+function RetiedPhone(props) {
     const { t } = useTranslation('mainPage');
     const [selectedCountryCode, setSelectedCountryCode] = useState("");
     const schema = yup.object().shape({
@@ -86,10 +86,6 @@ function RetiedPhone() {
             phone: control._formValues.phone,
         };
         const sendRes = await dispatch(sendSms(data));
-        if (!userData.userInfo.bindMobile) {
-            props.backPage()
-        }
-        dispatch(userProfile());
         if (sendRes.payload) {
             setTime(60)
         }
@@ -107,6 +103,8 @@ function RetiedPhone() {
                 let result = res.payload;
                 if (result.errno === 0) {
                     dispatch(showMessage({ message: 'Success', code: 1 }));
+                    props.backPage();
+                    dispatch(userProfile());
                     dispatch(getUserData());
                 } else {
                     dispatch(showMessage({ message: result.errmsg, code: 2 }));

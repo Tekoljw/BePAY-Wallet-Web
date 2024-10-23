@@ -745,8 +745,8 @@ function Fiat(props) {
     };
 
     const closePinFunc = () => {
-        document.getElementById('PINSty').classList.remove('PinMoveAni');
-        document.getElementById('PINSty').classList.add('PinMoveOut');
+        document.getElementById('PINSty') &&  document.getElementById('PINSty').classList && document.getElementById('PINSty').classList.remove('PinMoveAni');
+        document.getElementById('PINSty') &&  document.getElementById('PINSty').classList && document.getElementById('PINSty').classList.add('PinMoveOut');
         setTimeout(() => {
             setOpenPinWindow(false);
             setOpenSuccess(true);
@@ -1945,7 +1945,7 @@ function Fiat(props) {
                         }}   >
                             <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                         </div>
-                        <RetiedEmail backPage={ backPageEvt()}/>
+                        <RetiedEmail backPage={ ()=> backPageEvt()}/>
                         <div style={{ height: "5rem" }}></div>
                     </motion.div>
                 </div>}
@@ -1964,7 +1964,7 @@ function Fiat(props) {
                         }}   >
                             <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                         </div>
-                        <RetiedPhone backPage={ backPageEvt()}/>
+                        <RetiedPhone backPage={ ()=> backPageEvt()}/>
                         <div style={{ height: "5rem" }}></div>
                     </motion.div>
                 </div>}
