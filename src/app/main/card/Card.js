@@ -194,11 +194,20 @@ function Card(props) {
                 setTextSelect(false)
                 setShowGuangBiao(false)
             }
-            if (transferMoney < symbolWallet[0].balance) {
-                openInputPin()
-            } else {
-                setOpenChongZhi(true)
-                setPin('')
+            if (huaZhuanValue === 0) {
+                if(transferMoney < symbolWallet[0].balance) {
+                    openInputPin()
+                } else {
+                    setOpenChongZhi(true)
+                    setPin('')
+                }
+            }else if(huaZhuanValue === 1){
+                if(transferMoney < cardListObj[cardID]?.amount) {
+                    openInputPin()
+                } else {
+                    setOpenChongZhi(true)
+                    setPin('')
+                }
             }
             return true
         }
@@ -1129,7 +1138,7 @@ function Card(props) {
 
         let tmpTransferFee = 0
         tmpTransferFee = Number(balance) * Number(cardConfigList[cardConfigID].creditRate) + Number(cardConfigList[cardConfigID].basicFee)
-        setTransferMoney(balance - tmpTransferFee)
+        setTransferMoney(balance)
         setMaxValue(balance)
     }
 
@@ -2446,7 +2455,7 @@ function Card(props) {
                                 <div className='flex mt-20 justify-between' style={{ borderBottom: "1px solid #2C3950" }}>
                                     <div className='text-18'>{t('card_27')}</div>
                                     <div className='flex pb-32'>
-                                        <div className='text-18'>USDT</div>
+                                        <div className='text-18'>USD</div>
                                         <div className='text-18 ml-10'>{cardListObj[cardID]?.amount.toFixed(2) ?? '0.00'}</div>
                                     </div>
                                 </div>
@@ -2486,7 +2495,7 @@ function Card(props) {
                                 <div className='flex justify-between mt-16'>
                                     <div className='flex'>
                                         <div className='' style={{ color: "#94A3B8" }}>{t('home_borrow_16')}</div>
-                                        <div className='ml-10'>{transferFee.toFixed(2)} USDT</div>
+                                        <div className='ml-10'>{transferFee.toFixed(2)} USD</div>
                                     </div>
                                 </div>
                             </div>
@@ -3154,10 +3163,21 @@ function Card(props) {
                             </div>
                         </div>
 
-                        {typeBinded ? ((twiceVerifyType == 0 || twiceVerifyType == 1) ?
-                            <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}> 发送至 {twiceVerifyType === 0 ? `邮箱 ${userData?.userInfo?.email}` : `手机号 ${'+' + userData?.userInfo?.nation + userData?.userInfo?.phone}`} <span style={{ color: "#2dd4bf", textDecoration: "underline" }} onClick={() => reciveCode()}>接收</span>
-                            </div> : <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}> 请在google验证器查看</div>)
-                            : <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}> 您还没有绑定{twiceVerifyType === 0 ? '邮箱' : twiceVerifyType === 1 ? '手机号' : 'Google验证'} <span style={{ color: "#2dd4bf", textDecoration: "underline" }} onClick={() => bindTwiceVerifyType()} >立即绑定</span> </div>
+                        { typeBinded ? ( (twiceVerifyType == 0 ||  twiceVerifyType == 1 ) ?
+                            (
+                                twiceVerifyType === 0 ? <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}>
+                                    {t('Kyc_66')}<span style={{ color:"#909fb4", padding: '0px 5px' }}>{userData?.userInfo?.email}</span>
+                                    <span style={{ color:"#2dd4bf", textDecoration:"underline"}}  onClick={ ()=> reciveCode()}>{t('Kyc_65')}</span>
+                                </div>: <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}>
+                                    {t('Kyc_67')}<span style={{ color:"#909fb4", padding: '0px 5px'}}>{userData?.userInfo?.nation + userData?.userInfo?.phone}</span>
+                                    <span style={{ color:"#2dd4bf", textDecoration:"underline"}}  onClick={ ()=> reciveCode()}>{t('Kyc_65')}</span>
+                                </div>
+                            )
+                            : <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> {t('Kyc_60')}</div>)
+                            : <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> 
+                            { twiceVerifyType ===0 ? t('Kyc_62'):  twiceVerifyType ===1 ? t('Kyc_63'): t('Kyc_64') }
+                                <span style={{ color:"#2dd4bf", textDecoration:"underline", paddingLeft: '5px' }} onClick={ ()=> bindTwiceVerifyType()} >{t('card_167')}</span>
+                            </div>
                         }
 
                         <div className='flex justify-between mt-32 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
