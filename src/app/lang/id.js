@@ -591,7 +591,7 @@ const locale = {
     Kyc_62:"Email belum ditautkan",
     Kyc_63:"Tidak terhubung ke ponsel",
     Kyc_64:"Google Authenticator belum terhubung",
-
+    Kyc_65:"menerima",
 
     
 
