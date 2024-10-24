@@ -595,8 +595,8 @@ const locale = {
     Kyc_63:"Kein Handy verknüpft",
     Kyc_64:"Google Authenticator wurde nicht verbunden",
     Kyc_65:"empfangen",
-
-    
+    Kyc_66:"An das Handy senden",
+    Kyc_67:"An E-Mail senden",
     
 
 };

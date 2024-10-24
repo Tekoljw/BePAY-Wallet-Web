@@ -593,8 +593,8 @@ const locale = {
     Kyc_63:"Hindi naka-link sa telepono",
     Kyc_64:"Hindi pa nakakonekta ang Google Authenticator",
     Kyc_65:"tumanggap",
-
-    
+    Kyc_66:"Ipinadala sa telepono",
+    Kyc_67:"Ipadala sa email",
 
     
 

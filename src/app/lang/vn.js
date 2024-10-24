@@ -582,8 +582,8 @@ const locale = {
     Kyc_63:"Chưa liên kết với điện thoại",
     Kyc_64:"Google Authenticator chưa được liên kết",
     Kyc_65:"nhận",
-
-
+    Kyc_66:"Đã gửi đến điện thoại",
+    Kyc_67:"Gửi đến email",
 
 
     };
