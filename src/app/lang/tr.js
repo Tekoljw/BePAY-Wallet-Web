@@ -590,8 +590,8 @@ const locale = {
     Kyc_63:"Telefona bağlanmadı",
     Kyc_64:"Google Authenticator bağlanmadı",
     Kyc_65:"almak",
-
-    
+    Kyc_66:"Telefona gönderildi",
+    Kyc_67:"E-postaya gönder",
 
     
 
