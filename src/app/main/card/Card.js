@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { selectConfig, setSwapConfig } from "../../store/config";
-import { arrayLookup, setPhoneTab, getNowTime } from "../../util/tools/function";
+import {arrayLookup, setPhoneTab, getNowTime, getUserLoginType} from "../../util/tools/function";
 import Dialog from "@mui/material/Dialog/Dialog";
 import Tabs, { tabsClasses } from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -47,6 +47,7 @@ import { centerGetTokenBalanceList, userProfile, sendEmail, sendSms } from "app/
 import { centerGetUserFiat } from "app/store/wallet/walletThunk";
 import moment from 'moment';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
+import userLoginType from "../../define/userLoginType";
 import RetiedEmail from "../login/RetiedEmail";
 import RetiedPhone from "../login/RetiedPhone";
 
@@ -449,9 +450,12 @@ function Card(props) {
 
     useEffect(() => {
         setPhoneTab('card');
-        dispatch(userProfile());
-        dispatch(centerGetTokenBalanceList());
-        dispatch(centerGetUserFiat());
+        const curLoginType = getUserLoginType(userData);
+        if(curLoginType !== userLoginType.USER_LOGIN_TYPE_UNKNOWN) { //登录过以后才会获取余额值
+            dispatch(userProfile());
+            dispatch(centerGetTokenBalanceList());
+            dispatch(centerGetUserFiat());
+        }
     }, []);
 
 

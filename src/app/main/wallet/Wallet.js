@@ -369,8 +369,6 @@ function Wallet() {
 
   };
 
-
-
   const saveSettingSymbol = async (data) => {
     var openAppId = getOpenAppId();
     var openIndex = getOpenAppIndex();
@@ -1047,10 +1045,14 @@ function Wallet() {
   useEffect(() => {
     setPhoneTab('wallet');
     setTimeout(() => {
-      initWalletData()
-      dispatch(userProfile());
-      dispatch(centerGetTokenBalanceList());
-      dispatch(centerGetUserFiat());
+      initWalletData();
+
+      const curLoginType = getUserLoginType(userData);
+      if(curLoginType !== userLoginType.USER_LOGIN_TYPE_UNKNOWN){ //登录过以后才会获取余额值
+        dispatch(userProfile());
+        dispatch(centerGetTokenBalanceList());
+        dispatch(centerGetUserFiat());
+      }
     }, 500)
   }, []);
 
