@@ -1166,7 +1166,7 @@ function Card(props) {
         } else {
             closeGoogleCodeFunc()
             closePinFunc()
-            setOpenAnimateModal(true)
+            setOpenGoogleAnimateModal(true)
             return;
         }
     }
@@ -2344,7 +2344,7 @@ function Card(props) {
                         {t('card_108')}
                     </div>
                 </Box>
-                <div style={{ textAlign: "center", padding: "0rem 1.5rem", color: '#0D9488', fontWeight: 600 }}>{t('home_borrow_18')}: 2 USD</div>
+                <div style={{ textAlign: "center", padding: "0rem 1.5rem", color: '#46DFB7', fontWeight: 600 }}>{t('home_borrow_18')}: 2 USD</div>
 
                 <div className='flex mt-16 mb-20 px-15 position-re' style={{ height: "40px" }} >
                     <LoadingButton
@@ -3151,7 +3151,7 @@ function Card(props) {
                         </div>
 
                         {typeBinded ? ((twiceVerifyType == 0 || twiceVerifyType == 1) ?
-                            <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}> 发送至 <span style={{ color: "#909fb4" }}>{twiceVerifyType === 0 ? `邮箱 ${userData?.userInfo?.email}` : `手机号 ${'+' + userData?.userInfo?.nation + userData?.userInfo?.phone}`}</span> <span style={{ color: "#2dd4bf", textDecoration: "underline" }} onClick={() => reciveCode()}>接收</span>
+                            <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}> 发送至 {twiceVerifyType === 0 ? `邮箱 ${userData?.userInfo?.email}` : `手机号 ${'+' + userData?.userInfo?.nation + userData?.userInfo?.phone}`} <span style={{ color: "#2dd4bf", textDecoration: "underline" }} onClick={() => reciveCode()}>接收</span>
                             </div> : <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}> 请在google验证器查看</div>)
                             : <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}> 您还没有绑定{twiceVerifyType === 0 ? '邮箱' : twiceVerifyType === 1 ? '手机号' : 'Google验证'} <span style={{ color: "#2dd4bf", textDecoration: "underline" }} onClick={() => bindTwiceVerifyType()} >立即绑定</span> </div>
                         }
@@ -3169,7 +3169,7 @@ function Card(props) {
                         </div>
                     </div>
 
-                    <div className='jianPanSty'>
+                    <div className={clsx('jianPanSty', typeBinded ? '' : 'disabled_jianPanSty')}>
                         <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
                             <div id="createPin1" className='jianPanNumBtn borderRight borderBottom color-box'
                                 onTouchStart={changeToBlack}
