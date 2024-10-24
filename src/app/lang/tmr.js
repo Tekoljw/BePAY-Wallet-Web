@@ -590,7 +590,7 @@ const locale = {
     Kyc_61:"Google Authenticator",
     Kyc_62:"மின்னஞ்சல் இணைக்கப்படவில்லை",
     Kyc_63:"தொலைபேசியில் இணைக்கப்படவில்லை",
-
+    Kyc_64:"Google Authenticator இணைக்கப்படவில்லை",
 
 
     

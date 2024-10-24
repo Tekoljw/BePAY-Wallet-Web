@@ -590,7 +590,7 @@ const locale = {
     Kyc_61:"Google Authenticator",
     Kyc_62:"メールがリンクされていません",
     Kyc_63:"電話がリンクされていない",
-
+    Kyc_64:"Google Authenticatorがリンクされていません",
 
 
     

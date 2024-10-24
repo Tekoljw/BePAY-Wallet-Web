@@ -589,7 +589,7 @@ const locale = {
     Kyc_61:"Google Authenticator",
     Kyc_62:"沒有綁定過郵箱",
     Kyc_63:"沒有綁定過手機",
-
+    Kyc_64:"沒有綁定過谷歌Authenticator",
 
 
     

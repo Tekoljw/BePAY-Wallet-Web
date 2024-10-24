@@ -602,7 +602,7 @@ const locale = {
     Kyc_61:"Google Authenticator",
     Kyc_62:"ইমেল সংযুক্ত করা হয়নি",
     Kyc_63:"মোবাইল ফোন সংযুক্ত করা হয়নি",
-
+    Kyc_64:"গুগল Authenticator সংযুক্ত করা হয়নি",
 
 
     

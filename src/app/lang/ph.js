@@ -591,7 +591,7 @@ const locale = {
     Kyc_61:"Google Authenticator",
     Kyc_62:"Hindi naka-link ang email",
     Kyc_63:"Hindi naka-link sa telepono",
-
+    Kyc_64:"Hindi pa nakakonekta ang Google Authenticator",
 
 
     

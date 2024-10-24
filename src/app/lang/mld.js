@@ -593,7 +593,7 @@ const locale = {
     Kyc_61:"Google Authenticator",
     Kyc_62:"ईमेल लिंक केलेले नाही",
     Kyc_63:"फोनशी लिंक केलेले नाही",
-
+    Kyc_64:"Google Authenticator लिंक केलेले नाही",
 
 
     

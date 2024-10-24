@@ -592,7 +592,7 @@ const locale = {
     Kyc_61:"Google Authenticator",
     Kyc_62:"이메일이 연결되지 않았습니다",
     Kyc_63:"휴대폰이 연결되지 않음",
-
+    Kyc_64:"Google Authenticator가 연결되지 않았습니다",
 
 
     
