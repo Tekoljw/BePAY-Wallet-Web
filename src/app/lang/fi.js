@@ -590,7 +590,7 @@ const locale = {
     Kyc_62:"Sähköpostia ei ole liitetty",
     Kyc_63:"Ei yhdistetty puhelimeen",
     Kyc_64:"Google Authenticatoria ei ole liitetty",
-
+    Kyc_65:"vastaanottaa",
 
     
 

@@ -591,7 +591,7 @@ const locale = {
     Kyc_62:"O e-mail não foi vinculado",
     Kyc_63:"Não vinculado a um telefone",
     Kyc_64:"O Google Authenticator não foi vinculado",
-
+    Kyc_65:"receber",
 
     
 

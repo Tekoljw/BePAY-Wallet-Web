@@ -591,7 +591,7 @@ const locale = {
     Kyc_62:"メールがリンクされていません",
     Kyc_63:"電話がリンクされていない",
     Kyc_64:"Google Authenticatorがリンクされていません",
-
+    Kyc_65:"受信する",
 
     
 
