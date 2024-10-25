@@ -2129,10 +2129,10 @@ function Fiat(props) {
                             { typeBinded ? ( (twiceVerifyType == 0 ||  twiceVerifyType == 1 ) ?
                                 (
                                     twiceVerifyType === 0 ? <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}>
-                                        {t('Kyc_66')}<span style={{ color:"#909fb4", padding: '0px 5px' }}>{userData?.userInfo?.email}</span>
+                                        {t('Kyc_67')}<span style={{ color:"#909fb4", padding: '0px 5px' }}>{userData?.userInfo?.email}</span>
                                         <span style={{ color:"#2dd4bf", textDecoration:"underline"}}  onClick={ ()=> reciveCode()}>{t('Kyc_65')}</span>
                                     </div>: <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}>
-                                        {t('Kyc_67')}<span style={{ color:"#909fb4", padding: '0px 5px'}}>{userData?.userInfo?.nation + userData?.userInfo?.phone}</span>
+                                        {t('Kyc_66')}<span style={{ color:"#909fb4", padding: '0px 5px'}}>{userData?.userInfo?.nation + userData?.userInfo?.phone}</span>
                                         <span style={{ color:"#2dd4bf", textDecoration:"underline"}}  onClick={ ()=> reciveCode()}>{t('Kyc_65')}</span>
                                     </div>
                                 )
