@@ -195,14 +195,14 @@ function Card(props) {
                 setShowGuangBiao(false)
             }
             if (huaZhuanValue === 0) {
-                if(transferMoney < symbolWallet[0].balance) {
+                if(transferMoney <= symbolWallet[0].balance) {
                     openInputPin()
                 } else {
                     setOpenChongZhi(true)
                     setPin('')
                 }
             }else if(huaZhuanValue === 1){
-                if(transferMoney < cardListObj[cardID]?.amount) {
+                if(transferMoney <= cardListObj[cardID]?.amount) {
                     openInputPin()
                 } else {
                     setOpenChongZhi(true)
