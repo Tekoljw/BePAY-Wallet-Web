@@ -1133,7 +1133,7 @@ function Card(props) {
         if (huaZhuanValue === 0) {
             balance = _.get(_.find(symbolList, { 'symbol': symbol }), 'balance', 0)
         } else if (huaZhuanValue === 1) {
-            balance = cardListObj[cardID] && cardListObj[cardID].amount && cardListObj[cardID].amount.toFixed(2);
+            balance = cardListObj[cardID] && cardListObj[cardID].amount && cardListObj[cardID].amount;
         }
 
         let tmpTransferFee = 0
