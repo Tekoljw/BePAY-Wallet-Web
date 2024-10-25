@@ -593,7 +593,7 @@ const locale = {
     Kyc_65:"vastaanottaa",
     Kyc_66:"Lähetetty puhelimeen",
     Kyc_67:"Lähetä sähköpostiin",
-
+    card_223: "Vastaanotettu määrä:",
     
 
 

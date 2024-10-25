@@ -595,7 +595,7 @@ const locale = {
     Kyc_65:"tumanggap",
     Kyc_66:"Ipinadala sa telepono",
     Kyc_67:"Ipadala sa email",
-
+    card_223: "Natanggap na halaga:",
     
 
     

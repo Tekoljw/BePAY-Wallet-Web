@@ -592,7 +592,7 @@ const locale = {
     Kyc_65:"almak",
     Kyc_66:"Telefona gönderildi",
     Kyc_67:"E-postaya gönder",
-
+    card_223: "Alınan miktar:",
     
 
 

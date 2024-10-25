@@ -594,7 +594,7 @@ const locale = {
     Kyc_65:"recibir",
     Kyc_66:"Enviado al móvil",
     Kyc_67:"Enviar al correo electrónico",
-
+    card_223: "Cantidad recibida:",
     
 
     

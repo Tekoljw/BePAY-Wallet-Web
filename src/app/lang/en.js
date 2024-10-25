@@ -603,7 +603,7 @@ const locale = {
     Kyc_65:"receive",
     Kyc_66:"Sent to mobile",
     Kyc_67:"Send to email",
-
+    card_223: "Received amount:",
     
 
 
