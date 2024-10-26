@@ -588,12 +588,45 @@ const locale = {
     Kyc_61:"Google Authenticator",
     Kyc_62:"Электронная почта не привязана",
     Kyc_63:"Не привязан к телефону",
+    Kyc_64:"Google Authenticator не был привязан",
+    Kyc_65:"получать",
+    Kyc_66:"Отправлено на телефон",
+    Kyc_67:"Отправить на почту",
+    card_223: "Полученная сумма:",
+    error_50:"Неверный параметр в интерфейсе",
+    server_error_10002:"Проверка не удалась",
+    server_error_10003:"Проверка истекла",
+    server_error_10004:"Недействительный идентификатор третьей стороны",
+    server_error_10005:"Недопустимый параметр запроса",
+    server_error_10006:"Проверка входа не удалась",
+    server_error_10007:"Информация для подтверждения входа отсутствует",
+    server_error_10101:"Не удалось получить адрес кошелька",
+    server_error_10201:"Не удалось создать заказ",
+    server_error_11001:"Информация о пользователе не найдена",
+    server_error_11002:"Пользователь BeingFi не существует",
+    server_error_11003:"Верификация KYC пользователя BeingFi не прошла",
+    server_error_11101:"Идентификатор пользователя продавца равен null",
+    server_error_12001:"",
+    server_error_12002:"",
+    server_error_13001:"",
+    server_error_13002:"",
+    server_error_13003:"",
+    server_error_13004:"",
+    server_error_13005:"",
+    server_error_13006:"",
+    server_error_13007:"",
+    server_error_13201:"",
+    server_error_13202:"",
+    server_error_13203:"",
+    server_error_13204:"",
+    server_error_14001:"",
+    server_error_15001:"",
+    server_error_15002:"",
+    server_error_15003:"",
+    server_error_15004:"",
+    server_error_16001:"",
+    server_error_99999:"",
 
-
-
-    
-
-    
     
 
 

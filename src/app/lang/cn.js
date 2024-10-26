@@ -598,12 +598,44 @@ const locale = {
     Kyc_61:"谷歌验证器",
     Kyc_62:"没有绑定过邮箱",
     Kyc_63:"没有绑定过手机",
-
-
-
-    
-
-    
+    Kyc_64:"没有绑定过谷歌验证器",
+    Kyc_65:"接收",
+    Kyc_66:"发送至手机",
+    Kyc_67:"发送至邮箱",
+    card_223: "到账金额:",
+    server_error_10001:"接口无效参数",
+    server_error_10002:"验证失败",
+    server_error_10003:"验证过期",
+    server_error_10004:"无效第三方ID",
+    server_error_10005:"无效的请求参数",
+    server_error_10006:"登录验证失败",
+    server_error_10007:"登录验证信息不存在",
+    server_error_10101:"钱包地址获取失败",
+    server_error_10201:"生产订单失败",
+    server_error_11001:"用户信息不存在",
+    server_error_11002:"BeingFi手机信息用户不存在",
+    server_error_11003:"BeingFi用户KYC没有通过审核",
+    server_error_11101:"商户用户Id是null",
+    server_error_12001:"",
+    server_error_12002:"",
+    server_error_13001:"",
+    server_error_13002:"",
+    server_error_13003:"",
+    server_error_13004:"",
+    server_error_13005:"",
+    server_error_13006:"",
+    server_error_13007:"",
+    server_error_13201:"",
+    server_error_13202:"",
+    server_error_13203:"",
+    server_error_13204:"",
+    server_error_14001:"",
+    server_error_15001:"",
+    server_error_15002:"",
+    server_error_15003:"",
+    server_error_15004:"",
+    server_error_16001:"",
+    server_error_99999:"",
 
 
 

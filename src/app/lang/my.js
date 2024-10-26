@@ -590,12 +590,45 @@ const locale = {
     Kyc_61:"Google Authenticator",
     Kyc_62:"E-mel tidak dipautkan",
     Kyc_63:"Tidak dipautkan ke telefon",
+    Kyc_64:"Google Authenticator belum dipautkan",
+    Kyc_65:"menerima",
+    Kyc_66:"Dihantar ke telefon",
+    Kyc_67:"Hantar ke e-mel",
+    card_223: "Jumlah yang diterima:",
+    error_50:"Parameter tidak sah pada antaramuka",
+    server_error_10002:"Pengesahan gagal",
+    server_error_10003:"Pengesahan Tamat Tempoh",
+    server_error_10004:"ID pihak ketiga tidak sah",
+    server_error_10005:"Parameter permintaan tidak sah",
+    server_error_10006:"Pengesahan log masuk gagal",
+    server_error_10007:"Maklumat pengesahan log masuk tidak wujud",
+    server_error_10101:"Gagal mendapatkan alamat dompet",
+    server_error_10201:"Ciptaan pesanan gagal",
+    server_error_11001:"Maklumat pengguna tiada",
+    server_error_11002:"Pengguna BeingFi tidak wujud",
+    server_error_11003:"KYC pengguna BeingFi tidak berjaya",
+    server_error_11101:"ID pengguna pedagang adalah null",
+    server_error_12001:"",
+    server_error_12002:"",
+    server_error_13001:"",
+    server_error_13002:"",
+    server_error_13003:"",
+    server_error_13004:"",
+    server_error_13005:"",
+    server_error_13006:"",
+    server_error_13007:"",
+    server_error_13201:"",
+    server_error_13202:"",
+    server_error_13203:"",
+    server_error_13204:"",
+    server_error_14001:"",
+    server_error_15001:"",
+    server_error_15002:"",
+    server_error_15003:"",
+    server_error_15004:"",
+    server_error_16001:"",
+    server_error_99999:"",
 
-
-
-    
-
-    
 
     
     

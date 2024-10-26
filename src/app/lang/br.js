@@ -590,12 +590,45 @@ const locale = {
     Kyc_61:"Google Authenticator",
     Kyc_62:"O e-mail não foi vinculado",
     Kyc_63:"Não vinculado a um telefone",
+    Kyc_64:"O Google Authenticator não foi vinculado",
+    Kyc_65:"receber",
+    Kyc_66:"Enviado para o celular",
+    Kyc_67:"Enviar para o e-mail",
+    card_223: "Montante recebido:",
+    error_50:"Parâmetro inválido na interface",
+    server_error_10002:"Falha na verificação",
+    server_error_10003:"Verificação Expirada",
+    server_error_10004:"ID de terceiro inválido",
+    server_error_10005:"Parâmetro de solicitação inválido",
+    server_error_10006:"Falha na verificação de login",
+    server_error_10007:"Informações de verificação de login inexistentes",
+    server_error_10101:"Falha ao obter o endereço da carteira",
+    server_error_10201:"Falha na criação do pedido",
+    server_error_11001:"Informação do usuário não encontrada",
+    server_error_11002:"Usuário BeingFi não encontrado",
+    server_error_11003:"O KYC do usuário BeingFi não foi aprovado",
+    server_error_11101:"O ID do usuário do comerciante é null",
+    server_error_12001:"",
+    server_error_12002:"",
+    server_error_13001:"",
+    server_error_13002:"",
+    server_error_13003:"",
+    server_error_13004:"",
+    server_error_13005:"",
+    server_error_13006:"",
+    server_error_13007:"",
+    server_error_13201:"",
+    server_error_13202:"",
+    server_error_13203:"",
+    server_error_13204:"",
+    server_error_14001:"",
+    server_error_15001:"",
+    server_error_15002:"",
+    server_error_15003:"",
+    server_error_15004:"",
+    server_error_16001:"",
+    server_error_99999:"",
 
-
-
-    
-
-    
 
  };
 export default locale;

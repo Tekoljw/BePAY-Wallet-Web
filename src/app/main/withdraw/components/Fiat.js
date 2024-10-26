@@ -2126,10 +2126,21 @@ function Fiat(props) {
                                 </div>
                             </div>
 
-                            { typeBinded ? ( (twiceVerifyType == 0 ||  twiceVerifyType == 1 ) ? 
-                                <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> 发送至 <span style={{ color:"#909fb4" }}>{ twiceVerifyType ===0 ? `邮箱 ${userData?.userInfo?.email}` : `手机号 ${ '+' + userData?.userInfo?.nation + userData?.userInfo?.phone}`}</span> <span style={{ color:"#2dd4bf", textDecoration:"underline"}}  onClick={ ()=> reciveCode()}>接收</span> 
-                                </div>: <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> 请在google验证器查看</div>)
-                                : <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> 您还没有绑定{ twiceVerifyType ===0 ? '邮箱' :  twiceVerifyType ===1 ? '手机号': 'Google验证' } <span style={{ color:"#2dd4bf", textDecoration:"underline" }} onClick={ ()=> bindTwiceVerifyType()} >立即绑定</span> </div>
+                            { typeBinded ? ( (twiceVerifyType == 0 ||  twiceVerifyType == 1 ) ?
+                                (
+                                    twiceVerifyType === 0 ? <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}>
+                                        {t('Kyc_67')}<span style={{ color:"#909fb4", padding: '0px 5px' }}>{userData?.userInfo?.email}</span>
+                                        <span style={{ color:"#2dd4bf", textDecoration:"underline"}}  onClick={ ()=> reciveCode()}>{t('Kyc_65')}</span>
+                                    </div>: <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}>
+                                        {t('Kyc_66')}<span style={{ color:"#909fb4", padding: '0px 5px'}}>{userData?.userInfo?.nation + userData?.userInfo?.phone}</span>
+                                        <span style={{ color:"#2dd4bf", textDecoration:"underline"}}  onClick={ ()=> reciveCode()}>{t('Kyc_65')}</span>
+                                    </div>
+                                )
+                                : <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> {t('Kyc_60')}</div>)
+                                : <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> 
+                                { twiceVerifyType ===0 ? t('Kyc_62'):  twiceVerifyType ===1 ? t('Kyc_63'): t('Kyc_64') }
+                                    <span style={{ color:"#2dd4bf", textDecoration:"underline", paddingLeft: '5px' }} onClick={ ()=> bindTwiceVerifyType()} >{t('card_167')}</span>
+                                </div>
                             }
                             
                             <div className='flex justify-between mt-32 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
@@ -2145,7 +2156,7 @@ function Fiat(props) {
                             </div>
                         </div>
 
-                        <div className='jianPanSty'>
+                        <div className={clsx('jianPanSty', typeBinded ? '' : 'disabled_jianPanSty')}>
                             <div className='flex' style={{ borderTop: "1px solid #2C3950", borderBottom: "none" }}>
                                 <div id="createPin1" className='jianPanNumBtn borderRight borderBottom color-box'
                                     onTouchStart={changeToBlack}

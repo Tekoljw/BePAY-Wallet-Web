@@ -591,12 +591,45 @@ const locale = {
     Kyc_61:"Google Authenticator",
     Kyc_62:"Hindi naka-link ang email",
     Kyc_63:"Hindi naka-link sa telepono",
+    Kyc_64:"Hindi pa nakakonekta ang Google Authenticator",
+    Kyc_65:"tumanggap",
+    Kyc_66:"Ipinadala sa telepono",
+    Kyc_67:"Ipadala sa email",
+    card_223: "Natanggap na halaga:",
+    error_50:"Di-wastong parameter sa interface",
+    server_error_10002:"Nabigo ang pag-verify",
+    server_error_10003:"Nag-expire na ang Pagpapatunay",
+    server_error_10004:"Di-wastong third-party ID",
+    server_error_10005:"Di-wastong parameter ng kahilingan",
+    server_error_10006:"Nabigo ang pag-verify ng pag-login",
+    server_error_10007:"Walang impormasyon sa pagpapatunay ng pag-login",
+    server_error_10101:"Nabigong makuha ang address ng wallet",
+    server_error_10201:"Nabigong makuha ang address ng wallet",
+    server_error_11001:"Nabigo ang paglikha ng order",
+    server_error_11002:"Walang impormasyon ng user",
+    server_error_11003:"Walang user ng BeingFi",
+    server_error_11101:"Hindi pumasa ang KYC ng BeingFi user",
+    server_error_12001:"Ang ID ng user ng merchant ay null",
+    server_error_12002:"",
+    server_error_13001:"",
+    server_error_13002:"",
+    server_error_13003:"",
+    server_error_13004:"",
+    server_error_13005:"",
+    server_error_13006:"",
+    server_error_13007:"",
+    server_error_13201:"",
+    server_error_13202:"",
+    server_error_13203:"",
+    server_error_13204:"",
+    server_error_14001:"",
+    server_error_15001:"",
+    server_error_15002:"",
+    server_error_15003:"",
+    server_error_15004:"",
+    server_error_16001:"",
+    server_error_99999:"",
 
-
-
-    
-
-    
 
     
     

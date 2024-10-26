@@ -590,12 +590,45 @@ const locale = {
     Kyc_61:"Google Authenticator",
     Kyc_62:"Email belum ditautkan",
     Kyc_63:"Tidak terhubung ke ponsel",
+    Kyc_64:"Google Authenticator belum terhubung",
+    Kyc_65:"menerima",
+    Kyc_66:"Dikirim ke ponsel",
+    Kyc_67:"Kirim ke email",
+    card_223: "Jumlah yang diterima:",
+    error_50:"Parameter tidak valid pada antarmuka",
+    server_error_10002:"Verifikasi gagal",
+    server_error_10003:"Verifikasi Kedaluwarsa",
+    server_error_10004:"ID pihak ketiga tidak valid",
+    server_error_10005:"Parameter permintaan tidak valid",
+    server_error_10006:"Verifikasi login gagal",
+    server_error_10007:"Informasi verifikasi login tidak ada",
+    server_error_10101:"Gagal mengambil alamat dompet",
+    server_error_10201:"Pembuatan pesanan gagal",
+    server_error_11001:"Informasi pengguna tidak ditemukan",
+    server_error_11002:"Pengguna BeingFi tidak ada",
+    server_error_11003:"Verifikasi KYC pengguna BeingFi tidak lolos",
+    server_error_11101:"ID pengguna pedagang adalah null",
+    server_error_12001:"",
+    server_error_12002:"",
+    server_error_13001:"",
+    server_error_13002:"",
+    server_error_13003:"",
+    server_error_13004:"",
+    server_error_13005:"",
+    server_error_13006:"",
+    server_error_13007:"",
+    server_error_13201:"",
+    server_error_13202:"",
+    server_error_13203:"",
+    server_error_13204:"",
+    server_error_14001:"",
+    server_error_15001:"",
+    server_error_15002:"",
+    server_error_15003:"",
+    server_error_15004:"",
+    server_error_16001:"",
+    server_error_99999:"",
 
-
-
-    
-
-    
 
     
     

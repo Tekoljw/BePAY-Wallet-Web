@@ -589,12 +589,45 @@ const locale = {
     Kyc_61:"Google Authenticator",
     Kyc_62:"ای میل منسلک نہیں ہے",
     Kyc_63:"فون سے لنک نہیں کیا گی",
+    Kyc_64:"Google Authenticator منسلک نہیں ہے",
+    Kyc_65:"وصول کرنا",
+    Kyc_66:"موبائل پر بھیجا گیا",
+    Kyc_67:"ای میل پر بھیجیں",
+    card_223: "موصولہ رقم:",
+    error_50:"انٹرفیس میں غلط پیرا میٹر",
+    server_error_10002:"تصدیق ناکام ہوگئی",
+    server_error_10003:"تصدیق ختم ہوگئی",
+    server_error_10004:"غیر درست تیسرے فریق کی شناخت",
+    server_error_10005:"غیر معتبر درخواست پیرامیٹر",
+    server_error_10006:"لاگ ان کی تصدیق ناکام ہوگئی",
+    server_error_10007:"لاگ ان کی تصدیق کی معلومات موجود نہیں ہیں",
+    server_error_10101:"والیٹ ایڈریس حاصل کرنے میں ناکامی ہوئی",
+    server_error_10201:"آرڈر کی تخلیق ناکام ہوگئی",
+    server_error_11001:"صارف کی معلومات موجود نہیں ہے",
+    server_error_11002:"BeingFi صارف موجود نہیں ہے",
+    server_error_11003:"BeingFi صارف کا KYC تصدیق کامیاب نہیں ہوئی",
+    server_error_11101:"مرچنٹ صارف ID null ہے",
+    server_error_12001:"",
+    server_error_12002:"",
+    server_error_13001:"",
+    server_error_13002:"",
+    server_error_13003:"",
+    server_error_13004:"",
+    server_error_13005:"",
+    server_error_13006:"",
+    server_error_13007:"",
+    server_error_13201:"",
+    server_error_13202:"",
+    server_error_13203:"",
+    server_error_13204:"",
+    server_error_14001:"",
+    server_error_15001:"",
+    server_error_15002:"",
+    server_error_15003:"",
+    server_error_15004:"",
+    server_error_16001:"",
+    server_error_99999:"",
 
-
-
-    
-
-    
     
 
     
