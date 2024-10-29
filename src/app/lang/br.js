@@ -628,6 +628,12 @@ const locale = {
     server_error_15004:"O anúncio não existe ou não foi aprovado",
     server_error_16001:"O tipo de mensagem enviada pelo bot do Telegram está vazio",
     server_error_99999:"Erro de serviço de API",
+    card_224: "Código de verificação incorreto",
+    wallet_30: "Fundo insuficiente para custódia",
+    wallet_31: "Se os ativos ultrapassarem 200 USD, escolha um método de vinculação para garantir a segurança dos fundos",
+
+
+
 
 
  };

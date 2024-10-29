@@ -618,6 +618,16 @@ const locale = {
     server_error_15004:"Quảng cáo không tồn tại hoặc chưa được phê duyệt",
     server_error_16001:"Loại tin nhắn được gửi bởi bot Telegram đang trống",
     server_error_99999:"Lỗi dịch vụ API",
+    card_224: "Mã xác nhận không đúng",
+    wallet_30: "Quỹ giám sát không đủ",
+    wallet_31: "Nếu tài sản vượt quá 200 USD, vui lòng chọn phương thức liên kết để đảm bảo an toàn cho quỹ",
+
+
+
+
+
+    
+
 
     };
 

@@ -17,7 +17,7 @@ import Checkbox from '@mui/material/Checkbox';
 
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../../store/user";
-import { centerGetTokenBalanceList, getListBank,  sendEmail, sendSms, userProfile} from "../../../store/user/userThunk";
+import { centerGetTokenBalanceList, getListBank, sendEmail, sendSms, userProfile } from "../../../store/user/userThunk";
 import { makeWithdrawOrder, getFiatFee, payoutBank, payoutPayWays } from "../../../store/payment/paymentThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../../components/StyledAccordionSelect";
@@ -219,7 +219,7 @@ function Fiat(props) {
                 amount: inputVal.amount,
                 transferType: 1,
                 checkCode: googleCode,
-                codeType: twiceVerifyType ===0 ? 2 :  twiceVerifyType ===1 ? 1 : 0
+                codeType: twiceVerifyType === 0 ? 2 : twiceVerifyType === 1 ? 1 : 0
             };
             dispatch(makeWithdrawOrder(data)).then((res) => {
                 setOpenLoad(false)
@@ -241,11 +241,16 @@ function Fiat(props) {
                             setZhuanQuan(false);
                             setTiJiaoState(2);
                         }, 1200);
-                        dispatch(showMessage({ message: result.data.msg, code: 2 }));
+
+                        if (result.data.msg.includes("security code error")) {
+                            dispatch(showMessage({ message: t('card_224'), code: 2 }));
+                        } else {
+                            dispatch(showMessage({ message: result.data.msg, code: 2 }));
+                        }
                     }
                 } else if (result.errno === -2) {
                     setTwiceVerifyType(0);
-                    setTypeBined(hasAuthEmail ? true: false);
+                    setTypeBined(hasAuthEmail ? true : false);
 
                     openGoogleCodeFunc()
                     return
@@ -262,7 +267,14 @@ function Fiat(props) {
                         setZhuanQuan(false);
                         setTiJiaoState(2);
                     }, 1200);
-                    dispatch(showMessage({ message: result.errmsg, code: 2 }));
+
+                    if (result.data.msg.includes("security code error")) {
+                        dispatch(showMessage({ message: t('card_224'), code: 2 }));
+                    } else if (result.data.msg.includes("商户共管资金余额不足")) {
+                        dispatch(showMessage({ message: t('wallet_30'), code: 2 }));
+                    } else {
+                        dispatch(showMessage({ message: result.data.msg, code: 2 }));
+                    }
                 }
             });
         }
@@ -279,7 +291,7 @@ function Fiat(props) {
                 amount: inputVal.amount,
                 entryType: entryType,
                 checkCode: googleCode,
-                codeType: twiceVerifyType ===0 ? 2 :  twiceVerifyType ===1 ? 1 : 0,
+                codeType: twiceVerifyType === 0 ? 2 : twiceVerifyType === 1 ? 1 : 0,
                 channelExtra: JSON.stringify({
                     accountNo: inputVal.accountNo,
                     accountName: inputVal.accountName,
@@ -310,12 +322,17 @@ function Fiat(props) {
                             setZhuanQuan(false);
                             setTiJiaoState(2);
                         }, 1200);
-                        dispatch(showMessage({ message: result.data.msg, code: 2 }));
+                        if (result.data.msg.includes("security code error")) {
+                            dispatch(showMessage({ message: t('card_224'), code: 2 }));
+                        } else if (result.data.msg.includes("商户共管资金余额不足")) {
+                            dispatch(showMessage({ message: t('wallet_30'), code: 2 }));
+                        } else {
+                            dispatch(showMessage({ message: result.data.msg, code: 2 }));
+                        }
                     }
                 } else if (result.errno === -2) {
                     setTwiceVerifyType(0);
-                    setTypeBined(hasAuthEmail ? true: false);
-
+                    setTypeBined(hasAuthEmail ? true : false);
                     openGoogleCodeFunc()
                     return
                 } else {
@@ -324,7 +341,13 @@ function Fiat(props) {
                         setZhuanQuan(false);
                         setTiJiaoState(2);
                     }, 1200);
-                    dispatch(showMessage({ message: result.errmsg, code: 2 }));
+                    if (result.errmsg.includes("security code error")) {
+                        dispatch(showMessage({ message: t('card_224'), code: 2 }));
+                    } else if (result.errmsg.includes("商户共管资金余额不足")) {
+                        dispatch(showMessage({ message: t('wallet_30'), code: 2 }));
+                    } else {
+                        dispatch(showMessage({ message: result.errmsg, code: 2 }));
+                    }
                 }
             });
         }
@@ -386,7 +409,7 @@ function Fiat(props) {
     const symbols = config.symbols;
     const hasAuthGoogle = userData.userInfo?.hasAuthGoogle;
     const hasAuthEmail = userData.userInfo?.bindEmail;
-    const hasAuthPhone =  userData.userInfo?.bindMobile;
+    const hasAuthPhone = userData.userInfo?.bindMobile;
     const [twiceVerifyType, setTwiceVerifyType] = useState(0);
     const [typeBinded, setTypeBined] = useState(false);
     const [openKyc, setOpenKyc] = useState(false);
@@ -745,8 +768,8 @@ function Fiat(props) {
     };
 
     const closePinFunc = () => {
-        document.getElementById('PINSty') &&  document.getElementById('PINSty').classList && document.getElementById('PINSty').classList.remove('PinMoveAni');
-        document.getElementById('PINSty') &&  document.getElementById('PINSty').classList && document.getElementById('PINSty').classList.add('PinMoveOut');
+        document.getElementById('PINSty') && document.getElementById('PINSty').classList && document.getElementById('PINSty').classList.remove('PinMoveAni');
+        document.getElementById('PINSty') && document.getElementById('PINSty').classList && document.getElementById('PINSty').classList.add('PinMoveOut');
         setTimeout(() => {
             setOpenPinWindow(false);
             setOpenSuccess(true);
@@ -877,7 +900,7 @@ function Fiat(props) {
     };
 
 
-    const reciveCode = async()=> {
+    const reciveCode = async () => {
         let sendRes = {};
         if (twiceVerifyType === 0) {
             const data = {
@@ -895,13 +918,13 @@ function Fiat(props) {
         }
     }
 
-    const bindTwiceVerifyType = () =>{
-        if(twiceVerifyType === 0){
+    const bindTwiceVerifyType = () => {
+        if (twiceVerifyType === 0) {
             closeGoogleCodeFunc()
             closePinFunc()
             setOpenBindEmail(true)
             return
-        } else if(twiceVerifyType === 1){
+        } else if (twiceVerifyType === 1) {
             closeGoogleCodeFunc()
             closePinFunc()
             setOpenBindPhone(true)
@@ -1945,7 +1968,7 @@ function Fiat(props) {
                         }}   >
                             <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                         </div>
-                        <RetiedEmail backPage={ ()=> backPageEvt()}/>
+                        <RetiedEmail backPage={() => backPageEvt()} />
                         <div style={{ height: "5rem" }}></div>
                     </motion.div>
                 </div>}
@@ -1964,7 +1987,7 @@ function Fiat(props) {
                         }}   >
                             <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                         </div>
-                        <RetiedPhone backPage={ ()=> backPageEvt()}/>
+                        <RetiedPhone backPage={() => backPageEvt()} />
                         <div style={{ height: "5rem" }}></div>
                     </motion.div>
                 </div>}
@@ -2102,15 +2125,15 @@ function Fiat(props) {
 
                             <div className='flex justify-between'>
                                 <div
-                                    onClick={() => { setTwiceVerifyType(0); setTypeBined(hasAuthEmail? true: false) }}
-                                    className={clsx('selectPin',  twiceVerifyType=== 0 && 'activePinZi')}
+                                    onClick={() => { setTwiceVerifyType(0); setTypeBined(hasAuthEmail ? true : false) }}
+                                    className={clsx('selectPin', twiceVerifyType === 0 && 'activePinZi')}
                                 >
                                     <img style={{ width: '2rem', borderRadius: '0.5rem', float: "left" }} src="wallet/assets/images/menu/email.png" alt="" />
                                     <div style={{ float: "left" }} className="px-6">{t('signIn_5')} </div>
                                 </div>
 
                                 <div
-                                    onClick={() => { setTwiceVerifyType(1); setTypeBined(hasAuthPhone? true: false)}}
+                                    onClick={() => { setTwiceVerifyType(1); setTypeBined(hasAuthPhone ? true : false) }}
                                     className={clsx('selectPin', twiceVerifyType === 1 && 'activePinZi')}
                                 >
                                     <img style={{ width: '2rem', borderRadius: '0.5rem', float: "left" }} src="wallet/assets/images/menu/phone.png" alt="" />
@@ -2118,7 +2141,7 @@ function Fiat(props) {
                                 </div>
 
                                 <div
-                                    onClick={() => { setTwiceVerifyType(2);setTypeBined(hasAuthGoogle? true: false) }}
+                                    onClick={() => { setTwiceVerifyType(2); setTypeBined(hasAuthGoogle ? true : false) }}
                                     className={clsx('selectPin', twiceVerifyType === 2 && 'activePinZi')}
                                 >
                                     <img style={{ width: '2rem', borderRadius: '0.5rem', float: "left" }} src="wallet/assets/images/menu/google.png" alt="" />
@@ -2126,23 +2149,23 @@ function Fiat(props) {
                                 </div>
                             </div>
 
-                            { typeBinded ? ( (twiceVerifyType == 0 ||  twiceVerifyType == 1 ) ?
+                            {typeBinded ? ((twiceVerifyType == 0 || twiceVerifyType == 1) ?
                                 (
-                                    twiceVerifyType === 0 ? <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}>
-                                        {t('Kyc_67')}<span style={{ color:"#909fb4", padding: '0px 5px' }}>{userData?.userInfo?.email}</span>
-                                        <span style={{ color:"#2dd4bf", textDecoration:"underline"}}  onClick={ ()=> reciveCode()}>{t('Kyc_65')}</span>
-                                    </div>: <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}>
-                                        {t('Kyc_66')}<span style={{ color:"#909fb4", padding: '0px 5px'}}>{userData?.userInfo?.nation + userData?.userInfo?.phone}</span>
-                                        <span style={{ color:"#2dd4bf", textDecoration:"underline"}}  onClick={ ()=> reciveCode()}>{t('Kyc_65')}</span>
+                                    twiceVerifyType === 0 ? <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}>
+                                        {t('Kyc_67')}<span style={{ color: "#909fb4", padding: '0px 5px' }}>{userData?.userInfo?.email}</span>
+                                        <span style={{ color: "#2dd4bf", textDecoration: "underline" }} onClick={() => reciveCode()}>{t('Kyc_65')}</span>
+                                    </div> : <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}>
+                                        {t('Kyc_66')}<span style={{ color: "#909fb4", padding: '0px 5px' }}>{userData?.userInfo?.nation + userData?.userInfo?.phone}</span>
+                                        <span style={{ color: "#2dd4bf", textDecoration: "underline" }} onClick={() => reciveCode()}>{t('Kyc_65')}</span>
                                     </div>
                                 )
-                                : <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> {t('Kyc_60')}</div>)
-                                : <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> 
-                                { twiceVerifyType ===0 ? t('Kyc_62'):  twiceVerifyType ===1 ? t('Kyc_63'): t('Kyc_64') }
-                                    <span style={{ color:"#2dd4bf", textDecoration:"underline", paddingLeft: '5px' }} onClick={ ()=> bindTwiceVerifyType()} >{t('card_167')}</span>
+                                : <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}> {t('Kyc_60')}</div>)
+                                : <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}>
+                                    {twiceVerifyType === 0 ? t('Kyc_62') : twiceVerifyType === 1 ? t('Kyc_63') : t('Kyc_64')}
+                                    <span style={{ color: "#2dd4bf", textDecoration: "underline", paddingLeft: '5px' }} onClick={() => bindTwiceVerifyType()} >{t('card_167')}</span>
                                 </div>
                             }
-                            
+
                             <div className='flex justify-between mt-32 pt-16 pb-16' style={{ borderTop: "1px solid #2C3950" }}>
                                 <div className='PinNum color-box'
                                     onTouchStart={changeToBlack}

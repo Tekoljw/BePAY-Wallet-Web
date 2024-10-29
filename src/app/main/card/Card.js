@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { selectConfig, setSwapConfig } from "../../store/config";
-import {arrayLookup, setPhoneTab, getNowTime, getUserLoginType} from "../../util/tools/function";
+import { arrayLookup, setPhoneTab, getNowTime, getUserLoginType } from "../../util/tools/function";
 import Dialog from "@mui/material/Dialog/Dialog";
 import Tabs, { tabsClasses } from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -195,14 +195,14 @@ function Card(props) {
                 setShowGuangBiao(false)
             }
             if (huaZhuanValue === 0) {
-                if(transferMoney <= symbolWallet[0].balance) {
+                if (transferMoney <= symbolWallet[0].balance) {
                     openInputPin()
                 } else {
                     setOpenChongZhi(true)
                     setPin('')
                 }
-            }else if(huaZhuanValue === 1){
-                if(transferMoney <= cardListObj[cardID]?.amount) {
+            } else if (huaZhuanValue === 1) {
+                if (transferMoney <= cardListObj[cardID]?.amount) {
                     openInputPin()
                 } else {
                     setOpenChongZhi(true)
@@ -460,7 +460,7 @@ function Card(props) {
     useEffect(() => {
         setPhoneTab('card');
         const curLoginType = getUserLoginType(userData);
-        if(curLoginType !== userLoginType.USER_LOGIN_TYPE_UNKNOWN) { //登录过以后才会获取余额值
+        if (curLoginType !== userLoginType.USER_LOGIN_TYPE_UNKNOWN) { //登录过以后才会获取余额值
             dispatch(userProfile());
             dispatch(centerGetTokenBalanceList());
             dispatch(centerGetUserFiat());
@@ -1064,14 +1064,21 @@ function Card(props) {
                         setZhuanQuan(false);
                         setTiJiaoState(2);
                         setOpenSuccess(true);
-                        dispatch(showMessage({ message: result.data.msg, code: 2 }));
+                        if (result.data.msg.includes("security code error")) {
+                            dispatch(showMessage({ message: t('card_224'), code: 2 }));
+                        } else {
+                            dispatch(showMessage({ message: result.data.msg, code: 2 }));
+                        }
+
                     }
                 }
             } else {
                 setZhuanQuan(false);
                 setOpenSuccess(true);
                 setTiJiaoState(2);
-                dispatch(showMessage({ message: result.errmsg, code: 2 }));
+                if (result.errmsg.includes("security code error")) {
+                    dispatch(showMessage({ message: t('card_224'), code: 2 }));
+                }
             }
         })
     }
@@ -1165,13 +1172,13 @@ function Card(props) {
         }
     }
 
-    const bindTwiceVerifyType = () =>{
-        if(twiceVerifyType === 0){
+    const bindTwiceVerifyType = () => {
+        if (twiceVerifyType === 0) {
             closeGoogleCodeFunc()
             closePinFunc()
             setOpenBindEmail(true)
             return
-        } else if(twiceVerifyType === 1){
+        } else if (twiceVerifyType === 1) {
             closeGoogleCodeFunc()
             closePinFunc()
             setOpenBindPhone(true)
@@ -1312,7 +1319,7 @@ function Card(props) {
                                 </motion.div>
 
                                 {
-                                  !openBindEmail && !openBindPhone && <div className='cardSelectBg'>
+                                    !openBindEmail && !openBindPhone && <div className='cardSelectBg'>
                                         <div className='cardSelectBgPadding '>
                                             {!openKyc && <div style={{ padding: '1rem 1.5rem 1.5rem 1.5rem' }} >
                                                 <Tabs
@@ -1859,7 +1866,7 @@ function Card(props) {
                                             </div>
                                             }
                                         </div>
-                                </div>
+                                    </div>
                                 }
                             </div>
                         }
@@ -2236,7 +2243,7 @@ function Card(props) {
                 </motion.div>
             </div>}
 
-            
+
             {openBindEmail && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
                 <motion.div
                     variants={container}
@@ -2251,7 +2258,7 @@ function Card(props) {
                     }}   >
                         <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                     </div>
-                    <RetiedEmail backPage={ ()=> backPageEvt()}/>
+                    <RetiedEmail backPage={() => backPageEvt()} />
                     <div style={{ height: "5rem" }}></div>
                 </motion.div>
             </div>}
@@ -2270,7 +2277,7 @@ function Card(props) {
                     }}   >
                         <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                     </div>
-                    <RetiedPhone backPage={ ()=> backPageEvt()}/>
+                    <RetiedPhone backPage={() => backPageEvt()} />
                     <div style={{ height: "5rem" }}></div>
                 </motion.div>
             </div>}
@@ -3163,20 +3170,20 @@ function Card(props) {
                             </div>
                         </div>
 
-                        { typeBinded ? ( (twiceVerifyType == 0 ||  twiceVerifyType == 1 ) ?
+                        {typeBinded ? ((twiceVerifyType == 0 || twiceVerifyType == 1) ?
                             (
-                                twiceVerifyType === 0 ? <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}>
-                                    {t('Kyc_67')}<span style={{ color:"#909fb4", padding: '0px 5px' }}>{userData?.userInfo?.email}</span>
-                                    <span style={{ color:"#2dd4bf", textDecoration:"underline"}}  onClick={ ()=> reciveCode()}>{t('Kyc_65')}</span>
-                                </div>: <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}>
-                                    {t('Kyc_66')}<span style={{ color:"#909fb4", padding: '0px 5px'}}>{userData?.userInfo?.nation + userData?.userInfo?.phone}</span>
-                                    <span style={{ color:"#2dd4bf", textDecoration:"underline"}}  onClick={ ()=> reciveCode()}>{t('Kyc_65')}</span>
+                                twiceVerifyType === 0 ? <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}>
+                                    {t('Kyc_67')}<span style={{ color: "#909fb4", padding: '0px 5px' }}>{userData?.userInfo?.email}</span>
+                                    <span style={{ color: "#2dd4bf", textDecoration: "underline" }} onClick={() => reciveCode()}>{t('Kyc_65')}</span>
+                                </div> : <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}>
+                                    {t('Kyc_66')}<span style={{ color: "#909fb4", padding: '0px 5px' }}>{userData?.userInfo?.nation + userData?.userInfo?.phone}</span>
+                                    <span style={{ color: "#2dd4bf", textDecoration: "underline" }} onClick={() => reciveCode()}>{t('Kyc_65')}</span>
                                 </div>
                             )
-                            : <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> {t('Kyc_60')}</div>)
-                            : <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> 
-                            { twiceVerifyType ===0 ? t('Kyc_62'):  twiceVerifyType ===1 ? t('Kyc_63'): t('Kyc_64') }
-                                <span style={{ color:"#2dd4bf", textDecoration:"underline", paddingLeft: '5px' }} onClick={ ()=> bindTwiceVerifyType()} >{t('card_167')}</span>
+                            : <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}> {t('Kyc_60')}</div>)
+                            : <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}>
+                                {twiceVerifyType === 0 ? t('Kyc_62') : twiceVerifyType === 1 ? t('Kyc_63') : t('Kyc_64')}
+                                <span style={{ color: "#2dd4bf", textDecoration: "underline", paddingLeft: '5px' }} onClick={() => bindTwiceVerifyType()} >{t('card_167')}</span>
                             </div>
                         }
 

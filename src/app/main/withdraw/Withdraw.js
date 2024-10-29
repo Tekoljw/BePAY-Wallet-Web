@@ -200,7 +200,7 @@ function Withdraw(props) {
     };
 
     const changeToWhite = (target) => {
-        document.getElementById(target.target.id) &&  document.getElementById(target.target.id).classList && document.getElementById(target.target.id).classList.remove('pinJianPanColor1');
+        document.getElementById(target.target.id) && document.getElementById(target.target.id).classList && document.getElementById(target.target.id).classList.remove('pinJianPanColor1');
     };
 
     const [inputIDVal, setInputIDVal] = useState('');
@@ -241,7 +241,7 @@ function Withdraw(props) {
     const transferStats = userData.transferStats;
     const hasAuthGoogle = userData.userInfo?.hasAuthGoogle;
     const hasAuthEmail = userData.userInfo?.bindEmail;
-    const hasAuthPhone =  userData.userInfo?.bindMobile;
+    const hasAuthPhone = userData.userInfo?.bindMobile;
 
 
     const currentLanguage = useSelector(selectCurrentLanguage);
@@ -411,7 +411,7 @@ function Withdraw(props) {
             networkId: networkId,
             priceLevel: amountTab,
             bAppendFee: tmpBAppendFee,
-            codeType: twiceVerifyType ===0 ? 2 :  twiceVerifyType ===1 ? 1 : 0
+            codeType: twiceVerifyType === 0 ? 2 : twiceVerifyType === 1 ? 1 : 0
         };
 
         dispatch(tokenTransfer(data)).then((res) => {
@@ -429,7 +429,7 @@ function Withdraw(props) {
                 dispatch(centerGetTokenBalanceList());
             } else if (result.errno == -2) { //需要google验证
                 setTwiceVerifyType(0);
-                setTypeBined(hasAuthEmail ? true: false);
+                setTypeBined(hasAuthEmail ? true : false);
                 // if (!hasAuthGoogle) {
                 //     closePinFunc()
                 //     setOpenAnimateModal(true);
@@ -443,9 +443,14 @@ function Withdraw(props) {
                     setZhuanQuan(false);
                     setTiJiaoState(2);
                 }, 1200);
-                dispatch(showMessage({ message: t('error_22'), code: 2 }));
+                if (result.errmsg.includes("security code error")) {
+                    dispatch(showMessage({ message: t('card_224'), code: 2 }));
+                } else if (result.errmsg.includes("商户共管资金余额不足")) {
+                    dispatch(showMessage({ message: t('wallet_30'), code: 2 }));
+                } else {
+                    dispatch(showMessage({ message: t('error_22'), code: 2 }));
+                }
             }
-
         });
     };
 
@@ -503,7 +508,7 @@ function Withdraw(props) {
             amount: inputVal.amount,
             symbol: symbol,
             checkCode: googleCode,
-            codeType: twiceVerifyType ===0 ? 2 :  twiceVerifyType ===1 ? 1 : 0
+            codeType: twiceVerifyType === 0 ? 2 : twiceVerifyType === 1 ? 1 : 0
         };
 
         setOpenLoad(true);
@@ -522,7 +527,7 @@ function Withdraw(props) {
                 }, 1200);
             } else if (resData.errno == -2) {
                 setTwiceVerifyType(0);
-                setTypeBined(hasAuthEmail ? true: false);
+                setTypeBined(hasAuthEmail ? true : false);
                 // if (!hasAuthGoogle) {
                 //     closePinFunc()
                 //     setOpenAnimateModal(true);
@@ -536,7 +541,11 @@ function Withdraw(props) {
                     setZhuanQuan(false);
                     setTiJiaoState(2);
                 }, 1200);
-                dispatch(showMessage({ message: t('error_22'), code: 2 }));
+                if (resData.errmsg.includes("security code error")) {
+                    dispatch(showMessage({ message: t('card_224'), code: 2 }));
+                } else {
+                    dispatch(showMessage({ message: t('error_22'), code: 2 }));
+                }
             }
         });
     };
@@ -873,7 +882,7 @@ function Withdraw(props) {
     }
 
     const handleDoGoogleCode = (text) => {
-        if(!typeBinded) return;
+        if (!typeBinded) return;
         let tmpCode = googleCode
         if (text === -1) {
             tmpCode = tmpCode.slice(0, -1)
@@ -1012,13 +1021,13 @@ function Withdraw(props) {
         }
     }
 
-    const bindTwiceVerifyType = () =>{
-        if(twiceVerifyType === 0){
+    const bindTwiceVerifyType = () => {
+        if (twiceVerifyType === 0) {
             closeGoogleCodeFunc()
             closePinFunc()
             setOpenBindEmail(true)
             return
-        } else if(twiceVerifyType === 1){
+        } else if (twiceVerifyType === 1) {
             closeGoogleCodeFunc()
             closePinFunc()
             setOpenBindPhone(true)
@@ -1040,7 +1049,7 @@ function Withdraw(props) {
         setOpenGoogleCode(true);
     }
 
-    const reciveCode = async()=> {
+    const reciveCode = async () => {
         let sendRes = {};
         if (twiceVerifyType === 0) {
             const data = {
@@ -1514,19 +1523,19 @@ function Withdraw(props) {
                                             closeGoogleCodeFunc()
                                         }} />
                                     </div>
-                           
+
 
                                     <div className='flex justify-between'>
                                         <div
-                                            onClick={() => { setTwiceVerifyType(0); setTypeBined(hasAuthEmail? true: false) }}
-                                            className={clsx('selectPin',  twiceVerifyType=== 0 && 'activePinZi')}
+                                            onClick={() => { setTwiceVerifyType(0); setTypeBined(hasAuthEmail ? true : false) }}
+                                            className={clsx('selectPin', twiceVerifyType === 0 && 'activePinZi')}
                                         >
                                             <img style={{ width: '2rem', borderRadius: '0.5rem', float: "left" }} src="wallet/assets/images/menu/email.png" alt="" />
                                             <div style={{ float: "left" }} className="px-6">{t('signIn_5')} </div>
                                         </div>
 
                                         <div
-                                            onClick={() => { setTwiceVerifyType(1); setTypeBined(hasAuthPhone? true: false)}}
+                                            onClick={() => { setTwiceVerifyType(1); setTypeBined(hasAuthPhone ? true : false) }}
                                             className={clsx('selectPin', twiceVerifyType === 1 && 'activePinZi')}
                                         >
                                             <img style={{ width: '2rem', borderRadius: '0.5rem', float: "left" }} src="wallet/assets/images/menu/phone.png" alt="" />
@@ -1534,7 +1543,7 @@ function Withdraw(props) {
                                         </div>
 
                                         <div
-                                            onClick={() => { setTwiceVerifyType(2);setTypeBined(hasAuthGoogle? true: false) }}
+                                            onClick={() => { setTwiceVerifyType(2); setTypeBined(hasAuthGoogle ? true : false) }}
                                             className={clsx('selectPin', twiceVerifyType === 2 && 'activePinZi')}
                                         >
                                             <img style={{ width: '2rem', borderRadius: '0.5rem', float: "left" }} src="wallet/assets/images/menu/google.png" alt="" />
@@ -1542,20 +1551,20 @@ function Withdraw(props) {
                                         </div>
                                     </div>
 
-                                    { typeBinded ? ( (twiceVerifyType == 0 ||  twiceVerifyType == 1 ) ?
+                                    {typeBinded ? ((twiceVerifyType == 0 || twiceVerifyType == 1) ?
                                         (
-                                            twiceVerifyType === 0 ? <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}>
-                                                {t('Kyc_67')}<span style={{ color:"#909fb4", padding: '0px 5px' }}>{userData?.userInfo?.email}</span>
-                                                <span style={{ color:"#2dd4bf", textDecoration:"underline"}}  onClick={ ()=> reciveCode()}>{t('Kyc_65')}</span>
-                                            </div>: <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}>
-                                                {t('Kyc_66')}<span style={{ color:"#909fb4", padding: '0px 5px'}}>{userData?.userInfo?.nation + userData?.userInfo?.phone}</span>
-                                                <span style={{ color:"#2dd4bf", textDecoration:"underline"}}  onClick={ ()=> reciveCode()}>{t('Kyc_65')}</span>
+                                            twiceVerifyType === 0 ? <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}>
+                                                {t('Kyc_67')}<span style={{ color: "#909fb4", padding: '0px 5px' }}>{userData?.userInfo?.email}</span>
+                                                <span style={{ color: "#2dd4bf", textDecoration: "underline" }} onClick={() => reciveCode()}>{t('Kyc_65')}</span>
+                                            </div> : <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}>
+                                                {t('Kyc_66')}<span style={{ color: "#909fb4", padding: '0px 5px' }}>{userData?.userInfo?.nation + userData?.userInfo?.phone}</span>
+                                                <span style={{ color: "#2dd4bf", textDecoration: "underline" }} onClick={() => reciveCode()}>{t('Kyc_65')}</span>
                                             </div>
                                         )
-                                        : <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> {t('Kyc_60')}</div>)
-                                     : <div className='mt-16' style={{ fontSize:"16px",textAlign:"center" }}> 
-                                        { twiceVerifyType ===0 ? t('Kyc_62'):  twiceVerifyType ===1 ? t('Kyc_63'): t('Kyc_64') }
-                                            <span style={{ color:"#2dd4bf", textDecoration:"underline", paddingLeft: '5px' }} onClick={ ()=> bindTwiceVerifyType()} >{t('card_167')}</span>
+                                        : <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}> {t('Kyc_60')}</div>)
+                                        : <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}>
+                                            {twiceVerifyType === 0 ? t('Kyc_62') : twiceVerifyType === 1 ? t('Kyc_63') : t('Kyc_64')}
+                                            <span style={{ color: "#2dd4bf", textDecoration: "underline", paddingLeft: '5px' }} onClick={() => bindTwiceVerifyType()} >{t('card_167')}</span>
                                         </div>
                                     }
 
@@ -2289,7 +2298,7 @@ function Withdraw(props) {
                     }}   >
                         <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                     </div>
-                    <RetiedEmail backPage={ ()=> backPageEvt()}/>
+                    <RetiedEmail backPage={() => backPageEvt()} />
                     <div style={{ height: "5rem" }}></div>
                 </motion.div>
             </div>}
@@ -2308,7 +2317,7 @@ function Withdraw(props) {
                     }}   >
                         <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                     </div>
-                    <RetiedPhone backPage={ ()=> backPageEvt()}/>
+                    <RetiedPhone backPage={() => backPageEvt()} />
                     <div style={{ height: "5rem" }}></div>
                 </motion.div>
             </div>}

@@ -631,6 +631,15 @@ const locale = {
     server_error_15004:"Die Anzeige existiert nicht oder wurde nicht genehmigt",
     server_error_16001:"Der Nachrichtentyp des Telegram-Bots ist leer",
     server_error_99999:"API-Dienstfehler",
+    card_224: "Falscher Verifizierungscode",
+    wallet_30: "Unzureichende gemeinsame Mittel",
+    wallet_31: "Wenn die Vermögenswerte 200 USD übersteigen, wählen Sie eine Bindungsmethode, um die Sicherheit der Gelder zu gewährleisten",
+
+
+
+
+
+
 
 };
 

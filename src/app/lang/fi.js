@@ -627,6 +627,15 @@ const locale = {
     server_error_15004:"Mainosta ei ole olemassa tai se ei ole läpäissyt tarkastusta",
     server_error_16001:"Telegram-botin lähettämän viestin tyyppi on tyhjä",
     server_error_99999:"API-palveluvirhe",
+    card_224: "Virheellinen vahvistuskoodi",
+    wallet_30: "Riittämättömät yhteisvarat",
+    wallet_31: "Jos varat ylittävät 200 USD, valitse liittämismenetelmä varojen turvallisuuden varmistamiseksi",
+
+
+
+
+
+    
 
 
 

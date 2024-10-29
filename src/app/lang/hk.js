@@ -627,6 +627,16 @@ const locale = {
     server_error_15004:"廣告不存在或沒有通過審核",
     server_error_16001:"Telegram 機器人發送的消息類型為空",
     server_error_99999:"API服務異常",
+    card_224: "驗證碼錯誤",
+    wallet_30: "共管資金不足",
+    wallet_31: "資產超過200美元，請選擇綁定方式確保資金安全",
+
+
+
+
+
+    
+
 
 
     

@@ -628,6 +628,16 @@ const locale = {
     server_error_15004:"Iklan tidak wujud atau belum diluluskan",
     server_error_16001:"Jenis mesej yang dihantar oleh bot Telegram adalah kosong",
     server_error_99999:"Ralat Perkhidmatan API",
+    card_224: "Kod pengesahan salah",
+    wallet_30: "Dana pengurusan tidak mencukupi",
+    wallet_31: "Jika aset melebihi 200 USD, sila pilih kaedah pengikatan untuk memastikan keselamatan dana",
+
+
+
+
+
+    
+
 
 
     

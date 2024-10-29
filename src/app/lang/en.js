@@ -637,6 +637,15 @@ const locale = {
     server_error_15004:"The ad does not exist or has not been approved",
     server_error_16001:"The type of message sent by the Telegram bot is empty",
     server_error_99999:"API Service Error",
+    card_224: "Verification code incorrect",
+    wallet_30: "Insufficient custody funds",
+    wallet_31: "If assets exceed 200 USD, please choose a binding method to ensure fund security",
+
+
+
+
+
+    
 
 
 

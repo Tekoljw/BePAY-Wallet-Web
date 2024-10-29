@@ -626,6 +626,15 @@ const locale = {
     server_error_15004:"Reklam mevcut değil veya onaylanmadı",
     server_error_16001:"Telegram botunun gönderdiği mesaj türü boş",
     server_error_99999:"API Hizmeti Hatası",
+    card_224: "Doğrulama kodu yanlış",
+    wallet_30: "Yetersiz ortak fon",
+    wallet_31: "Varlıklar 200 USD'yi aşıyorsa, fon güvenliğini sağlamak için bir bağlama yöntemi seçin",
+
+
+
+
+
+    
 
 
 

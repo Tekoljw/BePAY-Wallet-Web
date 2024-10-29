@@ -629,6 +629,15 @@ const locale = {
     server_error_15004:"Ang ad ay hindi umiiral o hindi naaprubahan",
     server_error_16001:"Ang uri ng mensaheng ipinadala ng Telegram bot ay walang laman",
     server_error_99999:"Pagkakamali sa Serbisyo ng API",
+    card_224: "Mali ang verification code",
+    wallet_30: "Hindi sapat ang pondong pang-custodya",
+    wallet_31: "Kung ang mga asset ay lumampas sa 200 USD, mangyaring pumili ng paraan ng pagkakabit upang matiyak ang seguridad ng pondo",
+
+
+
+
+
+    
 
 
     

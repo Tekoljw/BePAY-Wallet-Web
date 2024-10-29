@@ -34,6 +34,7 @@ import DialogContent from "@mui/material/DialogContent";
 import CloseIcon from "@mui/icons-material/Close";
 import { styled } from "@mui/material/styles";
 import ComingSoon from "../coming-soon/ComingSoon";
+import LoadingButton from "@mui/lab/LoadingButton";
 import {
   getDecenterWalletBalance,
   bindWallet,
@@ -55,6 +56,7 @@ import {
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import AnimateModal from "../../components/FuniModal";
+import AnimateModal2 from "../../components/FuniModal2";
 import axios from "axios";
 import domain from "../../api/Domain";
 import phoneCode from "../../../phone/phoneCode";
@@ -67,7 +69,7 @@ import { symbol } from "prop-types";
 import { Image } from "@mui/icons-material";
 import userLoginType from "../../define/userLoginType";
 import { selectCurrentLanguage } from "app/store/i18nSlice";
-import { centerGetTokenBalanceList, userProfile} from "app/store/user/userThunk";
+import { centerGetTokenBalanceList, userProfile } from "app/store/user/userThunk";
 import { centerGetUserFiat } from "app/store/wallet/walletThunk";
 
 const container = {
@@ -189,7 +191,7 @@ function Wallet() {
 
   useEffect(() => {
     setRanges([t('home_deposite_1'), t('home_deposite_2')]);
-}, [currentLanguage.id]);
+  }, [currentLanguage.id]);
 
   useEffect(() => {
     setwalletDisplayData(userData.walletDisplay);
@@ -308,13 +310,18 @@ function Wallet() {
       currencyCode,
       "exchangeRate"
     ) || 0;
+
   const currencys = config.payment.currency || [];
   const [decenterSymbols, setDecenterSymbols] = useState([]);
   const [decenterSymbolsSearch, setDecenterSymbolsSearch] = useState([]);
   const [openAnimateModal, setOpenAnimateModal] = useState(false);
   const [cryptoSelect, setCryptoSelect] = useState(0);
   const [fiatSelect, setFiatSelect] = useState(1);
+  const [openBindWinow, setOpenBindWinow] = useState(false);
+  const [openBindEmail, setOpenBindEmail] = useState(false);
   const [loadingShow, setLoadingShow] = useState(false);
+
+
 
   const mounted = useRef();
   // let fiats = [];
@@ -345,6 +352,17 @@ function Wallet() {
   //   }
   // }, [symbols]);
 
+
+
+  // useEffect(() => {
+  //   if (userData.profile.wallet?.Crypto + userData.profile.wallet?.Fiat > 200) {
+  //     setOpenBindWinow(true);
+  //   } else {
+  //     setOpenBindWinow(false);
+  //   }
+  // }, [symbols]);
+
+
   const handleSelectedSymbol = (type, symbol) => {
     setSelectedSymbol(symbol);
     let data = {
@@ -366,7 +384,6 @@ function Wallet() {
     dispatch(setCurrencySelect(currencydata)).then((res) => {
       dispatch(getCurrencySelect());
     })
-
   };
 
   const saveSettingSymbol = async (data) => {
@@ -1048,7 +1065,7 @@ function Wallet() {
       initWalletData();
 
       const curLoginType = getUserLoginType(userData);
-      if(curLoginType !== userLoginType.USER_LOGIN_TYPE_UNKNOWN){ //登录过以后才会获取余额值
+      if (curLoginType !== userLoginType.USER_LOGIN_TYPE_UNKNOWN) { //登录过以后才会获取余额值
         dispatch(userProfile());
         dispatch(centerGetTokenBalanceList());
         dispatch(centerGetUserFiat());
@@ -1627,8 +1644,8 @@ function Wallet() {
                         src="/wallet/assets/images/withdraw/yan2.png"
                         onClick={() => {
                           setIsOpenEye(!isOpenEye);
+                          setOpenBindWinow(true);
                         }}></img>
-
                     }
                     {
                       !isOpenEye && <img className="cardImg"
@@ -3131,9 +3148,8 @@ function Wallet() {
                 </Box>
 
               </div>
-              {/* </DialogContent> */}
-              {/* </BootstrapDialog> */}
             </AnimateModal>
+
 
             {/*切换网路*/}
             <BootstrapDialog
@@ -3225,6 +3241,83 @@ function Wallet() {
                 {t('card_197')}
               </div>
             </BootstrapDialog>
+
+            <AnimateModal2
+              className="faBiDiCard tanChuanDiSe"
+              open={openBindWinow}
+              onClose={() => setOpenBindWinow(false)}
+            >
+              <div className='flex justify-center mb-16' style={{ width: "100%" }}>
+                <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
+                <div className='TanHaoCardZi '>
+                  {t('kyc_26')}
+                </div>
+              </div>
+
+              <Box
+                className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard flex justify-center"
+                sx={{
+                  backgroundColor: "#2C394D",
+                  padding: "1.5rem",
+                  overflow: "hidden",
+                  margin: "0rem auto 0rem auto"
+                }}
+              >
+                <div className="danChuangTxt ">
+                  {t('wallet_31')}
+                </div>
+              </Box>
+
+              <div className='flex mt-16 mb-28 px-15 justify-between' >
+                <LoadingButton
+                  disabled={false}
+                  className="boxCardBtn"
+                  color="secondary"
+                  loading={false}
+                  variant="contained"
+                  onClick={() => {
+
+                  }}
+                >
+                  {t('signIn_5')}
+                </LoadingButton>
+
+
+                <LoadingButton
+                  disabled={false}
+                  className="boxCardBtn"
+                  color="secondary"
+                  loading={false}
+                  variant="contained"
+                  onClick={() => {
+
+                  }}
+                >
+                  {t('kyc_56')}
+                </LoadingButton>
+              </div>
+            </AnimateModal2>
+
+            {openBindEmail && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
+              <motion.div
+                variants={container}
+                initial="hidden"
+                animate="show"
+                className='mt-12'
+                id="topGo"
+              >
+                <div className='flex mb-10' onClick={() => {
+                  setOpenBindEmail(false);
+                  myFunction;
+                }}   >
+                  <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
+                </div>
+                <RetiedEmail backPage={() => backPageEvt()} />
+                <div style={{ height: "5rem" }}></div>
+              </motion.div>
+            </div>}
+
+
 
           </Box>
         </motion.div >

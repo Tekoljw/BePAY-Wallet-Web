@@ -629,6 +629,15 @@ const locale = {
     server_error_15004:"Ogłoszenie nie istnieje lub nie zostało zatwierdzone",
     server_error_16001:"Typ wiadomości wysłanej przez bota Telegram jest pusty",
     server_error_99999:"Błąd usługi API",
+    card_224: "Nieprawidłowy kod weryfikacyjny",
+    wallet_30: "Niewystarczające środki na depozyt",
+    wallet_31: "Jeśli aktywa przekraczają 200 USD, wybierz metodę powiązania, aby zapewnić bezpieczeństwo funduszy",
+
+
+
+
+
+    
 
 
     
