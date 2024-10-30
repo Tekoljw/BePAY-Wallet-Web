@@ -2562,7 +2562,7 @@ function Card(props) {
 
                                 <div className='flex justify-between mt-16'>
                                     <div className='flex'>
-                                        <div className='' style={{ color: "#94A3B8" }}>{ t('card_225')}</div>
+                                        <div className='' style={{ color: "#94A3B8" }}>{ t('card_223')}</div>
                                         <div className='ml-10'>{recivedAmount.toFixed(2)} USD</div>
                                     </div>
                                 </div>
@@ -2747,7 +2747,7 @@ function Card(props) {
                         </motion.div>
 
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
-                            <div style={{ color: "#888B92" }}>{ t('card_225')}</div>
+                            <div style={{ color: "#888B92" }}>{ t('card_223')}</div>
                             <div>{recivedAmount} USD </div>
                         </motion.div>
 
