@@ -1152,7 +1152,7 @@ function Card(props) {
     useEffect(() => {
         if (cardID) {
             let tmpTransferFee = 0
-            if(transferMoney !== 0){
+            if(transferMoney){
                 tmpTransferFee = Number(maxValue ? maxValue : transferMoney) * Number(cardConfigList[cardConfigID].creditRate) + Number(cardConfigList[cardConfigID].basicFee)
             }
             setTransferFee(tmpTransferFee * swapRate)
@@ -1516,7 +1516,7 @@ function Card(props) {
                                                                                     </div>
                                                                                     <div className='gongNengLanW' onClick={() => {
                                                                                         setCurrentCardItem(cardItem)
-                                                                                        setExchangeCreditFee(cardConfigList[cardItem.creditConfigId]?.exchangeCreditFee * swapRate )
+                                                                                        setExchangeCreditFee(cardConfigList[cardItem.creditConfigId]?.exchangeCreditFee )
                                                                                         setBalanceNotEnough(false);
                                                                                         setOpenAnimateHuanKa(true);
                                                                                     }}>
@@ -1862,7 +1862,7 @@ function Card(props) {
                                                                                     </div>
                                                                                     <div className='gongNengLanW' onClick={() => {
                                                                                          setCurrentCardItem(cardItem)
-                                                                                         setExchangeCreditFee(cardConfigList[cardItem.creditConfigId]?.exchangeCreditFee * swapRate )
+                                                                                         setExchangeCreditFee(cardConfigList[cardItem.creditConfigId]?.exchangeCreditFee )
                                                                                          setBalanceNotEnough(false);
                                                                                          setOpenAnimateHuanKa(true);
                                                                                     }}>
@@ -2008,7 +2008,7 @@ function Card(props) {
                                                                 </div>
 
                                                                 <div className='flex justify-between items-center mt-10'>
-                                                                    <div className='openingFee' >{t('card_33')} {configItem.applyCreditFee} {configItem.cardSymbol} </div>
+                                                                    <div className='openingFee' >{t('card_33')} {configItem.applyCreditFee} USDT </div>
                                                                     {/* <div className='openingFee' >{t('card_33')} 28 USDT</div> */}
                                                                     <div className='openCardBtn' onClick={() => {
                                                                         setOpenXiangQing(true);
@@ -2057,7 +2057,7 @@ function Card(props) {
                                                                 </div>
 
                                                                 <div className='flex justify-between items-center mt-10'>
-                                                                    <div className='openingFee'>{t('card_33')} 1USD</div>
+                                                                    <div className='openingFee'>{t('card_33')} 1USDT</div>
 
                                                                     <div className='openCardBtn' onClick={() => {
                                                                         setOpenXiangQing(true);
@@ -2148,7 +2148,7 @@ function Card(props) {
                             <div className='flex justify-between mt-10'>
                                 <div className='quanYiHuiZi'>{t('card_33')}</div>
                                 <div className='flex'>
-                                    <div className='quanYiZi quanYiHui mr-10'>100 USD</div><div className='quanYiZi quanYiLv'>{cardConfigList[cardConfigID]?.applyCreditFee} {cardConfigList[cardConfigID]?.cardSymbol}</div>
+                                    <div className='quanYiZi quanYiHui mr-10'>100 USDT</div><div className='quanYiZi quanYiLv'>{cardConfigList[cardConfigID]?.applyCreditFee} USDT</div>
                                     {/* <div className='quanYiZi quanYiHui mr-10'>100 USDT</div><div className='quanYiZi quanYiLv'>28 USDT</div> */}
                                 </div>
                             </div>
@@ -2423,7 +2423,7 @@ function Card(props) {
                         {t('card_108')}
                     </div>
                 </Box>
-                <div className={clsx('exchange-credit-fee', balanceNotEnough && 'error-msg-font')}>{t('home_borrow_18')}: { exchangeCreditFee } USD</div>
+                <div className={clsx('exchange-credit-fee', balanceNotEnough && 'error-msg-font')}>{t('home_borrow_18')}: { exchangeCreditFee } USDT</div>
 
                 <div className='flex mt-16 mb-20 px-15 position-re' style={{ height: "40px" }} >
                     <LoadingButton
@@ -2562,7 +2562,7 @@ function Card(props) {
 
                                 <div className='flex justify-between mt-16'>
                                     <div className='flex'>
-                                        <div className='' style={{ color: "#94A3B8" }}>Recived amount</div>
+                                        <div className='' style={{ color: "#94A3B8" }}>{ t('card_225')}</div>
                                         <div className='ml-10'>{recivedAmount.toFixed(2)} USD</div>
                                     </div>
                                 </div>
@@ -2747,7 +2747,7 @@ function Card(props) {
                         </motion.div>
 
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
-                            <div style={{ color: "#888B92" }}>Recived amount</div>
+                            <div style={{ color: "#888B92" }}>{ t('card_225')}</div>
                             <div>{recivedAmount} USD </div>
                         </motion.div>
 
@@ -3702,7 +3702,7 @@ function Card(props) {
                             <div className='text-16'>{t('card_33')}</div>
                             <div className='flex pb-20 '>
                                 <div className='text-16 ml-10'>{cardConfigList[cardConfigID]?.applyCreditFee}</div>
-                                <div className='text-16'>&nbsp;{cardConfigList[cardConfigID]?.cardSymbol}</div>
+                                <div className='text-16'>&nbsp;USDT</div>
                             </div>
                         </div>
 

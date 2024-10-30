@@ -638,6 +638,7 @@ const locale = {
     server_error_16001: "Telegram 机器人发送的消息类型为空",
     server_error_99999: "API业务异常",
     card_224: "验证码错误",
+    card_225: "到账金额",
     wallet_30: "共管资金不足",
     wallet_31: "资产超过200USD，请选择绑定方式确保资金安全",
 
