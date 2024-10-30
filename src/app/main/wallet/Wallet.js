@@ -71,6 +71,8 @@ import userLoginType from "../../define/userLoginType";
 import { selectCurrentLanguage } from "app/store/i18nSlice";
 import { centerGetTokenBalanceList, userProfile } from "app/store/user/userThunk";
 import { centerGetUserFiat } from "app/store/wallet/walletThunk";
+import RetiedEmail from "../login/RetiedEmail";
+import RetiedPhone from "../login/RetiedPhone";
 
 const container = {
   show: {
@@ -319,6 +321,7 @@ function Wallet() {
   const [fiatSelect, setFiatSelect] = useState(1);
   const [openBindWinow, setOpenBindWinow] = useState(false);
   const [openBindEmail, setOpenBindEmail] = useState(false);
+  const [openBindPhone, setOpenBindPhone] = useState(false);
   const [loadingShow, setLoadingShow] = useState(false);
 
 
@@ -346,22 +349,38 @@ function Wallet() {
     }, 800);
   }
 
+
+  const myFunction = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // 平滑滚动
+    });
+  };
+
   // useEffect(() => {
   //   if (symbols.length > 0) {
   //     setLoadingShow(true);
   //   }
   // }, [symbols]);
 
+  useEffect(() => {
+    if (userData.profile.wallet?.Crypto + userData.profile.wallet?.Fiat > 200) {
+      if (userData.profile.user.bindEmail === false && userData.profile.user.bindMobile === false) {
+        if (openBindEmail === false && openBindPhone === false) {
+          setOpenBindWinow(true);
+        }
+      }
+    } else {
+      setOpenBindWinow(false);
+    }
+  }, [userData.profile]);
 
-
-  // useEffect(() => {
-  //   if (userData.profile.wallet?.Crypto + userData.profile.wallet?.Fiat > 200) {
-  //     setOpenBindWinow(true);
-  //   } else {
-  //     setOpenBindWinow(false);
-  //   }
-  // }, [symbols]);
-
+  const backPageEvt = () => {
+    setOpenBindPhone(false)
+    setOpenBindEmail(false);
+    dispatch(userProfile())
+    myFunction;
+  }
 
   const handleSelectedSymbol = (type, symbol) => {
     setSelectedSymbol(symbol);
@@ -1416,7 +1435,7 @@ function Wallet() {
   }, [userData.profile?.user?.regWallet]);
 
   return (
-    <div style={{ position: "relative" }}>
+    <div id="mainWallet" style={{ position: "relative" }}>
       {
         !loadingShow && <motion.div variants={container} initial="hidden" animate="show">
           <Box
@@ -3276,7 +3295,8 @@ function Wallet() {
                   loading={false}
                   variant="contained"
                   onClick={() => {
-
+                    setOpenBindEmail(true);
+                    setOpenBindWinow(false)
                   }}
                 >
                   {t('signIn_5')}
@@ -3290,7 +3310,8 @@ function Wallet() {
                   loading={false}
                   variant="contained"
                   onClick={() => {
-
+                    setOpenBindPhone(true);
+                    setOpenBindWinow(false)
                   }}
                 >
                   {t('kyc_56')}
@@ -3298,7 +3319,7 @@ function Wallet() {
               </div>
             </AnimateModal2>
 
-            {openBindEmail && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
+            {openBindEmail && <div style={{ position: "absolute", width: "100%", height: `${document.getElementById('mainWallet').offsetHeight}px`, top: "0%", zIndex: "998", backgroundColor: "#0E1421" }} >
               <motion.div
                 variants={container}
                 initial="hidden"
@@ -3309,6 +3330,7 @@ function Wallet() {
                 <div className='flex mb-10' onClick={() => {
                   setOpenBindEmail(false);
                   myFunction;
+                  backPageEvt();
                 }}   >
                   <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                 </div>
@@ -3317,7 +3339,25 @@ function Wallet() {
               </motion.div>
             </div>}
 
-
+            {openBindPhone && <div style={{ position: "absolute", width: "100%", height: `${document.getElementById('mainWallet').offsetHeight}px`, top: "0%", zIndex: "998", backgroundColor: "#0E1421" }} >
+              <motion.div
+                variants={container}
+                initial="hidden"
+                animate="show"
+                className='mt-12'
+                id="topGo"
+              >
+                <div className='flex mb-10' onClick={() => {
+                  setOpenBindPhone(false);
+                  myFunction;
+                  backPageEvt();
+                }}   >
+                  <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
+                </div>
+                <RetiedPhone backPage={() => backPageEvt()} />
+                <div style={{ height: "5rem" }}></div>
+              </motion.div>
+            </div>}
 
           </Box>
         </motion.div >

@@ -241,7 +241,6 @@ function Fiat(props) {
                             setZhuanQuan(false);
                             setTiJiaoState(2);
                         }, 1200);
-
                         if (result.data.msg.includes("security code error")) {
                             dispatch(showMessage({ message: t('card_224'), code: 2 }));
                         } else {
@@ -267,13 +266,12 @@ function Fiat(props) {
                         setZhuanQuan(false);
                         setTiJiaoState(2);
                     }, 1200);
-
-                    if (result.data.msg.includes("security code error")) {
+                    if (result.errmsg.includes("security code error")) {
                         dispatch(showMessage({ message: t('card_224'), code: 2 }));
-                    } else if (result.data.msg.includes("商户共管资金余额不足")) {
+                    } else if (result.errmsg.includes("商户共管资金余额不足")) {
                         dispatch(showMessage({ message: t('wallet_30'), code: 2 }));
                     } else {
-                        dispatch(showMessage({ message: result.data.msg, code: 2 }));
+                        dispatch(showMessage({ message: result.errmsg, code: 2 }));
                     }
                 }
             });
