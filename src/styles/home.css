@@ -4432,3 +4432,13 @@ button {
         margin-left: 0;
     }
 }
+
+.exchange-credit-fee{
+    text-align: center;
+    padding: 0rem 1.5rem;
+    color: #46DFB7;
+    font-weight: 600
+}
+.error-msg-font{
+    color: #f00 !important;
+}

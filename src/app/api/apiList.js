@@ -661,6 +661,10 @@ export default {
         exchangeCreditCard: {
             url: "/credit/exchangeCreditCard",
             method: "post",
+        },
+        queryCreditBalance: {
+            url: "/credit/queryCreditBalance",
+            method: "post",
         }
     },
 
