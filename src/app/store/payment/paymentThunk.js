@@ -194,11 +194,20 @@ export const getStarPayConfig = createAsyncThunk(
     }
 );
 
-// 法币提现
+// 法币提现(外部)
 export const makeWithdrawOrder = createAsyncThunk(
     'payment/makeWithdrawOrder',
     async (settings, { dispatch, getState }) => {
         const result = await React.$api("payment.makeWithdrawOrder", settings);
+        return result
+    }
+);
+
+// 法币提现(内部)
+export const fiatSendTips = createAsyncThunk(
+    'transfer/fiat/sendTips',
+    async (settings, { dispatch, getState }) => {
+        const result = await React.$api("payment.sendTips", settings);
         return result
     }
 );

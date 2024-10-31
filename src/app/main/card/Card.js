@@ -155,6 +155,7 @@ function Card(props) {
     const [swapRate, setSwapRate] = useState(0);
     const [exchangeCreditFee, setExchangeCreditFee] = useState(0);
     const [balanceNotEnough, setBalanceNotEnough] = useState(false);
+    const [updatedKycInfoFlag, setUpdatedKycInfoFlag] = useState(false);
 
     const openPinFunc = () => {
         setTimeout(() => {
@@ -1082,10 +1083,21 @@ function Card(props) {
                         // setOpenSuccess(true);
                         // closeRecordFunc()
                         // myFunction();
-                    } else {
+                    } else if(result.data.status === 'transferring'){
+                        closeGoogleCodeFunc();
+                        setZhuanQuan(false);
+                        setTiJiaoState(3);
+                        setUpdateCard(true)
+                        dispatch(centerGetTokenBalanceList());
+                        setUpdateCard(true)
+                        setTimer(timer + 1)
+                        // setOpenSuccess(true);
+                        // closeRecordFunc()
+                        // myFunction();
+                    }else{
                         setZhuanQuan(false);
                         setTiJiaoState(2);
-                        setOpenSuccess(true);
+                        // setOpenSuccess(true);
                         if (result.data.msg.includes("security code error")) {
                             dispatch(showMessage({ message: t('card_224'), code: 2 }));
                         } else {
@@ -1096,7 +1108,7 @@ function Card(props) {
                 }
             } else {
                 setZhuanQuan(false);
-                setOpenSuccess(true);
+                // setOpenSuccess(true);
                 setTiJiaoState(2);
                 if (result.errmsg.includes("security code error")) {
                     dispatch(showMessage({ message: t('card_224'), code: 2 }));
@@ -1177,6 +1189,19 @@ function Card(props) {
     const backCardPageEvt = () => {
         history.push(`/wallet/home/card`)
         setOpenKyc(false)
+    }
+
+    const updatedKycInfoEvt = () => {
+        setOpenKyc(false);
+        const index = _.findIndex(cardList[2], {id: currentCardItem.id});
+        setTimeout(()=> {
+            document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`).click();
+            setCurrentCardItem(currentCardItem)
+            setExchangeCreditFee(cardConfigList[currentCardItem.creditConfigId]?.exchangeCreditFee)
+            setBalanceNotEnough(false);
+            setUpdatedKycInfoFlag(true);
+            setOpenAnimateHuanKa(true);
+        }, 100)
     }
 
     const reciveCode = async () => {
@@ -1486,6 +1511,7 @@ function Card(props) {
 
                                                                     <div className='cardGongNengMyDi' style={{ position: "relative" }}>
                                                                         <Accordion className='gongNengTan1'
+                                                                        id={'responsive-div-accordion' + i}
                                                                         // disabled={cardItem?.state == 9}
                                                                         >
                                                                             <AccordionSummary
@@ -1518,6 +1544,7 @@ function Card(props) {
                                                                                         setCurrentCardItem(cardItem)
                                                                                         setExchangeCreditFee(cardConfigList[cardItem.creditConfigId]?.exchangeCreditFee )
                                                                                         setBalanceNotEnough(false);
+                                                                                        setUpdatedKycInfoFlag(false);
                                                                                         setOpenAnimateHuanKa(true);
                                                                                     }}>
                                                                                         <img className='gongNengTuBiao' src="wallet/assets/images/menu/gengHuanKaPian.png"></img>
@@ -2293,11 +2320,18 @@ function Card(props) {
                 >
                     <div className='flex mb-10' onClick={() => {
                         setOpenKyc(false);
-                        myFunction;
+                        const index = _.findIndex(cardList[2], {id: currentCardItem.id});
+                        setTimeout(()=> {
+                            document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`).click();
+                            setCurrentCardItem(currentCardItem)
+                            setExchangeCreditFee(cardConfigList[currentCardItem.creditConfigId]?.exchangeCreditFee )
+                            setBalanceNotEnough(false);
+                            setOpenAnimateHuanKa(true);
+                        }, 100)
                     }}   >
                         <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                     </div>
-                    <Kyc backCardPage={backCardPageEvt} />
+                    <Kyc backCardPage={backCardPageEvt} updatedKycInfo={updatedKycInfoEvt}/>
                     <div style={{ height: "5rem" }}></div>
                 </motion.div>
             </div>}
@@ -2405,7 +2439,7 @@ function Card(props) {
 
                 <div className='flex justify-center mb-16' style={{ width: "100%" }}>
                     <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
-                    <div className='TanHaoCardZi'>
+                    <div className='TanHaoCardZi'>  
                         {t('card_32')}
                     </div>
                 </div>
@@ -2446,7 +2480,7 @@ function Card(props) {
                             // }, 1500);
                         }}
                     >
-                        {t('card_77')}
+                        { updatedKycInfoFlag ? t('home_borrow_8') : t('card_77') }
                     </LoadingButton>
 
                     <div className=' position-ab xiaHuaXian' style={{ height: "4rem", lineHeight: "4rem", bottom: "0%", right: "4%", }} onClick={() => {
@@ -2697,7 +2731,7 @@ function Card(props) {
                                         zhuanQuan && <img className='chuKuanDongHua' style={{ width: "22px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong3.png'></img>
                                     }
                                     {
-                                        !zhuanQuan && tiJiaoState === 1 && <img className='daGouFangDa' style={{ width: "23px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong4.png'></img>
+                                        !zhuanQuan && (tiJiaoState === 1 || tiJiaoState === 3) && <img className='daGouFangDa' style={{ width: "23px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong4.png'></img>
                                     }
                                     {
                                         !zhuanQuan && tiJiaoState === 2 && <img className='daGouFangDa' style={{ width: "23px", height: "23px" }} src='wallet/assets/images/wallet/naoZhong5.png'></img>
@@ -2715,6 +2749,11 @@ function Card(props) {
                             {
                                 tiJiaoState === 2 && !zhuanQuan && <motion.div variants={item} style={{ height: "23px", lineHeight: "23px", color: "#EE124B" }}>
                                     ● {t('error_36')}
+                                </motion.div>
+                            }
+                            {
+                                tiJiaoState === 3 && !zhuanQuan && <motion.div variants={item} style={{ height: "23px", lineHeight: "23px" }}>
+                                    ● {t('errorMsg_4')}
                                 </motion.div>
                             }
                         </div>

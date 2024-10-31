@@ -288,6 +288,7 @@ const locale = {
     errorMsg_1: 'success',
     errorMsg_2: 'error',
     errorMsg_3: 'Password is too simple',
+    errorMsg_4:  'Transferring',
 
 
     re_tied_email_1: 'Edit your Email',

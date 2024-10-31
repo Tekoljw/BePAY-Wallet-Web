@@ -18,7 +18,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../../store/user";
 import { centerGetTokenBalanceList, getListBank, sendEmail, sendSms, userProfile } from "../../../store/user/userThunk";
-import { makeWithdrawOrder, getFiatFee, payoutBank, payoutPayWays } from "../../../store/payment/paymentThunk";
+import { makeWithdrawOrder, fiatSendTips, getFiatFee, payoutBank, payoutPayWays } from "../../../store/payment/paymentThunk";
 import BN from "bn.js";
 import StyledAccordionSelect from "../../../components/StyledAccordionSelect";
 import { selectConfig } from "../../../store/config";
@@ -215,13 +215,12 @@ function Fiat(props) {
         if (smallTabValue === 1) {
             let data = {
                 currency: currencyCode,
-                transferUserId: inputVal.userId,
+                userId: inputVal.userId,
                 amount: inputVal.amount,
-                transferType: 1,
                 checkCode: googleCode,
                 codeType: twiceVerifyType === 0 ? 2 : twiceVerifyType === 1 ? 1 : 0
             };
-            dispatch(makeWithdrawOrder(data)).then((res) => {
+            dispatch(fiatSendTips(data)).then((res) => {
                 setOpenLoad(false)
                 setGoogleCode('');
                 setIsLoadingBtn(false)

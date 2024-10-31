@@ -287,6 +287,7 @@ const locale = {
     errorMsg_1: '成功',
     errorMsg_2: '错误',
     errorMsg_3: '密码过于简单',
+    errorMsg_4:  '划转中',
 
 
     re_tied_email_1: '更改绑定邮箱',
