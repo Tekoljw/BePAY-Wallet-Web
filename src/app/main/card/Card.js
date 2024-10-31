@@ -701,7 +701,7 @@ function Card(props) {
                         withdrawLock: arrayLookup(walletData.inner, 'symbol', symbols[i].symbol, 'withdrawLock') || 0
                     })
                 }
-                const tmpSwapRate =  arrayLookup(symbols, 'symbol', 'USDT', 'rate');
+                const tmpSwapRate = arrayLookup(symbols, 'symbol', 'USDT', 'rate');
                 setSwapRate(tmpSwapRate)
             }
 
@@ -931,11 +931,15 @@ function Card(props) {
                     setBalanceNotEnough(false);
                     setOpenCardBtnShow(false)
                 }
-            } else if(result.errno === -1){
-                dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            } else if (result.errno === -1) {
+                if (result.errmsg.includes("wallet balance not enough")) {
+                    dispatch(showMessage({ message: t('card_61'), code: 2 }));
+                } else {
+                    dispatch(showMessage({ message: result.errmsg, code: 2 }));
+                }
                 setBalanceNotEnough(true);
                 setOpenCardBtnShow(false)
-            }else {
+            } else {
                 dispatch(showMessage({ message: result.errmsg, code: 2 }));
                 setBalanceNotEnough(false);
                 setOpenCardBtnShow(false)
@@ -1152,11 +1156,11 @@ function Card(props) {
     useEffect(() => {
         if (cardID) {
             let tmpTransferFee = 0
-            if(transferMoney){
+            if (transferMoney) {
                 tmpTransferFee = Number(maxValue ? maxValue : transferMoney) * Number(cardConfigList[cardConfigID].creditRate) + Number(cardConfigList[cardConfigID].basicFee)
             }
             setTransferFee(tmpTransferFee * swapRate)
-            setRecivedAmount((transferMoney - tmpTransferFee)*swapRate)
+            setRecivedAmount((transferMoney - tmpTransferFee) * swapRate)
         }
     }, [transferMoney])
 
@@ -1235,14 +1239,14 @@ function Card(props) {
             let cardList2 = []
             let tmpCardListObj = {}
             if (result) {
-                cardList[2].forEach((c2)=>{
-                    if(c2.id === result.userCreditId){
+                cardList[2].forEach((c2) => {
+                    if (c2.id === result.userCreditId) {
                         cardList2.push({
                             ...c2,
                             amount: result.balance
                         })
-                        tmpCardListObj[c2.id] = {...c2, amount: result.balance}
-                    }else{
+                        tmpCardListObj[c2.id] = { ...c2, amount: result.balance }
+                    } else {
                         cardList2.push(c2)
                         tmpCardListObj[c2.id] = c2;
                     }
@@ -1516,7 +1520,7 @@ function Card(props) {
                                                                                     </div>
                                                                                     <div className='gongNengLanW' onClick={() => {
                                                                                         setCurrentCardItem(cardItem)
-                                                                                        setExchangeCreditFee(cardConfigList[cardItem.creditConfigId]?.exchangeCreditFee )
+                                                                                        setExchangeCreditFee(cardConfigList[cardItem.creditConfigId]?.exchangeCreditFee)
                                                                                         setBalanceNotEnough(false);
                                                                                         setOpenAnimateHuanKa(true);
                                                                                     }}>
@@ -1861,10 +1865,10 @@ function Card(props) {
                                                                                         <div className='gongNengZiW mt-4 text-14'>{t('card_31')}</div>
                                                                                     </div>
                                                                                     <div className='gongNengLanW' onClick={() => {
-                                                                                         setCurrentCardItem(cardItem)
-                                                                                         setExchangeCreditFee(cardConfigList[cardItem.creditConfigId]?.exchangeCreditFee )
-                                                                                         setBalanceNotEnough(false);
-                                                                                         setOpenAnimateHuanKa(true);
+                                                                                        setCurrentCardItem(cardItem)
+                                                                                        setExchangeCreditFee(cardConfigList[cardItem.creditConfigId]?.exchangeCreditFee)
+                                                                                        setBalanceNotEnough(false);
+                                                                                        setOpenAnimateHuanKa(true);
                                                                                     }}>
                                                                                         <img className='gongNengTuBiao' src="wallet/assets/images/menu/gengHuanKaPian.png"></img>
                                                                                         <div className='gongNengZiW mt-4 text-14'>{t('card_32')}</div>
@@ -2423,7 +2427,7 @@ function Card(props) {
                         {t('card_108')}
                     </div>
                 </Box>
-                <div className={clsx('exchange-credit-fee', balanceNotEnough && 'error-msg-font')}>{t('home_borrow_18')}: { exchangeCreditFee } USDT</div>
+                <div className={clsx('exchange-credit-fee', balanceNotEnough && 'error-msg-font')}>{t('home_borrow_18')}: {exchangeCreditFee} USDT</div>
 
                 <div className='flex mt-16 mb-20 px-15 position-re' style={{ height: "40px" }} >
                     <LoadingButton
@@ -2562,7 +2566,7 @@ function Card(props) {
 
                                 <div className='flex justify-between mt-16'>
                                     <div className='flex'>
-                                        <div className='' style={{ color: "#94A3B8" }}>{ t('card_223')}</div>
+                                        <div className='' style={{ color: "#94A3B8" }}>{t('card_223')}</div>
                                         <div className='ml-10'>{recivedAmount.toFixed(2)} USD</div>
                                     </div>
                                 </div>
@@ -2747,7 +2751,7 @@ function Card(props) {
                         </motion.div>
 
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
-                            <div style={{ color: "#888B92" }}>{ t('card_223')}</div>
+                            <div style={{ color: "#888B92" }}>{t('card_223')}</div>
                             <div>{recivedAmount} USD </div>
                         </motion.div>
 

@@ -1960,6 +1960,7 @@ function Deposite() {
                             }
                         })}
 
+                        <div className='' style={{ height: "20px" }} ></div>
                         {/*<StyledAccordion*/}
                         {/*    component={motion.div}*/}
                         {/*    variants={item}*/}
