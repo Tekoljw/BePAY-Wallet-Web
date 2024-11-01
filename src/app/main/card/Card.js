@@ -340,6 +340,8 @@ function Card(props) {
     }
 
     useEffect(() => {
+        getCardConfig()
+        getCardList()
         setHasPin(userData.profile?.user?.hasSetPaymentPassword ?? false)
 
     }, [userData.profile]);

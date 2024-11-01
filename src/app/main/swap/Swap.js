@@ -342,7 +342,7 @@ function Swap() {
     let tmpCoinData = {};
     let tmpCoinFiatData = {};
     await Object.keys(swapData)?.map((item) => {
-      if (arrayLookup(symbolsData, "symbol", swapData[item].base_coin, "symbol") || arrayLookup(fiatData, 'currencyCode', swapData[item].base_coin, 'currencyCode')) {
+      if (arrayLookup(symbolsData, "symbol", swapData[item].base_coin, "symbol") || arrayLookup(fiatsData, 'currencyCode', swapData[item].base_coin, 'currencyCode')) {
         if (displayData.indexOf(swapData[item].base_coin) == -1) {
           displayData.push(swapData[item].base_coin);
           tmpCoinData[swapData[item].base_coin] = [swapData[item]]
@@ -405,7 +405,6 @@ function Swap() {
     };
 
     let tmpNetworks = {};
-
     tmpSymbols.forEach((item, index) => {
       var tmpNetId = [];
       var tmpNetData = [];
@@ -591,7 +590,7 @@ function Swap() {
       const result = res.payload;
       setSwapFee(result.data);
     })
-  }, []);
+  }, [userData?.profile]);
 
   useEffect(() => {
     if (userData.profile?.user?.regWallet) {
