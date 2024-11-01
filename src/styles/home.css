@@ -1022,14 +1022,14 @@ input[type='number'] {
 
 .xszfSty {
     width: 100%;
-    aspect-ratio: 430 / 448;
+    aspect-ratio: 430 / 360;
     border-radius: 1rem;
     margin-top: 1.4rem;
 }
 
 .xszfSty2 {
     width: 100%;
-    aspect-ratio: 430 / 296;
+    aspect-ratio: 430 / 280;
     border-radius: 1rem;
     margin-top: 1.4rem;
 }

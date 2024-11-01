@@ -1089,7 +1089,7 @@ function Card(props) {
                         // setOpenSuccess(true);
                         // closeRecordFunc()
                         // myFunction();
-                    } else if(result.data.status === 'transferring'){
+                    } else if (result.data.status === 'transferring') {
                         closeGoogleCodeFunc();
                         setZhuanQuan(false);
                         setTiJiaoState(3);
@@ -1100,7 +1100,7 @@ function Card(props) {
                         // setOpenSuccess(true);
                         // closeRecordFunc()
                         // myFunction();
-                    }else{
+                    } else {
                         setZhuanQuan(false);
                         setTiJiaoState(2);
                         // setOpenSuccess(true);
@@ -1199,8 +1199,8 @@ function Card(props) {
 
     const updatedKycInfoEvt = () => {
         setOpenKyc(false);
-        const index = _.findIndex(cardList[2], {id: currentCardItem.id});
-        setTimeout(()=> {
+        const index = _.findIndex(cardList[2], { id: currentCardItem.id });
+        setTimeout(() => {
             document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`).click();
             setCurrentCardItem(currentCardItem)
             setExchangeCreditFee(cardConfigList[currentCardItem.creditConfigId]?.exchangeCreditFee)
@@ -1517,7 +1517,7 @@ function Card(props) {
 
                                                                     <div className='cardGongNengMyDi' style={{ position: "relative" }}>
                                                                         <Accordion className='gongNengTan1'
-                                                                        id={'responsive-div-accordion' + i}
+                                                                            id={'responsive-div-accordion' + i}
                                                                         // disabled={cardItem?.state == 9}
                                                                         >
                                                                             <AccordionSummary
@@ -1719,39 +1719,8 @@ function Card(props) {
                                                             <div className='zhangDanZi' >{t('card_25')}</div>
                                                         </div>
 
-                                                        {/* <div>
-                                                            <div className='text-16 mt-28 ml-10'>如何使用信用卡？</div>
-
-                                                            <StyledAccordion
-                                                                component={motion.div}
-                                                                variants={item}
-                                                                classes={{
-                                                                    root: clsx('FaqPage-panel shadow'),
-                                                                }}
-                                                            >
-                                                                <AccordionSummary
-                                                                    expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
-                                                                    sx={{ paddingLeft: "10px", paddingRight: "10px" }}
-                                                                >
-                                                                    <div className="flex items-center py-4 flex-grow" style={{ width: '100%' }}>
-                                                                        <FuseSvgIcon className="mr-8">
-                                                                            heroicons-outline:information-circle
-                                                                        </FuseSvgIcon>
-                                                                        线上付款，直接使用
-                                                                    </div>
-                                                                </AccordionSummary>
-
-                                                                <AccordionDetails style={{ paddingInline: "15px" }}>
-                                                                    <div> ① 线上付款时通常需要填写卡号、到期年月、安全码。 </div>
-                                                                    <img className='xszfSty' src="wallet/assets/images/card/xszf1.png" />
-                                                                    <div className='mt-28'> ② 将卡片的卡号填入付款页面 </div>
-                                                                    <img className='xszfSty2' src="wallet/assets/images/card/xszf2.png" />
-                                                                    <div className='mt-28'> ② 将卡片的有效年月填入付款页面 </div>
-                                                                    <img className='xszfSty2' src="wallet/assets/images/card/xszf3.png" />
-                                                                    <div className='mt-28'> ③ 将卡片的安全码填入付款页面 </div>
-                                                                    <img className='xszfSty2' src="wallet/assets/images/card/xszf4.png" />
-                                                                </AccordionDetails>
-                                                            </StyledAccordion>
+                                                        <div>
+                                                            <div className='text-16 mt-28 ml-10'>如何使用虚拟卡？</div>
 
                                                             <StyledAccordion
                                                                 component={motion.div}
@@ -1773,19 +1742,71 @@ function Card(props) {
                                                                 </AccordionSummary>
 
                                                                 <AccordionDetails style={{ paddingInline: "15px" }}>
-                                                                    <div>
-                                                                        <div> ① 打开电子钱包（如微信），选择添加卡片。 </div>
-                                                                        <img className='dzqbSty' src="wallet/assets/images/card/dzqb1.png" />
-                                                                        <div className='mt-28'> ② 填写beingFi信用卡的卡号。 </div>
-                                                                        <img className='xszfSty3' src="wallet/assets/images/card/dzqb2.png" />
-                                                                        <div className='mt-28'> ③ 填写卡片的有效年月及安全码。 </div>
-                                                                        <img className='xszfSty4' src="wallet/assets/images/card/dzqb3.png" />
-                                                                        <div className='mt-28'> ④ 添加成功后即可在微信付款时使用。</div>
-                                                                    </div>
+                                                                    <div> 1. 打开要绑定的电子钱包 </div>
+                                                                    <img className='xszfSty' src="wallet/assets/images/card/zfb1.png" />
+                                                                    <div className='mt-28'> 2. 选择银行卡 </div>
+                                                                    <img className='xszfSty' src="wallet/assets/images/card/zfb2.png" />
+                                                                    <div className='mt-28'> 3. 点击添加按钮 </div>
+                                                                    <img className='xszfSty' src="wallet/assets/images/card/zfb3.png" />
+                                                                    <div className='mt-28'> 4. 将虚拟卡的信息填入页面 </div>
+                                                                    <img className='xszfSty' src="wallet/assets/images/card/zfb4.png" />
+                                                                    <div className='mt-28'> 5. 点击完成按钮 </div>
+                                                                    <img className='xszfSty2' src="wallet/assets/images/card/zfb5.png" />
+                                                                    <div className='mt-28'> 6. 点击设置按钮 </div>
+                                                                    <img className='xszfSty2' src="wallet/assets/images/card/zfb5_1.png" />
+                                                                    <div className='mt-28'> 7. 点击支付设置 </div>
+                                                                    <img className='xszfSty' src="wallet/assets/images/card/zfb5_2.png" />
+                                                                    <div className='mt-28'> 8. 点击扣款顺序 </div>
+                                                                    <img className='xszfSty' src="wallet/assets/images/card/zfb5_3.png" />
+                                                                    <div className='mt-28'> 9. 优先使用虚拟卡支付 </div>
+                                                                    <img className='xszfSty2' src="wallet/assets/images/card/zfb6.png" />
+                                                                    <div className='mt-28'> 10. 打开要使用的APP </div>
+                                                                    <img className='xszfSty2' src="wallet/assets/images/card/zfb7.png" />
+                                                                    <div className='mt-28'> 11. 选好商品点击付款 </div>
+                                                                    <img className='xszfSty2' src="wallet/assets/images/card/zfb8.png" />
+                                                                    <div className='mt-28'> 12. 支付成功 </div>
+                                                                    <img className='xszfSty2' src="wallet/assets/images/card/zfb9.png" />
                                                                 </AccordionDetails>
                                                             </StyledAccordion>
 
                                                             <StyledAccordion
+                                                                component={motion.div}
+                                                                variants={item}
+                                                                classes={{
+                                                                    root: clsx('FaqPage-panel shadow'),
+                                                                }}
+                                                            >
+                                                                <AccordionSummary
+                                                                    expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
+                                                                    sx={{ paddingLeft: "10px", paddingRight: "10px" }}
+                                                                >
+                                                                    <div className="flex items-center py-4 flex-grow" style={{ width: '100%' }}>
+                                                                        <FuseSvgIcon className="mr-8">
+                                                                            heroicons-outline:information-circle
+                                                                        </FuseSvgIcon>
+                                                                        直接线上支付
+                                                                    </div>
+                                                                </AccordionSummary>
+
+                                                                <AccordionDetails style={{ paddingInline: "15px" }}>
+                                                                    <div>
+                                                                        <div> 1. 打开要使用的APP</div>
+                                                                        <img className='xszfSty2' src="wallet/assets/images/card/zjz1.png" />
+                                                                        <div className='mt-28'> 2. 打开选购好的商品</div>
+                                                                        <img className='xszfSty2' src="wallet/assets/images/card/zjz2.png" />
+                                                                        <div className='mt-28'> 3. 将虚拟卡的信息填入页面 </div>
+                                                                        <img className='xszfSty2' src="wallet/assets/images/card/zjz3.png" />
+                                                                        <div className='mt-28'> 4. 点击继续付款</div>
+                                                                        <img className='xszfSty' src="wallet/assets/images/card/zjz4.png" />
+                                                                        <div className='mt-28'> 5. 确认信息，点击支付按钮</div>
+                                                                        <img className='xszfSty' src="wallet/assets/images/card/zjz5.png" />
+                                                                        <div className='mt-28'> 6. 支付成功</div>
+                                                                        <img className='xszfSty' src="wallet/assets/images/card/zjz6.png" />
+                                                                    </div>
+                                                                </AccordionDetails>
+                                                            </StyledAccordion>
+
+                                                            {/* <StyledAccordion
                                                                 component={motion.div}
                                                                 variants={item}
                                                                 classes={{
@@ -1818,8 +1839,8 @@ function Card(props) {
                                                                         <img className='xxzfSty4' src="wallet/assets/images/card/xxzf5.jpg" />
                                                                     </div>
                                                                 </AccordionDetails>
-                                                            </StyledAccordion>
-                                                        </div> */}
+                                                            </StyledAccordion> */}
+                                                        </div>
                                                     </div>
 
                                                 }
@@ -2326,18 +2347,18 @@ function Card(props) {
                 >
                     <div className='flex mb-10' onClick={() => {
                         setOpenKyc(false);
-                        const index = _.findIndex(cardList[2], {id: currentCardItem.id});
-                        setTimeout(()=> {
+                        const index = _.findIndex(cardList[2], { id: currentCardItem.id });
+                        setTimeout(() => {
                             document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`).click();
                             setCurrentCardItem(currentCardItem)
-                            setExchangeCreditFee(cardConfigList[currentCardItem.creditConfigId]?.exchangeCreditFee )
+                            setExchangeCreditFee(cardConfigList[currentCardItem.creditConfigId]?.exchangeCreditFee)
                             setBalanceNotEnough(false);
                             setOpenAnimateHuanKa(true);
                         }, 100)
                     }}   >
                         <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                     </div>
-                    <Kyc backCardPage={backCardPageEvt} updatedKycInfo={updatedKycInfoEvt}/>
+                    <Kyc backCardPage={backCardPageEvt} updatedKycInfo={updatedKycInfoEvt} />
                     <div style={{ height: "5rem" }}></div>
                 </motion.div>
             </div>}
@@ -2445,7 +2466,7 @@ function Card(props) {
 
                 <div className='flex justify-center mb-16' style={{ width: "100%" }}>
                     <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
-                    <div className='TanHaoCardZi'>  
+                    <div className='TanHaoCardZi'>
                         {t('card_32')}
                     </div>
                 </div>
@@ -2486,7 +2507,7 @@ function Card(props) {
                             // }, 1500);
                         }}
                     >
-                        { updatedKycInfoFlag ? t('home_borrow_8') : t('card_77') }
+                        {updatedKycInfoFlag ? t('home_borrow_8') : t('card_77')}
                     </LoadingButton>
 
                     <div className=' position-ab xiaHuaXian' style={{ height: "4rem", lineHeight: "4rem", bottom: "0%", right: "4%", }} onClick={() => {

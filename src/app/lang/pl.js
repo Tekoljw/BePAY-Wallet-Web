@@ -632,7 +632,25 @@ const locale = {
     card_224: "Nieprawidłowy kod weryfikacyjny",
     wallet_30: "Niewystarczające środki na depozyt",
     wallet_31: "Jeśli aktywa przekraczają 200 USD, wybierz metodę powiązania, aby zapewnić bezpieczeństwo funduszy",
-
+    card_225:"Jak używać karty wirtualnej?",
+    card_226:"Powiąż z portfelem elektronicznym",
+    card_227:"1. Otwórz portfel elektroniczny do powiązania",
+    card_228:"2. Wybierz kartę bankową",
+    card_229:"3. Kliknij przycisk Dodaj",
+    card_230:"4. Wprowadź informacje o karcie wirtualnej na stronie",
+    card_231:"5. Kliknij przycisk Zakończ",
+    card_232:"6. Kliknij przycisk ustawień",
+    card_233:"7. Kliknij Ustawienia Płatności",
+    card_234:"8. Kolejność pobierania kliknięcia",
+    card_235:"9. Preferuj użycie karty wirtualnej do płatności",
+    card_236:"10. Otwórz aplikację, której chcesz używać",
+    card_237:"11. Wybierz produkt i kliknij, aby zapłacić",
+    card_238:"12. Płatność udana",
+    card_239:"",
+    card_240:"",
+    card_241:"",
+    card_242:"",
+    card_243:"",
 
 
 

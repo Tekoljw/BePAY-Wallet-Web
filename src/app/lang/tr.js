@@ -629,7 +629,25 @@ const locale = {
     card_224: "Doğrulama kodu yanlış",
     wallet_30: "Yetersiz ortak fon",
     wallet_31: "Varlıklar 200 USD'yi aşıyorsa, fon güvenliğini sağlamak için bir bağlama yöntemi seçin",
-
+    card_225:"Sanal kart nasıl kullanılır?",
+    card_226:"Elektronik cüzdana bağlayın",
+    card_227:"1. Bağlanacak elektronik cüzdanı açın",
+    card_228:"2. Banka Kartını Seçin",
+    card_229:"3. Ekle düğmesine tıklayın",
+    card_230:"4. Sanal kart bilgilerini sayfaya doldurun",
+    card_231:"5. Tamam butonuna tıklayın",
+    card_232:"6. Ayarlar düğmesine tıklayın",
+    card_233:"7. Ödeme Ayarlarına Tıklayın",
+    card_234:"8. Tıklama Kesinti Sırası",
+    card_235:"9. Ödeme için sanal kart kullanımını önceliklendirin",
+    card_236:"10. Kullanmak istediğiniz uygulamayı açın",
+    card_237:"11. Ürünü seçin ve ödemek için tıklayın",
+    card_238:"12. Ödeme başarılı",
+    card_239:"",
+    card_240:"",
+    card_241:"",
+    card_242:"",
+    card_243:"",
 
 
 

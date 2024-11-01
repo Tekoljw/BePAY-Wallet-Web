@@ -631,7 +631,25 @@ const locale = {
     card_224: "Code de vérification incorrect",
     wallet_30: "Fonds de garde insuffisants",
     wallet_31: "Si les actifs dépassent 200 USD, veuillez choisir une méthode de liaison pour garantir la sécurité des fonds",
-
+    card_225:"Comment utiliser une carte virtuelle ?",
+    card_226:"Lier au portefeuille électronique",
+    card_227:"1. Ouvrez le portefeuille électronique à lier",
+    card_228:"2. Choisissez la carte bancaire",
+    card_229:"3. Cliquez sur le bouton Ajouter",
+    card_230:"4. Remplissez les informations de la carte virtuelle sur la page",
+    card_231:"5. Cliquez sur le bouton Terminer",
+    card_232:"6. Cliquez sur le bouton de paramètres",
+    card_233:"7. Cliquez sur les Paramètres de Paiement",
+    card_234:"8. Ordre de déduction par clic",
+    card_235:"9. Priorisez l'utilisation de cartes virtuelles pour le paiement",
+    card_236:"10. Ouvrez l'application que vous souhaitez utiliser",
+    card_237:"11. Sélectionnez le produit et cliquez sur payer",
+    card_238:"12. Paiement réussi",
+    card_239:"",
+    card_240:"",
+    card_241:"",
+    card_242:"",
+    card_243:"",
 
 
 

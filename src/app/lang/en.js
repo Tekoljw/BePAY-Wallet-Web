@@ -641,7 +641,25 @@ const locale = {
     card_224: "Verification code incorrect",
     wallet_30: "Insufficient custody funds",
     wallet_31: "If assets exceed 200 USD, please choose a binding method to ensure fund security",
-
+    card_225:"How to use a virtual card?",
+    card_226:"Bind to electronic wallet",
+    card_227:"1. Open the electronic wallet to be linked",
+    card_228:"2. Select Bank Card",
+    card_229:"3. Click the Add button",
+    card_230:"4. Fill in the virtual card information on the page",
+    card_231:"5. Click the Finish button",
+    card_232:"6. Click on the settings button",
+    card_233:"7. Click on Payment Settings",
+    card_234:"8. Click Deduction Order",
+    card_235:"9. Prioritize the use of virtual cards for payment",
+    card_236:"10. Open the app you want to use",
+    card_237:"11. Select the product and click to pay",
+    card_238:"12. Payment successful",
+    card_239:"",
+    card_240:"",
+    card_241:"",
+    card_242:"",
+    card_243:"",
 
 
 

@@ -634,7 +634,25 @@ const locale = {
     card_224: "Falscher Verifizierungscode",
     wallet_30: "Unzureichende gemeinsame Mittel",
     wallet_31: "Wenn die Vermögenswerte 200 USD übersteigen, wählen Sie eine Bindungsmethode, um die Sicherheit der Gelder zu gewährleisten",
-
+    card_225:"Wie verwendet man eine virtuelle Karte?",
+    card_226:"An elektronische Brieftasche binden",
+    card_227:"1. Öffnen Sie die zu verbindende elektronische Brieftasche",
+    card_228:"2. Wählen Sie die Bankkarte aus",
+    card_229:"3. Klicken Sie auf die Schaltfläche Hinzufügen",
+    card_230:"4. Fügen Sie die Informationen der virtuellen Karte in die Seite ein",
+    card_231:"5. Klicken Sie auf die Schaltfläche Fertigstellen",
+    card_232:"6. Klicken Sie auf die Schaltfläche Einstellungen",
+    card_233:"7. Klicken Sie auf die Zahlungseinstellungen",
+    card_234:"8. Klick-Abbuchungsreihenfolge",
+    card_235:"9. Bevorzugen Sie die Zahlung mit einer virtuellen Karte",
+    card_236:"10. Öffnen Sie die App, die Sie verwenden möchten",
+    card_237:"11. Wählen Sie das Produkt aus und klicken Sie auf Bezahlen",
+    card_238:"12. Zahlung erfolgreich",
+    card_239:"",
+    card_240:"",
+    card_241:"",
+    card_242:"",
+    card_243:"",
 
 
 

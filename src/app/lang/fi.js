@@ -630,7 +630,25 @@ const locale = {
     card_224: "Virheellinen vahvistuskoodi",
     wallet_30: "Riittämättömät yhteisvarat",
     wallet_31: "Jos varat ylittävät 200 USD, valitse liittämismenetelmä varojen turvallisuuden varmistamiseksi",
-
+    card_225:"Kuinka käyttää virtuaalista korttia?",
+    card_226:"Liitä sähköiseen lompakkoon",
+    card_227:"1. Avaa liitettävä sähköinen lompakko",
+    card_228:"2. Valitse pankkikortti",
+    card_229:"3. Napsauta Lisää-painiketta",
+    card_230:"4. Täytä virtuaalikortin tiedot sivulle",
+    card_231:"5. Napsauta Valmis-painiketta",
+    card_232:"6. Napsauta asetuspainiketta",
+    card_233:"7. Napsauta Maksuasetuksia",
+    card_234:"8. Napsautusmaksujärjestys",
+    card_235:"9. Suosi virtuaalikortin käyttöä maksamiseen",
+    card_236:"10. Avaa sovellus, jota haluat käyttää",
+    card_237:"11. Valitse tuote ja napsauta maksaa",
+    card_238:"12. Maksu onnistui",
+    card_239:"",
+    card_240:"",
+    card_241:"",
+    card_242:"",
+    card_243:"",
 
 
 

@@ -632,7 +632,25 @@ const locale = {
     card_224: "Mali ang verification code",
     wallet_30: "Hindi sapat ang pondong pang-custodya",
     wallet_31: "Kung ang mga asset ay lumampas sa 200 USD, mangyaring pumili ng paraan ng pagkakabit upang matiyak ang seguridad ng pondo",
-
+    card_225:"Paano gamitin ang virtual card?",
+    card_226:"Ikabit sa electronic wallet",
+    card_227:"1. Buksan ang elektronikong wallet na ikakabit",
+    card_228:"2. Pumili ng Bank Card",
+    card_229:"3. I-click ang pindutang Magdagdag",
+    card_230:"4. Punan ang impormasyon ng virtual card sa pahina",
+    card_231:"5. I-click ang pindutan ng Tapusin",
+    card_232:"6. I-click ang button ng mga setting",
+    card_233:"7. I-click ang Mga Setting ng Pagbabayad",
+    card_234:"8. Order ng pagbabawas ng pag-click",
+    card_235:"9. Bigyang-priyoridad ang paggamit ng virtual card para sa pagbabayad",
+    card_236:"10. Buksan ang app na nais mong gamitin",
+    card_237:"11. Piliin ang produkto at i-click ang bayaran",
+    card_238:"12. Matagumpay na bayad",
+    card_239:"",
+    card_240:"",
+    card_241:"",
+    card_242:"",
+    card_243:"",
 
 
 

@@ -631,7 +631,25 @@ const locale = {
     card_224: "Código de verificación incorrecto",
     wallet_30: "Fondos de custodia insuficientes",
     wallet_31: "Si los activos superan los 200 USD, elija un método de vinculación para garantizar la seguridad de los fondos",
-
+    card_225:"¿Cómo usar una tarjeta virtual?",
+    card_226:"Vincular a la billetera electrónica",
+    card_227:"1. Abre la billetera electrónica que deseas vincular",
+    card_228:"2. Seleccionar tarjeta bancaria",
+    card_229:"3. Haz clic en el botón Agregar",
+    card_230:"4. Rellena la información de la tarjeta virtual en la página",
+    card_231:"5. Haga clic en el botón Finalizar",
+    card_232:"6. Haz clic en el botón de configuración",
+    card_233:"7. Haga clic en Configuración de Pago",
+    card_234:"8. Orden de deducción por clic",
+    card_235:"9. Prioriza el uso de tarjetas virtuales para el pago",
+    card_236:"10. Abre la aplicación que deseas usar",
+    card_237:"11. Selecciona el producto y haz clic en pagar",
+    card_238:"12. Pago exitoso",
+    card_239:"",
+    card_240:"",
+    card_241:"",
+    card_242:"",
+    card_243:"",
 
 
 

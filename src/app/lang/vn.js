@@ -621,7 +621,25 @@ const locale = {
     card_224: "Mã xác nhận không đúng",
     wallet_30: "Quỹ giám sát không đủ",
     wallet_31: "Nếu tài sản vượt quá 200 USD, vui lòng chọn phương thức liên kết để đảm bảo an toàn cho quỹ",
-
+    card_225:"Cách sử dụng thẻ ảo?",
+    card_226:"Liên kết với ví điện tử",
+    card_227:"1. Mở ví điện tử cần liên kết",
+    card_228:"2. Chọn thẻ ngân hàng",
+    card_229:"3. Nhấp vào nút Thêm",
+    card_230:"4. Điền thông tin thẻ ảo vào trang",
+    card_231:"5. Nhấp vào nút Hoàn tất",
+    card_232:"6. Nhấp vào nút cài đặt",
+    card_233:"7. Nhấp vào Cài đặt Thanh toán",
+    card_234:"8. Thứ tự khấu trừ khi nhấp",
+    card_235:"9. Ưu tiên sử dụng thẻ ảo để thanh toán",
+    card_236:"10. Mở ứng dụng bạn muốn sử dụng",
+    card_237:"11. Chọn sản phẩm và nhấp vào thanh toán",
+    card_238:"12. Thanh toán thành công",
+    card_239:"",
+    card_240:"",
+    card_241:"",
+    card_242:"",
+    card_243:"",
 
 
 

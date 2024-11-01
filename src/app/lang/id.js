@@ -631,7 +631,25 @@ const locale = {
     card_224: "Kode verifikasi salah",
     wallet_30: "Dana penampungan tidak mencukupi",
     wallet_31: "Jika aset melebihi 200 USD, silakan pilih metode pengikatan untuk memastikan keamanan dana",
-
+    card_225:"Bagaimana cara menggunakan kartu virtual?",
+    card_226:"Mengikat ke dompet elektronik",
+    card_227:"1. Buka dompet elektronik yang akan dihubungkan",
+    card_228:"2. Pilih Kartu Bank",
+    card_229:"3. Klik tombol Tambah",
+    card_230:"4. Isi informasi kartu virtual di halaman",
+    card_231:"5. Klik tombol Selesai",
+    card_232:"6. Klik tombol pengaturan",
+    card_233:"7. Klik pada Pengaturan Pembayaran",
+    card_234:"8. Urutan pemotongan klik",
+    card_235:"9. Utamakan penggunaan kartu virtual untuk pembayaran",
+    card_236:"10. Buka aplikasi yang ingin Anda gunakan",
+    card_237:"11. Pilih produk dan klik untuk membayar",
+    card_238:"12. Pembayaran berhasil",
+    card_239:"",
+    card_240:"",
+    card_241:"",
+    card_242:"",
+    card_243:"",
 
 
 

@@ -631,7 +631,25 @@ const locale = {
     card_224: "Kod pengesahan salah",
     wallet_30: "Dana pengurusan tidak mencukupi",
     wallet_31: "Jika aset melebihi 200 USD, sila pilih kaedah pengikatan untuk memastikan keselamatan dana",
-
+    card_225:"Bagaimana menggunakan kad maya?",
+    card_226:"Mengikat ke dompet elektronik",
+    card_227:"1. Buka dompet elektronik yang ingin disambungkan",
+    card_228:"2. Pilih Kad Bank",
+    card_229:"3. Klik butang Tambah",
+    card_230:"4. Isi maklumat kad maya di halaman",
+    card_231:"5. Klik butang Siap",
+    card_232:"6. Klik butang tetapan",
+    card_233:"7. Klik pada Tetapan Pembayaran",
+    card_234:"8. Urutan potongan klik",
+    card_235:"9. Utamakan penggunaan kad maya untuk pembayaran",
+    card_236:"10. Buka aplikasi yang ingin anda gunakan",
+    card_237:"11. Pilih produk dan klik untuk membayar",
+    card_238:"12. Pembayaran berjaya",
+    card_239:"",
+    card_240:"",
+    card_241:"",
+    card_242:"",
+    card_243:"",
 
 
 
