@@ -1720,7 +1720,7 @@ function Card(props) {
                                                         </div>
 
                                                         <div>
-                                                            <div className='text-16 mt-28 ml-10'>如何使用虚拟卡？</div>
+                                                            <div className='text-16 mt-28 ml-10'> {t('card_225')}</div>
 
                                                             <StyledAccordion
                                                                 component={motion.div}
@@ -1737,34 +1737,34 @@ function Card(props) {
                                                                         <FuseSvgIcon className="mr-8">
                                                                             heroicons-outline:information-circle
                                                                         </FuseSvgIcon>
-                                                                        绑定至电子钱包
+                                                                        {t('card_226')}
                                                                     </div>
                                                                 </AccordionSummary>
 
                                                                 <AccordionDetails style={{ paddingInline: "15px" }}>
-                                                                    <div> 1. 打开要绑定的电子钱包 </div>
+                                                                    <div>  {t('card_227')} </div>
                                                                     <img className='xszfSty' src="wallet/assets/images/card/zfb1.png" />
-                                                                    <div className='mt-28'> 2. 选择银行卡 </div>
+                                                                    <div className='mt-28'> {t('card_228')} </div>
                                                                     <img className='xszfSty' src="wallet/assets/images/card/zfb2.png" />
-                                                                    <div className='mt-28'> 3. 点击添加按钮 </div>
+                                                                    <div className='mt-28'>  {t('card_229')} </div>
                                                                     <img className='xszfSty' src="wallet/assets/images/card/zfb3.png" />
-                                                                    <div className='mt-28'> 4. 将虚拟卡的信息填入页面 </div>
+                                                                    <div className='mt-28'>  {t('card_230')} </div>
                                                                     <img className='xszfSty' src="wallet/assets/images/card/zfb4.png" />
-                                                                    <div className='mt-28'> 5. 点击完成按钮 </div>
+                                                                    <div className='mt-28'>  {t('card_231')} </div>
                                                                     <img className='xszfSty2' src="wallet/assets/images/card/zfb5.png" />
-                                                                    <div className='mt-28'> 6. 点击设置按钮 </div>
+                                                                    <div className='mt-28'>  {t('card_232')} </div>
                                                                     <img className='xszfSty2' src="wallet/assets/images/card/zfb5_1.png" />
-                                                                    <div className='mt-28'> 7. 点击支付设置 </div>
+                                                                    <div className='mt-28'> {t('card_233')} </div>
                                                                     <img className='xszfSty' src="wallet/assets/images/card/zfb5_2.png" />
-                                                                    <div className='mt-28'> 8. 点击扣款顺序 </div>
+                                                                    <div className='mt-28'>  {t('card_234')} </div>
                                                                     <img className='xszfSty' src="wallet/assets/images/card/zfb5_3.png" />
-                                                                    <div className='mt-28'> 9. 优先使用虚拟卡支付 </div>
+                                                                    <div className='mt-28'>  {t('card_235')} </div>
                                                                     <img className='xszfSty2' src="wallet/assets/images/card/zfb6.png" />
-                                                                    <div className='mt-28'> 10. 打开要使用的APP </div>
+                                                                    <div className='mt-28'>  {t('card_236')} </div>
                                                                     <img className='xszfSty2' src="wallet/assets/images/card/zfb7.png" />
-                                                                    <div className='mt-28'> 11. 选好商品点击付款 </div>
+                                                                    <div className='mt-28'>  {t('card_237')} </div>
                                                                     <img className='xszfSty2' src="wallet/assets/images/card/zfb8.png" />
-                                                                    <div className='mt-28'> 12. 支付成功 </div>
+                                                                    <div className='mt-28'>  {t('card_238')}</div>
                                                                     <img className='xszfSty2' src="wallet/assets/images/card/zfb9.png" />
                                                                 </AccordionDetails>
                                                             </StyledAccordion>
@@ -1784,23 +1784,23 @@ function Card(props) {
                                                                         <FuseSvgIcon className="mr-8">
                                                                             heroicons-outline:information-circle
                                                                         </FuseSvgIcon>
-                                                                        直接线上支付
+                                                                        {t('card_239')}
                                                                     </div>
                                                                 </AccordionSummary>
 
                                                                 <AccordionDetails style={{ paddingInline: "15px" }}>
                                                                     <div>
-                                                                        <div> 1. 打开要使用的APP</div>
+                                                                        <div> {t('card_236_1')}</div>
                                                                         <img className='xszfSty2' src="wallet/assets/images/card/zjz1.png" />
-                                                                        <div className='mt-28'> 2. 打开选购好的商品</div>
+                                                                        <div className='mt-28'> {t('card_240')}</div>
                                                                         <img className='xszfSty2' src="wallet/assets/images/card/zjz2.png" />
-                                                                        <div className='mt-28'> 3. 将虚拟卡的信息填入页面 </div>
+                                                                        <div className='mt-28'> {t('card_230_1')} </div>
                                                                         <img className='xszfSty2' src="wallet/assets/images/card/zjz3.png" />
-                                                                        <div className='mt-28'> 4. 点击继续付款</div>
+                                                                        <div className='mt-28'> {t('card_241')}</div>
                                                                         <img className='xszfSty' src="wallet/assets/images/card/zjz4.png" />
-                                                                        <div className='mt-28'> 5. 确认信息，点击支付按钮</div>
+                                                                        <div className='mt-28'> {t('card_242')} </div>
                                                                         <img className='xszfSty' src="wallet/assets/images/card/zjz5.png" />
-                                                                        <div className='mt-28'> 6. 支付成功</div>
+                                                                        <div className='mt-28'> {t('card_238_1')}  </div>
                                                                         <img className='xszfSty' src="wallet/assets/images/card/zjz6.png" />
                                                                     </div>
                                                                 </AccordionDetails>
