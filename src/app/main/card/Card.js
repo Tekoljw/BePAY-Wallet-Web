@@ -1500,13 +1500,13 @@ function Card(props) {
                                                                             </div>
                                                                             {cardItem?.state == 9 && (
                                                                                 <div className='cardErrorBg'>
-                                                                                    <div className='flex justify-center mt-28' style={{ width: "100%" }}>
+                                                                                    <div className={clsx("flex justify-center", cardItem?.freezeType === 'admin' ? 'mt-28': 'mt-88')} style={{ width: "100%" }}>
                                                                                         <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                                                                                         <div className='TanHaoCardZi'>
                                                                                             {t('card_178')}
                                                                                         </div>
                                                                                     </div>
-                                                                                    { currUserCardInfo?.freezeType === 'admin' && <div className='cardErrorZi'>{t('card_179')}</div>}
+                                                                                    { cardItem?.freezeType === 'admin' && <div className='cardErrorZi'>{t('card_179')}</div>}
                                                                                     {/* 
                                                                                         <div className='cardErrorBtn txtColorTitleSmall' onClick={() => {
                                                                                             changePhoneTab('security');
