@@ -1285,6 +1285,11 @@ function Card(props) {
         })
     }
 
+    const confirmHeld = (configId) => {
+        let index = _.findIndex(cardList[2], { creditConfigId: _.toNumber(configId) });
+        return index < 0 ? false: true
+    }
+
 
     const [loadingShow, setLoadingShow] = useState(false);
 
@@ -1540,11 +1545,15 @@ function Card(props) {
 
                                                                             <AccordionDetails className='gongNengTan3'>
                                                                                 <div className='flex justify-center'>
-                                                                                    <div className='gongNengLanW' onClick={() => {
+                                                                                    <div className={clsx("gongNengLanW mt-4 text-14", cardItem && cardItem.freezeType == 'admin' && "checkIsPhone")}  onClick={() => {
+                                                                                        if(cardItem.freezeType == 'admin') return;
+                                                                                        if(cardItem.state == '9') return;
                                                                                         setOpenAnimateModal(true);
                                                                                     }} >
                                                                                         <img className='gongNengTuBiao' src="wallet/assets/images/menu/guaShi.png"></img>
-                                                                                        <div className='gongNengZiW mt-4 text-14'>{t('card_31')}</div>
+                                                                                        <div className='gongNengZiW mt-4 text-14'>
+                                                                                            { cardItem?.state === 9 ? t('card_244') : t('card_31')}
+                                                                                        </div>
                                                                                     </div>
                                                                                     <div className='gongNengLanW' onClick={() => {
                                                                                         setCurrentCardItem(cardItem)
@@ -2069,7 +2078,7 @@ function Card(props) {
                                                                         setClickShenQinCard(true);
                                                                         setCardConfigID(configItem.configId);
                                                                         myFunction;
-                                                                    }}   >{t('card_35')}</div>
+                                                                    }}>{ confirmHeld(configItem.configId) ? t('card_243') : t('card_35')}</div>
                                                                 </div>
                                                             </div>
                                                         </motion.div>
@@ -2312,7 +2321,7 @@ function Card(props) {
                     </motion.div>
 
                     <motion.div variants={item} className='flex mt-16' style={{ paddingInline: "1.5rem" }} >
-                        <LoadingButton
+                        { !confirmHeld(cardConfigID) && <LoadingButton
                             disabled={false}
                             className={clsx('px-48  m-28 btnColorTitleBig loadingBtnSty')}
                             color="secondary"
@@ -2331,6 +2340,7 @@ function Card(props) {
                         >
                             {t('card_36')}
                         </LoadingButton>
+                        }
                     </motion.div>
                     <motion.div variants={item} className='flex mt-10 ' style={{ height: "5rem" }}>
                     </motion.div>
