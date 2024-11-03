@@ -654,7 +654,7 @@ const locale = {
     card_242:"5. Confirmez les informations, cliquez sur le bouton de paiement",
     card_243:"Déjà détenu",
     card_244:"dégel",
-
+    card_245:"La carte sera-t-elle dégelée ?",
 
 
     

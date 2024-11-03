@@ -664,7 +664,7 @@ const locale = {
     card_242:"5. 确认信息，点击支付按钮",
     card_243:"已持有",
     card_244:"解冻",
-
+    card_245:"是否将该卡片解冻？",
 };
 
 export default locale;

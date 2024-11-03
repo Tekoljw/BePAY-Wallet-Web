@@ -652,7 +652,7 @@ const locale = {
     card_242:"5. Bilgileri onaylayın, ödeme butonuna tıklayın",
     card_243:"Zaten sahip",
     card_244:"çözmek",
-
+    card_245:"Bu kart çözülecek mi?",
 
 
     

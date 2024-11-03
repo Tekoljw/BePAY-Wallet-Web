@@ -653,7 +653,7 @@ const locale = {
     card_242: "5. Vahvista tiedot, napsauta maksupainiketta",
     card_243: "Jo omistettu",
     card_244:"sulattaa",
-
+    card_245:"Vapautetaanko tämä kortti?",
 
 
 

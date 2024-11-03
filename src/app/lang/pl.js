@@ -655,7 +655,7 @@ const locale = {
     card_242:"5. Potwierdź informacje, kliknij przycisk płatności",
     card_243:"Już posiadane",
     card_244:"rozmrozić",
-
+    card_245:"Czy ta karta zostanie odblokowana?",
 
 
     

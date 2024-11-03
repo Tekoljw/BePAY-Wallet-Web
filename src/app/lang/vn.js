@@ -644,7 +644,7 @@ const locale = {
     card_242:"5. Xác nhận thông tin, nhấp vào nút thanh toán",
     card_243:"Đã giữ",
     card_244:"rã đông",
-
+    card_245:"Thẻ này có được giải phóng không?",
 
 
     

@@ -654,7 +654,7 @@ const locale = {
     card_242:"5. Sahkan maklumat, klik butang pembayaran",
     card_243:"Sudah dimiliki",
     card_244:"mencair",
-
+    card_245:"Adakah kad ini akan dibekukan?",
 
 
     

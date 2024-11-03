@@ -657,7 +657,7 @@ const locale = {
     card_242:"5. Bestätigen Sie die Informationen, klicken Sie auf die Schaltfläche Zahlung",
     card_243:"Bereits im Besitz",
     card_244:"auftauen",
-
+    card_245:"Wird diese Karte aufgetaut?",
 
 
 

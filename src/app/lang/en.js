@@ -664,7 +664,7 @@ const locale = {
     card_242:"5. Confirm information, click the payment button",
     card_243:"Already held",
     card_244:"unfreeze",
-
+    card_245:"Will this card be unfrozen?",
 };
 
 export default locale;

@@ -654,7 +654,7 @@ const locale = {
     card_242:"5. Confirme as informações, clique no botão de pagamento",
     card_243:"Já possui",
     card_244:"descongelar",
-
+    card_245:"O cartão será descongelado?",
 
 
  };

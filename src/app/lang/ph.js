@@ -655,7 +655,7 @@ const locale = {
     card_242:"5. Kumpirmahin ang impormasyon, i-click ang pindutan ng pagbabayad",
     card_243:"Nakahawak na",
     card_244:"mag-unfreeze",
-
+    card_245:"Ibinabawas ba ang card na ito?",
 
 
     
