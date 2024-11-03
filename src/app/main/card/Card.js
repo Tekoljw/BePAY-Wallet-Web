@@ -1506,7 +1506,7 @@ function Card(props) {
                                                                                             {t('card_178')}
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div className='cardErrorZi'>{t('card_179')}</div>
+                                                                                    { currUserCardInfo?.freezeType === 'admin' && <div className='cardErrorZi'>{t('card_179')}</div>}
                                                                                     {/* 
                                                                                         <div className='cardErrorBtn txtColorTitleSmall' onClick={() => {
                                                                                             changePhoneTab('security');
@@ -1547,7 +1547,8 @@ function Card(props) {
                                                                                 <div className='flex justify-center'>
                                                                                     <div className={clsx("gongNengLanW mt-4 text-14", cardItem && cardItem.freezeType == 'admin' && "checkIsPhone")}  onClick={() => {
                                                                                         if(cardItem.freezeType == 'admin') return;
-                                                                                        if(cardItem.state == '9') return;
+                                                                                        setCurrentCardItem(cardItem)
+                                                                                        setCurrUserCardInfo(cardItem)
                                                                                         setOpenAnimateModal(true);
                                                                                     }} >
                                                                                         <img className='gongNengTuBiao' src="wallet/assets/images/menu/guaShi.png"></img>
@@ -2052,7 +2053,7 @@ function Card(props) {
                                                                 <div className="responsive-div-content card1Bg" style={{ background: `url(${configItem?.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }} onClick={() => {
                                                                     setOpenXiangQing(true);
                                                                     setClickShenQinCard(true);
-                                                                    setCardConfigID(currentCardItem.creditConfigId);
+                                                                    setCardConfigID(currentCardItem?.creditConfigId || currUserCardInfo?.creditConfigId);
                                                                     myFunction;
                                                                 }}   >
                                                                 </div>
@@ -2420,7 +2421,7 @@ function Card(props) {
                 <div className='flex justify-center mb-16' style={{ width: "100%" }}>
                     <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                     <div className='TanHaoCardZi '>
-                        {t('card_31')}
+                        {currUserCardInfo.state === 9 ? t('card_244') : t('card_31')}
                     </div>
                 </div>
 
@@ -2434,7 +2435,7 @@ function Card(props) {
                     }}
                 >
                     <div className="danChuangTxt ">
-                        {t('card_75')}
+                        {currUserCardInfo.state === 9 ? t('card_245') : t('card_75')}
                     </div>
                 </Box>
 
@@ -2446,10 +2447,10 @@ function Card(props) {
                         loading={openCardBtnShow}
                         variant="contained"
                         onClick={() => {
-                            cardUpdate(1);
+                            currUserCardInfo.state === 9 ? cardUpdate(2): cardUpdate(1)
                         }}
                     >
-                        {t('card_31')}
+                        {currUserCardInfo.state === 9 ? t('card_244') : t('card_31')}
                     </LoadingButton>
 
 

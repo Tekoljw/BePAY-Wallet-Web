@@ -663,7 +663,7 @@ const locale = {
     card_241:"4. Click to continue payment",
     card_242:"5. Confirm information, click the payment button",
     card_243:"Already held",
-    card_244:"unfreeze",
+    card_244:"Unfreeze",
     card_245:"Will this card be unfrozen?",
 };
 
