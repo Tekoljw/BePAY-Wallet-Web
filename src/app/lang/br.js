@@ -652,8 +652,8 @@ const locale = {
     card_240:"2. Abrir o produto selecionado",
     card_241:"4. Clique para continuar o pagamento",
     card_242:"5. Confirme as informações, clique no botão de pagamento",
-    card_243:"",
-
+    card_243:"Já possui",
+    card_244:"descongelar",
 
 
 

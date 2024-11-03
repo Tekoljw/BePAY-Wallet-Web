@@ -650,8 +650,8 @@ const locale = {
     card_240:"2. Seçilen ürünü aç",
     card_241:"4. Ödemeye devam etmek için tıklayın",
     card_242:"5. Bilgileri onaylayın, ödeme butonuna tıklayın",
-    card_243:"",
-
+    card_243:"Zaten sahip",
+    card_244:"çözmek",
 
 
 

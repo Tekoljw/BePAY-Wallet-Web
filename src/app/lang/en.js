@@ -662,8 +662,8 @@ const locale = {
     card_240:"2. Open the selected product",
     card_241:"4. Click to continue payment",
     card_242:"5. Confirm information, click the payment button",
-    card_243:"Held",
-    card_244:"Unlock",
+    card_243:"Already held",
+    card_244:"unfreeze",
 
 };
 

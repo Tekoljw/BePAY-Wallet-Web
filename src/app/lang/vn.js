@@ -642,8 +642,8 @@ const locale = {
     card_240:"2. Mở sản phẩm đã chọn",
     card_241:"4. Nhấp để tiếp tục thanh toán",
     card_242:"5. Xác nhận thông tin, nhấp vào nút thanh toán",
-    card_243:"",
-
+    card_243:"Đã giữ",
+    card_244:"rã đông",
 
 
 

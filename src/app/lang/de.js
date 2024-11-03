@@ -655,8 +655,8 @@ const locale = {
     card_240:"2. Das ausgewählte Produkt öffnen",
     card_241:"4. Klicken Sie, um mit der Zahlung fortzufahren",
     card_242:"5. Bestätigen Sie die Informationen, klicken Sie auf die Schaltfläche Zahlung",
-    card_243:"",
-
+    card_243:"Bereits im Besitz",
+    card_244:"auftauen",
 
 
 

@@ -651,8 +651,8 @@ const locale = {
     card_240: "2. Avaa valittu tuote",
     card_241: "4. Napsauta jatkaaksesi maksua",
     card_242: "5. Vahvista tiedot, napsauta maksupainiketta",
-    card_243: "",
-
+    card_243: "Jo omistettu",
+    card_244:"sulattaa",
 
 
 

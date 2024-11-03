@@ -653,8 +653,8 @@ const locale = {
     card_240:"2. Buksan ang napiling produkto",
     card_241:"4. Mag-click upang magpatuloy sa pagbabayad",
     card_242:"5. Kumpirmahin ang impormasyon, i-click ang pindutan ng pagbabayad",
-    card_243:"",
-
+    card_243:"Nakahawak na",
+    card_244:"mag-unfreeze",
 
 
 

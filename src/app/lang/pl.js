@@ -653,8 +653,8 @@ const locale = {
     card_240:"2. Otwórz wybrany produkt",
     card_241:"4. Kliknij, aby kontynuować płatność",
     card_242:"5. Potwierdź informacje, kliknij przycisk płatności",
-    card_243:"",
-
+    card_243:"Już posiadane",
+    card_244:"rozmrozić",
 
 
 
