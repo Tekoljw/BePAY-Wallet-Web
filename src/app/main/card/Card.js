@@ -1500,13 +1500,13 @@ function Card(props) {
                                                                             </div>
                                                                             {cardItem?.state == 9 && (
                                                                                 <div className='cardErrorBg'>
-                                                                                    <div className={clsx("flex justify-center", cardItem?.freezeType === 'admin' ? 'mt-28': 'mt-88')} style={{ width: "100%" }}>
+                                                                                    <div className={clsx("flex justify-center", (cardItem?.freezeType === 'admin' || cardItem?.freezeType === 'delete') ? 'mt-28': 'mt-88')} style={{ width: "100%" }}>
                                                                                         <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                                                                                         <div className='TanHaoCardZi'>
                                                                                             {t('card_178')}
                                                                                         </div>
                                                                                     </div>
-                                                                                    { cardItem?.freezeType === 'admin' && <div className='cardErrorZi'>{t('card_179')}</div>}
+                                                                                    { (cardItem?.freezeType === 'admin' || cardItem?.freezeType === 'delete') && <div className='cardErrorZi'>{t('card_179')}</div>}
                                                                                     {/* 
                                                                                         <div className='cardErrorBtn txtColorTitleSmall' onClick={() => {
                                                                                             changePhoneTab('security');
@@ -1545,8 +1545,8 @@ function Card(props) {
 
                                                                             <AccordionDetails className='gongNengTan3'>
                                                                                 <div className='flex justify-center'>
-                                                                                    <div className={clsx("gongNengLanW mt-4 text-14", cardItem && cardItem.freezeType == 'admin' && "checkIsPhone")}  onClick={() => {
-                                                                                        if(cardItem.freezeType == 'admin') return;
+                                                                                    <div className={clsx("gongNengLanW mt-4 text-14", cardItem && (cardItem.freezeType == 'admin' || cardItem.freezeType == 'delete') && "checkIsPhone")}  onClick={() => {
+                                                                                        if(cardItem.freezeType == 'admin' || cardItem.freezeType == 'delete') return;
                                                                                         setCurrentCardItem(cardItem)
                                                                                         setCurrUserCardInfo(cardItem)
                                                                                         setOpenAnimateModal(true);
