@@ -1663,7 +1663,6 @@ function Wallet() {
                         src="/wallet/assets/images/withdraw/yan2.png"
                         onClick={() => {
                           setIsOpenEye(!isOpenEye);
-                          setOpenBindWinow(true);
                         }}></img>
                     }
                     {

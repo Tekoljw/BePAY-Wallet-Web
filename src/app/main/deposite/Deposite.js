@@ -422,10 +422,15 @@ function Deposite() {
 
     useEffect(() => {
         setLoadingShow(false);
+        setPhoneTab('deposite');
         dispatch(getCryptoDisplay()).then((res) => {
             setLoadingShow(false);
             let result = res.payload;
             setCryptoDisplayData(result?.data);
+        });
+        dispatch(getFiatDisplay()).then((res) => {
+            let result = res.payload;
+            setFiatDisplayData(result?.data);
         });
     }, []);
 
@@ -715,14 +720,14 @@ function Deposite() {
     }
 
     //改变网络的处理
-    const handleChangeNetWork = (tmpNetwordId) => {
-        let address = (addressData[symbol] && addressData[symbol][tmpNetwordId]) || ''
+    const handleChangeNetWork = (tmpNetworkId) => {
+        let address = (addressData[symbol] && addressData[symbol][tmpNetworkId]) || ''
         setSelectWalletAddressIndex(null)
-        setIsGetWalletAddress(addressData[symbol] && addressData[symbol][tmpNetwordId]);
+        setIsGetWalletAddress(addressData[symbol] && addressData[symbol][tmpNetworkId]);
         setWalletAddress(address);
-        if (tmpNetwordId !== 0) {
-            getWalletAddressList(tmpNetwordId);
-            handleCheckWalletAddress(tmpNetwordId);
+        if (tmpNetworkId) {
+            getWalletAddressList(tmpNetworkId);
+            handleCheckWalletAddress(tmpNetworkId);
         }
     };
 
@@ -983,14 +988,6 @@ function Deposite() {
             fiatsFormatAmount();
         }
     }, [fiatData, fiatDisplayData, paymentFiat]);
-
-    useEffect(() => {
-        setPhoneTab('deposite');
-        dispatch(getFiatDisplay()).then((res) => {
-            let result = res.payload;
-            setFiatDisplayData(result?.data);
-        });
-    }, []);
 
     // 格式化金额
     const formatAmount = (amount) => {
