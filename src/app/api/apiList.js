@@ -403,6 +403,12 @@ export default {
             url: "/payment/makeWithdrawOrder",
             method: "post",
         },
+        
+        sendTips:{
+            url: "/transfer/fiat/sendTips",
+            method: "post",
+        },
+
         fiatWithdrawFee: {
             url: "/payment/fiatWithdrawFee",
             method: "post",
@@ -660,6 +666,10 @@ export default {
         },
         exchangeCreditCard: {
             url: "/credit/exchangeCreditCard",
+            method: "post",
+        },
+        queryCreditBalance: {
+            url: "/credit/queryCreditBalance",
             method: "post",
         }
     },

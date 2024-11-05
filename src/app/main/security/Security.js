@@ -45,6 +45,8 @@ const item = {
 
 const backCardPageEvt = () => {}
 
+const updatedKycInfoEvt = ()=>{}
+
 function Security(props) {
     const { t } = useTranslation('mainPage');
 
@@ -129,7 +131,7 @@ function Security(props) {
                     {tabValue === 1 && <RetiedEmail />}
                     {tabValue === 2 && <RetiedPhone />}
                     {tabValue === 3 && <ResetPass />}
-                    {tabValue === 4 && <Kyc backCardPage={backCardPageEvt} />}
+                    {tabValue === 4 && <Kyc backCardPage={backCardPageEvt} updatedKycInfo={updatedKycInfoEvt}/>}
                     {tabValue === 5 && <ResetPin resetTabValueParam={resetTabValueParam} />}
                 </div>
             }

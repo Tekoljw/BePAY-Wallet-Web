@@ -194,11 +194,20 @@ export const getStarPayConfig = createAsyncThunk(
     }
 );
 
-// 法币提现
+// 法币提现(外部)
 export const makeWithdrawOrder = createAsyncThunk(
     'payment/makeWithdrawOrder',
     async (settings, { dispatch, getState }) => {
         const result = await React.$api("payment.makeWithdrawOrder", settings);
+        return result
+    }
+);
+
+// 法币提现(内部)
+export const fiatSendTips = createAsyncThunk(
+    'transfer/fiat/sendTips',
+    async (settings, { dispatch, getState }) => {
+        const result = await React.$api("payment.sendTips", settings);
         return result
     }
 );
@@ -311,6 +320,7 @@ export const exchangeCreditCard = createAsyncThunk(
     '/credit/exchangeCreditCard',
     async (settings, { dispatch, getState }) => {
         const result = await React.$api("credit.exchangeCreditCard", settings);
+        return result;
         if (result.errno === 0) {
             if(!settings.ignoreMessage){
                 if (result.data.status === 'success') {
@@ -324,6 +334,20 @@ export const exchangeCreditCard = createAsyncThunk(
         }
     }
 );
+
+// 获取信用卡余额
+export const getCreditCardBalance = createAsyncThunk(
+    'credit/queryCreditBalance',
+    async (settings, { dispatch, getState }) => {
+        const result = await React.$api("credit.queryCreditBalance", settings);
+        if (result.errno === 0) {
+            return result.data
+        } else {
+            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+        }
+    }
+);
+
 
 // 获取信用卡列表
 export const getUserCreditCard = createAsyncThunk(

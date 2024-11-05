@@ -1022,14 +1022,14 @@ input[type='number'] {
 
 .xszfSty {
     width: 100%;
-    aspect-ratio: 430 / 448;
+    aspect-ratio: 430 / 360;
     border-radius: 1rem;
     margin-top: 1.4rem;
 }
 
 .xszfSty2 {
     width: 100%;
-    aspect-ratio: 430 / 296;
+    aspect-ratio: 430 / 280;
     border-radius: 1rem;
     margin-top: 1.4rem;
 }
@@ -4431,4 +4431,14 @@ button {
     .muiltr-43y7f .FusePageCarded-sidebarWrapper.permanent.closed.FusePageCarded-leftSidebar {
         margin-left: 0;
     }
+}
+
+.exchange-credit-fee{
+    text-align: center;
+    padding: 0rem 1.5rem;
+    color: #46DFB7;
+    font-weight: 600
+}
+.error-msg-font{
+    color: #EE124B !important;
 }

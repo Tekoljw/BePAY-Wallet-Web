@@ -10,7 +10,7 @@ import Paper from '@mui/material/Paper';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     bindEmail,
-    changeEmail, sendEmail, getUserData
+    changeEmail, sendEmail, getUserData, userProfile
 } from '../../store/user/userThunk';
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel/InputLabel";
@@ -33,7 +33,7 @@ const defaultValues = {
     smsCode: '',
 };
 
-function RetiedEmail() {
+function RetiedEmail(props) {
     const { t } = useTranslation('mainPage');
     const schema = yup.object().shape({
         smsCode: yup.string().required('You must enter a smsCode'),
@@ -96,9 +96,11 @@ function RetiedEmail() {
                 let result = res.payload;
                 if (result.errno === 0) {
                     dispatch(showMessage({ message: 'Success', code: 1 }));
+                    props.backPage()
+                    dispatch(userProfile());
                     dispatch(getUserData());
-                    changePhoneTab('withdraw');
-                    history.push('/wallet/home/wallet')
+                    // changePhoneTab('withdraw');
+                    // history.push('/wallet/home/wallet')
                 } else {
                     dispatch(showMessage({ message: result.errmsg, code: 2 }));
                 }
