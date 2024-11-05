@@ -3264,7 +3264,6 @@ function Wallet() {
             <AnimateModal2
               className="faBiDiCard tanChuanDiSe"
               open={openBindWinow}
-              onClose={() => setOpenBindWinow(false)}
             >
               <div className='flex justify-center mb-16' style={{ width: "100%" }}>
                 <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
