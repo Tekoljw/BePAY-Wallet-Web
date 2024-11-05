@@ -156,7 +156,7 @@ function Enable2FA(props) {
                                 background: '#ffffff',
                                 margin: '0.5rem 0'
                             }}
-                            value={googleText.qr ? googleText.qr : ''}
+                            value={googleText?.qr ? googleText.qr : ''}
                             size={138}
                         />
                     </div>
@@ -168,11 +168,11 @@ function Enable2FA(props) {
                             <OutlinedInput
                                 disabled={true}
                                 id="outlined-adornment-weight"
-                                value={googleText.key ? googleText.key : ''}
+                                value={googleText?.key ? googleText.key : ''}
                                 endAdornment={<InputAdornment position="end">
                                     <IconButton
                                         onClick={() => {
-                                            handleCopyText(googleText.key)
+                                            handleCopyText(googleText?.key)
                                         }}
                                         edge="end"
                                     >
@@ -205,7 +205,7 @@ function Enable2FA(props) {
                     variants={item}
                 >
                     <Typography className="text-16 px-16 my-16 font-medium text-center pad-l-r-10 margin-t-b-10" style={{ color: '#94a3b8' }}>{t('card_180')}</Typography>
-                    <OtpPass googleTextKey={googleText.key} setGoogleCode={setGoogleCode} resizeLayout={(value) => resizeLayoutEvt(value)} />
+                    <OtpPass googleTextKey={googleText?.key} setGoogleCode={setGoogleCode} resizeLayout={(value) => resizeLayoutEvt(value)} />
                     <div className="mb-24 mt-4 flex  items-center justify-content-center">
                         <LoadingButton
                             disabled={openLoad}
