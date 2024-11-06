@@ -161,7 +161,7 @@ const locale = {
     home_withdraw_12: 'Hızlı',
     home_withdraw_13: 'Yavaş',
     home_withdraw_14: 'adres',
-    home_withdraw_15: 'İşlem ücreti - ',
+    home_withdraw_15: 'İşlem ücreti ',
     home_withdraw_16: 'Süre - 0-2 Saat. ',
     home_withdraw_17: 'Ağ onayı dahil değildir ve ek zaman alabilir',
     home_withdraw_18: 'Banka',
@@ -653,6 +653,7 @@ const locale = {
     card_243:"Zaten sahip",
     card_244:"çözmek",
     card_245:"Bu kart çözülecek mi?",
+    login_1:"Giriş başarısız oldu. Lütfen mini uygulamayı kapatıp tekrar açın",
 
 
     

@@ -153,7 +153,7 @@ const locale = {
     home_withdraw_12: 'Fast',
     home_withdraw_13: 'Slow',
     home_withdraw_14: 'địa chỉ',
-    home_withdraw_15: 'Phí giao dịch - ',
+    home_withdraw_15: 'Phí giao dịch ',
     home_withdraw_16: 'Thời gian - 0-2 giờ. ',
     home_withdraw_17: 'Không bao gồm xác nhận mạng và có thể mất thêm thời gian',
     home_withdraw_18: 'Ngân hàng',
@@ -645,6 +645,7 @@ const locale = {
     card_243:"Đã giữ",
     card_244:"rã đông",
     card_245:"Thẻ này có được giải phóng không?",
+    login_1:"Đăng nhập thất bại, vui lòng đóng ứng dụng mini và mở lại",
 
 
     

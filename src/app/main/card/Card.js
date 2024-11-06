@@ -1212,6 +1212,7 @@ function Card(props) {
 
     const reciveCode = async () => {
         let sendRes = {};
+        setTime(60);
         if (twiceVerifyType === 0) {
             const data = {
                 codeType: 14,
@@ -1256,6 +1257,19 @@ function Card(props) {
         setOpenGoogleCode(true);
     }
 
+    const timeRef = useRef();
+    const [time, setTime] = useState(0);
+    //倒计时
+    useEffect(() => {
+        if (time && time !== 0)
+            timeRef.current = setTimeout(() => {
+                setTime(time => time - 1)
+            }, 1000);
+        return () => {
+            clearTimeout(timeRef.current)
+        }
+    }, [time]);
+
     const toggleExpandCard = (cardItem) => {
         setCurrUserCardInfo(cardItem);
         dispatch(getCreditCardBalance({
@@ -1287,7 +1301,7 @@ function Card(props) {
 
     const confirmHeld = (configId) => {
         let index = _.findIndex(cardList[2], { creditConfigId: _.toNumber(configId) });
-        return index < 0 ? false: true
+        return index < 0 ? false : true
     }
 
 
@@ -1500,13 +1514,13 @@ function Card(props) {
                                                                             </div>
                                                                             {cardItem?.state == 9 && (
                                                                                 <div className='cardErrorBg'>
-                                                                                    <div className={clsx("flex justify-center", (cardItem?.freezeType === 'admin' || cardItem?.freezeType === 'delete') ? 'mt-28': 'mt-88')} style={{ width: "100%" }}>
+                                                                                    <div className={clsx("flex justify-center", (cardItem?.freezeType === 'admin' || cardItem?.freezeType === 'delete') ? 'mt-28' : 'mt-88')} style={{ width: "100%" }}>
                                                                                         <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                                                                                         <div className='TanHaoCardZi'>
                                                                                             {t('card_178')}
                                                                                         </div>
                                                                                     </div>
-                                                                                    { (cardItem?.freezeType === 'admin' || cardItem?.freezeType === 'delete') && <div className='cardErrorZi'>{t('card_179')}</div>}
+                                                                                    {(cardItem?.freezeType === 'admin' || cardItem?.freezeType === 'delete') && <div className='cardErrorZi'>{t('card_179')}</div>}
                                                                                     {/* 
                                                                                         <div className='cardErrorBtn txtColorTitleSmall' onClick={() => {
                                                                                             changePhoneTab('security');
@@ -1545,15 +1559,15 @@ function Card(props) {
 
                                                                             <AccordionDetails className='gongNengTan3'>
                                                                                 <div className='flex justify-center'>
-                                                                                    <div className={clsx("gongNengLanW mt-4 text-14", cardItem && (cardItem.freezeType == 'admin' || cardItem.freezeType == 'delete') && "checkIsPhone")}  onClick={() => {
-                                                                                        if(cardItem.freezeType == 'admin' || cardItem.freezeType == 'delete') return;
+                                                                                    <div className={clsx("gongNengLanW mt-4 text-14", cardItem && (cardItem.freezeType == 'admin' || cardItem.freezeType == 'delete') && "checkIsPhone")} onClick={() => {
+                                                                                        if (cardItem.freezeType == 'admin' || cardItem.freezeType == 'delete') return;
                                                                                         setCurrentCardItem(cardItem)
                                                                                         setCurrUserCardInfo(cardItem)
                                                                                         setOpenAnimateModal(true);
                                                                                     }} >
                                                                                         <img className='gongNengTuBiao' src="wallet/assets/images/menu/guaShi.png"></img>
                                                                                         <div className='gongNengZiW mt-4 text-14'>
-                                                                                            { cardItem?.state === 9 ? t('card_244') : t('card_31')}
+                                                                                            {cardItem?.state === 9 ? t('card_244') : t('card_31')}
                                                                                         </div>
                                                                                     </div>
                                                                                     <div className='gongNengLanW' onClick={() => {
@@ -1676,51 +1690,55 @@ function Card(props) {
                                                         {/*    </div>*/}
                                                         {/*</motion.div>*/}
 
-                                                        {/*<motion.div variants={item}*/}
-                                                        {/*    initial="hidden"*/}
-                                                        {/*    animate="show"*/}
-                                                        {/*    className='cardJianGe'*/}
-                                                        {/*>*/}
-                                                        {/*    <div className="responsive-div">*/}
-                                                        {/*        <div className="responsive-div-content card2Bg cardZhiDi" >*/}
-                                                        {/*            <div className='cardZhuangTaiDi'>*/}
-                                                        {/*                <div className='cardZhuangTai'>审核中</div>*/}
-                                                        {/*            </div>*/}
-                                                        {/*            <div className='cardNumber'>2489 8794 8894 7845</div>*/}
-                                                        {/*            <div className='cardBeiMian'>*/}
-                                                        {/*            </div>*/}
-                                                        {/*        </div>*/}
-                                                        {/*    </div>*/}
+                                                        {/* <motion.div variants={item}
+                                                            initial="hidden"
+                                                            animate="show"
+                                                            className='cardJianGe'
+                                                        >
+                                                            <div className="responsive-div">
+                                                                <div className="responsive-div-content card2Bg cardZhiDi" >
+                                                                    <div className='cardZhuangTaiDi'>
+                                                                        <div className='cardZhuangTai mt-32'>审核中</div>
+                                                                    </div>
+                                                                    <div className='cardNumber'>2489 8794 8894 7845</div>
+                                                                    <div>
+                                                                        <span style={{ paddingTop: "2%", paddingLeft: "8%" }} >07/24</span>
+                                                                    </div>
+                                                                    <div className='cardBeiMian'>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
 
-                                                        {/*    <div className='mt-10'>*/}
-                                                        {/*        <div style={{ position: "relative", height: "1.2rem", width: "100%", margin: "0 auto" }}>*/}
-                                                        {/*            <div className='borderYuan' style={{ position: "absolute" }}>*/}
-                                                        {/*                <div className='jinDuDi' ></div>*/}
-                                                        {/*            </div>*/}
-                                                        {/*            <div className='borderYuan' style={{ position: "absolute" }}>*/}
-                                                        {/*                <div className={clsx("jinDuDi1")} style={{ width: "25%" }}></div>*/}
-                                                        {/*            </div>*/}
-                                                        {/*            <div style={{ position: "absolute", width: "100%", height: "0.6rem" }}>*/}
-                                                        {/*                <div className='flex justify-between items-center ' style={{ width: "100%", height: "0.6rem", padding: "0rem 0rem" }}>*/}
-                                                        {/*                    <div className='smallYuanDian'></div>*/}
-                                                        {/*                    <div className='smallYuanDianBig yuanDianAni'></div>*/}
-                                                        {/*                    <div className='smallYuanDian'></div>*/}
-                                                        {/*                    <div className='smallYuanDian'></div>*/}
-                                                        {/*                    <div className='smallYuanDian'></div>*/}
-                                                        {/*                </div>*/}
-                                                        {/*            </div>*/}
-                                                        {/*        </div>*/}
-                                                        {/*        <div style={{ width: "100%", margin: "0rem auto" }}>*/}
-                                                        {/*            <div className='flex justify-between items-center ' style={{ width: "100%" }}>*/}
-                                                        {/*                <div className=''>申请</div>*/}
-                                                        {/*                <div className='jinDuZi'>审核</div>*/}
-                                                        {/*                <div className=''>寄送</div>*/}
-                                                        {/*                <div className=''>激活</div>*/}
-                                                        {/*                <div className=''>成功</div>*/}
-                                                        {/*            </div>*/}
-                                                        {/*        </div>*/}
-                                                        {/*    </div>*/}
-                                                        {/*</motion.div>*/}
+                                                            <div className='mt-10'>
+                                                                <div style={{ position: "relative", height: "1.2rem", width: "100%", margin: "0 auto" }}>
+                                                                    <div className='borderYuan' style={{ position: "absolute" }}>
+                                                                        <div className='jinDuDi' ></div>
+                                                                    </div>
+                                                                    <div className='borderYuan' style={{ position: "absolute" }}>
+                                                                        <div className={clsx("jinDuDi1")} style={{ width: "25%" }}></div>
+                                                                    </div>
+                                                                    <div style={{ position: "absolute", width: "100%", height: "0.6rem" }}>
+                                                                        <div className='flex justify-between items-center ' style={{ width: "100%", height: "0.6rem", padding: "0rem 0rem" }}>
+                                                                            <div className='smallYuanDian'></div>
+                                                                            <div className='smallYuanDianBig yuanDianAni'></div>
+                                                                            <div className='smallYuanDian'></div>
+                                                                            <div className='smallYuanDian'></div>
+                                                                            <div className='smallYuanDian'></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div style={{ width: "100%", margin: "0rem auto" }}>
+                                                                    <div className='flex justify-between items-center ' style={{ width: "100%" }}>
+                                                                        <div className=''>申请</div>
+                                                                        <div className='jinDuZi'>审核</div>
+                                                                        <div className=''>寄送</div>
+                                                                        <div className=''>激活</div>
+                                                                        <div className=''>成功</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </motion.div> */}
+
 
                                                         <div className='tianJiaKaPian flex items-center pl-16' onClick={() => {
                                                             setTabValue(1);
@@ -2079,7 +2097,7 @@ function Card(props) {
                                                                         setClickShenQinCard(true);
                                                                         setCardConfigID(configItem.configId);
                                                                         myFunction;
-                                                                    }}>{ confirmHeld(configItem.configId) ? t('card_243') : t('card_35')}</div>
+                                                                    }}>{confirmHeld(configItem.configId) ? t('card_243') : t('card_35')}</div>
                                                                 </div>
                                                             </div>
                                                         </motion.div>
@@ -2322,7 +2340,7 @@ function Card(props) {
                     </motion.div>
 
                     <motion.div variants={item} className='flex mt-16' style={{ paddingInline: "1.5rem" }} >
-                        { !confirmHeld(cardConfigID) && <LoadingButton
+                        {!confirmHeld(cardConfigID) && <LoadingButton
                             disabled={false}
                             className={clsx('px-48  m-28 btnColorTitleBig loadingBtnSty')}
                             color="secondary"
@@ -2447,7 +2465,7 @@ function Card(props) {
                         loading={openCardBtnShow}
                         variant="contained"
                         onClick={() => {
-                            currUserCardInfo.state === 9 ? cardUpdate(2): cardUpdate(1)
+                            currUserCardInfo.state === 9 ? cardUpdate(2) : cardUpdate(1)
                         }}
                     >
                         {currUserCardInfo.state === 9 ? t('card_244') : t('card_31')}
@@ -3324,10 +3342,20 @@ function Card(props) {
                             (
                                 twiceVerifyType === 0 ? <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}>
                                     {t('Kyc_67')}<span style={{ color: "#909fb4", padding: '0px 5px' }}>{userData?.userInfo?.email}</span>
-                                    <span style={{ color: "#2dd4bf", textDecoration: "underline" }} onClick={() => reciveCode()}>{t('Kyc_65')}</span>
+                                    {
+                                        time <= 0 && <span style={{ color: "#2dd4bf", textDecoration: "underline" }} onClick={() => reciveCode()}>{t('Kyc_65')}</span>
+                                    }
+                                    {
+                                        time > 0 && <span style={{ color: "#2dd4bf", }} >{time}s</span>
+                                    }
                                 </div> : <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}>
                                     {t('Kyc_66')}<span style={{ color: "#909fb4", padding: '0px 5px' }}>{userData?.userInfo?.nation + userData?.userInfo?.phone}</span>
-                                    <span style={{ color: "#2dd4bf", textDecoration: "underline" }} onClick={() => reciveCode()}>{t('Kyc_65')}</span>
+                                    {
+                                        time <= 0 && <span style={{ color: "#2dd4bf", textDecoration: "underline" }} onClick={() => reciveCode()}>{t('Kyc_65')}</span>
+                                    }
+                                    {
+                                        time > 0 && <span style={{ color: "#2dd4bf", }} >{time}s</span>
+                                    }
                                 </div>
                             )
                             : <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}> {t('Kyc_60')}</div>)

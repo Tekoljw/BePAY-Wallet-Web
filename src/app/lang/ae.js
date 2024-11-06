@@ -164,7 +164,7 @@ const locale = {
     home_withdraw_12: 'سريع',
     home_withdraw_13: 'بطيء',
     home_withdraw_14: 'العنوان',
-    home_withdraw_15: 'رسوم المعاملة -',
+    home_withdraw_15: 'رسوم المعاملة',
     home_withdraw_16: 'الوقت المستغرق - 0-2 ساعة.',
     home_withdraw_17: 'التأكيد في الشبكة غير متضمن ويمكن أن يستغرق بعض الوقت الإضافي',
     home_withdraw_18: 'البنك',
@@ -660,7 +660,7 @@ const locale = {
     card_243:"تم الاحتفاظ به",
     card_244:"فك التجميد",
     card_245:"هل سيتم فك تجميد هذه البطاقة؟",
-
+    login_1:"فشل تسجيل الدخول، يُرجى إغلاق التطبيق الصغير وإعادة فتحه",
     server_error_10008:"",
     server_error_10009:"",
     server_error_10010:"",

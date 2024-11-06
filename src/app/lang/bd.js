@@ -162,7 +162,7 @@ const locale = {
     home_withdraw_12: 'দ্রুত',
     home_withdraw_13: 'মন্থর',
     home_withdraw_14: 'ঠিকানা',
-    home_withdraw_15: 'লেনদেন ফি -',
+    home_withdraw_15: 'লেনদেন ফি ',
     home_withdraw_16: 'সময় লাগে - 0-2 ঘন্টা।',
     home_withdraw_17: 'নেটওয়ার্ক নিশ্চিতকরণ সংযোজন করা হয় না এবং কিছু অতিরিক্ত সময় নিতে পারে।',
     home_withdraw_18: 'ব্যাংক',
@@ -667,7 +667,7 @@ const locale = {
     card_243:"ধারণ করা হয়েছে",
     card_244:"মুক্তি",
     card_245:"কি এই কার্ডটি আনফ্রিজ করা হবে?",
-
+    login_1:"লগইন ব্যর্থ হয়েছে, দয়া করে অ্যাপটি বন্ধ করে পুনরায় খুলুন।",
     server_error_10008:"",
     server_error_10009:"",
     server_error_10010:"",

@@ -163,7 +163,7 @@ const locale = {
     home_withdraw_12: 'Fast',
     home_withdraw_13: 'Slow',
     home_withdraw_14: 'adres',
-    home_withdraw_15: 'Opłata transakcyjna - ',
+    home_withdraw_15: 'Opłata transakcyjna ',
     home_withdraw_16: 'Czas trwania - 0-2 godziny. ',
     home_withdraw_17: 'Potwierdzenie sieci nie jest uwzględnione i może zająć trochę więcej czasu',
     home_withdraw_18: 'Bank',
@@ -656,6 +656,7 @@ const locale = {
     card_243:"Już posiadane",
     card_244:"rozmrozić",
     card_245:"Czy ta karta zostanie odblokowana?",
+    login_1:"Logowanie nie powiodło się, zamknij aplikację i otwórz ją ponownie",
 
 
     

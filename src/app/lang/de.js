@@ -162,7 +162,7 @@ const locale = {
     home_withdraw_12: 'Fast',
     home_withdraw_13: 'Slow',
     home_withdraw_14: 'Adresse',
-    home_withdraw_15: 'Transaktionsgebühr - ',
+    home_withdraw_15: 'Transaktionsgebühr ',
     home_withdraw_16: 'Zeit benötigt - 0-2 Stunden.',
     home_withdraw_17: 'Netzwerkbestätigung ist nicht enthalten und kann etwas länger dauern.',
     home_withdraw_18: 'Bank',
@@ -658,7 +658,7 @@ const locale = {
     card_243:"Bereits im Besitz",
     card_244:"auftauen",
     card_245:"Wird diese Karte aufgetaut?",
-
+    login_1:"Anmeldefehler. Bitte schließen Sie die Mini-App und öffnen Sie sie erneut",
     server_error_10008:"",
     server_error_10009:"",
     server_error_10010:"",

@@ -323,6 +323,7 @@ function Wallet() {
   const [openBindEmail, setOpenBindEmail] = useState(false);
   const [openBindPhone, setOpenBindPhone] = useState(false);
   const [loadingShow, setLoadingShow] = useState(false);
+  const [openLoginWinow, setOpenLoginWinow] = useState(false);
 
 
 
@@ -362,6 +363,12 @@ function Wallet() {
   //     setLoadingShow(true);
   //   }
   // }, [symbols]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setOpenLoginWinow(false);
+    }, 1000);
+  }, []);
 
   useEffect(() => {
     if (userData.profile.wallet?.Crypto + userData.profile.wallet?.Fiat > 200) {
@@ -3314,6 +3321,48 @@ function Wallet() {
                   }}
                 >
                   {t('kyc_56')}
+                </LoadingButton>
+              </div>
+            </AnimateModal2>
+
+            <AnimateModal2
+              className="faBiDiCard tanChuanDiSe"
+              open={openLoginWinow}
+              onClose={() => setOpenLoginWinow(false)}
+            >
+              <div className='flex justify-center mb-16' style={{ width: "100%" }}>
+                <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
+                <div className='TanHaoCardZi '>
+                  {t('signIn_1')}
+                </div>
+              </div>
+
+              <Box
+                className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard flex justify-center"
+                sx={{
+                  backgroundColor: "#2C394D",
+                  padding: "1.5rem",
+                  overflow: "hidden",
+                  margin: "0rem auto 0rem auto"
+                }}
+              >
+                <div className="danChuangTxt ">
+                  {t('login_1')}
+                </div>
+              </Box>
+
+              <div className='flex mt-16 mb-28 px-15 justify-center' >
+                <LoadingButton
+                  disabled={false}
+                  className="boxCardBtn"
+                  color="secondary"
+                  loading={false}
+                  variant="contained"
+                  onClick={() => {
+
+                  }}
+                >
+                  {t('home_borrow_17')}
                 </LoadingButton>
               </div>
             </AnimateModal2>
