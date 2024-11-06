@@ -297,23 +297,28 @@ function RetiedPhone(props) {
                             </a>
                         </div>
 
-                        <Button
+                        {(userData && userData.userInfo && userData.userInfo.bindMobile) ? <Button
                             variant="contained"
                             color="secondary"
                             className=" w-full mt-24"
                             aria-label="Register"
-                            // disabled={_.isEmpty(dirtyFields) || !isValid}
-                            disabled={
-                                _.isEmpty(dirtyFields) ||
-                                !isValid ||
-                                (selectedCountryCode !== "" && selectedCountryCode !== control._formValues.nationCode)
-                              }
+                            disabled={_.isEmpty(dirtyFields) || !isValid}
                             type="submit"
                             size="large"
                             sx={{ paddingTop: "2px!important", paddingBottom: "2px!important", fontSize: "20px!important" }}
                         >
                             {t('re_tied_phone_3')}
-                        </Button>
+                        </Button> : <Button
+                            variant="contained"
+                            color="secondary"
+                            className=" w-full mt-24"
+                            aria-label="Register"
+                            disabled={_.isEmpty(dirtyFields) || !isValid}
+                            type="submit"
+                            size="large"
+                        >
+                            {t('menu_20')} </Button>
+                        }
                     </form>
                 </div>
             </Paper>
