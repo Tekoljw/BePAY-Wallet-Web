@@ -62,6 +62,7 @@ function Earn(props) {
     const [openYaoQing, setOpenYaoQing] = useState(false);
     const [openXiangQing, setOpenXiangQing] = useState(false);
     const [inputIDVal, setInputIDVal] = useState(0);
+    const [openZhiYa, setOpenZhiYa] = useState(false);
     const handleChangeInputVal2 = (event) => {
         setInputIDVal(event.target.value);
     };
@@ -140,11 +141,35 @@ function Earn(props) {
         }, 0);
     };
 
+
     const closesWaKuangFunc = () => {
         document.getElementById('openWaKuang').classList.remove('PinMoveAni');
         document.getElementById('openWaKuang').classList.add('PinMoveOut');
         setTimeout(() => {
             setOpenWaKuang(false)
+        }, 300);
+    };
+
+    const openZhiYaFunc = () => {
+        setOpenZhiYa(true)
+        // setTimeout(() => {
+        //     document.getElementById('target').scrollIntoView({ behavior: 'smooth' });
+        // }, 0);
+    }
+
+    const closesZhiYaFunc = () => {
+        document.getElementById('openWaKuang').classList.remove('PinMoveAni');
+        document.getElementById('openWaKuang').classList.add('PinMoveOut');
+        setTimeout(() => {
+            setOpenZhiYa(false)
+        }, 300);
+    };
+
+    const openLiShiFunc = () => {
+        document.getElementById('openWaKuang').classList.remove('PinMoveAni');
+        document.getElementById('openWaKuang').classList.add('PinMoveOut');
+        setTimeout(() => {
+
         }, 300);
     };
 
@@ -284,6 +309,30 @@ function Earn(props) {
                         className='mt-20'
                         style={{ paddingInline: "1.5rem" }}
                     >
+                        <div className='text-16'>{t('card_120')}</div>
+                        <div className='ziDi mt-16' onClick={() => {
+                            openZhiYaFunc();
+                        }}>
+                            <div className='flex justify-between pt-4'>
+                                <div className='huangDiZi'>
+                                    <div className='tuoYuanDi2'>
+                                        <div className='' style={{ textAlign: "center", fontSize: "20px", whiteSpace: 'nowrap', overflow: 'hidden' }}><span style={{ color: "#ffffff" }}>超高的收益</span> </div>
+                                    </div>
+                                    <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>净赚收益，</span><span style={{ color: "#5BEA9C", fontWeight: "bold", fontSize: "29px" }}>0 </span><span style={{ color: "#ffffff", fontSize: "14px" }}>GAS</span></div>
+                                    <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>质押BFT，年化 </span><span style={{ color: "#ffc600", fontWeight: "bold", fontSize: "29px" }}>292%</span></div>
+                                </div>
+                                <img className='earnYouTu2 mt-16' src="wallet/assets/images/earn/bi3.png" />
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className='mt-20'
+                        style={{ paddingInline: "1.5rem" }}
+                    >
                         <div className='text-16 '>{t('card_125')}</div>
                         <div className='lvEarnDi mt-16' onClick={() => {
                             // openBindFunc();//提示绑定界面
@@ -324,18 +373,6 @@ function Earn(props) {
                             </div>
                         </div>
                     </motion.div>
-
-                    <motion.div
-                        variants={container}
-                        initial="hidden"
-                        animate="show"
-                        className=''
-                        style={{ height: "160px" }}
-                    >
-                    </motion.div>
-
-
-
 
                     <AnimateModal
                         className="checkInDi"
@@ -875,7 +912,7 @@ function Earn(props) {
                             </div>
                             <div className='flex justifyContent'>
                                 <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/card/usd.png"></img>
-                                <div className='text-18 ml-6' style={{ fontWeight:"600" }} >{t('card_152')} USD</div>
+                                <div className='text-18 ml-6' style={{ fontWeight: "600" }} >{t('card_152')} USD</div>
                             </div>
                             <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "center", color: "#00FF96" }}>10000.00</div>
                             <div className='flex  justify-between mt-12'>
@@ -951,6 +988,100 @@ function Earn(props) {
                             <div className='txtBrightness text-20 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>{t('card_156')}</div>
                         </div>
                     </BootstrapDialog>
+
+
+                    <BootstrapDialog
+                        closeClass="closeBtnspin"
+                        open={openZhiYa}
+                        onClose={() => setOpenZhiYa(false)}
+                    >
+                        <div id='openWaKuang' className="px-15 pt-10 zhiYaDi">
+                            <div className='flex mt-10' style={{ justifyContent: "space-between", width: "100%" }}>
+                                <img src="wallet/assets/images/earn/liShiBtn.png" className='closePinBtn' onClick={() => {
+                                    openLiShiFunc();
+                                }} ></img>
+                                <div className='text-18 kongTouTitle'>质押挖矿</div>
+                                <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                                    closesZhiYaFunc();
+                                }} ></img>
+                            </div>
+                            <div className='mt-20 text-12' style={{ textAlign: "center", color: "#A4A4A4" }}>
+                                质押BFT获得超高收益，每日返利，到期归还质押本金。
+                            </div>
+
+
+                            <div className='pt-10 pb-12 mt-20 flex justify-between' style={{ backgroundColor: "#191A1B", borderRadius: "10px", border: "4px solid #151617" }}>
+                                <div style={{ width: "60%" }}>
+                                    <div className='text-14 ml-10' style={{ textAlign: "left" }}>质押总资产(BFT)</div>
+                                    <div className='text-12 ml-10 mt-12' style={{ textAlign: "left" }}>100.00 ≈ 14.42USD</div>
+                                </div>
+                                <div style={{ width: "40%" }}>
+                                    <div className='text-14 mr-10' style={{ textAlign: "right" }}>质押笔数</div>
+                                    <div className='text-12 mr-10 mt-12' style={{ textAlign: "right" }}>10</div>
+                                </div>
+                            </div>
+
+
+                            <motion.div variants={item} className="mt-16">
+                                <VisitsWidget />
+                            </motion.div>
+
+                            <div className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
+                                <div className='flex justify-between px-10' >
+                                    <div className='' style={{ width: "60%", height: "60px", paddingTop: "10px" }}>
+                                        <div className='text-14'><span style={{ color: "#14C2A3" }}>182.50%</span> 年利率</div>
+                                        <div style={{ color: "#A4A4A4", fontSize: "12px" }}> ≈ 0.50% 日利率 </div>
+                                    </div>
+                                    <div className='flex justify-end' style={{ width: "40%" }}>
+                                        <div style={{ height: "60px", lineHeight: "60px", color: "#7D9BB0", fontSize: "16px" }}>15天</div>
+                                        <img style={{ marginTop: "20px", width: "20px", height: "20px" }} src="wallet/assets/images/card/goJianTou.png" ></img>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
+                                <div className='flex justify-between px-10' >
+                                    <div className='' style={{ width: "60%", height: "60px", paddingTop: "10px" }}>
+                                        <div className='text-14'><span style={{ color: "#14C2A3" }}>182.50%</span> 年利率</div>
+                                        <div style={{ color: "#A4A4A4", fontSize: "12px" }}> ≈ 0.50% 日利率 </div>
+                                    </div>
+                                    <div className='flex justify-end' style={{ width: "40%" }}>
+                                        <div style={{ height: "60px", lineHeight: "60px", color: "#7D9BB0", fontSize: "16px" }}>15天</div>
+                                        <img style={{ marginTop: "20px", width: "20px", height: "20px" }} src="wallet/assets/images/card/goJianTou.png" ></img>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
+                                <div className='flex justify-between px-10' >
+                                    <div className='' style={{ width: "60%", height: "60px", paddingTop: "10px" }}>
+                                        <div className='text-14'><span style={{ color: "#14C2A3" }}>182.50%</span> 年利率</div>
+                                        <div style={{ color: "#A4A4A4", fontSize: "12px" }}> ≈ 0.50% 日利率 </div>
+                                    </div>
+                                    <div className='flex justify-end' style={{ width: "40%" }}>
+                                        <div style={{ height: "60px", lineHeight: "60px", color: "#7D9BB0", fontSize: "16px" }}>15天</div>
+                                        <img style={{ marginTop: "20px", width: "20px", height: "20px" }} src="wallet/assets/images/card/goJianTou.png" ></img>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
+                                <div className='flex justify-between px-10' >
+                                    <div className='' style={{ width: "60%", height: "60px", paddingTop: "10px" }}>
+                                        <div className='text-14'><span style={{ color: "#14C2A3" }}>182.50%</span> 年利率</div>
+                                        <div style={{ color: "#A4A4A4", fontSize: "12px" }}> ≈ 0.50% 日利率 </div>
+                                    </div>
+                                    <div className='flex justify-end' style={{ width: "40%" }}>
+                                        <div style={{ height: "60px", lineHeight: "60px", color: "#7D9BB0", fontSize: "16px" }}>15天</div>
+                                        <img style={{ marginTop: "20px", width: "20px", height: "20px" }} src="wallet/assets/images/card/goJianTou.png" ></img>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='' style={{ height: "30px" }}></div>
+                        </div>
+                    </BootstrapDialog>
+
+
 
                     <BootstrapDialog
                         closeClass="closeBtnspin"
