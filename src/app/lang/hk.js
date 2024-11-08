@@ -655,6 +655,7 @@ const locale = {
     card_244:"解凍",
     card_245:"是否將該卡片解凍？",
     login_1:"登錄失敗，請關閉小程式重新打開",
+    deposite_35:"超出限制金額",
     server_error_10008:"",
     server_error_10009:"",
     server_error_10010:"",

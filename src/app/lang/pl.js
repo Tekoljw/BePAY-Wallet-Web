@@ -657,6 +657,7 @@ const locale = {
     card_244:"rozmrozić",
     card_245:"Czy ta karta zostanie odblokowana?",
     login_1:"Logowanie nie powiodło się, zamknij aplikację i otwórz ją ponownie",
+    deposite_35:"Przekroczono limit kwoty",
 
 
     

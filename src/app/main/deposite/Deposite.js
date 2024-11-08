@@ -21,7 +21,7 @@ import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import DialogContent from "@mui/material/DialogContent/DialogContent";
 import Dialog from "@mui/material/Dialog/Dialog";
-import { DialogActions } from '@mui/material';
+import { DialogActions, FormHelperText } from '@mui/material';
 import '../../../styles/home.css';
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
@@ -244,6 +244,7 @@ function Deposite() {
     const [openUpdateBtnShow, setOpenUpdateBtnShow] = useState(false);
     const [fiatsSelected, setFiatsSelected] = useState(0);
     const [openAnimateModal, setOpenAnimateModal] = useState(false);
+    const [canDeposite, setCanDeposite] = useState(true);
     const [cryptoDisplayData, setCryptoDisplayData] = useState([]);
     const [networkData, setNetworkData] = useState([]);
     const [networkId, setNetworkId] = useState(0);
@@ -308,7 +309,7 @@ function Deposite() {
     const handleChangeFiats = (event) => {
         setFiatsSelected(event.target.value);
         setCurrencyCode(fiats[event.target.value].currencyCode);
-        setWeight('');
+        setWeight(0);
     };
 
     //设置图片地址
@@ -764,6 +765,17 @@ function Deposite() {
                 clearInterval(timer);
             }
         }, 1000);
+    }
+
+    function ismore(inputVal, MaxVal, MinValue) {
+        if (inputVal > MaxVal || inputVal < MinValue) {
+            if (inputVal === 0) {
+                return false
+            } else {
+                return true
+            }
+
+        } else return false
     }
 
     const getSettingSymbol = async () => {
@@ -1887,7 +1899,7 @@ function Deposite() {
 
                                         <AccordionDetails>
                                             <div>
-                                                <FormControl className="my-16 " sx={{ width: '100%' }} variant="outlined">
+                                                <FormControl className="mt-10 mb-4" sx={{ width: '100%' }} variant="outlined">
                                                     <OutlinedInput
                                                         type='text'
                                                         disabled={false}
@@ -1898,6 +1910,7 @@ function Deposite() {
                                                                 position="end"
                                                                 onClick={() => {
                                                                     setWeight(bankItem.maxValue)
+                                                                    setCanDeposite(false);
                                                                 }}
                                                             >MAX</InputAdornment>}
                                                         aria-describedby="outlined-weight-helper-text"
@@ -1906,19 +1919,30 @@ function Deposite() {
                                                             inputMode: 'numeric',
                                                             pattern: '[0-9]*',
                                                         }}
+                                                        error={ismore(weight, bankItem.maxValue, bankItem.minValue)}
                                                         onChange={(event) => {
                                                             if (event.target.value === '') {
                                                                 setWeight('')
+                                                                setCanDeposite(true);
                                                                 return
                                                             }
                                                             let numericValue = event.target.value.replace(/[^0-9.]/g, '');
                                                             if (numericValue.startsWith('0') && numericValue.length > 1 && numericValue[1] !== '.') {
                                                                 numericValue = numericValue.replace(/^0+/, '');
                                                             }
+                                                            if (numericValue > 0) {
+                                                                setCanDeposite(false);
+                                                            }
+                                                            if (numericValue > bankItem.maxValue || numericValue == 0 || numericValue < bankItem.minValue) {
+                                                                setCanDeposite(true);
+                                                            }
                                                             setWeight(numericValue);
                                                         }}
                                                     />
                                                 </FormControl>
+                                                {ismore(weight, bankItem.maxValue, bankItem.minValue) && (
+                                                    <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt2' > {t('deposite_35')}</FormHelperText>
+                                                )}
 
                                                 {bankItem?.depositRange?.length > 0 && <div className="flex weight-list">
                                                     {bankItem?.depositRange.map((depositRangeItem) => {
@@ -1932,11 +1956,12 @@ function Deposite() {
                                                     })}
                                                 </div>}
 
-                                                <div className='ml-2' style={{ fontSize: "13px" }} >{t('home_borrow_16')}  {(bankItem?.ifRate * weight + bankItem?.basicFee)?.toFixed(2)} </div>
+                                                <div className='ml-2 mt-10' style={{ fontSize: "13px" }} >{t('home_borrow_16')}  {(bankItem?.ifRate * weight + bankItem?.basicFee)?.toFixed(2)} </div>
 
                                                 <div className="my-16 flex items-center justify-content-center">
                                                     <LoadingButton
                                                         className="px-48 text-lg btnColorTitleBig"
+                                                        disabled={canDeposite}
                                                         size="large"
                                                         color="secondary"
                                                         variant="contained"

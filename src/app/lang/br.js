@@ -656,6 +656,7 @@ const locale = {
     card_244:"descongelar",
     card_245:"O cartão será descongelado?",
     login_1:"Falha no login, feche o aplicativo e abra-o novamente",
+    deposite_35:"Excedeu o limite do valor",
     server_error_10008:"",
     server_error_10009:"",
     server_error_10010:"",

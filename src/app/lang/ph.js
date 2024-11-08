@@ -657,6 +657,7 @@ const locale = {
     card_244:"mag-unfreeze",
     card_245:"Ibinabawas ba ang card na ito?",
     login_1:"Nabigo ang pag-login. Mangyaring isara ang mini app at buksan itong muli",
+    deposite_35:"Lumampas sa limitasyon ng halaga",
     server_error_10008:"",
     server_error_10009:"",
     server_error_10010:"",

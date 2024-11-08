@@ -654,6 +654,7 @@ const locale = {
     card_244:"çözmek",
     card_245:"Bu kart çözülecek mi?",
     login_1:"Giriş başarısız oldu. Lütfen mini uygulamayı kapatıp tekrar açın",
+    deposite_35:"Limit tutarını aştı",
 
 
     

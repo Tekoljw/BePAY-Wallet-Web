@@ -666,6 +666,8 @@ const locale = {
     card_244:"解冻",
     card_245:"是否将该卡片解冻？",
     login_1:"登录失败请关闭小程序重新打开",
+    deposite_35:"超出限制金额",
+
     
     server_error_10008:"无效的请求金额",
     server_error_10009:"触发严重错误",

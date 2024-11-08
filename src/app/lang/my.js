@@ -656,6 +656,7 @@ const locale = {
     card_244:"mencair",
     card_245:"Adakah kad ini akan dibekukan?",
     login_1:"Log masuk gagal. Sila tutup aplikasi mini dan buka semula",
+    deposite_35:"Melebihi jumlah had",
     server_error_10008:"",
     server_error_10009:"",
     server_error_10010:"",

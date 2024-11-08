@@ -646,6 +646,7 @@ const locale = {
     card_244:"rã đông",
     card_245:"Thẻ này có được giải phóng không?",
     login_1:"Đăng nhập thất bại, vui lòng đóng ứng dụng mini và mở lại",
+    deposite_35:"Vượt quá số tiền giới hạn",
 
 
     

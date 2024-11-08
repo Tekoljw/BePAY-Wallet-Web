@@ -655,6 +655,7 @@ const locale = {
     card_244:"sulattaa",
     card_245:"Vapautetaanko tämä kortti?",
     login_1:"Kirjautuminen epäonnistui. Sulje sovellus ja avaa se uudelleen",
+    deposite_35:"Ylittää rajoitusmäärän",
     server_error_10008:"",
     server_error_10009:"",
     server_error_10010:"",

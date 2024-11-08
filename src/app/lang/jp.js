@@ -656,6 +656,7 @@ const locale = {
     card_244:"解凍する",
     card_245:"このカードは解凍されますか？",
     login_1:"ログインに失敗しました。ミニアプリを閉じて再度開いてください",
+    deposite_35:"限度額を超えました",
     server_error_10008:"",
     server_error_10009:"",
     server_error_10010:"",

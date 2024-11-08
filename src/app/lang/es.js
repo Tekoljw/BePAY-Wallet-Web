@@ -656,6 +656,7 @@ const locale = {
     card_244:"descongelar",
     card_245:"¿Se descongelará esta tarjeta?",
     login_1:"Error de inicio de sesión, cierre la mini aplicación y vuelva a abrirla",
+    deposite_35:"Superado el importe límite",
     server_error_10008:"",
     server_error_10009:"",
     server_error_10010:"",

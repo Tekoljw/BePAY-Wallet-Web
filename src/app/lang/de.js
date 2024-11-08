@@ -659,6 +659,7 @@ const locale = {
     card_244:"auftauen",
     card_245:"Wird diese Karte aufgetaut?",
     login_1:"Anmeldefehler. Bitte schließen Sie die Mini-App und öffnen Sie sie erneut",
+    deposite_35:"Über dem Limit-Betrag",
     server_error_10008:"",
     server_error_10009:"",
     server_error_10010:"",

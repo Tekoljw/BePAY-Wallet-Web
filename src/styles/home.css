@@ -1005,7 +1005,7 @@ input[type='number'] {
     }
 
     to {
-        bottom: -70%;
+        bottom: -75%;
     }
 }
 
@@ -1093,6 +1093,14 @@ input[type='number'] {
 .flipped2 {
     -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg);
+}
+
+.zhiYaLiShi {
+    border: 1px solid #2DD4BF;
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-color: #1E293B;
 }
 
 
@@ -1516,6 +1524,11 @@ input[type='number'] {
 
 .redHelpTxt {
     margin-top: 6px;
+    color: #F44336;
+}
+
+.redHelpTxt2 {
+    margin-top: 0px;
     color: #F44336;
 }
 
@@ -3540,7 +3553,6 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     background-color: rgba(0, 0, 0, 0);
     background-image: url("../../public/assets/images/nav/diPan3.jpg");
     width: 100%;
-    height: 510px;
     border-radius: 15px 15px 0px 0px;
     position: fixed;
     left: 0%;
@@ -3582,7 +3594,6 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     background-color: rgba(0, 0, 0, 0);
     background-image: url("../../public/assets/images/nav/diPan3.jpg");
     width: 100%;
-    height: 640px;
     border-radius: 15px 15px 0px 0px;
     position: fixed;
     left: 0%;
@@ -3594,7 +3605,6 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     background-color: rgba(0, 0, 0, 0);
     background-image: url("../../public/assets/images/nav/diPan3.jpg");
     width: 100%;
-    height: 580px;
     border-radius: 15px 15px 0px 0px;
     position: fixed;
     left: 0%;

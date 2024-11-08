@@ -656,6 +656,7 @@ const locale = {
     card_244:"dégel",
     card_245:"La carte sera-t-elle dégelée ?",
     login_1:"Échec de la connexion, veuillez fermer l'application et la rouvrir",
+    deposite_35:"Montant limite dépassé",
     server_error_10008:"",
     server_error_10009:"",
     server_error_10010:"",

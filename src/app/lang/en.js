@@ -666,6 +666,7 @@ const locale = {
     card_244:"Unfreeze",
     card_245:"Will this card be unfrozen?",
     login_1:"Login failed. Please close the mini app and reopen it",
+    deposite_35:"Exceeded limit amount",
     server_error_10008:"",
     server_error_10009:"",
     server_error_10010:"",

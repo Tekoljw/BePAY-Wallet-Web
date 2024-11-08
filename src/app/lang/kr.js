@@ -658,6 +658,7 @@ const locale = {
     card_244:"해동하다",
     card_245:"이 카드를 해제할 건가요?",
     login_1:"로그인 실패. 미니 앱을 닫고 다시 열어주세요",
+    deposite_35:"제한 금액 초과",
     server_error_10008:"",
     server_error_10009:"",
     server_error_10010:"",
