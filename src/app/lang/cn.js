@@ -126,7 +126,7 @@ const locale = {
     home_borrow_14: '滑点容差:',
     home_borrow_15: '最小接收金额:',
     home_borrow_16: '手续费:',
-    home_borrow_17: '确认',
+    home_borrow_17: '确定',
     home_borrow_18: '手续费',
 
     home_swap_1: '从',
@@ -166,7 +166,7 @@ const locale = {
     home_withdraw_12: '快速',
     home_withdraw_13: '慢速',
     home_withdraw_14: '地址',
-    home_withdraw_15: '交易手续费 -',
+    home_withdraw_15: '交易手续费 ',
     home_withdraw_16: '。处理时间为0-2小时。',
     home_withdraw_17: '不包括网络确认时间，可能需要额外的时间。',
     home_withdraw_18: '银行',
@@ -665,6 +665,9 @@ const locale = {
     card_243:"已持有",
     card_244:"解冻",
     card_245:"是否将该卡片解冻？",
+    login_1:"登录失败请关闭小程序重新打开",
+    deposite_35:"超出限制金额",
+
     
     server_error_10008:"无效的请求金额",
     server_error_10009:"触发严重错误",

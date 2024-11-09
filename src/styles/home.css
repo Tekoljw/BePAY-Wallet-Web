@@ -633,7 +633,7 @@ input[type='number'] {
     width: 100%;
 }
 
-.disabled_jianPanSty{
+.disabled_jianPanSty {
     color: rgb(144, 159, 180) !important;
 }
 
@@ -1005,7 +1005,7 @@ input[type='number'] {
     }
 
     to {
-        bottom: -70%;
+        bottom: -75%;
     }
 }
 
@@ -1093,6 +1093,14 @@ input[type='number'] {
 .flipped2 {
     -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg);
+}
+
+.zhiYaLiShi {
+    border: 1px solid #2DD4BF;
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-color: #1E293B;
 }
 
 
@@ -1519,6 +1527,11 @@ input[type='number'] {
     color: #F44336;
 }
 
+.redHelpTxt2 {
+    margin-top: 0px;
+    color: #F44336;
+}
+
 .xiaHuaXian {
     text-Decoration: underline;
 }
@@ -1543,7 +1556,7 @@ input[type='number'] {
 }
 
 .card2Bg {
-    background-image: url("../../public/assets/images/card/card2.png");
+    background-image: url("https://scource-static.funibet.com/beingfi/images/card/xf_master_z.png");
     background-size: cover;
     background-position: center;
 }
@@ -1947,6 +1960,8 @@ input[type='number'] {
 }
 
 
+
+
 .huangDi {
     background-image: url("../../public/assets/images/earn/huangDi.png");
     width: 100%;
@@ -1964,6 +1979,15 @@ input[type='number'] {
     border-radius: 1rem;
     padding: 1.4rem 1rem 1.4rem 1rem;
     border: 1px solid #14C2A3;
+}
+
+.ziDi {
+    background-image: url("../../public/assets/images/earn/ziDi.png");
+    width: 100%;
+    height: 165px;
+    background-size: cover;
+    border-radius: 1rem;
+    padding: 1.4rem 1rem 1.4rem 1rem;
 }
 
 .fangFaBtn {
@@ -1998,6 +2022,15 @@ input[type='number'] {
     padding: 0px 10px 0px 10px;
     max-width: 190px;
 }
+
+.tuoYuanDi2 {
+    background-color: #884DFF;
+    border-radius: 1.5rem;
+    padding: 0px 10px 0px 10px;
+    max-width: 190px;
+}
+
+
 
 .lanDiZi {
     width: 66%;
@@ -3520,7 +3553,6 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     background-color: rgba(0, 0, 0, 0);
     background-image: url("../../public/assets/images/nav/diPan3.jpg");
     width: 100%;
-    height: 510px;
     border-radius: 15px 15px 0px 0px;
     position: fixed;
     left: 0%;
@@ -3562,7 +3594,6 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     background-color: rgba(0, 0, 0, 0);
     background-image: url("../../public/assets/images/nav/diPan3.jpg");
     width: 100%;
-    height: 640px;
     border-radius: 15px 15px 0px 0px;
     position: fixed;
     left: 0%;
@@ -3574,7 +3605,16 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     background-color: rgba(0, 0, 0, 0);
     background-image: url("../../public/assets/images/nav/diPan3.jpg");
     width: 100%;
-    height: 580px;
+    border-radius: 15px 15px 0px 0px;
+    position: fixed;
+    left: 0%;
+    bottom: 0%;
+}
+
+.zhiYaDi {
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url("../../public/assets/images/nav/diPan3.jpg");
+    width: 100%;
     border-radius: 15px 15px 0px 0px;
     position: fixed;
     left: 0%;
@@ -3760,6 +3800,10 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
 
 .spinIconShadow {
     box-shadow: 2px 2px 2px #202020;
+}
+
+.spinIconShadow2 {
+    box-shadow: 2px 2px 2px #0f0f0f;
 }
 
 .height-28 {
@@ -4433,12 +4477,13 @@ button {
     }
 }
 
-.exchange-credit-fee{
+.exchange-credit-fee {
     text-align: center;
     padding: 0rem 1.5rem;
     color: #46DFB7;
     font-weight: 600
 }
-.error-msg-font{
+
+.error-msg-font {
     color: #EE124B !important;
 }

@@ -16,6 +16,7 @@ import ConversionsWidget from './widgets/ConversionsWidget';
 import ImpressionsWidget from './widgets/ImpressionsWidget';
 import VisitsWidget from './widgets/VisitsWidget';
 import AnimateModal from "../../components/FuniModal";
+import InputAdornment from '@mui/material/InputAdornment';
 import Typography from '@mui/material/Typography';
 import Spin from "../spin/Spin";
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -23,10 +24,12 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
+import FormControl from '@mui/material/FormControl';
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { lineHeight } from '@mui/system';
 import clsx from 'clsx';
+import { FormHelperText } from '@mui/material';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -62,6 +65,13 @@ function Earn(props) {
     const [openYaoQing, setOpenYaoQing] = useState(false);
     const [openXiangQing, setOpenXiangQing] = useState(false);
     const [inputIDVal, setInputIDVal] = useState(0);
+    const [divHeight, setDivHeight] = useState(0);
+    const [openZhiYa, setOpenZhiYa] = useState(false);
+    const [showZhiYa, setShowZhiYa] = useState(true);
+    const [showLiShi, setShowLiShi] = useState(false);
+    const [showZhiYaXinXi, setShowZhiYaXinXi] = useState(false);
+    const [canDeposite, setCanDeposite] = useState(true);
+    const [weight, setWeight] = useState(0);
     const handleChangeInputVal2 = (event) => {
         setInputIDVal(event.target.value);
     };
@@ -140,12 +150,58 @@ function Earn(props) {
         }, 0);
     };
 
+
     const closesWaKuangFunc = () => {
         document.getElementById('openWaKuang').classList.remove('PinMoveAni');
         document.getElementById('openWaKuang').classList.add('PinMoveOut');
         setTimeout(() => {
             setOpenWaKuang(false)
         }, 300);
+    };
+
+    const openZhiYaFunc = () => {
+        setOpenZhiYa(true)
+        setTimeout(() => {
+            document.getElementById('openZhiYa').classList.add('PinMoveAni');
+        }, 0);
+    }
+
+    const closesZhiYaFunc = () => {
+        document.getElementById('openZhiYa').classList.remove('PinMoveAni');
+        document.getElementById('openZhiYa').classList.add('PinMoveOut');
+        setTimeout(() => {
+            setOpenZhiYa(false)
+        }, 300);
+    };
+
+    function ismore(inputVal, MaxVal, MinValue) {
+        if (inputVal > MaxVal || inputVal < MinValue) {
+            if (inputVal === 0) {
+                return false
+            } else {
+                return true
+            }
+        } else return false
+    }
+
+    const openLiShiFunc = () => {
+        getDivHeight("pinDivHeight");
+        setShowZhiYa(false);
+        setShowLiShi(true);
+    };
+
+    const backZhiYaFunc = () => {
+        setShowZhiYa(true);
+        setShowLiShi(false);
+    };
+
+    const openZhiYaXinXi = () => {
+        setShowZhiYa(false);
+        setShowZhiYaXinXi(true);
+    };
+
+    const getDivHeight = (divName) => {
+        setDivHeight(document.getElementById(divName).offsetHeight)
     };
 
     const [loadingShow, setLoadingShow] = useState(false);
@@ -211,7 +267,7 @@ function Earn(props) {
                         return (
                             !_.isEmpty(widgets) && (
                                 <motion.div
-                                    className="w-full  "
+                                    className="w-full"
                                     variants={container}
                                     initial="hidden"
                                     animate="show"
@@ -284,6 +340,30 @@ function Earn(props) {
                         className='mt-20'
                         style={{ paddingInline: "1.5rem" }}
                     >
+                        <div className='text-16'>{t('card_120')}</div>
+                        <div className='ziDi mt-16' onClick={() => {
+                            openZhiYaFunc();
+                        }}>
+                            <div className='flex justify-between pt-4'>
+                                <div className='huangDiZi'>
+                                    <div className='tuoYuanDi2'>
+                                        <div className='' style={{ textAlign: "center", fontSize: "20px", whiteSpace: 'nowrap', overflow: 'hidden' }}><span style={{ color: "#ffffff" }}>超高的收益</span> </div>
+                                    </div>
+                                    <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>净赚收益，</span><span style={{ color: "#5BEA9C", fontWeight: "bold", fontSize: "29px" }}>0 </span><span style={{ color: "#ffffff", fontSize: "14px" }}>GAS</span></div>
+                                    <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>质押BFT，年化 </span><span style={{ color: "#ffc600", fontWeight: "bold", fontSize: "29px" }}>292%</span></div>
+                                </div>
+                                <img className='earnYouTu2 mt-16' src="wallet/assets/images/earn/bi3.png" />
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className='mt-20'
+                        style={{ paddingInline: "1.5rem" }}
+                    >
                         <div className='text-16 '>{t('card_125')}</div>
                         <div className='lvEarnDi mt-16' onClick={() => {
                             // openBindFunc();//提示绑定界面
@@ -324,18 +404,6 @@ function Earn(props) {
                             </div>
                         </div>
                     </motion.div>
-
-                    <motion.div
-                        variants={container}
-                        initial="hidden"
-                        animate="show"
-                        className=''
-                        style={{ height: "160px" }}
-                    >
-                    </motion.div>
-
-
-
 
                     <AnimateModal
                         className="checkInDi"
@@ -875,7 +943,7 @@ function Earn(props) {
                             </div>
                             <div className='flex justifyContent'>
                                 <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/card/usd.png"></img>
-                                <div className='text-18 ml-6' style={{ fontWeight:"600" }} >{t('card_152')} USD</div>
+                                <div className='text-18 ml-6' style={{ fontWeight: "600" }} >{t('card_152')} USD</div>
                             </div>
                             <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "center", color: "#00FF96" }}>10000.00</div>
                             <div className='flex  justify-between mt-12'>
@@ -896,6 +964,7 @@ function Earn(props) {
                             </div>
                             <VisitorsOverviewWidget />
                             <div className='txtBrightness text-20 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>{t('card_156')}</div>
+                            <div style={{ height: "20px" }}></div>
                         </div>
                     </BootstrapDialog>
 
@@ -949,8 +1018,280 @@ function Earn(props) {
                                 </div>
                             </div>
                             <div className='txtBrightness text-20 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>{t('card_156')}</div>
+                            <div style={{ height: "20px" }}></div>
                         </div>
                     </BootstrapDialog>
+
+
+                    <BootstrapDialog
+                        closeClass="closeBtnspin"
+                        open={openZhiYa}
+                        onClose={() => setOpenZhiYa(false)}
+                    >
+                        <div id='openZhiYa' className="px-15 pt-10 zhiYaDi">
+                            <div className='flex mt-10' style={{ justifyContent: "space-between", width: "100%" }}>
+                                {
+                                    showZhiYa && <img src="wallet/assets/images/earn/liShiBtn.png" className='closePinBtn' onClick={() => {
+                                        openLiShiFunc();
+                                    }} ></img>
+                                }
+                                {
+                                    showLiShi && <img src="wallet/assets/images/earn/liShiBtn2.png" className='closePinBtn' onClick={() => {
+                                        backZhiYaFunc();
+                                    }} ></img>
+                                }
+
+                                <div className='text-18 kongTouTitle'>质押挖矿</div>
+                                <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                                    closesZhiYaFunc();
+                                }} ></img>
+                            </div>
+                            {
+                                showZhiYa && <div id="pinDivHeight" className=''>
+                                    <div className='mt-20 text-12' style={{ textAlign: "center", color: "#A4A4A4" }}>
+                                        质押BFT获得超高收益，每日返利，到期归还质押本金。
+                                    </div>
+
+                                    <div className='pt-10 pb-12 mt-20 flex justify-between' style={{ backgroundColor: "#191A1B", borderRadius: "10px", border: "4px solid #151617" }}>
+                                        <div style={{ width: "60%" }}>
+                                            <div className='text-14 ml-10' style={{ textAlign: "left" }}>质押总资产(BFT)</div>
+                                            <div className='text-12 ml-10 mt-12' style={{ textAlign: "left" }}>100.00 ≈ 14.42USD</div>
+                                        </div>
+                                        <div style={{ width: "40%" }}>
+                                            <div className='text-14 mr-10' style={{ textAlign: "right" }}>质押笔数</div>
+                                            <div className='text-12 mr-10 mt-12' style={{ textAlign: "right" }}>10</div>
+                                        </div>
+                                    </div>
+
+
+                                    <motion.div variants={item} className="mt-16">
+                                        <VisitsWidget />
+                                    </motion.div>
+
+                                    <div className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
+                                        <div className='flex justify-between px-10' onClick={() => {
+                                            openZhiYaXinXi();
+                                        }} >
+                                            <div className='' style={{ width: "60%", height: "60px", paddingTop: "10px" }}>
+                                                <div className='text-14'><span style={{ color: "#14C2A3" }}>182.50%</span> 年利率</div>
+                                                <div style={{ color: "#A4A4A4", fontSize: "12px" }}> ≈ 0.50% 日利率 </div>
+                                            </div>
+                                            <div className='flex justify-end' style={{ width: "40%" }}>
+                                                <div style={{ height: "60px", lineHeight: "60px", color: "#7D9BB0", fontSize: "14px" }}>15天</div>
+                                                <img style={{ marginTop: "20px", width: "20px", height: "20px" }} src="wallet/assets/images/card/goJianTou.png" ></img>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
+                                        <div className='flex justify-between px-10' >
+                                            <div className='' style={{ width: "60%", height: "60px", paddingTop: "10px" }}>
+                                                <div className='text-14'><span style={{ color: "#14C2A3" }}>182.50%</span> 年利率</div>
+                                                <div style={{ color: "#A4A4A4", fontSize: "12px" }}> ≈ 0.50% 日利率 </div>
+                                            </div>
+                                            <div className='flex justify-end' style={{ width: "40%" }}>
+                                                <div style={{ height: "60px", lineHeight: "60px", color: "#7D9BB0", fontSize: "14px" }}>30天</div>
+                                                <img style={{ marginTop: "20px", width: "20px", height: "20px" }} src="wallet/assets/images/card/goJianTou.png" ></img>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
+                                        <div className='flex justify-between px-10' >
+                                            <div className='' style={{ width: "60%", height: "60px", paddingTop: "10px" }}>
+                                                <div className='text-14'><span style={{ color: "#14C2A3" }}>182.50%</span> 年利率</div>
+                                                <div style={{ color: "#A4A4A4", fontSize: "12px" }}> ≈ 0.50% 日利率 </div>
+                                            </div>
+                                            <div className='flex justify-end' style={{ width: "40%" }}>
+                                                <div style={{ height: "60px", lineHeight: "60px", color: "#7D9BB0", fontSize: "14px" }}>90天</div>
+                                                <img style={{ marginTop: "20px", width: "20px", height: "20px" }} src="wallet/assets/images/card/goJianTou.png" ></img>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
+                                        <div className='flex justify-between px-10' >
+                                            <div className='' style={{ width: "60%", height: "60px", paddingTop: "10px" }}>
+                                                <div className='text-14'><span style={{ color: "#14C2A3" }}>182.50%</span> 年利率</div>
+                                                <div style={{ color: "#A4A4A4", fontSize: "12px" }}> ≈ 0.50% 日利率 </div>
+                                            </div>
+                                            <div className='flex justify-end' style={{ width: "40%" }}>
+                                                <div style={{ height: "60px", lineHeight: "60px", color: "#7D9BB0", fontSize: "14px" }}>180天</div>
+                                                <img style={{ marginTop: "20px", width: "20px", height: "20px" }} src="wallet/assets/images/card/goJianTou.png" ></img>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='' style={{ height: "30px" }}></div>
+                                </div>
+                            }
+                            {
+                                showLiShi &&
+                                <div>
+                                    <div className='mt-12 mb-12' style={{ textAlign: "center", color: "#A4A4A4" }}>BFT质押记录</div>
+                                    <div style={{ height: `${divHeight - 24}px`, overflowY: "auto", paddingRight: "2px" }} >
+                                        <div className='zhiYaLiShi px-10 py-10'>
+                                            <div className='flex'>
+                                                <img style={{ width: "18px", height: "18px" }} src="wallet/assets/images/earn/naoZhong.png" ></img>
+                                                <div className='ml-10 text-12' style={{ color: "#9A9A9A" }}> 2024-11-06 14:34:26 </div>
+                                            </div>
+                                            <div className='mt-10 flex justify-between'>
+                                                <div className='text-12'> 总收益</div>
+                                                <div className='text-12'> 120 BFT </div>
+                                            </div>
+                                            <div className='mt-10 flex justify-between'>
+                                                <div className='text-12'> 质押金额</div>
+                                                <div className='text-12'> 300 BFT </div>
+                                            </div>
+                                            <div className='mt-10 flex justify-between'>
+                                                <div className='text-12'> 状态</div>
+                                                <div className='text-12'> 质押中 </div>
+                                            </div>
+                                            <div className='mt-10 flex justify-between'>
+                                                <div className='text-12'> 结束日期</div>
+                                                <div className='text-12'> 2024-11-06 14:34:26 </div>
+                                            </div>
+                                        </div>
+                                        <div className='zhiYaLiShi px-10 py-10 '>
+                                            <div className='flex'>
+                                                <img style={{ width: "18px", height: "18px" }} src="wallet/assets/images/earn/naoZhong.png" ></img>
+                                                <div className='ml-10 text-12' style={{ color: "#9A9A9A" }}> 2024-11-06 14:34:26 </div>
+                                            </div>
+                                            <div className='mt-10 flex justify-between'>
+                                                <div className='text-12'> 总收益</div>
+                                                <div className='text-12'> 120 BFT </div>
+                                            </div>
+                                            <div className='mt-10 flex justify-between'>
+                                                <div className='text-12'> 质押金额</div>
+                                                <div className='text-12'> 300 BFT </div>
+                                            </div>
+                                            <div className='mt-10 flex justify-between'>
+                                                <div className='text-12'> 状态</div>
+                                                <div className='text-12'> 质押中 </div>
+                                            </div>
+                                            <div className='mt-10 flex justify-between'>
+                                                <div className='text-12'> 结束日期</div>
+                                                <div className='text-12'> 2024-11-06 14:34:26 </div>
+                                            </div>
+                                        </div>
+                                        <div className='zhiYaLiShi px-10 py-10 '>
+                                            <div className='flex'>
+                                                <img style={{ width: "18px", height: "18px" }} src="wallet/assets/images/earn/naoZhong.png" ></img>
+                                                <div className='ml-10 text-12' style={{ color: "#9A9A9A" }}> 2024-11-06 14:34:26 </div>
+                                            </div>
+                                            <div className='mt-10 flex justify-between'>
+                                                <div className='text-12'> 总收益</div>
+                                                <div className='text-12'> 120 BFT </div>
+                                            </div>
+                                            <div className='mt-10 flex justify-between'>
+                                                <div className='text-12'> 质押金额</div>
+                                                <div className='text-12'> 300 BFT </div>
+                                            </div>
+                                            <div className='mt-10 flex justify-between'>
+                                                <div className='text-12'> 状态</div>
+                                                <div className='text-12'> 质押中 </div>
+                                            </div>
+                                            <div className='mt-10 flex justify-between'>
+                                                <div className='text-12'> 结束日期</div>
+                                                <div className='text-12'> 2024-11-06 14:34:26 </div>
+                                            </div>
+                                        </div>
+                                        <div className='zhiYaLiShi px-10 py-10 '>
+                                            <div className='flex'>
+                                                <img style={{ width: "18px", height: "18px" }} src="wallet/assets/images/earn/naoZhong.png" ></img>
+                                                <div className='ml-10 text-12' style={{ color: "#9A9A9A" }}> 2024-11-06 14:34:26 </div>
+                                            </div>
+                                            <div className='mt-10 flex justify-between'>
+                                                <div className='text-12'> 总收益</div>
+                                                <div className='text-12'> 120 BFT </div>
+                                            </div>
+                                            <div className='mt-10 flex justify-between'>
+                                                <div className='text-12'> 质押金额</div>
+                                                <div className='text-12'> 300 BFT </div>
+                                            </div>
+                                            <div className='mt-10 flex justify-between'>
+                                                <div className='text-12'> 状态</div>
+                                                <div className='text-12'> 质押中 </div>
+                                            </div>
+                                            <div className='mt-10 flex justify-between'>
+                                                <div className='text-12'> 结束日期</div>
+                                                <div className='text-12'> 2024-11-06 14:34:26 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            {
+                                showZhiYaXinXi &&
+                                <div>
+                                    <div style={{ height: `${divHeight - 24}px` }} >
+                                        <div className='mt-20'>
+                                            <div className='flex justify-between'>
+                                                <div className='text-16' style={{ color: "#ffffff" }}> 当前年利率 </div>
+                                                <div className='text-16' style={{ color: "#ffffff" }}> 292.00% </div>
+                                            </div>
+                                        </div>
+
+                                        <div className='mt-16'>
+                                            <div className='flex justify-between'>
+                                                <div className='text-16' style={{ color: "#ffffff" }}> 账户剩余 </div>
+                                                <div className='text-16' style={{ color: "#ffffff" }}> BFT 500 </div>
+                                            </div>
+                                        </div>
+
+                                        <div className='zhiYaLiShi px-16 py-16 mt-20'>
+                                            <div>质押数量</div>
+                                            <FormControl className="mt-10 mb-4" sx={{ width: '100%' }} variant="outlined">
+                                                <OutlinedInput
+                                                    type='text'
+                                                    disabled={false}
+                                                    id="outlined-adornment-weight send-tips-container-amount"
+                                                    value={weight}
+                                                    endAdornment={
+                                                        <InputAdornment
+                                                            position="end"
+                                                            onClick={() => {
+                                                                setWeight(10000)
+                                                            }}
+                                                        >MAX</InputAdornment>}
+                                                    aria-describedby="outlined-weight-helper-text"
+                                                    inputProps={{
+                                                        'aria-label': 'weight',
+                                                        inputMode: 'numeric',
+                                                        pattern: '[0-9]*',
+                                                    }}
+                                                    error={ismore(weight, 10000, 100)}
+                                                    onChange={(event) => {
+                                                        if (event.target.value === '') {
+                                                            setWeight('')
+                                                            setCanDeposite(true);
+                                                            return
+                                                        }
+                                                        let numericValue = event.target.value.replace(/[^0-9.]/g, '');
+                                                        if (numericValue.startsWith('0') && numericValue.length > 1 && numericValue[1] !== '.') {
+                                                            numericValue = numericValue.replace(/^0+/, '');
+                                                        }
+                                                        if (numericValue > 0) {
+                                                            setCanDeposite(false);
+                                                        }
+                                                        if (numericValue > 10000 || numericValue == 0 || numericValue < 100) {
+                                                            setCanDeposite(true);
+                                                        }
+                                                        setWeight(numericValue);
+                                                    }}
+                                                />
+                                            </FormControl>
+                                            {ismore(weight, 10000, 100) && (
+                                                <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt2' > {t('deposite_35')}</FormHelperText>
+                                            )}
+                                        </div>
+
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </BootstrapDialog>
+
+
 
                     <BootstrapDialog
                         closeClass="closeBtnspin"
@@ -994,6 +1335,7 @@ function Earn(props) {
                                 </div>
                             </div>
                             <div className='txtBrightness text-20 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>{t('card_130')}</div>
+                            <div style={{ height: "20px" }}></div>
                         </div>
                     </BootstrapDialog>
 

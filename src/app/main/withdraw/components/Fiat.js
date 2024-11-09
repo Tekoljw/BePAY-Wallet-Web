@@ -74,7 +74,6 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 
-
 const item = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0 },
@@ -182,6 +181,20 @@ function Fiat(props) {
 
         return result
     }
+
+    const timeRef = useRef();
+    const [time, setTime] = useState(0);
+    //倒计时
+    useEffect(() => {
+        if (time && time !== 0)
+            timeRef.current = setTimeout(() => {
+                setTime(time => time - 1)
+            }, 1000);
+        return () => {
+            clearTimeout(timeRef.current)
+        }
+    }, [time]);
+
 
     const openGoogleCodeFunc = () => {
         setOpenGoogleCode(true);
@@ -899,6 +912,7 @@ function Fiat(props) {
 
     const reciveCode = async () => {
         let sendRes = {};
+        setTime(60);
         if (twiceVerifyType === 0) {
             const data = {
                 codeType: 14,
@@ -2150,10 +2164,20 @@ function Fiat(props) {
                                 (
                                     twiceVerifyType === 0 ? <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}>
                                         {t('Kyc_67')}<span style={{ color: "#909fb4", padding: '0px 5px' }}>{userData?.userInfo?.email}</span>
-                                        <span style={{ color: "#2dd4bf", textDecoration: "underline" }} onClick={() => reciveCode()}>{t('Kyc_65')}</span>
+                                        {
+                                            time <= 0 && <span style={{ color: "#2dd4bf", textDecoration: "underline" }} onClick={() => reciveCode()}>{t('Kyc_65')}</span>
+                                        }
+                                        {
+                                            time > 0 && <span style={{ color: "#2dd4bf", }} >{time}s</span>
+                                        }
                                     </div> : <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}>
                                         {t('Kyc_66')}<span style={{ color: "#909fb4", padding: '0px 5px' }}>{userData?.userInfo?.nation + userData?.userInfo?.phone}</span>
-                                        <span style={{ color: "#2dd4bf", textDecoration: "underline" }} onClick={() => reciveCode()}>{t('Kyc_65')}</span>
+                                        {
+                                            time <= 0 && <span style={{ color: "#2dd4bf", textDecoration: "underline" }} onClick={() => reciveCode()}>{t('Kyc_65')}</span>
+                                        }
+                                        {
+                                            time > 0 && <span style={{ color: "#2dd4bf", }} >{time}s</span>
+                                        }
                                     </div>
                                 )
                                 : <div className='mt-16' style={{ fontSize: "16px", textAlign: "center" }}> {t('Kyc_60')}</div>)
