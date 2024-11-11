@@ -1076,6 +1076,11 @@ input[type='number'] {
     margin-top: 1.4rem;
 }
 
+.liXiTimeZi {
+    font-size: 12px;
+    color: #94A3B8;
+}
+
 .xxzfSty4 {
     width: 100%;
     aspect-ratio: 430 / 266;

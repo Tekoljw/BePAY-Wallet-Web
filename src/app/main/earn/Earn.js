@@ -69,9 +69,10 @@ function Earn(props) {
     const [openZhiYa, setOpenZhiYa] = useState(false);
     const [showZhiYa, setShowZhiYa] = useState(true);
     const [showLiShi, setShowLiShi] = useState(false);
+    const [showZhiYaInfo, setShowZhiYaInfo] = useState(false);
     const [showZhiYaXinXi, setShowZhiYaXinXi] = useState(false);
     const [canDeposite, setCanDeposite] = useState(true);
-    const [weight, setWeight] = useState(0);
+    const [weight, setWeight] = useState('');
     const handleChangeInputVal2 = (event) => {
         setInputIDVal(event.target.value);
     };
@@ -175,13 +176,13 @@ function Earn(props) {
     };
 
     function ismore(inputVal, MaxVal, MinValue) {
-        if (inputVal > MaxVal || inputVal < MinValue) {
-            if (inputVal === 0) {
-                return false
-            } else {
-                return true
-            }
-        } else return false
+        // if (inputVal > MaxVal || inputVal < MinValue) {
+        //     if (inputVal === 0) {
+        //         return false
+        //     } else {
+        //         return true
+        //     }
+        // } else return false
     }
 
     const openLiShiFunc = () => {
@@ -193,12 +194,17 @@ function Earn(props) {
     const backZhiYaFunc = () => {
         setShowZhiYa(true);
         setShowLiShi(false);
+        setShowZhiYaXinXi(false);
+        setShowZhiYaInfo(false);
     };
 
     const openZhiYaXinXi = () => {
+        getDivHeight("pinDivHeight");
         setShowZhiYa(false);
         setShowZhiYaXinXi(true);
+        setShowZhiYaInfo(true);
     };
+
 
     const getDivHeight = (divName) => {
         setDivHeight(document.getElementById(divName).offsetHeight)
@@ -340,13 +346,13 @@ function Earn(props) {
                         className='mt-20'
                         style={{ paddingInline: "1.5rem" }}
                     >
-                        <div className='text-16'>{t('card_120')}</div>
+                        <div className='text-16'>质押挖矿</div>
                         <div className='ziDi mt-16' onClick={() => {
                             openZhiYaFunc();
                         }}>
                             <div className='flex justify-between pt-4'>
                                 <div className='huangDiZi'>
-                                    <div className='tuoYuanDi2'>
+                                    <div className='tuoYuanDi2' style={{ maxWidth: "150px" }}>
                                         <div className='' style={{ textAlign: "center", fontSize: "20px", whiteSpace: 'nowrap', overflow: 'hidden' }}><span style={{ color: "#ffffff" }}>超高的收益</span> </div>
                                     </div>
                                     <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>净赚收益，</span><span style={{ color: "#5BEA9C", fontWeight: "bold", fontSize: "29px" }}>0 </span><span style={{ color: "#ffffff", fontSize: "14px" }}>GAS</span></div>
@@ -1035,8 +1041,15 @@ function Earn(props) {
                                         openLiShiFunc();
                                     }} ></img>
                                 }
+
                                 {
                                     showLiShi && <img src="wallet/assets/images/earn/liShiBtn2.png" className='closePinBtn' onClick={() => {
+                                        backZhiYaFunc();
+                                    }} ></img>
+                                }
+
+                                {
+                                    showZhiYaInfo && <img src="wallet/assets/images/earn/liShiBtn2.png" className='closePinBtn' onClick={() => {
                                         backZhiYaFunc();
                                     }} ></img>
                                 }
@@ -1047,12 +1060,20 @@ function Earn(props) {
                                 }} ></img>
                             </div>
                             {
-                                showZhiYa && <div id="pinDivHeight" className=''>
-                                    <div className='mt-20 text-12' style={{ textAlign: "center", color: "#A4A4A4" }}>
+                                showZhiYa && <motion.div id="pinDivHeight"
+                                    variants={container}
+                                    initial="hidden"
+                                    animate="show"
+                                    className=''>
+                                    <motion.div
+                                        variants={item}
+                                        className='mt-20 text-12' style={{ textAlign: "center", color: "#A4A4A4" }}>
                                         质押BFT获得超高收益，每日返利，到期归还质押本金。
-                                    </div>
+                                    </motion.div>
 
-                                    <div className='pt-10 pb-12 mt-20 flex justify-between' style={{ backgroundColor: "#191A1B", borderRadius: "10px", border: "4px solid #151617" }}>
+                                    <motion.div
+                                        variants={item}
+                                        className='pt-10 pb-12 mt-20 flex justify-between' style={{ backgroundColor: "#191A1B", borderRadius: "10px", border: "4px solid #151617" }}>
                                         <div style={{ width: "60%" }}>
                                             <div className='text-14 ml-10' style={{ textAlign: "left" }}>质押总资产(BFT)</div>
                                             <div className='text-12 ml-10 mt-12' style={{ textAlign: "left" }}>100.00 ≈ 14.42USD</div>
@@ -1061,14 +1082,16 @@ function Earn(props) {
                                             <div className='text-14 mr-10' style={{ textAlign: "right" }}>质押笔数</div>
                                             <div className='text-12 mr-10 mt-12' style={{ textAlign: "right" }}>10</div>
                                         </div>
-                                    </div>
+                                    </motion.div>
 
 
                                     <motion.div variants={item} className="mt-16">
                                         <VisitsWidget />
                                     </motion.div>
 
-                                    <div className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
+                                    <motion.div
+                                        variants={item}
+                                        className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
                                         <div className='flex justify-between px-10' onClick={() => {
                                             openZhiYaXinXi();
                                         }} >
@@ -1081,9 +1104,11 @@ function Earn(props) {
                                                 <img style={{ marginTop: "20px", width: "20px", height: "20px" }} src="wallet/assets/images/card/goJianTou.png" ></img>
                                             </div>
                                         </div>
-                                    </div>
+                                    </motion.div>
 
-                                    <div className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
+                                    <motion.div
+                                        variants={item}
+                                        className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
                                         <div className='flex justify-between px-10' >
                                             <div className='' style={{ width: "60%", height: "60px", paddingTop: "10px" }}>
                                                 <div className='text-14'><span style={{ color: "#14C2A3" }}>182.50%</span> 年利率</div>
@@ -1094,9 +1119,11 @@ function Earn(props) {
                                                 <img style={{ marginTop: "20px", width: "20px", height: "20px" }} src="wallet/assets/images/card/goJianTou.png" ></img>
                                             </div>
                                         </div>
-                                    </div>
+                                    </motion.div>
 
-                                    <div className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
+                                    <motion.div
+                                        variants={item}
+                                        className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
                                         <div className='flex justify-between px-10' >
                                             <div className='' style={{ width: "60%", height: "60px", paddingTop: "10px" }}>
                                                 <div className='text-14'><span style={{ color: "#14C2A3" }}>182.50%</span> 年利率</div>
@@ -1107,9 +1134,11 @@ function Earn(props) {
                                                 <img style={{ marginTop: "20px", width: "20px", height: "20px" }} src="wallet/assets/images/card/goJianTou.png" ></img>
                                             </div>
                                         </div>
-                                    </div>
+                                    </motion.div>
 
-                                    <div className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
+                                    <motion.div
+                                        variants={item}
+                                        className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
                                         <div className='flex justify-between px-10' >
                                             <div className='' style={{ width: "60%", height: "60px", paddingTop: "10px" }}>
                                                 <div className='text-14'><span style={{ color: "#14C2A3" }}>182.50%</span> 年利率</div>
@@ -1120,16 +1149,48 @@ function Earn(props) {
                                                 <img style={{ marginTop: "20px", width: "20px", height: "20px" }} src="wallet/assets/images/card/goJianTou.png" ></img>
                                             </div>
                                         </div>
-                                    </div>
+                                    </motion.div>
                                     <div className='' style={{ height: "30px" }}></div>
-                                </div>
+                                </motion.div>
                             }
                             {
                                 showLiShi &&
-                                <div>
-                                    <div className='mt-12 mb-12' style={{ textAlign: "center", color: "#A4A4A4" }}>BFT质押记录</div>
-                                    <div style={{ height: `${divHeight - 24}px`, overflowY: "auto", paddingRight: "2px" }} >
-                                        <div className='zhiYaLiShi px-10 py-10'>
+                                <motion.div
+                                    variants={container}
+                                    initial="hidden"
+                                    animate="show"
+                                >
+                                    <motion.div
+                                        variants={item}
+                                        className='mt-12 mb-12' style={{ textAlign: "center", color: "#A4A4A4" }}>BFT质押记录</motion.div>
+                                    <div style={{ height: `${divHeight - 24}px`, overflowY: "auto" }} >
+                                        <motion.div
+                                            variants={item}
+                                            className='zhiYaLiShi px-10 py-10'>
+                                            <div className='flex'>
+                                                <img style={{ width: "18px", height: "18px" }} src="wallet/assets/images/earn/naoZhong.png"></img>
+                                                <div className='ml-10 text-12' style={{ color: "#9A9A9A" }}> 2024-11-06 14:34:26 </div>
+                                            </div>
+                                            <div className='mt-10 flex justify-between'>
+                                                <div className='text-12'> 总收益</div>
+                                                <div className='text-12'> 120 BFT </div>
+                                            </div>
+                                            <div className='mt-10 flex justify-between'>
+                                                <div className='text-12'> 质押金额</div>
+                                                <div className='text-12'> 300 BFT </div>
+                                            </div>
+                                            <div className='mt-10 flex justify-between'>
+                                                <div className='text-12'> 状态</div>
+                                                <div className='text-12'> 质押中 </div>
+                                            </div>
+                                            <div className='mt-10 flex justify-between'>
+                                                <div className='text-12'> 结束日期</div>
+                                                <div className='text-12'> 2024-11-06 14:34:26 </div>
+                                            </div>
+                                        </motion.div>
+                                        <motion.div
+                                            variants={item}
+                                            className='zhiYaLiShi px-10 py-10 '>
                                             <div className='flex'>
                                                 <img style={{ width: "18px", height: "18px" }} src="wallet/assets/images/earn/naoZhong.png" ></img>
                                                 <div className='ml-10 text-12' style={{ color: "#9A9A9A" }}> 2024-11-06 14:34:26 </div>
@@ -1150,8 +1211,10 @@ function Earn(props) {
                                                 <div className='text-12'> 结束日期</div>
                                                 <div className='text-12'> 2024-11-06 14:34:26 </div>
                                             </div>
-                                        </div>
-                                        <div className='zhiYaLiShi px-10 py-10 '>
+                                        </motion.div>
+                                        <motion.div
+                                            variants={item}
+                                            className='zhiYaLiShi px-10 py-10 '>
                                             <div className='flex'>
                                                 <img style={{ width: "18px", height: "18px" }} src="wallet/assets/images/earn/naoZhong.png" ></img>
                                                 <div className='ml-10 text-12' style={{ color: "#9A9A9A" }}> 2024-11-06 14:34:26 </div>
@@ -1172,80 +1235,45 @@ function Earn(props) {
                                                 <div className='text-12'> 结束日期</div>
                                                 <div className='text-12'> 2024-11-06 14:34:26 </div>
                                             </div>
-                                        </div>
-                                        <div className='zhiYaLiShi px-10 py-10 '>
-                                            <div className='flex'>
-                                                <img style={{ width: "18px", height: "18px" }} src="wallet/assets/images/earn/naoZhong.png" ></img>
-                                                <div className='ml-10 text-12' style={{ color: "#9A9A9A" }}> 2024-11-06 14:34:26 </div>
-                                            </div>
-                                            <div className='mt-10 flex justify-between'>
-                                                <div className='text-12'> 总收益</div>
-                                                <div className='text-12'> 120 BFT </div>
-                                            </div>
-                                            <div className='mt-10 flex justify-between'>
-                                                <div className='text-12'> 质押金额</div>
-                                                <div className='text-12'> 300 BFT </div>
-                                            </div>
-                                            <div className='mt-10 flex justify-between'>
-                                                <div className='text-12'> 状态</div>
-                                                <div className='text-12'> 质押中 </div>
-                                            </div>
-                                            <div className='mt-10 flex justify-between'>
-                                                <div className='text-12'> 结束日期</div>
-                                                <div className='text-12'> 2024-11-06 14:34:26 </div>
-                                            </div>
-                                        </div>
-                                        <div className='zhiYaLiShi px-10 py-10 '>
-                                            <div className='flex'>
-                                                <img style={{ width: "18px", height: "18px" }} src="wallet/assets/images/earn/naoZhong.png" ></img>
-                                                <div className='ml-10 text-12' style={{ color: "#9A9A9A" }}> 2024-11-06 14:34:26 </div>
-                                            </div>
-                                            <div className='mt-10 flex justify-between'>
-                                                <div className='text-12'> 总收益</div>
-                                                <div className='text-12'> 120 BFT </div>
-                                            </div>
-                                            <div className='mt-10 flex justify-between'>
-                                                <div className='text-12'> 质押金额</div>
-                                                <div className='text-12'> 300 BFT </div>
-                                            </div>
-                                            <div className='mt-10 flex justify-between'>
-                                                <div className='text-12'> 状态</div>
-                                                <div className='text-12'> 质押中 </div>
-                                            </div>
-                                            <div className='mt-10 flex justify-between'>
-                                                <div className='text-12'> 结束日期</div>
-                                                <div className='text-12'> 2024-11-06 14:34:26 </div>
-                                            </div>
-                                        </div>
+                                        </motion.div>
                                     </div>
-                                </div>
+                                </motion.div>
                             }
                             {
-                                showZhiYaXinXi &&
-                                <div>
-                                    <div style={{ height: `${divHeight - 24}px` }} >
-                                        <div className='mt-20'>
+                                showZhiYaXinXi && <div className=''>
+                                    <motion.div
+                                        variants={container}
+                                        initial="hidden"
+                                        animate="show"
+                                        style={{ height: `${divHeight - 12}px` }} >
+                                        <motion.div
+                                            variants={item}
+                                            className='mt-32'>
                                             <div className='flex justify-between'>
                                                 <div className='text-16' style={{ color: "#ffffff" }}> 当前年利率 </div>
                                                 <div className='text-16' style={{ color: "#ffffff" }}> 292.00% </div>
                                             </div>
-                                        </div>
+                                        </motion.div >
 
-                                        <div className='mt-16'>
+                                        <motion.div
+                                            variants={item}
+                                            className='mt-16'>
                                             <div className='flex justify-between'>
                                                 <div className='text-16' style={{ color: "#ffffff" }}> 账户剩余 </div>
-                                                <div className='text-16' style={{ color: "#ffffff" }}> BFT 500 </div>
+                                                <div className='text-16' style={{ color: "#ffffff" }}> 500 BFT</div>
                                             </div>
-                                        </div>
+                                        </motion.div>
 
-                                        <div className='zhiYaLiShi px-16 py-16 mt-20'>
+                                        <motion.div
+                                            variants={item}
+                                            className='zhiYaLiShi px-16 py-20 mt-20'>
                                             <div>质押数量</div>
-                                            <FormControl className="mt-10 mb-4" sx={{ width: '100%' }} variant="outlined">
+                                            <FormControl className="mt-16 mb-4" sx={{ width: '100%' }} variant="outlined">
                                                 <OutlinedInput
                                                     type='text'
                                                     disabled={false}
                                                     id="outlined-adornment-weight send-tips-container-amount"
-                                                    value={weight}
+                                                    value={weight || undefined}
                                                     endAdornment={
                                                         <InputAdornment
                                                             position="end"
@@ -1260,6 +1288,7 @@ function Earn(props) {
                                                         pattern: '[0-9]*',
                                                     }}
                                                     error={ismore(weight, 10000, 100)}
+                                                    placeholder="100起投"
                                                     onChange={(event) => {
                                                         if (event.target.value === '') {
                                                             setWeight('')
@@ -1283,9 +1312,55 @@ function Earn(props) {
                                             {ismore(weight, 10000, 100) && (
                                                 <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt2' > {t('deposite_35')}</FormHelperText>
                                             )}
-                                        </div>
 
-                                    </div>
+                                            <div className='mt-12'>
+                                                <div>预估收益</div>
+                                                <div className='text-18 mt-4' style={{ color: "#14C2A3", fontWeight: "600" }}>0 BFT</div>
+                                            </div>
+
+                                            <div className='flex justify-between mt-20'>
+                                                <div className='liXiTimeZi'>
+                                                    <div>开始日期</div>
+                                                    <div>2024-08-29</div>
+                                                    <div>00:00:00</div>
+                                                </div>
+
+                                                <div className='flex align-item' style={{}}>
+                                                    <img style={{ width: "22px", height: "22px" }} src="wallet/assets/images/earn/jianTou.png" ></img>
+                                                </div>
+
+                                                <div className='liXiTimeZi'>
+                                                    <div>计息日期</div>
+                                                    <div>2024-08-30</div>
+                                                    <div>00:00:00</div>
+                                                </div>
+
+                                                <div className='flex align-item' style={{}}>
+                                                    <img style={{ width: "22px", height: "22px" }} src="wallet/assets/images/earn/jianTou.png" ></img>
+                                                </div>
+
+                                                <div className='liXiTimeZi'>
+                                                    <div style={{ textAlign: "right" }}>结束日期</div>
+                                                    <div style={{ textAlign: "right" }}>2024-09-15</div>
+                                                    <div style={{ textAlign: "right" }}>00:00:00</div>
+                                                </div>
+                                            </div>
+
+                                            <div className='flex justify-center mt-20' style={{ width: "100%" }}>
+                                                <LoadingButton className="text-lg btnColorTitleBig inputYaoQingBtan"
+                                                    size="large"
+                                                    color="secondary"
+                                                    variant="contained"
+                                                    loading={false}
+                                                    sx={{ paddingTop: "2px!important", paddingBottom: "2px!important", fontSize: "20px!important" }}
+                                                >
+                                                    立即质押
+                                                </LoadingButton>
+                                            </div>
+
+                                            <div className='' style={{ height: "10px" }}> </div>
+                                        </motion.div>
+                                    </motion.div>
                                 </div>
                             }
                         </div>
