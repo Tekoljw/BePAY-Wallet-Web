@@ -722,7 +722,7 @@ function Card(props) {
         tmpSymbolWallet.sort(sortUseAge)
         tmpSymbolWallet2.sort(sortUseAge)
         setSymbolWallet(tmpSymbolWallet)
-        setSymbolList(tmpSymbolWallet2)
+        setSymbolList(tmpSymbolWallet)
     }
 
     useEffect(() => {
@@ -1307,6 +1307,8 @@ function Card(props) {
 
     const [loadingShow, setLoadingShow] = useState(false);
 
+    const cardShowStatusFailed = [1, 3, 7]
+
     return (
         <div style={{ position: "relative" }}>
 
@@ -1466,6 +1468,7 @@ function Card(props) {
                                                 {
                                                     smallTabValue === 0 && <div style={{ margin: "1.5rem 0rem 6rem 0rem" }}>
                                                         {cardList[2].map((cardItem, i) => {
+                                                            if(cardItem.showState > 8 ) {
                                                             return (
                                                                 <motion.div
                                                                     key={cardItem.id}
@@ -1626,119 +1629,124 @@ function Card(props) {
                                                                     </div>
                                                                 </motion.div>
                                                             )
-                                                        })}
-
-                                                        {/*<motion.div variants={item}*/}
-                                                        {/*    initial="hidden"*/}
-                                                        {/*    animate="show"*/}
-                                                        {/*    className='cardJianGe'*/}
-                                                        {/*>*/}
-                                                        {/*    <div className="responsive-div">*/}
-                                                        {/*        <div className="responsive-div-content card5Bg cardZhiDi" >*/}
-                                                        {/*            <div className='cardNumber'>2489 8794 8894 7845</div>*/}
-                                                        {/*            <div className='cardBeiMian'>*/}
-                                                        {/*            </div>*/}
-                                                        {/*        </div>*/}
-
-                                                        {/*        <div className='cardErrorBg'>*/}
-
-                                                        {/*            <div className='flex justify-center mt-16' style={{ width: "100%" }}>*/}
-                                                        {/*                <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />*/}
-                                                        {/*                <div className='TanHaoCardZi'>*/}
-                                                        {/*                    审核失败*/}
-                                                        {/*                </div>*/}
-                                                        {/*            </div>*/}
-                                                        {/*            <div className='cardErrorZi'>您填写的地址有误请重新修改！</div>*/}
-
-                                                        {/*            <div className='cardErrorBtn txtColorTitleSmall' onClick={() => {*/}
-                                                        {/*                changePhoneTab('security');*/}
-                                                        {/*                history.push('/wallet/home/security', { tabValue: 4 })*/}
-                                                        {/*            }} >*/}
-                                                        {/*                重新提交*/}
-                                                        {/*            </div>*/}
-                                                        {/*        </div>*/}
-                                                        {/*    </div>*/}
-
-
-                                                        {/*    <div className='mt-10'>*/}
-                                                        {/*        <div style={{ position: "relative", height: "1.2rem", width: "100%", margin: "0 auto" }}>*/}
-                                                        {/*            <div className='borderYuan' style={{ position: "absolute" }}>*/}
-                                                        {/*                <div className='jinDuDi' ></div>*/}
-                                                        {/*            </div>*/}
-                                                        {/*            <div className='borderYuan' style={{ position: "absolute" }}>*/}
-                                                        {/*                <div className={clsx("jinDuDi1Red")} style={{ width: "25%" }}></div>*/}
-                                                        {/*            </div>*/}
-                                                        {/*            <div style={{ position: "absolute", width: "100%", height: "0.6rem" }}>*/}
-                                                        {/*                <div className='flex justify-between items-center ' style={{ width: "100%", height: "0.6rem", padding: "0rem 0rem" }}>*/}
-                                                        {/*                    <div className='smallYuanDian'></div>*/}
-                                                        {/*                    <div className='smallYuanDianErrorBig'></div>*/}
-                                                        {/*                    <div className='smallYuanDian'></div>*/}
-                                                        {/*                    <div className='smallYuanDian'></div>*/}
-                                                        {/*                    <div className='smallYuanDian'></div>*/}
-                                                        {/*                </div>*/}
-                                                        {/*            </div>*/}
-                                                        {/*        </div>*/}
-                                                        {/*        <div style={{ width: "100%", margin: "0rem auto" }}>*/}
-                                                        {/*            <div className='flex justify-between items-center ' style={{ width: "100%" }}>*/}
-                                                        {/*                <div className=''>申请</div>*/}
-                                                        {/*                <div className='jinDuZiError'>审核</div>*/}
-                                                        {/*                <div className=''>寄送</div>*/}
-                                                        {/*                <div className=''>激活</div>*/}
-                                                        {/*                <div className=''>成功</div>*/}
-                                                        {/*            </div>*/}
-                                                        {/*        </div>*/}
-                                                        {/*    </div>*/}
-                                                        {/*</motion.div>*/}
-
-                                                        {/* <motion.div variants={item}
-                                                            initial="hidden"
-                                                            animate="show"
-                                                            className='cardJianGe'
-                                                        >
-                                                            <div className="responsive-div">
-                                                                <div className="responsive-div-content card2Bg cardZhiDi" >
-                                                                    <div className='cardZhuangTaiDi'>
-                                                                        <div className='cardZhuangTai mt-32'>审核中</div>
-                                                                    </div>
-                                                                    <div className='cardNumber'>2489 8794 8894 7845</div>
-                                                                    <div>
-                                                                        <span style={{ paddingTop: "2%", paddingLeft: "8%" }} >07/24</span>
-                                                                    </div>
-                                                                    <div className='cardBeiMian'>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div className='mt-10'>
-                                                                <div style={{ position: "relative", height: "1.2rem", width: "100%", margin: "0 auto" }}>
-                                                                    <div className='borderYuan' style={{ position: "absolute" }}>
-                                                                        <div className='jinDuDi' ></div>
-                                                                    </div>
-                                                                    <div className='borderYuan' style={{ position: "absolute" }}>
-                                                                        <div className={clsx("jinDuDi1")} style={{ width: "25%" }}></div>
-                                                                    </div>
-                                                                    <div style={{ position: "absolute", width: "100%", height: "0.6rem" }}>
-                                                                        <div className='flex justify-between items-center ' style={{ width: "100%", height: "0.6rem", padding: "0rem 0rem" }}>
-                                                                            <div className='smallYuanDian'></div>
-                                                                            <div className='smallYuanDianBig yuanDianAni'></div>
-                                                                            <div className='smallYuanDian'></div>
-                                                                            <div className='smallYuanDian'></div>
-                                                                            <div className='smallYuanDian'></div>
+                                                            }else {
+                                                                if(cardShowStatusFailed.indexOf(cardItem.showState)>-1 ){
+                                                                    return (
+                                                                        <motion.div variants={item}
+                                                                        initial="hidden"
+                                                                        animate="show"
+                                                                        className='cardJianGe'
+                                                                    >
+                                                                        <div className="responsive-div">
+                                                                            <div className="responsive-div-content card5Bg cardZhiDi" >
+                                                                                <div className='cardNumber'>{cardItem?.userCreditNo?.replace(/(.{4})/g, '$1 ')}</div>
+                                                                                <div className='cardBeiMian'>
+                                                                                </div>
+                                                                            </div>
+            
+                                                                            <div className='cardErrorBg'>
+            
+                                                                                <div className='flex justify-center mt-16' style={{ width: "100%" }}>
+                                                                                    <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
+                                                                                    <div className='TanHaoCardZi'>
+                                                                                        审核失败
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div className='cardErrorZi'>您填写的地址有误请重新修改！</div>
+            
+                                                                                <div className='cardErrorBtn txtColorTitleSmall' onClick={() => {
+                                                                                    changePhoneTab('security');
+                                                                                    history.push('/wallet/home/security', { tabValue: 4 })
+                                                                                }} >
+                                                                                    重新提交
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div style={{ width: "100%", margin: "0rem auto" }}>
-                                                                    <div className='flex justify-between items-center ' style={{ width: "100%" }}>
-                                                                        <div className=''>申请</div>
-                                                                        <div className='jinDuZi'>审核</div>
-                                                                        <div className=''>寄送</div>
-                                                                        <div className=''>激活</div>
-                                                                        <div className=''>成功</div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </motion.div> */}
+            
+            
+                                                                        <div className='mt-10'>
+                                                                            <div style={{ position: "relative", height: "1.2rem", width: "100%", margin: "0 auto" }}>
+                                                                                <div className='borderYuan' style={{ position: "absolute" }}>
+                                                                                    <div className='jinDuDi' ></div>
+                                                                                </div>
+                                                                                <div className='borderYuan' style={{ position: "absolute" }}>
+                                                                                    <div className={clsx("jinDuDi1Red")} style={{ width: "25%" }}></div>
+                                                                                </div>
+                                                                                <div style={{ position: "absolute", width: "100%", height: "0.6rem" }}>
+                                                                                    <div className='flex justify-between items-center ' style={{ width: "100%", height: "0.6rem", padding: "0rem 0rem" }}>
+                                                                                        <div className='smallYuanDian'></div>
+                                                                                        <div className='smallYuanDianErrorBig'></div>
+                                                                                        <div className='smallYuanDian'></div>
+                                                                                        <div className='smallYuanDian'></div>
+                                                                                        <div className='smallYuanDian'></div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div style={{ width: "100%", margin: "0rem auto" }}>
+                                                                                <div className='flex justify-between items-center ' style={{ width: "100%" }}>
+                                                                                    <div className=''>申请</div>
+                                                                                    <div className='jinDuZiError'>审核</div>
+                                                                                    <div className=''>寄送</div>
+                                                                                    <div className=''>激活</div>
+                                                                                    <div className=''>成功</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </motion.div>
+                                                                    )
+                                                                }else{
+                                                                    return (<motion.div variants={cardItem}
+                                                                        initial="hidden"
+                                                                        animate="show"
+                                                                        className='cardJianGe'
+                                                                    >
+                                                                        <div className="responsive-div">
+                                                                            <div className="responsive-div-content card2Bg cardZhiDi" >
+                                                                                <div className='cardZhuangTaiDi'>
+                                                                                    <div className='cardZhuangTai mt-32'>审核中</div>
+                                                                                </div>
+                                                                                <div className='cardNumber'>{cardItem?.userCreditNo?.replace(/(.{4})/g, '$1 ')}</div>
+                                                                                <div>
+                                                                                    <span style={{ paddingTop: "2%", paddingLeft: "8%" }} >{cardItem?.userCreditEndTime?.split('-')[1]}/{cardItem?.userCreditEndTime?.split('-')[0].slice(-2)}</span>
+                                                                                </div>
+                                                                                <div className='cardBeiMian'>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
 
+                                                                        <div className='mt-10'>
+                                                                            <div style={{ position: "relative", height: "1.2rem", width: "100%", margin: "0 auto" }}>
+                                                                                <div className='borderYuan' style={{ position: "absolute" }}>
+                                                                                    <div className='jinDuDi' ></div>
+                                                                                </div>
+                                                                                <div className='borderYuan' style={{ position: "absolute" }}>
+                                                                                    <div className={clsx("jinDuDi1")} style={{ width: "25%" }}></div>
+                                                                                </div>
+                                                                                <div style={{ position: "absolute", width: "100%", height: "0.6rem" }}>
+                                                                                    <div className='flex justify-between items-center ' style={{ width: "100%", height: "0.6rem", padding: "0rem 0rem" }}>
+                                                                                        <div className='smallYuanDian'></div>
+                                                                                        <div className='smallYuanDianBig yuanDianAni'></div>
+                                                                                        <div className='smallYuanDian'></div>
+                                                                                        <div className='smallYuanDian'></div>
+                                                                                        <div className='smallYuanDian'></div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div style={{ width: "100%", margin: "0rem auto" }}>
+                                                                                <div className='flex justify-between items-center ' style={{ width: "100%" }}>
+                                                                                    <div className=''>申请</div>
+                                                                                    <div className='jinDuZi'>审核</div>
+                                                                                    <div className=''>寄送</div>
+                                                                                    <div className=''>激活</div>
+                                                                                    <div className=''>成功</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </motion.div>)
+                                                                }
+                                                            }
+                                                            
+                                                        })}
 
                                                         <div className='tianJiaKaPian flex items-center pl-16' onClick={() => {
                                                             setTabValue(1);
