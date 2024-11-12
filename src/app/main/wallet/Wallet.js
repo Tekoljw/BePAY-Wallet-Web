@@ -73,6 +73,7 @@ import { centerGetTokenBalanceList, userProfile } from "app/store/user/userThunk
 import { centerGetUserFiat } from "app/store/wallet/walletThunk";
 import RetiedEmail from "../login/RetiedEmail";
 import RetiedPhone from "../login/RetiedPhone";
+import ReloginDialog from '../../components/ReloginDialog';
 
 const container = {
   show: {
@@ -162,7 +163,7 @@ const sortUseAge = (a, b) => {
   }
 };
 
-function Wallet() {
+function Wallet(props) {
   const { t } = useTranslation("mainPage");
   const dispatch = useDispatch();
   const [selectedSymbol, setSelectedSymbol] = useState(getUrlParam("symbol"));
@@ -364,11 +365,13 @@ function Wallet() {
   //   }
   // }, [symbols]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setOpenLoginWinow(false);
-    }, 1000);
-  }, []);
+  // 弹出重新登录弹框
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setOpenLoginWinow(true);
+  //   }, 1000);
+  // }, []);
 
   useEffect(() => {
     if (userData.profile.wallet?.Crypto + userData.profile.wallet?.Fiat > 200) {
@@ -3325,47 +3328,7 @@ function Wallet() {
               </div>
             </AnimateModal2>
 
-            <AnimateModal2
-              className="faBiDiCard tanChuanDiSe"
-              open={openLoginWinow}
-              onClose={() => setOpenLoginWinow(false)}
-            >
-              <div className='flex justify-center mb-16' style={{ width: "100%" }}>
-                <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
-                <div className='TanHaoCardZi '>
-                  {t('signIn_1')}
-                </div>
-              </div>
-
-              <Box
-                className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard flex justify-center"
-                sx={{
-                  backgroundColor: "#2C394D",
-                  padding: "1.5rem",
-                  overflow: "hidden",
-                  margin: "0rem auto 0rem auto"
-                }}
-              >
-                <div className="danChuangTxt ">
-                  {t('login_1')}
-                </div>
-              </Box>
-
-              <div className='flex mt-16 mb-28 px-15 justify-center' >
-                <LoadingButton
-                  disabled={false}
-                  className="boxCardBtn"
-                  color="secondary"
-                  loading={false}
-                  variant="contained"
-                  onClick={() => {
-
-                  }}
-                >
-                  {t('home_borrow_17')}
-                </LoadingButton>
-              </div>
-            </AnimateModal2>
+           <ReloginDialog openLoginWinow={ openLoginWinow } closeLoginWindow={()=>{ setOpenLoginWinow(false) }} ></ReloginDialog>
 
             {openBindEmail && <div style={{ position: "absolute", width: "100%", height: `${document.getElementById('mainWallet').offsetHeight}px`, top: "0%", zIndex: "998", backgroundColor: "#0E1421" }} >
               <motion.div

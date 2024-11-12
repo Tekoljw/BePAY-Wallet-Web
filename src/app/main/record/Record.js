@@ -54,26 +54,39 @@ function Record() {
     const [cardConfig, setCardConfig] = useState({ 2: [], 3: [] })
     const [cardConfigList, setCardConfigList] = useState({});
 
-    // public static final int CONST_LOG_TYPE_DEPOSIT                = 1;
-    // public static final int CONST_LOG_TYPE_POOL_TAKE_OUT            = 2;
-    // // deductUserBalance => CONST_LOG_TYPE_SYS_DEDUCT
-    // public static final int CONST_LOG_TYPE_SYS_DEDUCT              = 3;
-    // // awardCoinByAdmin => CONST_LOG_TYPE_ADMIN_AWARD
-    // public static final int CONST_LOG_TYPE_ADMIN_AWARD              = 4;
-    // public static final int CONST_LOG_TYPE_BORROW_PAYBACK            = 5;
-    // public static final int CONST_LOG_TYPE_SEND_TIPS              = 6;
-    // public static final int CONST_LOG_TYPE_FIAT_BUY                = 7;
-    // public static final int CONST_LOG_TYPE_CRYPTO_SELL              = 8;
-    // public static final int CONST_LOG_TYPE_CRYPTO_SWAP              = 9;
-    // public static final int CONST_LOG_TYPE_ADMIN_WITHDRAW            = 10;
-    // public static final int CONST_LOG_TYPE_HASH_GAME_BET            = 11;
-    // public static final int CONST_LOG_TYPE_USER_WITHDRAW            = 12;
-    //
-    // public static final int CONST_LOG_TYPE_VOLUNTEER_DIRECT_ACTIVE        = 13;
-    // public static final int CONST_LOG_TYPE_VOLUNTEER_RELEASE_ACTIVE        = 14;
-    // public static final int CONST_LOG_TYPE_VOLUNTEER_USE_TASK_CODE        = 15;
-    // public static final int CONST_LOG_TYPE_TRANSFER_TO_GAME            = 16;
-    // public static final int CONST_LOG_TYPE_TRANSFER_FROM_GAME          = 17;
+    // 日志类型
+    // public static final int LOG_TYPE_MCH_ASSETS_USER_FIAT_CHANGE = 0;    //商户和用户之间法币资产转换
+    // public static final int LOG_TYPE_MCH_ASSETS_USER_CRYPTO_CHANGE = 1;  //商户和用户之间虚拟币资产转换
+    // public static final int LOG_TYPE_ASSETS_FIAT_DEPOSIT = 2;       //法币资产入金
+    // public static final int LOG_TYPE_ASSETS_FIAT_WITHDRAW = 3;      //法币资产出金
+    // public static final int LOG_TYPE_ASSETS_CRYPTO_DEPOSIT = 4;     //虚拟币资产入金
+    // public static final int LOG_TYPE_ASSETS_CRYPTO_WITHDRAW = 5;    //虚拟币资产出金
+    // public static final int LOG_TYPE_CREDIT_FIAT_DEPOSIT = 6;       //法币信用卡入金
+    // public static final int LOG_TYPE_CREDIT_FIAT_WITHDRAW = 7;      //法币信用卡出金
+    // public static final int LOG_TYPE_CREDIT_CRYPTO_DEPOSIT = 8;     //虚拟币信用卡入金
+    // public static final int LOG_TYPE_CREDIT_CRYPTO_WITHDRAW = 9;    //虚拟币信用卡出金
+    // public static final int LOG_TYPE_CREDIT_SWAP_FIAT_FIAT = 10;     //兑换法币-法币
+    // public static final int LOG_TYPE_CREDIT_SWAP_FIAT_CRYPTO = 11;   //兑换法币-虚拟币
+    // public static final int LOG_TYPE_CREDIT_SWAP_CRYPTO_FIAT = 12;  //兑换虚拟币-法币
+    // public static final int LOG_TYPE_CREDIT_SWAP_CRYPTO_CRYPTO = 13;//兑换虚拟币-虚拟币
+    // public static final int LOG_TYPE_CREDIT_APPLY_CRYPTO_FEE = 14;  //申请信用卡费用
+    // public static final int LOG_TYPE_CREDIT_CONSUME_FIAT = 15;      //信用卡消费法币
+    // public static final int LOG_TYPE_CREDIT_CONSUME_CRYPTO = 16;    //信用卡消费虚拟币
+    // public static final int LOG_TYPE_CREDIT_YEAR_FEE = 17;          //信用卡年费
+    // public static final int LOG_TYPE_ASSETS_TRANSFER_FIAT_INNER = 18;  //法币内部转账
+    // public static final int LOG_TYPE_ASSETS_TRANSFER_CRYPTO_INNER = 19;//虚拟币内部转账
+    // public static final int LOG_TYPE_ASSETS_NFT_DEPOSIT = 20;       //存入NFT
+    // public static final int LOG_TYPE_ASSETS_NFT_WITHDRAW = 21;      //取出NFT
+    // public static final int LOG_TYPE_CREDIT_SERVICE_FEE = 22;      //信用卡服务手续费
+    // public static final int LOG_TYPE_CREDIT_FIAT_FROZEN = 23;
+    // public static final int LOG_TYPE_CREDIT_FIAT_UN_FROZEN = 24;
+    // public static final int LOG_TYPE_CREDIT_CRYPTO_FROZEN = 25;
+    // public static final int LOG_TYPE_CREDIT_CRYPTO_UN_FROZEN = 26;
+    // public static final int LOG_TYPE_CREDIT_FINE_AMOUNT = 27;
+    // public static final int LOG_TYPE_CREDIT_REVERSAL_FIAT = 28;
+    // public static final int LOG_TYPE_CREDIT_REVERSAL_CRYPTO = 29;
+    // public static final int LOG_TYPE_CREDIT_REFUND_FIAT = 30;
+    // public static final int LOG_TYPE_CREDIT_REFUND_CRYPTO = 31;
 
     const typeList = [
         { id: 0, label: t('home_record_0') },
