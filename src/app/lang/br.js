@@ -781,7 +781,11 @@ const locale = {
     server_error_40001: "Erro nos parâmetros de verificação de staking de NFT",
     server_error_40002: "Erro ao participar do staking de NFT",
     server_error_40101: "Código do pacote não encontrado no arquivo de texto",
+    card_246:"Desfazer",
 
+
+
+    
 };
 export default locale;
 

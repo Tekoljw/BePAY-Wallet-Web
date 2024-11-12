@@ -791,6 +791,11 @@ const locale = {
     server_error_40001: "NFT staking parameter error",
     server_error_40002: "NFT staking participation error",
     server_error_40101: "Gift code not found in text file",
+    card_246:"Undo",
+
+
+
+    
 };
 
 export default locale;

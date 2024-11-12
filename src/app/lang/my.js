@@ -781,7 +781,11 @@ const locale = {
     server_error_40001: "Parameter semakan staking NFT tidak sah",
     server_error_40002: "Kesalahan dalam penyertaan staking NFT",
     server_error_40101: "Kod hadiah tidak ditemui dalam fail teks",
+    card_246:"Buat asal",
 
+
+
+    
 
 
 

@@ -782,7 +782,11 @@ server_error_21001:"Kirjautumisviesti on tyhjä",
 server_error_40001:"NFT-lainan tarkistuksen parametri virheellinen",  
 server_error_40002:"NFT-lainan osallistuminen virheellinen",  
 server_error_40101:"Tekstitiedostossa ei löytynyt lahjakoodia",  
+card_246:"Kumoa",
 
+
+
+    
 
 
 

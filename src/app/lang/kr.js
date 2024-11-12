@@ -783,7 +783,11 @@ const locale = {
     server_error_40001: "NFT 스테이킹 파라미터 오류",
     server_error_40002: "NFT 스테이킹 참여 오류",
     server_error_40101: "텍스트 파일에서 기프트 코드 없음",
+    card_246:"되돌리기",
 
+
+
+    
 
 
 

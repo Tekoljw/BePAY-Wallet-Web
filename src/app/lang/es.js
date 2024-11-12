@@ -781,8 +781,12 @@ const locale = {
     server_error_21001:"El mensaje de inicio de sesión está vacío",  
     server_error_40001:"Error en los parámetros de verificación de staking NFT",  
     server_error_40002:"Error al participar en el staking de NFT",  
-    server_error_40101:"No se encontró el código de regalo en el archivo de texto"  
+    server_error_40101:"No se encontró el código de regalo en el archivo de texto",  
+    card_246:"Deshacer",
 
+
+
+    
     
 
 

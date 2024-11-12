@@ -782,7 +782,11 @@ const locale = {
     server_error_40001: "NFTステーキングチェックパラメータエラー",
     server_error_40002: "NFTステーキング参加エラー",
     server_error_40101: "テキストファイルにギフトコードが見つかりません",
+    card_246:"元に戻す",
 
+
+
+    
 
 
 

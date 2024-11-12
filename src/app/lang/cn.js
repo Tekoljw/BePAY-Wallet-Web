@@ -793,6 +793,7 @@ const locale = {
     server_error_40001:"NFT质押检查参数错误",
     server_error_40002:"NFT质押参与错误",
     server_error_40101:"文本文件中没有找到礼包码",
+    card_246:"撤消",
 };
 
 export default locale;

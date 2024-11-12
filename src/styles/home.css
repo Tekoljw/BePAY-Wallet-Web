@@ -1635,6 +1635,24 @@ input[type='number'] {
     background-color: #0D9488;
 }
 
+.twoSamllBtn {
+    width: 100%;
+    left: 0%;
+    right: 0%;
+    position: absolute;
+    bottom: 0%;
+}
+
+.cardErrorBtn2 {
+    margin: 1rem auto 2rem auto;
+    width: 34%;
+    text-align: center;
+    border-radius: 5rem;
+    height: 3.6rem;
+    line-height: 3.6rem;
+    background-color: #0D9488;
+}
+
 .card6Bg {
     background-image: url("../../public/assets/images/card/card6.png");
     background-size: cover;

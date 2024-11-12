@@ -782,7 +782,11 @@ const locale = {
     server_error_40001: "Błąd parametrów weryfikacji NFT",
     server_error_40002: "Błąd uczestnictwa w stawce NFT",
     server_error_40101: "Nie znaleziono kodu prezentu w pliku tekstowym",
+    card_246:"Cofnij",
 
+
+
+    
 
 
 

@@ -793,6 +793,11 @@ const locale = {
     server_error_40001: "NFT পণ পরীক্ষা প্যারামিটার ভুল",
     server_error_40002: "NFT পণ অংশগ্রহণ ত্রুটি",
     server_error_40101: "টেক্সট ফাইলে গিফট কোড পাওয়া যায়নি",
+    card_246:"পুনরুদ্ধার",
+
+
+
+    
 };
 
 export default locale;

@@ -780,7 +780,11 @@ const locale = {
     server_error_40001:"NFT質押檢查參數錯誤",
     server_error_40002:"NFT質押參與錯誤",
     server_error_40101:"文本文件中沒有找到禮包碼",
+    card_246:"撤銷",
 
+
+
+    
     
 
 

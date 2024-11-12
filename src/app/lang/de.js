@@ -784,7 +784,11 @@ const locale = {
     server_error_40001:"Fehler bei der Überprüfung der NFT-Staking-Parameter",
     server_error_40002:"Fehler bei der Teilnahme am NFT-Staking",
     server_error_40101:"Geschenkcode nicht in der Textdatei gefunden",
+    card_246:"Rückgängig machen",
 
+
+
+    
 
 };
 
