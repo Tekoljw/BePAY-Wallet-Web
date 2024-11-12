@@ -162,6 +162,10 @@ function Earn(props) {
 
     const openZhiYaFunc = () => {
         setOpenZhiYa(true)
+        setShowZhiYa(true);
+        setShowLiShi(false);
+        setShowZhiYaXinXi(false);
+        setShowZhiYaInfo(false);
         setTimeout(() => {
             document.getElementById('openZhiYa').classList.add('PinMoveAni');
         }, 0);
@@ -352,7 +356,7 @@ function Earn(props) {
                         }}>
                             <div className='flex justify-between pt-4'>
                                 <div className='huangDiZi'>
-                                    <div className='tuoYuanDi2' style={{ maxWidth: "150px" }}>
+                                    <div className='tuoYuanDi2'>
                                         <div className='' style={{ textAlign: "center", fontSize: "20px", whiteSpace: 'nowrap', overflow: 'hidden' }}><span style={{ color: "#ffffff" }}>超高的收益</span> </div>
                                     </div>
                                     <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>净赚收益，</span><span style={{ color: "#5BEA9C", fontWeight: "bold", fontSize: "29px" }}>0 </span><span style={{ color: "#ffffff", fontSize: "14px" }}>GAS</span></div>
@@ -1109,7 +1113,9 @@ function Earn(props) {
                                     <motion.div
                                         variants={item}
                                         className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
-                                        <div className='flex justify-between px-10' >
+                                        <div className='flex justify-between px-10' onClick={() => {
+                                            openZhiYaXinXi();
+                                        }}>
                                             <div className='' style={{ width: "60%", height: "60px", paddingTop: "10px" }}>
                                                 <div className='text-14'><span style={{ color: "#14C2A3" }}>182.50%</span> 年利率</div>
                                                 <div style={{ color: "#A4A4A4", fontSize: "12px" }}> ≈ 0.50% 日利率 </div>
@@ -1124,7 +1130,9 @@ function Earn(props) {
                                     <motion.div
                                         variants={item}
                                         className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
-                                        <div className='flex justify-between px-10' >
+                                        <div className='flex justify-between px-10' onClick={() => {
+                                            openZhiYaXinXi();
+                                        }}>
                                             <div className='' style={{ width: "60%", height: "60px", paddingTop: "10px" }}>
                                                 <div className='text-14'><span style={{ color: "#14C2A3" }}>182.50%</span> 年利率</div>
                                                 <div style={{ color: "#A4A4A4", fontSize: "12px" }}> ≈ 0.50% 日利率 </div>
@@ -1139,7 +1147,9 @@ function Earn(props) {
                                     <motion.div
                                         variants={item}
                                         className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
-                                        <div className='flex justify-between px-10' >
+                                        <div className='flex justify-between px-10' onClick={() => {
+                                            openZhiYaXinXi();
+                                        }}>
                                             <div className='' style={{ width: "60%", height: "60px", paddingTop: "10px" }}>
                                                 <div className='text-14'><span style={{ color: "#14C2A3" }}>182.50%</span> 年利率</div>
                                                 <div style={{ color: "#A4A4A4", fontSize: "12px" }}> ≈ 0.50% 日利率 </div>
@@ -1163,7 +1173,7 @@ function Earn(props) {
                                     <motion.div
                                         variants={item}
                                         className='mt-12 mb-12' style={{ textAlign: "center", color: "#A4A4A4" }}>BFT质押记录</motion.div>
-                                    <div style={{ height: `${divHeight - 24}px`, overflowY: "auto" }} >
+                                    <div style={{ height: `${divHeight - 24}px`, overflowY: "auto", paddingRight: "2px" }} >
                                         <motion.div
                                             variants={item}
                                             className='zhiYaLiShi px-10 py-10'>
@@ -1481,8 +1491,8 @@ function Earn(props) {
                             }}>
                                 <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                             </div>
-                            <div className='yaoQingTitleZi'>累计邀请收益</div>
-                            <div className='my-16' style={{ textAlign: "center" }}>● 邀请好友加入，即可获得 <span style={{ color: "#00f0c5" }}>巨额奖励</span>！</div>
+                            <div className='yaoQingTitleZi'>邀请码 5358485488</div>
+                            <div className='my-16' style={{ textAlign: "center" }}>● 邀请好友加入，获得累计 <span style={{ color: "#00f0c5" }}>巨额奖励</span>！</div>
 
                             <div className='flex justify-center mt-10' style={{ paddingInline: "1.5rem" }}>
                                 <div style={{ width: "50%" }}>
@@ -1945,11 +1955,11 @@ function Earn(props) {
                                         <img className='ml-10' style={{ width: "20px", height: "20px", marginTop: "3px" }} src="wallet/assets/images/deposite/fenXiang.png" />
                                     </div>
                                 </div>
-                                <div className='' style={{ height: "50px" }}></div>
+                                <div className='' style={{ height: "100px" }}></div>
                             </div>
                         </motion.div>
                     </div>}
-                    <div style={{ marginBottom: "50px" }}></div>
+                    <div style={{ height: "50px" }}></div>
                 </div>
             }
             {

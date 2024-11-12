@@ -1303,11 +1303,13 @@ function Withdraw(props) {
                                                     {t('home_withdraw_13')}
                                                 </div>
                                             </div>
-                                            <div className="flex items-center justify-between my-16" style={{ marginTop: 0 }}>
+                                            <div>{t('card_223')} {Math.max(0, Number(inputVal.amount) - Number(fee) - Number(TransactionFee))} {symbol}</div>
+
+                                            <div className="flex items-center justify-between my-16 mt-4" >
                                                 <Typography className="text-16 cursor-pointer ">
                                                     <p style={{ fontSize: '1.3rem' }}> {t('home_withdraw_7')}: {fee}  {symbol}</p>
                                                 </Typography>
-                                                <Typography
+                                                {/* <Typography
                                                     className="text-16 cursor-pointer color-2DD4BF"
                                                     onClick={() => {
                                                         if (!bAppendFee) {
@@ -1321,7 +1323,7 @@ function Withdraw(props) {
                                                     }}
                                                 >
                                                     <p style={{ fontSize: '1.3rem' }}>{t('home_withdraw_8')}</p>
-                                                </Typography>
+                                                </Typography> */}
                                             </div>
 
                                             <Box
