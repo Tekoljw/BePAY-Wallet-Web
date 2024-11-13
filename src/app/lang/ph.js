@@ -783,7 +783,7 @@ const locale = {
     server_error_40002: "NFT stake participation error",
     server_error_40101: "Walang gift code sa text file",
     card_246:"I-undo",
-
+    card_247:"Mag-apply",
 
 
     

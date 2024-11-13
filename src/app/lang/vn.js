@@ -773,7 +773,7 @@ const locale = {
     server_error_40002: "Lỗi tham gia cầm cố NFT",
     server_error_40101: "Không tìm thấy mã quà tặng trong tệp văn bản",
     card_246:"Hoàn tác",
-
+    card_247:"Đăng ký",
 
 
     

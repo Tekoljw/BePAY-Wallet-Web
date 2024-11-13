@@ -782,7 +782,7 @@ server_error_40001:"Erreur dans les paramètres de vérification de staking NFT"
 server_error_40002:"Erreur dans la participation au staking NFT",
 server_error_40101:"Code de coupon non trouvé dans le fichier texte",
 card_246:"Annuler",
-
+card_247:"Postuler",
 
 
     

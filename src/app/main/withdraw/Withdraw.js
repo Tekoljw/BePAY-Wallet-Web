@@ -1151,7 +1151,7 @@ function Withdraw(props) {
                                 component={motion.div}
                                 variants={item}
                                 className="w-full rounded-16 border flex flex-col "
-                                style={{ borderRadius: '0.5rem' }}
+                                style={{ borderRadius: '1rem' }}
                                 sx={{
                                     backgroundColor: '#1E293B',
                                     border: 'none'
