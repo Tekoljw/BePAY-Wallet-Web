@@ -116,6 +116,7 @@ export const cryptoWithdrawFee = createAsyncThunk(
             networkId: settings.networkId,
             coinName: settings.coinName,
             amount: settings.amount,
+            address: settings.address,
         };
         const resultData = await React.$api("wallet.cryptoWithdrawFee", data);
         if (resultData.errno === 0) {

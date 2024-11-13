@@ -189,7 +189,7 @@ function Withdraw(props) {
         setInputVal({ ...inputVal, [prop]: event.target.value });
         if (prop == 'amount' && event.target.value != '' && event.target.value != 0) {
             console.log(networkId, 'networkId')
-            evalFee2(networkId, symbol, event.target.value);
+            evalFee2(networkId, symbol, event.target.value, inputVal.address);
         }
     };
 
@@ -624,15 +624,16 @@ function Withdraw(props) {
         });
     };
 
-    const evalFee2 = (networkId, coinName, amount) => {
+    const evalFee2 = (networkId, coinName, amount, address) => {
         dispatch(cryptoWithdrawFee({
             networkId: networkId,
             coinName: coinName,
             amount: amount,
+            address: address,
         })).then((res) => {
             let resData = res.payload;
             if (resData && resData.data != 0) {
-                let TransactionFee = (resData.data).toFixed(2);
+                let TransactionFee = resData.data.minerFee;
                 setTransactionFee(TransactionFee);
             } else {
                 setTransactionFee(0);
@@ -1303,7 +1304,7 @@ function Withdraw(props) {
                                                     {t('home_withdraw_13')}
                                                 </div>
                                             </div>
-                                            <div>{t('card_223')} {Math.max(0, Number(inputVal.amount) - Number(fee) - Number(TransactionFee))} {symbol}</div>
+                                            <div>{t('card_223')} {Math.max(0, Number(inputVal.amount) - Number(fee))} {symbol}</div>
 
                                             <div className="flex items-center justify-between my-16 mt-4" >
                                                 <Typography className="text-16 cursor-pointer ">
