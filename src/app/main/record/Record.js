@@ -78,7 +78,7 @@ function Record() {
     // public static final int LOG_TYPE_ASSETS_NFT_DEPOSIT = 20;       //存入NFT
     // public static final int LOG_TYPE_ASSETS_NFT_WITHDRAW = 21;      //取出NFT
     // public static final int LOG_TYPE_CREDIT_SERVICE_FEE = 22;      //信用卡服务手续费
-    // public static final int LOG_TYPE_CREDIT_FIAT_FROZEN = 23;
+    // public static final int LOG_TYPE_CREDIT_FIAT_FROZEN = 23;  //信用卡法币冻结金额
     // public static final int LOG_TYPE_CREDIT_FIAT_UN_FROZEN = 24;
     // public static final int LOG_TYPE_CREDIT_CRYPTO_FROZEN = 25;
     // public static final int LOG_TYPE_CREDIT_CRYPTO_UN_FROZEN = 26;
@@ -89,6 +89,41 @@ function Record() {
     // public static final int LOG_TYPE_CREDIT_REFUND_CRYPTO = 31;
 
     const typeList = [
+        { key: 0, label: '商户和用户之间法币资产转换'},
+        { key: 1, label: '商户和用户之间虚拟币资产转换'},
+        { key: 2, label: '法币资产入金'},
+        { key: 3, label: '法币资产出金'},
+        { key: 4, label: '虚拟币资产入金'},
+        { key: 5, label: '虚拟币资产出金'},
+        { key: 6, label: '法币信用卡入金'},
+        { key: 7, label: '法币信用卡出金'},
+        { key: 8, label: '虚拟币信用卡入金'},
+        { key: 9, label: '虚拟币信用卡出金'},
+        { key: 10, label: '兑换法币-法币'},
+        { key: 11, label: '兑换法币-虚拟币'},
+        { key: 12, label: '兑换虚拟币-法币'},
+        { key: 13, label: '兑换虚拟币-虚拟币'},
+        { key: 14, label: '申请信用卡费用'},
+        { key: 15, label: '信用卡消费法币'},
+        { key: 16, label: '信用卡消费虚拟币'},
+        { key: 17, label: '信用卡年费'},
+        { key: 18, label: '法币内部转账'},
+        { key: 19, label: '虚拟币内部转账'},
+        { key: 20, label: '存入NFT'},
+        { key: 21, label: '取出NFT'},
+        { key: 22, label: '信用卡服务手续费'},
+        { key: 23, label: '信用卡法币冻结金额'},
+        { key: 24, label: '信用卡法币解冻金额'},
+        { key: 25, label: '信用卡虚拟币冻结金额'},
+        { key: 26, label: '信用卡虚拟币解冻金额'},
+        { key: 27, label: '信用卡交易撤销罚款金额'},
+        { key: 28, label: '信用卡法币交易撤销'},
+        { key: 29, label: '信用卡虚拟币交易撤销'},
+        { key: 30, label: '信用卡法币交易退款'},
+        { key: 31, label: '信用卡虚拟币交易退款'}
+    ]
+
+    const showTypeList = [
         { id: 0, label: t('home_record_0') },
         { id: 1, label: t('home_record_1') },
         // { id: 2, label: 'Pool' },
@@ -117,7 +152,7 @@ function Record() {
 
     const [isLoading, setIsLoading] = React.useState(true);
     const columns = [
-        { field: 'type', label: t('home_record_19'), minWidth: 100, align: 'left', format: (value) => { return typeList.find(v => { return v.id == value }).label } },
+        { field: 'type', label: t('home_record_19'), minWidth: 100, align: 'left', format: (value) => { return showTypeList.find(v => { return v.id == value }).label } },
         { field: 'symbol', label: t('home_record_8'), minWidth: 100, align: 'center' },
         { field: 'balance', label: t('home_record_9'), minWidth: 100, align: 'center', format: (value) => value.toFixed(4), },
         { field: 'amount', label: t('home_record_10'), minWidth: 100, align: 'center', format: (value) => value.toFixed(4), },
@@ -273,7 +308,7 @@ function Record() {
                     component={motion.div}
                     variants={item}
                 >
-                    {typeList.map((typeRow) => {
+                    {showTypeList.map((typeRow) => {
                         return (
                             <Typography key={typeRow.id} className={clsx('text-16 px-16 my-16 cursor-pointer font-medium txtColorTitleSmall text-nowrap', type === typeRow.id && 'record-type-active')} onClick={() => {setType(typeRow.id)}}>{typeRow.label}</Typography>
                         )
@@ -384,7 +419,7 @@ function Record() {
                                     },
                                 }}
                             >
-                                {typeList.map((item) => {
+                                {showTypeList.map((item) => {
                                     return (
                                         <MenuItem key={item.id} value={item.id} className='text-16'>{item.label}</MenuItem>
                                     )
@@ -558,10 +593,10 @@ function Record() {
                                                 style={{ borderBottom: index != (transferList.length - 1) ? "solid 1px #33435d" : '' }}>
                                                 <div className='flex justify-between '>
                                                     <div className='flex'>
-                                                        <div className='recordListZi'>{typeList.find(v => {
+                                                        <div className='recordListZi'>{showTypeList.find(v => {
                                                             return v.id == (transferItem.showType)
                                                         })?.label}</div>
-                                                        {typeList.find(v => {
+                                                        {showTypeList.find(v => {
                                                             return v.id == (transferItem.showType)
                                                         }) ?
                                                             <div className="recordListZi ml-10">{transferItem.symbol}</div> :
@@ -571,6 +606,12 @@ function Record() {
                                                     <div className='recordListZi2'>{transferItem.amount}</div>
                                                 </div>
                                                 <div className='recordListSmallZi'>{t('home_deposite_24')} <span>{transferItem.balance}</span>
+                                                </div>
+                                                <div className='recordListSmallZi'>{ 
+                                                    typeList.find(v => {
+                                                        return v.key == (transferItem.type)
+                                                    })?.label
+                                                }
                                                 </div>
                                                 <div
                                                     className='recordListSmallZi'>{getNowTime(transferItem.createTime)}</div>
