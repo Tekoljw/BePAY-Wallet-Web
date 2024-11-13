@@ -1706,7 +1706,7 @@ function Card(props) {
                                                                         <div className="responsive-div">
                                                                             <div className="responsive-div-content card2Bg cardZhiDi" >
                                                                                 <div className='cardZhuangTaiDi'>
-                                                                                    <div className='cardZhuangTai mt-32'>审核中</div>
+                                                                                    <div className='cardZhuangTai mt-32'>{ cardItem.showState == 0 ? '申请中' : '审核中' }</div>
                                                                                 </div>
                                                                                 <div className='cardNumber'>{cardItem?.userCreditNo?.replace(/(.{4})/g, '$1 ')}</div>
                                                                                 <div>
