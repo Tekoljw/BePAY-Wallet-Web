@@ -1480,7 +1480,7 @@ function Card(props) {
                                                                         <div className='flex justify-center container' style={{ position: "relative" }}>
                                                                             <div className="responsive-div creditcard" id={'responsive-div' + i}>
                                                                                 <div className={clsx("", cardItem.showFrontCard && "xiaoShi")}>
-                                                                                    <div className="responsive-div-content card4Bg cardZhiDi alphaCard_1" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }} onClick={() => {
+                                                                                    <div className="responsive-div-content card4Bg cardZhiDi alphaCard_1" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.url})`,backgroundSize:"cover" }} onClick={() => {
                                                                                     }}  >
                                                                                         <div className={clsx("cardNumber", cardItem.kaBeiButton && "xiaoShi")}> <span id={'cardNumberOne' + i} >{cardItem?.userCreditNo?.replace(/(.{4})/g, '$1 ')}</span> </div>
                                                                                         <div className={clsx("cardExpired ", cardItem.kaBeiButton && "xiaoShi")}>
@@ -1501,7 +1501,7 @@ function Card(props) {
                                                                                 </div>
 
                                                                                 <div className={clsx("", !cardItem.showFrontCard && "xiaoShi")} >
-                                                                                    <div className="responsive-div-content card41Bg cardZhiDi flipped2 alphaCard_1" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.backUrl})`, backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat' }} onClick={() => {
+                                                                                    <div className="responsive-div-content card41Bg cardZhiDi flipped2 alphaCard_1" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.backUrl})`}} onClick={() => {
                                                                                     }}  >
                                                                                         <div className='cardAnQuanMa '>{cardItem.userCreditKey}</div>
                                                                                         <div className='cardBeiMian flipped2 '>
@@ -1562,7 +1562,7 @@ function Card(props) {
 
                                                                                 <AccordionDetails className='gongNengTan3'>
                                                                                     <div className='flex justify-center'>
-                                                                                        <div className={clsx("gongNengLanW mt-4 text-14", cardItem && (cardItem.freezeType == 'admin' || cardItem.freezeType == 'delete') && "checkIsPhone")} onClick={() => {
+                                                                                        <div className={clsx("gongNengLanW text-14", cardItem && (cardItem.freezeType == 'admin' || cardItem.freezeType == 'delete') && "checkIsPhone")} onClick={() => {
                                                                                             if (cardItem.freezeType == 'admin' || cardItem.freezeType == 'delete') return;
                                                                                             setCurrentCardItem(cardItem)
                                                                                             setCurrUserCardInfo(cardItem)

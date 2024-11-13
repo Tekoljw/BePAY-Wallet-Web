@@ -772,13 +772,41 @@ const locale = {
     server_error_40001: "Lỗi tham số kiểm tra cầm cố NFT",
     server_error_40002: "Lỗi tham gia cầm cố NFT",
     server_error_40101: "Không tìm thấy mã quà tặng trong tệp văn bản",
+    recordInfo_0: "",
+    recordInfo_1: "",
+    recordInfo_2: "",
+    recordInfo_3: "",
+    recordInfo_4: "",
+    recordInfo_5: "",
+    recordInfo_6: "",
+    recordInfo_7: "",
+    recordInfo_8: "",
+    recordInfo_9: "",
+    recordInfo_10: "",
+    recordInfo_11: "",
+    recordInfo_12: "",
+    recordInfo_13: "",
+    recordInfo_14: "",
+    recordInfo_15: "",
+    recordInfo_16: "",
+    recordInfo_17: "",
+    recordInfo_18: "",
+    recordInfo_19: "",
+    recordInfo_20: "",
+    recordInfo_21: "",
+    recordInfo_22: "",
+    recordInfo_23: "",
+    recordInfo_24: "",
+    recordInfo_25: "",
+    recordInfo_26: "",
+    recordInfo_27: "",
+    recordInfo_28: "",
+    recordInfo_29: "",
+    recordInfo_30: "",
+    recordInfo_31: "",
     card_246:"Hoàn tác",
-    card_247:"Đăng ký",
-
-
-    
-
-
+    card_247:"",
+    card_248: "",
 
 };
 

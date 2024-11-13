@@ -1573,13 +1573,11 @@ input[type='number'] {
 }
 
 .card4Bg {
-    background-image: url("../../public/assets/images/card/card1.png");
-    background-size: 100% 100%;
-    /* 背景图片初始尺寸 */
-    background-repeat: no-repeat;
-    /* 背景图片不重复 */
-    /* opacity: 0;
-    transition: opacity 0.5s ease-in-out */
+    width: 100%;
+    background-size: cover !important;
+    background-position: center !important;
+    aspect-ratio: 716/416;
+    background-repeat: no-repeat !important;
 }
 
 .card4Bg.fade-in {
@@ -1591,11 +1589,11 @@ input[type='number'] {
 }
 
 .card41Bg {
-    background-image: url("../../public/assets/images/card/card1_b.png");
-    background-size: 100% 100%;
-    /* 背景图片初始尺寸 */
-    background-repeat: no-repeat;
-    /* 背景图片不重复 */
+    width: 100%;
+    background-size: cover !important;
+    background-position: center !important;
+    aspect-ratio: 716/416;
+    background-repeat: no-repeat !important;
 }
 
 .card5Bg {
