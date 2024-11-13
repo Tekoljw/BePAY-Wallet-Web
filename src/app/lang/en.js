@@ -792,7 +792,7 @@ const locale = {
     server_error_40002: "NFT staking participation error",
     server_error_40101: "Gift code not found in text file",
     card_246:"Undo",
-
+    card_247:"Antrag",
 
 
     

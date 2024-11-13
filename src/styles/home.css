@@ -1244,7 +1244,7 @@ input[type='number'] {
     text-align: center;
     font-size: 1.5rem;
     text-decoration: underline;
-    color: #D4FFF3;
+    color: #ffffff;
     padding-right: 1.6rem;
     margin: "0rem 2rem 0rem 2rem"
 }
@@ -1680,6 +1680,10 @@ input[type='number'] {
     line-height: 2.5rem;
 }
 
+.beiJingJianBian1 {
+    background: linear-gradient(to right, #006972, #003040);
+}
+
 .bianShe1 {
     background: linear-gradient(to right, #8770DF, #F68C9A);
     margin: 0 auto;
@@ -2088,6 +2092,7 @@ input[type='number'] {
     background-image: url("../../public/assets/images/withdraw/cardDi.png");
     background-size: cover;
     background-position: center;
+    padding-top: 1.8%;
 }
 
 .danChuangTxt {
@@ -2107,7 +2112,7 @@ input[type='number'] {
 }
 
 .txtColorTitle:hover {
-    color: #12C1A2;
+    color: #ffffff;
     transition: all 0.25s;
 }
 
@@ -2281,8 +2286,27 @@ input[type='number'] {
     background: #1E293A;
 }
 
+.web3Di {
+    width: 100%;
+    aspect-ratio: 360 / 326;
+    /* background-image: url("../../public/assets/images/withdraw/jianBianDi.png"); */
+    background-repeat: no-repeat;
+    border: none;
+    border-radius: 1rem;
+    background-color: #1E293B;
+}
+
+.txtColorTitleGai .muiltr-1ii38xq-MuiButtonBase-root-MuiTab-root.Mui-selected {
+    color: #101828 !important;
+}
+
 .huaKuaBgColor2 {
     background: #304156;
+}
+
+.indexhuaKuaBgColor {
+    background: -webkit-linear-gradient(120deg, #a6fec0 0%, #01efe9 50%, #40d2fc 100%);
+    background: linear-gradient(120deg, #a6fec0 0%, #01efe9 50%, #40d2fc 100%);
 }
 
 .huaKuaBgColor1 {

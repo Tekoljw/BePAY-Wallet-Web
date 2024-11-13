@@ -780,7 +780,7 @@ const locale = {
     server_error_40002: "NFT staking katılım hatalı",
     server_error_40101: "Metin dosyasından hediye kod",
     card_246:"Geri al",
-
+    card_247:"Başvur",
 
 
     
