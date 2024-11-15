@@ -1513,7 +1513,7 @@ function Card(props) {
                                                                         aria-controls="panel1-content"
                                                                         id="panel1-header"
                                                                         className='gongNengTan2'
-                                                                        style={{ marginTop: "-20px" }}
+                                                                        style={{ marginTop: "-19px" }}
                                                                         onClick={() => {
                                                                         }}
                                                                     >
