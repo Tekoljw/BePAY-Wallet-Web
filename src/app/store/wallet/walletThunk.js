@@ -106,7 +106,6 @@ export const evalTokenTransferFee = createAsyncThunk(
 );
 
 
-
 //手续费
 export const cryptoWithdrawFee = createAsyncThunk(
     'wallet/cryptoWithdrawFee',

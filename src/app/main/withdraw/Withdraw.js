@@ -176,6 +176,7 @@ function Withdraw(props) {
     const [openAnimateModal, setOpenAnimateModal] = useState(false);
     const [openYanZheng, setOpenYanZheng] = useState(false);
     const [openSuccess, setOpenSuccess] = useState(true);
+    const [isOkTijiao, setIsOkTijiao] = useState(false);
     const [divHeight, setDivHeight] = useState(0);
     const [currRequestId, setCurrRequestId] = useState(0);
     const [isLoadingBtn, setIsLoadingBtn] = useState(false);
@@ -221,7 +222,6 @@ function Withdraw(props) {
         }, 300);
     };
 
-
     const changeAddress = (prop, value) => {
         setInputVal({ ...inputVal, [prop]: value });
     };
@@ -243,7 +243,6 @@ function Withdraw(props) {
     const hasAuthEmail = userData.userInfo?.bindEmail;
     const hasAuthPhone = userData.userInfo?.bindMobile;
 
-
     const currentLanguage = useSelector(selectCurrentLanguage);
     const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || 'USD');
     const [cryptoDisplayData, setCryptoDisplayData] = useState([]);
@@ -255,7 +254,6 @@ function Withdraw(props) {
     const mounted = useRef();
     const [smallTabValue, setSmallTabValue] = useState(0);
     const [resetTabValue, setResetTabValue] = useState(0);
-
     const [openPinWindow, setOpenPinWindow] = useState(false);
     const [movePinWindow, setMovePinWindow] = useState(false);
     const [createPinWindow, setCreatePinWindow] = useState(false);
@@ -343,10 +341,18 @@ function Withdraw(props) {
     }, [time]);
 
     function ismore(inputVal) {
-        if (Number(inputVal) > Number(arrayLookup(symbolWallet, 'symbol', symbol, 'balance'))) {
-
+        if (Number(inputVal) + Number(fee) > Number(arrayLookup(symbolWallet, 'symbol', symbol, 'balance'))) {
             return true
-        } else return false
+        } else if (isOkTijiao) {
+            setIsOkTijiao(false)
+            return true
+        } else if (symbol == "USDT") {
+            if (Number(inputVal) + Number(fee) + Number(TransactionFee) > Number(arrayLookup(symbolWallet, 'symbol', symbol, 'balance'))) {
+                return true
+            }
+        }
+        else
+            return false
     }
 
     const schema = yup.object().shape({
@@ -455,7 +461,6 @@ function Withdraw(props) {
         });
     };
 
-
     const handleSendTipsSubmit = () => {
         setIsLoadingBtn(true)
         if (textSelect) {
@@ -512,8 +517,8 @@ function Withdraw(props) {
             checkCode: googleCode,
             codeType: twiceVerifyType === 0 ? 2 : twiceVerifyType === 1 ? 1 : 0
         };
-
         setOpenLoad(true);
+
         dispatch(sendTips(data)).then((res) => {
             setIsLoadingBtn(false)
             setOpenLoad(false);
@@ -590,7 +595,6 @@ function Withdraw(props) {
                 closeScan();
                 setOpenChangeCurrency(false);
             }
-
             if (err) {
                 console.error(err);
                 closeScan();
@@ -625,6 +629,7 @@ function Withdraw(props) {
     };
 
     const evalFee2 = (networkId, coinName, amount, address) => {
+        let usdtGass = userData.wallet.inner?.find(item => Object.values(item).includes("USDT"));
         dispatch(cryptoWithdrawFee({
             networkId: networkId,
             coinName: coinName,
@@ -635,6 +640,9 @@ function Withdraw(props) {
             if (resData && resData.data != 0) {
                 let TransactionFee = resData.data.minerFee;
                 setTransactionFee(TransactionFee);
+                if (TransactionFee > usdtGass.balance) {
+                    setIsOkTijiao(true);
+                }
             } else {
                 setTransactionFee(0);
                 return
@@ -1304,10 +1312,9 @@ function Withdraw(props) {
                                                     {t('home_withdraw_13')}
                                                 </div>
                                             </div>
-                                            <div>{t('card_223')} {Math.max(0, Number(inputVal.amount) - Number(fee))} {symbol}</div>
-
-                                            <div className="flex items-center justify-between my-16 mt-4" >
-                                                <Typography className="text-16 cursor-pointer ">
+                                            {/* <div>{t('card_223')} {Math.max(0, Number(inputVal.amount) - Number(fee))} {symbol}</div> */}
+                                            <div className="flex items-center justify-between mb-16" >
+                                                <Typography className="text-16 cursor-pointer">
                                                     <p style={{ fontSize: '1.3rem' }}> {t('home_withdraw_7')}: {fee}  {symbol}</p>
                                                 </Typography>
                                                 {/* <Typography
@@ -1380,7 +1387,7 @@ function Withdraw(props) {
                                                 }} />
                                                 {
                                                     isMobileMedia &&
-                                                    <img className='shaoMiaoIcon ' src="wallet/assets/images/withdraw/code.png" alt="" onClick={() => {
+                                                    <img className='shaoMiaoIcon' src="wallet/assets/images/withdraw/code.png" alt="" onClick={() => {
                                                         setOpenChangeCurrency(true);
                                                     }} />
                                                 }
@@ -1423,15 +1430,13 @@ function Withdraw(props) {
 
                                             <LoadingButton
                                                 disabled={openPinWindow}
-                                                className={clsx('px-48  m-28 btnColorTitleBig loadingBtnSty')}
+                                                className={clsx('px-48 m-28 btnColorTitleBig loadingBtnSty')}
                                                 color="secondary"
                                                 loading={openPinWindow}
                                                 variant="contained"
                                                 sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
                                                 style={{ width: '100%', height: '4rem', fontSize: "20px", margin: '1.4rem auto 1rem auto', display: 'block', lineHeight: "inherit", padding: "0px" }}
-                                                onClick={() => {
-                                                    isBindPin()
-                                                }}
+                                                onClick={() => { isBindPin() }}
                                             >
                                                 {t('home_withdraw_10')}
                                             </LoadingButton>
