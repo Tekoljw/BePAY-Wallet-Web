@@ -3,7 +3,7 @@ import Web3 from "../../util/web3";
 import React from "react";
 import history from '@history';
 import { showMessage } from 'app/store/fuse/messageSlice';
-import { selectUserData, updateTransfer, updateUser, updateUserToken, updateWallet } from "./index";
+import {selectUserData, updateLoginState, updateTransfer, updateUser, updateUserToken, updateWallet} from "./index";
 import utils from "../../util/tools/utils";
 import BN from "bn.js";
 import { getWithdrawTransferStats } from '../wallet/walletThunk';
@@ -18,9 +18,7 @@ import userLoginType from "../../define/userLoginType";
 import { sendLogInfo } from "app/store/log/logThunk";
 import { getSymbols } from "app/store/config/configThunk";
 import { useTranslation } from "react-i18next";
-
-
-
+import userLoginState from "../../define/userLoginState";
 
 // 检查用户是否已经登录
 export const checkLoginState = createAsyncThunk(
@@ -49,8 +47,13 @@ export const checkLoginState = createAsyncThunk(
                     );
                     break;
                 }
+                default :{
+                    dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_FAILURE));
+                    break;
+                }
             }
         } else if (loginState.errno === 0) { //已经登录成功
+            dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_SUCCESS));
             //请求对应的数据
             requestUserLoginData(dispatch);
         } else { //其他错误
@@ -98,9 +101,7 @@ export const getCurrencySelect = createAsyncThunk(
             dispatch(showMessage({ message: getCurrencySelect.errmsg, code: 2 }));
         }
     }
-);
-
-
+)
 
 // 去中心以太链钱包登录
 export const doLogin = createAsyncThunk(
@@ -237,6 +238,7 @@ export const telegramWebAppLoginApi = createAsyncThunk(
         if (userLoginData.errno === 0) {
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userLoginData));
+            dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_SUCCESS));
             requestUserLoginData(dispatch);
             if (config.storageKey) {
                 React.$api("security.setKey", {
@@ -245,6 +247,12 @@ export const telegramWebAppLoginApi = createAsyncThunk(
                 })
             }
         } else {
+            if(userLoginData.errno === 1 || userLoginData.errno === 2){
+                dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_VERIFY_ERROR));
+            }else{
+                dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_FAILURE));
+            }
+
             dispatch(showMessage({ message: userLoginData.errmsg, code: 2 }));
         }
     }

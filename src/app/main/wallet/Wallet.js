@@ -326,8 +326,6 @@ function Wallet(props) {
   const [loadingShow, setLoadingShow] = useState(false);
   const [openLoginWinow, setOpenLoginWinow] = useState(false);
 
-
-
   const mounted = useRef();
   // let fiats = [];
   const handleChangeInputVal = (prop) => (event) => {

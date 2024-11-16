@@ -1,6 +1,7 @@
 // 公共方法
 
 import userLoginType from "../../define/userLoginType";
+import userLoginState from "../../define/userLoginState";
 
 export const getUrlParam = (param) => {
     const res = window.location.href;
@@ -23,6 +24,7 @@ export const getUrlParam = (param) => {
  .但是，它在同一标签页下的 iframe 之间是共享的（假如它们来自相同的源）。
  .数据在页面刷新后仍然保留，但在关闭/重新打开浏览器标签页后不会被保留。
  */
+
 // 获取openAppId
 export const getOpenAppId = () => {
     return  window.sessionStorage.getItem('openAppId') || 0;
@@ -46,6 +48,11 @@ export const getAutoLoginKey = () => {
 //获取用户登录方式
 export const getUserLoginType = (userData) => {
     return (window.sessionStorage.getItem('loginType') ?? userData?.userInfo?.loginType) || userLoginType.USER_LOGIN_TYPE_UNKNOWN;
+}
+
+//获取用户登录状态
+export const getUserLoginState = () => {
+    return window.sessionStorage.getItem('loginState') || userLoginState.USER_LOGIN_STATE_UN;
 }
 
 /**
@@ -116,6 +123,17 @@ export const handleCopyText = async (text) => {
         console.error(error.message);
     }
 };
+
+//已经登录成功
+export const isLoginSuccess = (userData) =>  {
+    if(userData){
+        const sessionLoginState = getUserLoginState();
+        if(userData.loginState === sessionLoginState && userData.loginState === userLoginState.USER_LOGIN_STATE_SUCCESS) { //已经进行过登录流程了
+            return true;
+        }
+    }
+    return false;
+}
 
 export const isMobile = () =>  {
     const userAgent = navigator.userAgent;

@@ -14,22 +14,14 @@ import withAppProviders from './withAppProviders';
 import { getNetworks, getConfig } from "app/store/config/configThunk";
 import {useEffect, useRef, useState} from "react";
 import {selectUserData} from "./store/user";
-import {getThirdPartId, getUrlParam, getUserLoginType} from "./util/tools/function";
+import {getUrlParam, getUserLoginState} from "./util/tools/function";
 import { getKycInfo } from "app/store/payment/paymentThunk";
 import { changeLanguage } from "./store/i18nSlice";
 import userLoginType from "./define/userLoginType";
 import {checkLoginState} from "app/store/user/userThunk";
-import {showMessage} from "app/store/fuse/messageSlice";
 import {requestUserLoginData} from "./util/tools/loginFunction";
-import {sendLogInfo} from "app/store/log/logThunk";
-
-// import axios from 'axios';
-/**
- * Axios HTTP Request defaults
- */
-// axios.defaults.baseURL = "";
-// axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-// axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
+import userLoginState from "./define/userLoginState";
+import ReloginDialog from './components/ReloginDialog';
 
 const emotionCacheOptions = {
     rtl: {
@@ -56,13 +48,12 @@ const App = () => {
     const currentLanguage = useSelector(selectCurrentLanguage);
     const mainTheme = useSelector(selectMainTheme);
     const token = useSelector(selectUserData).token;
+    const [openLoginWindow, setOpenLoginWindow] = useState(false);
     const lang = currentLanguage.id === getUrlParam('lang') ? currentLanguage.id : getUrlParam('lang');
-
-    /*dispatch(sendLogInfo({
-        logPlatform: accessType,
-        logTitle: "react web url href",
-        logContent: 'path url :' + window.location.href
-    }));*/
+    //清除登录状态
+    window.sessionStorage.removeItem('loginState');
+    const userData = useSelector(selectUserData);
+    const loginState = userData.loginState;
 
     useEffect(() => {
 
@@ -92,11 +83,6 @@ const App = () => {
         if (storageKey) {
             window.localStorage.setItem('storageKey', storageKey)
         }
-        /*dispatch(sendLogInfo({
-            logPlatform: accessType,
-            logTitle: "app accessType",
-            logContent: "thirdPartId : " + thirdPartId
-        }));*/
         switch (accessType){
             case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP:{ //telegramWebApp
                 window.sessionStorage.setItem('loginType', userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP);
@@ -124,6 +110,26 @@ const App = () => {
             );
         }
     }, [lang]);
+
+    useEffect(() => {
+        const sessionLoginState = getUserLoginState();
+        if(loginState === sessionLoginState){ //已经进行过登录流程了
+            switch (loginState){
+                case userLoginState.USER_LOGIN_STATE_SUCCESS:{
+                    setOpenLoginWindow(false);
+                    break;
+                }
+                case userLoginState.USER_LOGIN_STATE_FAILURE:{
+                    setOpenLoginWindow(false);
+                    break;
+                }
+                case userLoginState.USER_LOGIN_STATE_VERIFY_ERROR:{
+                    setOpenLoginWindow(true);
+                    break;
+                }
+            }
+        }
+    }, [loginState]);
 
     useEffect(() => {
         dispatch(getKycInfo({
@@ -157,6 +163,10 @@ const App = () => {
                     {/*</FuseAuthorization>*/}
                 </BrowserRouter>
                 {/*</AuthProvider>*/}
+                <ReloginDialog openLoginWindow={ openLoginWindow } closeLoginWindow={()=>{
+                    setOpenLoginWindow(false)
+                }} >
+                </ReloginDialog>
             </FuseTheme>
         </CacheProvider>
     );

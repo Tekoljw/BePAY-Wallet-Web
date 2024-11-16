@@ -1,12 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 import history from '@history';
-import { useHistory } from 'react-router-dom';
-import {
-    getOpenAppId,
-    getOpenAppIndex,
-    getUserLoginType
-} from "../../util/tools/function";
+import {getOpenAppId, getOpenAppIndex, getUserLoginType} from "../../util/tools/function";
 import userLoginType from "../../define/userLoginType";
+import userLoginState from "../../define/userLoginState";
 // state
 const initialState = {
     token: '', //网站自己的验证token
@@ -20,6 +16,7 @@ const initialState = {
     transferStats: {},
     walletDisplay: [],
     currencyCode: localStorage.getItem('currencyCode') || 'USD',
+    loginState: userLoginState.USER_LOGIN_STATE_UN,
 };
 
 const userSlice = createSlice({
@@ -104,8 +101,13 @@ const userSlice = createSlice({
         },
 
         setTransferStats: (state, action) => {
+            state.transferStats = action.payload;
+        },
+
+        updateLoginState: (state, action) => {
             let res = action.payload;
-            state.transferStats = res;
+            window.sessionStorage.setItem('loginState', res);
+            state.loginState = res;
         },
     },
     extraReducers: {
@@ -113,7 +115,7 @@ const userSlice = createSlice({
     }
 });
 
-export const { updateUser, updateUserToken, updateTransfer, updateWallet, updateFiat, updateCryptoDisplay, updateWalletDisplay, updateCurrency, setTransferStats } = userSlice.actions;
+export const { updateUser, updateUserToken, updateTransfer, updateWallet, updateFiat, updateCryptoDisplay, updateWalletDisplay, updateCurrency, setTransferStats, updateLoginState } = userSlice.actions;
 
 export const selectUserData = ({ user }) => user;
 

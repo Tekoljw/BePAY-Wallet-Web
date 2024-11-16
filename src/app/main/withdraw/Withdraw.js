@@ -243,7 +243,6 @@ function Withdraw(props) {
     const hasAuthEmail = userData.userInfo?.bindEmail;
     const hasAuthPhone = userData.userInfo?.bindMobile;
 
-
     const currentLanguage = useSelector(selectCurrentLanguage);
     const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || 'USD');
     const [cryptoDisplayData, setCryptoDisplayData] = useState([]);
