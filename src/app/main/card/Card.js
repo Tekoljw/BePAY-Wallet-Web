@@ -51,6 +51,8 @@ import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import userLoginType from "../../define/userLoginType";
 import RetiedEmail from "../login/RetiedEmail";
 import RetiedPhone from "../login/RetiedPhone";
+import { Carousel } from "react-responsive-carousel";
+import styles from "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -145,6 +147,8 @@ function Card(props) {
     const [maxValue, setMaxValue] = useState(0);
     const [pinForFanKa, setPinForFanKa] = useState(false);
     const [currentCardItem, setCurrentCardItem] = useState(null);
+    const [cardHeight, setCardHeight] = useState(0);
+    const divRef = useRef(null);
 
     const [pin, setPin] = useState('');
     const [hasPin, setHasPin] = useState(false)
@@ -543,7 +547,6 @@ function Card(props) {
             document.getElementById('openRecord').classList.add('PinMoveAni');
             getDivHeight("pinDivHeight");
         }, 0);
-
     };
 
     const openApplyFunc = () => {
@@ -605,6 +608,20 @@ function Card(props) {
             setDivHeight(document.getElementById(divName).offsetHeight)
         }, 300);
     };
+
+    const getCardHeight = (divName) => {
+        setTimeout(() => {
+            setDivHeight(document.getElementById(divName).offsetHeight)
+        }, 300);
+    };
+
+
+    useEffect(() => {
+        setTimeout(() => {
+            setCardHeight(document.getElementById("cardHeights").offsetHeight)
+        }, 1000);
+    }, []);
+
 
     const schema = yup.object().shape({
         oldPassword: yup
@@ -1197,6 +1214,8 @@ function Card(props) {
         setOpenKyc(false)
     }
 
+
+
     const updatedKycInfoEvt = () => {
         setOpenKyc(false);
         const index = _.findIndex(cardList[2], { id: currentCardItem.id });
@@ -1448,9 +1467,7 @@ function Card(props) {
                                                             />
                                                         ),
                                                     }}
-                                                    sx={{
-                                                        padding: '1rem 1rem',
-                                                    }}
+                                                    sx={{ padding: '1rem 1rem' }}
                                                 >
                                                     {Object.entries([t('card_12'), t('card_13')]).map(([key, label]) => (
                                                         <Tab
@@ -1466,7 +1483,93 @@ function Card(props) {
                                                 </Tabs>
 
                                                 {
-                                                    smallTabValue === 0 && <div style={{ margin: "1.5rem 0rem 6rem 0rem" }}>
+                                                    smallTabValue === 0 &&
+                                                    <div style={{ margin: "1.5rem 0rem 6rem 0rem" }}>
+
+                                                        <div className='flex' style={{ position: "relative", height: `${cardHeight}px`, marginBottom: "67px" }}>
+                                                            <img id="cardHeights" className='cardShowDi' style={{ position: "absolute", zIndex: "0" }} src='wallet/assets/images/card/card9.png' />
+                                                            <div style={{ position: "absolute", zIndex: "9998" }}>
+                                                                <Carousel
+                                                                    className="container"
+                                                                    showArrows={true}
+                                                                    showStatus={false}
+                                                                    infiniteLoop={true}
+                                                                    autoPlay={false}
+                                                                    showThumbs={false}
+                                                                >
+                                                                    <div>
+                                                                        <img className='' src="wallet/assets/images/card/card7.png"></img>
+                                                                    </div>
+                                                                    <div>
+                                                                        <img className='' src="wallet/assets/images/card/card8.png"></img>
+                                                                    </div>
+                                                                </Carousel>
+                                                            </div>
+
+                                                            <div className='cardGongNengMyDi' style={{ position: "relative", marginTop: "200px" }}>
+                                                                <Accordion className='gongNengTan1'>
+                                                                    <AccordionSummary
+                                                                        expandIcon={<ExpandMoreIcon />}
+                                                                        aria-controls="panel1-content"
+                                                                        id="panel1-header"
+                                                                        className='gongNengTan2'
+                                                                        style={{ marginTop: "-19px" }}
+                                                                        onClick={() => {
+                                                                        }}
+                                                                    >
+                                                                        <div className='flex justify-between w-full'>
+                                                                            <div className='flex'>
+                                                                                <div className=''>{t('home_record_9')}</div>
+                                                                                <div className='ml-8 yuEZi'>0.00</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </AccordionSummary>
+
+                                                                    <AccordionDetails className='gongNengTan3'>
+                                                                        <div className='flex justify-center'>
+                                                                            <div className={clsx("gongNengLanW text-14")} onClick={() => {
+                                                                            }} >
+                                                                                <img className='gongNengTuBiao' src="wallet/assets/images/menu/guaShi.png"></img>
+                                                                                <div className='gongNengZiW mt-4 text-14'>
+                                                                                    {t('card_244')}
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div className='gongNengLanW' onClick={() => {
+                                                                                setBalanceNotEnough(false);
+                                                                                setUpdatedKycInfoFlag(false);
+                                                                                setOpenAnimateHuanKa(true);
+                                                                            }}>
+                                                                                <img className='gongNengTuBiao' src="wallet/assets/images/menu/gengHuanKaPian.png"></img>
+                                                                                <div className='gongNengZiW mt-4 text-14'>{t('card_32')}</div>
+                                                                            </div>
+
+                                                                            <div className='gongNengLanW' onClick={() => {
+                                                                                setOpenPassWordWindow(true)
+                                                                                openPassWordFunc()
+                                                                            }}>
+                                                                                <img className='gongNengTuBiao' src="wallet/assets/images/menu/miMaGuanLi.png"></img>
+                                                                                <div className='gongNengZiW mt-4 text-14'>{t('signIn_9')}</div>
+                                                                            </div>
+
+                                                                            <div className="gongNengLanW" onClick={() => {
+                                                                                setOpenRecordWindow(true)
+                                                                                setTransferFee(0)
+                                                                                setRecivedAmount(0)
+                                                                                setMaxValue(0)
+                                                                                openRecordFunc()
+                                                                            }}>
+                                                                                <img className='gongNengTuBiao dingYueSty' src="wallet/assets/images/menu/huaZhuan.png"></img>
+                                                                                <div className='gongNengZiW mt-4 text-14 dingYueSty'>{t('card_16')}</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </AccordionDetails>
+                                                                </Accordion>
+                                                            </div>
+                                                        </div>
+
+
+
                                                         {cardList[2].map((cardItem, i) => {
                                                             if (cardItem.showState > 8) {
                                                                 return (
@@ -1480,7 +1583,7 @@ function Card(props) {
                                                                         <div className='flex justify-center container' style={{ position: "relative" }}>
                                                                             <div className="responsive-div creditcard" id={'responsive-div' + i}>
                                                                                 <div className={clsx("", cardItem.showFrontCard && "xiaoShi")}>
-                                                                                    <div className="responsive-div-content card4Bg cardZhiDi alphaCard_1" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.url})`,backgroundSize:"cover" }} onClick={() => {
+                                                                                    <div className="responsive-div-content card4Bg cardZhiDi alphaCard_1" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.url})`, backgroundSize: "cover" }} onClick={() => {
                                                                                     }}  >
                                                                                         <div className={clsx("cardNumber", cardItem.kaBeiButton && "xiaoShi")}> <span id={'cardNumberOne' + i} >{cardItem?.userCreditNo?.replace(/(.{4})/g, '$1 ')}</span> </div>
                                                                                         <div className={clsx("cardExpired ", cardItem.kaBeiButton && "xiaoShi")}>
@@ -1501,7 +1604,7 @@ function Card(props) {
                                                                                 </div>
 
                                                                                 <div className={clsx("", !cardItem.showFrontCard && "xiaoShi")} >
-                                                                                    <div className="responsive-div-content card41Bg cardZhiDi flipped2 alphaCard_1" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.backUrl})`}} onClick={() => {
+                                                                                    <div className="responsive-div-content card41Bg cardZhiDi flipped2 alphaCard_1" style={{ background: `url(${cardConfigList[cardItem.creditConfigId]?.backUrl})` }} onClick={() => {
                                                                                     }}  >
                                                                                         <div className='cardAnQuanMa '>{cardItem.userCreditKey}</div>
                                                                                         <div className='cardBeiMian flipped2 '>
@@ -1573,6 +1676,7 @@ function Card(props) {
                                                                                                 {cardItem?.state === 9 ? t('card_244') : t('card_31')}
                                                                                             </div>
                                                                                         </div>
+
                                                                                         <div className='gongNengLanW' onClick={() => {
                                                                                             setCurrentCardItem(cardItem)
                                                                                             setExchangeCreditFee(cardConfigList[cardItem.creditConfigId]?.exchangeCreditFee)
@@ -1706,7 +1810,7 @@ function Card(props) {
                                                                         <div className="responsive-div">
                                                                             <div className="responsive-div-content card2Bg cardZhiDi" >
                                                                                 <div className='cardZhuangTaiDi'>
-                                                                                    <div className='cardZhuangTai mt-32'>{ cardItem.showState == 0 ? '申请中' : '审核中' }</div>
+                                                                                    <div className='cardZhuangTai mt-32'>{cardItem.showState == 0 ? '申请中' : '审核中'}</div>
                                                                                 </div>
                                                                                 <div className='cardNumber'>{cardItem?.userCreditNo?.replace(/(.{4})/g, '$1 ')}</div>
                                                                                 <div>
@@ -1748,7 +1852,6 @@ function Card(props) {
                                                                     </motion.div>)
                                                                 }
                                                             }
-
                                                         })}
 
                                                         <div className='tianJiaKaPian flex items-center pl-16' onClick={() => {
@@ -1760,7 +1863,6 @@ function Card(props) {
 
                                                         <div>
                                                             <div className='text-16 mt-28 ml-10'> {t('card_225')}</div>
-
                                                             <StyledAccordion
                                                                 component={motion.div}
                                                                 variants={item}
@@ -1881,7 +1983,6 @@ function Card(props) {
                                                             </StyledAccordion> */}
                                                         </div>
                                                     </div>
-
                                                 }
                                                 {
                                                     smallTabValue === 1 && <div>

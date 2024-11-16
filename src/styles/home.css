@@ -1387,6 +1387,20 @@ input[type='number'] {
     padding: 1rem 1rem 1rem 1rem !important;
 }
 
+.carousel .control-dots {
+    display: none;
+}
+
+.control-arrow {
+    opacity: 1 !important;
+    border-radius: 1rem;
+    padding: 0px !important;
+}
+
+.slide {
+    background: rgba(23, 31, 41, 0) !important;
+}
+
 .shenQingCardDi {
     background-image: url("../../public/assets/images/card/shenQingCardDi.png");
     width: calc(100% - 3rem);
@@ -1578,6 +1592,11 @@ input[type='number'] {
     background-position: center !important;
     aspect-ratio: 716/416;
     background-repeat: no-repeat !important;
+}
+
+.cardShowDi {
+    width: 100%;
+    aspect-ratio: 716/416;
 }
 
 .card4Bg.fade-in {
