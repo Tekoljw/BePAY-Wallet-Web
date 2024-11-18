@@ -6,7 +6,7 @@ import { styled } from '@mui/material/styles';
 import '../../../styles/home.css';
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserData } from "../../store/user";
-import { arrayLookup, setPhoneTab } from "../../util/tools/function";
+import { arrayLookup, setPhoneTab, getUserLoginType} from "../../util/tools/function";
 import Dialog from "@mui/material/Dialog/Dialog";
 import Tabs, { tabsClasses } from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -21,6 +21,7 @@ import ResetPin from "../login/ResetPin";
 import { useParams } from 'react-router-dom';
 import history from "@history";
 import {selectCurrentLanguage} from "app/store/i18nSlice";
+import userLoginType from "../../define/userLoginType";
 
 const container = {
     show: {
@@ -77,6 +78,10 @@ function Security(props) {
         }
         if(!userData.userInfo.bindMobile) {
             langArr[2] = t('menu_20')
+        }
+        const loginType = getUserLoginType(userData);
+        if (loginType === userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP) {
+            langArr = langArr.filter((str, i) => i !== 3);
         }
         setRanges(langArr);
     }, [currentLanguage.id, userData.profile]);
