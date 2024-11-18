@@ -13,8 +13,9 @@ import {
   arrayLookup,
   getOpenAppId,
   getOpenAppIndex,
-  getUrlParam,
+  getUrlParam, getUserLoginState,
   getUserLoginType,
+  canLoginAfterRequest,
   setPhoneTab
 } from "../../util/tools/function";
 import { updateCurrency, updateWalletDisplay } from "../../store/user";
@@ -74,6 +75,7 @@ import { centerGetUserFiat } from "app/store/wallet/walletThunk";
 import RetiedEmail from "../login/RetiedEmail";
 import RetiedPhone from "../login/RetiedPhone";
 import ReloginDialog from '../../components/ReloginDialog';
+import userLoginState from "../../define/userLoginState";
 
 const container = {
   show: {
@@ -174,15 +176,16 @@ function Wallet(props) {
   const [hideSmall, setHideSmall] = useState(false);
   const config = useSelector(selectConfig);
   const userData = useSelector(selectUserData);
-  const [walletConnectShow, setWalletConnectShow] = useState(false);
+  const loginState = userData.loginState;
+  const fiatsData = userData.fiat || [];
   const symbolsData = config.symbols;
   const networks = config.networks || [];
-  const fiatsData = userData.fiat || [];
   const paymentFiat = config.payment?.currency;
   const [ranges, setRanges] = useState([
     // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
     t('home_deposite_1'), t('home_deposite_2')
   ]);
+  const [walletConnectShow, setWalletConnectShow] = useState(false);
   const [userSetting, setUserSetting] = useState({});
   const [isOpenEye, setIsOpenEye] = useState(false);
   // const walletDisplayData = userData.walletDisplay || [];
@@ -362,14 +365,6 @@ function Wallet(props) {
   //     setLoadingShow(true);
   //   }
   // }, [symbols]);
-
-  // 弹出重新登录弹框
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setOpenLoginWinow(true);
-  //   }, 1000);
-  // }, []);
 
   useEffect(() => {
     if (userData.profile.wallet?.Crypto + userData.profile.wallet?.Fiat > 200) {
@@ -1053,6 +1048,7 @@ function Wallet(props) {
 
     }
   }, [nfts, showType, nftDisplayData, nftBalance]);
+
   const initWalletData = () => {
     dispatch(getCryptoDisplay()).then((res) => {
       let result = res.payload;
@@ -1089,16 +1085,19 @@ function Wallet(props) {
   useEffect(() => {
     setPhoneTab('wallet');
     setTimeout(() => {
-      initWalletData();
-
-      const curLoginType = getUserLoginType(userData);
-      if (curLoginType !== userLoginType.USER_LOGIN_TYPE_UNKNOWN) { //登录过以后才会获取余额值
+      if (canLoginAfterRequest(userData)) { //登录过以后才会获取余额值
         dispatch(userProfile());
         dispatch(centerGetTokenBalanceList());
         dispatch(centerGetUserFiat());
       }
     }, 500)
   }, []);
+
+  useEffect(() => {
+    if(canLoginAfterRequest(userData)){ //已经进行过登录流程了
+      initWalletData();
+    }
+  }, [loginState]);
 
 
   // 去中心化钱包数据整理

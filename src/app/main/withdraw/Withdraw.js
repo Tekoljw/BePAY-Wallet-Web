@@ -24,7 +24,7 @@ import {
     getNowTime,
     getOpenAppId,
     getOpenAppIndex, getUserLoginType,
-    handleCopyText,
+    handleCopyText, canLoginAfterRequest,
     setPhoneTab
 } from "../../util/tools/function";
 import { openScan, closeScan } from "../../util/tools/scanqrcode";
@@ -234,11 +234,11 @@ function Withdraw(props) {
     const [openTiBi, setOpenTiBi] = useState(false);
     const [withDrawOrderID, setWithDrawOrderID] = useState('');
     const [openLoad, setOpenLoad] = useState(false);
-    const [openPaste, setOpenPaste] = useState(false);
     const userData = useSelector(selectUserData);
     const fiatData = userData.fiat;
     const walletData = userData.wallet;
     const transferStats = userData.transferStats;
+    const loginState = userData.loginState;
     const hasAuthGoogle = userData.userInfo?.hasAuthGoogle;
     const hasAuthEmail = userData.userInfo?.bindEmail;
     const hasAuthPhone = userData.userInfo?.bindMobile;
@@ -771,12 +771,13 @@ function Withdraw(props) {
     }, [cryptoDisplayData, symbolsData, networks, walletData]);
 
     useEffect(() => {
-        // getWalletConfig();
-        dispatch(getCryptoDisplay()).then((res) => {
-            let result = res.payload;
-            setCryptoDisplayData(result?.data);
-        });
-    }, []);
+        if(canLoginAfterRequest(userData)) { //已经进行过登录流程了
+            dispatch(getCryptoDisplay()).then((res) => {
+                let result = res.payload;
+                setCryptoDisplayData(result?.data);
+            });
+        }
+    }, [loginState]);
 
     useEffect(() => {
         if (networkData[symbol]) {

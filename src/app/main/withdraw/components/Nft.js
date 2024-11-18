@@ -23,15 +23,10 @@ import { selectConfig } from "../../../store/config";
 import { getWithdrawHistoryAddress } from "app/store/wallet/walletThunk";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
 import Dialog from "@mui/material/Dialog/Dialog";
-import OtpPass from "../../otpPass/OtpPass";
-import DialogTitle from "@mui/material/DialogTitle";
-import CloseIcon from "@mui/material/SvgIcon/SvgIcon";
-import { getCryptoDisplay, getFiatDisplay } from "../../../store/wallet/walletThunk";
-import { showMessage } from 'app/store/fuse/messageSlice';
 import MobileDetect from 'mobile-detect';
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { centerGetNftList, getNftConfig, evalWithdrawFee, nftWithdraw } from "../../../store/wallet/walletThunk";
+import { centerGetNftList, getNftConfig, evalWithdrawFee, nftWithdraw } from "app/store/wallet/walletThunk";
 import { useTranslation } from "react-i18next";
 import LoadingButton from "@mui/lab/LoadingButton";
 

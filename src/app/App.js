@@ -13,7 +13,7 @@ import { selectMainTheme } from 'app/store/fuse/settingsSlice';
 import withAppProviders from './withAppProviders';
 import { getNetworks, getConfig } from "app/store/config/configThunk";
 import {useEffect, useRef, useState} from "react";
-import {selectUserData} from "./store/user";
+import {selectUserData, updateLoginState} from "./store/user";
 import {getUrlParam, getUserLoginState} from "./util/tools/function";
 import { getKycInfo } from "app/store/payment/paymentThunk";
 import { changeLanguage } from "./store/i18nSlice";
@@ -50,8 +50,6 @@ const App = () => {
     const token = useSelector(selectUserData).token;
     const [openLoginWindow, setOpenLoginWindow] = useState(false);
     const lang = currentLanguage.id === getUrlParam('lang') ? currentLanguage.id : getUrlParam('lang');
-    //清除登录状态
-    window.sessionStorage.removeItem('loginState');
     const userData = useSelector(selectUserData);
     const loginState = userData.loginState;
 
@@ -59,6 +57,9 @@ const App = () => {
 
         dispatch(getNetworks());
         dispatch(getConfig());
+
+        //清除登录状态
+        dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_UN));
 
         /**
          sessionStorage : 数据只存在于当前浏览器标签页。

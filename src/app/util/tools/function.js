@@ -124,15 +124,19 @@ export const handleCopyText = async (text) => {
     }
 };
 
-//已经登录成功
-export const isLoginSuccess = (userData) =>  {
-    if(userData){
-        const sessionLoginState = getUserLoginState();
-        if(userData.loginState === sessionLoginState && userData.loginState === userLoginState.USER_LOGIN_STATE_SUCCESS) { //已经进行过登录流程了
-            return true;
+//能够进行登录后请求
+export const canLoginAfterRequest = (userData) =>  {
+    const curLoginType = getUserLoginType();
+    if(curLoginType === userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP){
+        if(userData){
+            const sessionLoginState = getUserLoginState();
+            if(userData.loginState === sessionLoginState && userData.loginState === userLoginState.USER_LOGIN_STATE_SUCCESS) { //已经进行过登录流程了
+                return true;
+            }
         }
+        return false;
     }
-    return false;
+    return true;
 }
 
 export const isMobile = () =>  {

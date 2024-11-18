@@ -145,6 +145,7 @@ export const doLogin = createAsyncThunk(
             window.localStorage.setItem('walletname', walletType);
             // dispatch(updateUser(userLoginData));
             dispatch(updateUser({ ...userLoginData, pathname: settings.pathname }));
+            dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_SUCCESS));
             if (config.storageKey) {
                 React.$api("security.setKey", {
                     key: config.storageKey,
@@ -152,6 +153,7 @@ export const doLogin = createAsyncThunk(
                 })
             }
         } else {
+            dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_FAILURE));
             dispatch(showMessage({ message: userLoginData.errmsg, code: 2 }));
         }
     }
@@ -174,6 +176,7 @@ export const mobileLogin = createAsyncThunk(
         if (userLoginData.errno === 0) {
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userLoginData));
+            dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_SUCCESS));
             // console.log('config.storageKey', config.storageKey);
             if (config.storageKey) {
                 React.$api("security.setKey", {
@@ -182,6 +185,7 @@ export const mobileLogin = createAsyncThunk(
                 })
             }
         } else {
+            dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_FAILURE));
             dispatch(showMessage({ message: userLoginData.errmsg, code: 2 }));
         }
     }
@@ -196,6 +200,7 @@ export const facebookLoginApi = createAsyncThunk(
         if (userLoginData.errno === 0) {
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userLoginData));
+            dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_SUCCESS));
             if (config.storageKey) {
                 React.$api("security.setKey", {
                     key: config.storageKey,
@@ -203,6 +208,7 @@ export const facebookLoginApi = createAsyncThunk(
                 })
             }
         } else {
+            dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_FAILURE));
             dispatch(showMessage({ message: userLoginData.errmsg, code: 2 }));
         }
     }
@@ -217,6 +223,7 @@ export const telegramLoginApi = createAsyncThunk(
         if (userLoginData.errno === 0) {
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userLoginData));
+            dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_SUCCESS));
             if (config.storageKey) {
                 React.$api("security.setKey", {
                     key: config.storageKey,
@@ -224,6 +231,7 @@ export const telegramLoginApi = createAsyncThunk(
                 })
             }
         } else {
+            dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_FAILURE));
             dispatch(showMessage({ message: userLoginData.errmsg, code: 2 }));
         }
     }
@@ -267,6 +275,7 @@ export const googleLoginApi = createAsyncThunk(
         if (userLoginData.errno === 0) {
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userLoginData));
+            dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_SUCCESS));
             if (config.storageKey) {
                 React.$api("security.setKey", {
                     key: config.storageKey,
@@ -274,6 +283,7 @@ export const googleLoginApi = createAsyncThunk(
                 })
             }
         } else {
+            dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_FAILURE));
             dispatch(showMessage({ message: userLoginData.errmsg, code: 2 }));
         }
     }
