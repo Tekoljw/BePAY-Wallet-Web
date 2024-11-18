@@ -1721,11 +1721,26 @@ input[type='number'] {
     margin-right: 0.8rem;
 }
 
+.wuXianCard {
+    width: 100%;
+    aspect-ratio: 716 / 416;
+}
+
+.wuXianSty {
+    width: 100%;
+    aspect-ratio: 716 / 416;
+}
+
 
 .guoDuDongHua {
     transition: all 0.5s;
     overflow: hidden;
 }
+
+.guoDuDongHua2 {
+    transition: all 0.2s;
+}
+
 
 .guoDuDongPin {
     transition: all 1s;

@@ -821,6 +821,8 @@ const locale = {
     card_248: "",
 
     
+    card_249: "जोडा",
+    
 
 
 

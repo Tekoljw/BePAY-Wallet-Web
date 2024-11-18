@@ -830,6 +830,9 @@ const locale = {
     card_246: "撤消",
     card_247: "申请中",
     card_248: "审核中",
+    
+    
+    card_249: "添加",
 };
 
 export default locale;

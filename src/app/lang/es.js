@@ -818,6 +818,9 @@ const locale = {
     card_247:"",
     card_248: "",
 
+
+    card_249: "Agregar",
+
     
     
 

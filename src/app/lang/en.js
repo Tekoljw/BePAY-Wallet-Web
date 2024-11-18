@@ -828,6 +828,8 @@ const locale = {
     card_248: "",
 
     
+    card_249: "Add",
+    
 };
 
 export default locale;

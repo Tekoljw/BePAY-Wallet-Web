@@ -148,6 +148,7 @@ function Card(props) {
     const [pinForFanKa, setPinForFanKa] = useState(false);
     const [currentCardItem, setCurrentCardItem] = useState(null);
     const [cardHeight, setCardHeight] = useState(0);
+    const [cardFlexibleHeight, setCardFlexibleHeight] = useState(false);
     const divRef = useRef(null);
 
     const [pin, setPin] = useState('');
@@ -1343,7 +1344,11 @@ function Card(props) {
                             component={motion.div}
                             variants={item}
                             value={tabValue}
-                            onChange={(ev, value) => setTabValue(value)}
+                            onChange={(ev, value) => {
+                                setTabValue(value)
+                                setCardFlexibleHeight(false)
+                            }
+                            }
                             indicatorColor="secondary"
                             textColor="inherit"
                             variant="scrollable"
@@ -1451,7 +1456,11 @@ function Card(props) {
                                                     component={motion.div}
                                                     variants={item}
                                                     value={smallTabValue}
-                                                    onChange={(ev, value) => setSmallTabValue(value)}
+                                                    onChange={(ev, value) => {
+                                                        setSmallTabValue(value)
+                                                        setCardFlexibleHeight(false)
+                                                    }
+                                                    }
                                                     indicatorColor="secondary"
                                                     textColor="inherit"
                                                     variant="scrollable"
@@ -1485,10 +1494,13 @@ function Card(props) {
                                                 {
                                                     smallTabValue === 0 &&
                                                     <div style={{ margin: "1.5rem 0rem 6rem 0rem" }}>
-
-                                                        <div className='flex' style={{ position: "relative", height: `${cardHeight}px`, marginBottom: "67px" }}>
+                                                        <motion.div className='flex guoDuDongHua2'
+                                                            variants={item}
+                                                            initial="hidden"
+                                                            animate="show"
+                                                            style={{ position: "relative", height: cardFlexibleHeight ? `${cardHeight + 100}px` : `${cardHeight}px`, marginBottom: "67px" }}>
                                                             <img id="cardHeights" className='cardShowDi' style={{ position: "absolute", zIndex: "0" }} src='wallet/assets/images/card/card9.png' />
-                                                            <div style={{ position: "absolute", zIndex: "9998" }}>
+                                                            <div className='wuXianSty' style={{ position: "absolute", zIndex: "9998" }}>
                                                                 <Carousel
                                                                     className="container"
                                                                     showArrows={true}
@@ -1496,17 +1508,29 @@ function Card(props) {
                                                                     infiniteLoop={true}
                                                                     autoPlay={false}
                                                                     showThumbs={false}
+                                                                    style={{ fontSize: "16px" }}
                                                                 >
-                                                                    <div>
-                                                                        <img className='' src="wallet/assets/images/card/card7.png"></img>
+                                                                    <div className='wuXianCard' style={{ background: `url(wallet/assets/images/card/card6.png)`, backgroundSize: "cover", position: "relative" }}>
+                                                                        <div className="" style={{ position: "absolute", fontSize: "140%", height: "17%", top: "44.5%", left: "8%", right: "0%", textAlign: "left" }}>100000045152452453</div>
+                                                                        <div className="" style={{ position: "absolute", height: "17%", top: "61%", left: "8%" }}> 10/24 </div>
+                                                                        <div className='' style={{ position: "absolute", height: "17%", top: "78%", left: "8%" }}>778</div>
                                                                     </div>
-                                                                    <div>
-                                                                        <img className='' src="wallet/assets/images/card/card8.png"></img>
+
+                                                                    <div className='wuXianCard' style={{ background: `url(wallet/assets/images/card/card7.png)`, backgroundSize: "cover", position: "relative" }}>
+                                                                        <div className="" style={{ position: "absolute", fontSize: "140%", height: "17%", top: "44.5%", left: "8%", right: "0%", textAlign: "left" }}>300000045152452453</div>
+                                                                        <div className="" style={{ position: "absolute", height: "17%", top: "61%", left: "8%" }}> 10/24 </div>
+                                                                        <div className='' style={{ position: "absolute", height: "17%", top: "78%", left: "8%" }}>778</div>
+                                                                    </div>
+
+                                                                    <div className='wuXianCard' style={{ background: `url(wallet/assets/images/card/card8.png)`, backgroundSize: "cover", position: "relative" }}>
+                                                                        <div className="" style={{ position: "absolute", fontSize: "140%", height: "17%", top: "44.5%", left: "8%", right: "0%", textAlign: "left" }}>400020045152452453</div>
+                                                                        <div className="" style={{ position: "absolute", height: "17%", top: "61%", left: "8%" }}> 10/24 </div>
+                                                                        <div className='' style={{ position: "absolute", height: "17%", top: "78%", left: "8%" }}>778</div>
                                                                     </div>
                                                                 </Carousel>
                                                             </div>
 
-                                                            <div className='cardGongNengMyDi' style={{ position: "relative", marginTop: "200px" }}>
+                                                            <div className='cardGongNengMyDi' style={{ position: "relative", marginTop: `${cardHeight + 9}px` }}>
                                                                 <Accordion className='gongNengTan1'>
                                                                     <AccordionSummary
                                                                         expandIcon={<ExpandMoreIcon />}
@@ -1515,6 +1539,7 @@ function Card(props) {
                                                                         className='gongNengTan2'
                                                                         style={{ marginTop: "-19px" }}
                                                                         onClick={() => {
+                                                                            setCardFlexibleHeight(!cardFlexibleHeight)
                                                                         }}
                                                                     >
                                                                         <div className='flex justify-between w-full'>
@@ -1536,12 +1561,10 @@ function Card(props) {
                                                                             </div>
 
                                                                             <div className='gongNengLanW' onClick={() => {
-                                                                                setBalanceNotEnough(false);
-                                                                                setUpdatedKycInfoFlag(false);
-                                                                                setOpenAnimateHuanKa(true);
+                                                                                setTabValue(1);
                                                                             }}>
-                                                                                <img className='gongNengTuBiao' src="wallet/assets/images/menu/gengHuanKaPian.png"></img>
-                                                                                <div className='gongNengZiW mt-4 text-14'>{t('card_32')}</div>
+                                                                                <img className='gongNengTuBiao' src="wallet/assets/images/menu/addKaPian.png"></img>
+                                                                                <div className='gongNengZiW mt-4 text-14'>{t('card_249')}</div>
                                                                             </div>
 
                                                                             <div className='gongNengLanW' onClick={() => {
@@ -1566,7 +1589,7 @@ function Card(props) {
                                                                     </AccordionDetails>
                                                                 </Accordion>
                                                             </div>
-                                                        </div>
+                                                        </motion.div>
 
 
 
