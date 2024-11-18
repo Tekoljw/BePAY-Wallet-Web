@@ -678,14 +678,14 @@ function Wallet(props) {
         }
         if (isFait) {
           Object.keys(symbolList).forEach((key) => {
-            let symbolRate = symbolList[key].rate || 0;
+            let symbolRate = symbolList[key].sellRate || 0;
             amount +=
               getUserMoney(symbolList[key].symbol) *
               (symbolRate * currencyRate);
           });
         } else {
           Object.keys(symbolList).forEach((key) => {
-            let symbolRate = symbolList[key].rate || 0;
+            let symbolRate = symbolList[key].sellRate || 0;
             amount +=
               getUserMoney(symbolList[key].symbol) *
               symbolRate;
@@ -783,7 +783,7 @@ function Wallet(props) {
       }
       if (tmpShow === true) {
         // 兑换成USDT的汇率
-        let symbolRate = tmpSymbolsData[item]?.rate || 0;
+        let symbolRate = tmpSymbolsData[item]?.sellRate || 0;
         var balance = getUserMoney(item);
         tmpSymbols.push({
           avatar: tmpSymbolsData[item]?.avatar || "",
@@ -804,7 +804,7 @@ function Wallet(props) {
       }
 
       // 兑换成USDT的汇率
-      let symbolRate = symbol.rate || 0;
+      let symbolRate = symbol.sellRate || 0;
       var balance = getUserMoney(symbol.symbol);
       if (!arrayLookup(tmpDisplaySymbols, "symbol", symbol.symbol, "symbol")) {
         tmpDisplaySymbols.push({
@@ -1173,12 +1173,12 @@ function Wallet(props) {
         }
 
         // 兑换成USDT的汇率
-        let symbolRate = symbol.rate || 0;
+        let symbolRate = symbol.sellRate || 0;
 
         if (!arrayLookup(tmpArr, "symbol", symbol.symbol, "symbol")) {
           tmpArr.push({
             avatar: symbol.avatar,
-            rate: symbol.rate,
+            rate: symbol.sellRate,
             symbol: symbol.symbol,
             balance: balance, // 余额
             dollarFiat: (balance * symbolRate * dollarCurrencyRate).toFixed(2), // 换算成美元
@@ -1192,7 +1192,7 @@ function Wallet(props) {
             });
             tmpArr[_index] = {
               avatar: symbol.avatar,
-              rate: symbol.rate,
+              rate: symbol.sellRate,
               symbol: symbol.symbol,
               balance: balance, // 余额
               dollarFiat: (balance * symbolRate * dollarCurrencyRate).toFixed(

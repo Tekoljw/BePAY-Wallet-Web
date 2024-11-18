@@ -594,7 +594,7 @@ function Deposite() {
                 }
                 if (tmpShow === true && item !== 'eBGT') {
                     // 兑换成USDT的汇率
-                    let symbolRate = arrayLookup(symbolsData, 'symbol', item, 'rate') || 0;
+                    let symbolRate = arrayLookup(symbolsData, 'symbol', item, 'sellRate') || 0;
                     var balance = getSymbolMoney(item);
                     tmpSymbols.push({
                         avatar: arrayLookup(symbolsData, 'symbol', item, 'avatar') || '',
