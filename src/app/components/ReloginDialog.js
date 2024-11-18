@@ -41,7 +41,7 @@ function ReloginDialog( props, ref ) {
           >
             <AnimateModal2
               className="faBiDiCard tanChuanDiSe"
-              open={props.openLoginWinow}
+              open={props.openLoginWindow}
               onClose={() => props.closeLoginWindow() }
             >
               <div className='flex justify-center mb-16' style={{ width: "100%" }}>
