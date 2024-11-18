@@ -1397,9 +1397,9 @@ input[type='number'] {
     padding: 0px !important;
 }
 
-.slide {
+/* .slide {
     background: rgba(23, 31, 41, 0) !important;
-}
+} */
 
 .shenQingCardDi {
     background-image: url("../../public/assets/images/card/shenQingCardDi.png");
