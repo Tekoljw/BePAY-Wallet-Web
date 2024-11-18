@@ -721,7 +721,7 @@ function Card(props) {
                         withdrawLock: arrayLookup(walletData.inner, 'symbol', symbols[i].symbol, 'withdrawLock') || 0
                     })
                 }
-                const tmpSwapRate = arrayLookup(symbols, 'symbol', 'USDT', 'rate');
+                const tmpSwapRate = arrayLookup(symbols, 'symbol', 'USDT', (huaZhuanValue === 0? 'buyRate' : 'sellRate'));
                 setSwapRate(tmpSwapRate)
             }
 
@@ -1753,10 +1753,10 @@ function Card(props) {
                                                                                     <div className='flex justify-center mt-16' style={{ width: "100%" }}>
                                                                                         <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                                                                                         <div className='TanHaoCardZi'>
-                                                                                            审核失败
+                                                                                        {t('card_17')}
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div className='cardErrorZi'>您填写的地址有误请重新修改！</div>
+                                                                                    <div className='cardErrorZi'>{ t('card_18') }</div>
 
                                                                                     <div className='twoSamllBtn flex justify-between'>
                                                                                         <div className='cardErrorBtn2 txtColorTitleSmall' >
@@ -1791,11 +1791,11 @@ function Card(props) {
                                                                                 </div>
                                                                                 <div style={{ width: "100%", margin: "0rem auto" }}>
                                                                                     <div className='flex justify-between items-center ' style={{ width: "100%" }}>
-                                                                                        <div className=''>申请</div>
-                                                                                        <div className='jinDuZiError'>审核</div>
-                                                                                        <div className=''>寄送</div>
-                                                                                        <div className=''>激活</div>
-                                                                                        <div className=''>成功</div>
+                                                                                        <div className=''>{t('card_20')}</div>
+                                                                                        <div className='jinDuZiError'>{t('card_21')}</div>
+                                                                                        <div className=''>{t('card_22')}</div>
+                                                                                        <div className=''>{t('card_23')}</div>
+                                                                                        <div className=''>{t('card_24')}</div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1810,7 +1810,7 @@ function Card(props) {
                                                                         <div className="responsive-div">
                                                                             <div className="responsive-div-content card2Bg cardZhiDi" >
                                                                                 <div className='cardZhuangTaiDi'>
-                                                                                    <div className='cardZhuangTai mt-32'>{cardItem.showState == 0 ? '申请中' : '审核中'}</div>
+                                                                                    <div className='cardZhuangTai mt-32'>{cardItem.showState == 0 ? t('card_247') : t('card_248')}</div>
                                                                                 </div>
                                                                                 <div className='cardNumber'>{cardItem?.userCreditNo?.replace(/(.{4})/g, '$1 ')}</div>
                                                                                 <div>
@@ -1841,11 +1841,11 @@ function Card(props) {
                                                                             </div>
                                                                             <div style={{ width: "100%", margin: "0rem auto" }}>
                                                                                 <div className='flex justify-between items-center ' style={{ width: "100%" }}>
-                                                                                    <div className=''>申请</div>
-                                                                                    <div className='jinDuZi'>审核</div>
-                                                                                    <div className=''>寄送</div>
-                                                                                    <div className=''>激活</div>
-                                                                                    <div className=''>成功</div>
+                                                                                    <div className=''>{t('card_20')}</div>
+                                                                                    <div className='jinDuZi'>{t('card_21')}</div>
+                                                                                    <div className=''>{t('card_22')}</div>
+                                                                                    <div className=''>{t('card_23')}</div>
+                                                                                    <div className=''>{t('card_24')}</div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -2688,6 +2688,8 @@ function Card(props) {
                                         setTransferMoney(0)
                                         setTransferFee(0)
                                         setRecivedAmount(0)
+                                        const tmpSwapRate = arrayLookup(symbols, 'symbol', 'USDT', (huaZhuanValue === 0? 'buyRate' : 'sellRate'));
+                                        setSwapRate(tmpSwapRate)
                                     }}
                                     indicatorColor="secondary"
                                     textColor="inherit"

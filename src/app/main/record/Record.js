@@ -87,40 +87,40 @@ function Record() {
     // public static final int LOG_TYPE_CREDIT_REVERSAL_CRYPTO = 29;
     // public static final int LOG_TYPE_CREDIT_REFUND_FIAT = 30;
     // public static final int LOG_TYPE_CREDIT_REFUND_CRYPTO = 31;
-
+    
     const typeList = [
-        { key: 0, label: '商户和用户之间法币资产转换'},
-        { key: 1, label: '商户和用户之间虚拟币资产转换'},
-        { key: 2, label: '法币资产入金'},
-        { key: 3, label: '法币资产出金'},
-        { key: 4, label: '虚拟币资产入金'},
-        { key: 5, label: '虚拟币资产出金'},
-        { key: 6, label: '法币信用卡入金'},
-        { key: 7, label: '法币信用卡出金'},
-        { key: 8, label: '虚拟币信用卡入金'},
-        { key: 9, label: '虚拟币信用卡出金'},
-        { key: 10, label: '兑换法币-法币'},
-        { key: 11, label: '兑换法币-虚拟币'},
-        { key: 12, label: '兑换虚拟币-法币'},
-        { key: 13, label: '兑换虚拟币-虚拟币'},
-        { key: 14, label: '申请信用卡费用'},
-        { key: 15, label: '信用卡消费法币'},
-        { key: 16, label: '信用卡消费虚拟币'},
-        { key: 17, label: '信用卡年费'},
-        { key: 18, label: '法币内部转账'},
-        { key: 19, label: '虚拟币内部转账'},
-        { key: 20, label: '存入NFT'},
-        { key: 21, label: '取出NFT'},
-        { key: 22, label: '信用卡服务手续费'},
-        { key: 23, label: '信用卡法币冻结金额'},
-        { key: 24, label: '信用卡法币解冻金额'},
-        { key: 25, label: '信用卡虚拟币冻结金额'},
-        { key: 26, label: '信用卡虚拟币解冻金额'},
-        { key: 27, label: '信用卡交易撤销罚款金额'},
-        { key: 28, label: '信用卡法币交易撤销'},
-        { key: 29, label: '信用卡虚拟币交易撤销'},
-        { key: 30, label: '信用卡法币交易退款'},
-        { key: 31, label: '信用卡虚拟币交易退款'}
+        { key: 0, label: t('recordInfo_0')},
+        { key: 1, label: t('recordInfo_1')},
+        { key: 2, label: t('recordInfo_2')},
+        { key: 3, label: t('recordInfo_3')},
+        { key: 4, label: t('recordInfo_4')},
+        { key: 5, label: t('recordInfo_5')},
+        { key: 6, label: t('recordInfo_6')},
+        { key: 7, label: t('recordInfo_7')},
+        { key: 8, label: t('recordInfo_8')},
+        { key: 9, label: t('recordInfo_9')},
+        { key: 10, label: t('recordInfo_10')},
+        { key: 11, label: t('recordInfo_11')},
+        { key: 12, label: t('recordInfo_12')},
+        { key: 13, label: t('recordInfo_13')},
+        { key: 14, label: t('recordInfo_14')},
+        { key: 15, label: t('recordInfo_15')},
+        { key: 16, label: t('recordInfo_16')},
+        { key: 17, label: t('recordInfo_17')},
+        { key: 18, label: t('recordInfo_18')},
+        { key: 19, label: t('recordInfo_19')},
+        { key: 20, label: t('recordInfo_20')},
+        { key: 21, label: t('recordInfo_21')},
+        { key: 22, label: t('recordInfo_22')},
+        { key: 23, label: t('recordInfo_23')},
+        { key: 24, label: t('recordInfo_24')},
+        { key: 25, label: t('recordInfo_25')},
+        { key: 26, label: t('recordInfo_26')},
+        { key: 27, label: t('recordInfo_27')},
+        { key: 28, label: t('recordInfo_28')},
+        { key: 29, label: t('recordInfo_29')},
+        { key: 30, label: t('recordInfo_30')},
+        { key: 31, label: t('recordInfo_31')}
     ]
 
     const showTypeList = [
@@ -606,6 +606,8 @@ function Record() {
                                                     <div className='recordListZi2'>{transferItem.amount}</div>
                                                 </div>
                                                 <div className='recordListSmallZi'>{t('home_deposite_24')} <span>{transferItem.balance}</span>
+                                                </div>
+                                                <div className='recordListSmallZi'>{t('home_borrow_18')} <span>{transferItem.serviceFee}</span>
                                                 </div>
                                                 <div className='recordListSmallZi'>{ 
                                                     typeList.find(v => {

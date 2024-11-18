@@ -378,7 +378,7 @@ function Withdraw(props) {
             tmpBAppendFee = bAppendFee;
         }
 
-        const rate = arrayLookup(symbolsData, 'symbol', symbol, 'rate');
+        const rate = arrayLookup(symbolsData, 'symbol', symbol, 'buyRate');
         let conversionAmount = rate * amount;
 
         // if (conversionAmount >= transferState.limitSingle && googleCode.length < 6) {
@@ -476,7 +476,7 @@ function Withdraw(props) {
             return
         }
         // closePinFunc()
-        const rate = arrayLookup(symbolsData, 'symbol', symbol, 'rate');
+        const rate = arrayLookup(symbolsData, 'symbol', symbol, 'buyRate');
         let conversionAmount = rate * inputVal.amount;
         // if (conversionAmount >= transferState.limitSingle && googleCode.length < 6) {
         //     if (!hasAuthGoogle) {
@@ -705,7 +705,7 @@ function Withdraw(props) {
                 }
                 if (tmpShow === true && item != 'eBGT') {
                     // 兑换成USDT的汇率
-                    let symbolRate = arrayLookup(symbolsData, 'symbol', item, 'rate') || 0;
+                    let symbolRate = arrayLookup(symbolsData, 'symbol', item, 'buyRate') || 0;
                     var balance = getSymbolMoney(item);
                     tmpSymbols.push({
                         avatar: arrayLookup(symbolsData, 'symbol', item, 'avatar') || '',

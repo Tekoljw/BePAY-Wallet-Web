@@ -614,7 +614,7 @@ function Swap() {
   }, [formatSymbol]);
 
   const assembleRateChange = () => {
-    const symbolArrRate = _.map(config.symbols, (symbol) => { return { key: symbol.symbol, rate: symbol.rate } });
+    const symbolArrRate = _.map(config.symbols, (symbol) => { return { key: symbol.symbol, rate: symbol.buyRate } });
     const fiatArrRate = _.map(userData.fiat, (fa) => { return { key: fa.currencyCode, rate: (1 / fa.exchangeRate).toFixed(20) } });
     setRateArr([...symbolArrRate, ...fiatArrRate]);
   }
