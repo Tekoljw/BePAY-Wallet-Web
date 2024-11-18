@@ -2059,7 +2059,11 @@ function Fiat(props) {
                                                 <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
                                                 <div className='bianJiBiZi'>{t('card_74')}</div>
                                             </div>
-                                            <div className='pasteDi'>{item}</div>
+                                            <div className='pasteDi'  onClick={()=>{ 
+                                                if(smallTabValue === 1) {
+                                                    setInputVal({ ...inputVal, 'userId': item });
+                                                }
+                                        }}>{item}</div>
                                         </div>
                                     )
                                 })

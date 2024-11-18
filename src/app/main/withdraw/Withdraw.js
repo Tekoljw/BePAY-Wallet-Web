@@ -2295,7 +2295,10 @@ function Withdraw(props) {
                                             <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
                                             <div className='bianJiBiZi'>{t('card_74')}</div>
                                         </div>
-                                        <div className='pasteDi'>{item}</div>
+                                        <div className='pasteDi' onClick={()=>{ 
+                                            smallTabValue === 0 ?
+                                            setInputVal({ ...inputVal,  'address': item }): setInputIDVal(item);
+                                        }}>{item}</div>
                                     </div>
                                 )
                             })
