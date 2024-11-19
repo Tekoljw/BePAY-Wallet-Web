@@ -81,7 +81,7 @@ function StyledAccordionSelect(props) {
     };
 
     const currenyPaytoken = (currentSymbol, currentBalance) => {
-        const symbolRate = _.get(_.find(rateArr, {key: currentSymbol }), 'buyRate', 0);
+        const symbolRate = _.get(_.find(rateArr, {key: currentSymbol }), 'rate', 0);
         const currencyRate = arrayLookup(config.payment.currency, 'currencyCode', currencyCode, 'exchangeRate');
         return (currentBalance * symbolRate).toFixed(2)
     };

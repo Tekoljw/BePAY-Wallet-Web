@@ -79,10 +79,10 @@ function Security(props) {
         if(!userData.userInfo.bindMobile) {
             langArr[2] = t('menu_20')
         }
-        const loginType = getUserLoginType(userData);
-        if (loginType === userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP) {
-            langArr = langArr.filter((str, i) => i !== 3);
-        }
+        // const loginType = getUserLoginType(userData);
+        // if (loginType === userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP) {
+        //     langArr = langArr.filter((str, i) => i !== 3);
+        // }
         setRanges(langArr);
     }, [currentLanguage.id, userData.profile]);
 
