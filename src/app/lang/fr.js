@@ -819,7 +819,7 @@ card_248: "",
 
     
 card_249: "Ajouter",
-    
+card_250: "Veuillez fermer le mini-programme et cliquer sur le bouton d'actualisation pour réessayer.",
     
 
 

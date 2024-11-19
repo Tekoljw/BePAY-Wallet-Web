@@ -2049,6 +2049,22 @@ input[type='number'] {
     padding: 1.4rem 1rem 1.4rem 1rem;
 }
 
+.swapWH {
+    margin-inline: 10px;
+    margin-top: 1px;
+    width: 26px;
+    height: 26px;
+}
+
+.lvDi {
+    background-image: url("../../public/assets/images/earn/lvDi.png");
+    width: 100%;
+    height: 165px;
+    background-size: cover;
+    border-radius: 1rem;
+    padding: 1.4rem 1rem 1.4rem 1rem;
+}
+
 .fangFaBtn {
     background-color: #8465FF;
     height: 26px;

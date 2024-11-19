@@ -61,7 +61,7 @@ function ReloginDialog( props, ref ) {
                 }}
               >
                 <div className="danChuangTxt ">
-                  {t('login_1')}
+                  {t('card_250')}
                 </div>
               </Box>
 

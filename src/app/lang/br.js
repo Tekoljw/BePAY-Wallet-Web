@@ -819,7 +819,7 @@ const locale = {
 
     
     card_249: "Adicionar",
-    
+    card_250: "Por favor, feche o mini aplicativo e clique no botão de atualizar para tentar novamente.",
 };
 export default locale;
 

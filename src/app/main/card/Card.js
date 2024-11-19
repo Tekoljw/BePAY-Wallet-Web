@@ -1513,19 +1513,19 @@ function Card(props) {
                                                                     <div className='wuXianCard' style={{ background: `url(wallet/assets/images/card/card6.png)`, backgroundSize: "cover", position: "relative" }}>
                                                                         <div className="" style={{ position: "absolute", fontSize: "140%", height: "17%", top: "44.5%", left: "8%", right: "0%", textAlign: "left" }}>100000045152452453</div>
                                                                         <div className="" style={{ position: "absolute", height: "17%", top: "61%", left: "8%" }}> 10/24 </div>
-                                                                        <div className='' style={{ position: "absolute", height: "17%", top: "78%", left: "8%" }}>778</div>
+                                                                        <div className='' style={{ position: "absolute", height: "17%", top: "78%", left: "8%" }}>CCV 778</div>
                                                                     </div>
 
                                                                     <div className='wuXianCard' style={{ background: `url(wallet/assets/images/card/card7.png)`, backgroundSize: "cover", position: "relative" }}>
                                                                         <div className="" style={{ position: "absolute", fontSize: "140%", height: "17%", top: "44.5%", left: "8%", right: "0%", textAlign: "left" }}>300000045152452453</div>
                                                                         <div className="" style={{ position: "absolute", height: "17%", top: "61%", left: "8%" }}> 10/24 </div>
-                                                                        <div className='' style={{ position: "absolute", height: "17%", top: "78%", left: "8%" }}>778</div>
+                                                                        <div className='' style={{ position: "absolute", height: "17%", top: "78%", left: "8%" }}>CCV 548</div>
                                                                     </div>
 
                                                                     <div className='wuXianCard' style={{ background: `url(wallet/assets/images/card/card8.png)`, backgroundSize: "cover", position: "relative" }}>
                                                                         <div className="" style={{ position: "absolute", fontSize: "140%", height: "17%", top: "44.5%", left: "8%", right: "0%", textAlign: "left" }}>400020045152452453</div>
                                                                         <div className="" style={{ position: "absolute", height: "17%", top: "61%", left: "8%" }}> 10/24 </div>
-                                                                        <div className='' style={{ position: "absolute", height: "17%", top: "78%", left: "8%" }}>778</div>
+                                                                        <div className='' style={{ position: "absolute", height: "17%", top: "78%", left: "8%" }}>CCV 128</div>
                                                                     </div>
                                                                 </Carousel>
                                                             </div>

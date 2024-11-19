@@ -833,6 +833,7 @@ const locale = {
     
     
     card_249: "添加",
+    card_250: "请关闭小程序并点击刷新按钮重试",
 };
 
 export default locale;

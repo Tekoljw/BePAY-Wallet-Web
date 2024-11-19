@@ -817,7 +817,7 @@ const locale = {
 
     
     card_249: "Ekle",
-    
+    card_250: "Lütfen mini uygulamayı kapatın ve yeniden denemek için yenile düğmesine tıklayın.",
 
 
 

@@ -820,7 +820,7 @@ const locale = {
 
 
     card_249: "Agregar",
-
+    card_250: "Por favor, cierre la mini aplicación y haga clic en el botón de actualizar para intentarlo de nuevo.",
     
     
 

@@ -171,6 +171,7 @@ function Withdraw(props) {
     const [symbolWallet, setSymbolWallet] = useState([]);
     const [amountTab, setAmountTab] = useState('HIGHER');
     const [fee, setFee] = useState(0);
+    const [tokenFee, setTokenFee] = useState(0);
     const [TransactionFee, setTransactionFee] = useState(0);
     const [bAppendFee, setBAppendFee] = useState(false);
     const [openAnimateModal, setOpenAnimateModal] = useState(false);
@@ -341,13 +342,13 @@ function Withdraw(props) {
     }, [time]);
 
     function ismore(inputVal) {
-        if (Number(inputVal) + Number(fee) > Number(arrayLookup(symbolWallet, 'symbol', symbol, 'balance'))) {
+        if (Number(inputVal) + Number(tokenFee) > Number(arrayLookup(symbolWallet, 'symbol', symbol, 'balance'))) {
             return true
         } else if (isOkTijiao) {
             setIsOkTijiao(false)
             return true
         } else if (symbol == "USDT") {
-            if (Number(inputVal) + Number(fee) + Number(TransactionFee) > Number(arrayLookup(symbolWallet, 'symbol', symbol, 'balance'))) {
+            if (Number(inputVal) + Number(tokenFee) + Number(TransactionFee) > Number(arrayLookup(symbolWallet, 'symbol', symbol, 'balance'))) {
                 return true
             }
         }
@@ -627,6 +628,7 @@ function Withdraw(props) {
             setFee(fee);
         });
     };
+    
 
     const evalFee2 = (networkId, coinName, amount, address) => {
         let usdtGass = userData.wallet.inner?.find(item => Object.values(item).includes("USDT"));
@@ -639,6 +641,7 @@ function Withdraw(props) {
             let resData = res.payload;
             if (resData && resData.data != 0) {
                 let TransactionFee = resData.data.minerFee;
+                setTokenFee(resData.data.mchFeeAmount);
                 setTransactionFee(TransactionFee);
                 if (TransactionFee > usdtGass.balance) {
                     setIsOkTijiao(true);
@@ -1316,23 +1319,25 @@ function Withdraw(props) {
                                             {/* <div>{t('card_223')} {Math.max(0, Number(inputVal.amount) - Number(fee))} {symbol}</div> */}
                                             <div className="flex items-center justify-between mb-16" >
                                                 <Typography className="text-16 cursor-pointer">
-                                                    <p style={{ fontSize: '1.3rem' }}> {t('home_withdraw_7')}: {fee}  {symbol}</p>
+                                                    <p style={{ fontSize: '1.3rem' }}> {t('home_withdraw_7')}: {tokenFee}  {symbol}</p>
                                                 </Typography>
+
                                                 {/* <Typography
                                                     className="text-16 cursor-pointer color-2DD4BF"
                                                     onClick={() => {
                                                         if (!bAppendFee) {
                                                             setBAppendFee(true);
-                                                            changeAddress('amount', Number(inputVal.amount) + Number(fee));
+                                                            changeAddress('amount', Number(inputVal.amount) + Number(tokenFee));
                                                         } else {
                                                             setBAppendFee(false);
-                                                            changeAddress('amount', Number(inputVal.amount) - Number(fee));
+                                                            changeAddress('amount', Number(inputVal.amount) - Number(tokenFee));
                                                         }
                                                         evalFee(symbol, networkId, amountTab)
                                                     }}
                                                 >
                                                     <p style={{ fontSize: '1.3rem' }}>{t('home_withdraw_8')}</p>
                                                 </Typography> */}
+
                                             </div>
 
                                             <Box

@@ -810,6 +810,7 @@ const locale = {
 
     
     card_249: "Thêm",
+    card_250: "Vui lòng đóng ứng dụng mini và nhấn nút làm mới để thử lại.",
 };
 
 export default locale;

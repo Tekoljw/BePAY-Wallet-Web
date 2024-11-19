@@ -61,6 +61,7 @@ function Earn(props) {
     const [openKXian, setOpenKXian] = useState(false);
     const [openKongTou, setOpenKongTou] = useState(false);
     const [openWaKuang, setOpenWaKuang] = useState(false);
+    const [openHuanHui, setOpenHuanHui] = useState(false);
     const [openBind, setOpenBind] = useState(false);
     const [openYaoQing, setOpenYaoQing] = useState(false);
     const [openXiangQing, setOpenXiangQing] = useState(false);
@@ -171,13 +172,29 @@ function Earn(props) {
         }, 0);
     }
 
-    const closesZhiYaFunc = () => {
+    const closeZhiYaFunc = () => {
         document.getElementById('openZhiYa').classList.remove('PinMoveAni');
         document.getElementById('openZhiYa').classList.add('PinMoveOut');
         setTimeout(() => {
             setOpenZhiYa(false)
         }, 300);
     };
+
+    const openHuanHuiFunc = () => {
+        setOpenHuanHui(true)
+        setTimeout(() => {
+            document.getElementById('openHuanHui').classList.add('PinMoveAni');
+        }, 0);
+    }
+
+    const closeHuanHuiFunc = () => {
+        document.getElementById('openHuanHui').classList.remove('PinMoveAni');
+        document.getElementById('openHuanHui').classList.add('PinMoveOut');
+        setTimeout(() => {
+            setOpenHuanHui(false)
+        }, 300);
+    };
+
 
     function ismore(inputVal, MaxVal, MinValue) {
         // if (inputVal > MaxVal || inputVal < MinValue) {
@@ -363,6 +380,32 @@ function Earn(props) {
                                     <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>质押BFT，年化 </span><span style={{ color: "#ffc600", fontWeight: "bold", fontSize: "29px" }}>292%</span></div>
                                 </div>
                                 <img className='earnYouTu2 mt-16' src="wallet/assets/images/earn/bi3.png" />
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className='mt-20'
+                        style={{ paddingInline: "1.5rem" }}
+                    >
+                        <div className='text-16'>换汇佣金</div>
+                        <div className='lvDi mt-16' onClick={() => {
+                            openHuanHuiFunc();
+                        }}>
+                            <div className='flex justify-between pt-4'>
+                                <div className='huangDiZi'>
+                                    <div className='flex'>
+                                        <div className='' style={{ fontSize: "20px", overflow: 'hidden' }}>BeingFi</div>
+                                        <img className='swapWH' src="wallet/assets/images/earn/swapImg.png" />
+                                        <div className='' style={{ fontSize: "20px", overflow: 'hidden' }}>Swap</div>
+                                    </div>
+                                    <div><span >换汇风暴，</span><span style={{ color: "#5BEA9C" }}>邀友共赢</span></div>
+                                    <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>享受佣金 </span><span style={{ color: "#ffc600", fontWeight: "bold", fontSize: "29px" }}>0.1%</span></div>
+                                </div>
+                                <img className='earnYouTu2 mt-16' src="wallet/assets/images/earn/bi4.png" />
                             </div>
                         </div>
                     </motion.div>
@@ -1060,7 +1103,7 @@ function Earn(props) {
 
                                 <div className='text-18 kongTouTitle'>质押挖矿</div>
                                 <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
-                                    closesZhiYaFunc();
+                                    closeZhiYaFunc();
                                 }} ></img>
                             </div>
                             {
@@ -1478,6 +1521,52 @@ function Earn(props) {
                             {t('card_167')}
                         </LoadingButton>
                     </AnimateModal>
+
+
+                    <BootstrapDialog
+                        closeClass="closeBtnspin"
+                        open={openHuanHui}
+                        onClose={() => setOpenHuanHui(false)}
+                    >
+                        <div id='openHuanHui' className="px-15 pt-10 waKuangDi">
+                            <div className='flex mt-10' style={{ justifyContent: "space-between", width: "100%" }}>
+                                <div className='text-18 kongTouTitle'>换汇业务佣金</div>
+                                <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                                    closeHuanHuiFunc();
+                                }} ></img>
+                            </div>
+
+                            <div className='mt-20 text-12' style={{ textAlign: "center", color: "#A4A4A4" }}>
+                                邀请好友后可获得好友支付后总金额的0.1%佣金！
+                            </div>
+                            <div className='flex  mt-32 justify-center'>
+                                <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/card/usd.png"></img>
+                                <div className='text-14 ml-6' style={{ height: "24px", lineHeight: "24px" }}>换汇总收益(USDT)</div>
+                            </div>
+                            <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "center", color: "#00FF96" }}>1000.00</div>
+                            <div className='flex  justify-between mt-20'>
+                                <div>
+                                    <div style={{ textAlign: "center" }}>邀请总数</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}>3</div>
+                                </div>
+
+                                <div>
+                                    <div style={{ textAlign: "center" }}>{t('card_129')}(USDT)</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}>100.00</div>
+                                </div>
+
+                                <div>
+                                    <div style={{ textAlign: "center" }}>{t('card_153')}(USDT)</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}>100.00</div>
+                                </div>
+                            </div>
+                            <div style={{ height: "40px" }}></div>
+                            <div className='txtBrightness text-20 px-15 ' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>邀请好友</div>
+                            <div style={{ height: "20px" }}></div>
+                        </div>
+                    </BootstrapDialog>
+
+
 
                     {openXiangQing && <div id="target" style={{ position: "absolute", width: "100%", zIndex: "998", backgroundColor: "#0E1421", top: "0%", bottom: "0%" }} >
                         <motion.div

@@ -820,7 +820,7 @@ const locale = {
 
     
     card_249: "Idagdag",
-    
+    card_250: "Pakisara ang mini app at i-click ang refresh button para subukang muli.",
 
 
 
