@@ -2062,6 +2062,7 @@ function Fiat(props) {
                                             <div className='pasteDi'  onClick={()=>{ 
                                                 if(smallTabValue === 1) {
                                                     setInputVal({ ...inputVal, 'userId': item });
+                                                    closePasteFunc()
                                                 }
                                         }}>{item}</div>
                                         </div>

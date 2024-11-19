@@ -91,9 +91,9 @@ export const appendScript = async(scriptToAppend, isAsync) => {
     if(!isScriptLoad(scriptToAppend)) {
         const script = document.createElement("script");
         script.src = scriptToAppend;
-        script.async = (isAsync == undefined || isAsync == true) ? true : false ;
+        script.defer = (isAsync == undefined || isAsync == true) ? true : false ;
         document.body.appendChild(script);
-        resolve(true)
+        return resolve(true)
     }
   })
 }
@@ -125,7 +125,7 @@ export const consoleText = (words, id, colors) => {
             target.setAttribute('style', 'color:' + colors[0])
             letterCount += x;
             waiting = false;
-            resolve(true)
+            return resolve(true)
           }, 1000)
         } else if (letterCount === words[0].length + 1 && waiting === false) {
           waiting = true;
@@ -133,12 +133,12 @@ export const consoleText = (words, id, colors) => {
             x = -1;
             letterCount += x;
             waiting = false;
-            resolve(true)
+            return resolve(true)
           }, 1000)
         } else if (waiting === false) {
           target.innerHTML = words[0].substring(0, letterCount)
           letterCount += x;
-          resolve(true)
+          return resolve(true)
         }
       }, 120)
 
@@ -150,7 +150,7 @@ export const consoleText = (words, id, colors) => {
           con.className = 'console-underscore'
           visible = true;
         }
-        resolve(true)
+        return resolve(true)
       }, 400)
     })
   }
