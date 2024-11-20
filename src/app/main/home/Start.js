@@ -44,7 +44,7 @@ export default function start() {
                         style={{ fontWeight: "600", color: "#ffffff", width: "45%", borderRadius: "10rem", height: "3.8rem", lineHeight: "3.8rem", textAlign: "center" }}
                     >
                         <img className='mt-9 mr-9' style={{ width: "20px", height: "20px" }} src="/wallet/assets/images/login/tg.png"></img>
-                        <div>Sign</div>
+                        <div>Sign up</div>
                     </div>
                     <div className='flex justify-center'
                         onClick={() => { history.push("/wallet/login" + window.location.search); }}
