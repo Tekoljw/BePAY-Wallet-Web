@@ -21,39 +21,61 @@ export default function start() {
 
     return (
         <div id="kkqd" class="">
-            <div style={{ position: "relative", zIndex: "1", marginTop: "36%", width: "100%" }}>
+            <div style={{ position: "relative", zIndex: "1", paddingTop: "16%", width: "100%", height: "100vh" }}>
                 <div className='flex ' style={{ width: "100%", justifyContent: "center" }} >
-                    <img style={{ width: "68%" }} src="/wallet/assets/images/logo/qdLogo.png" />
+                    <img style={{ width: "46%" }} src="/wallet/assets/images/logo/qdLogo.png" />
                 </div>
-                <div className='px-32 starZi' style={{ fontSize: "28px", width: "100%", textAlign: "center", color: "#ffffff", fontWeight: "bold", marginTop: "34%" }} >
-                    Global Crypto Bank
-                </div>
-                <div class='console-container px-28' style={{ marginTop: "12%" }} ><span id='qddzj'></span><div class='console-underscore' id='console'>&#95;</div></div>
 
-                <div className='flex justify-center' >
-                    <img className='mr-16' style={{ width: "20%" }} src="/wallet/assets/images/login/master.png" />
-                    <img className='ml-16' style={{ width: "20%" }} src="/wallet/assets/images/login/visa.png" />
+
+
+                <div className='flex justify-center' style={{ width: "100%", justifyContent: "center", marginTop: "30%" }} >
+                    <div className='floating' style={{ width: "60%" }} >
+                        <img className='animated-image ' src="/wallet/assets/images/login/mokuai.png" />
+                    </div>
                 </div>
+
+
                 <div
-                    className='flex justify-between px-32 mt-60'
-                    style={{}}
+                    style={{ position: "absolute", bottom: "16%", width: "100%" }}
+                >
+                    <div className='' style={{ fontSize: "46px", marginLeft: "10%", width: "80%", textAlign: "left", color: "#ffffff", fontWeight: "bold", marginTop: "34%" }} >
+                        Global Crypto
+                    </div>
+                    <div className='' style={{ fontSize: "46px", marginLeft: "10%", width: "80%", textAlign: "left", color: "#ffffff", fontWeight: "bold", marginTop: "0%" }} >
+                        Digital banking
+                    </div>
+
+                    <div class='console-container ' style={{ marginTop: "5%", paddingLeft: "10%" }} ><span id='qddzj'></span><div class='console-underscore' id='console'>&#95;</div></div>
+                </div>
+
+                <div
+                    style={{ position: "absolute", bottom: "6%", width: "100%" }}
                 >
                     <div
-                        className='flex justify-center starBtnColor1'
+                        className='flex justify-center '
                         onClick={() => { history.push("/wallet/sign-up" + window.location.search); }}
-                        style={{ fontWeight: "600", color: "#ffffff", width: "45%", borderRadius: "10rem", height: "3.8rem", lineHeight: "3.8rem", textAlign: "center" }}
+                        style={{ backgroundColor: "#0D9488", fontWeight: "600", color: "#ffffff", width: "80%", margin: "0 auto", borderRadius: "20rem", height: "5.2rem", lineHeight: "5.2rem", textAlign: "center" }}
                     >
-                        <img className='mt-9 mr-9' style={{ width: "20px", height: "20px" }} src="/wallet/assets/images/login/tg.png"></img>
-                        <div>Sign up</div>
+                        <img className='mr-10' style={{ marginTop: "14px", width: "24px", height: "24px" }} src="/wallet/assets/images/login/tg.png"></img>
+                        <div className='starZi2 ' style={{ fontSize: "17px" }}>Register a new account</div>
                     </div>
+
                     <div className='flex justify-center'
                         onClick={() => { history.push("/wallet/login" + window.location.search); }}
-                        style={{ backgroundColor: "#ffffff", fontWeight: "600", width: "45%", borderRadius: "10rem", height: "3.8rem", lineHeight: "3.8rem", textAlign: "center" }}
+                        style={{ border: "1px solid #0D9488", margin: "28px auto 0px auto", fontWeight: "600", width: "80%", borderRadius: "20rem", height: "5.2rem", lineHeight: "5.2rem", textAlign: "center" }}
                     >
-                        <div className='starZi2 mr-9'>Login</div>
-                        <img className='mt-9' style={{ width: "20px", height: "20px" }} src="/wallet/assets/images/login/my.png"></img>
+                        <img className='mr-10' style={{ marginTop: "14px", width: "24px", height: "24px" }} src="/wallet/assets/images/login/my.png"></img>
+                        <div style={{ fontSize: "17px" }}>Log in existing account</div>
                     </div>
                 </div>
+
+
+                <div className='flex justify-center' style={{ position: "absolute", bottom: "1%" }} >
+                    <img className='mr-16' style={{ width: "12%" }} src="/wallet/assets/images/login/master.png" />
+                    <img className='ml-16' style={{ width: "12%" }} src="/wallet/assets/images/login/visa.png" />
+                </div>
+
+
             </div>
         </div>
     );
