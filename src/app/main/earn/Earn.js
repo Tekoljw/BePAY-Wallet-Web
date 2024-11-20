@@ -123,6 +123,8 @@ function Earn(props) {
     };
 
     const openXiangQingFunc = () => {
+        setOpenHuanHui(false)
+        setOpenZhiFu(false)
         setOpenXiangQing(true)
         setTimeout(() => {
             document.getElementById('target').scrollIntoView({ behavior: 'smooth' });
@@ -427,7 +429,7 @@ function Earn(props) {
                     </motion.div>
 
 
-                    <motion.div
+                    {!openXiangQing && <motion.div
                         variants={container}
                         initial="hidden"
                         animate="show"
@@ -441,7 +443,7 @@ function Earn(props) {
                             <div className='flex justify-between pt-4'>
                                 <div className='huangDiZi'>
                                     <div className='flex'>
-                                        <img className='swapWH' src="wallet/assets/images/earn/zhiFuImg.png" />
+                                        <img className='mr-10' style={{ width: "26px", height: "26px" }} src="wallet/assets/images/earn/zhiFuImg.png" />
                                         <div className='' style={{ fontSize: "20px", overflow: 'hidden' }}>BeingFi 支付</div>
                                     </div>
                                     <div><span >小费，</span><span style={{ fontSize: "20px", color: "#30F2DD" }}>大收益</span></div>
@@ -451,8 +453,9 @@ function Earn(props) {
                             </div>
                         </div>
                     </motion.div>
+                    }
 
-                    <motion.div
+                    {!openXiangQing && <motion.div
                         variants={container}
                         initial="hidden"
                         animate="show"
@@ -499,6 +502,7 @@ function Earn(props) {
                             </div>
                         </div>
                     </motion.div>
+                    }
 
                     <AnimateModal
                         className="checkInDi"
@@ -1604,7 +1608,9 @@ function Earn(props) {
 
                             </div>
                             <div style={{ height: "40px" }}></div>
-                            <div className='txtBrightness text-20 px-15 ' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>邀请好友</div>
+                            <div className='txtBrightness text-20 px-15 ' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}
+                                onClick={() => { openXiangQingFunc(); }}
+                            >邀请好友</div>
                             <div style={{ height: "20px" }}></div>
                         </div>
                     </BootstrapDialog>
@@ -1648,7 +1654,8 @@ function Earn(props) {
                                 </div>
                             </div>
                             <div style={{ height: "40px" }}></div>
-                            <div className='txtBrightness text-20 px-15 ' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>邀请好友</div>
+                            <div className='txtBrightness text-20 px-15 ' onClick={() => { openXiangQingFunc(); }}
+                                style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>邀请好友</div>
                             <div style={{ height: "20px" }}></div>
                         </div>
                     </BootstrapDialog>

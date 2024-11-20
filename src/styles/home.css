@@ -673,7 +673,7 @@ input[type='number'] {
 
 .console-container {
     width: auto;
-    height: 18rem;
+    height: 16rem;
     font-weight: bold;
     font-size: 20px;
     text-align: center;
@@ -1046,6 +1046,26 @@ input[type='number'] {
     aspect-ratio: 430 / 326;
     border-radius: 1rem;
     margin-top: 1.4rem;
+}
+
+.starZi {
+    font-weight: bold;
+    background: linear-gradient(to right, rgb(28, 198, 162), rgb(82, 216, 138), rgb(255, 255, 255));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+}
+
+.starZi2 {
+    font-weight: bold;
+    background: linear-gradient(to right, rgb(28, 198, 162), rgb(82, 216, 138));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+}
+
+.starBtnColor1 {
+    background: linear-gradient(to right, rgb(28, 198, 162), rgb(88, 233, 156));
 }
 
 .dzqbSty {
