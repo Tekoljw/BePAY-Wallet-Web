@@ -579,7 +579,7 @@ function Deposite() {
             filterSymbolData = symbolsData;
         }
 
-        let currencyRate = arrayLookup(config.payment.currency, 'currencyCode', currencyCode, 'exchangeRate') || 0;
+        let currencyRate = arrayLookup(config.payment.currency, 'currencyCode', currencyCode, 'sellRate') || 0;
         let displayData = [];
         cryptoDisplayData?.map((item, index) => {
             displayData.push(item.name);
@@ -593,7 +593,7 @@ function Deposite() {
         if (displayData.length > 0) {
             let tmpSymbols = [];
             // 美元汇率
-            let dollarCurrencyRate = arrayLookup(config.payment.currency, 'currencyCode', 'USD', 'exchangeRate') || 0;
+            let dollarCurrencyRate = arrayLookup(config.payment.currency, 'currencyCode', 'USD', 'sellRate') || 0;
             displayData.forEach((item, index) => {
                 var tmpShow = arrayLookup(cryptoDisplayData, 'name', item, 'show');
                 if (tmpShow === '') {
@@ -979,7 +979,7 @@ function Deposite() {
                     currencyCode: item,
                     // balance: balance == 0 ? 0.00 : balance.toFixed(2),
                     balance,
-                    dollarFiat: (balance == 0) ? 0 : balance / tmpPaymentFiat[item]?.exchangeRate
+                    dollarFiat: (balance == 0) ? 0 : balance / tmpPaymentFiat[item]?.sellRate
                 })
             }
         });

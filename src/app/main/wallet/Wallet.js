@@ -314,7 +314,7 @@ function Wallet(props) {
       config.payment.currency,
       "currencyCode",
       currencyCode,
-      "exchangeRate"
+      "sellRate"
     ) || 0;
 
   const currencys = config.payment.currency || [];
@@ -661,7 +661,7 @@ function Wallet(props) {
         config.payment.currency,
         "currencyCode",
         currencyCode,
-        "exchangeRate"
+        "sellRate"
       ) || 0;
     if (walletType === 0) {
       if (showType === cryptoSelect) {
@@ -688,7 +688,7 @@ function Wallet(props) {
       } else if (showType === fiatSelect) {
         for (let i = 0; i < fiatsData.length; i++) {
           let tmpDollarMoney =
-            fiatsData[i]["balance"] / fiatsData[i]["exchangeRate"];
+            fiatsData[i]["balance"] / fiatsData[i]["sellRate"];
           if (tmpDollarMoney >= 0) {
             amount += currencyRate * tmpDollarMoney;
           }
@@ -742,7 +742,7 @@ function Wallet(props) {
       "currencyCode",
       // "USD",
       "VND",
-      "exchangeRate"
+      "sellRate"
     ) || 0;
 
   // token数据整理
@@ -906,7 +906,7 @@ function Wallet(props) {
           currencyCode: item,
           balance: balance.toFixed(2),
           dollarFiat:
-            balance == 0 ? 0 : balance / tmpPaymentFiat[item]?.exchangeRate,
+            balance == 0 ? 0 : balance / tmpPaymentFiat[item]?.sellRate,
         });
       }
     });
@@ -925,7 +925,7 @@ function Wallet(props) {
           avatar: item.avatar,
           currencyCode: item.currencyCode,
           balance: balance.toFixed(2),
-          dollarFiat: balance == 0 ? 0 : balance / item.exchangeRate,
+          dollarFiat: balance == 0 ? 0 : balance / item.sellRate,
           isShow: tmpShow,
         });
       });
@@ -1113,7 +1113,7 @@ function Wallet(props) {
         "currencyCode",
         // "USD",
         "VND",
-        "exchangeRate"
+        "sellRate"
       ) || 0;
 
     for await (let symbol of symbolsData) {

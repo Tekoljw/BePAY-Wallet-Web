@@ -850,7 +850,7 @@ function Fiat(props) {
                     avatar: tmpPaymentFiat[item]?.avatar || '',
                     currencyCode: item,
                     balance: balance.toFixed(2),
-                    dollarFiat: (balance == 0) ? 0 : balance / tmpPaymentFiat[item]?.exchangeRate
+                    dollarFiat: (balance == 0) ? 0 : balance / tmpPaymentFiat[item]?.buyRate
                 })
             }
         });

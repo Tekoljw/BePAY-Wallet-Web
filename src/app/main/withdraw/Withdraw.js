@@ -687,7 +687,7 @@ function Withdraw(props) {
 
     //格式化币种和网络
     const symbolsFormatAmount = () => {
-        let currencyRate = arrayLookup(config.payment.currency, 'currencyCode', currencyCode, 'exchangeRate') || 0;
+        let currencyRate = arrayLookup(config.payment.currency, 'currencyCode', currencyCode, 'buyRate') || 0;
         let displayData = [];
         cryptoDisplayData?.map((item, index) => {
             displayData.push(item.name);
@@ -700,7 +700,7 @@ function Withdraw(props) {
         if (displayData.length > 0) {
             let tmpSymbols = [];
             // 美元汇率
-            let dollarCurrencyRate = arrayLookup(config.payment.currency, 'currencyCode', 'USD', 'exchangeRate') || 0;
+            let dollarCurrencyRate = arrayLookup(config.payment.currency, 'currencyCode', 'USD', 'buyRate') || 0;
             displayData.forEach((item, index) => {
                 var tmpShow = arrayLookup(cryptoDisplayData, 'name', item, 'show');
                 if (tmpShow === '') {
