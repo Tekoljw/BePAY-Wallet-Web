@@ -617,11 +617,11 @@ function Card(props) {
     };
 
 
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         setCardHeight(document.getElementById("cardHeights").offsetHeight)
-    //     }, 1000);
-    // }, []);
+    useEffect(() => {
+        setTimeout(() => {
+            document.getElementById("cardHeights") && setCardHeight(document.getElementById("cardHeights").offsetHeight)
+        }, 1000);
+    }, []);
 
 
     const schema = yup.object().shape({
@@ -1187,13 +1187,26 @@ function Card(props) {
 
     useEffect(() => {
         if (cardID) {
-            let tmpTransferFee = 0
-            if (transferMoney) {
-                tmpTransferFee = Number(maxValue ? maxValue : transferMoney) * Number(cardConfigList[cardConfigID].creditRate) + Number(cardConfigList[cardConfigID].basicFee)
+            if(huaZhuanValue === 0){
+                //划入
+                let tmpTransferFeeIn = 0
+                if (transferMoney) {
+                    tmpTransferFeeIn = Number(maxValue ? maxValue : transferMoney) * Number(cardConfigList[cardConfigID].creditRate) + Number(cardConfigList[cardConfigID].basicFee)
+                }
+                setTransferFee(tmpTransferFeeIn)
+                setRecivedAmount((transferMoney - tmpTransferFeeIn))* ( swapRate)
+            }else if(huaZhuanValue === 1) {
+                //划出
+                let tmpTransferFeeOut = 0
+                if (transferMoney) {
+                    tmpTransferFeeOut = Number(maxValue ? maxValue : transferMoney)/swapRate * Number(cardConfigList[cardConfigID].creditRate) + Number(cardConfigList[cardConfigID].basicFee)
+                }
+                setTransferFee(tmpTransferFeeOut)
+                setRecivedAmount((transferMoney/swapRate - tmpTransferFeeOut))
             }
-            setTransferFee(tmpTransferFee * swapRate)
-            setRecivedAmount((transferMoney - tmpTransferFee) * swapRate)
         }
+
+
     }, [transferMoney])
 
     const setMaxValueClick = () => {
@@ -1203,9 +1216,6 @@ function Card(props) {
         } else if (huaZhuanValue === 1) {
             balance = cardListObj[cardID] && cardListObj[cardID].amount && cardListObj[cardID].amount;
         }
-
-        let tmpTransferFee = 0
-        tmpTransferFee = Number(balance) * Number(cardConfigList[cardConfigID].creditRate) + Number(cardConfigList[cardConfigID].basicFee)
         setTransferMoney(balance)
         setMaxValue(balance)
     }
@@ -2712,7 +2722,7 @@ function Card(props) {
                                         setTransferMoney(0)
                                         setTransferFee(0)
                                         setRecivedAmount(0)
-                                        const tmpSwapRate = arrayLookup(symbols, 'symbol', 'USDT', (huaZhuanValue === 0? 'buyRate' : 'sellRate'));
+                                        const tmpSwapRate = arrayLookup(symbols, 'symbol', 'USDT', (huaZhuanValue === 0? 'sellRate' : 'buyRate'));
                                         setSwapRate(tmpSwapRate)
                                     }}
                                     indicatorColor="secondary"
@@ -2791,14 +2801,13 @@ function Card(props) {
                                 <div className='flex justify-between mt-16'>
                                     <div className='flex'>
                                         <div className='' style={{ color: "#94A3B8" }}>{t('card_223')}</div>
-                                        <div className='ml-10'>{recivedAmount.toFixed(2)} USD</div>
+                                        <div className='ml-10'>{ huaZhuanValue === 0 ? ( Number(recivedAmount.toFixed(2)) || '0.00') + ' USD' : ( Number(recivedAmount.toFixed(6)) || '0.00') + ' USDT'}</div>
                                     </div>
                                 </div>
-
                                 <div className='flex justify-between mt-16'>
                                     <div className='flex'>
                                         <div className='' style={{ color: "#94A3B8" }}>{t('home_borrow_16')}</div>
-                                        <div className='ml-10'>{transferFee.toFixed(2)} USD</div>
+                                        <div className='ml-10'>{ Number(transferFee.toFixed(6))|| '0.00' } USDT</div>
                                     </div>
                                 </div>
                             </div>
@@ -2976,12 +2985,12 @@ function Card(props) {
 
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
                             <div style={{ color: "#888B92" }}>{t('home_borrow_18')}</div>
-                            <div>{transferFee} USD </div>
+                            <div>{ Number(transferFee.toFixed(6))|| '0.00' } USDT</div>
                         </motion.div>
 
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
                             <div style={{ color: "#888B92" }}>{t('card_223')}</div>
-                            <div>{recivedAmount} USD </div>
+                            <div>{ huaZhuanValue === 0 ? ( Number(recivedAmount.toFixed(2)) || '0.00') + ' USD' : ( Number(recivedAmount.toFixed(6)) || '0.00') + ' USDT'} </div>
                         </motion.div>
 
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
