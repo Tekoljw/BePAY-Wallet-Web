@@ -26,14 +26,11 @@ export default function start() {
                     <img style={{ width: "46%" }} src="/wallet/assets/images/logo/qdLogo.png" />
                 </div>
 
-
-
                 <div className='flex justify-center' style={{ width: "100%", justifyContent: "center", marginTop: "30%" }} >
                     <div className='floating' style={{ width: "60%" }} >
                         <img className='animated-image ' src="/wallet/assets/images/login/mokuai.png" />
                     </div>
                 </div>
-
 
                 <div
                     style={{ position: "absolute", bottom: "16%", width: "100%" }}
@@ -41,6 +38,7 @@ export default function start() {
                     <div className='' style={{ fontSize: "46px", marginLeft: "10%", width: "80%", textAlign: "left", color: "#ffffff", fontWeight: "bold", marginTop: "34%" }} >
                         Global Crypto
                     </div>
+
                     <div className='' style={{ fontSize: "46px", marginLeft: "10%", width: "80%", textAlign: "left", color: "#ffffff", fontWeight: "bold", marginTop: "0%" }} >
                         Digital banking
                     </div>

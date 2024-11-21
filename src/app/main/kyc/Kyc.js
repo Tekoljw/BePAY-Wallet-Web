@@ -1239,7 +1239,7 @@ function Kyc(props) {
                             <Stack
                                 sx={{ width: '100%', borderColor: '#94A3B8' }}
                                 spacing={3}
-                                className="mb-24"
+                                className="mb-16"
                             >
                                 <MobileDatePicker
                                     label="BirthDate"
@@ -1250,6 +1250,8 @@ function Kyc(props) {
                                 />
                             </Stack>
                         </div>
+
+                        <div className='mb-16' style={{}}>地址1</div>
 
                         <div className="flex items-center justify-between">
                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
@@ -1413,7 +1415,7 @@ function Kyc(props) {
                         </div>
 
                         <div className="flex items-center justify-between">
-                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-16">
                                 <InputLabel id="demo-simple-select-label">{t('kyc_13')}</InputLabel>
                                 <OutlinedInput
                                     id="outlined-adornment-address"
@@ -1440,6 +1442,9 @@ function Kyc(props) {
                                 />
                             </FormControl>
                         </div>
+
+                        <div className='mb-16 flex' style={{ borderRadius: "99px", backgroundColor: "#374252", height: "36px" }} > <img className='cardIconW mt-3' src="wallet/assets/images/card/jiaHao.png" alt="" />   <div className='' style={{ height: "36px", lineHeight: "36px" }}>添加地址</div> </div>
+
 
                         <div className="flex items-center justify-between">
                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">

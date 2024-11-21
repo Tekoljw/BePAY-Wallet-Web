@@ -617,11 +617,11 @@ function Card(props) {
     };
 
 
-    useEffect(() => {
-        setTimeout(() => {
-            setCardHeight(document.getElementById("cardHeights").offsetHeight)
-        }, 1000);
-    }, []);
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         setCardHeight(document.getElementById("cardHeights").offsetHeight)
+    //     }, 1000);
+    // }, []);
 
 
     const schema = yup.object().shape({
@@ -1494,7 +1494,8 @@ function Card(props) {
                                                 {
                                                     smallTabValue === 0 &&
                                                     <div style={{ margin: "1.5rem 0rem 6rem 0rem" }}>
-                                                        <motion.div className='flex guoDuDongHua2'
+
+                                                        {/* <motion.div className='flex guoDuDongHua2'
                                                             variants={item}
                                                             initial="hidden"
                                                             animate="show"
@@ -1589,7 +1590,7 @@ function Card(props) {
                                                                     </AccordionDetails>
                                                                 </Accordion>
                                                             </div>
-                                                        </motion.div>
+                                                        </motion.div> */}
 
 
 

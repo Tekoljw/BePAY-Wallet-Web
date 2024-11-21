@@ -826,12 +826,9 @@ const locale = {
     recordInfo_29: "信用卡虚拟币交易撤销",
     recordInfo_30: "信用卡法币交易退款",
     recordInfo_31: "信用卡虚拟币交易退款",
-    
     card_246: "撤消",
     card_247: "申请中",
     card_248: "审核中",
-    
-    
     card_249: "添加",
     card_250: "请关闭小程序并点击刷新按钮重试",
 };
