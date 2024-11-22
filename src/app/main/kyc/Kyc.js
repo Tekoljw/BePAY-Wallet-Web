@@ -1251,7 +1251,26 @@ function Kyc(props) {
                             </Stack>
                         </div>
 
-                        <div className='mb-16' style={{}}>地址1</div>
+
+                        <div className="flex items-center justify-between ">
+                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={inputVal.idType}
+                                    label="IdType"
+                                    onChange={handleChangeInputVal15('idType')}
+                                    error={idTypeError}
+                                    onBlur={handleBlur15}
+                                >
+                                    <MenuItem value={'id_card'}>地址1</MenuItem>{/*身份证*/}
+                                    <MenuItem value={'passport'}>地址2</MenuItem>{/*护照*/}
+                                    <MenuItem value={'dl'}>地址3</MenuItem>{/*驾照*/}
+                                </Select>
+                            </FormControl>
+                        </div>
+
+
 
                         <div className="flex items-center justify-between">
                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
@@ -1385,6 +1404,7 @@ function Kyc(props) {
                             </FormControl>
                         </div>
 
+
                         <div className="flex items-center justify-between">
                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
                                 <InputLabel id="demo-simple-select-label">{t('kyc_12')}</InputLabel>
@@ -1442,8 +1462,6 @@ function Kyc(props) {
                                 />
                             </FormControl>
                         </div>
-
-                        <div className='mb-16 flex' style={{ borderRadius: "99px", backgroundColor: "#374252", height: "36px" }} > <img className='cardIconW mt-3' src="wallet/assets/images/card/jiaHao.png" alt="" />   <div className='' style={{ height: "36px", lineHeight: "36px" }}>添加地址</div> </div>
 
 
                         <div className="flex items-center justify-between">

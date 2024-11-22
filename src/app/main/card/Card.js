@@ -1856,13 +1856,16 @@ function Card(props) {
                                                                         </div>
 
                                                                         <div className='mt-10'>
+
                                                                             <div style={{ position: "relative", height: "1.2rem", width: "100%", margin: "0 auto" }}>
                                                                                 <div className='borderYuan' style={{ position: "absolute" }}>
                                                                                     <div className='jinDuDi' ></div>
                                                                                 </div>
+
                                                                                 <div className='borderYuan' style={{ position: "absolute" }}>
                                                                                     <div className={clsx("jinDuDi1")} style={{ width: "25%" }}></div>
                                                                                 </div>
+
                                                                                 <div style={{ position: "absolute", width: "100%", height: "0.6rem" }}>
                                                                                     <div className='flex justify-between items-center ' style={{ width: "100%", height: "0.6rem", padding: "0rem 0rem" }}>
                                                                                         <div className='smallYuanDian'></div>
@@ -1872,7 +1875,9 @@ function Card(props) {
                                                                                         <div className='smallYuanDian'></div>
                                                                                     </div>
                                                                                 </div>
+                                                                                
                                                                             </div>
+
                                                                             <div style={{ width: "100%", margin: "0rem auto" }}>
                                                                                 <div className='flex justify-between items-center ' style={{ width: "100%" }}>
                                                                                     <div className=''>{t('card_20')}</div>
@@ -1882,6 +1887,7 @@ function Card(props) {
                                                                                     <div className=''>{t('card_24')}</div>
                                                                                 </div>
                                                                             </div>
+
                                                                         </div>
                                                                     </motion.div>)
                                                                 }
