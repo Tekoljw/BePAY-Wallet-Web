@@ -722,23 +722,23 @@ function Kyc(props) {
             countryInputRef.current.focus();  // 聚焦到输入框
         }, 0);
     };
-    
+
     const editShiLiCountry = () => {
-        setInputVal({ ...inputVal, country: '美国' });
+        setInputVal({ ...inputVal, country: '美国', state: '加州', city: '皇后区', address: '东大街3号', address: '东大街3号', address: '51000' });
         setTimeout(() => {
             setClickShiLi(true);
-            countryInputRef.current.blur();
+            setCountryInputShow(true);
+            setStateInputShow(true);
+            setCityInputShow(true);
+            setAddressInputShow(true);
         }, 0);
     };
 
     const editMiddleName = () => {
-
-
         setMiddleNameInput(false);  // 取消禁用状态
         setTimeout(() => {
             middleNameInputRef.current.focus();  // 聚焦到输入框
         }, 0);
-
     };
 
     const editLastName = () => {
@@ -1270,8 +1270,7 @@ function Kyc(props) {
                             </Stack>
                         </div>
 
-
-                        {/* <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between">
                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} className="mb-24">
                                 <InputLabel id="demo-simple-select-label">地址1</InputLabel>
                                 <Select
@@ -1287,7 +1286,7 @@ function Kyc(props) {
                                     <MenuItem value={'location3'}>地址3</MenuItem>
                                 </Select>
                             </FormControl>
-                        </div> */}
+                        </div>
 
                         <div className="flex items-center justify-between">
                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
@@ -1307,13 +1306,13 @@ function Kyc(props) {
                                     inputRef={countryInputRef}
                                     endAdornment={
                                         <InputAdornment position="end" className='flex justify-end' style={{ width: "160px", }}>
-                                            {/* {
+                                            {
                                                 !clickShiLi && <IconButton edge="end" onClick={() => editShiLiCountry()}>
                                                     <div className='px-5' style={{ backgroundColor: "#374252", minWidth: "50px", color: "#ffffff", fontSize: "12px", lineHeight: "26px", height: "26px", borderRadius: "50px" }}>
-                                                        halimbawa
+                                                        示例
                                                     </div>
                                                 </IconButton>
-                                            } */}
+                                            }
                                             {
                                                 countryInputShow && <IconButton edge="end" onClick={() => editCountry()} style={{ marginLeft: "5px" }}>
                                                     <img src="wallet/assets/images/kyc/bianJiBi.png"
