@@ -852,6 +852,11 @@ input[type='number'] {
     width: 33.33% !important;
 }
 
+.addressKyc {
+    height: 52px !important;
+    line-height: 52px !important;
+}
+
 .jinDuDi1 {
     background-color: #17D8B7;
     width: 0%;

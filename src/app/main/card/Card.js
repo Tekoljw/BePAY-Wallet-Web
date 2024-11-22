@@ -2419,7 +2419,7 @@ function Card(props) {
                             <div className='flex justify-between mt-10'>
                                 <div className='quanYiHuiZi'>{t('card_104')}</div>
                                 {/* <div>{cardConfigList[cardConfigID]?.yearBasicFee} {cardConfigList[cardConfigID]?.cardSymbol} </div> */}
-                                <div>50 USDT</div>
+                                <div>28 USDT</div>
                             </div>
 
                             <div className='flex justify-between mt-10'>

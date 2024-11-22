@@ -39,6 +39,7 @@ import Tabs from "@mui/material/Tabs";
 import Hidden from "@mui/material/Hidden";
 import { useTranslation } from "react-i18next";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { width } from '@mui/system';
 
 const container = {
     show: {
@@ -74,6 +75,7 @@ function Kyc(props) {
     const isMobileMedia = new MobileDetect(window.navigator.userAgent).mobile();
     const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down(isMobileMedia ? 'lg' : 'sm'));
     const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobile);
+
     const [inputVal, setInputVal] = useState({
         address: '',
         addressTwo: '',
@@ -95,6 +97,7 @@ function Kyc(props) {
         state: '',
         usSsn: '',
         zipcode: '',
+        addressKyc: '',
     });
 
 
@@ -209,7 +212,7 @@ function Kyc(props) {
     const [emailError, setEmailError] = useState(false);
     const [openAnimateModal, setOpenAnimateModal] = useState(false);
     const [showSaveBtn, setShowSaveBtn] = useState(true);
-
+    const [clickShiLi, setClickShiLi] = useState(false);
     const [emailInput, setEmailInput] = useState(false);
     const [emailInputShow, setEmailInputShow] = useState(false);
     const emailInputRef = useRef(null);  // 用于存储输入框的引用
@@ -267,6 +270,9 @@ function Kyc(props) {
     const [usSsnInput, setUsSsnInput] = useState(false);
     const [usSsnInputShow, setUsSsnInputShow] = useState(false);
     const usSsnInputRef = useRef(null);
+
+    const [addressKyc, setAddressKyc] = useState(t('kyc_11'));
+
 
 
     //文凯改
@@ -716,13 +722,23 @@ function Kyc(props) {
             countryInputRef.current.focus();  // 聚焦到输入框
         }, 0);
     };
-
+    
+    const editShiLiCountry = () => {
+        setInputVal({ ...inputVal, country: '美国' });
+        setTimeout(() => {
+            setClickShiLi(true);
+            countryInputRef.current.blur();
+        }, 0);
+    };
 
     const editMiddleName = () => {
+
+
         setMiddleNameInput(false);  // 取消禁用状态
         setTimeout(() => {
             middleNameInputRef.current.focus();  // 聚焦到输入框
         }, 0);
+
     };
 
     const editLastName = () => {
@@ -872,6 +888,11 @@ function Kyc(props) {
         } else {
             setIdTypeError(false);
         }
+    };
+
+
+    const handleChangeInputVal16 = (prop) => (event) => {
+        setInputVal({ ...inputVal, [prop]: event.target.value });
     };
 
 
@@ -1089,9 +1110,7 @@ function Kyc(props) {
                                     value={inputVal.phoneCountry}
                                     onChange={handleChangeInputVal2('phoneCountry')}
                                     aria-describedby="outlined-weight-helper-text"
-                                    inputProps={{
-                                        'aria-label': 'phoneCountry',
-                                    }}
+                                    inputProps={{ 'aria-label': 'phoneCountry' }}
                                     error={phoneCountryError}
                                     onBlur={handleBlur2}
                                     disabled={phoneCountryInput}
@@ -1252,25 +1271,23 @@ function Kyc(props) {
                         </div>
 
 
-                        <div className="flex items-center justify-between ">
-                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
+                        {/* <div className="flex items-center justify-between">
+                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} className="mb-24">
+                                <InputLabel id="demo-simple-select-label">地址1</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    value={inputVal.idType}
-                                    label="IdType"
-                                    onChange={handleChangeInputVal15('idType')}
-                                    error={idTypeError}
-                                    onBlur={handleBlur15}
+                                    label="AddressKyc"
+                                    value={inputVal.addressKyc}
+                                    onChange={handleChangeInputVal16('addressKyc')}
+                                    className='addressKyc'
                                 >
-                                    <MenuItem value={'id_card'}>地址1</MenuItem>{/*身份证*/}
-                                    <MenuItem value={'passport'}>地址2</MenuItem>{/*护照*/}
-                                    <MenuItem value={'dl'}>地址3</MenuItem>{/*驾照*/}
+                                    <MenuItem value={'location1'}>地址1</MenuItem>
+                                    <MenuItem value={'location2'}>地址2</MenuItem>
+                                    <MenuItem value={'location3'}>地址3</MenuItem>
                                 </Select>
                             </FormControl>
-                        </div>
-
-
+                        </div> */}
 
                         <div className="flex items-center justify-between">
                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
@@ -1289,13 +1306,21 @@ function Kyc(props) {
                                     disabled={countryInput}
                                     inputRef={countryInputRef}
                                     endAdornment={
-                                        countryInputShow && <InputAdornment onClick={() => editCountry()} position="end">
-                                            {<IconButton edge="end">
-                                                <img
-                                                    src="wallet/assets/images/kyc/bianJiBi.png"
-                                                    style={{ width: '24px', height: '24px' }}
-                                                />
-                                            </IconButton>}
+                                        <InputAdornment position="end" className='flex justify-end' style={{ width: "160px", }}>
+                                            {/* {
+                                                !clickShiLi && <IconButton edge="end" onClick={() => editShiLiCountry()}>
+                                                    <div className='px-5' style={{ backgroundColor: "#374252", minWidth: "50px", color: "#ffffff", fontSize: "12px", lineHeight: "26px", height: "26px", borderRadius: "50px" }}>
+                                                        halimbawa
+                                                    </div>
+                                                </IconButton>
+                                            } */}
+                                            {
+                                                countryInputShow && <IconButton edge="end" onClick={() => editCountry()} style={{ marginLeft: "5px" }}>
+                                                    <img src="wallet/assets/images/kyc/bianJiBi.png"
+                                                        style={{ width: '24px', height: '24px' }}
+                                                    />
+                                                </IconButton>
+                                            }
                                         </InputAdornment>
                                     }
                                 />
