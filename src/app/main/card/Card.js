@@ -1194,7 +1194,7 @@ function Card(props) {
                     tmpTransferFeeIn = Number(maxValue ? maxValue : transferMoney) * Number(cardConfigList[cardConfigID].creditRate) + Number(cardConfigList[cardConfigID].basicFee)
                 }
                 setTransferFee(tmpTransferFeeIn)
-                setRecivedAmount((transferMoney - tmpTransferFeeIn))* ( swapRate)
+                setRecivedAmount((transferMoney - tmpTransferFeeIn)* swapRate)
             }else if(huaZhuanValue === 1) {
                 //划出
                 let tmpTransferFeeOut = 0
