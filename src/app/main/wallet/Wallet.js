@@ -13,8 +13,9 @@ import {
   arrayLookup,
   getOpenAppId,
   getOpenAppIndex,
-  getUrlParam,
+  getUrlParam, getUserLoginState,
   getUserLoginType,
+  canLoginAfterRequest,
   setPhoneTab
 } from "../../util/tools/function";
 import { updateCurrency, updateWalletDisplay } from "../../store/user";
@@ -73,6 +74,8 @@ import { centerGetTokenBalanceList, userProfile } from "app/store/user/userThunk
 import { centerGetUserFiat } from "app/store/wallet/walletThunk";
 import RetiedEmail from "../login/RetiedEmail";
 import RetiedPhone from "../login/RetiedPhone";
+import ReloginDialog from '../../components/ReloginDialog';
+import userLoginState from "../../define/userLoginState";
 
 const container = {
   show: {
@@ -162,7 +165,7 @@ const sortUseAge = (a, b) => {
   }
 };
 
-function Wallet() {
+function Wallet(props) {
   const { t } = useTranslation("mainPage");
   const dispatch = useDispatch();
   const [selectedSymbol, setSelectedSymbol] = useState(getUrlParam("symbol"));
@@ -173,15 +176,16 @@ function Wallet() {
   const [hideSmall, setHideSmall] = useState(false);
   const config = useSelector(selectConfig);
   const userData = useSelector(selectUserData);
-  const [walletConnectShow, setWalletConnectShow] = useState(false);
+  const loginState = userData.loginState;
+  const fiatsData = userData.fiat || [];
   const symbolsData = config.symbols;
   const networks = config.networks || [];
-  const fiatsData = userData.fiat || [];
   const paymentFiat = config.payment?.currency;
   const [ranges, setRanges] = useState([
     // t('home_deposite_1'), t('home_deposite_2'), t('home_deposite_3')
     t('home_deposite_1'), t('home_deposite_2')
   ]);
+  const [walletConnectShow, setWalletConnectShow] = useState(false);
   const [userSetting, setUserSetting] = useState({});
   const [isOpenEye, setIsOpenEye] = useState(false);
   // const walletDisplayData = userData.walletDisplay || [];
@@ -310,7 +314,7 @@ function Wallet() {
       config.payment.currency,
       "currencyCode",
       currencyCode,
-      "exchangeRate"
+      "sellRate"
     ) || 0;
 
   const currencys = config.payment.currency || [];
@@ -324,8 +328,6 @@ function Wallet() {
   const [openBindPhone, setOpenBindPhone] = useState(false);
   const [loadingShow, setLoadingShow] = useState(false);
   const [openLoginWinow, setOpenLoginWinow] = useState(false);
-
-
 
   const mounted = useRef();
   // let fiats = [];
@@ -363,12 +365,6 @@ function Wallet() {
   //     setLoadingShow(true);
   //   }
   // }, [symbols]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setOpenLoginWinow(false);
-    }, 1000);
-  }, []);
 
   useEffect(() => {
     if (userData.profile.wallet?.Crypto + userData.profile.wallet?.Fiat > 200) {
@@ -665,7 +661,7 @@ function Wallet() {
         config.payment.currency,
         "currencyCode",
         currencyCode,
-        "exchangeRate"
+        "sellRate"
       ) || 0;
     if (walletType === 0) {
       if (showType === cryptoSelect) {
@@ -675,14 +671,14 @@ function Wallet() {
         }
         if (isFait) {
           Object.keys(symbolList).forEach((key) => {
-            let symbolRate = symbolList[key].rate || 0;
+            let symbolRate = symbolList[key].sellRate || 0;
             amount +=
               getUserMoney(symbolList[key].symbol) *
               (symbolRate * currencyRate);
           });
         } else {
           Object.keys(symbolList).forEach((key) => {
-            let symbolRate = symbolList[key].rate || 0;
+            let symbolRate = symbolList[key].sellRate || 0;
             amount +=
               getUserMoney(symbolList[key].symbol) *
               symbolRate;
@@ -692,7 +688,7 @@ function Wallet() {
       } else if (showType === fiatSelect) {
         for (let i = 0; i < fiatsData.length; i++) {
           let tmpDollarMoney =
-            fiatsData[i]["balance"] / fiatsData[i]["exchangeRate"];
+            fiatsData[i]["balance"] / fiatsData[i]["sellRate"];
           if (tmpDollarMoney >= 0) {
             amount += currencyRate * tmpDollarMoney;
           }
@@ -746,7 +742,7 @@ function Wallet() {
       "currencyCode",
       // "USD",
       "VND",
-      "exchangeRate"
+      "sellRate"
     ) || 0;
 
   // token数据整理
@@ -780,7 +776,7 @@ function Wallet() {
       }
       if (tmpShow === true) {
         // 兑换成USDT的汇率
-        let symbolRate = tmpSymbolsData[item]?.rate || 0;
+        let symbolRate = tmpSymbolsData[item]?.sellRate || 0;
         var balance = getUserMoney(item);
         tmpSymbols.push({
           avatar: tmpSymbolsData[item]?.avatar || "",
@@ -801,7 +797,7 @@ function Wallet() {
       }
 
       // 兑换成USDT的汇率
-      let symbolRate = symbol.rate || 0;
+      let symbolRate = symbol.sellRate || 0;
       var balance = getUserMoney(symbol.symbol);
       if (!arrayLookup(tmpDisplaySymbols, "symbol", symbol.symbol, "symbol")) {
         tmpDisplaySymbols.push({
@@ -910,7 +906,7 @@ function Wallet() {
           currencyCode: item,
           balance: balance.toFixed(2),
           dollarFiat:
-            balance == 0 ? 0 : balance / tmpPaymentFiat[item]?.exchangeRate,
+            balance == 0 ? 0 : balance / tmpPaymentFiat[item]?.sellRate,
         });
       }
     });
@@ -929,7 +925,7 @@ function Wallet() {
           avatar: item.avatar,
           currencyCode: item.currencyCode,
           balance: balance.toFixed(2),
-          dollarFiat: balance == 0 ? 0 : balance / item.exchangeRate,
+          dollarFiat: balance == 0 ? 0 : balance / item.sellRate,
           isShow: tmpShow,
         });
       });
@@ -1052,6 +1048,7 @@ function Wallet() {
 
     }
   }, [nfts, showType, nftDisplayData, nftBalance]);
+
   const initWalletData = () => {
     dispatch(getCryptoDisplay()).then((res) => {
       let result = res.payload;
@@ -1088,16 +1085,19 @@ function Wallet() {
   useEffect(() => {
     setPhoneTab('wallet');
     setTimeout(() => {
-      initWalletData();
-
-      const curLoginType = getUserLoginType(userData);
-      if (curLoginType !== userLoginType.USER_LOGIN_TYPE_UNKNOWN) { //登录过以后才会获取余额值
+      if (canLoginAfterRequest(userData)) { //登录过以后才会获取余额值
         dispatch(userProfile());
         dispatch(centerGetTokenBalanceList());
         dispatch(centerGetUserFiat());
       }
     }, 500)
   }, []);
+
+  useEffect(() => {
+    if(canLoginAfterRequest(userData)){ //已经进行过登录流程了
+      initWalletData();
+    }
+  }, [loginState]);
 
 
   // 去中心化钱包数据整理
@@ -1113,7 +1113,7 @@ function Wallet() {
         "currencyCode",
         // "USD",
         "VND",
-        "exchangeRate"
+        "sellRate"
       ) || 0;
 
     for await (let symbol of symbolsData) {
@@ -1170,12 +1170,12 @@ function Wallet() {
         }
 
         // 兑换成USDT的汇率
-        let symbolRate = symbol.rate || 0;
+        let symbolRate = symbol.sellRate || 0;
 
         if (!arrayLookup(tmpArr, "symbol", symbol.symbol, "symbol")) {
           tmpArr.push({
             avatar: symbol.avatar,
-            rate: symbol.rate,
+            rate: symbol.sellRate,
             symbol: symbol.symbol,
             balance: balance, // 余额
             dollarFiat: (balance * symbolRate * dollarCurrencyRate).toFixed(2), // 换算成美元
@@ -1189,7 +1189,7 @@ function Wallet() {
             });
             tmpArr[_index] = {
               avatar: symbol.avatar,
-              rate: symbol.rate,
+              rate: symbol.sellRate,
               symbol: symbol.symbol,
               balance: balance, // 余额
               dollarFiat: (balance * symbolRate * dollarCurrencyRate).toFixed(
@@ -3325,47 +3325,7 @@ function Wallet() {
               </div>
             </AnimateModal2>
 
-            <AnimateModal2
-              className="faBiDiCard tanChuanDiSe"
-              open={openLoginWinow}
-              onClose={() => setOpenLoginWinow(false)}
-            >
-              <div className='flex justify-center mb-16' style={{ width: "100%" }}>
-                <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
-                <div className='TanHaoCardZi '>
-                  {t('signIn_1')}
-                </div>
-              </div>
-
-              <Box
-                className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard flex justify-center"
-                sx={{
-                  backgroundColor: "#2C394D",
-                  padding: "1.5rem",
-                  overflow: "hidden",
-                  margin: "0rem auto 0rem auto"
-                }}
-              >
-                <div className="danChuangTxt ">
-                  {t('login_1')}
-                </div>
-              </Box>
-
-              <div className='flex mt-16 mb-28 px-15 justify-center' >
-                <LoadingButton
-                  disabled={false}
-                  className="boxCardBtn"
-                  color="secondary"
-                  loading={false}
-                  variant="contained"
-                  onClick={() => {
-
-                  }}
-                >
-                  {t('home_borrow_17')}
-                </LoadingButton>
-              </div>
-            </AnimateModal2>
+           <ReloginDialog openLoginWinow={ openLoginWinow } closeLoginWindow={()=>{ setOpenLoginWinow(false) }} ></ReloginDialog>
 
             {openBindEmail && <div style={{ position: "absolute", width: "100%", height: `${document.getElementById('mainWallet').offsetHeight}px`, top: "0%", zIndex: "998", backgroundColor: "#0E1421" }} >
               <motion.div

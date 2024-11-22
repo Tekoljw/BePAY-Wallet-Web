@@ -647,7 +647,7 @@ const locale = {
     card_245: "Thẻ này có được giải phóng không?",
     login_1: "Đăng nhập thất bại, vui lòng đóng ứng dụng mini và mở lại",
     deposite_35: "Vượt quá số tiền giới hạn",
-    
+
     server_error_10008: "Số tiền yêu cầu không hợp lệ",
     server_error_10009: "Lỗi nghiêm trọng đã xảy ra",
     server_error_10010: "Chưa được cấp phép",
@@ -774,8 +774,45 @@ const locale = {
     server_error_40101: "Không tìm thấy mã quà tặng trong tệp văn bản",
 
 
+    recordInfo_0: "Chuyển đổi tài sản giữa người bán và người dùng bằng tiền tệ pháp định",
+    recordInfo_1: "Chuyển đổi tài sản giữa người bán và người dùng bằng tiền ảo",
+    recordInfo_2: "Nạp tiền tệ pháp định vào tài khoản",
+    recordInfo_3: "Rút tiền tệ pháp định từ tài khoản",
+    recordInfo_4: "Nạp tiền ảo vào tài khoản",
+    recordInfo_5: "Rút tiền ảo từ tài khoản",
+    recordInfo_6: "Nạp tiền tệ pháp định qua thẻ tín dụng",
+    recordInfo_7: "Rút tiền tệ pháp định qua thẻ tín dụng",
+    recordInfo_8: "Nạp tiền ảo qua thẻ tín dụng",
+    recordInfo_9: "Rút tiền ảo qua thẻ tín dụng",
+    recordInfo_10: "Chuyển đổi tiền tệ pháp định - Tiền tệ pháp định",
+    recordInfo_11: "Chuyển đổi tiền tệ pháp định - Tiền ảo",
+    recordInfo_12: "Chuyển đổi tiền ảo - Tiền tệ pháp định",
+    recordInfo_13: "Chuyển đổi tiền ảo - Tiền ảo",
+    recordInfo_14: "Phí đăng ký thẻ tín dụng",
+    recordInfo_15: "Chi tiêu tiền tệ pháp định bằng thẻ tín dụng",
+    recordInfo_16: "Chi tiêu tiền ảo bằng thẻ tín dụng",
+    recordInfo_17: "Phí thường niên thẻ tín dụng",
+    recordInfo_18: "Chuyển khoản nội bộ bằng tiền tệ pháp định",
+    recordInfo_19: "Chuyển khoản nội bộ bằng tiền ảo",
+    recordInfo_20: "Gửi NFT vào tài khoản",
+    recordInfo_21: "Rút NFT khỏi tài khoản",
+    recordInfo_22: "Phí dịch vụ thẻ tín dụng",
+    recordInfo_23: "Số tiền đóng băng thẻ tín dụng bằng tiền tệ pháp định",
+    recordInfo_24: "Số tiền giải phóng thẻ tín dụng bằng tiền tệ pháp định",
+    recordInfo_25: "Số tiền đóng băng thẻ tín dụng bằng tiền ảo",
+    recordInfo_26: "Số tiền giải phóng thẻ tín dụng bằng tiền ảo",
+    recordInfo_27: "Phí phạt hủy giao dịch thẻ tín dụng",
+    recordInfo_28: "Hủy giao dịch thẻ tín dụng bằng tiền tệ pháp định",
+    recordInfo_29: "Hủy giao dịch thẻ tín dụng bằng tiền ảo",
+    recordInfo_30: "Hoàn tiền giao dịch thẻ tín dụng bằng tiền tệ pháp định",
+    recordInfo_31: "Hoàn tiền giao dịch thẻ tín dụng bằng tiền ảo",
+    card_246: "Hủy",
+    card_247: "Đang xin",
+    card_248: "Đang kiểm tra",
 
 
+    card_249: "Thêm",
+    card_250: "Vui lòng đóng ứng dụng mini và nhấn nút làm mới để thử lại.",
 };
 
 export default locale;

@@ -24,7 +24,7 @@ import {
     getNowTime,
     getOpenAppId,
     getOpenAppIndex, getUserLoginType,
-    handleCopyText,
+    handleCopyText, canLoginAfterRequest,
     setPhoneTab
 } from "../../util/tools/function";
 import { openScan, closeScan } from "../../util/tools/scanqrcode";
@@ -171,11 +171,13 @@ function Withdraw(props) {
     const [symbolWallet, setSymbolWallet] = useState([]);
     const [amountTab, setAmountTab] = useState('HIGHER');
     const [fee, setFee] = useState(0);
+    const [tokenFee, setTokenFee] = useState(0);
     const [TransactionFee, setTransactionFee] = useState(0);
     const [bAppendFee, setBAppendFee] = useState(false);
     const [openAnimateModal, setOpenAnimateModal] = useState(false);
     const [openYanZheng, setOpenYanZheng] = useState(false);
     const [openSuccess, setOpenSuccess] = useState(true);
+    const [isOkTijiao, setIsOkTijiao] = useState(false);
     const [divHeight, setDivHeight] = useState(0);
     const [currRequestId, setCurrRequestId] = useState(0);
     const [isLoadingBtn, setIsLoadingBtn] = useState(false);
@@ -189,7 +191,7 @@ function Withdraw(props) {
         setInputVal({ ...inputVal, [prop]: event.target.value });
         if (prop == 'amount' && event.target.value != '' && event.target.value != 0) {
             console.log(networkId, 'networkId')
-            evalFee2(networkId, symbol, event.target.value);
+            evalFee2(networkId, symbol, event.target.value, inputVal.address);
         }
     };
 
@@ -221,7 +223,6 @@ function Withdraw(props) {
         }, 300);
     };
 
-
     const changeAddress = (prop, value) => {
         setInputVal({ ...inputVal, [prop]: value });
     };
@@ -234,15 +235,14 @@ function Withdraw(props) {
     const [openTiBi, setOpenTiBi] = useState(false);
     const [withDrawOrderID, setWithDrawOrderID] = useState('');
     const [openLoad, setOpenLoad] = useState(false);
-    const [openPaste, setOpenPaste] = useState(false);
     const userData = useSelector(selectUserData);
     const fiatData = userData.fiat;
     const walletData = userData.wallet;
     const transferStats = userData.transferStats;
+    const loginState = userData.loginState;
     const hasAuthGoogle = userData.userInfo?.hasAuthGoogle;
     const hasAuthEmail = userData.userInfo?.bindEmail;
     const hasAuthPhone = userData.userInfo?.bindMobile;
-
 
     const currentLanguage = useSelector(selectCurrentLanguage);
     const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || 'USD');
@@ -255,7 +255,6 @@ function Withdraw(props) {
     const mounted = useRef();
     const [smallTabValue, setSmallTabValue] = useState(0);
     const [resetTabValue, setResetTabValue] = useState(0);
-
     const [openPinWindow, setOpenPinWindow] = useState(false);
     const [movePinWindow, setMovePinWindow] = useState(false);
     const [createPinWindow, setCreatePinWindow] = useState(false);
@@ -343,10 +342,18 @@ function Withdraw(props) {
     }, [time]);
 
     function ismore(inputVal) {
-        if (Number(inputVal) > Number(arrayLookup(symbolWallet, 'symbol', symbol, 'balance'))) {
-
+        if (Number(inputVal) + Number(tokenFee) > Number(arrayLookup(symbolWallet, 'symbol', symbol, 'balance'))) {
             return true
-        } else return false
+        } else if (isOkTijiao) {
+            setIsOkTijiao(false)
+            return true
+        } else if (symbol == "USDT") {
+            if (Number(inputVal) + Number(tokenFee) + Number(TransactionFee) > Number(arrayLookup(symbolWallet, 'symbol', symbol, 'balance'))) {
+                return true
+            }
+        }
+        else
+            return false
     }
 
     const schema = yup.object().shape({
@@ -372,7 +379,7 @@ function Withdraw(props) {
             tmpBAppendFee = bAppendFee;
         }
 
-        const rate = arrayLookup(symbolsData, 'symbol', symbol, 'rate');
+        const rate = arrayLookup(symbolsData, 'symbol', symbol, 'buyRate');
         let conversionAmount = rate * amount;
 
         // if (conversionAmount >= transferState.limitSingle && googleCode.length < 6) {
@@ -455,7 +462,6 @@ function Withdraw(props) {
         });
     };
 
-
     const handleSendTipsSubmit = () => {
         setIsLoadingBtn(true)
         if (textSelect) {
@@ -471,7 +477,7 @@ function Withdraw(props) {
             return
         }
         // closePinFunc()
-        const rate = arrayLookup(symbolsData, 'symbol', symbol, 'rate');
+        const rate = arrayLookup(symbolsData, 'symbol', symbol, 'buyRate');
         let conversionAmount = rate * inputVal.amount;
         // if (conversionAmount >= transferState.limitSingle && googleCode.length < 6) {
         //     if (!hasAuthGoogle) {
@@ -512,8 +518,8 @@ function Withdraw(props) {
             checkCode: googleCode,
             codeType: twiceVerifyType === 0 ? 2 : twiceVerifyType === 1 ? 1 : 0
         };
-
         setOpenLoad(true);
+
         dispatch(sendTips(data)).then((res) => {
             setIsLoadingBtn(false)
             setOpenLoad(false);
@@ -590,7 +596,6 @@ function Withdraw(props) {
                 closeScan();
                 setOpenChangeCurrency(false);
             }
-
             if (err) {
                 console.error(err);
                 closeScan();
@@ -623,17 +628,24 @@ function Withdraw(props) {
             setFee(fee);
         });
     };
+    
 
-    const evalFee2 = (networkId, coinName, amount) => {
+    const evalFee2 = (networkId, coinName, amount, address) => {
+        let usdtGass = userData.wallet.inner?.find(item => Object.values(item).includes("USDT"));
         dispatch(cryptoWithdrawFee({
             networkId: networkId,
             coinName: coinName,
             amount: amount,
+            address: address,
         })).then((res) => {
             let resData = res.payload;
             if (resData && resData.data != 0) {
-                let TransactionFee = (resData.data).toFixed(2);
+                let TransactionFee = resData.data.minerFee;
+                setTokenFee(resData.data.mchFeeAmount);
                 setTransactionFee(TransactionFee);
+                if (TransactionFee > usdtGass.balance) {
+                    setIsOkTijiao(true);
+                }
             } else {
                 setTransactionFee(0);
                 return
@@ -675,7 +687,7 @@ function Withdraw(props) {
 
     //格式化币种和网络
     const symbolsFormatAmount = () => {
-        let currencyRate = arrayLookup(config.payment.currency, 'currencyCode', currencyCode, 'exchangeRate') || 0;
+        let currencyRate = arrayLookup(config.payment.currency, 'currencyCode', currencyCode, 'buyRate') || 0;
         let displayData = [];
         cryptoDisplayData?.map((item, index) => {
             displayData.push(item.name);
@@ -688,7 +700,7 @@ function Withdraw(props) {
         if (displayData.length > 0) {
             let tmpSymbols = [];
             // 美元汇率
-            let dollarCurrencyRate = arrayLookup(config.payment.currency, 'currencyCode', 'USD', 'exchangeRate') || 0;
+            let dollarCurrencyRate = arrayLookup(config.payment.currency, 'currencyCode', 'USD', 'buyRate') || 0;
             displayData.forEach((item, index) => {
                 var tmpShow = arrayLookup(cryptoDisplayData, 'name', item, 'show');
                 if (tmpShow === '') {
@@ -696,7 +708,7 @@ function Withdraw(props) {
                 }
                 if (tmpShow === true && item != 'eBGT') {
                     // 兑换成USDT的汇率
-                    let symbolRate = arrayLookup(symbolsData, 'symbol', item, 'rate') || 0;
+                    let symbolRate = arrayLookup(symbolsData, 'symbol', item, 'buyRate') || 0;
                     var balance = getSymbolMoney(item);
                     tmpSymbols.push({
                         avatar: arrayLookup(symbolsData, 'symbol', item, 'avatar') || '',
@@ -762,12 +774,13 @@ function Withdraw(props) {
     }, [cryptoDisplayData, symbolsData, networks, walletData]);
 
     useEffect(() => {
-        // getWalletConfig();
-        dispatch(getCryptoDisplay()).then((res) => {
-            let result = res.payload;
-            setCryptoDisplayData(result?.data);
-        });
-    }, []);
+        if(canLoginAfterRequest(userData)) { //已经进行过登录流程了
+            dispatch(getCryptoDisplay()).then((res) => {
+                let result = res.payload;
+                setCryptoDisplayData(result?.data);
+            });
+        }
+    }, [loginState]);
 
     useEffect(() => {
         if (networkData[symbol]) {
@@ -1151,7 +1164,7 @@ function Withdraw(props) {
                                 component={motion.div}
                                 variants={item}
                                 className="w-full rounded-16 border flex flex-col "
-                                style={{ borderRadius: '0.5rem' }}
+                                style={{ borderRadius: '1rem' }}
                                 sx={{
                                     backgroundColor: '#1E293B',
                                     border: 'none'
@@ -1303,25 +1316,28 @@ function Withdraw(props) {
                                                     {t('home_withdraw_13')}
                                                 </div>
                                             </div>
-                                            <div className="flex items-center justify-between my-16" style={{ marginTop: 0 }}>
-                                                <Typography className="text-16 cursor-pointer ">
-                                                    <p style={{ fontSize: '1.3rem' }}> {t('home_withdraw_7')}: {fee}  {symbol}</p>
+                                            {/* <div>{t('card_223')} {Math.max(0, Number(inputVal.amount) - Number(fee))} {symbol}</div> */}
+                                            <div className="flex items-center justify-between mb-16" >
+                                                <Typography className="text-16 cursor-pointer">
+                                                    <p style={{ fontSize: '1.3rem' }}> {t('home_withdraw_7')}: {tokenFee}  {symbol}</p>
                                                 </Typography>
-                                                <Typography
+
+                                                {/* <Typography
                                                     className="text-16 cursor-pointer color-2DD4BF"
                                                     onClick={() => {
                                                         if (!bAppendFee) {
                                                             setBAppendFee(true);
-                                                            changeAddress('amount', Number(inputVal.amount) + Number(fee));
+                                                            changeAddress('amount', Number(inputVal.amount) + Number(tokenFee));
                                                         } else {
                                                             setBAppendFee(false);
-                                                            changeAddress('amount', Number(inputVal.amount) - Number(fee));
+                                                            changeAddress('amount', Number(inputVal.amount) - Number(tokenFee));
                                                         }
                                                         evalFee(symbol, networkId, amountTab)
                                                     }}
                                                 >
                                                     <p style={{ fontSize: '1.3rem' }}>{t('home_withdraw_8')}</p>
-                                                </Typography>
+                                                </Typography> */}
+
                                             </div>
 
                                             <Box
@@ -1377,7 +1393,7 @@ function Withdraw(props) {
                                                 }} />
                                                 {
                                                     isMobileMedia &&
-                                                    <img className='shaoMiaoIcon ' src="wallet/assets/images/withdraw/code.png" alt="" onClick={() => {
+                                                    <img className='shaoMiaoIcon' src="wallet/assets/images/withdraw/code.png" alt="" onClick={() => {
                                                         setOpenChangeCurrency(true);
                                                     }} />
                                                 }
@@ -1420,15 +1436,13 @@ function Withdraw(props) {
 
                                             <LoadingButton
                                                 disabled={openPinWindow}
-                                                className={clsx('px-48  m-28 btnColorTitleBig loadingBtnSty')}
+                                                className={clsx('px-48 m-28 btnColorTitleBig loadingBtnSty')}
                                                 color="secondary"
                                                 loading={openPinWindow}
                                                 variant="contained"
                                                 sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
                                                 style={{ width: '100%', height: '4rem', fontSize: "20px", margin: '1.4rem auto 1rem auto', display: 'block', lineHeight: "inherit", padding: "0px" }}
-                                                onClick={() => {
-                                                    isBindPin()
-                                                }}
+                                                onClick={() => { isBindPin() }}
                                             >
                                                 {t('home_withdraw_10')}
                                             </LoadingButton>
@@ -2287,7 +2301,10 @@ function Withdraw(props) {
                                             <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
                                             <div className='bianJiBiZi'>{t('card_74')}</div>
                                         </div>
-                                        <div className='pasteDi'>{item}</div>
+                                        <div className='pasteDi' onClick={()=>{ 
+                                            smallTabValue === 0 ? setInputVal({ ...inputVal,  'address': item }): setInputIDVal(item);
+                                            closePasteFunc()
+                                        }}>{item}</div>
                                     </div>
                                 )
                             })

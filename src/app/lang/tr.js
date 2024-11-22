@@ -781,6 +781,48 @@ const locale = {
     server_error_40101: "Metin dosyasından hediye kod",
 
 
+    recordInfo_0: "Tüccar ve kullanıcı arasındaki yerel para birimi varlık dönüşümü",
+    recordInfo_1: "Tüccar ve kullanıcı arasındaki sanal para birimi varlık dönüşümü",
+    recordInfo_2: "Yerel para birimi yatırma",
+    recordInfo_3: "Yerel para birimi çekme",
+    recordInfo_4: "Sanal para birimi yatırma",
+    recordInfo_5: "Sanal para birimi çekme",
+    recordInfo_6: "Yerel para birimi kredi kartı yatırma",
+    recordInfo_7: "Yerel para birimi kredi kartı çekme",
+    recordInfo_8: "Sanal para birimi kredi kartı yatırma",
+    recordInfo_9: "Sanal para birimi kredi kartı çekme",
+    recordInfo_10: "Yerel para birimi - Yerel para birimi dönüşümü",
+    recordInfo_11: "Yerel para birimi - Sanal para birimi dönüşümü",
+    recordInfo_12: "Sanal para birimi - Yerel para birimi dönüşümü",
+    recordInfo_13: "Sanal para birimi - Sanal para birimi dönüşümü",
+    recordInfo_14: "Kredi kartı başvuru ücreti",
+    recordInfo_15: "Kredi kartı ile yerel para birimi harcama",
+    recordInfo_16: "Kredi kartı ile sanal para birimi harcama",
+    recordInfo_17: "Kredi kartı yıllık ücreti",
+    recordInfo_18: "Yerel para birimi iç transfer",
+    recordInfo_19: "Sanal para birimi iç transfer",
+    recordInfo_20: "NFT yatırma",
+    recordInfo_21: "NFT çekme",
+    recordInfo_22: "Kredi kartı hizmet ücreti",
+    recordInfo_23: "Kredi kartı yerel para birimi dondurulmuş tutar",
+    recordInfo_24: "Kredi kartı yerel para birimi çözülmüş tutar",
+    recordInfo_25: "Kredi kartı sanal para birimi dondurulmuş tutar",
+    recordInfo_26: "Kredi kartı sanal para birimi çözülmüş tutar",
+    recordInfo_27: "Kredi kartı işlem iptal ceza ücreti",
+    recordInfo_28: "Kredi kartı yerel para birimi işlem iptali",
+    recordInfo_29: "Kredi kartı sanal para birimi işlem iptali",
+    recordInfo_30: "Kredi kartı yerel para birimi işlem geri ödeme",
+    recordInfo_31: "Kredi kartı sanal para birimi işlem geri ödeme",
+    card_246: "İptal",
+    card_247: "Başvuru Aşamasında",
+    card_248: "İnceleme Aşamasında",
+
+
+
+    card_249: "Ekle",
+    card_250: "Lütfen mini uygulamayı kapatın ve yeniden denemek için yenile düğmesine tıklayın.",
+
+
 
 
 

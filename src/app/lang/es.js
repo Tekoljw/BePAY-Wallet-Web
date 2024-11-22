@@ -781,8 +781,49 @@ const locale = {
     server_error_21001:"El mensaje de inicio de sesión está vacío",  
     server_error_40001:"Error en los parámetros de verificación de staking NFT",  
     server_error_40002:"Error al participar en el staking de NFT",  
-    server_error_40101:"No se encontró el código de regalo en el archivo de texto"  
+    server_error_40101:"No se encontró el código de regalo en el archivo de texto",  
 
+    
+    recordInfo_0: "Conversión de activos en moneda fiduciaria entre comerciantes y usuarios",
+    recordInfo_1: "Conversión de activos en criptomoneda entre comerciantes y usuarios",
+    recordInfo_2: "Depósito de activos en moneda fiduciaria",
+    recordInfo_3: "Retiro de activos en moneda fiduciaria",
+    recordInfo_4: "Depósito de activos en criptomoneda",
+    recordInfo_5: "Retiro de activos en criptomoneda",
+    recordInfo_6: "Depósito de activos en moneda fiduciaria mediante tarjeta de crédito",
+    recordInfo_7: "Retiro de activos en moneda fiduciaria mediante tarjeta de crédito",
+    recordInfo_8: "Depósito de activos en criptomoneda mediante tarjeta de crédito",
+    recordInfo_9: "Retiro de activos en criptomoneda mediante tarjeta de crédito",
+    recordInfo_10: "Intercambio de moneda fiduciaria a moneda fiduciaria",
+    recordInfo_11: "Intercambio de moneda fiduciaria a criptomoneda",
+    recordInfo_12: "Intercambio de criptomoneda a moneda fiduciaria",
+    recordInfo_13: "Intercambio de criptomoneda a criptomoneda",
+    recordInfo_14: "Tarifa de solicitud de tarjeta de crédito",
+    recordInfo_15: "Gasto en moneda fiduciaria con tarjeta de crédito",
+    recordInfo_16: "Gasto en criptomoneda con tarjeta de crédito",
+    recordInfo_17: "Cuota anual de tarjeta de crédito",
+    recordInfo_18: "Transferencia interna de activos en moneda fiduciaria",
+    recordInfo_19: "Transferencia interna de activos en criptomoneda",
+    recordInfo_20: "Depósito en NFT",
+    recordInfo_21: "Retiro de NFT",
+    recordInfo_22: "Tarifa de servicio de tarjeta de crédito",
+    recordInfo_23: "Monto congelado en moneda fiduciaria en tarjeta de crédito",
+    recordInfo_24: "Monto descongelado en moneda fiduciaria en tarjeta de crédito",
+    recordInfo_25: "Monto congelado en criptomoneda en tarjeta de crédito",
+    recordInfo_26: "Monto descongelado en criptomoneda en tarjeta de crédito",
+    recordInfo_27: "Multa por cancelación de transacción de tarjeta de crédito",
+    recordInfo_28: "Cancelación de transacción en moneda fiduciaria con tarjeta de crédito",
+    recordInfo_29: "Cancelación de transacción en criptomoneda con tarjeta de crédito",
+    recordInfo_30: "Reembolso de transacción en moneda fiduciaria con tarjeta de crédito",
+    recordInfo_31: "Reembolso de transacción en criptomoneda con tarjeta de crédito",
+    card_246: "Cancelar",
+    card_247: "En proceso",
+    card_248: "En revisión",
+
+
+    card_249: "Agregar",
+    card_250: "Por favor, cierre la mini aplicación y haga clic en el botón de actualizar para intentarlo de nuevo.",
+    
     
 
 

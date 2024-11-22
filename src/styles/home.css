@@ -669,14 +669,57 @@ input[type='number'] {
     right: 0;
 }
 
+.floating {
+    animation: floatUpDown 3s ease-in-out infinite;
+}
+
+
+@keyframes floatUpDown {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+        /* 上移 20px */
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.animated-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    animation: hueChange 5s infinite linear;
+}
+
+/* 色相变化动画 */
+@keyframes hueChange {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+
+    50% {
+        filter: hue-rotate(180deg);
+    }
+
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+
 
 
 .console-container {
     width: auto;
-    height: 18rem;
+    height: 12rem;
     font-weight: bold;
-    font-size: 20px;
-    text-align: center;
+    font-size: 16px;
+    text-align: left;
     color: white;
     top: 0;
     left: 0;
@@ -807,6 +850,11 @@ input[type='number'] {
 
 .jinduDiMove {
     width: 33.33% !important;
+}
+
+.addressKyc {
+    height: 52px !important;
+    line-height: 52px !important;
 }
 
 .jinDuDi1 {
@@ -1048,6 +1096,9 @@ input[type='number'] {
     margin-top: 1.4rem;
 }
 
+
+
+
 .dzqbSty {
     width: 100%;
     aspect-ratio: 430 / 256;
@@ -1074,6 +1125,11 @@ input[type='number'] {
     aspect-ratio: 430 / 220;
     border-radius: 1rem;
     margin-top: 1.4rem;
+}
+
+.liXiTimeZi {
+    font-size: 12px;
+    color: #94A3B8;
 }
 
 .xxzfSty4 {
@@ -1239,7 +1295,7 @@ input[type='number'] {
     text-align: center;
     font-size: 1.5rem;
     text-decoration: underline;
-    color: #D4FFF3;
+    color: #ffffff;
     padding-right: 1.6rem;
     margin: "0rem 2rem 0rem 2rem"
 }
@@ -1381,6 +1437,20 @@ input[type='number'] {
 .earnBg .muiltr-15v22id-MuiAccordionDetails-root {
     padding: 1rem 1rem 1rem 1rem !important;
 }
+
+.carousel .control-dots {
+    display: none;
+}
+
+.control-arrow {
+    opacity: 1 !important;
+    border-radius: 1rem;
+    padding: 0px !important;
+}
+
+/* .slide {
+    background: rgba(23, 31, 41, 0) !important;
+} */
 
 .shenQingCardDi {
     background-image: url("../../public/assets/images/card/shenQingCardDi.png");
@@ -1568,13 +1638,16 @@ input[type='number'] {
 }
 
 .card4Bg {
-    background-image: url("../../public/assets/images/card/card1.png");
-    background-size: 100% 100%;
-    /* 背景图片初始尺寸 */
-    background-repeat: no-repeat;
-    /* 背景图片不重复 */
-    /* opacity: 0;
-    transition: opacity 0.5s ease-in-out */
+    width: 100%;
+    background-size: cover !important;
+    background-position: center !important;
+    aspect-ratio: 716/416;
+    background-repeat: no-repeat !important;
+}
+
+.cardShowDi {
+    width: 100%;
+    aspect-ratio: 716/416;
 }
 
 .card4Bg.fade-in {
@@ -1586,11 +1659,11 @@ input[type='number'] {
 }
 
 .card41Bg {
-    background-image: url("../../public/assets/images/card/card1_b.png");
-    background-size: 100% 100%;
-    /* 背景图片初始尺寸 */
-    background-repeat: no-repeat;
-    /* 背景图片不重复 */
+    width: 100%;
+    background-size: cover !important;
+    background-position: center !important;
+    aspect-ratio: 716/416;
+    background-repeat: no-repeat !important;
 }
 
 .card5Bg {
@@ -1630,6 +1703,24 @@ input[type='number'] {
     background-color: #0D9488;
 }
 
+.twoSamllBtn {
+    width: 100%;
+    left: 0%;
+    right: 0%;
+    position: absolute;
+    bottom: 0%;
+}
+
+.cardErrorBtn2 {
+    margin: 1rem auto 2rem auto;
+    width: 34%;
+    text-align: center;
+    border-radius: 5rem;
+    height: 3.6rem;
+    line-height: 3.6rem;
+    background-color: #0D9488;
+}
+
 .card6Bg {
     background-image: url("../../public/assets/images/card/card6.png");
     background-size: cover;
@@ -1657,6 +1748,10 @@ input[type='number'] {
     line-height: 2.5rem;
 }
 
+.beiJingJianBian1 {
+    background: linear-gradient(to right, #006972, #003040);
+}
+
 .bianShe1 {
     background: linear-gradient(to right, #8770DF, #F68C9A);
     margin: 0 auto;
@@ -1677,11 +1772,26 @@ input[type='number'] {
     margin-right: 0.8rem;
 }
 
+.wuXianCard {
+    width: 100%;
+    aspect-ratio: 716 / 416;
+}
+
+.wuXianSty {
+    width: 100%;
+    aspect-ratio: 716 / 416;
+}
+
 
 .guoDuDongHua {
     transition: all 0.5s;
     overflow: hidden;
 }
+
+.guoDuDongHua2 {
+    transition: all 0.2s;
+}
+
 
 .guoDuDongPin {
     transition: all 1s;
@@ -1990,6 +2100,32 @@ input[type='number'] {
     padding: 1.4rem 1rem 1.4rem 1rem;
 }
 
+.swapWH {
+    margin-inline: 10px;
+    margin-top: 1px;
+    width: 26px;
+    height: 26px;
+}
+
+.lvDi {
+    background-image: url("../../public/assets/images/earn/lvDi.png");
+    width: 100%;
+    height: 165px;
+    background-size: cover;
+    border-radius: 1rem;
+    padding: 1.4rem 1rem 1.4rem 1rem;
+}
+
+.tianLanDi {
+    background-image: url("../../public/assets/images/earn/tianLanDi.png");
+    width: 100%;
+    height: 165px;
+    background-size: cover;
+    border-radius: 1rem;
+    padding: 1.4rem 1rem 1.4rem 1rem;
+}
+
+
 .fangFaBtn {
     background-color: #8465FF;
     height: 26px;
@@ -2065,6 +2201,7 @@ input[type='number'] {
     background-image: url("../../public/assets/images/withdraw/cardDi.png");
     background-size: cover;
     background-position: center;
+    padding-top: 1.8%;
 }
 
 .danChuangTxt {
@@ -2084,7 +2221,7 @@ input[type='number'] {
 }
 
 .txtColorTitle:hover {
-    color: #12C1A2;
+    color: #ffffff;
     transition: all 0.25s;
 }
 
@@ -2258,8 +2395,27 @@ input[type='number'] {
     background: #1E293A;
 }
 
+.web3Di {
+    width: 100%;
+    aspect-ratio: 360 / 326;
+    /* background-image: url("../../public/assets/images/withdraw/jianBianDi.png"); */
+    background-repeat: no-repeat;
+    border: none;
+    border-radius: 1rem;
+    background-color: #1E293B;
+}
+
+.txtColorTitleGai .muiltr-1ii38xq-MuiButtonBase-root-MuiTab-root.Mui-selected {
+    color: #101828 !important;
+}
+
 .huaKuaBgColor2 {
     background: #304156;
+}
+
+.indexhuaKuaBgColor {
+    background: -webkit-linear-gradient(120deg, #a6fec0 0%, #01efe9 50%, #40d2fc 100%);
+    background: linear-gradient(120deg, #a6fec0 0%, #01efe9 50%, #40d2fc 100%);
 }
 
 .huaKuaBgColor1 {

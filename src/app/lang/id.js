@@ -782,6 +782,47 @@ const locale = {
     server_error_40002: "Kesalahan partisipasi staking NFT",
     server_error_40101: "Kode hadiah tidak ditemukan dalam file teks",
 
+    
+
+    recordInfo_0: "Konversi aset mata uang fiat antara merchant dan pengguna",
+    recordInfo_1: "Konversi aset cryptocurrency antara merchant dan pengguna",
+    recordInfo_2: "Setoran aset mata uang fiat",
+    recordInfo_3: "Penarikan aset mata uang fiat",
+    recordInfo_4: "Setoran aset cryptocurrency",
+    recordInfo_5: "Penarikan aset cryptocurrency",
+    recordInfo_6: "Setoran kartu kredit mata uang fiat",
+    recordInfo_7: "Penarikan kartu kredit mata uang fiat",
+    recordInfo_8: "Setoran kartu kredit cryptocurrency",
+    recordInfo_9: "Penarikan kartu kredit cryptocurrency",
+    recordInfo_10: "Pertukaran mata uang fiat - mata uang fiat",
+    recordInfo_11: "Pertukaran mata uang fiat - cryptocurrency",
+    recordInfo_12: "Pertukaran cryptocurrency - mata uang fiat",
+    recordInfo_13: "Pertukaran cryptocurrency - cryptocurrency",
+    recordInfo_14: "Biaya aplikasi kartu kredit",
+    recordInfo_15: "Penggunaan kartu kredit untuk mata uang fiat",
+    recordInfo_16: "Penggunaan kartu kredit untuk cryptocurrency",
+    recordInfo_17: "Biaya tahunan kartu kredit",
+    recordInfo_18: "Transfer internal mata uang fiat",
+    recordInfo_19: "Transfer internal cryptocurrency",
+    recordInfo_20: "Setoran NFT",
+    recordInfo_21: "Penarikan NFT",
+    recordInfo_22: "Biaya layanan kartu kredit",
+    recordInfo_23: "Jumlah mata uang fiat yang dibekukan pada kartu kredit",
+    recordInfo_24: "Jumlah mata uang fiat yang dicairkan dari kartu kredit",
+    recordInfo_25: "Jumlah cryptocurrency yang dibekukan pada kartu kredit",
+    recordInfo_26: "Jumlah cryptocurrency yang dicairkan dari kartu kredit",
+    recordInfo_27: "Denda pembatalan transaksi kartu kredit",
+    recordInfo_28: "Pembatalan transaksi mata uang fiat kartu kredit",
+    recordInfo_29: "Pembatalan transaksi cryptocurrency kartu kredit",
+    recordInfo_30: "Pengembalian transaksi mata uang fiat kartu kredit",
+    recordInfo_31: "Pengembalian transaksi cryptocurrency kartu kredit",
+    card_246: "Batalkan",
+    card_247: "Sedang diproses",
+    card_248: "Sedang dalam peninjauan",
+
+
+    card_249: "Tambahkan",
+    card_250: "Silakan tutup aplikasi mini dan klik tombol refresh untuk mencoba lagi.",
 
 
 

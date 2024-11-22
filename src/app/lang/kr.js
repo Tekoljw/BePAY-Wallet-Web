@@ -785,6 +785,46 @@ const locale = {
     server_error_40101: "텍스트 파일에서 기프트 코드 없음",
 
 
+    recordInfo_0: "상인과 사용자 간의 법정 자산 전환",
+    recordInfo_1: "상인과 사용자 간의 가상 자산 전환",
+    recordInfo_2: "법정 자산 입금",
+    recordInfo_3: "법정 자산 출금",
+    recordInfo_4: "가상 자산 입금",
+    recordInfo_5: "가상 자산 출금",
+    recordInfo_6: "법정 자산 신용카드 입금",
+    recordInfo_7: "법정 자산 신용카드 출금",
+    recordInfo_8: "가상 자산 신용카드 입금",
+    recordInfo_9: "가상 자산 신용카드 출금",
+    recordInfo_10: "법정 자산 - 법정 자산 교환",
+    recordInfo_11: "법정 자산 - 가상 자산 교환",
+    recordInfo_12: "가상 자산 - 법정 자산 교환",
+    recordInfo_13: "가상 자산 - 가상 자산 교환",
+    recordInfo_14: "신용카드 신청 수수료",
+    recordInfo_15: "법정 자산 신용카드 소비",
+    recordInfo_16: "가상 자산 신용카드 소비",
+    recordInfo_17: "신용카드 연회비",
+    recordInfo_18: "법정 자산 내부 이체",
+    recordInfo_19: "가상 자산 내부 이체",
+    recordInfo_20: "NFT 입금",
+    recordInfo_21: "NFT 출금",
+    recordInfo_22: "신용카드 서비스 수수료",
+    recordInfo_23: "법정 자산 신용카드 동결 금액",
+    recordInfo_24: "법정 자산 신용카드 해제 금액",
+    recordInfo_25: "가상 자산 신용카드 동결 금액",
+    recordInfo_26: "가상 자산 신용카드 해제 금액",
+    recordInfo_27: "신용카드 거래 취소 벌금 금액",
+    recordInfo_28: "법정 자산 신용카드 거래 취소",
+    recordInfo_29: "가상 자산 신용카드 거래 취소",
+    recordInfo_30: "법정 자산 신용카드 거래 환불",
+    recordInfo_31: "가상 자산 신용카드 거래 환불",
+    card_246: "취소",
+    card_247: "신청 중",
+    card_248: "심사 중",
+
+
+    card_249: "추가",
+    card_250: "미니 프로그램을 닫고 새로 고침 버튼을 눌러 다시 시도하세요.",
+
 
 
 

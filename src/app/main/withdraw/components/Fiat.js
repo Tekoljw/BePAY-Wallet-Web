@@ -850,7 +850,7 @@ function Fiat(props) {
                     avatar: tmpPaymentFiat[item]?.avatar || '',
                     currencyCode: item,
                     balance: balance.toFixed(2),
-                    dollarFiat: (balance == 0) ? 0 : balance / tmpPaymentFiat[item]?.exchangeRate
+                    dollarFiat: (balance == 0) ? 0 : balance / tmpPaymentFiat[item]?.buyRate
                 })
             }
         });
@@ -1051,7 +1051,7 @@ function Fiat(props) {
                         component={motion.div}
                         variants={item}
                         className="w-full rounded-16 border flex flex-col "
-                        style={{ borderRadius: '0.5rem' }}
+                        style={{ borderRadius: '1rem' }}
                         sx={{
                             backgroundColor: '#1E293B',
                             border: 'none'
@@ -2059,7 +2059,12 @@ function Fiat(props) {
                                                 <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
                                                 <div className='bianJiBiZi'>{t('card_74')}</div>
                                             </div>
-                                            <div className='pasteDi'>{item}</div>
+                                            <div className='pasteDi'  onClick={()=>{ 
+                                                if(smallTabValue === 1) {
+                                                    setInputVal({ ...inputVal, 'userId': item });
+                                                    closePasteFunc()
+                                                }
+                                        }}>{item}</div>
                                         </div>
                                     )
                                 })

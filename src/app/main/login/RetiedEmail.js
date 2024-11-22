@@ -94,7 +94,7 @@ function RetiedEmail(props) {
         } else {
             await dispatch(bindEmail(control._formValues)).then((res) => {
                 let result = res.payload;
-                if (result.errno === 0) {
+                if (result && result.errno === 0) {
                     dispatch(showMessage({ message: 'Success', code: 1 }));
                     props.backPage()
                     dispatch(userProfile());

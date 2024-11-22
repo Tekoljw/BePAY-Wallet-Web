@@ -577,7 +577,7 @@ function Swap() {
 
   useEffect(() => {
     hasData && symbolsFormatAmount();
-  }, [hasData, swapData, inputVal.amount]);
+  }, [hasData, swapData, inputVal.amount, fiatsData]);
 
   useEffect(() => {
     setLoadingShow(false)
@@ -614,20 +614,20 @@ function Swap() {
   }, [formatSymbol]);
 
   const assembleRateChange = () => {
-    const symbolArrRate = _.map(config.symbols, (symbol) => { return { key: symbol.symbol, rate: symbol.rate } });
-    const fiatArrRate = _.map(userData.fiat, (fa) => { return { key: fa.currencyCode, rate: (1 / fa.exchangeRate).toFixed(20) } });
+    const symbolArrRate = _.map(config.symbols, (symbol) => { return { key: symbol.symbol, buyRate: symbol.buyRate, sellRate: symbol.sellRate} });
+    const fiatArrRate = _.map(userData.fiat, (fa) => { return { key: fa.currencyCode, buyRate: (1 / fa.buyRate).toFixed(20), sellRate: (1 / fa.sellRate).toFixed(20) } });
     setRateArr([...symbolArrRate, ...fiatArrRate]);
   }
 
   const fromToRate = (fromSymbol, toSymbol) => {
-    const fromSymbolRate = _.get(_.find(rateArr, { key: fromSymbol }), 'rate', 0);
-    const toSymbolRate = _.get(_.find(rateArr, { key: toSymbol }), 'rate', 0);
+    const fromSymbolRate = _.get(_.find(rateArr, { key: fromSymbol }), 'buyRate', 0);
+    const toSymbolRate = _.get(_.find(rateArr, { key: toSymbol }), 'sellRate', 0);
     return ((toSymbolRate / fromSymbolRate) ? (Number(toSymbolRate / fromSymbolRate)) : Number(toSymbolRate / fromSymbolRate))
   };
 
   const currentFromToRate = (fromSymbol, toSymbol) => {
-    const fromSymbolRate = _.get(_.find(rateArr, { key: fromSymbol }), 'rate', 0);
-    const toSymbolRate = _.get(_.find(rateArr, { key: toSymbol }), 'rate', 0);
+    const fromSymbolRate = _.get(_.find(rateArr, { key: fromSymbol }), 'buyRate', 0);
+    const toSymbolRate = _.get(_.find(rateArr, { key: toSymbol }), 'sellRate', 0);
     setConvertRate((fromSymbolRate / toSymbolRate) ? (Number(fromSymbolRate / toSymbolRate)) : Number(fromSymbolRate / toSymbolRate))
   };
 

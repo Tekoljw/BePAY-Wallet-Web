@@ -29,7 +29,7 @@ import { selectConfig, setNftConfig } from "../../store/config";
 import {
     arrayLookup, getOpenAppId, getOpenAppIndex,
     setPhoneTab, handleCopyText, getUserLoginType,
-    judgeIosOrAndroid, getNowTime
+    judgeIosOrAndroid, getNowTime, canLoginAfterRequest
 } from "../../util/tools/function";
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import { foxSendTransaction, manualCryptoNotify } from "../../store/transfer/transferThunk";
@@ -232,6 +232,7 @@ function Deposite() {
     const walletData = userData.wallet;
     // 法币余额数据
     const fiatData = userData.fiat;
+    const loginState = userData.loginState;
     const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || 'USD');
     const config = useSelector(selectConfig);
     const nftConfig = config.nftConfig;
@@ -424,16 +425,22 @@ function Deposite() {
     useEffect(() => {
         setLoadingShow(false);
         setPhoneTab('deposite');
-        dispatch(getCryptoDisplay()).then((res) => {
-            setLoadingShow(false);
-            let result = res.payload;
-            setCryptoDisplayData(result?.data);
-        });
-        dispatch(getFiatDisplay()).then((res) => {
-            let result = res.payload;
-            setFiatDisplayData(result?.data);
-        });
     }, []);
+
+
+    useEffect(() => {
+        if(canLoginAfterRequest(userData)){ //已经进行过登录流程了
+            dispatch(getCryptoDisplay()).then((res) => {
+                setLoadingShow(false);
+                let result = res.payload;
+                setCryptoDisplayData(result?.data);
+            });
+            dispatch(getFiatDisplay()).then((res) => {
+                let result = res.payload;
+                setFiatDisplayData(result?.data);
+            });
+        }
+    }, [loginState]);
 
     useEffect(() => {
         setSubmitDisabled(!transferFormData.money || !transferFormData.amount);
@@ -572,7 +579,7 @@ function Deposite() {
             filterSymbolData = symbolsData;
         }
 
-        let currencyRate = arrayLookup(config.payment.currency, 'currencyCode', currencyCode, 'exchangeRate') || 0;
+        let currencyRate = arrayLookup(config.payment.currency, 'currencyCode', currencyCode, 'sellRate') || 0;
         let displayData = [];
         cryptoDisplayData?.map((item, index) => {
             displayData.push(item.name);
@@ -586,7 +593,7 @@ function Deposite() {
         if (displayData.length > 0) {
             let tmpSymbols = [];
             // 美元汇率
-            let dollarCurrencyRate = arrayLookup(config.payment.currency, 'currencyCode', 'USD', 'exchangeRate') || 0;
+            let dollarCurrencyRate = arrayLookup(config.payment.currency, 'currencyCode', 'USD', 'sellRate') || 0;
             displayData.forEach((item, index) => {
                 var tmpShow = arrayLookup(cryptoDisplayData, 'name', item, 'show');
                 if (tmpShow === '') {
@@ -594,7 +601,7 @@ function Deposite() {
                 }
                 if (tmpShow === true && item !== 'eBGT') {
                     // 兑换成USDT的汇率
-                    let symbolRate = arrayLookup(symbolsData, 'symbol', item, 'rate') || 0;
+                    let symbolRate = arrayLookup(symbolsData, 'symbol', item, 'sellRate') || 0;
                     var balance = getSymbolMoney(item);
                     tmpSymbols.push({
                         avatar: arrayLookup(symbolsData, 'symbol', item, 'avatar') || '',
@@ -972,7 +979,7 @@ function Deposite() {
                     currencyCode: item,
                     // balance: balance == 0 ? 0.00 : balance.toFixed(2),
                     balance,
-                    dollarFiat: (balance == 0) ? 0 : balance / tmpPaymentFiat[item]?.exchangeRate
+                    dollarFiat: (balance == 0) ? 0 : balance / tmpPaymentFiat[item]?.sellRate
                 })
             }
         });

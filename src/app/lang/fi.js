@@ -784,6 +784,47 @@ server_error_40002:"NFT-lainan osallistuminen virheellinen",
 server_error_40101:"Tekstitiedostossa ei löytynyt lahjakoodia",  
 
 
+recordInfo_0: "Rahavarantojen vaihto kaupankäynnissä ja käyttäjien välillä",
+recordInfo_1: "Virtuaalirahavaroiden vaihto kaupankäynnissä ja käyttäjien välillä",
+recordInfo_2: "Rahavarojen talletus",
+recordInfo_3: "Rahavarojen nosto",
+recordInfo_4: "Virtuaalirahavaroiden talletus",
+recordInfo_5: "Virtuaalirahavaroiden nosto",
+recordInfo_6: "Rahavaroja talletettu luottokortilla",
+recordInfo_7: "Rahavaroja nostettu luottokortilla",
+recordInfo_8: "Virtuaalirahavaroja talletettu luottokortilla",
+recordInfo_9: "Virtuaalirahavaroja nostettu luottokortilla",
+recordInfo_10: "Rahavaroista rahavaroihin vaihto",
+recordInfo_11: "Rahavaroista virtuaalirahaan vaihto",
+recordInfo_12: "Virtuaalirahasta rahavaroihin vaihto",
+recordInfo_13: "Virtuaalirahasta virtuaalirahaan vaihto",
+recordInfo_14: "Luottokorttihakemuksen maksu",
+recordInfo_15: "Rahankäyttö luottokortilla",
+recordInfo_16: "Virtuaalirahan käyttö luottokortilla",
+recordInfo_17: "Luottokortin vuosimaksu",
+recordInfo_18: "Rahansiirto sisäisesti rahavaroissa",
+recordInfo_19: "Sisäinen rahansiirto virtuaalirahassa",
+recordInfo_20: "NFT-talletus",
+recordInfo_21: "NFT-nosto",
+recordInfo_22: "Luottokortin palvelumaksu",
+recordInfo_23: "Luottokortin rahavarojen jäädytys",
+recordInfo_24: "Luottokortin rahavarojen vapautus",
+recordInfo_25: "Luottokortin virtuaalirahavarojen jäädytys",
+recordInfo_26: "Luottokortin virtuaalirahavarojen vapautus",
+recordInfo_27: "Luottokortin tapahtuman peruutusmaksu",
+recordInfo_28: "Luottokortilla tehty rahasiirron peruutus",
+recordInfo_29: "Luottokortilla tehty virtuaalirahasiirron peruutus",
+recordInfo_30: "Rahasiirron palautus luottokortilla",
+recordInfo_31: "Virtuaalirahasiirron palautus luottokortilla",
+card_246: "Peruuta",
+card_247: "Hakemus käsittelyssä",
+card_248: "Tarkastuksessa",
+
+
+    
+card_249: "Lisää",
+card_250: "Sulje mini-ohjelma ja napsauta päivityspainiketta yrittääksesi uudelleen.",
+
 
 
 

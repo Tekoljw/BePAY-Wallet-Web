@@ -54,28 +54,76 @@ function Record() {
     const [cardConfig, setCardConfig] = useState({ 2: [], 3: [] })
     const [cardConfigList, setCardConfigList] = useState({});
 
-    // public static final int CONST_LOG_TYPE_DEPOSIT                = 1;
-    // public static final int CONST_LOG_TYPE_POOL_TAKE_OUT            = 2;
-    // // deductUserBalance => CONST_LOG_TYPE_SYS_DEDUCT
-    // public static final int CONST_LOG_TYPE_SYS_DEDUCT              = 3;
-    // // awardCoinByAdmin => CONST_LOG_TYPE_ADMIN_AWARD
-    // public static final int CONST_LOG_TYPE_ADMIN_AWARD              = 4;
-    // public static final int CONST_LOG_TYPE_BORROW_PAYBACK            = 5;
-    // public static final int CONST_LOG_TYPE_SEND_TIPS              = 6;
-    // public static final int CONST_LOG_TYPE_FIAT_BUY                = 7;
-    // public static final int CONST_LOG_TYPE_CRYPTO_SELL              = 8;
-    // public static final int CONST_LOG_TYPE_CRYPTO_SWAP              = 9;
-    // public static final int CONST_LOG_TYPE_ADMIN_WITHDRAW            = 10;
-    // public static final int CONST_LOG_TYPE_HASH_GAME_BET            = 11;
-    // public static final int CONST_LOG_TYPE_USER_WITHDRAW            = 12;
-    //
-    // public static final int CONST_LOG_TYPE_VOLUNTEER_DIRECT_ACTIVE        = 13;
-    // public static final int CONST_LOG_TYPE_VOLUNTEER_RELEASE_ACTIVE        = 14;
-    // public static final int CONST_LOG_TYPE_VOLUNTEER_USE_TASK_CODE        = 15;
-    // public static final int CONST_LOG_TYPE_TRANSFER_TO_GAME            = 16;
-    // public static final int CONST_LOG_TYPE_TRANSFER_FROM_GAME          = 17;
-
+    // 日志类型
+    // public static final int LOG_TYPE_MCH_ASSETS_USER_FIAT_CHANGE = 0;    //商户和用户之间法币资产转换
+    // public static final int LOG_TYPE_MCH_ASSETS_USER_CRYPTO_CHANGE = 1;  //商户和用户之间虚拟币资产转换
+    // public static final int LOG_TYPE_ASSETS_FIAT_DEPOSIT = 2;       //法币资产入金
+    // public static final int LOG_TYPE_ASSETS_FIAT_WITHDRAW = 3;      //法币资产出金
+    // public static final int LOG_TYPE_ASSETS_CRYPTO_DEPOSIT = 4;     //虚拟币资产入金
+    // public static final int LOG_TYPE_ASSETS_CRYPTO_WITHDRAW = 5;    //虚拟币资产出金
+    // public static final int LOG_TYPE_CREDIT_FIAT_DEPOSIT = 6;       //法币信用卡入金
+    // public static final int LOG_TYPE_CREDIT_FIAT_WITHDRAW = 7;      //法币信用卡出金
+    // public static final int LOG_TYPE_CREDIT_CRYPTO_DEPOSIT = 8;     //虚拟币信用卡入金
+    // public static final int LOG_TYPE_CREDIT_CRYPTO_WITHDRAW = 9;    //虚拟币信用卡出金
+    // public static final int LOG_TYPE_CREDIT_SWAP_FIAT_FIAT = 10;     //兑换法币-法币
+    // public static final int LOG_TYPE_CREDIT_SWAP_FIAT_CRYPTO = 11;   //兑换法币-虚拟币
+    // public static final int LOG_TYPE_CREDIT_SWAP_CRYPTO_FIAT = 12;  //兑换虚拟币-法币
+    // public static final int LOG_TYPE_CREDIT_SWAP_CRYPTO_CRYPTO = 13;//兑换虚拟币-虚拟币
+    // public static final int LOG_TYPE_CREDIT_APPLY_CRYPTO_FEE = 14;  //申请信用卡费用
+    // public static final int LOG_TYPE_CREDIT_CONSUME_FIAT = 15;      //信用卡消费法币
+    // public static final int LOG_TYPE_CREDIT_CONSUME_CRYPTO = 16;    //信用卡消费虚拟币
+    // public static final int LOG_TYPE_CREDIT_YEAR_FEE = 17;          //信用卡年费
+    // public static final int LOG_TYPE_ASSETS_TRANSFER_FIAT_INNER = 18;  //法币内部转账
+    // public static final int LOG_TYPE_ASSETS_TRANSFER_CRYPTO_INNER = 19;//虚拟币内部转账
+    // public static final int LOG_TYPE_ASSETS_NFT_DEPOSIT = 20;       //存入NFT
+    // public static final int LOG_TYPE_ASSETS_NFT_WITHDRAW = 21;      //取出NFT
+    // public static final int LOG_TYPE_CREDIT_SERVICE_FEE = 22;      //信用卡服务手续费
+    // public static final int LOG_TYPE_CREDIT_FIAT_FROZEN = 23;  //信用卡法币冻结金额
+    // public static final int LOG_TYPE_CREDIT_FIAT_UN_FROZEN = 24;
+    // public static final int LOG_TYPE_CREDIT_CRYPTO_FROZEN = 25;
+    // public static final int LOG_TYPE_CREDIT_CRYPTO_UN_FROZEN = 26;
+    // public static final int LOG_TYPE_CREDIT_FINE_AMOUNT = 27;
+    // public static final int LOG_TYPE_CREDIT_REVERSAL_FIAT = 28;
+    // public static final int LOG_TYPE_CREDIT_REVERSAL_CRYPTO = 29;
+    // public static final int LOG_TYPE_CREDIT_REFUND_FIAT = 30;
+    // public static final int LOG_TYPE_CREDIT_REFUND_CRYPTO = 31;
+    
     const typeList = [
+        { key: 0, label: t('recordInfo_0')},
+        { key: 1, label: t('recordInfo_1')},
+        { key: 2, label: t('recordInfo_2')},
+        { key: 3, label: t('recordInfo_3')},
+        { key: 4, label: t('recordInfo_4')},
+        { key: 5, label: t('recordInfo_5')},
+        { key: 6, label: t('recordInfo_6')},
+        { key: 7, label: t('recordInfo_7')},
+        { key: 8, label: t('recordInfo_8')},
+        { key: 9, label: t('recordInfo_9')},
+        { key: 10, label: t('recordInfo_10')},
+        { key: 11, label: t('recordInfo_11')},
+        { key: 12, label: t('recordInfo_12')},
+        { key: 13, label: t('recordInfo_13')},
+        { key: 14, label: t('recordInfo_14')},
+        { key: 15, label: t('recordInfo_15')},
+        { key: 16, label: t('recordInfo_16')},
+        { key: 17, label: t('recordInfo_17')},
+        { key: 18, label: t('recordInfo_18')},
+        { key: 19, label: t('recordInfo_19')},
+        { key: 20, label: t('recordInfo_20')},
+        { key: 21, label: t('recordInfo_21')},
+        { key: 22, label: t('recordInfo_22')},
+        { key: 23, label: t('recordInfo_23')},
+        { key: 24, label: t('recordInfo_24')},
+        { key: 25, label: t('recordInfo_25')},
+        { key: 26, label: t('recordInfo_26')},
+        { key: 27, label: t('recordInfo_27')},
+        { key: 28, label: t('recordInfo_28')},
+        { key: 29, label: t('recordInfo_29')},
+        { key: 30, label: t('recordInfo_30')},
+        { key: 31, label: t('recordInfo_31')}
+    ]
+
+    const showTypeList = [
         { id: 0, label: t('home_record_0') },
         { id: 1, label: t('home_record_1') },
         // { id: 2, label: 'Pool' },
@@ -104,7 +152,7 @@ function Record() {
 
     const [isLoading, setIsLoading] = React.useState(true);
     const columns = [
-        { field: 'type', label: t('home_record_19'), minWidth: 100, align: 'left', format: (value) => { return typeList.find(v => { return v.id == value }).label } },
+        { field: 'type', label: t('home_record_19'), minWidth: 100, align: 'left', format: (value) => { return showTypeList.find(v => { return v.id == value }).label } },
         { field: 'symbol', label: t('home_record_8'), minWidth: 100, align: 'center' },
         { field: 'balance', label: t('home_record_9'), minWidth: 100, align: 'center', format: (value) => value.toFixed(4), },
         { field: 'amount', label: t('home_record_10'), minWidth: 100, align: 'center', format: (value) => value.toFixed(4), },
@@ -260,7 +308,7 @@ function Record() {
                     component={motion.div}
                     variants={item}
                 >
-                    {typeList.map((typeRow) => {
+                    {showTypeList.map((typeRow) => {
                         return (
                             <Typography key={typeRow.id} className={clsx('text-16 px-16 my-16 cursor-pointer font-medium txtColorTitleSmall text-nowrap', type === typeRow.id && 'record-type-active')} onClick={() => {setType(typeRow.id)}}>{typeRow.label}</Typography>
                         )
@@ -371,7 +419,7 @@ function Record() {
                                     },
                                 }}
                             >
-                                {typeList.map((item) => {
+                                {showTypeList.map((item) => {
                                     return (
                                         <MenuItem key={item.id} value={item.id} className='text-16'>{item.label}</MenuItem>
                                     )
@@ -545,10 +593,10 @@ function Record() {
                                                 style={{ borderBottom: index != (transferList.length - 1) ? "solid 1px #33435d" : '' }}>
                                                 <div className='flex justify-between '>
                                                     <div className='flex'>
-                                                        <div className='recordListZi'>{typeList.find(v => {
+                                                        <div className='recordListZi'>{showTypeList.find(v => {
                                                             return v.id == (transferItem.showType)
                                                         })?.label}</div>
-                                                        {typeList.find(v => {
+                                                        {showTypeList.find(v => {
                                                             return v.id == (transferItem.showType)
                                                         }) ?
                                                             <div className="recordListZi ml-10">{transferItem.symbol}</div> :
@@ -558,6 +606,14 @@ function Record() {
                                                     <div className='recordListZi2'>{transferItem.amount}</div>
                                                 </div>
                                                 <div className='recordListSmallZi'>{t('home_deposite_24')} <span>{transferItem.balance}</span>
+                                                </div>
+                                                <div className='recordListSmallZi'>{t('home_borrow_18')} <span>{transferItem.serviceFee}</span>
+                                                </div>
+                                                <div className='recordListSmallZi'>{ 
+                                                    typeList.find(v => {
+                                                        return v.key == (transferItem.type)
+                                                    })?.label
+                                                }
                                                 </div>
                                                 <div
                                                     className='recordListSmallZi'>{getNowTime(transferItem.createTime)}</div>
