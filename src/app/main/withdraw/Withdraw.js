@@ -236,8 +236,8 @@ function Withdraw(props) {
     const [withDrawOrderID, setWithDrawOrderID] = useState('');
     const [openLoad, setOpenLoad] = useState(false);
     const userData = useSelector(selectUserData);
-    const fiatData = userData.fiat;
-    const walletData = userData.wallet;
+    const fiatData = userData.fiat || [];
+    const walletData = userData.wallet || {};
     const transferStats = userData.transferStats;
     const loginState = userData.loginState;
     const hasAuthGoogle = userData.userInfo?.hasAuthGoogle;
@@ -631,7 +631,7 @@ function Withdraw(props) {
     
 
     const evalFee2 = (networkId, coinName, amount, address) => {
-        let usdtGass = userData.wallet.inner?.find(item => Object.values(item).includes("USDT"));
+        let usdtGass = userData?.wallet?.inner?.find(item => Object.values(item).includes("USDT"));
         dispatch(cryptoWithdrawFee({
             networkId: networkId,
             coinName: coinName,
@@ -669,15 +669,16 @@ function Withdraw(props) {
         });
     };
     useEffect(() => {
+        setLoadingShow(true)
         setPhoneTab('withdraw');
-        setLoadingShow(false);
         dispatch(getWithdrawHistoryAddress()).then((res) => {
-            setLoadingShow(false);
+            setLoadingShow(false)
             if (res.payload?.data?.length > 0) {
                 setHistoryAddress(res.payload.data);
             }
         });
     }, []);
+
 
     const defaultValues = {
         email: '',
@@ -764,7 +765,7 @@ function Withdraw(props) {
     };
 
     const getSymbolMoney = (symbol) => {
-        let arr = userData.wallet.inner || [];
+        let arr = userData?.wallet?.inner || [];
         let balance = arrayLookup(arr, 'symbol', symbol, 'balance') || 0;
         return balance.toFixed(6)
     };

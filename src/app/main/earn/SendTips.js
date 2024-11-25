@@ -116,7 +116,7 @@ function Earn(props) {
     const changeAddress = (prop, value) => {
         setInputVal({ ...inputVal, [prop]: value });
     };
-    const walletData = useSelector(selectUserData).wallet;
+    const walletData = useSelector(selectUserData).wallet || {};
     const transferStats = useSelector(selectUserData).transferStats;
     const hasAuthGoogle = useSelector(selectUserData).userInfo?.hasAuthGoogle
     const sortUseAge = (a, b) => {

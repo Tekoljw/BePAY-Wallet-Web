@@ -250,7 +250,7 @@ function Record() {
 
 
     useEffect(() => {
-        setLoadingShow(false)
+        setLoadingShow(true)
         handleTransferRecord()
     }, [type, timeItem, kaPianItem]);
 

@@ -18,7 +18,7 @@ import {
   canLoginAfterRequest,
   setPhoneTab
 } from "../../util/tools/function";
-import { updateCurrency, updateWalletDisplay } from "../../store/user";
+import { updateCurrency, updateWalletDisplay, updateWalletLoading} from "../../store/user";
 import { showMessage } from "app/store/fuse/messageSlice";
 import { centerGetNftList } from '../../store/wallet/walletThunk';
 
@@ -360,6 +360,14 @@ function Wallet(props) {
     });
   };
 
+    useEffect(()=>{
+        if(!userData.walletLoading){
+            setLoadingShow(false);
+        }else{
+            setLoadingShow(true);
+        }
+    }, userData.walletLoading)
+
   // useEffect(() => {
   //   if (symbols.length > 0) {
   //     setLoadingShow(true);
@@ -649,7 +657,7 @@ function Wallet(props) {
   };
 
   const getUserMoney = (symbol) => {
-    let arr = userData.wallet.inner || [];
+    let arr = userData?.wallet?.inner || [];
     let balance = arrayLookup(arr, "symbol", symbol, "balance") || 0;
     return balance.toFixed(6);
   };
@@ -724,7 +732,7 @@ function Wallet(props) {
     getUserCurrencyMoney();
   }, [
     symbolsData,
-    userData.wallet.inner,
+    userData?.wallet?.inner,
     decenterSymbols,
     decenterSymbolsSearch,
     currencyCode,
@@ -747,7 +755,7 @@ function Wallet(props) {
 
   // token数据整理
   const symbolsFormatAmount = () => {
-    if (symbolsData.length === 0 || !userData.wallet.inner) {
+    if (symbolsData.length === 0 || !userData?.wallet?.inner) {
       return;
     }
 
@@ -834,7 +842,7 @@ function Wallet(props) {
     }
   }, [
     symbolsData,
-    userData.wallet.inner,
+    userData?.wallet?.inner,
     currencyCode,
     isFait,
     cryptoDisplayData,
@@ -1088,7 +1096,10 @@ function Wallet(props) {
       if (canLoginAfterRequest(userData)) { //登录过以后才会获取余额值
         dispatch(userProfile());
         dispatch(centerGetTokenBalanceList());
-        dispatch(centerGetUserFiat());
+        dispatch(centerGetUserFiat()).then(()=> {
+          setLoadingShow(false)
+          dispatch(updateWalletLoading(false))
+        });
       }
     }, 500)
   }, []);

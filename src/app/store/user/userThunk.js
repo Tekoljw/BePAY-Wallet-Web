@@ -3,7 +3,7 @@ import Web3 from "../../util/web3";
 import React from "react";
 import history from '@history';
 import { showMessage } from 'app/store/fuse/messageSlice';
-import {selectUserData, updateLoginState, updateTransfer, updateUser, updateUserToken, updateWallet} from "./index";
+import {selectUserData, updateLoginState, updateTransfer, updateUser, updateUserToken, updateWallet, updateBankList} from "./index";
 import utils from "../../util/tools/utils";
 import BN from "bn.js";
 import { getWithdrawTransferStats } from '../wallet/walletThunk';
@@ -66,11 +66,18 @@ export const checkLoginState = createAsyncThunk(
 export const userProfile = createAsyncThunk(
     'user/userProfile',
     async (settings, { dispatch, getState }) => {
-        const userProfile = await React.$api("user.profile");
-        if (userProfile.errno === 0) {
-            dispatch(updateUser(userProfile));
-        } else {
-            dispatch(showMessage({ message: userProfile.errmsg, code: 2 }));
+        const state = getState();
+        if (state.user.profile) {
+            dispatch(updateUser(state.data.profile));
+            return userProfile;
+        }else{
+            const userProfile = await React.$api("user.profile");
+            if (userProfile.errno === 0) {
+                dispatch(updateUser(userProfile));
+                return userProfile;
+            } else {
+                dispatch(showMessage({ message: userProfile.errmsg, code: 2 }));
+            }
         }
     }
 );
@@ -944,14 +951,22 @@ export const transferRecords = createAsyncThunk(
 export const centerGetTokenBalanceList = createAsyncThunk(
     'user/centerGetTokenBalanceList',
     async (settings, { dispatch, getState }) => {
-        const balanceList = await React.$api("wallet.centerGetTokenBalanceList");
-        if (balanceList.errno === 0) {
-            dispatch(updateWallet(balanceList));
-        } else {
-            dispatch(showMessage({ message: balanceList.errmsg, code: 2 }));
-        }
-        if (settings.requestSymbol) { //需要请求币种信息
-            dispatch(getSymbols());
+        const state = getState();
+        if(state.user.wallet) {
+            if (settings.requestSymbol) { //需要请求币种信息
+                dispatch(getSymbols());
+            }
+            return state.user.wallet;
+        }else {
+            const balanceList = await React.$api("wallet.centerGetTokenBalanceList");
+            if (balanceList.errno === 0) {
+                dispatch(updateWallet(balanceList));
+            } else {
+                dispatch(showMessage({ message: balanceList.errmsg, code: 2 }));
+            }
+            if (settings.requestSymbol) { //需要请求币种信息
+                dispatch(getSymbols());
+            }
         }
     }
 );
@@ -1158,11 +1173,17 @@ export const getDecenterWalletBalance = createAsyncThunk(
 export const getListBank = createAsyncThunk(
     'user/getListBank',
     async (settings, { dispatch, getState }) => {
-        const result = await React.$api("bank.listBank");
-        if (result.errno === 0) {
-            return result.data
+        const state  = getState();
+        if(state.user.bankList) {
+            return state.user.bankList
         } else {
-            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            const result = await React.$api("bank.listBank");
+            if (result.errno === 0) {
+                dispatch(updateBankList(result.data))
+                return result.data
+            } else {
+                dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            }
         }
     }
 );

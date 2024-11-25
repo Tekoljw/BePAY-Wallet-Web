@@ -117,7 +117,7 @@ function Card(props) {
     const [openJiHuoWindow, setOpenJiHuoWindow] = useState(false);
     const [applyOver, setApplyOver] = useState(false);
     const [symbol, setSymbol] = useState('');
-    const walletData = useSelector(selectUserData).wallet;
+    const walletData = useSelector(selectUserData).wallet || {};
     const config = useSelector(selectConfig);
     const symbols = config.symbols;
     const [symbolWallet, setSymbolWallet] = useState([]);
@@ -1012,6 +1012,7 @@ function Card(props) {
     // 获取卡列表
     const getCardList = () => {
         dispatch(getUserCreditCard()).then((res) => {
+            setLoadingShow(false)
             let result = res.payload
             let tmpCardList = { 2: [], 3: [] }
             let tmpCardListObj = {}
@@ -1181,6 +1182,7 @@ function Card(props) {
     }
 
     useEffect(() => {
+        setLoadingShow(true);
         getCardConfig()
         getCardList()
     }, []);

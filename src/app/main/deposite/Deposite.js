@@ -229,11 +229,11 @@ function Deposite() {
     const [submitDisabled, setSubmitDisabled] = useState(false);
     const [isGetWalletAddress, setIsGetWalletAddress] = useState(false);
     const userData = useSelector(selectUserData);
-    const walletData = userData.wallet;
+    const walletData = userData.wallet || {};
     // 法币余额数据
-    const fiatData = userData.fiat;
+    const fiatData = userData.fiat || [];
     const loginState = userData.loginState;
-    const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || 'USD');
+    const [currencyCode, setCurrencyCode] = useState(fiatData && fiatData[0]?.currencyCode || 'USD');
     const config = useSelector(selectConfig);
     const nftConfig = config.nftConfig;
     const networks = config.networks;
@@ -423,7 +423,7 @@ function Deposite() {
     };
 
     useEffect(() => {
-        setLoadingShow(false);
+        setLoadingShow(true);
         setPhoneTab('deposite');
     }, []);
 
@@ -698,7 +698,7 @@ function Deposite() {
     }, [networkId]);
 
     const getSymbolMoney = (symbol) => {
-        let arr = userData.wallet.inner || [];
+        let arr = userData?.wallet?.inner || [];
         let balance = arrayLookup(arr, 'symbol', symbol, 'balance') || 0;
         return balance.toFixed(6)
     };
@@ -935,7 +935,7 @@ function Deposite() {
     const [showQRcode, setShowQRcode] = useState(false);
 
     const fiatsFormatAmount = () => {
-        if (fiatData.length === 0 && paymentFiat.length === 0) {
+        if (fiatData && fiatData.length === 0 && paymentFiat && paymentFiat.length === 0) {
             return
         }
         let tmpFiatDisplayData = {};
@@ -956,8 +956,8 @@ function Deposite() {
             displayFiatData.push(item.name);
             tmpFiatDisplayData[item.name] = item
         });
-        if (fiatData.length > 0) {
-            fiatData?.map((item, index) => {
+        if (fiatData && fiatData.length > 0) {
+            fiatData.map((item, index) => {
                 tmpFiatsData[item.currencyCode] = item;
             });
         }

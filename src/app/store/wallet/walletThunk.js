@@ -1,13 +1,22 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import React from "react";
 import { showMessage } from 'app/store/fuse/messageSlice';
-import { updateFiat, updateCryptoDisplay, updateWalletDisplay } from "../user/index";
+import { updateFiat, updateCryptoDisplay, updateWalletDisplay, updateNftDisplay, updateFiatDisplay } from "../user/index";
 import { automaticConnectWeb3 } from "../user/userThunk";
 import utils_web3 from "../../util/web3"
 import { setTransferStats } from '../user'
 import BN from "bn.js";
 import { getSymbols, paymentConfig } from "app/store/config/configThunk";
 import { setBorrowConfig, setNftConfig } from "app/store/config";
+
+const checkCached = (key, getState) => {
+    const state = getState();
+    if(state[key.split('.')[0]][key.split('.')[1]]){
+        return true
+    }else{
+        return false;
+    }
+}
 
 export const WalletConfigDefineMap = {
     "ETH": {
@@ -42,15 +51,21 @@ export const WalletConfigDefineMap = {
 export const centerGetUserFiat = createAsyncThunk(
     'wallet/centerGetUserFiat',
     async (settings, { dispatch, getState }) => {
-        const balanceList = await React.$api("wallet.getUserFiat");
-        if (balanceList.errno === 0) {
-            dispatch(updateFiat(balanceList));
-        } else {
-            dispatch(showMessage({ message: balanceList.errmsg, code: 2 }));
-        }
-        if (settings.requestPayment) { //需要请求支付方式
-            dispatch(paymentConfig());
-        }
+        const state = getState();
+       if(checkCached('user.fiat', getState)){
+          return state.user.fiat
+       }else{
+            const balanceList = await React.$api("wallet.getUserFiat");
+            if (balanceList.errno === 0) {
+                dispatch(updateFiat(balanceList));
+            } else {
+                dispatch(showMessage({ message: balanceList.errmsg, code: 2 }));
+            }
+            if (settings.requestPayment) { //需要请求支付方式
+                dispatch(paymentConfig());
+            }
+            return balanceList;
+       }
     }
 );
 
@@ -58,7 +73,6 @@ export const centerGetUserFiat = createAsyncThunk(
 export const getWithDrawConfig = createAsyncThunk(
     'wallet/getWithDrawConfig',
     async (settings, { dispatch, getState }) => {
-
         const resultData = await React.$api("wallet.getWithDrawConfig");
         if (resultData.errno === 0) {
             return resultData;
@@ -205,11 +219,15 @@ export const checkWalletAddress = createAsyncThunk(
 export const getCryptoDisplay = createAsyncThunk(
     'account/getCryptoDisplay',
     async (settings, { dispatch, getState }) => {
-
-        const resultData = await React.$api("account.getCryptoDisplay");
-        if (resultData.errno === 0) {
-            // dispatch(updateCryptoDisplay(resultData));
-            return resultData;
+        const state = getState();
+        if(checkCached('user.cryptoDisplay', getState)){
+            return state.user.cryptoDisplay
+        }else {
+            const resultData = await React.$api("account.getCryptoDisplay");
+            if (resultData.errno === 0) {
+                dispatch(updateCryptoDisplay(resultData));
+                return resultData;
+            }
         }
     }
 );
@@ -239,12 +257,16 @@ export const setCryptoDisplay = createAsyncThunk(
 export const getWalletDisplay = createAsyncThunk(
     'account/getWalletDisplay',
     async (settings, { dispatch, getState }) => {
-
-        const resultData = await React.$api("account.getWalletDisplay");
-        // if (resultData.errno === 0) {
-        dispatch(updateWalletDisplay(resultData));
-        return resultData;
-        // }
+        const state = getState();
+        if(checkCached('user.walletDisplay', getState)){
+            return state.user.walletDisplay
+        }else{
+            const resultData = await React.$api("account.getWalletDisplay");
+            // if (resultData.errno === 0) {
+            dispatch(updateWalletDisplay(resultData));
+            return resultData;
+            // }
+        }
     }
 );
 
@@ -273,11 +295,15 @@ export const setWalletDisplay = createAsyncThunk(
 export const getFiatDisplay = createAsyncThunk(
     'account/getFiatDisplay',
     async (settings, { dispatch, getState }) => {
-
-        const resultData = await React.$api("account.getCurrencyDisplay");
-        if (resultData.errno === 0) {
-            // dispatch(updateWalletDisplay(resultData));
-            return resultData;
+        const state = getState();
+        if( checkCached('user.fiatDisplay', getState)){
+            return state.user.fiatDisplay
+        }else{
+            const resultData = await React.$api("account.getCurrencyDisplay");
+            if (resultData.errno === 0) {
+                dispatch(updateFiatDisplay(resultData));
+                return resultData;
+            }
         }
     }
 );
@@ -307,11 +333,15 @@ export const setCurrencyDisplay = createAsyncThunk(
 export const getNftDisplay = createAsyncThunk(
     'account/getNftDisplay',
     async (settings, { dispatch, getState }) => {
-
-        const resultData = await React.$api("account.getNftDisplay");
-        if (resultData.errno === 0) {
-            // dispatch(updateWalletDisplay(resultData));
-            return resultData;
+        const state = getState();
+        if( checkCached('user.nftDisplay', getState)){
+            return state.user.nftDisplay
+        }else {
+            const resultData = await React.$api("account.getNftDisplay");
+            if (resultData.errno === 0) {
+                dispatch(updateNftDisplay(resultData));
+                return resultData;
+            }
         }
     }
 );

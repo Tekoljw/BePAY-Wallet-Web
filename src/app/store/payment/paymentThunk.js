@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import React from "react";
 import { showMessage } from 'app/store/fuse/messageSlice';
 import { setKycInfo } from "../config/index";
+import { updatePayoutBankList, updatePayoutWays, updateCreditConfig} from "../user/index"
 
 import format from 'date-fns/format';
 
@@ -244,11 +245,17 @@ export const makeOrder = createAsyncThunk(
 export const payoutBank = createAsyncThunk(
     'payment/payoutBank',
     async (settings, { dispatch, getState }) => {
-        const result = await React.$api("payment.payoutBank");
-        if (result.errno === 0) {
-            return result.data
-        } else {
-            dispatch(showMessage({ message: result.errmsg, code: 2 }))
+        const state = getState();
+        if(state.user.payoutBank){
+            return state.user.payoutBank
+        }else{
+            const result = await React.$api("payment.payoutBank");
+            if (result.errno === 0) {
+                dispatch(updatePayoutBankList(result.data))
+                return result.data
+            } else {
+                dispatch(showMessage({ message: result.errmsg, code: 2 }))
+            }
         }
     }
 );
@@ -257,12 +264,19 @@ export const payoutBank = createAsyncThunk(
 export const payoutPayWays = createAsyncThunk(
     'payment/payoutPayWays',
     async (settings, { dispatch, getState }) => {
-        const result = await React.$api("payment.payoutPayWays");
-        if (result.errno === 0) {
-            return result.data
-        } else {
-            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+        const state = getState();
+        if(state.user.payoutWays) {
+            return state.user.payoutWays
+        } else{
+            const result = await React.$api("payment.payoutPayWays");
+            if (result.errno === 0) {
+                dispatch(updatePayoutWays(result.data))
+                return result.data
+            } else {
+                dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            }
         }
+
     }
 );
 
@@ -270,11 +284,17 @@ export const payoutPayWays = createAsyncThunk(
 export const getCreditConfig = createAsyncThunk(
     'credit/creditConfig',
     async (settings, { dispatch, getState }) => {
-        const result = await React.$api("credit.config");
-        if (result.errno === 0) {
-            return result.data
-        } else {
-            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+        const state = getState();
+        if(state.user.creditConfig) {
+            return state.user.creditConfig
+        }else {
+            const result = await React.$api("credit.config");
+            if (result.errno === 0) {
+                dispatch(updateCreditConfig(result.data))
+                return result.data
+            } else {
+                dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            }
         }
     }
 );

@@ -445,7 +445,7 @@ function Swap() {
 
 
   const getUserMoney = (symbol) => {
-    let arr = userData.wallet.inner || [];
+    let arr = userData?.wallet?.inner || [];
     let fiatArr = userData.fiat || [];
     let balance = arrayLookup(arr, "symbol", symbol, "balance") || 0;
     if (balance > 0) {
@@ -580,13 +580,13 @@ function Swap() {
   }, [hasData, swapData, inputVal.amount, fiatsData]);
 
   useEffect(() => {
-    setLoadingShow(false)
+    setLoadingShow(true)
     setPhoneTab('swap');
     dispatch(getSwapConfig()).then((res) => {
-      setLoadingShow(false)
       res.payload?.errno === 0 && dispatch(setSwapConfig(res.payload));
     });
     dispatch(getSwapFee()).then((res) => {
+      setLoadingShow(false)
       const result = res.payload;
       setSwapFee(result.data);
     })
