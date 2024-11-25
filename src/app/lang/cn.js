@@ -166,7 +166,7 @@ const locale = {
     home_withdraw_12: '快速',
     home_withdraw_13: '慢速',
     home_withdraw_14: '地址',
-    home_withdraw_15: '交易手续费 ',
+    home_withdraw_15: '预估网络费 ',
     home_withdraw_16: '。处理时间为0-2小时。',
     home_withdraw_17: '不包括网络确认时间，可能需要额外的时间。',
     home_withdraw_18: '银行',

@@ -162,7 +162,7 @@ const locale = {
     home_withdraw_12: '快速',
     home_withdraw_13: '慢速',
     home_withdraw_14: '地址',
-    home_withdraw_15: '交易手續費 ',
+    home_withdraw_15: '預估網絡費 ',
     home_withdraw_16: '所需時間 - 0-2 小時。',
     home_withdraw_17: '網絡確認未包含在內，可能需要額外的時間',
     home_withdraw_18: '銀行',
