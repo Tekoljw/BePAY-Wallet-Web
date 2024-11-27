@@ -824,7 +824,14 @@ card_248: "Tarkastuksessa",
     
 card_249: "Lisää",
 card_250: "Sulje mini-ohjelma ja napsauta päivityspainiketta yrittääksesi uudelleen.",
+card_251: "Apple Pay -kortti",
 
+
+
+
+
+
+    
 
 
 

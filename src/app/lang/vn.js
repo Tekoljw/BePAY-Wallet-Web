@@ -810,9 +810,14 @@ const locale = {
     card_247: "Đang xin",
     card_248: "Đang kiểm tra",
 
-
     card_249: "Thêm",
     card_250: "Vui lòng đóng ứng dụng mini và nhấn nút làm mới để thử lại.",
+    card_251: "Thẻ thanh toán Apple",
+
+
+
+
+
 };
 
 export default locale;

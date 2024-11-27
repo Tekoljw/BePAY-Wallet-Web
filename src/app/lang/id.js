@@ -820,10 +820,16 @@ const locale = {
     card_247: "Sedang diproses",
     card_248: "Sedang dalam peninjauan",
 
-
     card_249: "Tambahkan",
     card_250: "Silakan tutup aplikasi mini dan klik tombol refresh untuk mencoba lagi.",
+    card_251: "Kartu Pembayaran Apple",
 
+
+
+
+
+
+    
 
 
 

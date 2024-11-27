@@ -1278,7 +1278,7 @@ function Withdraw(props) {
                                             <Typography className="text-16 cursor-pointer mt-16">
                                                 {t('home_withdraw_3')}
                                             </Typography>
-                                            <div className="flex items-center py-16 justify-between" style={{}}>
+                                            <div className="flex items-start py-16 justify-between" style={{}}>
                                                 <FormControl sx={{ width: '80%', borderColor: '#94A3B8' }} variant="outlined">
                                                     <TextField
                                                         error={ismore(inputVal.amount)}
@@ -1403,7 +1403,8 @@ function Withdraw(props) {
                                             <Typography className="text-16 cursor-pointer mt-16" >
                                                 {t('home_withdraw_3')}
                                             </Typography>
-                                            <div className="flex items-center justify-between" style={{ paddingTop: "1.6rem", paddingBottom: "0.5rem" }}>
+                                            
+                                            <div className="flex items-start justify-between" style={{ paddingTop: "1.6rem", paddingBottom: "0.5rem" }}>
                                                 <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
                                                     <TextField
                                                         error={ismore(inputVal.amount)}

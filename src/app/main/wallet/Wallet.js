@@ -18,7 +18,7 @@ import {
   canLoginAfterRequest,
   setPhoneTab
 } from "../../util/tools/function";
-import { updateCurrency, updateWalletDisplay, updateWalletLoading} from "../../store/user";
+import { updateCurrency, updateWalletDisplay, updateWalletLoading } from "../../store/user";
 import { showMessage } from "app/store/fuse/messageSlice";
 import { centerGetNftList } from '../../store/wallet/walletThunk';
 
@@ -195,6 +195,7 @@ function Wallet(props) {
   const [copyTiShi, setCopyTiShi] = useState(false);
   const currentLanguage = useSelector(selectCurrentLanguage);
 
+
   useEffect(() => {
     setRanges([t('home_deposite_1'), t('home_deposite_2')]);
   }, [currentLanguage.id]);
@@ -360,13 +361,13 @@ function Wallet(props) {
     });
   };
 
-    useEffect(()=>{
-        if(!userData.walletLoading){
-            setLoadingShow(false);
-        }else{
-            setLoadingShow(true);
-        }
-    }, userData.walletLoading)
+  useEffect(() => {
+    if (!userData.walletLoading) {
+      setLoadingShow(false);
+    } else {
+      setLoadingShow(true);
+    }
+  }, userData.walletLoading)
 
   // useEffect(() => {
   //   if (symbols.length > 0) {
@@ -1092,11 +1093,12 @@ function Wallet(props) {
   };
   useEffect(() => {
     setPhoneTab('wallet');
+    window.localStorage.setItem('backBtn', 'wallet');
     setTimeout(() => {
       if (canLoginAfterRequest(userData)) { //登录过以后才会获取余额值
         dispatch(userProfile());
         dispatch(centerGetTokenBalanceList());
-        dispatch(centerGetUserFiat()).then(()=> {
+        dispatch(centerGetUserFiat()).then(() => {
           setLoadingShow(false)
           dispatch(updateWalletLoading(false))
         });
@@ -1105,7 +1107,7 @@ function Wallet(props) {
   }, []);
 
   useEffect(() => {
-    if(canLoginAfterRequest(userData)){ //已经进行过登录流程了
+    if (canLoginAfterRequest(userData)) { //已经进行过登录流程了
       initWalletData();
     }
   }, [loginState]);
@@ -3336,7 +3338,7 @@ function Wallet(props) {
               </div>
             </AnimateModal2>
 
-           <ReloginDialog openLoginWinow={ openLoginWinow } closeLoginWindow={()=>{ setOpenLoginWinow(false) }} ></ReloginDialog>
+            <ReloginDialog openLoginWinow={openLoginWinow} closeLoginWindow={() => { setOpenLoginWinow(false) }} ></ReloginDialog>
 
             {openBindEmail && <div style={{ position: "absolute", width: "100%", height: `${document.getElementById('mainWallet').offsetHeight}px`, top: "0%", zIndex: "998", backgroundColor: "#0E1421" }} >
               <motion.div

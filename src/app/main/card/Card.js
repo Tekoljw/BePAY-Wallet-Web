@@ -618,6 +618,7 @@ function Card(props) {
 
 
     useEffect(() => {
+        window.localStorage.setItem('backBtn', 'card');
         setTimeout(() => {
             document.getElementById("cardHeights") && setCardHeight(document.getElementById("cardHeights").offsetHeight)
         }, 1000);
@@ -722,7 +723,7 @@ function Card(props) {
                         withdrawLock: arrayLookup(walletData.inner, 'symbol', symbols[i].symbol, 'withdrawLock') || 0
                     })
                 }
-                const tmpSwapRate = arrayLookup(symbols, 'symbol', 'USDT', (huaZhuanValue === 0? 'buyRate' : 'sellRate'));
+                const tmpSwapRate = arrayLookup(symbols, 'symbol', 'USDT', (huaZhuanValue === 0 ? 'buyRate' : 'sellRate'));
                 setSwapRate(tmpSwapRate)
             }
 
@@ -816,7 +817,7 @@ function Card(props) {
                     if (item.state === 1) {
                         if (item.creditType === 2) {
                             tmpConfig[2].push(item)
-                            if (item.creditConfigName.includes("支付")) {
+                            if (item.creditConfigName.includes("线上")) {
                                 tmpLanguageList.push(t('card_190'));
                             } else if (item.creditConfigName.includes("购物")) {
                                 tmpLanguageList.push(t('card_191'));
@@ -826,10 +827,13 @@ function Card(props) {
                                 tmpLanguageList.push(t('card_193'));
                             } else if (item.creditConfigName.includes("采购")) {
                                 tmpLanguageList.push(t('card_194'));
+                            } else if (item.creditConfigName.includes("苹果")) {
+                                console.log(item.creditConfigName, "ddddddddddddddddddddddddddddddddddddd");
+                                tmpLanguageList.push(t('card_251'));
                             }
                         } else if (item.creditType === 3) {
                             tmpConfig[3].push(item)
-                            if (item.creditConfigName.includes("支付")) {
+                            if (item.creditConfigName.includes("线上")) {
                                 tmpLanguageList.push(t('card_190'));
                             } else if (item.creditConfigName.includes("购物")) {
                                 tmpLanguageList.push(t('card_191'));
@@ -839,6 +843,8 @@ function Card(props) {
                                 tmpLanguageList.push(t('card_193'));
                             } else if (item.creditConfigName.includes("采购")) {
                                 tmpLanguageList.push(t('card_194'));
+                            } else if (item.creditConfigName.includes("苹果")) {
+                                tmpLanguageList.push(t('card_251'));
                             }
                         }
                         tmpConfigList[item.configId] = item
@@ -855,7 +861,7 @@ function Card(props) {
 
     const infoShenQinTxt = (type) => {
         if (type?.includes("visa")) {
-            if (type?.includes("支付")) {
+            if (type?.includes("线上")) {
                 return t('card_211')
             }
             if (type?.includes("购物")) {
@@ -871,7 +877,7 @@ function Card(props) {
                 return t('card_219')
             }
         } else if (type?.includes("Master")) {
-            if (type?.includes("支付")) {
+            if (type?.includes("线上")) {
                 return t('card_201')
             }
             if (type?.includes("购物")) {
@@ -893,7 +899,7 @@ function Card(props) {
 
     const infoShenQinTxt2 = (type) => {
         if (type?.includes("visa")) {
-            if (type?.includes("支付")) {
+            if (type?.includes("线上")) {
                 return t('card_212')
             }
             if (type?.includes("购物")) {
@@ -909,7 +915,7 @@ function Card(props) {
                 return t('card_220')
             }
         } else if (type?.includes("Master")) {
-            if (type?.includes("支付")) {
+            if (type?.includes("线上")) {
                 return t('card_202')
             }
             if (type?.includes("购物")) {
@@ -1189,22 +1195,22 @@ function Card(props) {
 
     useEffect(() => {
         if (cardID) {
-            if(huaZhuanValue === 0){
+            if (huaZhuanValue === 0) {
                 //划入
                 let tmpTransferFeeIn = 0
                 if (transferMoney) {
                     tmpTransferFeeIn = Number(maxValue ? maxValue : transferMoney) * Number(cardConfigList[cardConfigID].creditRate) + Number(cardConfigList[cardConfigID].basicFee)
                 }
                 setTransferFee(tmpTransferFeeIn)
-                setRecivedAmount((transferMoney - tmpTransferFeeIn)* swapRate)
-            }else if(huaZhuanValue === 1) {
+                setRecivedAmount((transferMoney - tmpTransferFeeIn) * swapRate)
+            } else if (huaZhuanValue === 1) {
                 //划出
                 let tmpTransferFeeOut = 0
                 if (transferMoney) {
-                    tmpTransferFeeOut = Number(maxValue ? maxValue : transferMoney)/swapRate * Number(cardConfigList[cardConfigID].creditRate) + Number(cardConfigList[cardConfigID].basicFee)
+                    tmpTransferFeeOut = Number(maxValue ? maxValue : transferMoney) / swapRate * Number(cardConfigList[cardConfigID].creditRate) + Number(cardConfigList[cardConfigID].basicFee)
                 }
                 setTransferFee(tmpTransferFeeOut)
-                setRecivedAmount((transferMoney/swapRate - tmpTransferFeeOut))
+                setRecivedAmount((transferMoney / swapRate - tmpTransferFeeOut))
             }
         }
 
@@ -1789,10 +1795,10 @@ function Card(props) {
                                                                                     <div className='flex justify-center mt-16' style={{ width: "100%" }}>
                                                                                         <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                                                                                         <div className='TanHaoCardZi'>
-                                                                                        {t('card_17')}
+                                                                                            {t('card_17')}
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div className='cardErrorZi'>{ t('card_18') }</div>
+                                                                                    <div className='cardErrorZi'>{t('card_18')}</div>
 
                                                                                     <div className='twoSamllBtn flex justify-between'>
                                                                                         <div className='cardErrorBtn2 txtColorTitleSmall' >
@@ -1877,7 +1883,7 @@ function Card(props) {
                                                                                         <div className='smallYuanDian'></div>
                                                                                     </div>
                                                                                 </div>
-                                                                                
+
                                                                             </div>
 
                                                                             <div style={{ width: "100%", margin: "0rem auto" }}>
@@ -2220,12 +2226,12 @@ function Card(props) {
                                                             animate="show"
                                                             className='cardJianGe'
                                                         >
-                                                            <div className='cardName'>{cardLanguage[index]}</div>
+                                                            <div className='cardName '>{cardLanguage[index]}</div>
                                                             <div className="responsive-div">
                                                                 <div className="responsive-div-content card1Bg" style={{ background: `url(${configItem?.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }} onClick={() => {
                                                                     setOpenXiangQing(true);
                                                                     setClickShenQinCard(true);
-                                                                    setCardConfigID(currentCardItem?.creditConfigId || currUserCardInfo?.creditConfigId);
+                                                                    setCardConfigID(configItem.configId);
                                                                     myFunction;
                                                                 }}   >
                                                                 </div>
@@ -2235,7 +2241,7 @@ function Card(props) {
                                                                 <div className='flex justify-between'>
                                                                     <div className='kaPianInfoLeiXing' onClick={() => {
                                                                     }} >{configItem.cardOrganizations} Card</div>
-                                                                    <div className='kaPianInfo ' onClick={() => {
+                                                                    <div className='kaPianInfo' onClick={() => {
                                                                         setOpenXiangQing(true);
                                                                         setClickShenQinCard(true);
                                                                         setCardConfigID(configItem.configId);
@@ -2442,7 +2448,7 @@ function Card(props) {
 
                             <div className='flex justify-between mt-10'>
                                 <div className='quanYiHuiZi'>{t('card_46')}</div>
-                                <div>{cardConfigList[cardConfigID]?.cardOrganizations == 'visa' ? 'VISA' : 'MASTER'}</div>
+                                <div>{cardConfigList[cardConfigID]?.cardOrganizations == 'Visa' ? 'VISA' : 'MASTER'}</div>
                             </div>
 
 
@@ -2488,8 +2494,9 @@ function Card(props) {
                             </div>
 
                             <div className='flex justify-start mt-10'>
-                                <div className='quanYiHuiZi pb-8'>{t('card_107')}</div>
+                                <div className='quanYiHuiZi pb-8 '>{t('card_107')}</div>
                             </div>
+                            {cardConfigList[cardConfigID]?.creditConfigName.includes("苹果") && <div className=' pb-8 ' style={{ color: "#19D5B8" }}>仅支持美国地址</div>}
                         </div>
                     </motion.div>
 
@@ -2730,7 +2737,7 @@ function Card(props) {
                                         setTransferMoney(0)
                                         setTransferFee(0)
                                         setRecivedAmount(0)
-                                        const tmpSwapRate = arrayLookup(symbols, 'symbol', 'USDT', (huaZhuanValue === 0? 'sellRate' : 'buyRate'));
+                                        const tmpSwapRate = arrayLookup(symbols, 'symbol', 'USDT', (huaZhuanValue === 0 ? 'sellRate' : 'buyRate'));
                                         setSwapRate(tmpSwapRate)
                                     }}
                                     indicatorColor="secondary"
@@ -2809,13 +2816,13 @@ function Card(props) {
                                 <div className='flex justify-between mt-16'>
                                     <div className='flex'>
                                         <div className='' style={{ color: "#94A3B8" }}>{t('card_223')}</div>
-                                        <div className='ml-10'>{ huaZhuanValue === 0 ? ( Number(recivedAmount.toFixed(2)) || '0.00') + ' USD' : ( Number(recivedAmount.toFixed(6)) || '0.00') + ' USDT'}</div>
+                                        <div className='ml-10'>{huaZhuanValue === 0 ? (Number(recivedAmount.toFixed(2)) || '0.00') + ' USD' : (Number(recivedAmount.toFixed(6)) || '0.00') + ' USDT'}</div>
                                     </div>
                                 </div>
                                 <div className='flex justify-between mt-16'>
                                     <div className='flex'>
                                         <div className='' style={{ color: "#94A3B8" }}>{t('home_borrow_16')}</div>
-                                        <div className='ml-10'>{ Number(transferFee.toFixed(6))|| '0.00' } USDT</div>
+                                        <div className='ml-10'>{Number(transferFee.toFixed(6)) || '0.00'} USDT</div>
                                     </div>
                                 </div>
                             </div>
@@ -2993,12 +3000,12 @@ function Card(props) {
 
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
                             <div style={{ color: "#888B92" }}>{t('home_borrow_18')}</div>
-                            <div>{ Number(transferFee.toFixed(6))|| '0.00' } USDT</div>
+                            <div>{Number(transferFee.toFixed(6)) || '0.00'} USDT</div>
                         </motion.div>
 
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
                             <div style={{ color: "#888B92" }}>{t('card_223')}</div>
-                            <div>{ huaZhuanValue === 0 ? ( Number(recivedAmount.toFixed(2)) || '0.00') + ' USD' : ( Number(recivedAmount.toFixed(6)) || '0.00') + ' USDT'} </div>
+                            <div>{huaZhuanValue === 0 ? (Number(recivedAmount.toFixed(2)) || '0.00') + ' USD' : (Number(recivedAmount.toFixed(6)) || '0.00') + ' USDT'} </div>
                         </motion.div>
 
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >

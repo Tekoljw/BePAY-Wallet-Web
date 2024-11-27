@@ -823,7 +823,14 @@ const locale = {
 
     card_249: "Dodaj",
     card_250: "Proszę zamknąć miniaplikację i kliknąć przycisk odświeżania, aby spróbować ponownie.",
+    card_251: "Karta Płatnicza Apple",
 
+
+
+
+
+
+    
 
 
 

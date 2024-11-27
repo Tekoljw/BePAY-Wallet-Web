@@ -824,7 +824,14 @@ const locale = {
     
     card_249: "Hinzufügen",
     card_250: "Bitte schließen Sie die Mini-App und klicken Sie auf die Schaltfläche „Aktualisieren“, um es erneut zu versuchen.",
+    card_251: "Apple Pay-Karte",
 
+
+
+
+
+
+    
 };
 
 export default locale;
