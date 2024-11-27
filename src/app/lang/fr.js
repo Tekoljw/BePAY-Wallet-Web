@@ -822,7 +822,7 @@ const locale = {
     card_249: "Ajouter",
     card_250: "Veuillez fermer le mini-programme et cliquer sur le bouton d'actualisation pour réessayer.",
     card_251: "Carte de paiement Apple",
-
+    card_252: "Activer une carte existante",
 
 
 

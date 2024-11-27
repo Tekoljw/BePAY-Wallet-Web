@@ -824,6 +824,11 @@ const locale = {
     card_249: "Tambah",
     card_250: "Sila tutup aplikasi mini dan klik butang segar semula untuk mencuba lagi.",
     card_251: "Kad Pembayaran Apple",
+    card_252: "Aktifkan kad sedia ada",
+
+
+
+
 
 
 

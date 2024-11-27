@@ -404,368 +404,369 @@ function Login() {
 
             <Root
                 content={
-                    <Paper
-                        className={clsx('w-full sm:w-auto min-h-full sm:min-h-auto rounded-0 py-32 px-16 sm:p-48 sm:rounded-2xl sm:shadow flex', !isMobileMedia && 'login-right-side')}
-                        style={{
-                            maxWidth: '65rem',
-                            margin: 'auto',
-                            background: "#0E1421",
-                            paddingTop: '1.2rem',
-                        }}
-                    >
-                        <div className="w-full max-w-320 sm:w-320 mx-auto sm:mx-0 loginMarginZhong ">
-                            <img className="logWidth" style={{ marginBottom: '2rem' }} src={logo} alt="logo" />
+                    <div className='flex justify-center' >
+                        <Paper
+                            className={clsx('w-full  sm:w-auto min-h-full sm:min-h-auto rounded-0  sm:rounded-2xl sm:shadow flex', !isMobileMedia && 'login-right-side')}
+                            style={{
+                                maxWidth: '65rem',
+                                background: "#0E1421",
+                                padding: "8rem 1.5rem 0rem 1.5rem"
+                            }}
+                        >
+                            <div className="w-full  mx-auto  " style={{ minWidth: "310px" }} >
+                                <img className="logWidth" style={{ marginBottom: '1rem' }} src={logo} alt="logo" />
 
-                            {/* <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight">
+                                {/* <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight">
                               Sign in
                                 </Typography> */}
 
-                            <div className="flex items-baseline mt-2 font-medium">
-                                <Typography className='fontStyle'>{t('signIn_2')}</Typography>
-                                <Link className="ml-4 fontStyle" to="/sign-up" >
-                                    {t('signIn_3')}
-                                </Link>
-                            </div>
+                                <div className="flex items-baseline  font-medium ">
+                                    <Typography className='fontStyle'>{t('signIn_2')}</Typography>
+                                    <Link className="ml-4 fontStyle" to="/sign-up" >
+                                        {t('signIn_3')}
+                                    </Link>
+                                </div>
 
-                            <Tabs
-                                component={motion.div}
-                                value={tabValue}
-                                onChange={(ev, value) => {
-                                    setTabValue(value);
-                                    control._formValues.phone = '';
-                                    control._formValues.email = '';
-                                }}
-                                indicatorColor="secondary"
-                                textColor="inherit"
-                                // variant="scrollable"
-                                scrollButtons={false}
-                                className="min-h-32 "
-                                style={{ padding: '0 0', margin: '1.9rem 0px 2.4rem', borderColor: 'transparent', backgroundColor: '#1E293B', width: '144px', borderRadius: '20px', height: '3.2rem' }}
-                                classes={{ indicator: 'flex justify-center bg-transparent w-full h-full ' }}
-                                TabIndicatorProps={{
-                                    children: (
-                                        <Box
-                                            sx={{ bgcolor: 'text.disabled' }}
-                                            className="fontStyle w-full h-full rounded-full huaKuaBgColor1"
-                                        />
-                                    ),
-                                }}
-                                sx={{
-                                    borderBottom: '1px solid #374252',
-                                    padding: '1rem 1.2rem'
-                                }}
-                            >
-                                {Object.entries(ranges).map(([key, label]) => (
-                                    <Tab
-                                        className="fontStyle text-14 font-semibold min-h-32 min-w-72 px-8 txtColorTitle zindex opacity-100"
-                                        disableRipple
-                                        key={key}
-                                        label={label}
-                                        style={{ opacity: '1!important' }}
-                                        sx={{
-                                            color: '#FFFFFF', height: '3.2rem', opacity: '1'
-                                        }}
-                                    />
-                                ))}
-                            </Tabs>
-
-                            <form
-                                name="loginForm fontStyle"
-                                noValidate
-                                className="flex flex-col justify-center w-full mt-8 fontStyle "
-                                onSubmit={handleSubmit(onSubmit)}
-                            >
-                                {tabValue === 0 && <Controller
-                                    name="email"
-                                    control={control}
-                                    render={({ field }) => (
-                                        <TextField
-                                            {...field}
-                                            className="mb-24 fontStyle "
-                                            label={t('signIn_5')}
-                                            autoFocus
-                                            type="email"
-                                            error={!!errors.email}
-                                            helperText={errors?.email?.message}
-                                            variant="outlined"
-                                            required
-                                            fullWidth
-                                        />
-                                    )}
-                                />}
-
-                                {tabValue === 1 && <>
-                                    {/*<Controller*/}
-                                    {/*    name="nationCode"*/}
-                                    {/*    control={control}*/}
-                                    {/*    render={({ field }) => (*/}
-                                    {/*        <TextField*/}
-                                    {/*            {...field}*/}
-                                    {/*            className="mb-24"*/}
-                                    {/*            label="nationCode"*/}
-                                    {/*            autoFocus*/}
-                                    {/*            type="text"*/}
-                                    {/*            error={!!errors.nationCode}*/}
-                                    {/*            helperText={errors?.nationCode?.message}*/}
-                                    {/*            variant="outlined"*/}
-                                    {/*            required*/}
-                                    {/*            fullWidth*/}
-                                    {/*        />*/}
-                                    {/*    )}*/}
-                                    {/*/>*/}
-
-                                    {/*<Controller*/}
-                                    {/*    name="nationCode"*/}
-                                    {/*    control={control}*/}
-                                    {/*    render={({ field }) => (*/}
-                                    {/*        <FormControl>*/}
-                                    {/*            <InputLabel id="demo-simple-select-label">nationCode*</InputLabel>*/}
-                                    {/*            <Select*/}
-                                    {/*                label="nationCode*"*/}
-                                    {/*                value={selected}*/}
-                                    {/*                onChange={handleChange}*/}
-                                    {/*                displayEmpty*/}
-                                    {/*                inputProps={{ "aria-label": "Without label" }}*/}
-                                    {/*                className="MuiSelect-icon mb-24"*/}
-                                    {/*                // IconComponent={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}*/}
-                                    {/*                MenuProps={{*/}
-                                    {/*                    PaperProps: {*/}
-                                    {/*                        style: {*/}
-                                    {/*                            maxHeight: 300,*/}
-                                    {/*                            border: 'none'*/}
-                                    {/*                        },*/}
-                                    {/*                    },*/}
-                                    {/*                }}*/}
-                                    {/*            >*/}
-                                    {/*                {phoneCode.list.map((row, index) => {*/}
-                                    {/*                    return (*/}
-                                    {/*                        <MenuItem*/}
-                                    {/*                            key={index}*/}
-                                    {/*                            value={row.phone_code}*/}
-                                    {/*                        >*/}
-                                    {/*                            <div className="flex items-center">*/}
-                                    {/*                                <img*/}
-                                    {/*                                    style={{*/}
-                                    {/*                                        width: '25px',*/}
-                                    {/*                                        height: '25px'*/}
-                                    {/*                                    }}*/}
-                                    {/*                                    src={"/wallet/assets/images/country/" + row.country_code + ".png"}*/}
-                                    {/*                                    alt=""*/}
-                                    {/*                                />*/}
-                                    {/*                                <div className="ml-4">{row.local_name}</div>*/}
-                                    {/*                            </div>*/}
-                                    {/*                        </MenuItem>*/}
-                                    {/*                    )*/}
-                                    {/*                })}*/}
-                                    {/*            </Select>*/}
-                                    {/*        </FormControl>*/}
-                                    {/*    )}*/}
-                                    {/*/>*/}
-
-                                    <Controller
-                                        className='fontStyle'
-                                        name="nationCode"
-                                        control={control}
-                                        render={({ field }) => (
-                                            <Autocomplete
-                                                id="phoneCode"
-                                                onHighlightChange={(event, option) => {
-                                                    if (option?.english_name) {
-                                                        if (selectPhoneCode.length > 0) {
-                                                            var key = selectPhoneCode.findIndex(item => item.english_name === option.english_name);
-                                                            if ((key + 1) % 23 === 0) {
-                                                                var page = ((key + 1) / 23) + 1;
-                                                                pagePhoneCodeList(page, false)
-                                                            }
-                                                        }
-                                                    }
-                                                }}
-                                                // disablePortal
-                                                className="mb-24"
-                                                // options={phoneCode.list}
-                                                options={selectPhoneCode}
-                                                autoHighlight
-                                                onInputChange={(event, newInputValue) => {
-                                                    let tmpPhoneCodeText = newInputValue.replace(/\+/g, "")
-                                                    let tmpSearchData = [];
-                                                    phoneCode.list.map((item) => {
-                                                        if (item.phone_code.match(tmpPhoneCodeText) || item.country_code.match(tmpPhoneCodeText.toUpperCase()) || item.local_name.match(tmpPhoneCodeText.toUpperCase())) {
-                                                            tmpSearchData.push(item)
-                                                        }
-                                                    });
-                                                    setTmpPhoneCode(tmpPhoneCodeText);
-                                                    setSearchPhoneCode(tmpSearchData);
-                                                }}
-                                                filterOptions={(options) => {
-                                                    const reg = new RegExp(tmpPhoneCode, 'i');
-                                                    const array = options.filter((item) => {
-                                                        return reg.test(item.phone_code) || reg.test(item.local_name)
-                                                    });
-                                                    return array;
-                                                }}
-                                                onChange={(res, option) => {
-                                                    if (option) {
-                                                        control._formValues.nationCode = option.phone_code;
-                                                        setTmpCode(option.phone_code)
-                                                    }
-                                                }}
-                                                value={control._formValues.nationCode}
-                                                getOptionLabel={(option) => { return '+' + tmpCode }}
-                                                renderOption={(props, option) => (
-                                                    <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                                                        <img
-                                                            loading="lazy"
-                                                            width="20"
-                                                            src={`/wallet/assets/images/country/${option.country_code}.png`}
-                                                            alt=""
-                                                        />
-                                                        {option.local_name} ({option.country_code}) +{option.phone_code}
-                                                    </Box>
-                                                )}
-                                                renderInput={(params) => (
-                                                    <TextField
-                                                        className='fontStyle'
-                                                        id="test-b"
-                                                        {...params}
-                                                        label={t('signIn_6')}
-                                                        inputProps={{
-                                                            ...params.inputProps,
-                                                            autoComplete: 'nationCode', // disable autocomplete and autofill
-                                                        }}
-                                                    />
-                                                )}
+                                <Tabs
+                                    component={motion.div}
+                                    value={tabValue}
+                                    onChange={(ev, value) => {
+                                        setTabValue(value);
+                                        control._formValues.phone = '';
+                                        control._formValues.email = '';
+                                    }}
+                                    indicatorColor="secondary"
+                                    textColor="inherit"
+                                    // variant="scrollable"
+                                    scrollButtons={false}
+                                    className="min-h-32 "
+                                    style={{ padding: '0 0', margin: '1rem 0px 1.5rem', borderColor: 'transparent', backgroundColor: '#1E293B', width: '144px', borderRadius: '20px', height: '3.2rem' }}
+                                    classes={{ indicator: 'flex justify-center bg-transparent w-full h-full ' }}
+                                    TabIndicatorProps={{
+                                        children: (
+                                            <Box
+                                                sx={{ bgcolor: 'text.disabled' }}
+                                                className="fontStyle w-full h-full rounded-full huaKuaBgColor1"
                                             />
-                                        )}
-                                    />
+                                        ),
+                                    }}
+                                    sx={{
+                                        borderBottom: '1px solid #374252',
+                                        padding: '1rem 1.2rem'
+                                    }}
+                                >
+                                    {Object.entries(ranges).map(([key, label]) => (
+                                        <Tab
+                                            className="fontStyle text-14 font-semibold min-h-32 min-w-72 px-8 txtColorTitle zindex opacity-100"
+                                            disableRipple
+                                            key={key}
+                                            label={label}
+                                            style={{ opacity: '1!important' }}
+                                            sx={{
+                                                color: '#FFFFFF', height: '3.2rem', opacity: '1'
+                                            }}
+                                        />
+                                    ))}
+                                </Tabs>
 
-                                    <Controller
-                                        className='fontStyle'
-                                        name="phone"
+                                <form
+                                    name="loginForm fontStyle"
+                                    noValidate
+                                    className="flex flex-col justify-center w-full mt-8 fontStyle "
+                                    onSubmit={handleSubmit(onSubmit)}
+                                >
+                                    {tabValue === 0 && <Controller
+                                        name="email"
                                         control={control}
                                         render={({ field }) => (
                                             <TextField
                                                 {...field}
-                                                className="mb-24 fontStyle"
-                                                label={t('signIn_4')}
-                                                type="text"
-                                                error={!!errors.phone}
-                                                helperText={errors?.phone?.message}
+                                                className="mb-24 fontStyle "
+                                                label={t('signIn_5')}
+                                                autoFocus
+                                                type="email"
+                                                error={!!errors.email}
+                                                helperText={errors?.email?.message}
+                                                variant="outlined"
+                                                required
+                                                fullWidth
+                                            />
+                                        )}
+                                    />}
+
+                                    {tabValue === 1 && <>
+                                        {/*<Controller*/}
+                                        {/*    name="nationCode"*/}
+                                        {/*    control={control}*/}
+                                        {/*    render={({ field }) => (*/}
+                                        {/*        <TextField*/}
+                                        {/*            {...field}*/}
+                                        {/*            className="mb-24"*/}
+                                        {/*            label="nationCode"*/}
+                                        {/*            autoFocus*/}
+                                        {/*            type="text"*/}
+                                        {/*            error={!!errors.nationCode}*/}
+                                        {/*            helperText={errors?.nationCode?.message}*/}
+                                        {/*            variant="outlined"*/}
+                                        {/*            required*/}
+                                        {/*            fullWidth*/}
+                                        {/*        />*/}
+                                        {/*    )}*/}
+                                        {/*/>*/}
+
+                                        {/*<Controller*/}
+                                        {/*    name="nationCode"*/}
+                                        {/*    control={control}*/}
+                                        {/*    render={({ field }) => (*/}
+                                        {/*        <FormControl>*/}
+                                        {/*            <InputLabel id="demo-simple-select-label">nationCode*</InputLabel>*/}
+                                        {/*            <Select*/}
+                                        {/*                label="nationCode*"*/}
+                                        {/*                value={selected}*/}
+                                        {/*                onChange={handleChange}*/}
+                                        {/*                displayEmpty*/}
+                                        {/*                inputProps={{ "aria-label": "Without label" }}*/}
+                                        {/*                className="MuiSelect-icon mb-24"*/}
+                                        {/*                // IconComponent={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}*/}
+                                        {/*                MenuProps={{*/}
+                                        {/*                    PaperProps: {*/}
+                                        {/*                        style: {*/}
+                                        {/*                            maxHeight: 300,*/}
+                                        {/*                            border: 'none'*/}
+                                        {/*                        },*/}
+                                        {/*                    },*/}
+                                        {/*                }}*/}
+                                        {/*            >*/}
+                                        {/*                {phoneCode.list.map((row, index) => {*/}
+                                        {/*                    return (*/}
+                                        {/*                        <MenuItem*/}
+                                        {/*                            key={index}*/}
+                                        {/*                            value={row.phone_code}*/}
+                                        {/*                        >*/}
+                                        {/*                            <div className="flex items-center">*/}
+                                        {/*                                <img*/}
+                                        {/*                                    style={{*/}
+                                        {/*                                        width: '25px',*/}
+                                        {/*                                        height: '25px'*/}
+                                        {/*                                    }}*/}
+                                        {/*                                    src={"/wallet/assets/images/country/" + row.country_code + ".png"}*/}
+                                        {/*                                    alt=""*/}
+                                        {/*                                />*/}
+                                        {/*                                <div className="ml-4">{row.local_name}</div>*/}
+                                        {/*                            </div>*/}
+                                        {/*                        </MenuItem>*/}
+                                        {/*                    )*/}
+                                        {/*                })}*/}
+                                        {/*            </Select>*/}
+                                        {/*        </FormControl>*/}
+                                        {/*    )}*/}
+                                        {/*/>*/}
+
+                                        <Controller
+                                            className='fontStyle'
+                                            name="nationCode"
+                                            control={control}
+                                            render={({ field }) => (
+                                                <Autocomplete
+                                                    id="phoneCode"
+                                                    onHighlightChange={(event, option) => {
+                                                        if (option?.english_name) {
+                                                            if (selectPhoneCode.length > 0) {
+                                                                var key = selectPhoneCode.findIndex(item => item.english_name === option.english_name);
+                                                                if ((key + 1) % 23 === 0) {
+                                                                    var page = ((key + 1) / 23) + 1;
+                                                                    pagePhoneCodeList(page, false)
+                                                                }
+                                                            }
+                                                        }
+                                                    }}
+                                                    // disablePortal
+                                                    className="mb-24"
+                                                    // options={phoneCode.list}
+                                                    options={selectPhoneCode}
+                                                    autoHighlight
+                                                    onInputChange={(event, newInputValue) => {
+                                                        let tmpPhoneCodeText = newInputValue.replace(/\+/g, "")
+                                                        let tmpSearchData = [];
+                                                        phoneCode.list.map((item) => {
+                                                            if (item.phone_code.match(tmpPhoneCodeText) || item.country_code.match(tmpPhoneCodeText.toUpperCase()) || item.local_name.match(tmpPhoneCodeText.toUpperCase())) {
+                                                                tmpSearchData.push(item)
+                                                            }
+                                                        });
+                                                        setTmpPhoneCode(tmpPhoneCodeText);
+                                                        setSearchPhoneCode(tmpSearchData);
+                                                    }}
+                                                    filterOptions={(options) => {
+                                                        const reg = new RegExp(tmpPhoneCode, 'i');
+                                                        const array = options.filter((item) => {
+                                                            return reg.test(item.phone_code) || reg.test(item.local_name)
+                                                        });
+                                                        return array;
+                                                    }}
+                                                    onChange={(res, option) => {
+                                                        if (option) {
+                                                            control._formValues.nationCode = option.phone_code;
+                                                            setTmpCode(option.phone_code)
+                                                        }
+                                                    }}
+                                                    value={control._formValues.nationCode}
+                                                    getOptionLabel={(option) => { return '+' + tmpCode }}
+                                                    renderOption={(props, option) => (
+                                                        <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                                                            <img
+                                                                loading="lazy"
+                                                                width="20"
+                                                                src={`/wallet/assets/images/country/${option.country_code}.png`}
+                                                                alt=""
+                                                            />
+                                                            {option.local_name} ({option.country_code}) +{option.phone_code}
+                                                        </Box>
+                                                    )}
+                                                    renderInput={(params) => (
+                                                        <TextField
+                                                            className='fontStyle'
+                                                            id="test-b"
+                                                            {...params}
+                                                            label={t('signIn_6')}
+                                                            inputProps={{
+                                                                ...params.inputProps,
+                                                                autoComplete: 'nationCode', // disable autocomplete and autofill
+                                                            }}
+                                                        />
+                                                    )}
+                                                />
+                                            )}
+                                        />
+
+                                        <Controller
+                                            className='fontStyle'
+                                            name="phone"
+                                            control={control}
+                                            render={({ field }) => (
+                                                <TextField
+                                                    {...field}
+                                                    className="mb-24 fontStyle"
+                                                    label={t('signIn_4')}
+                                                    type="text"
+                                                    error={!!errors.phone}
+                                                    helperText={errors?.phone?.message}
+                                                    variant="outlined"
+                                                    required
+                                                    fullWidth
+                                                />
+                                            )}
+                                        />
+
+                                    </>}
+
+                                    <Controller
+                                        className='fontStyle'
+                                        name="password"
+                                        control={control}
+                                        render={({ field }) => (
+                                            <TextField
+                                                {...field}
+                                                className="mb-24"
+                                                label={t('signIn_9')}
+                                                type="password"
+                                                error={!!errors.password}
+                                                helperText={errors?.password?.message}
                                                 variant="outlined"
                                                 required
                                                 fullWidth
                                             />
                                         )}
                                     />
+                                    <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-center">
+                                        {/*<Controller*/}
+                                        {/*    name="remember"*/}
+                                        {/*    control={control}*/}
+                                        {/*    render={({ field }) => (*/}
+                                        {/*        <FormControl>*/}
+                                        {/*            <FormControlLabel*/}
+                                        {/*                label="Remember me"*/}
+                                        {/*                control={<Checkbox size="small" {...field} />}*/}
+                                        {/*            />*/}
+                                        {/*        </FormControl>*/}
+                                        {/*    )}*/}
+                                        {/*/>*/}
 
-                                </>}
+                                        <Link className="text-md font-medium" to="/forgot">
+                                            {t('signIn_10')}
+                                        </Link>
+                                    </div>
 
-                                <Controller
-                                    className='fontStyle'
-                                    name="password"
-                                    control={control}
-                                    render={({ field }) => (
-                                        <TextField
-                                            {...field}
-                                            className="mb-24"
-                                            label={t('signIn_9')}
-                                            type="password"
-                                            error={!!errors.password}
-                                            helperText={errors?.password?.message}
-                                            variant="outlined"
-                                            required
-                                            fullWidth
-                                        />
-                                    )}
-                                />
-                                <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-center">
-                                    {/*<Controller*/}
-                                    {/*    name="remember"*/}
-                                    {/*    control={control}*/}
-                                    {/*    render={({ field }) => (*/}
-                                    {/*        <FormControl>*/}
-                                    {/*            <FormControlLabel*/}
-                                    {/*                label="Remember me"*/}
-                                    {/*                control={<Checkbox size="small" {...field} />}*/}
-                                    {/*            />*/}
-                                    {/*        </FormControl>*/}
-                                    {/*    )}*/}
-                                    {/*/>*/}
-
-                                    <Link className="text-md font-medium" to="/forgot">
-                                        {t('signIn_10')}
-                                    </Link>
-                                </div>
-
-                                <Button
-                                    variant="contained"
-                                    color="secondary"
-                                    className=" w-full mt-16 btnColorTitleBig"
-                                    aria-label="Sign in"
-                                    disabled={_.isEmpty(dirtyFields) || !isValid}
-                                    type="submit"
-                                    size="large"
-                                >
-                                    {t('signIn_1')}
-                                </Button>
-
-                                <div className="flex items-center mt-32">
-                                    <div className="flex-auto mt-px border-t" />
-                                    <Typography className="mx-8 fontStyle" color="text.secondary">
-
-                                        {t('signIn_11')}
-                                    </Typography>
-                                    <div className="flex-auto mt-px border-t" />
-                                </div>
-
-
-                                <div className={clsx("flex items-center mt-32 ", (tabValue === 0) && 'loginMarginB')} style={{ flexWrap: 'wrap' }}>
-                                    <Button className='txtColorTitleSmall' style={{ width: '30%', margin: '.5rem 1.5%', backgroundColor: '#1E293B', borderColor: 'transparent', opacity: "1" }} variant="outlined"
-                                        onClick={() => facebookLogin()}
+                                    <Button
+                                        variant="contained"
+                                        color="secondary"
+                                        className=" w-full mt-16 btnColorTitleBig"
+                                        aria-label="Sign in"
+                                        disabled={_.isEmpty(dirtyFields) || !isValid}
+                                        type="submit"
+                                        size="large"
                                     >
-                                        <img style={{ height: '80%' }} src="/wallet/assets/images/login/icon-1.png" alt="" />
+                                        {t('signIn_1')}
                                     </Button>
-                                    <Button className='txtColorTitleSmall' onClick={() => {
-                                        loginTelegram(thirdPartId)
-                                    }} style={{ width: '30%', margin: '.5rem 1.5%', backgroundColor: '#1E293B', borderColor: 'transparent', opacity: "1" }} variant="outlined">
-                                        <img style={{ height: '80%' }} src="/wallet/assets/images/login/icon-2.png" alt="" />
-                                    </Button>
-                                    <Button className='txtColorTitleSmall' style={{ width: '30%', margin: '.5rem 1.5%', backgroundColor: '#1E293B', border: "none", opacity: "1" }} variant="outlined">
-                                        <GoogleLogin
-                                            render={(renderProps) => (
-                                                <img
-                                                    onClick={renderProps.onClick}
-                                                    disabled={renderProps.disabled}
-                                                    style={{ height: "80%" }}
-                                                    src="/wallet/assets/images/login/icon-3.png"
-                                                    alt=""
-                                                />
-                                            )}
-                                            clientId={clientId}
-                                            buttonText="login"
-                                            onSuccess={onSuccess}
-                                            onFailure={onFailure}
-                                            cookiePolicy={"single_host_origin"}
-                                        // isSignedIn={true}
-                                        //   icon={false}
-                                        />
-                                        {/* <img style={{ height: '80%' }} src="/wallet/assets/images/login/icon-3.png" alt="" /> */}
-                                    </Button>
-                                    {/* {isMobileMedia && <Button className='txtColorTitleSmall' onClick={() => { walletLogin('trustWallet') }} style={{ width: '30%', margin: '.5rem 1.5%', backgroundColor: '#1E293B', borderColor: 'transparent' }} variant="outlined">
+
+                                    <div className="flex items-center mt-32">
+                                        <div className="flex-auto mt-px border-t" />
+                                        <Typography className="mx-8 fontStyle" color="text.secondary">
+
+                                            {t('signIn_11')}
+                                        </Typography>
+                                        <div className="flex-auto mt-px border-t" />
+                                    </div>
+
+
+                                    <div className={clsx("flex justify-between items-center mt-32 ", (tabValue === 0) && 'loginMarginB')} style={{ flexWrap: 'wrap' }}>
+                                        <Button className='txtColorTitleSmall' style={{ width: '30%', margin: '.5rem 0%', backgroundColor: '#1E293B', borderColor: 'transparent', opacity: "1" }} variant="outlined"
+                                            onClick={() => facebookLogin()}
+                                        >
+                                            <img style={{ height: '80%' }} src="/wallet/assets/images/login/icon-1.png" alt="" />
+                                        </Button>
+                                        <Button className='txtColorTitleSmall' onClick={() => {
+                                            loginTelegram(thirdPartId)
+                                        }} style={{ width: '30%', margin: '.5rem 0%', backgroundColor: '#1E293B', borderColor: 'transparent', opacity: "1" }} variant="outlined">
+                                            <img style={{ height: '80%' }} src="/wallet/assets/images/login/icon-2.png" alt="" />
+                                        </Button>
+                                        <Button className='txtColorTitleSmall' style={{ width: '30%', margin: '.5rem 0%', backgroundColor: '#1E293B', border: "none", opacity: "1" }} variant="outlined">
+                                            <GoogleLogin
+                                                render={(renderProps) => (
+                                                    <img
+                                                        onClick={renderProps.onClick}
+                                                        disabled={renderProps.disabled}
+                                                        style={{ height: "80%" }}
+                                                        src="/wallet/assets/images/login/icon-3.png"
+                                                        alt=""
+                                                    />
+                                                )}
+                                                clientId={clientId}
+                                                buttonText="login"
+                                                onSuccess={onSuccess}
+                                                onFailure={onFailure}
+                                                cookiePolicy={"single_host_origin"}
+                                            // isSignedIn={true}
+                                            //   icon={false}
+                                            />
+                                            {/* <img style={{ height: '80%' }} src="/wallet/assets/images/login/icon-3.png" alt="" /> */}
+                                        </Button>
+                                        {/* {isMobileMedia && <Button className='txtColorTitleSmall' onClick={() => { walletLogin('trustWallet') }} style={{ width: '30%', margin: '.5rem 1.5%', backgroundColor: '#1E293B', borderColor: 'transparent' }} variant="outlined">
                                 <img style={{ height: '80%' }} src="/wallet/assets/images/login/icon-4.png" alt="" />
                             </Button>} */}
-                                </div>
-                                {/* //待修改 */}
-                                {isMobileMedia && <div className=' font-furore text-20' style={{ flexWrap: 'nowrap', display: 'flex' }}>
-                                    <Button className="color-16c2a3  " size="large" onClick={() => { setRightSidebarOpen(true) }} style={{ textDecoration: 'underline', color: '#0D9488', margin: 'auto', marginTop: '2rem', fontWeight: "bold" }} variant="text">
-                                        Web3.0   {t('signIn_1')}
-                                    </Button>
-                                </div>}
-                            </form>
-                        </div>
-                        {
-                            width >= 400 && !isMobileMedia ? <LoginSidebarContent tab={pathname.substring(pathname.lastIndexOf('\/') + 1, pathname.length) || 'wallet'} /> : null
-                        }
-                    </Paper>
+                                    </div>
+                                    {/* //待修改 */}
+                                    {isMobileMedia && <div className=' font-furore text-20' style={{ flexWrap: 'nowrap', display: 'flex' }}>
+                                        <Button className="color-16c2a3  " size="large" onClick={() => { setRightSidebarOpen(true) }} style={{ textDecoration: 'underline', color: '#0D9488', margin: 'auto', marginTop: '2rem', fontWeight: "bold" }} variant="text">
+                                            Web3.0   {t('signIn_1')}
+                                        </Button>
+                                    </div>}
+                                </form>
+                            </div>
+                            {
+                                width >= 400 && !isMobileMedia ? <LoginSidebarContent tab={pathname.substring(pathname.lastIndexOf('\/') + 1, pathname.length) || 'wallet'} /> : null
+                            }
+                        </Paper>
+                    </div>
                 }
                 //右侧web3栏
                 rightSidebarOpen={rightSidebarOpen}
