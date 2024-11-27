@@ -79,6 +79,9 @@ const locale = {
     home_record_17: '志愿者解质押',
     home_record_18: '任务代码',
     home_record_19: '操作',
+    home_record_20: '活动奖励',
+    home_record_21: '邀请奖励',
+
 
     home_sendTips_1: '地址',
     home_sendTips_2: 'Funi ID',
@@ -818,6 +821,10 @@ const locale = {
     recordInfo_29: "信用卡虚拟币交易撤销",
     recordInfo_30: "信用卡法币交易退款",
     recordInfo_31: "信用卡虚拟币交易退款",
+    recordInfo_32: "邀请法币奖励",
+    recordInfo_33: "邀请虚拟币奖励",
+    recordInfo_34: "活动奖励法币",
+    recordInfo_35: "活动奖励虚拟币",
     card_246: "撤消",
     card_247: "申请中",
     card_248: "审核中",

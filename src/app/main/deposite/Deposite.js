@@ -265,6 +265,8 @@ function Deposite() {
     const [nftId, setNftId] = useState('');
     const [isConfirmTransfer, setIsConfirmTransfer] = useState(false);
     const [tokenId, setTokenId] = useState('');
+    const [openExtraAddressFeeModal, setOpenExtraAddressFeeModal] = useState(false);
+    const [balanceNotEnough, setBalanceNotEnough] = useState(false);
 
     console.log('enter deposit page')
     const changePhoneTab = (tab) => {
@@ -454,6 +456,7 @@ function Deposite() {
 
         dispatch(getWalletAddress({ networkId: id, symbol: symbol })).then((res) => {
             setIsLoading(false);
+            setOpenExtraAddressFeeModal(false);
             const result = res.payload;
             if (result.errno === 0) {
                 setCryptoOpenLoad(false);
@@ -1292,7 +1295,11 @@ function Deposite() {
                                 {walletAddressList.length < 10 && (
                                     <div className='mb-16'>
                                         <div className='addressBigW flex justify-between mt-10' onClick={() => {
-                                            handleWalletAddress(networkId)
+                                           if(walletAddressList.length < 1 ){
+                                             handleWalletAddress(networkId)
+                                           }else{
+                                             setOpenExtraAddressFeeModal(true)
+                                           }
                                         }}>
                                             <div className="addressW flex justify-between">
                                                 <div className='addressZi2 flex'>
@@ -2462,6 +2469,53 @@ function Deposite() {
                 }
 
             </AnimateModal >
+
+            <AnimateModal
+                className="faBiDiCard tanChuanDiSe"
+                open={openExtraAddressFeeModal }
+                onClose={() => setOpenExtraAddressFeeModal(false)}
+            >
+
+                <div className='flex justify-center mb-16' style={{ width: "100%" }}>
+                    <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
+                    <div className='TanHaoCardZi'>
+                        {t('home_withdraw_2')}
+                    </div>
+                </div>
+
+                <Box
+                    className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard flex justify-center"
+                    sx={{
+                        backgroundColor: "#2C394D",
+                        padding: "1.5rem",
+                        overflow: "hidden",
+                        margin: "0rem auto 0rem auto"
+                    }}
+                >
+                    <div className="dialog-select-fiat danChuangTxt">
+                       首地址免费,新增地址需额外收费
+                    </div>
+                </Box>
+                <div className={clsx('exchange-credit-fee', balanceNotEnough && 'error-msg-font')}>{t('home_borrow_18')}: 5 USDT</div>
+
+                <div className='flex mt-16 mb-20 px-15 position-re' style={{ height: "40px" }} >
+                    <LoadingButton
+                        disabled={false}
+                        className="boxCardBtn position-ab"
+                        color="secondary"
+                        loading={isLoading}
+                        variant="contained"
+                        style={{ bottom: "0%", left: "0%", right: "0%", margin: "0 auto" }}
+                        onClick={() => {
+                            handleWalletAddress(networkId)
+                        }}
+                    >
+                        {t('card_249')}
+                    </LoadingButton>
+
+                </div>
+
+            </AnimateModal>
 
             <BootstrapDialog
                 onClose={() => {

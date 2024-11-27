@@ -88,40 +88,49 @@ function Record() {
     // public static final int LOG_TYPE_CREDIT_REVERSAL_CRYPTO = 29;
     // public static final int LOG_TYPE_CREDIT_REFUND_FIAT = 30;
     // public static final int LOG_TYPE_CREDIT_REFUND_CRYPTO = 31;
+    // public static final int LOG_TYPE_ASSETS_FIAT_INVITE_REWARD= 32;     //邀请法币奖励
+    // public static final int LOG_TYPE_ASSETS_CRYPTO_INVITE_REWARD = 33;  //邀请虚拟币奖励
+    // public static final int LOG_TYPE_ASSETS_ACTIVITY_FIAT = 34; //活动奖励法币
+    // public static final int LOG_TYPE_ASSETS_ACTIVITY_CRYPTO = 35; //活动奖励虚拟币
+    // public static final int LOG_TYPE_ASSETS_NO_EXIST = 1000;      //不存在的类型
 
     const typeList = [
-        { key: 0, label: t('recordInfo_0') },
-        { key: 1, label: t('recordInfo_1') },
-        { key: 2, label: t('recordInfo_2') },
-        { key: 3, label: t('recordInfo_3') },
-        { key: 4, label: t('recordInfo_4') },
-        { key: 5, label: t('recordInfo_5') },
-        { key: 6, label: t('recordInfo_6') },
-        { key: 7, label: t('recordInfo_7') },
-        { key: 8, label: t('recordInfo_8') },
-        { key: 9, label: t('recordInfo_9') },
-        { key: 10, label: t('recordInfo_10') },
-        { key: 11, label: t('recordInfo_11') },
-        { key: 12, label: t('recordInfo_12') },
-        { key: 13, label: t('recordInfo_13') },
-        { key: 14, label: t('recordInfo_14') },
-        { key: 15, label: t('recordInfo_15') },
-        { key: 16, label: t('recordInfo_16') },
-        { key: 17, label: t('recordInfo_17') },
-        { key: 18, label: t('recordInfo_18') },
-        { key: 19, label: t('recordInfo_19') },
-        { key: 20, label: t('recordInfo_20') },
-        { key: 21, label: t('recordInfo_21') },
-        { key: 22, label: t('recordInfo_22') },
-        { key: 23, label: t('recordInfo_23') },
-        { key: 24, label: t('recordInfo_24') },
-        { key: 25, label: t('recordInfo_25') },
-        { key: 26, label: t('recordInfo_26') },
-        { key: 27, label: t('recordInfo_27') },
-        { key: 28, label: t('recordInfo_28') },
-        { key: 29, label: t('recordInfo_29') },
-        { key: 30, label: t('recordInfo_30') },
-        { key: 31, label: t('recordInfo_31') }
+        { key: 0, label: t('recordInfo_0')},
+        { key: 1, label: t('recordInfo_1')},
+        { key: 2, label: t('recordInfo_2')},
+        { key: 3, label: t('recordInfo_3')},
+        { key: 4, label: t('recordInfo_4')},
+        { key: 5, label: t('recordInfo_5')},
+        { key: 6, label: t('recordInfo_6')},
+        { key: 7, label: t('recordInfo_7')},
+        { key: 8, label: t('recordInfo_8')},
+        { key: 9, label: t('recordInfo_9')},
+        { key: 10, label: t('recordInfo_10')},
+        { key: 11, label: t('recordInfo_11')},
+        { key: 12, label: t('recordInfo_12')},
+        { key: 13, label: t('recordInfo_13')},
+        { key: 14, label: t('recordInfo_14')},
+        { key: 15, label: t('recordInfo_15')},
+        { key: 16, label: t('recordInfo_16')},
+        { key: 17, label: t('recordInfo_17')},
+        { key: 18, label: t('recordInfo_18')},
+        { key: 19, label: t('recordInfo_19')},
+        { key: 20, label: t('recordInfo_20')},
+        { key: 21, label: t('recordInfo_21')},
+        { key: 22, label: t('recordInfo_22')},
+        { key: 23, label: t('recordInfo_23')},
+        { key: 24, label: t('recordInfo_24')},
+        { key: 25, label: t('recordInfo_25')},
+        { key: 26, label: t('recordInfo_26')},
+        { key: 27, label: t('recordInfo_27')},
+        { key: 28, label: t('recordInfo_28')},
+        { key: 29, label: t('recordInfo_29')},
+        { key: 30, label: t('recordInfo_30')},
+        { key: 31, label: t('recordInfo_31')},
+        { key: 32, label: t('recordInfo_32')},
+        { key: 33, label: t('recordInfo_33')},
+        { key: 34, label: t('recordInfo_34')},
+        { key: 35, label: t('recordInfo_35')}
     ]
 
     const showTypeList = [
@@ -144,6 +153,8 @@ function Record() {
         // { id: 16, label: 'TRANSFER_TO_GAME' },
         // { id: 17, label: 'TRANSFER_FROM_GAME' },
         { id: 5, label: t('menu_18') },
+        { id: 10, label: t('home_record_20') },
+        { id: 11, label: t('home_record_21') },
     ];
 
     const [timeItem, setTimeItem] = React.useState(new Date().getMonth() + 1);

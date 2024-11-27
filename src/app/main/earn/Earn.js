@@ -328,7 +328,7 @@ function Earn(props) {
                             )
                         );
                     }, [widgets])}
-
+{/* 
                     <motion.div
                         variants={container}
                         initial="hidden"
@@ -351,7 +351,7 @@ function Earn(props) {
                                 <img className='earnYouTu ' src="wallet/assets/images/earn/bi1.png" />
                             </div>
                         </div>
-                    </motion.div>
+                    </motion.div> */}
 
                     <motion.div
                         variants={container}
