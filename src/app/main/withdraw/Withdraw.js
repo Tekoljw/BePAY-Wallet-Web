@@ -25,7 +25,7 @@ import {
     getOpenAppId,
     getOpenAppIndex, getUserLoginType,
     handleCopyText, canLoginAfterRequest,
-    setPhoneTab
+    setPhoneTab, readClipboardText
 } from "../../util/tools/function";
 import { openScan, closeScan } from "../../util/tools/scanqrcode";
 import { evalTokenTransferFee, cryptoWithdrawFee, getWithdrawHistoryAddress, delWithdrawHistoryAddress, createPin, verifyPin } from "app/store/wallet/walletThunk";
@@ -1263,9 +1263,9 @@ function Withdraw(props) {
                                                     </div>
                                                 </FormControl>
                                                 <img className='nianTieIcon ' src="wallet/assets/images/withdraw/zhanTie.png" alt="" onClick={() => {
-                                                    navigator.clipboard.readText().then(clipText => {
-                                                        changeAddress('address', clipText)
-                                                    })
+                                                    readClipboardText().then(readText => {
+                                                        changeAddress('address', readText)
+                                                    });
                                                 }} />
                                                 {
                                                     isMobileMedia &&
@@ -1388,9 +1388,9 @@ function Withdraw(props) {
                                                     </div>
                                                 </FormControl>
                                                 <img className='nianTieIcon' src="wallet/assets/images/withdraw/zhanTie.png" alt="" onClick={() => {
-                                                    navigator.clipboard.readText().then(clipText => {
-                                                        setInputIDVal(clipText)
-                                                    })
+                                                    readClipboardText().then(readText => {
+                                                        changeAddress('address', readText)
+                                                    });
                                                 }} />
                                                 {
                                                     isMobileMedia &&
@@ -1510,7 +1510,7 @@ function Withdraw(props) {
                                                         >
                                                             {item}
                                                         </Typography>
-                                                        <IconButton onClick={() => { handleCopyText(item).then(r => { }) }}>
+                                                        <IconButton onClick={() => { handleCopyText(item); }}>
                                                             <img src="wallet/assets/images/deposite/copy.png" alt="" />
                                                         </IconButton>
                                                         <IconButton onClick={() => { del(item) }}>

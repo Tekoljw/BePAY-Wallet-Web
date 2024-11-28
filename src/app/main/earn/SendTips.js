@@ -24,7 +24,7 @@ import { selectUserData } from "../../store/user";
 import { sendTips } from "../../store/user/userThunk";
 import StyledAccordionSelect from '../../components/StyledAccordionSelect';
 import { selectConfig } from "../../store/config";
-import { arrayLookup } from "../../util/tools/function";
+import {arrayLookup, handleCopyText, readClipboardText} from "../../util/tools/function";
 import { closeScan, openScan } from "../../util/tools/scanqrcode";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
 import Dialog from "@mui/material/Dialog/Dialog";
@@ -101,7 +101,6 @@ function Earn(props) {
     const [tabVal, setTabVal] = useState(props.tab);
     const [tabValue, setTabValue] = useState(1);
     const [symbol, setSymbol] = useState('');
-    const [amount, setAmount] = useState('');
     const [googleCode, setGoogleCode] = useState('');
     const [transferState, setTransferState] = useState([]);
     const [historyAddress, setHistoryAddress] = useState([]);
@@ -160,18 +159,6 @@ function Earn(props) {
         }
     };
 
-    const handleCopyText = (text) => {
-        var input = document.createElement('input');
-        document.body.appendChild(input);
-        input.setAttribute('value', text);
-        input.select();
-        document.execCommand("copy"); // 执行浏览器复制命令
-        // navigator.clipboard.writeText(text)
-        if (document.execCommand('copy')) {
-            document.execCommand('copy');
-        }
-        document.body.removeChild(input);
-    }
     const config = useSelector(selectConfig);
     const symbols = config.symbols;
     const [symbolWallet, setSymbolWallet] = useState([]);
@@ -436,10 +423,9 @@ function Earn(props) {
                                             }}
                                         />
                                         <div className='paste-btn' onClick={() => {
-                                            const clipPromise = navigator.clipboard.readText();
-                                            clipPromise.then(clipText => {
-                                                changeAddress('address', clipText)
-                                            })
+                                            readClipboardText().then(readText => {
+                                                changeAddress('address', readText)
+                                            });
                                         }}>{t('home_withdraw_11')}</div>
                                     </FormControl>
                                     {isMobileMedia && tabValue === 0 && <>

@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import Qrcode from "qrcode";
 import { useEffect, useRef } from "react";
+import {handleCopyText} from "../../util/tools/function";
 
 
 const QrView = ({ uri }) => {
@@ -23,7 +24,7 @@ const QrView = ({ uri }) => {
 
   
   const onClick = async () => {
-    await navigator.clipboard.writeText(uri);
+    await handleCopyText(uri);
     toast({
       title: "Copied URI",
     });
