@@ -1508,7 +1508,7 @@ function Withdraw(props) {
                                                         >
                                                             {item}
                                                         </Typography>
-                                                        <IconButton onClick={() => { handleCopyText(item).then(r => { }) }}>
+                                                        <IconButton onClick={() => { handleCopyText(item); }}>
                                                             <img src="wallet/assets/images/deposite/copy.png" alt="" />
                                                         </IconButton>
                                                         <IconButton onClick={() => { del(item) }}>

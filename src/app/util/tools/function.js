@@ -121,14 +121,15 @@ export const getNowTime = (time) => {
 //复制文本到粘贴板
 export const handleCopyText = (text) => {
     try {
-        copy(text);
-        //copy(text, {
-        //    message: 'success',
-        //});
+        if(copy(text)){
+            console.error("copy success");
+        }else{
+            console.error("copy failure");
+        }
     } catch (error) {
         console.error(error.message);
         const dispatch = useDispatch();
-        dispatch(showMessage({ message: "copy fail", code: 2 }));
+        dispatch(showMessage({ message: "copy exception:", code: 2 }));
     }
 };
 
