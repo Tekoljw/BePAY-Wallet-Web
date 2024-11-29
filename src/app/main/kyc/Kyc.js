@@ -97,7 +97,7 @@ function Kyc(props) {
         state: '',
         usSsn: '',
         zipcode: '',
-        addressKyc: '',
+        addressKycId: '',
     });
 
 
@@ -271,7 +271,7 @@ function Kyc(props) {
     const [usSsnInput, setUsSsnInput] = useState(false);
     const [usSsnInputShow, setUsSsnInputShow] = useState(false);
     const usSsnInputRef = useRef(null);
-    const [addressKyc, setAddressKyc] = useState("location1");
+    const [addressKyc, setAddressKyc] = useState("1");
 
 
     //文凯改
@@ -394,6 +394,16 @@ function Kyc(props) {
             setEmailError(false);
         }
     };
+
+
+
+    // useEffect(() => {
+    //     if (kycInfo) {
+    //         if (kycInfo.ldAuditStatus === 0) {
+    //             setInputVal({ ...inputVal, addressKyc: "地址1" });
+    //         }
+    //     }
+    // }, []);
 
     useEffect(() => {
         if (inputVal.email === '') {
@@ -914,7 +924,7 @@ function Kyc(props) {
 
     const handleChangeInputVal16 = (event) => {
         setAddressKyc(event.target.value);
-        // setInputVal({ ...inputVal, [prop]: event.target.value });
+        console.log("ddddddddddddddddddddd", event);
     };
 
 
@@ -1301,9 +1311,9 @@ function Kyc(props) {
                                     onChange={handleChangeInputVal16}
                                     className='addressKyc'
                                 >
-                                    <MenuItem value={'location1'}>地址1</MenuItem>
-                                    <MenuItem value={'location2'}>地址2</MenuItem>
-                                    <MenuItem value={'location3'}>地址3</MenuItem>
+                                    <MenuItem value={'1'}>地址1</MenuItem>
+                                    <MenuItem value={'2'}>地址2</MenuItem>
+                                    <MenuItem value={'3'}>地址3</MenuItem>
                                 </Select>
                             </FormControl>
                         </div>
