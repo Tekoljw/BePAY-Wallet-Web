@@ -823,6 +823,14 @@ const locale = {
     card_250: "Veuillez fermer le mini-programme et cliquer sur le bouton d'actualisation pour réessayer.",
     card_251: "Carte de paiement Apple",
     card_252: "Activer une carte existante",
+    card_253: "Privilégiez l'utilisation d'une adresse aux États-Unis, si vous n'en avez pas, veuillez cliquer sur [Exemple] dans KYC pour fournir les informations pertinentes.",
+
+
+
+    
+
+
+
 
 
 

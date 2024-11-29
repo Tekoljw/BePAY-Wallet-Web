@@ -825,6 +825,14 @@ const locale = {
     card_250: "Por favor, cierre la mini aplicación y haga clic en el botón de actualizar para intentarlo de nuevo.",
     card_251: "Tarjeta de pago Apple",
     card_252: "Activar tarjeta existente",
+    card_253: "Preferiblemente use una dirección de EE. UU., si no tiene una, haga clic en [Ejemplo] en KYC para proporcionar la información relevante.",
+
+
+
+    
+
+
+
 
 
 

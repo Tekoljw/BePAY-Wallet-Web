@@ -825,6 +825,14 @@ const locale = {
     card_250: "Sila tutup aplikasi mini dan klik butang segar semula untuk mencuba lagi.",
     card_251: "Kad Pembayaran Apple",
     card_252: "Aktifkan kad sedia ada",
+    card_253: "Utamakan menggunakan alamat AS, jika tiada, sila klik [Contoh] dalam KYC untuk menyediakan maklumat yang berkaitan.",
+
+
+
+    
+
+
+
 
 
 

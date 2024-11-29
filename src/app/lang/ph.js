@@ -821,6 +821,14 @@ const locale = {
     card_250: "Pakisara ang mini app at i-click ang refresh button para subukang muli.",
     card_251: "Apple Payment Card",
     card_252: "Isaaktibo ang umiiral na card",
+    card_253: "Mas pinipili ang paggamit ng address ng US, kung wala, pakiclick ang [Halimbawa] sa KYC para magbigay ng kaugnay na impormasyon.",
+
+
+
+    
+
+
+
 
 
 

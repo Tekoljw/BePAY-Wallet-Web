@@ -813,6 +813,14 @@ const locale = {
     card_250: "Vui lòng đóng ứng dụng mini và nhấn nút làm mới để thử lại.",
     card_251: "Thẻ thanh toán Apple",
     card_252: "Kích hoạt thẻ hiện có",
+    card_253: "Amerikan adresini tercih edin, yoksa KYC'deki [Örnek]e tıklayarak ilgili bilgileri sağlayın",
+
+
+
+    
+
+
+
 
 
 

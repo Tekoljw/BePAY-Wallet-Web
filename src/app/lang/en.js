@@ -826,6 +826,14 @@ const locale = {
     card_250: "Please close the mini program and click the refresh button to try again.",
     card_251: "Apple Payment Card",
     card_252: "Activate existing card",
+    card_253: "Prefer to use a US address, if not available, please click on [Example] in KYC to provide the relevant information.",
+
+
+
+    
+
+
+
 
 
 

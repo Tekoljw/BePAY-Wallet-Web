@@ -826,6 +826,14 @@ card_249: "Lisää",
 card_250: "Sulje mini-ohjelma ja napsauta päivityspainiketta yrittääksesi uudelleen.",
 card_251: "Apple Pay -kortti",
 card_252: "Aktivoi olemassa oleva kortti",
+card_253: "Suositellaan Yhdysvaltojen osoitteen käyttöä, jos ei ole, klikkaa KYC:ssä [Esimerkki] ja anna tarvittavat tiedot.",
+
+
+
+    
+
+
+
 
 
 

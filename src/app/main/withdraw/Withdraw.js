@@ -1349,7 +1349,7 @@ function Withdraw(props) {
                                                 }}
                                             >
                                                 <Typography className="text-14 px-16">
-                                                    <span style={{ color: '#FCE100' }}>⚠</span> {t('home_withdraw_15')}{TransactionFee}  {symbol}{t('home_withdraw_16')}{t('home_withdraw_17')}
+                                                    <span style={{ color: '#FCE100' }}>⚠</span> {t('home_withdraw_15')}{TransactionFee}  USDT{t('home_withdraw_16')}{t('home_withdraw_17')}
                                                 </Typography>
                                             </Box>
 

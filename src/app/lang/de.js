@@ -826,6 +826,14 @@ const locale = {
     card_250: "Bitte schließen Sie die Mini-App und klicken Sie auf die Schaltfläche „Aktualisieren“, um es erneut zu versuchen.",
     card_251: "Apple Pay-Karte",
     card_252: "Vorhandene Karte aktivieren",
+    card_253: "Bevorzugen Sie die Verwendung einer US-Adresse. Wenn Sie keine haben, klicken Sie bitte auf [Beispiel] im KYC, um die entsprechenden Informationen bereitzustellen.",
+
+
+
+    
+
+
+
 
 
 

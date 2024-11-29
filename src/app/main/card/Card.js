@@ -25,6 +25,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
 import Typography from '@mui/material/Typography';
 import {
     getKycInfo,
@@ -41,8 +42,10 @@ import { createPin, verifyPin } from "app/store/wallet/walletThunk";
 import { showMessage } from "app/store/fuse/messageSlice";
 import { borderBottom } from '@mui/system';
 import Kyc from "../kyc/Kyc";
+import InputLabel from '@mui/material/InputLabel';
 import _ from 'lodash';
 import { selectCurrentLanguage } from "app/store/i18nSlice";
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Enable2FA from "../2fa/Enable2FA";
 import { centerGetTokenBalanceList, userProfile, sendEmail, sendSms } from "app/store/user/userThunk";
 import { centerGetUserFiat } from "app/store/wallet/walletThunk";
@@ -51,6 +54,7 @@ import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import userLoginType from "../../define/userLoginType";
 import RetiedEmail from "../login/RetiedEmail";
 import RetiedPhone from "../login/RetiedPhone";
+import MenuItem from '@mui/material/MenuItem';
 import { Carousel } from "react-responsive-carousel";
 import styles from "react-responsive-carousel/lib/styles/carousel.min.css";
 
@@ -149,8 +153,10 @@ function Card(props) {
     const [currentCardItem, setCurrentCardItem] = useState(null);
     const [cardHeight, setCardHeight] = useState(0);
     const [cardFlexibleHeight, setCardFlexibleHeight] = useState(false);
-    const divRef = useRef(null);
+    const [openKycAddress, setOpenKycAddress] = useState(false);
+    const [addressKyc, setAddressKyc] = useState("location1");
 
+    const divRef = useRef(null);
     const [pin, setPin] = useState('');
     const [hasPin, setHasPin] = useState(false)
 
@@ -370,6 +376,10 @@ function Card(props) {
             top: 0,
             behavior: 'smooth' // 平滑滚动
         });
+    };
+
+    const handleChangeInputVal = (event) => {
+        setAddressKyc(event.target.value);
     };
 
 
@@ -2504,7 +2514,7 @@ function Card(props) {
                             <div className='flex justify-start mt-10'>
                                 <div className='quanYiHuiZi pb-8 '>{t('card_107')}</div>
                             </div>
-                            {cardConfigList[cardConfigID]?.creditConfigName.includes("苹果") && <div className=' pb-8 ' style={{ color: "#19D5B8" }}>仅支持美国地址</div>}
+                            {!cardConfigList[cardConfigID]?.creditConfigName.includes("苹果") && <div className=' pb-8 ' style={{ color: "#19D5B8" }}>优先使用美国地址，没有请点击KYC中的[示例]提供相关信息</div>}
                         </div>
                     </motion.div>
 
@@ -2518,12 +2528,9 @@ function Card(props) {
                             sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
                             style={{ width: '100%', height: '4rem', fontSize: "20px", margin: '1rem auto 2.8rem', display: 'block', lineHeight: "inherit" }}
                             onClick={() => {
-                                // setOpenApplyWindow(true)
-                                // openApplyFunc()
-                                // setOpenChongZhi(true)
-                                // applyCard()
-                                openChangeBiFunc()
-                                refreshKycInfo()
+                                // openChangeBiFunc()
+                                // refreshKycInfo()
+                                setOpenKycAddress(true);
                             }}
                         >
                             {t('card_36')}
@@ -4084,7 +4091,79 @@ function Card(props) {
                     </LoadingButton>
                 </div>
             </AnimateModal>
-        </div>
+
+
+
+            <AnimateModal
+                className="faBiDiCard tanChuanDiSe"
+                open={openKycAddress}
+                onClose={() => setOpenKycAddress(false)}
+            >
+                <div className='flex justify-center mb-16' style={{ width: "100%" }}>
+                    <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
+                    <div className='TanHaoCardZi '>
+                        提交申请
+                    </div>
+                </div>
+
+                <Box
+                    className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard flex justify-center"
+                    sx={{
+                        backgroundColor: "#2C394D",
+                        padding: "1rem 0rem",
+                        overflow: "hidden",
+                        margin: "0rem auto 0rem auto"
+                    }}
+                >
+                    <div className="danChuangTxt ">
+                        请确保您的KYC信息正确并选择申请的地址
+                    </div>
+                </Box>
+
+                <div className="flex items-center justify-between mt-20">
+                    <FormControl sx={{ width: '100%', borderColor: '#525A67' }} className="mb-16">
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={addressKyc}
+                            onChange={handleChangeInputVal}
+                            className='addressKyc'
+                            style={{ color: "#909EB0", backgroundColor: "#1E293A" }}
+                        >
+                            <MenuItem value={'location1'} style={{ color: "#909EB0" }}>地址1：中国，上海</MenuItem>
+                            <MenuItem value={'location2'} style={{ color: "#909EB0" }}>地址2：广州</MenuItem>
+                            <MenuItem value={'location3'} style={{ color: "#909EB0" }}>地址3：中国，杭州</MenuItem>
+
+                        </Select>
+                    </FormControl>
+                </div>
+
+                <div className='flex mt-10  justify-center' >
+                    <LoadingButton
+                        disabled={false}
+                        className="boxCardBtn"
+                        color="secondary"
+                        loading={openCardBtnShow}
+                        variant="contained"
+                        style={{ width: "60%" }}
+                        onClick={() => {
+
+                        }}
+                    >
+                        确定
+                    </LoadingButton>
+                </div>
+
+                <div className='mt-16 mb-20' style={{ textDecoration: "underline", textAlign: "center" }}>
+                    修改KYC信息
+                </div>
+
+            </AnimateModal >
+
+
+
+
+        </div >
     )
 }
 

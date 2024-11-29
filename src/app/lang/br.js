@@ -823,6 +823,14 @@ const locale = {
     card_250: "Por favor, feche o mini aplicativo e clique no botão de atualizar para tentar novamente.",
     card_251: "Cartão de Pagamento Apple",
     card_252: "Ativar cartão existente",
+    card_253: "Priorize o uso de um endereço dos EUA, se não tiver, clique em [Exemplo] no KYC para fornecer as informações necessárias",
+
+
+
+    
+
+
+
 
 
 
