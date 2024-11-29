@@ -952,7 +952,7 @@ export const centerGetTokenBalanceList = createAsyncThunk(
     'user/centerGetTokenBalanceList',
     async (settings, { dispatch, getState }) => {
         const state = getState();
-        if(state.user.wallet) {
+        if(state.user.wallet && !settings.forceUpdate ) {
             if (settings.requestSymbol) { //需要请求币种信息
                 dispatch(getSymbols());
             }
@@ -961,6 +961,7 @@ export const centerGetTokenBalanceList = createAsyncThunk(
             const balanceList = await React.$api("wallet.centerGetTokenBalanceList");
             if (balanceList.errno === 0) {
                 dispatch(updateWallet(balanceList));
+                // return balanceList;
             } else {
                 dispatch(showMessage({ message: balanceList.errmsg, code: 2 }));
             }

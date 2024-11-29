@@ -589,6 +589,58 @@ export default {
         participate: {
             url: "/activity/nftPledge/participate",
             method: "post",
+        },
+        beingFIActivityInfo:{
+            url: "/activity/beingFIActivityInfo/info",
+            method: "get",
+        },
+        beingFIActivityControl: {
+            url: "/activity/beingFIActivityControl/list",
+            method: "get",
+        },
+        signInActivityConfig: {
+            url: "/activity/signInActivity/list",
+            method: "get",
+        },
+        signInActivityInfo: {
+            url: "/activity/signInActivity/info",
+            method: "get",
+        },
+        signIn: {
+            url: "/unique_invite/signIn",
+            method: "post",
+        },
+        demandInterestActivity: {
+            url: "/activity/demandInterestActivity/info",
+            method: "get",
+        },
+        walletPayRewardActivity: {
+            url: "/activity/walletPayRewardActivity/info",
+            method: "get",
+        },
+        swapRewardActivity: {
+            url: "/activity/swapRewardActivity/info",
+            method: "get",
+        },
+        uniqueInvite: {
+            url: "/unique_invite/useInviteCode",
+            method: "post",
+        },
+        getInviteRewardConfig: {
+            url: "/unique_invite/getInviteRewardConfig",
+            method: "get",
+        },
+        resetInvite: {
+            url: "/unique_invite/resetInvite",
+            method: "post",
+        },
+        getInviteRewardAllInfo: {
+            url: "/unique_invite/getInviteRewardAllInfo",
+            method: "get",
+        },
+        getInviteRewardDetail: {
+            url: "/unique_invite/getInviteRewardDetail",
+            method: "get",
         }
     },
 

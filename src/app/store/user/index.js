@@ -161,43 +161,43 @@ const userSlice = createSlice({
 
     },
     extraReducers: (builder) => {
-        builder
-            .addCase(userProfile.fulfilled, (state, action) => {
-                state.profile = action.payload;
-            })
-            .addCase(getCryptoDisplay.fulfilled, (state, action) => {
-                state.cryptoDisplay = action.payload;
-            })
-            .addCase(centerGetUserFiat.fulfilled, (state, action) => {
-                state.fiat = action.payload;
-            })
-            .addCase(getFiatDisplay.fulfilled, (state, action) => {
-                state.fiatDisplay = action.payload;
-            })
-            .addCase(getNftDisplay.fulfilled, (state, action) => {
-                state.nftDisplay = action.payload;
-            })
-            .addCase(getWalletDisplay.fulfilled, (state, action) => {
-                state.walletDisplay = action.payload;
-            })
-            .addCase(centerGetTokenBalanceList.fulfilled, (state, action) => {
-                state.wallet = action.payload;
-            })
-            .addCase(getListBank.fulfilled, (state, action) => {
-                state.bankList = action.payload;
-            })
-            .addCase(payoutBank.fulfilled, (state, action) => {
-                state.payoutBank = action.payload;
-            })
-            .addCase(payoutPayWays.fulfilled, (state, action) => {
-                state.payoutWays = action.payload;
-            })
-            .addCase(getSwapFee.fulfilled, (state, action) => {
-                state.swapFee = action.payload;
-            })
-            .addCase(getCreditConfig.fulfilled, (state, action) => {
-                state.creditConfig = action.payload;
-            })
+        // builder
+        //     .addCase(userProfile.fulfilled, (state, action) => {
+        //         state.profile = action.payload;
+        //     })
+        //     .addCase(getCryptoDisplay.fulfilled, (state, action) => {
+        //         state.cryptoDisplay = action.payload;
+        //     })
+        //     .addCase(centerGetUserFiat.fulfilled, (state, action) => {
+        //         state.fiat = action.payload;
+        //     })
+        //     .addCase(getFiatDisplay.fulfilled, (state, action) => {
+        //         state.fiatDisplay = action.payload;
+        //     })
+        //     .addCase(getNftDisplay.fulfilled, (state, action) => {
+        //         state.nftDisplay = action.payload;
+        //     })
+        //     .addCase(getWalletDisplay.fulfilled, (state, action) => {
+        //         state.walletDisplay = action.payload;
+        //     })
+        //     .addCase(centerGetTokenBalanceList.fulfilled, (state, action) => {
+        //         state.wallet = action.payload;
+        //     })
+        //     .addCase(getListBank.fulfilled, (state, action) => {
+        //         state.bankList = action.payload;
+        //     })
+        //     .addCase(payoutBank.fulfilled, (state, action) => {
+        //         state.payoutBank = action.payload;
+        //     })
+        //     .addCase(payoutPayWays.fulfilled, (state, action) => {
+        //         state.payoutWays = action.payload;
+        //     })
+        //     .addCase(getSwapFee.fulfilled, (state, action) => {
+        //         state.swapFee = action.payload;
+        //     })
+        //     .addCase(getCreditConfig.fulfilled, (state, action) => {
+        //         state.creditConfig = action.payload;
+        //     })
         },
 });
 

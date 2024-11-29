@@ -47,7 +47,7 @@ import QRCode from "qrcode.react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { getCryptoDisplay } from "../../store/wallet/walletThunk";
-import { getDecenterWalletBalance } from "../../store/user/userThunk";
+import { getDecenterWalletBalance, centerGetTokenBalanceList} from "../../store/user/userThunk";
 import FuseLoading from '@fuse/core/FuseLoading';
 import { useTranslation } from "react-i18next";
 import { makeOrder, getDepositeFiatOrderStatus } from "../../store/payment/paymentThunk";
@@ -473,13 +473,16 @@ function Deposite() {
                 if (result?.data?.address) {
                     setWalletAddressList([...walletAddressList, {
                         address: result?.data?.address ?? '',
+                        addressDesc: '收款地址'
                     }])
                     setWalletAddressListBak([...walletAddressList, {
                         address: result?.data?.address ?? '',
+                        addressDesc: '收款地址'
                     }])
                 }
+                dispatch(centerGetTokenBalanceList( {forceUpdate: true}))
             } else {
-                dispatch(showMessage({ message: t('error_39'), code: 2 }));
+                dispatch(showMessage({ message: result.errmsg, code: 2 }));
             }
         });
     };
@@ -702,6 +705,7 @@ function Deposite() {
 
     const getSymbolMoney = (symbol) => {
         let arr = userData?.wallet?.inner || [];
+        console.log(arr);
         let balance = arrayLookup(arr, 'symbol', symbol, 'balance') || 0;
         return balance.toFixed(6)
     };
