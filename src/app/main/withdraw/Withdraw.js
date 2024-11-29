@@ -432,7 +432,7 @@ function Withdraw(props) {
                     setTiJiaoState(1);
                     setWithDrawOrderID(result.data);
                 }, 1200);
-                dispatch(centerGetTokenBalanceList());
+                dispatch(centerGetTokenBalanceList({forceUpdate: true}));
             } else if (result.errno == -2) { //需要google验证
                 setTwiceVerifyType(0);
                 setTypeBined(hasAuthEmail ? true : false);
@@ -531,7 +531,7 @@ function Withdraw(props) {
                 setTimeout(() => {
                     setZhuanQuan(false);
                     setTiJiaoState(1);
-                    dispatch(centerGetTokenBalanceList());
+                    dispatch(centerGetTokenBalanceList({ forceUpdate: true}));
                 }, 1200);
             } else if (resData.errno == -2) {
                 setTwiceVerifyType(0);
@@ -669,10 +669,10 @@ function Withdraw(props) {
         });
     };
     useEffect(() => {
-        setLoadingShow(true)
+        // setLoadingShow(true)
         setPhoneTab('withdraw');
         dispatch(getWithdrawHistoryAddress()).then((res) => {
-            setLoadingShow(false)
+            // setLoadingShow(false)
             if (res.payload?.data?.length > 0) {
                 setHistoryAddress(res.payload.data);
             }
@@ -917,12 +917,12 @@ function Withdraw(props) {
         if (tabValue === cryptoSelect) {
             setOpenYanZheng(false);
             setOpenGoogleCode(true);
-            dispatch(userProfile());
+            dispatch(userProfile({ forceUpdate: true}));
             setTypeBined(true);
         } else if (tabValue === fiatSelect) {
             setOpenYanZheng(false);
             setFiatVerifiedAuth(true);
-            dispatch(userProfile());
+            dispatch(userProfile({ forceUpdate: true}));
             setTypeBined(true);
         }
     }
@@ -1059,7 +1059,7 @@ function Withdraw(props) {
     const backPageEvt = () => {
         setOpenBindPhone(false)
         setOpenBindEmail(false);
-        dispatch(userProfile());
+        dispatch(userProfile({ forceUpdate: true}));
         setTypeBined(true);
         myFunction;
         setOpenGoogleCode(true);

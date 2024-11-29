@@ -590,12 +590,12 @@ export default {
             url: "/activity/nftPledge/participate",
             method: "post",
         },
-        beingFIActivityInfo:{
-            url: "/activity/beingFIActivityInfo/info",
+        beingFiActivityInfo:{
+            url: "/activity/beingFiActivityInfo/info",
             method: "get",
         },
-        beingFIActivityControl: {
-            url: "/activity/beingFIActivityControl/list",
+        beingFiActivityControl: {
+            url: "/activity/beingFiActivityControl/list",
             method: "get",
         },
         signInActivityConfig: {

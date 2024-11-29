@@ -239,7 +239,7 @@ function Record() {
                 limit: rowsPerPage,
                 userCreditNo: kaPianItem == 0 ? null : kaPianItem,
             })).then((res) => {
-                setLoadingShow(false)
+                // setLoadingShow(false)
                 setTimeout(() => {
                     setIsLoading(false)
                 }, 500)
@@ -266,7 +266,7 @@ function Record() {
 
 
     useEffect(() => {
-        setLoadingShow(true)
+        // setLoadingShow(true)
         handleTransferRecord()
     }, [type, timeItem, kaPianItem]);
 

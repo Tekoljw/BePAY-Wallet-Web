@@ -82,9 +82,8 @@ function Earn(props) {
 
     useEffect(() => {
         setPhoneTab('card');
-        dispatch(beingFiActivityInfo()).then((res) => {
-          });
-          
+        dispatch(beingFiActivityControl()).then((res) => {
+        });  
     }, []);
 
     const dispatch = useDispatch();

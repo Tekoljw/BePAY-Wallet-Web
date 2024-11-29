@@ -378,7 +378,7 @@ function Wallet(props) {
   const backPageEvt = () => {
     setOpenBindPhone(false)
     setOpenBindEmail(false);
-    dispatch(userProfile())
+    dispatch(userProfile({ forceUpdate: true}))
     myFunction;
   }
 
@@ -1069,6 +1069,8 @@ function Wallet(props) {
       // console.timeEnd('keyxxxx')
     });
 
+    // dispatch(updateWalletLoading(false))
+
     // 获取nft数据
     // dispatch(getNftConfig()).then((res) => {
     //   let result = res.payload;
@@ -1090,6 +1092,8 @@ function Wallet(props) {
           setLoadingShow(false)
           dispatch(updateWalletLoading(false))
         });
+      } else {
+        setLoadingShow(false)
       }
     }, 500)
   }, []);

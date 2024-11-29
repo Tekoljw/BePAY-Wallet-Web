@@ -1129,7 +1129,7 @@ function Card(props) {
                         setZhuanQuan(false);
                         setTiJiaoState(1);
                         setUpdateCard(true)
-                        dispatch(centerGetTokenBalanceList());
+                        dispatch(centerGetTokenBalanceList({ forceUpdate: true}));
                         setUpdateCard(true)
                         setTimer(timer + 1)
                         // setOpenSuccess(true);
@@ -1140,7 +1140,7 @@ function Card(props) {
                         setZhuanQuan(false);
                         setTiJiaoState(3);
                         setUpdateCard(true)
-                        dispatch(centerGetTokenBalanceList());
+                        dispatch(centerGetTokenBalanceList({ forceUpdate: true}));
                         setUpdateCard(true)
                         setTimer(timer + 1)
                         // setOpenSuccess(true);
@@ -1204,7 +1204,7 @@ function Card(props) {
     const verifiedVAuthEvt = () => {
         setOpenYanZheng(false);
         setOpenGoogleCode(true);
-        dispatch(userProfile());
+        dispatch(userProfile({ forceUpdate: true}));
         setTypeBined(true);
     }
 
@@ -1310,7 +1310,7 @@ function Card(props) {
     const backPageEvt = () => {
         setOpenBindPhone(false)
         setOpenBindEmail(false);
-        dispatch(userProfile());
+        dispatch(userProfile({ forceUpdate: true}));
         setTypeBined(true);
         myFunction;
         setOpenGoogleCode(true);

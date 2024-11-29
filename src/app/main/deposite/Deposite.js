@@ -425,7 +425,7 @@ function Deposite() {
     };
 
     useEffect(() => {
-        setLoadingShow(true);
+        // setLoadingShow(true);
         setPhoneTab('deposite');
     }, []);
 
@@ -433,7 +433,7 @@ function Deposite() {
     useEffect(() => {
         if(canLoginAfterRequest(userData)){ //已经进行过登录流程了
             dispatch(getCryptoDisplay()).then((res) => {
-                setLoadingShow(false);
+                // setLoadingShow(false);
                 let result = res.payload;
                 setCryptoDisplayData(result?.data);
             });
