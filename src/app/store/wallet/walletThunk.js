@@ -52,7 +52,7 @@ export const centerGetUserFiat = createAsyncThunk(
     'wallet/centerGetUserFiat',
     async (settings, { dispatch, getState }) => {
         const state = getState();
-       if(checkCached('user.fiat', getState)){
+       if(checkCached('user.fiat', getState) && !settings.forceUpdate){
           return state.user.fiat
        }else{
             const balanceList = await React.$api("wallet.getUserFiat");

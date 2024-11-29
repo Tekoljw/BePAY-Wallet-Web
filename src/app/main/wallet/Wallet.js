@@ -378,7 +378,7 @@ function Wallet(props) {
   const backPageEvt = () => {
     setOpenBindPhone(false)
     setOpenBindEmail(false);
-    dispatch(userProfile())
+    dispatch(userProfile({ forceUpdate: true}))
     myFunction;
   }
 

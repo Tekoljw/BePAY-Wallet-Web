@@ -521,8 +521,8 @@ function Swap() {
               setTimeout(() => {
                 setZhuanQuan(false);
                 setTiJiaoState(1);
-                dispatch(centerGetTokenBalanceList());
-                dispatch(centerGetUserFiat());
+                dispatch(centerGetTokenBalanceList({ forceUpdate: true}));
+                dispatch(centerGetUserFiat({ forceUpdate: true}));
                 setTimeout(() => {
                   // userData = useSelector(selectUserData);
                   symbolsFormatAmount();

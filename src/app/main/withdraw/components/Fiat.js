@@ -245,7 +245,7 @@ function Fiat(props) {
                         setTimeout(() => {
                             setZhuanQuan(false);
                             setTiJiaoState(1);
-                            dispatch(centerGetUserFiat());
+                            dispatch(centerGetUserFiat({ forceUpdate: true}));
                         }, 1200);
                     } else {
                         setOpenSuccess(false)
@@ -324,7 +324,7 @@ function Fiat(props) {
                         setTimeout(() => {
                             setZhuanQuan(false);
                             setTiJiaoState(1);
-                            dispatch(centerGetUserFiat());
+                            dispatch(centerGetUserFiat({ forceUpdate: true}));
                         }, 1200);
                     } else {
                         setOpenSuccess(false)
@@ -953,7 +953,7 @@ function Fiat(props) {
     const backPageEvt = () => {
         setOpenBindPhone(false)
         setOpenBindEmail(false);
-        dispatch(userProfile());
+        dispatch(userProfile({ forceUpdate: true}));
         setTypeBined(true);
         myFunction;
         setOpenGoogleCode(true);

@@ -67,7 +67,7 @@ export const userProfile = createAsyncThunk(
     'user/userProfile',
     async (settings, { dispatch, getState }) => {
         const state = getState();
-        if (state.user.profile) {
+        if (state.user.profile && !settings.forceUpdate) {
             dispatch(updateUser(state.data.profile));
             return userProfile;
         }else{
