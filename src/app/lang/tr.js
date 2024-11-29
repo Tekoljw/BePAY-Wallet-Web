@@ -824,8 +824,8 @@ const locale = {
     card_251: "Apple Ödeme Kartı",
     card_252: "Mevcut kartı etkinleştir",
     card_253: "Amerikan adresini tercih edin, yoksa KYC'deki [Örnek]e tıklayarak ilgili bilgileri sağlayın",
-
-
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
 
     
 

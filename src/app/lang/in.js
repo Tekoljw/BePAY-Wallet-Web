@@ -823,8 +823,8 @@ const locale = {
     card_251: "एप्पल भुगतान कार्ड",
     card_252: "मौजूदा कार्ड को सक्रिय करें",
     card_253: "अमेरिकी पता का उपयोग प्राथमिकता दें, यदि नहीं है, तो कृपया KYC में [उदाहरण] पर क्लिक करके संबंधित जानकारी प्रदान करें।",
-
-
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
 
     
 

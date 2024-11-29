@@ -823,8 +823,8 @@ const locale = {
     card_251: "Карта Apple Pay",
     card_252: "Активировать существующую карту",
     card_253: "Предпочтительно использовать адрес в США, если у вас его нет, пожалуйста, нажмите на [Пример] в KYC, чтобы предоставить соответствующую информацию",
-
-
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
 
     
 

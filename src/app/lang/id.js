@@ -825,8 +825,8 @@ const locale = {
     card_251: "Kartu Pembayaran Apple",
     card_252: "Aktifkan kartu yang ada",
     card_253: "Utamakan menggunakan alamat AS, jika tidak ada, silakan klik [Contoh] di KYC untuk memberikan informasi terkait.",
-
-
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
 
     
 

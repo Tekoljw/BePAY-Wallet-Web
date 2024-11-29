@@ -822,8 +822,8 @@ const locale = {
     card_251: "Apple Payment Card",
     card_252: "Isaaktibo ang umiiral na card",
     card_253: "Mas pinipili ang paggamit ng address ng US, kung wala, pakiclick ang [Halimbawa] sa KYC para magbigay ng kaugnay na impormasyon.",
-
-
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
 
     
 

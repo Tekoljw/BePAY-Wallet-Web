@@ -836,8 +836,8 @@ const locale = {
     card_251: "অ্যাপল পেমেন্ট কার্ড",
     card_252: "বিদ্যমান কার্ড সক্রিয় করুন",
     card_253: "মার্কিন ঠিকানা ব্যবহারকে অগ্রাধিকার দিন, না থাকলে KYC-এ [নমুনা] ক্লিক করে প্রাসঙ্গিক তথ্য দিন।",
-
-
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
 
     
 

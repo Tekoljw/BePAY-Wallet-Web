@@ -820,14 +820,13 @@ const locale = {
     card_247: "En proceso",
     card_248: "En revisión",
 
-
     card_249: "Agregar",
     card_250: "Por favor, cierre la mini aplicación y haga clic en el botón de actualizar para intentarlo de nuevo.",
     card_251: "Tarjeta de pago Apple",
     card_252: "Activar tarjeta existente",
     card_253: "Preferiblemente use una dirección de EE. UU., si no tiene una, haga clic en [Ejemplo] en KYC para proporcionar la información relevante.",
-
-
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
 
     
 

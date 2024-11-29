@@ -824,8 +824,8 @@ const locale = {
     card_251: "蘋果支付卡",
     card_252: "激活已有卡片",
     card_253: "優先使用美國地址，沒有請點擊KYC中的[示例]提供相關資訊。",
-
-
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
 
     
 

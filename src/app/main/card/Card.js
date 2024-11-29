@@ -838,7 +838,6 @@ function Card(props) {
                             } else if (item.creditConfigName.includes("采购")) {
                                 tmpLanguageList.push(t('card_194'));
                             } else if (item.creditConfigName.includes("苹果")) {
-                                console.log(item.creditConfigName, "ddddddddddddddddddddddddddddddddddddd");
                                 tmpLanguageList.push(t('card_251'));
                             }
                         } else if (item.creditType === 3) {
@@ -886,6 +885,9 @@ function Card(props) {
             if (type?.includes("采购")) {
                 return t('card_219')
             }
+            if (type?.includes("苹果")) {
+                return t('card_255')
+            }
         } else if (type?.includes("Master")) {
             if (type?.includes("线上")) {
                 return t('card_201')
@@ -901,6 +903,9 @@ function Card(props) {
             }
             if (type?.includes("采购")) {
                 return t('card_219')
+            }
+            if (type?.includes("苹果")) {
+                return t('card_255')
             }
         }
         return "";
@@ -924,6 +929,9 @@ function Card(props) {
             if (type?.includes("采购")) {
                 return t('card_220')
             }
+            if (type?.includes("苹果")) {
+                return t('card_254')
+            }
         } else if (type?.includes("Master")) {
             if (type?.includes("线上")) {
                 return t('card_202')
@@ -939,6 +947,9 @@ function Card(props) {
             }
             if (type?.includes("采购")) {
                 return t('card_210')
+            }
+            if (type?.includes("苹果")) {
+                return t('card_254')
             }
         }
         return "";
@@ -2514,7 +2525,7 @@ function Card(props) {
                             <div className='flex justify-start mt-10'>
                                 <div className='quanYiHuiZi pb-8 '>{t('card_107')}</div>
                             </div>
-                            {!cardConfigList[cardConfigID]?.creditConfigName.includes("苹果") && <div className=' pb-8 ' style={{ color: "#19D5B8" }}>优先使用美国地址，没有请点击KYC中的[示例]提供相关信息</div>}
+                            {!cardConfigList[cardConfigID]?.creditConfigName.includes("苹果") && <div className=' pb-8 ' style={{ color: "#19D5B8" }}>{t('card_253')}</div>}
                         </div>
                     </motion.div>
 

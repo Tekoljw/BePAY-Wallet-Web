@@ -816,8 +816,8 @@ const locale = {
     card_251: "အပ်ပယ် ငွေပေးချေမှု ကတ်",
     card_252: "လက်ရှိ ကတ်ကို အက်တစ်ဗိတ်လုပ်ရန်",
     card_253: "အမေရိကန်လိပ်စာကို ဦးစားပေးသုံးပါ၊ မရှိလျှင် KYC တွင် [နမူနာ] ကိုနှိပ်ပြီး ပတ်သက်သည့်သတင်းအချက်အလက်များ ပေးပါ။",
-
-
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
 
     
 

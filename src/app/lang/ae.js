@@ -828,7 +828,8 @@ const locale = {
     card_251: "بطاقة دفع آبل",
     card_252: "تفعيل بطاقة موجودة",
     card_253: "يفضل استخدام عنوان أمريكي، إذا لم يكن لديك، يرجى النقر على [المثال] في KYC لتوفير المعلومات ذات الصلة.",
-
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
 
 
     

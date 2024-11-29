@@ -201,6 +201,7 @@ function Kyc(props) {
     const [idTypeError, setIdTypeError] = useState(false);
     const [idNoError, setIdNoError] = useState(false);
     const [addressError, setAddressError] = useState(false);
+    const [zipcodeError, setZipcodeError] = useState(false);
     const [cityError, setCityError] = useState(false);
     const [stateError, setStateError] = useState(false);
     const [countryError, setCountryError] = useState(false);
@@ -270,9 +271,7 @@ function Kyc(props) {
     const [usSsnInput, setUsSsnInput] = useState(false);
     const [usSsnInputShow, setUsSsnInputShow] = useState(false);
     const usSsnInputRef = useRef(null);
-
-    const [addressKyc, setAddressKyc] = useState(t('kyc_11'));
-
+    const [addressKyc, setAddressKyc] = useState("location1");
 
 
     //文凯改
@@ -440,6 +439,13 @@ function Kyc(props) {
             setAddressError(false);
         }
 
+
+        if (inputVal.zipcode === '') {
+            setZipcodeError(true);
+        } else {
+            setZipcodeError(false);
+        }
+
         if (inputVal.idNo === '') {
             setIdNoError(true);
         } else {
@@ -573,7 +579,6 @@ function Kyc(props) {
         }
     };
 
-
     const handleBlur10 = () => {
         if (inputVal.city === '') {
             setCityError(true);
@@ -618,8 +623,14 @@ function Kyc(props) {
         }
     };
 
-
     const handleBlur13 = () => {
+
+        if (inputVal.zipcode === '') {
+            setZipcodeError(true);
+        } else {
+            setZipcodeError(false);
+        }
+
         if (inputVal.zipcode) {
             setZipCodeInput(true)
             setZipCodeInputShow(true)
@@ -629,8 +640,6 @@ function Kyc(props) {
             setZipCodeInputShow(false)
         }
     };
-
-
 
     const handleBlur14 = () => {
         if (inputVal.idNo === '') {
@@ -648,6 +657,7 @@ function Kyc(props) {
         }
     };
 
+
     const handleBlur15 = () => {
         if (inputVal.idType === '') {
             setIdTypeError(true);
@@ -655,6 +665,7 @@ function Kyc(props) {
             setIdTypeError(false)
         }
     };
+
 
     const handleBlur16 = () => {
         if (inputVal.idFrontUrl === '') {
@@ -724,13 +735,14 @@ function Kyc(props) {
     };
 
     const editShiLiCountry = () => {
-        setInputVal({ ...inputVal, country: '美国', state: '加州', city: '皇后区', address: '东大街3号', address: '东大街3号', address: '51000' });
+        setInputVal({ ...inputVal, country: '美国', state: '加州', city: '皇后区', address: '东大街3号', zipcode: '51000' });
         setTimeout(() => {
             setClickShiLi(true);
             setCountryInputShow(true);
             setStateInputShow(true);
             setCityInputShow(true);
             setAddressInputShow(true);
+            setZipCodeInputShow(true);
         }, 0);
     };
 
@@ -800,7 +812,7 @@ function Kyc(props) {
 
 
     const showBtnFunc = () => {
-        if (inputVal.email !== '' && inputVal.idNo !== '' && inputVal.address !== '' && inputVal.city !== '' && inputVal.state !== '' && inputVal.country !== '' && inputVal.birthDate !== '' && inputVal.firstName !== '' && inputVal.phoneCountry !== '' && inputVal.phoneNumber !== '' && inputVal.idType !== '' && inputVal.idFrontUrl !== '' && inputVal.idBackUrl !== '') {
+        if (inputVal.email !== '' && inputVal.idNo !== '' && inputVal.address !== '' && inputVal.zipcode !== '' && inputVal.city !== '' && inputVal.state !== '' && inputVal.country !== '' && inputVal.birthDate !== '' && inputVal.firstName !== '' && inputVal.phoneCountry !== '' && inputVal.phoneNumber !== '' && inputVal.idType !== '' && inputVal.idFrontUrl !== '' && inputVal.idBackUrl !== '') {
             setShowSaveBtn(false)
         } else
             setShowSaveBtn(true)
@@ -872,6 +884,15 @@ function Kyc(props) {
         }
     };
 
+    const handleChangeInputVal13 = (prop) => (event) => {
+        setInputVal({ ...inputVal, [prop]: event.target.value });
+        if (event.target.value === '') {
+            setZipcodeError(true);
+        } else {
+            setZipcodeError(false);
+        }
+    };
+
     const handleChangeInputVal14 = (prop) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
         if (event.target.value === '') {
@@ -891,8 +912,9 @@ function Kyc(props) {
     };
 
 
-    const handleChangeInputVal16 = (prop) => (event) => {
-        setInputVal({ ...inputVal, [prop]: event.target.value });
+    const handleChangeInputVal16 = (event) => {
+        setAddressKyc(event.target.value);
+        // setInputVal({ ...inputVal, [prop]: event.target.value });
     };
 
 
@@ -982,8 +1004,8 @@ function Kyc(props) {
     };
 
     const onSave = () => {
-        if (inputVal.email !== undefined && inputVal.idNo !== undefined && inputVal.address !== undefined && inputVal.city !== undefined && inputVal.state !== undefined && inputVal.country !== undefined && inputVal.firstName !== undefined && inputVal.phoneCountry !== undefined && inputVal.phoneNumber !== undefined && inputVal.idType !== undefined && inputVal.idFrontUrl !== undefined && inputVal.idBackUrl !== undefined) {
-            if (inputVal.email !== '' && inputVal.idNo !== '' && inputVal.address !== '' && inputVal.city !== '' && inputVal.state !== '' && inputVal.country !== '' && inputVal.firstName !== '' && inputVal.phoneCountry !== '' && inputVal.phoneNumber !== '' && inputVal.idType !== '' && inputVal.idFrontUrl !== '' && inputVal.idBackUrl !== '') {
+        if (inputVal.email !== undefined && inputVal.idNo !== undefined && inputVal.address !== undefined && inputVal.zipcode !== undefined && inputVal.city !== undefined && inputVal.state !== undefined && inputVal.country !== undefined && inputVal.firstName !== undefined && inputVal.phoneCountry !== undefined && inputVal.phoneNumber !== undefined && inputVal.idType !== undefined && inputVal.idFrontUrl !== undefined && inputVal.idBackUrl !== undefined) {
+            if (inputVal.email !== '' && inputVal.idNo !== '' && inputVal.address !== '' && inputVal.zipcode !== '' && inputVal.city !== '' && inputVal.state !== '' && inputVal.country !== '' && inputVal.firstName !== '' && inputVal.phoneCountry !== '' && inputVal.phoneNumber !== '' && inputVal.idType !== '' && inputVal.idFrontUrl !== '' && inputVal.idBackUrl !== '') {
                 dispatch(updateKycInfo(inputVal)).then(
                     (value) => {
                         if (value.payload) {
@@ -1272,13 +1294,11 @@ function Kyc(props) {
 
                         <div className="flex items-center justify-between">
                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} className="mb-24">
-                                <InputLabel id="demo-simple-select-label">地址1</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    label="AddressKyc"
-                                    value={inputVal.addressKyc}
-                                    onChange={handleChangeInputVal16('addressKyc')}
+                                    value={addressKyc}
+                                    onChange={handleChangeInputVal16}
                                     className='addressKyc'
                                 >
                                     <MenuItem value={'location1'}>地址1</MenuItem>
@@ -1395,6 +1415,41 @@ function Kyc(props) {
                             </FormControl>
                         </div>
 
+
+                        <div className="flex items-center justify-between">
+                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-16">
+                                <InputLabel id="demo-simple-select-label">{t('kyc_13')} *</InputLabel>
+                                <OutlinedInput
+                                    id="outlined-adornment-address"
+                                    label="Zipcode"
+                                    value={inputVal.zipcode}
+                                    onChange={handleChangeInputVal13('zipcode')}
+                                    aria-describedby="outlined-weight-helper-text"
+                                    error={zipcodeError}
+                                    inputProps={{
+                                        'aria-label': 'zipcode',
+                                    }}
+                                    onBlur={handleBlur13}
+                                    disabled={zipCodeInput}
+                                    inputRef={zipCodeInputRef}
+                                    endAdornment={
+                                        zipCodeInputShow && <InputAdornment onClick={() => editZipCode()} position="end">
+                                            {<IconButton edge="end">
+                                                <img
+                                                    src="wallet/assets/images/kyc/bianJiBi.png"
+                                                    style={{ width: '24px', height: '24px' }}
+                                                />
+                                            </IconButton>}
+                                        </InputAdornment>
+                                    }
+                                />
+                                {zipcodeError && (
+                                    <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
+                                )}
+                            </FormControl>
+                        </div>
+
+
                         <div className="flex items-center justify-between">
                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
                                 <InputLabel id="demo-simple-select-label">{t('kyc_11')} *</InputLabel>
@@ -1458,34 +1513,7 @@ function Kyc(props) {
                             </FormControl>
                         </div>
 
-                        <div className="flex items-center justify-between">
-                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-16">
-                                <InputLabel id="demo-simple-select-label">{t('kyc_13')}</InputLabel>
-                                <OutlinedInput
-                                    id="outlined-adornment-address"
-                                    label="Zipcode"
-                                    value={inputVal.zipcode}
-                                    onChange={handleChangeInputVal('zipcode')}
-                                    aria-describedby="outlined-weight-helper-text"
-                                    inputProps={{
-                                        'aria-label': 'zipcode',
-                                    }}
-                                    onBlur={handleBlur13}
-                                    disabled={zipCodeInput}
-                                    inputRef={zipCodeInputRef}
-                                    endAdornment={
-                                        zipCodeInputShow && <InputAdornment onClick={() => editZipCode()} position="end">
-                                            {<IconButton edge="end">
-                                                <img
-                                                    src="wallet/assets/images/kyc/bianJiBi.png"
-                                                    style={{ width: '24px', height: '24px' }}
-                                                />
-                                            </IconButton>}
-                                        </InputAdornment>
-                                    }
-                                />
-                            </FormControl>
-                        </div>
+
 
 
                         <div className="flex items-center justify-between">

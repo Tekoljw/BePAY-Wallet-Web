@@ -828,8 +828,8 @@ const locale = {
     card_251: "ஆப்பிள் பைமெண்ட் கார்டு",
     card_252: "இருந்த கார்டை செயல்படுத்தவும்",
     card_253: "அமெரிக்க முகவரியை முன்னுரிமையாக பயன்படுத்தவும், இல்லையெனில் KYC-இல் [உதாரணம்] ஐ கிளிக் செய்து தொடர்புடைய தகவலை வழங்கவும்",
-
-
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
 
     
 

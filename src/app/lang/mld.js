@@ -829,8 +829,8 @@ const locale = {
     card_251: "अॅपल पेमेंट कार्ड",
     card_252: "विद्यमान कार्ड सक्रिय करा",
     card_253: "अमेरिकेचा पत्ता वापरण्याला प्राधान्य द्या, जर तो नसेल तर KYC मधील [उदाहरण] वर क्लिक करून संबंधित माहिती द्या.",
-
-
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
 
     
 

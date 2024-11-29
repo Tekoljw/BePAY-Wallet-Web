@@ -833,9 +833,8 @@ const locale = {
     card_251: "苹果支付卡",
     card_252: "激活已有卡片",
     card_253: "优先使用美国地址，没有请点击KYC中的[示例]提供相关信息。",
-
-
-
+    card_254:" 阿里巴巴, 拼多多, 腾讯, 12306, Facebook, steam, Pubg, 淘宝, Yettel, Yandex, 谷歌, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"苹果,",
 
 
 
