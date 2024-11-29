@@ -30,6 +30,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { lineHeight } from '@mui/system';
 import clsx from 'clsx';
 import { FormHelperText } from '@mui/material';
+import { signInActivityConfig, signInActivityInfo, beingFiActivityInfo, beingFiActivityControl} from '../../store/activity/activityThunk'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -81,6 +82,9 @@ function Earn(props) {
 
     useEffect(() => {
         setPhoneTab('card');
+        dispatch(beingFiActivityInfo()).then((res) => {
+          });
+          
     }, []);
 
     const dispatch = useDispatch();
@@ -1667,6 +1671,7 @@ function Earn(props) {
                             initial="hidden"
                             animate="show"
                             className='mt-12'
+                            style={{ height: "100%" , overflowY: "auto"}}
                         >
                             <div className='flex' onClick={() => {
                                 setOpenXiangQing(false);
