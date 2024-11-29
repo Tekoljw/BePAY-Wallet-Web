@@ -181,6 +181,7 @@ const userSlice = createSlice({
                 state.walletDisplay = action.payload;
             })
             .addCase(centerGetTokenBalanceList.fulfilled, (state, action) => {
+                debugger;
                 state.wallet = action.payload;
             })
             .addCase(getListBank.fulfilled, (state, action) => {

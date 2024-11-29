@@ -473,13 +473,15 @@ function Deposite() {
                 if (result?.data?.address) {
                     setWalletAddressList([...walletAddressList, {
                         address: result?.data?.address ?? '',
+                        addressDesc: '收款地址'
                     }])
                     setWalletAddressListBak([...walletAddressList, {
                         address: result?.data?.address ?? '',
+                        addressDesc: '收款地址'
                     }])
                 }
             } else {
-                dispatch(showMessage({ message: t('error_39'), code: 2 }));
+                dispatch(showMessage({ message: result.errmsg, code: 2 }));
             }
         });
     };
@@ -702,6 +704,7 @@ function Deposite() {
 
     const getSymbolMoney = (symbol) => {
         let arr = userData?.wallet?.inner || [];
+        console.log(arr);
         let balance = arrayLookup(arr, 'symbol', symbol, 'balance') || 0;
         return balance.toFixed(6)
     };
