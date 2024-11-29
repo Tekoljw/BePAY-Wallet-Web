@@ -4,11 +4,11 @@ import { showMessage } from 'app/store/fuse/messageSlice';
 
 // 获取活动基础信息接口（赚钱页面）
 export const beingFiActivityInfo = createAsyncThunk(
-    'activity/beingFIActivityInfo',
+    'activity/beingFiActivityInfo',
     async (settings, { dispatch, getState }) => {
         settings = settings || {};
 
-        const resultData = await React.$api("activity.beingFIActivityInfo", {});
+        const resultData = await React.$api("activity.beingFiActivityInfo", {});
         if (resultData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
         } else {
@@ -19,11 +19,11 @@ export const beingFiActivityInfo = createAsyncThunk(
 
 // 获取控制接口（判断活动是否启用）
 export const beingFiActivityControl = createAsyncThunk(
-    'activity/beingFIActivityControl',
+    'activity/beingFiActivityControl',
     async (settings, { dispatch, getState }) => {
         settings = settings || {};
 
-        const resultData = await React.$api("activity.beingFIActivityControl", {});
+        const resultData = await React.$api("activity.beingFiActivityControl", {});
         if (resultData.errno === 0) {
            return resultData
         } else {

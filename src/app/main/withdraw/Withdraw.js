@@ -669,10 +669,10 @@ function Withdraw(props) {
         });
     };
     useEffect(() => {
-        setLoadingShow(true)
+        // setLoadingShow(true)
         setPhoneTab('withdraw');
         dispatch(getWithdrawHistoryAddress()).then((res) => {
-            setLoadingShow(false)
+            // setLoadingShow(false)
             if (res.payload?.data?.length > 0) {
                 setHistoryAddress(res.payload.data);
             }

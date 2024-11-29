@@ -580,13 +580,13 @@ function Swap() {
   }, [hasData, swapData, inputVal.amount, fiatsData]);
 
   useEffect(() => {
-    setLoadingShow(true)
+    // setLoadingShow(true)
     setPhoneTab('swap');
     dispatch(getSwapConfig()).then((res) => {
       res.payload?.errno === 0 && dispatch(setSwapConfig(res.payload));
     });
     dispatch(getSwapFee()).then((res) => {
-      setLoadingShow(false)
+      // setLoadingShow(false)
       const result = res.payload;
       setSwapFee(result.data);
     })
