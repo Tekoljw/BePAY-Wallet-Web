@@ -83,7 +83,6 @@ function Earn(props) {
     useEffect(() => {
         setPhoneTab('card');
         dispatch(beingFiActivityInfo()).then((res) => {
-            debugger;
           });
           
     }, []);

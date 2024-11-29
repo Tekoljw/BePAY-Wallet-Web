@@ -952,8 +952,7 @@ export const centerGetTokenBalanceList = createAsyncThunk(
     'user/centerGetTokenBalanceList',
     async (settings, { dispatch, getState }) => {
         const state = getState();
-        debugger;
-        if(state.user.wallet) {
+        if(state.user.wallet && !settings.forceUpdate ) {
             if (settings.requestSymbol) { //需要请求币种信息
                 dispatch(getSymbols());
             }

@@ -47,7 +47,7 @@ import QRCode from "qrcode.react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { getCryptoDisplay } from "../../store/wallet/walletThunk";
-import { getDecenterWalletBalance } from "../../store/user/userThunk";
+import { getDecenterWalletBalance, centerGetTokenBalanceList} from "../../store/user/userThunk";
 import FuseLoading from '@fuse/core/FuseLoading';
 import { useTranslation } from "react-i18next";
 import { makeOrder, getDepositeFiatOrderStatus } from "../../store/payment/paymentThunk";
@@ -480,6 +480,7 @@ function Deposite() {
                         addressDesc: '收款地址'
                     }])
                 }
+                dispatch(centerGetTokenBalanceList( {forceUpdate: true}))
             } else {
                 dispatch(showMessage({ message: result.errmsg, code: 2 }));
             }

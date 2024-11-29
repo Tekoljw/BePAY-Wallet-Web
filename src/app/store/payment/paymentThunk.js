@@ -284,7 +284,6 @@ export const payoutPayWays = createAsyncThunk(
 export const getCreditConfig = createAsyncThunk(
     'credit/creditConfig',
     async (settings, { dispatch, getState }) => {
-        debugger;
         const state = getState();
         if(state.user.creditConfig) {
             return state.user.creditConfig
