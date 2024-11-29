@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import clsx from 'clsx';
 import OtpPass from "../otpPass/OtpPass";
 
-import { judgeIosOrAndroid } from "../../util/tools/function";
+import {handleCopyText, judgeIosOrAndroid} from "../../util/tools/function";
 
 import '../../../styles/home.css';
 import Typography from "@mui/material/Typography";
@@ -36,18 +36,6 @@ const item = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0 },
 };
-
-const handleCopyText = (text) => {
-    var input = document.createElement('input');
-    document.body.appendChild(input);
-    input.setAttribute('value', text);
-    input.select();
-    document.execCommand("copy"); // 执行浏览器复制命令
-    if (document.execCommand('copy')) {
-        document.execCommand('copy');
-    }
-    document.body.removeChild(input);
-}
 
 function Enable2FA(props) {
     const { t } = useTranslation('mainPage');

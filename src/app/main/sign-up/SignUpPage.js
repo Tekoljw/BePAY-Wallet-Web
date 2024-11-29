@@ -204,19 +204,20 @@ function ClassicSignUpPage() {
             }}
         >
             <Paper
-                className={clsx("w-full sm:w-auto min-h-full sm:min-h-auto rounded-0 py-32 px-16 sm:p-48 sm:rounded-2xl sm:shadow flex", !isMobileMedia && 'login-right-side')}
+                className={clsx("w-full sm:w-auto min-h-full sm:min-h-auto rounded-0  sm:rounded-2xl sm:shadow flex", !isMobileMedia && 'login-right-side')}
                 style={{
+                    maxWidth: '65rem',
                     background: "#0E1421",
-                    paddingTop: '1.2rem'
+                    padding: "8rem 1.5rem 0rem 1.5rem"
                 }}
             >
-                <div className="w-full max-w-320 sm:w-320 mx-auto sm:mx-0">
-                    <img className="w-160" style={{ marginBottom: '1rem' }} src={logo} alt="logo" />
+                <div className="w-full  mx-auto " style={{ minWidth: "310px" }}>
+                    <img className="logWidth" style={{ marginBottom: '1rem' }} src={logo} alt="logo" />
 
                     {/* <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight">
                         Sign up
                     </Typography> */}
-                    <div className="flex items-baseline mt-2 font-medium">
+                    <div className="flex items-baseline  font-medium">
                         <Typography>{t('signUp_2')}</Typography>
                         <Link className="ml-4" to="/login">
                             {t('signIn_1')}
@@ -519,7 +520,7 @@ function ClassicSignUpPage() {
                             name="acceptTermsConditions"
                             control={control}
                             render={({ field }) => (
-                                <FormControl className="items-center" error={!!errors.acceptTermsConditions}>
+                                <FormControl className="items-center noMargin" error={!!errors.acceptTermsConditions}>
                                     <FormControlLabel
                                         label={t('signUp_4')}
                                         control={<Checkbox size="small" checked={!errors.acceptTermsConditions} {...field} />}

@@ -22,7 +22,7 @@ import { makeWithdrawOrder, fiatSendTips, getFiatFee, payoutBank, payoutPayWays 
 import BN from "bn.js";
 import StyledAccordionSelect from "../../../components/StyledAccordionSelect";
 import { selectConfig } from "../../../store/config";
-import { arrayLookup, getNowTime, getUserLoginType } from "../../../util/tools/function";
+import {arrayLookup, getNowTime, getUserLoginType, readClipboardText} from "../../../util/tools/function";
 import { openScan, closeScan } from "../../../util/tools/scanqrcode";
 import {
     getWithDrawConfig,
@@ -1513,10 +1513,9 @@ function Fiat(props) {
                                                     </div>
                                                 </FormControl>
                                                 <img className='nianTieIcon' src="wallet/assets/images/withdraw/zhanTie.png" alt="" onClick={() => {
-                                                    const clipPromise = navigator.clipboard.readText();
-                                                    clipPromise.then(clipText => {
-                                                        setInputIDVal(clipText)
-                                                    })
+                                                    readClipboardText().then(readText => {
+                                                        setInputIDVal(readText)
+                                                    });
                                                 }} />
                                                 {
                                                     isMobileMedia &&

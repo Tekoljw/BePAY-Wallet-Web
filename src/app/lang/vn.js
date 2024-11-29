@@ -773,7 +773,6 @@ const locale = {
     server_error_40002: "Lỗi tham gia cầm cố NFT",
     server_error_40101: "Không tìm thấy mã quà tặng trong tệp văn bản",
 
-
     recordInfo_0: "Chuyển đổi tài sản giữa người bán và người dùng bằng tiền tệ pháp định",
     recordInfo_1: "Chuyển đổi tài sản giữa người bán và người dùng bằng tiền ảo",
     recordInfo_2: "Nạp tiền tệ pháp định vào tài khoản",
@@ -813,6 +812,11 @@ const locale = {
     card_249: "Thêm",
     card_250: "Vui lòng đóng ứng dụng mini và nhấn nút làm mới để thử lại.",
     card_251: "Thẻ thanh toán Apple",
+    card_252: "Kích hoạt thẻ hiện có",
+
+
+
+
 
 
 

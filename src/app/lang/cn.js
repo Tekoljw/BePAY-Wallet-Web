@@ -670,7 +670,6 @@ const locale = {
     login_1: "登录失败请关闭小程序重新打开",
     deposite_35: "超出限制金额",
 
-
     server_error_10008: "无效的请求金额",
     server_error_10009: "触发严重错误",
     server_error_10010: "未获得授权",
@@ -832,6 +831,7 @@ const locale = {
     card_250: "请关闭小程序并点击刷新按钮重试",
 
     card_251: "苹果支付卡",
+    card_252: "激活已有卡片",
 
 
 

@@ -29,6 +29,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { centerGetNftList, getNftConfig, evalWithdrawFee, nftWithdraw } from "app/store/wallet/walletThunk";
 import { useTranslation } from "react-i18next";
 import LoadingButton from "@mui/lab/LoadingButton";
+import {handleCopyText, readClipboardText} from "../../../util/tools/function";
 
 const container = {
     show: {
@@ -433,10 +434,9 @@ function Nft(props) {
                                             placeholder='Recipient Account Name'
                                         />
                                         <div className='paste-btn' onClick={() => {
-                                            const clipPromise = navigator.clipboard.readText();
-                                            clipPromise.then(clipText => {
-                                                changeAddress('address', clipText)
-                                            })
+                                            readClipboardText().then(readText => {
+                                                changeAddress('address', readText)
+                                            });
                                         }}>Paste</div>
                                     </FormControl>
                                     <div onClick={() => { setOpenWithdrawLog(true) }} className="flex items-center justify-content-center cursor-pointer">
@@ -611,7 +611,7 @@ function Nft(props) {
                                                 >
                                                     {item}
                                                 </Typography>
-                                                <IconButton onClick={() => navigator.clipboard.writeText(item)}>
+                                                <IconButton onClick={() => handleCopyText(item)}>
                                                     <img src="wallet/assets/images/deposite/copy.png" alt="" />
                                                 </IconButton>
                                                 <IconButton>

@@ -1905,8 +1905,16 @@ function Card(props) {
                                                         <div className='tianJiaKaPian flex items-center pl-16' onClick={() => {
                                                             setTabValue(1);
                                                         }}>
-                                                            <img className='cardIconW' src="wallet/assets/images/card/jiaHao.png" alt="" />
+                                                            <img className='cardIconW ' src="wallet/assets/images/card/jiaHao.png" alt="" />
                                                             <div className='zhangDanZi' >{t('card_25')}</div>
+                                                        </div>
+
+                                                        <div className='tianJiaKaPian flex items-center  pl-16' style={{ marginTop: "20px" }} onClick={() => {
+                                                            setOpenJiHuoWindow(true)
+                                                            openJiHuoFunc();
+                                                        }}>
+                                                            <img className='cardIconW ' src="wallet/assets/images/card/jiaHao.png" alt="" />
+                                                            <div className='zhangDanZi' >{t('card_252')}</div>
                                                         </div>
 
                                                         <div>
@@ -3304,7 +3312,7 @@ function Card(props) {
                             render={({ field }) => (
                                 <TextField
                                     {...field}
-                                    className="mb-36"
+                                    className="mb-20"
                                     label={t('card_86')}
                                     type="number"
                                     error={!!errors.cardNumber}
@@ -3316,15 +3324,19 @@ function Card(props) {
                             )}
                         />
 
+
+                        <div className='flex  justify-between pb-20' >
+                            <div className='text-16'>CVV</div>
+                        </div>
+
                         <Controller
                             name="checkCode"
                             control={control}
                             render={({ field }) => (
                                 <TextField
                                     {...field}
-                                    disabled={true}
                                     className="mb-36"
-                                    label={t('card_87')}
+                                    label="CCV"
                                     type="number"
                                     error={!!errors.checkCode}
                                     helperText={errors?.checkCode?.message}
@@ -3348,7 +3360,6 @@ function Card(props) {
                         >
                             {t('kyc_23')}
                         </LoadingButton>
-
                     </div>
                 </div>
             </BootstrapDialog >

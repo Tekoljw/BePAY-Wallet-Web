@@ -1133,8 +1133,8 @@ function Deposite() {
                                 <div className="addressW2 flex justify-between guoDuDongHua">
                                     <div className='idZi guoDuDongHua'> <span style={{ color: "#ffffff", marginRight: "10px" }}>UserID</span>  {userData?.profile?.user?.id}</div>
                                     <img onClick={() => {
+                                        handleCopyText(userData?.profile?.user?.id);
                                         copyTiShiFunc();
-                                        handleCopyText(userData?.profile?.user?.id)
                                     }} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png" />
                                 </div>
                                 <QRCode
@@ -1259,8 +1259,8 @@ function Deposite() {
                                                         </div>
                                                         <img
                                                             onClick={() => {
+                                                                handleCopyText(addressItem.address);
                                                                 copyTiShiFunc();
-                                                                handleCopyText(addressItem.address)
                                                             }}
                                                             className='bianJiBiImg '
                                                             src="wallet/assets/images/deposite/newCopy.png"
@@ -1468,7 +1468,8 @@ function Deposite() {
                                                                     <IconButton
                                                                         aria-label="toggle password visibility "
                                                                         onClick={() => {
-                                                                            handleCopyText(walletAddress)
+                                                                            handleCopyText(walletAddress);
+                                                                            copyTiShiFunc();
                                                                         }}
                                                                         edge="end"
                                                                     >
@@ -1854,8 +1855,8 @@ function Deposite() {
                                     <div className="addressW2 flex justify-between guoDuDongHua">
                                         <div className='idZi guoDuDongHua' > <span style={{ color: "#ffffff", marginRight: "10px" }}>UserID</span>  {userData?.profile?.user?.id}</div>
                                         <img onClick={() => {
+                                            handleCopyText(userData?.profile?.user?.id);
                                             copyTiShiFunc();
-                                            handleCopyText(userData?.profile?.user?.id)
                                         }} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png" />
                                     </div>
                                     <QRCode
