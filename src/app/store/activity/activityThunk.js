@@ -8,9 +8,9 @@ export const beingFiActivityInfo = createAsyncThunk(
     async (settings, { dispatch, getState }) => {
         settings = settings || {};
 
-        const resultData = await React.$api("activity.beingFiActivityInfo", {});
+        const resultData = await React.$apiGet("activity.beingFiActivityInfo", {});
         if (resultData.errno === 0) {
-            dispatch(showMessage({ message: 'success', code: 1 }));
+            return resultData
         } else {
             dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
         }
@@ -23,7 +23,7 @@ export const beingFiActivityControl = createAsyncThunk(
     async (settings, { dispatch, getState }) => {
         settings = settings || {};
 
-        const resultData = await React.$api("activity.beingFiActivityControl", {});
+        const resultData = await React.$apiGet("activity.beingFiActivityControl", {});
         if (resultData.errno === 0) {
            return resultData
         } else {
@@ -38,7 +38,7 @@ export const signInActivityConfig = createAsyncThunk(
     async (settings, { dispatch, getState }) => {
         settings = settings || {};
 
-        const resultData = await React.$api("activity.signInActivityConfig", {});
+        const resultData = await React.$apiGet("activity.signInActivityConfig", {});
         if (resultData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
         } else {
@@ -53,7 +53,7 @@ export const signInActivityInfo = createAsyncThunk(
     async (settings, { dispatch, getState }) => {
         settings = settings || {};
         
-        const resultData = await React.$api("activity.signInActivityInfo", {});
+        const resultData = await React.$apiGet("activity.signInActivityInfo", {});
         if (resultData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
         } else {
@@ -82,10 +82,14 @@ export const demandInterestActivity = createAsyncThunk(
     'activity/demandInterestActivity',
     async (settings, { dispatch, getState }) => {
         settings = settings || {};
-        
-        const resultData = await React.$api("activity.demandInterestActivity", {});
+
+        let params = {
+            day: 180
+        }
+
+        const resultData = await React.$apiGet('activity.demandInterestActivity' , params);
         if (resultData.errno === 0) {
-            dispatch(showMessage({ message: 'success', code: 1 }));
+           return resultData;
         } else {
             dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
         }
@@ -98,9 +102,9 @@ export const walletPayRewardActivity = createAsyncThunk(
     async (settings, { dispatch, getState }) => {
         settings = settings || {};
         
-        const resultData = await React.$api("activity.walletPayRewardActivity", {});
+        const resultData = await React.$apiGet("activity.walletPayRewardActivity", {});
         if (resultData.errno === 0) {
-            dispatch(showMessage({ message: 'success', code: 1 }));
+           return resultData;
         } else {
             dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
         }
@@ -113,9 +117,9 @@ export const swapRewardActivity = createAsyncThunk(
     async (settings, { dispatch, getState }) => {
         settings = settings || {};
         
-        const resultData = await React.$api("activity.swapRewardActivity", {});
+        const resultData = await React.$apiGet("activity.swapRewardActivity", {});
         if (resultData.errno === 0) {
-            dispatch(showMessage({ message: 'success', code: 1 }));
+            return resultData;
         } else {
             dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
         }
@@ -146,9 +150,9 @@ export const getInviteRewardConfig = createAsyncThunk(
     'activity/getInviteRewardConfig',
     async (settings, { dispatch, getState }) => {
         settings = settings || {};
-        const resultData = await React.$api("activity.getInviteRewardConfig", {});
+        const resultData = await React.$apiGet("activity.getInviteRewardConfig", {});
         if (resultData.errno === 0) {
-            dispatch(showMessage({ message: 'success', code: 1 }));
+           return resultData;
         } else {
             dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
         }
@@ -179,9 +183,9 @@ export const getInviteRewardAllInfo = createAsyncThunk(
     'activity/getInviteRewardAllInfo',
     async (settings, { dispatch, getState }) => {
         settings = settings || {};
-        const resultData = await React.$api("activity.getInviteRewardAllInfo", {});
+        const resultData = await React.$apiGet("activity.getInviteRewardAllInfo", {});
         if (resultData.errno === 0) {
-            dispatch(showMessage({ message: 'success', code: 1 }));
+            return resultData;
         } else {
             dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
         }
@@ -193,9 +197,12 @@ export const getInviteRewardDetail = createAsyncThunk(
     'activity/getInviteRewardDetail',
     async (settings, { dispatch, getState }) => {
         settings = settings || {};
-        const resultData = await React.$api("activity.getInviteRewardDetail", {});
+        let data = {
+            activityId: settings.activityId
+        }
+        const resultData = await React.$apiGet("activity.getInviteRewardDetail", data);
         if (resultData.errno === 0) {
-            dispatch(showMessage({ message: 'success', code: 1 }));
+            return resultData
         } else {
             dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
         }

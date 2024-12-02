@@ -485,7 +485,7 @@ const locale = {
     card_122: "Instant delivery",
     card_123: "Compensate all transaction fees",
     card_124: "compensation",
-    card_125: "referral reward",
+    card_125: "Referral Reward",
     card_126: "Invite friends",
     card_127: "receive cash reward!",
     card_128: "total revenue",

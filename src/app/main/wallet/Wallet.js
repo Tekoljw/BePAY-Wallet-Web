@@ -355,7 +355,7 @@ function Wallet(props) {
     } else {
       setLoadingShow(true);
     }
-  }, userData.walletLoading)
+  }, [userData.walletLoading])
 
   // useEffect(() => {
   //   if (symbols.length > 0) {
@@ -1089,11 +1089,11 @@ function Wallet(props) {
         dispatch(userProfile());
         dispatch(centerGetTokenBalanceList());
         dispatch(centerGetUserFiat()).then(() => {
-          setLoadingShow(false)
+          // setLoadingShow(false)
           dispatch(updateWalletLoading(false))
         });
       } else {
-        setLoadingShow(false)
+        dispatch(updateWalletLoading(false))
       }
     }, 500)
   }, []);
