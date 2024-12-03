@@ -22,7 +22,7 @@ export const getKycInfo = createAsyncThunk(
             if (kycData.data && kycData.data.birthDate != undefined) {
                 kycData.data.birthDate = format(new Date(kycData.data.birthDate), 'yyyy-MM-dd');
             }
-            await dispatch(setKycInfo(kycData));
+            dispatch(setKycInfo(kycData));
             return kycData;
         } else {
             if (!unloginerror && kycData.errmsg === 'unlogin') {

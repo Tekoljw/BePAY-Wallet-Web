@@ -154,6 +154,7 @@ function Card(props) {
     const [cardHeight, setCardHeight] = useState(0);
     const [cardFlexibleHeight, setCardFlexibleHeight] = useState(false);
     const [openKycAddress, setOpenKycAddress] = useState(false);
+    const [openKycAuth, setOpenKycAuth] = useState(false);
     const [addressKyc, setAddressKyc] = useState("location1");
 
     const divRef = useRef(null);
@@ -354,7 +355,7 @@ function Card(props) {
         getCardConfig()
         getCardList()
         setHasPin(userData.profile?.user?.hasSetPaymentPassword ?? false)
-
+        refreshKycInfo()
     }, [userData.profile]);
 
     useEffect(() => {
@@ -2541,7 +2542,13 @@ function Card(props) {
                             onClick={() => {
                                 // openChangeBiFunc()
                                 // refreshKycInfo()
-                                setOpenKycAddress(true);
+                                if(userData?.profile?.user?.bindKyc) {
+                                    setOpenKycAuth(false)
+                                    setOpenKycAddress(true)
+                                }else{
+                                    setOpenKycAddress(false)
+                                    setOpenKycAuth(true)
+                                }
                             }}
                         >
                             {t('card_36')}
@@ -4165,12 +4172,58 @@ function Card(props) {
                     </LoadingButton>
                 </div>
 
-                <div className='mt-16 mb-20' style={{ textDecoration: "underline", textAlign: "center" }}>
+                <div className='mt-16 mb-20' style={{ textDecoration: "underline", textAlign: "center" }} onClick={ ()=>{
+                    setOpenKycAddress(false)
+                    setOpenKyc(true)
+                }}>
                     修改KYC信息
                 </div>
 
             </AnimateModal >
+            
+            <AnimateModal
+                className="faBiDiCard tanChuanDiSe"
+                open={openKycAuth}
+                onClose={() => setOpenKycAuth(false)}
+            >
+                <div className='flex justify-center mb-16' style={{ width: "100%" }}>
+                    <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
+                    <div className='TanHaoCardZi '>
+                        KYC认证
+                    </div>
+                </div>
 
+                <Box
+                    className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard flex justify-center"
+                    sx={{
+                        backgroundColor: "#2C394D",
+                        padding: "1rem 0rem",
+                        overflow: "hidden",
+                        margin: "0rem auto 0rem auto"
+                    }}
+                >
+                    <div className="danChuangTxt ">
+                       申请卡片前需完成KYC认证
+                    </div>
+                </Box>
+
+                <div className='flex mt-16 mb-28 justify-center' >
+                    <LoadingButton
+                        disabled={false}
+                        className="boxCardBtn"
+                        color="secondary"
+                        loading={openCardBtnShow}
+                        variant="contained"
+                        style={{ width: "60%" }}
+                        onClick={() => {
+                            setOpenKyc(true);
+                        }}
+                    >
+                        确定
+                    </LoadingButton>
+                </div>
+
+            </AnimateModal >
 
 
 

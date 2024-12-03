@@ -30,7 +30,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { lineHeight } from '@mui/system';
 import clsx from 'clsx';
 import { FormHelperText } from '@mui/material';
-import { signInActivityConfig, signInActivityInfo, beingFiActivityInfo, beingFiActivityControl} from '../../store/activity/activityThunk'
+import { handleCopyText } from "../../util/tools/function";
+import { useNavigate } from 'react-router-dom';
+import { signInActivityConfig, signInActivityInfo, beingFiActivityInfo, beingFiActivityControl, demandInterestActivity, swapRewardActivity, walletPayRewardActivity, getInviteRewardConfig, getInviteRewardAllInfo, getInviteRewardDetail} from '../../store/activity/activityThunk';
+import { shareURL } from '@telegram-apps/sdk';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -56,6 +59,7 @@ const item = {
 
 function Earn(props) {
     const { t } = useTranslation('mainPage');
+    const navigate = useNavigate()
     const userData = useSelector(selectUserData);
     const [openCheckIn, setOpenCheckIn] = useState(false);
     const [openSpin, setOpenSpin] = useState(false);
@@ -75,14 +79,36 @@ function Earn(props) {
     const [showZhiYaInfo, setShowZhiYaInfo] = useState(false);
     const [showZhiYaXinXi, setShowZhiYaXinXi] = useState(false);
     const [canDeposite, setCanDeposite] = useState(true);
+    const [activityList, setActivityList] = useState([]);
+    const [activityInfo, setActivityInfo] = useState({});
+    const [swapData, setSwapData] = useState({});
+    const [walletPayRewardData, setWalletPayRewardData] = useState({});
+    const [demandInterestActivityData, setDemandInterestActivityData] = useState({});
+    const [inviteLevelConfig, setInviteLevelConfig] = useState([]);
+    const [inviteRewardAllInfo, setInviteRewardAllInfo] = useState([]);
+    const [copyTiShi, setCopyTiShi] = useState(false);
     const [weight, setWeight] = useState('');
+    const [loadingShow, setLoadingShow] = useState(false);
+    const textRef = useRef(null);
     const handleChangeInputVal2 = (event) => {
         setInputIDVal(event.target.value);
     };
 
     useEffect(() => {
         setPhoneTab('card');
+        setLoadingShow(true);
         dispatch(beingFiActivityControl()).then((res) => {
+            const result = res.payload
+            setLoadingShow(false);
+            if(result.errno === 0 ){
+                setActivityList(result.data)
+            }
+        });
+        dispatch(beingFiActivityInfo()).then((res) => {
+            const result = res.payload
+            if(result.errno === 0 ) {
+                setActivityInfo(result.data)
+            }
         });  
     }, []);
 
@@ -90,9 +116,7 @@ function Earn(props) {
     const widgets = useSelector(selectWidgets);
 
     useEffect(() => {
-        setLoadingShow(false);
         dispatch(getWidgets()).then(() => {
-            setLoadingShow(false);
         });
     }, [dispatch]);
 
@@ -128,10 +152,28 @@ function Earn(props) {
     const openXiangQingFunc = () => {
         setOpenHuanHui(false)
         setOpenZhiFu(false)
-        setOpenXiangQing(true)
-        setTimeout(() => {
-            document.getElementById('target').scrollIntoView({ behavior: 'smooth' });
-        }, 0);
+        dispatch(getInviteRewardConfig()).then((res) => {
+            const result = res.payload
+            if(result.errno === 0 ) {
+                setInviteLevelConfig(result.data)
+                setOpenXiangQing(true)
+                setTimeout(() => {
+                    document.getElementById('target').scrollIntoView({ behavior: 'smooth' });
+                }, 0);
+            }
+        });
+        dispatch(getInviteRewardAllInfo()).then((res) => {
+            const result = res.payload
+            if(result.errno === 0 ) {
+                setInviteRewardAllInfo(result.data)
+            }
+        });
+        dispatch(getInviteRewardDetail({activityId: 1} )).then((res) => {
+            const result = res.payload
+            if(result.errno === 0 ) {
+                setInviteRewardAllInfo(result.data)
+            }
+        });
     }
 
 
@@ -187,10 +229,16 @@ function Earn(props) {
     };
 
     const openHuanHuiFunc = () => {
-        setOpenHuanHui(true)
-        setTimeout(() => {
-            document.getElementById('openHuanHui').classList.add('PinMoveAni');
-        }, 0);
+        dispatch(swapRewardActivity()).then((res) => {
+            const result = res.payload
+            if(result.errno === 0 ) {
+                setSwapData(result.data)
+                setOpenHuanHui(true)
+                setTimeout(() => {
+                    document.getElementById('openHuanHui').classList.add('PinMoveAni');
+                }, 0);
+            }
+        });  
     }
 
     const closeHuanHuiFunc = () => {
@@ -202,10 +250,16 @@ function Earn(props) {
     };
 
     const openZhiFuFunc = () => {
-        setOpenZhiFu(true)
-        setTimeout(() => {
-            document.getElementById('openZhiFu').classList.add('PinMoveAni');
-        }, 0);
+        dispatch(walletPayRewardActivity()).then((res) => {
+            const result = res.payload
+            if(result.errno === 0 ) {
+                setWalletPayRewardData(result.data)
+                setOpenZhiFu(true)
+                setTimeout(() => {
+                    document.getElementById('openZhiFu').classList.add('PinMoveAni');
+                }, 0);
+            }
+        });  
     }
 
     const closeZhiFuFunc = () => {
@@ -252,8 +306,27 @@ function Earn(props) {
         setDivHeight(document.getElementById(divName).offsetHeight)
     };
 
-    const [loadingShow, setLoadingShow] = useState(false);
-    const textRef = useRef(null);
+    const existCurrentActivity = (id) => {
+        return activityList && _.find(activityList, { activityId: id}) && _.find(activityList, { activityId: id}).state === 1
+    }
+
+    const openDemandInterestResult = ()=> {
+        dispatch(demandInterestActivity()).then((res) => {
+            const result = res.payload
+            if(result.errno === 0 ) {
+                setDemandInterestActivityData(result.data);
+                setOpenKXian(true);
+                openKXianFunc();
+            }
+        });  
+    }
+
+    const copyTiShiFunc = () => {
+        setCopyTiShi(true)
+        setTimeout(() => {
+            setCopyTiShi(false)
+        }, 800);
+    }
 
     return (
         <div className=''>
@@ -270,7 +343,7 @@ function Earn(props) {
                         <div className='text-16'>{t('card_113')}</div>
                         <div className='newBlocak'>
                             <div className='flex mt-12'>
-                                <div className='qianDaoSty flex justify-between px-10' onClick={() => {
+                                { existCurrentActivity(1) &&  <div className='qianDaoSty flex justify-between px-10' onClick={() => {
                                     setOpenCheckIn(true)
                                 }}>
                                     <div className='mt-6'>
@@ -279,8 +352,9 @@ function Earn(props) {
                                     </div>
                                     <img src="wallet/assets/images/earn/qianDao.png" />
                                 </div>
+                                }
 
-                                <div className='zhuanPanSty flex justify-between px-10' onClick={() => {
+                                { existCurrentActivity(5) && <div className='zhuanPanSty flex justify-between px-10' onClick={() => {
                                     setOpenSpin(true)
                                 }}>
                                     <div className='mt-6'>
@@ -293,14 +367,15 @@ function Earn(props) {
                                         <img className='zhuanPanDongHua0' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan1.png" />
                                     </div>
                                 </div>
+                                }
                             </div>
                             <div className='flex mt-16 justify-center'>
-                                <img className='naoZhongImg' src="wallet/assets/images/earn/naoZhong.png" />  <div className='naoZhongZi ml-10'>{t('card_116')}</div> <div className='ml-10 naoZhongZi' >23:48:36</div>
+                                <img className='naoZhongImg' src="wallet/assets/images/earn/naoZhong.png" />  <div className='naoZhongZi ml-10'>{t('card_116')}</div> <div className='ml-10 naoZhongZi' >{ activityInfo?.limitActivityTime === '0' ? '00:00:00' : activityInfo?.limitActivityTime }</div>
                             </div>
                         </div>
                     </motion.div>
 
-                    <motion.div
+                    { existCurrentActivity(3) && <motion.div
                         variants={container}
                         initial="hidden"
                         animate="show"
@@ -309,11 +384,10 @@ function Earn(props) {
                     >
                         <div className='text-16'>{t('card_117')}</div>
 
-                    </motion.div>
+                     </motion.div>
+                    }
 
-                    {useMemo(() => {
-                        return (
-                            !_.isEmpty(widgets) && (
+                    { existCurrentActivity(3) && (
                                 <motion.div
                                     className="w-full"
                                     variants={container}
@@ -322,15 +396,13 @@ function Earn(props) {
                                     style={{ padding: "1.5rem", backgroundColor: "#0E1421" }}
                                 >
                                     <motion.div variants={item} className="" onClick={() => {
-                                        setOpenKXian(true);
-                                        openKXianFunc();
+                                        openDemandInterestResult()
                                     }}>
-                                        <ImpressionsWidget />
+                                        <ImpressionsWidget activityInfo={ activityInfo}/>
                                     </motion.div>
                                 </motion.div>
                             )
-                        );
-                    }, [widgets])}
+                    }
 {/* 
                     <motion.div
                         variants={container}
@@ -356,7 +428,7 @@ function Earn(props) {
                         </div>
                     </motion.div> */}
 
-                    <motion.div
+                    { existCurrentActivity(7) && <motion.div
                         variants={container}
                         initial="hidden"
                         animate="show"
@@ -380,8 +452,9 @@ function Earn(props) {
                             </div>
                         </div>
                     </motion.div>
+                    }
 
-                    <motion.div
+                    { existCurrentActivity(6) && <motion.div
                         variants={container}
                         initial="hidden"
                         animate="show"
@@ -404,8 +477,9 @@ function Earn(props) {
                             </div>
                         </div>
                     </motion.div>
+                    }
 
-                    <motion.div
+                    { existCurrentActivity(4) && <motion.div
                         variants={container}
                         initial="hidden"
                         animate="show"
@@ -424,15 +498,16 @@ function Earn(props) {
                                         <div className='' style={{ fontSize: "20px", overflow: 'hidden' }}>Swap</div>
                                     </div>
                                     <div><span >换汇风暴，</span><span style={{ color: "#5BEA9C" }}>邀友共赢</span></div>
-                                    <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>享受佣金 </span><span style={{ color: "#ffc600", fontWeight: "bold", fontSize: "29px" }}>0.1%</span></div>
+                                    <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>享受佣金 </span><span style={{ color: "#ffc600", fontWeight: "bold", fontSize: "29px" }}>{activityInfo?.swapRewardRate} %</span></div>
                                 </div>
                                 <img className='earnYouTu2 mt-16' src="wallet/assets/images/earn/bi4.png" />
                             </div>
                         </div>
-                    </motion.div>
+                        </motion.div>
+                    }
 
 
-                    {!openXiangQing && <motion.div
+                    {!openXiangQing &&  existCurrentActivity(2) && <motion.div
                         variants={container}
                         initial="hidden"
                         animate="show"
@@ -450,7 +525,7 @@ function Earn(props) {
                                         <div className='' style={{ fontSize: "20px", overflow: 'hidden' }}>BeingFi 支付</div>
                                     </div>
                                     <div><span >小费，</span><span style={{ fontSize: "20px", color: "#30F2DD" }}>大收益</span></div>
-                                    <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>享受佣金 </span><span style={{ color: "#ffc600", fontWeight: "bold", fontSize: "29px" }}>0.1%</span></div>
+                                    <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>享受佣金 </span><span style={{ color: "#ffc600", fontWeight: "bold", fontSize: "29px" }}>{activityInfo?.walletPayRate}%</span></div>
                                 </div>
                                 <img className='earnYouTu2 mt-16' src="wallet/assets/images/earn/bi5.png" />
                             </div>
@@ -458,7 +533,7 @@ function Earn(props) {
                     </motion.div>
                     }
 
-                    {!openXiangQing && <motion.div
+                    {!openXiangQing &&<motion.div
                         variants={container}
                         initial="hidden"
                         animate="show"
@@ -480,25 +555,25 @@ function Earn(props) {
 
                             <div className='flex justify-between mt-20'>
                                 <div className='' style={{ width: "25%" }}>
-                                    <div className='yaoQingEarnZi' style={{ textAlign: "left" }}>500.00</div>
+                                    <div className='yaoQingEarnZi' style={{ textAlign: "left" }}>{ Number(activityInfo?.inviteReward?.inviteRewardAllUSDT) === 0 ?  '0.00': Number(activityInfo?.inviteReward?.inviteRewardAllUSDT) }</div>
                                     <div className='earnHuiZi' style={{ textAlign: "left" }}>{t('card_128')}</div>
                                     <div className='earnHuiZi' style={{ textAlign: "left" }}>USDT</div>
                                 </div>
 
                                 <div className='' style={{ width: "25%", color: "#FF9000" }}>
-                                    <div className='yaoQingEarnZi' style={{ textAlign: "center" }}>30.00</div>
+                                    <div className='yaoQingEarnZi' style={{ textAlign: "center" }}>{ Number(activityInfo?.inviteReward?.inviteRewardTodayUSDT) === 0 ?  '0.00': Number(activityInfo?.inviteReward?.inviteRewardTodayUSDT) }</div>
                                     <div className='earnHuiZi' style={{ textAlign: "center" }}>{t('card_129')}</div>
                                     <div className='earnHuiZi' style={{ textAlign: "center" }}>USDT</div>
                                 </div>
 
                                 <div className='' style={{ width: "25%", color: "#02A7F0" }}>
-                                    <div className='yaoQingEarnZi' style={{ textAlign: "center" }}>200.00</div>
+                                    <div className='yaoQingEarnZi' style={{ textAlign: "center" }}>{ Number(activityInfo?.inviteReward?.inviteRewardAllBFT) === 0 ?  '0.00': Number(activityInfo?.inviteReward?.inviteRewardAllBFT) }</div>
                                     <div className='earnHuiZi' style={{ textAlign: "center" }}>{t('card_128')}</div>
                                     <div className='earnHuiZi' style={{ textAlign: "center" }}>BFT</div>
                                 </div>
 
                                 <div className='' style={{ width: "25%", color: "#00FF47" }}>
-                                    <div className='yaoQingEarnZi' style={{ textAlign: "right" }}>100.00</div>
+                                    <div className='yaoQingEarnZi' style={{ textAlign: "right" }}>{ Number(activityInfo?.inviteReward?.inviteRewardTodayBFT) === 0 ?  '0.00': Number(activityInfo?.inviteReward?.inviteRewardTodayBFT) }</div>
                                     <div className='earnHuiZi' style={{ textAlign: "right" }}>{t('card_129')}</div>
                                     <div className='earnHuiZi' style={{ textAlign: "right" }}>BFT</div>
                                 </div>
@@ -1047,25 +1122,27 @@ function Earn(props) {
                                 <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/card/usd.png"></img>
                                 <div className='text-18 ml-6' style={{ fontWeight: "600" }} >{t('card_152')} USD</div>
                             </div>
-                            <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "center", color: "#00FF96" }}>10000.00</div>
+                            <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "center", color: "#00FF96" }}>{(userData.profile.wallet?.Crypto + userData.profile.wallet?.Fiat).toFixed(2) ?? '0.00'}</div>
                             <div className='flex  justify-between mt-12'>
                                 <div>
                                     <div style={{ textAlign: "center" }}>{t('card_153')}(USDT)</div>
-                                    <div className='mt-6' style={{ textAlign: "center" }}>100.00</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}>{ demandInterestActivityData.demandInterestData ? (Number(demandInterestActivityData.demandInterestData.yesterday.symbol.usdt) === 0 ? '0.00' : Number(demandInterestActivityData.demandInterestData.yesterday.symbol.usdt)): '0.00' }</div>
                                 </div>
 
                                 <div>
                                     <div style={{ textAlign: "center" }}>{t('card_154')}(USDT)</div>
-                                    <div className='mt-6' style={{ textAlign: "center" }}>100.00</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}>{ demandInterestActivityData.demandInterestData ? (Number(demandInterestActivityData.demandInterestData.curMonth.symbol.usdt) === 0 ? '0.00' : Number(demandInterestActivityData.demandInterestData.curMonth.symbol.usdt)): '0.00' }</div>
                                 </div>
 
                                 <div>
                                     <div style={{ textAlign: "center" }}>{t('card_155')}</div>
-                                    <div className='mt-6' style={{ textAlign: "center" }}>5.26%</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}> { demandInterestActivityData?.curDemandInterest}%</div>
                                 </div>
                             </div>
-                            <VisitorsOverviewWidget />
-                            <div className='txtBrightness text-20 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>{t('card_156')}</div>
+                            <VisitorsOverviewWidget demandInterestHistory={demandInterestActivityData?.demandInterestHistory }/>
+                            <div className='txtBrightness text-20 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }} onClick={()=>{
+                                navigate('/home/deposite');
+                            }}>{t('card_156')}</div>
                             <div style={{ height: "20px" }}></div>
                         </div>
                     </BootstrapDialog>
@@ -1586,27 +1663,27 @@ function Earn(props) {
                             </div>
 
                             <div className='mt-20 text-12' style={{ textAlign: "center", color: "#A4A4A4" }}>
-                                邀请好友后可获得好友换汇后总金额的0.1%佣金！
+                                邀请好友后可获得好友换汇后总金额的{activityInfo?.swapRewardRate}%佣金！
                             </div>
                             <div className='flex  mt-32 justify-center'>
                                 <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/card/usd.png"></img>
                                 <div className='text-14 ml-6' style={{ height: "24px", lineHeight: "24px" }}>换汇总收益(USDT)</div>
                             </div>
-                            <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "center", color: "#00FF96" }}>2000.00</div>
+                            <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "center", color: "#00FF96" }}>{ Number(swapData?.totalReward) === 0 ? '0.00' : Number(swapData?.totalReward)}</div>
                             <div className='flex  justify-between mt-20'>
                                 <div>
                                     <div style={{ textAlign: "center" }}>邀请人数</div>
-                                    <div className='mt-6' style={{ textAlign: "center" }}>4</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}>{swapData?.inviteUserCount }</div>
                                 </div>
 
                                 <div>
                                     <div style={{ textAlign: "center" }}>{t('card_129')}</div>
-                                    <div className='mt-6' style={{ textAlign: "center" }}>100 USDT</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}>{ Number(swapData?.todayReward) === 0 ? '0.00': Number(swapData?.todayReward) } USDT</div>
                                 </div>
 
                                 <div>
                                     <div style={{ textAlign: "center" }}>{t('card_153')}</div>
-                                    <div className='mt-6' style={{ textAlign: "center" }}>100USDT</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}>{ Number(swapData?.yesterdayReward) === 0 ? '0.00': Number(swapData?.yesterdayReward) } USDT</div>
                                 </div>
 
                             </div>
@@ -1633,27 +1710,27 @@ function Earn(props) {
                             </div>
 
                             <div className='mt-20 text-12' style={{ textAlign: "center", color: "#A4A4A4" }}>
-                                邀请好友后可获得好友支付后总金额的0.1%佣金！
+                                邀请好友后可获得好友支付后总金额的{ activityInfo?.walletPayRate}%佣金！
                             </div>
                             <div className='flex  mt-32 justify-center'>
                                 <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/card/usd.png"></img>
                                 <div className='text-14 ml-6' style={{ height: "24px", lineHeight: "24px" }}>支付总收益(USDT)</div>
                             </div>
-                            <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "center", color: "#00FF96" }}>1000.00</div>
+                            <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "center", color: "#00FF96" }}>{ Number(walletPayRewardData?.totalReward) === 0 ? '0.00': Number(walletPayRewardData?.totalReward) } </div>
                             <div className='flex  justify-between mt-20'>
                                 <div>
                                     <div style={{ textAlign: "center" }}>邀请人数</div>
-                                    <div className='mt-6' style={{ textAlign: "center" }}>3</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}>{ walletPayRewardData?.inviteUserCount }</div>
                                 </div>
 
                                 <div>
                                     <div style={{ textAlign: "center" }}>{t('card_129')}</div>
-                                    <div className='mt-6' style={{ textAlign: "center" }}>200 USDT</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}>{ Number(walletPayRewardData?.todayReward) === 0 ? '0.00': Number(walletPayRewardData?.todayReward) } USDT</div>
                                 </div>
 
                                 <div>
                                     <div style={{ textAlign: "center" }}>{t('card_153')}</div>
-                                    <div className='mt-6' style={{ textAlign: "center" }}>100 USDT</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}>{ Number(walletPayRewardData?.yesterdayReward) === 0 ? '0.00': Number(walletPayRewardData?.yesterdayReward) } USDT</div>
                                 </div>
                             </div>
                             <div style={{ height: "40px" }}></div>
@@ -1661,6 +1738,20 @@ function Earn(props) {
                                 style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>邀请好友</div>
                             <div style={{ height: "20px" }}></div>
                         </div>
+                    </BootstrapDialog>
+
+                    <BootstrapDialog
+                        onClose={() => {
+                            setCopyTiShi(false)
+                        }}
+                        aria-labelledby="customized-dialog-title "
+                        open={copyTiShi}
+                        className="dialog-container copyTiShiW"
+                    >
+                        <div style={{ textAlign: "center", padding: "1rem 1rem 1rem 1rem" }}>
+                            {t('card_195')}
+                        </div>
+
                     </BootstrapDialog>
 
 
@@ -1677,14 +1768,14 @@ function Earn(props) {
                             }}>
                                 <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                             </div>
-                            <div className='yaoQingTitleZi'>邀请码 5358485488</div>
+                            <div className='yaoQingTitleZi'>邀请码 { userData?.userInfo?.uniqueInviteCode }</div>
                             <div className='my-16' style={{ textAlign: "center" }}>● 邀请好友加入，获得累计 <span style={{ color: "#00f0c5" }}>巨额奖励</span>！</div>
 
                             <div className='flex justify-center mt-10' style={{ paddingInline: "1.5rem" }}>
                                 <div style={{ width: "50%" }}>
                                     <div className='flex justify-center mb-10'>
                                         <img className='' style={{ width: "3rem", height: "3rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
-                                        <div className='ml-10' style={{ height: "3rem", lineHeight: "3rem", fontSize: "2.8rem" }}>400.00</div>
+                                        <div className='ml-10' style={{ height: "3rem", lineHeight: "3rem", fontSize: "2.8rem" }}>{ Number(activityInfo?.inviteReward?.inviteRewardAllUSDT) === 0 ?  '0.00': Number(activityInfo?.inviteReward?.inviteRewardAllUSDT) } </div>
                                     </div>
                                     <div className='bianShe1' style={{ borderRadius: "50px", height: "0.8rem", width: "90%" }}></div>
                                 </div>
@@ -1692,7 +1783,7 @@ function Earn(props) {
                                 <div style={{ width: "50%" }}>
                                     <div className='flex justify-center mb-10'>
                                         <img className='' style={{ width: "3rem", height: "3rem" }} src="wallet/assets/images/symbol/bft.png" alt="" />
-                                        <div className='ml-10' style={{ height: "3rem", lineHeight: "3rem", fontSize: "2.8rem" }}>100.00</div>
+                                        <div className='ml-10' style={{ height: "3rem", lineHeight: "3rem", fontSize: "2.8rem" }}> { Number(activityInfo?.inviteReward?.inviteRewardAllBFT) === 0 ?  '0.00' : Number(activityInfo?.inviteReward?.inviteRewardAllBFT) } </div>
                                     </div>
                                     <div className='bianShe2' style={{ borderRadius: "50px", height: "0.8rem", width: "90%" }}></div>
                                 </div>
@@ -1777,12 +1868,12 @@ function Earn(props) {
                                                     <img className='mr-10' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/menu/deposite3-active.png" alt="" />
                                                 </div>
                                                 <div>
-                                                    <div className='ml-8 fenChengZi'>活期利益分成<br /> <p className='fenChengZi2 mt-4'>直接邀请：1人，间接邀请：9人。</p> </div>
+                                                    <div className='ml-8 fenChengZi'>活期利益分成<br /> <p className='fenChengZi2 mt-4'>直接邀请：{ inviteRewardAllInfo.demandInterestData ? inviteRewardAllInfo.demandInterestData.direct : 0 }人，间接邀请：{inviteRewardAllInfo.demandInterestData ? inviteRewardAllInfo.demandInterestData.indirect : 0 }人。</p> </div>
                                                 </div>
                                             </div>
                                             <div className='flex earnDepositeDi'>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
-                                                    <div style={{}}>1.0</div>
+                                                    <div style={{}}>{ inviteRewardAllInfo.demandInterestData ? (Number(inviteRewardAllInfo.demandInterestData.totalReward) === 0 ? '0.00' : Number(inviteRewardAllInfo.demandInterestData.totalReward)): '0.00' }</div>
                                                 </div>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
                                                     <img className='ml-10 mr-6' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
@@ -1841,12 +1932,12 @@ function Earn(props) {
                                                     <img className='mr-10' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/menu/icon-pools-active.png" alt="" />
                                                 </div>
                                                 <div>
-                                                    <div className='ml-8 fenChengZi'>质押收益分成<br /> <p className='fenChengZi2 mt-4'>直接邀请：1人，间接邀请：9人。</p> </div>
+                                                    <div className='ml-8 fenChengZi'>质押收益分成<br /> <p className='fenChengZi2 mt-4'>直接邀请：{ inviteRewardAllInfo.tokenPledgeRewardData ? inviteRewardAllInfo.tokenPledgeRewardData.direct : 0 }人，间接邀请：{inviteRewardAllInfo.tokenPledgeRewardData ? inviteRewardAllInfo.tokenPledgeRewardData.indirect : 0}人。</p> </div>
                                                 </div>
                                             </div>
                                             <div className='flex earnDepositeDi'>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
-                                                    <div style={{}}>1.0</div>
+                                                    <div style={{}}>{ inviteRewardAllInfo.tokenPledgeRewardData ? (Number(inviteRewardAllInfo.tokenPledgeRewardData.totalReward) === 0 ? '0.00' : Number(inviteRewardAllInfo.tokenPledgeRewardData.totalReward)): '0.00' }</div>
                                                 </div>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
                                                     <img className='ml-10 mr-6' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
@@ -1905,12 +1996,12 @@ function Earn(props) {
                                                     <img className='mr-10' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/menu/daE.png" alt="" />
                                                 </div>
                                                 <div>
-                                                    <div className='ml-8 fenChengZi'>合约挖矿分成<br /> <p className='fenChengZi2 mt-4'>直接邀请：1人，间接邀请：9人。</p> </div>
+                                                    <div className='ml-8 fenChengZi'>合约挖矿分成<br /> <p className='fenChengZi2 mt-4'>直接邀请：{ inviteRewardAllInfo.tokenContractRewardData ? inviteRewardAllInfo.tokenContractRewardData.direct : 0 }人，间接邀请：{ inviteRewardAllInfo.tokenContractRewardData ? inviteRewardAllInfo.tokenContractRewardData.indirect : 0 }人。</p> </div>
                                                 </div>
                                             </div>
                                             <div className='flex earnDepositeDi'>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
-                                                    <div style={{}}>1.0</div>
+                                                    <div style={{}}>{ inviteRewardAllInfo.tokenContractRewardData ? (Number(inviteRewardAllInfo.tokenContractRewardData.totalReward) === 0 ? '0.00' : Number(inviteRewardAllInfo.tokenContractRewardData.totalReward)): '0.00' }</div>
                                                 </div>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
                                                     <img className='ml-10 mr-6' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
@@ -1969,12 +2060,12 @@ function Earn(props) {
                                                     <img className='mr-10' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/menu/buyCrypto-active.png" alt="" />
                                                 </div>
                                                 <div>
-                                                    <div className='ml-8 fenChengZi'>支付手续费佣金<br /> <p className='fenChengZi2 mt-4'>直接邀请：1人，间接邀请：9人。</p> </div>
+                                                    <div className='ml-8 fenChengZi'>支付手续费佣金<br /> <p className='fenChengZi2 mt-4'>直接邀请：{ inviteRewardAllInfo.payCommissionRewardData ? inviteRewardAllInfo.payCommissionRewardData.direct : 0 }人，间接邀请：{ inviteRewardAllInfo.walletPayRewardData ? inviteRewardAllInfo.walletPayRewardData.indirect : 0 }人。</p> </div>
                                                 </div>
                                             </div>
                                             <div className='flex earnDepositeDi'>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
-                                                    <div style={{}}>1.0</div>
+                                                    <div style={{}}>{ inviteRewardAllInfo.payCommissionRewardData ? (Number(inviteRewardAllInfo.payCommissionRewardData.totalReward) === 0 ? '0.00' : Number(inviteRewardAllInfo.payCommissionRewardData.totalReward)): '0.00' }</div>
                                                 </div>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
                                                     <img className='ml-10 mr-6' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
@@ -2033,12 +2124,12 @@ function Earn(props) {
                                                     <img className='mr-10' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/menu/icon-borrow-active.png" alt="" />
                                                 </div>
                                                 <div>
-                                                    <div className='ml-8 fenChengZi'>换汇手续费佣金<br /> <p className='fenChengZi2 mt-4'>直接邀请：1人，间接邀请：9人。</p> </div>
+                                                    <div className='ml-8 fenChengZi'>换汇手续费佣金<br /> <p className='fenChengZi2 mt-4'>直接邀请：{ inviteRewardAllInfo.swapRewardData ? inviteRewardAllInfo.swapRewardData.direct : 0 } 人，间接邀请： { inviteRewardAllInfo.swapRewardData ? inviteRewardAllInfo.swapRewardData.indirect : 0 } 人。</p> </div>
                                                 </div>
                                             </div>
                                             <div className='flex earnDepositeDi'>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
-                                                    <div style={{}}>1.0</div>
+                                                    <div style={{}}>{ inviteRewardAllInfo.swapRewardData ? (Number(inviteRewardAllInfo.swapRewardData.totalReward) === 0 ? '0.00' : Number(inviteRewardAllInfo.swapRewardData.totalReward)): '0.00' } </div>
                                                 </div>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
                                                     <img className='ml-10 mr-6' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
@@ -2097,34 +2188,34 @@ function Earn(props) {
 
 
                                 <div className='flex mt-2' style={{ paddingInline: "15px", height: "40px", lineHeight: "40px" }}>
-                                    <div style={{ width: "30%", textAlign: "center", borderBottom: "1px solid #14C2A3" }}>1</div>
+                                    <div style={{ width: "30%", textAlign: "center", borderBottom: "1px solid #14C2A3" }}>{ inviteLevelConfig[0]?.inviteLayer }</div>
                                     <div style={{ width: "70%", marginLeft: "10px" }}>
-                                        <div style={{ width: "100%", textAlign: "right" }}>15%</div>
+                                        <div style={{ width: "100%", textAlign: "right" }}>{ inviteLevelConfig[0]?.rewardRate }%</div>
                                         <div className='yaoQingxiaHuaXian' style={{ marginTop: "-1px" }}></div>
                                     </div>
                                 </div>
 
                                 <div className='flex mt-2' style={{ paddingInline: "15px", height: "40px", lineHeight: "40px" }}>
-                                    <div style={{ width: "30%", textAlign: "center", borderBottom: "1px solid #14C2A3" }}>2</div>
+                                    <div style={{ width: "30%", textAlign: "center", borderBottom: "1px solid #14C2A3" }}>{ inviteLevelConfig[1]?.inviteLayer }</div>
                                     <div style={{ width: "70%", marginLeft: "10px" }}>
-                                        <div style={{ width: "100%", textAlign: "right" }}>7.5%</div>
+                                        <div style={{ width: "100%", textAlign: "right" }}>{ inviteLevelConfig[1]?.rewardRate }%</div>
                                         <div className='yaoQingxiaHuaXian' style={{ marginTop: "-1px" }}></div>
                                     </div>
                                 </div>
 
 
                                 <div className='flex mt-2' style={{ paddingInline: "15px", height: "40px", lineHeight: "40px" }}>
-                                    <div style={{ width: "30%", textAlign: "center", borderBottom: "1px solid #14C2A3" }}>3</div>
+                                    <div style={{ width: "30%", textAlign: "center", borderBottom: "1px solid #14C2A3" }}>{ inviteLevelConfig[2]?.inviteLayer }</div>
                                     <div style={{ width: "70%", marginLeft: "10px" }}>
-                                        <div style={{ width: "100%", textAlign: "right" }}>3.75%</div>
+                                        <div style={{ width: "100%", textAlign: "right" }}>{ inviteLevelConfig[2]?.rewardRate}%</div>
                                         <div className='yaoQingxiaHuaXian' style={{ marginTop: "-1px" }}></div>
                                     </div>
                                 </div>
 
                                 <div className='flex mt-2' style={{ paddingInline: "15px", height: "40px", lineHeight: "40px" }}>
-                                    <div style={{ width: "30%", textAlign: "center", borderBottom: "1px solid #14C2A3" }}>4-12</div>
+                                    <div style={{ width: "30%", textAlign: "center", borderBottom: "1px solid #14C2A3" }}>{ inviteLevelConfig[3]?.inviteLayer } - { inviteLevelConfig[11]?.inviteLayer }</div>
                                     <div style={{ width: "70%", marginLeft: "10px" }}>
-                                        <div style={{ width: "100%", textAlign: "right" }}>1%</div>
+                                        <div style={{ width: "100%", textAlign: "right" }}>{ inviteLevelConfig[3]?.rewardRate}%</div>
                                         <div className='yaoQingxiaHuaXian' style={{ marginTop: "-1px" }}></div>
                                     </div>
                                 </div>
@@ -2133,12 +2224,17 @@ function Earn(props) {
                                     <div className='flex' style={{ paddingLeft: "15px" }}>
                                         <div className='fangFaBtn'>方法 1</div>
                                         <div className='fangFaBtn2'>分享 https://www.beingfi.com</div>
-                                        <img className='ml-10' style={{ width: "20px", height: "20px", marginTop: "3px" }} src="wallet/assets/images/deposite/newCopy2.png" />
+                                        <img className='ml-10' style={{ width: "20px", height: "20px", marginTop: "3px" }} src="wallet/assets/images/deposite/newCopy2.png" onClick={()=> {
+                                             handleCopyText( 'https://t.me/BeingFiWalletBot?start='+ userData?.userInfo?.address);
+                                             copyTiShiFunc();
+                                        }}/>
                                     </div>
                                     <div className='flex mt-20' style={{ paddingLeft: "15px" }}>
                                         <div className='fangFaBtn'>方法 2</div>
                                         <div className='fangFaBtn2'>邀请好友进入Telegram官方社群</div>
-                                        <img className='ml-10' style={{ width: "20px", height: "20px", marginTop: "3px" }} src="wallet/assets/images/deposite/fenXiang.png" />
+                                        <img className='ml-10' style={{ width: "20px", height: "20px", marginTop: "3px" }} src="wallet/assets/images/deposite/fenXiang.png" onClick={ ()=>{
+                                            shareURL('https://t.me/beingfibank/1');
+                                        }}/>
                                     </div>
                                 </div>
                                 <div className='' style={{ height: "100px" }}></div>
@@ -2187,4 +2283,4 @@ function Earn(props) {
     )
 }
 
-export default withReducer('analyticsDashboardApp', reducer)(Earn);
+export default withReducer('analyticsDashboardApp', reducer)(React.memo(Earn));

@@ -8,6 +8,7 @@ import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { selectWidgets } from '../store/widgetsSlice';
 
 function Impressions(props) {
+  const { activityInfo } = props;
   const theme = useTheme();
   const widgets = useSelector(selectWidgets);
   const { series, amount, labels } = widgets?.impressions;
@@ -56,7 +57,7 @@ function Impressions(props) {
       <div className="flex mt-2  mx-12 ">
 
         <Typography className="text-6xl font-bold tracking-tighter leading-tight mr-10">
-          {amount.toLocaleString('en-US')}
+          { Number(activityInfo?.demandInterestMonthReward) === 0 ? '0.00'.toLocaleString('en-US'): Number(activityInfo?.demandInterestMonthReward)?.toLocaleString('en-US')}
         </Typography>
 
         <div className="flex lg:flex-col lg:ml-12">
@@ -68,7 +69,7 @@ function Impressions(props) {
             className="flex items-center ml-4 lg:ml-0 lg:mt-2 text-md leading-none whitespace-nowrap"
             color="text.secondary"
           >
-            <span className="font-medium text-red-500">4%</span>
+            <span className="font-medium text-red-500">{activityInfo?.demandInterestRewardTrend }%</span>
             <span className="ml-4">below target</span>
           </Typography>
         </div>

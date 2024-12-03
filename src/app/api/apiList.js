@@ -646,6 +646,7 @@ export default {
         getInviteRewardDetail: {
             url: "/unique_invite/getInviteRewardDetail",
             method: "get",
+            json: true
         }
     },
 
