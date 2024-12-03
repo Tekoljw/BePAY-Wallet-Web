@@ -320,6 +320,11 @@ export default {
             method: "post",
         },
 
+        kycAddress: {
+            url: "/payment/kycAddress",
+            method: "post",
+        },
+
         makeOrder: {
             url: "/payment/makeOrder",
             method: "post",

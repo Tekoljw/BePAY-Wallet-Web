@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import React from "react";
 import { showMessage } from 'app/store/fuse/messageSlice';
 import { setKycInfo } from "../config/index";
-import { updatePayoutBankList, updatePayoutWays, updateCreditConfig} from "../user/index"
+import { updatePayoutBankList, updatePayoutWays, updateCreditConfig } from "../user/index"
 
 import format from 'date-fns/format';
 
@@ -33,6 +33,15 @@ export const getKycInfo = createAsyncThunk(
     }
 );
 
+//返回示例地址
+export const kycAddress = createAsyncThunk(
+    '/payment/kycAddress',
+    async (settings, { dispatch, getState }) => {
+        const result = await React.$api("payment.kycAddress", settings);
+        return result;
+    }
+);
+
 
 export const updateKycInfo = createAsyncThunk(
     '/payment/kycUpdate',
@@ -60,6 +69,9 @@ export const updateKycInfo = createAsyncThunk(
             idBackUrl: settings.idBackUrl,
             selfPhotoUrl: settings.selfPhotoUrl,
             proofOfAddressUrl: settings.proofOfAddressUrl,
+            defaultAddressInfo: settings.defaultAddressInfo,
+            userAddressTwo: settings.userAddressTwo,
+            userAddressThree: settings.userAddressThree,
             usSsn: settings.usSsn,
         };
         console.log(data, "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
@@ -246,9 +258,9 @@ export const payoutBank = createAsyncThunk(
     'payment/payoutBank',
     async (settings, { dispatch, getState }) => {
         const state = getState();
-        if(state.user.payoutBank){
+        if (state.user.payoutBank) {
             return state.user.payoutBank
-        }else{
+        } else {
             const result = await React.$api("payment.payoutBank");
             if (result.errno === 0) {
                 dispatch(updatePayoutBankList(result.data))
@@ -265,9 +277,9 @@ export const payoutPayWays = createAsyncThunk(
     'payment/payoutPayWays',
     async (settings, { dispatch, getState }) => {
         const state = getState();
-        if(state.user.payoutWays) {
+        if (state.user.payoutWays) {
             return state.user.payoutWays
-        } else{
+        } else {
             const result = await React.$api("payment.payoutPayWays");
             if (result.errno === 0) {
                 dispatch(updatePayoutWays(result.data))
@@ -285,9 +297,9 @@ export const getCreditConfig = createAsyncThunk(
     'credit/creditConfig',
     async (settings, { dispatch, getState }) => {
         const state = getState();
-        if(state.user.creditConfig) {
+        if (state.user.creditConfig) {
             return state.user.creditConfig
-        }else {
+        } else {
             const result = await React.$api("credit.config");
             if (result.errno === 0) {
                 dispatch(updateCreditConfig(result.data))
@@ -322,7 +334,7 @@ export const creditCardUpdate = createAsyncThunk(
     async (settings, { dispatch, getState }) => {
         const result = await React.$api("credit.creditCardUpdate", settings);
         if (result.errno === 0) {
-            if(!settings.ignoreMessage){
+            if (!settings.ignoreMessage) {
                 if (result.data.status === 'success') {
                     dispatch(showMessage({ message: result.errmsg, code: 1 }));
                 } else {
@@ -342,7 +354,7 @@ export const exchangeCreditCard = createAsyncThunk(
         const result = await React.$api("credit.exchangeCreditCard", settings);
         return result;
         if (result.errno === 0) {
-            if(!settings.ignoreMessage){
+            if (!settings.ignoreMessage) {
                 if (result.data.status === 'success') {
                     dispatch(showMessage({ message: result.errmsg, code: 1 }));
                 } else {

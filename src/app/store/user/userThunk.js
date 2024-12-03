@@ -387,6 +387,7 @@ export const bindEmail = createAsyncThunk(
     }
 );
 
+
 // 手机注册
 export const signUp = createAsyncThunk(
     'user/signUp',

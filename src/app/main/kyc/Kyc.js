@@ -24,7 +24,7 @@ import HomeSidebarContent from "../home/HomeSidebarContent";
 import MobileDetect from 'mobile-detect';
 import { getUserData } from "../../store/user/userThunk";
 import { uploadStorage } from "../../store/tools/toolThunk";
-import { getKycInfo, updateKycInfo, submitKycInfo } from "app/store/payment/paymentThunk";
+import { getKycInfo, updateKycInfo, submitKycInfo, kycAddress } from "app/store/payment/paymentThunk";
 import { selectConfig } from "../../store/config";
 import { selectUserData } from "../../store/user";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -97,7 +97,10 @@ function Kyc(props) {
         state: '',
         usSsn: '',
         zipcode: '',
+        defaultAddressInfo: '',
         addressKycId: '',
+        userAddressTwo: {},
+        userAddressThree: {},
     });
 
 
@@ -187,6 +190,30 @@ function Kyc(props) {
             } else {
                 dispatch(showMessage({ message: result.errmsg, code: 2 }));
             }
+        });
+    };
+
+
+
+    const onSubmitKycAddress = async () => {
+        await dispatch(kycAddress({
+        })).then((res) => {
+            let result = res.payload;
+            if (result.errno === 0) {
+                let resultData = res.payload.data;
+                setInputVal({ ...inputVal, country: resultData.country, state: resultData.state, city: resultData.city, address: resultData.street, zipcode: resultData.zip });
+               
+               
+                setTimeout(() => {
+                    setClickShiLi(true);
+                    setCountryInputShow(true);
+                    setStateInputShow(true);
+                    setCityInputShow(true);
+                    setAddressInputShow(true);
+                    setZipCodeInputShow(true);
+                }, 0);
+            }
+
         });
     };
 
@@ -397,13 +424,23 @@ function Kyc(props) {
 
 
 
-    // useEffect(() => {
-    //     if (kycInfo) {
-    //         if (kycInfo.ldAuditStatus === 0) {
-    //             setInputVal({ ...inputVal, addressKyc: "地址1" });
-    //         }
-    //     }
-    // }, []);
+    useEffect(() => {
+        if (kycInfo) {
+            if (kycInfo.defaultAddressInfo === 1) {
+                setInputVal({ ...inputVal, addressKyc: "地址1" });
+                setAddressKyc("1");
+                setInputVal({ ...inputVal, defaultAddressInfo: 1 });
+            } else if (kycInfo.defaultAddressInfo === 2) {
+                setInputVal({ ...inputVal, addressKyc: "地址2" });
+                setAddressKyc("2");
+                setInputVal({ ...inputVal, defaultAddressInfo: 2 });
+            } else if (kycInfo.defaultAddressInfo === 3) {
+                setInputVal({ ...inputVal, addressKyc: "地址3" });
+                setAddressKyc("3");
+                setInputVal({ ...inputVal, defaultAddressInfo: 3 });
+            }
+        }
+    }, []);
 
     useEffect(() => {
         if (inputVal.email === '') {
@@ -497,7 +534,6 @@ function Kyc(props) {
             setPhoneCountryInputShow(false)
         }
     };
-
 
     const handleBlur3 = () => {
         if (inputVal.phoneNumber === '') {
@@ -745,15 +781,7 @@ function Kyc(props) {
     };
 
     const editShiLiCountry = () => {
-        setInputVal({ ...inputVal, country: '美国', state: '加州', city: '皇后区', address: '东大街3号', zipcode: '51000' });
-        setTimeout(() => {
-            setClickShiLi(true);
-            setCountryInputShow(true);
-            setStateInputShow(true);
-            setCityInputShow(true);
-            setAddressInputShow(true);
-            setZipCodeInputShow(true);
-        }, 0);
+        onSubmitKycAddress();
     };
 
     const editMiddleName = () => {
@@ -924,7 +952,14 @@ function Kyc(props) {
 
     const handleChangeInputVal16 = (event) => {
         setAddressKyc(event.target.value);
-        console.log("ddddddddddddddddddddd", event);
+        setInputVal({ ...inputVal, addressKycId: event.target.value });
+        setInputVal({ ...inputVal, defaultAddressInfo: event.target.value });
+        
+        if(event.target.value === 1){
+
+
+        }
+
     };
 
 
@@ -1016,6 +1051,7 @@ function Kyc(props) {
     const onSave = () => {
         if (inputVal.email !== undefined && inputVal.idNo !== undefined && inputVal.address !== undefined && inputVal.zipcode !== undefined && inputVal.city !== undefined && inputVal.state !== undefined && inputVal.country !== undefined && inputVal.firstName !== undefined && inputVal.phoneCountry !== undefined && inputVal.phoneNumber !== undefined && inputVal.idType !== undefined && inputVal.idFrontUrl !== undefined && inputVal.idBackUrl !== undefined) {
             if (inputVal.email !== '' && inputVal.idNo !== '' && inputVal.address !== '' && inputVal.zipcode !== '' && inputVal.city !== '' && inputVal.state !== '' && inputVal.country !== '' && inputVal.firstName !== '' && inputVal.phoneCountry !== '' && inputVal.phoneNumber !== '' && inputVal.idType !== '' && inputVal.idFrontUrl !== '' && inputVal.idBackUrl !== '') {
+                console.log(inputVal, "tttttttttttttttttttttttttttttttttttttt")
                 dispatch(updateKycInfo(inputVal)).then(
                     (value) => {
                         if (value.payload) {
