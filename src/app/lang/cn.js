@@ -835,7 +835,10 @@ const locale = {
     card_253: "优先使用美国地址，没有请点击KYC中的[示例]提供相关信息。",
     card_254:" 阿里巴巴, 拼多多, 腾讯, 12306, Facebook, steam, Pubg, 淘宝, Yettel, Yandex, 谷歌, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
     card_255:"苹果,",
-
+    kyc_68:"地址1",
+    kyc_69:"地址2",
+    kyc_70:"地址3",
+    kyc_71:"示例",
 
 
 

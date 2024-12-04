@@ -826,7 +826,15 @@ const locale = {
     card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
     card_255:"Apple, ",
 
+    kyc_68:"पता1",
+    kyc_69:"पता2",
+    kyc_70:"पता3",
+    kyc_71:"उदाहरण",
+
     
+
+
+
 
 
 

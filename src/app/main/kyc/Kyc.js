@@ -67,14 +67,13 @@ function Kyc(props) {
     const config = useSelector(selectConfig);
     const user = useSelector(selectUserData);
     const kycInfo = config.kycInfo || {};
-    const [pageState, setPageState] = useState(0);
     let baseImgUrl = "";
     if (config.system.cdnUrl) {
         baseImgUrl = config.system.cdnUrl.substr(0, config.system.cdnUrl.length - 1);
     }
-    const isMobileMedia = new MobileDetect(window.navigator.userAgent).mobile();
-    const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down(isMobileMedia ? 'lg' : 'sm'));
-    const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobile);
+
+
+
 
     const [inputVal, setInputVal] = useState({
         address: '',
@@ -96,114 +95,22 @@ function Kyc(props) {
         selfPhotoUrl: '',
         state: '',
         usSsn: '',
-        zipcode: '',
+        zipCode: '',
         defaultAddressInfo: '',
-        addressKycId: '',
         userAddressTwo: {},
         userAddressThree: {},
     });
 
 
-    const [approveData, setApproveData] = useState({
-        nationCode: user.profile?.nation ?? '',
-        phone: user.profile?.phone ?? '',
-        email: user.profile?.user?.email ?? '',
-        password: '',
-        code: ''
-    });
 
-    const [tmpPhoneCode, setTmpPhoneCode] = useState('');
-
-    const ranges = ['Email', 'Phone'];
-
-    const [tabValue, setTabValue] = useState(pageState === 0 ? 0 : pageState - 1);
-
-    const [time, setTime] = useState(null);
-    const timeRef = useRef();
-    //倒计时
-    useEffect(() => {
-        if (time && time !== 0)
-            timeRef.current = setTimeout(() => {
-                setTime(time => time - 1)
-            }, 1000);
-
-        return () => {
-            clearTimeout(timeRef.current)
-        }
-    }, [time]);
-
-    async function sendCode(type) {
-        let sendRes = {};
-        if (type === 'phone') {
-            const data = {
-                codeType: 5,
-                nationCode: inputVal.nationCode,
-                phone: approveData.phone,
-                password: approveData.password,
-            };
-            sendRes = await dispatch(sendSms(data));
-        } else {
-            const data = {
-                codeType: 10,
-                email: approveData.email,
-            };
-            sendRes = await dispatch(sendEmail(data));
-        }
-
-        if (sendRes?.payload) {
-            setTime(60)
-        }
-    }
-
-    const onSubmitPhone = async () => {
-        await dispatch(bindPhone({
-            nationCode: inputVal.nationCode,
-            phone: approveData.phone,
-            smsCode: approveData.code,
-        })).then((res) => {
-            let result = res.payload;
-            if (result.errno === 0) {
-                dispatch(showMessage({ message: 'Success', code: 1 }));
-                dispatch(getUserData());
-                setTimeout(() => {
-                    refreshKycInfo();
-                }, 1000)
-            } else {
-                dispatch(showMessage({ message: result.errmsg, code: 2 }));
-            }
-        });
-    };
-
-    const onSubmitEmail = async () => {
-        await dispatch(bindEmail({
-            email: approveData.email,
-            smsCode: approveData.code,
-            password: approveData.password,
-        })).then((res) => {
-            let result = res.payload;
-            if (result.errno === 0) {
-                dispatch(showMessage({ message: 'Success', code: 1 }));
-                dispatch(getUserData());
-                setTimeout(() => {
-                    refreshKycInfo();
-                }, 1000)
-            } else {
-                dispatch(showMessage({ message: result.errmsg, code: 2 }));
-            }
-        });
-    };
-
-
-
+    //获取示例数据
     const onSubmitKycAddress = async () => {
         await dispatch(kycAddress({
         })).then((res) => {
             let result = res.payload;
             if (result.errno === 0) {
                 let resultData = res.payload.data;
-                setInputVal({ ...inputVal, country: resultData.country, state: resultData.state, city: resultData.city, address: resultData.street, zipcode: resultData.zip });
-               
-               
+                setInputVal({ ...inputVal, country: resultData.country, state: resultData.state, city: resultData.city, address: resultData.street, zipCode: resultData.zip });
                 setTimeout(() => {
                     setClickShiLi(true);
                     setCountryInputShow(true);
@@ -213,15 +120,7 @@ function Kyc(props) {
                     setZipCodeInputShow(true);
                 }, 0);
             }
-
         });
-    };
-
-    const handleApproveData = (prop) => (event) => {
-        setApproveData({ ...approveData, [prop]: event.target.value });
-    };
-    const handleChangeApproveDataVal = (prop, value) => {
-        setInputVal({ ...inputVal, [prop]: value });
     };
 
     const [keyName, setKeyName] = useState('');
@@ -298,7 +197,7 @@ function Kyc(props) {
     const [usSsnInput, setUsSsnInput] = useState(false);
     const [usSsnInputShow, setUsSsnInputShow] = useState(false);
     const usSsnInputRef = useRef(null);
-    const [addressKyc, setAddressKyc] = useState("1");
+    const [addressKyc, setAddressKyc] = useState(1);
 
 
     //文凯改
@@ -386,7 +285,7 @@ function Kyc(props) {
             setAddressTwoInputShow(false)
         }
 
-        if (copyData.zipcode) {
+        if (copyData.zipCode) {
             setZipCodeInput(true)
             setZipCodeInputShow(true)
         } else {
@@ -409,38 +308,7 @@ function Kyc(props) {
             setIdNoInput(false)
             setIdNoInputShow(false)
         }
-
     };
-
-
-    const handleChangeInputVal = (prop) => (event) => {
-        setInputVal({ ...inputVal, [prop]: event.target.value });
-        if (event.target.value === '') {
-            setEmailError(true);
-        } else {
-            setEmailError(false);
-        }
-    };
-
-
-
-    useEffect(() => {
-        if (kycInfo) {
-            if (kycInfo.defaultAddressInfo === 1) {
-                setInputVal({ ...inputVal, addressKyc: "地址1" });
-                setAddressKyc("1");
-                setInputVal({ ...inputVal, defaultAddressInfo: 1 });
-            } else if (kycInfo.defaultAddressInfo === 2) {
-                setInputVal({ ...inputVal, addressKyc: "地址2" });
-                setAddressKyc("2");
-                setInputVal({ ...inputVal, defaultAddressInfo: 2 });
-            } else if (kycInfo.defaultAddressInfo === 3) {
-                setInputVal({ ...inputVal, addressKyc: "地址3" });
-                setAddressKyc("3");
-                setInputVal({ ...inputVal, defaultAddressInfo: 3 });
-            }
-        }
-    }, []);
 
     useEffect(() => {
         if (inputVal.email === '') {
@@ -487,7 +355,7 @@ function Kyc(props) {
         }
 
 
-        if (inputVal.zipcode === '') {
+        if (inputVal.zipCode === '') {
             setZipcodeError(true);
         } else {
             setZipcodeError(false);
@@ -498,8 +366,30 @@ function Kyc(props) {
         } else {
             setIdNoError(false);
         }
-        showBtnFunc();
+
+        showBtnFunc();//显示保存按钮
+
+        if (inputVal.country != '' && inputVal.state != '' && inputVal.city != '' && inputVal.address != '' && inputVal.zipCode != '') {
+            setClickShiLi(true);//显示示例按钮
+        } else {
+            setClickShiLi(false);
+        }
+
+        if (inputVal.defaultAddressInfo === 2 || inputVal.defaultAddressInfo === 3) {
+            addAddressTwoOrThree()
+        }
     }, [inputVal]);
+
+
+    const addAddressTwoOrThree = () => {
+        inputVal.userAddressTwo = {
+            country: inputVal.country,
+            city: inputVal.city,
+            state: inputVal.state,
+            address: inputVal.address,
+            zipCode: inputVal.zipCode,
+        }
+    };
 
 
     const handleBlur = () => {
@@ -509,7 +399,7 @@ function Kyc(props) {
             setEmailError(false);
         }
         if (inputVal.email) {
-            setEmailInputShow(true)
+            setEmailInputShow(true) // 判断当前输入框是否有笔标
             setEmailInput(true); // 开启禁用状态
             emailInputRef.current.blur();// 取消到输入框
         } else {
@@ -671,13 +561,13 @@ function Kyc(props) {
 
     const handleBlur13 = () => {
 
-        if (inputVal.zipcode === '') {
+        if (inputVal.zipCode === '') {
             setZipcodeError(true);
         } else {
             setZipcodeError(false);
         }
 
-        if (inputVal.zipcode) {
+        if (inputVal.zipCode) {
             setZipCodeInput(true)
             setZipCodeInputShow(true)
             zipCodeInputRef.current.blur();// 取消到输入框
@@ -742,7 +632,6 @@ function Kyc(props) {
     };
 
 
-
     const editEmail = () => {
         setEmailInput(false);  // 取消禁用状态
         setTimeout(() => {
@@ -780,9 +669,6 @@ function Kyc(props) {
         }, 0);
     };
 
-    const editShiLiCountry = () => {
-        onSubmitKycAddress();
-    };
 
     const editMiddleName = () => {
         setMiddleNameInput(false);  // 取消禁用状态
@@ -848,12 +734,13 @@ function Kyc(props) {
     };
 
 
-
-    const showBtnFunc = () => {
-        if (inputVal.email !== '' && inputVal.idNo !== '' && inputVal.address !== '' && inputVal.zipcode !== '' && inputVal.city !== '' && inputVal.state !== '' && inputVal.country !== '' && inputVal.birthDate !== '' && inputVal.firstName !== '' && inputVal.phoneCountry !== '' && inputVal.phoneNumber !== '' && inputVal.idType !== '' && inputVal.idFrontUrl !== '' && inputVal.idBackUrl !== '') {
-            setShowSaveBtn(false)
-        } else
-            setShowSaveBtn(true)
+    const handleChangeInputVal = (prop) => (event) => {
+        setInputVal({ ...inputVal, [prop]: event.target.value });
+        if (event.target.value === '') {
+            setEmailError(true);
+        } else {
+            setEmailError(false);
+        }
     };
 
 
@@ -949,19 +836,79 @@ function Kyc(props) {
         }
     };
 
-
     const handleChangeInputVal16 = (event) => {
         setAddressKyc(event.target.value);
-        setInputVal({ ...inputVal, addressKycId: event.target.value });
-        setInputVal({ ...inputVal, defaultAddressInfo: event.target.value });
-        
-        if(event.target.value === 1){
-
-
+        if (event.target.value === 1) {
+            if (kycInfo) {
+                setInputVal(prevState => ({
+                    ...prevState,
+                    country: kycInfo.country ? kycInfo.country : '',
+                    state: kycInfo.state ? kycInfo.state : '',
+                    city: kycInfo.city ? kycInfo.city : '',
+                    address: kycInfo.address ? kycInfo.address : '',
+                    zipCode: kycInfo.zipCode ? kycInfo.zipCode : '',
+                    defaultAddressInfo: event.target.value
+                }));
+            }
+            if (inputVal.country != '' && inputVal.state != '' && inputVal.city != '' && inputVal.address != '' && inputVal.zipCode != '') {
+                setClickShiLi(true);//显示示例按钮
+            } else {
+                setClickShiLi(false);
+            }
+        } else if (event.target.value === 2) {
+            if (kycInfo) {
+                if (kycInfo.userAddressTwo != null) {
+                    setInputVal(prevState => ({
+                        ...prevState,
+                        country: kycInfo.userAddressTwo.country ? kycInfo.userAddressTwo.country : '',
+                        state: kycInfo.userAddressTwo.state ? kycInfo.userAddressTwo.state : '',
+                        city: kycInfo.userAddressTwo.city ? kycInfo.userAddressTwo.city : '',
+                        address: kycInfo.userAddressTwo.address ? kycInfo.userAddressTwo.address : '',
+                        zipCode: kycInfo.userAddressTwo.zipCode ? kycInfo.userAddressTwo.zipCode : '',
+                        defaultAddressInfo: event.target.value
+                    }));
+                    setClickShiLi(true);
+                } else {
+                    setInputVal(prevState => ({
+                        ...prevState,
+                        country: '',
+                        state: '',
+                        city: '',
+                        address: '',
+                        zipCode: '',
+                        defaultAddressInfo: event.target.value
+                    }));
+                    setClickShiLi(false);
+                }
+            }
+        } else if (event.target.value === 3) {
+            if (kycInfo) {
+                if (kycInfo.userAddressThree != null) {
+                    setInputVal(prevState => ({
+                        ...prevState,
+                        country: kycInfo.userAddressThree.country ? kycInfo.userAddressThree.country : '',
+                        state: kycInfo.userAddressThree.state ? kycInfo.userAddressThree.state : '',
+                        city: kycInfo.userAddressThree.city ? kycInfo.userAddressThree.city : '',
+                        address: kycInfo.userAddressThree.address ? kycInfo.userAddressThree.address : '',
+                        zipCode: kycInfo.userAddressThree.zipCode ? kycInfo.userAddressThree.zipCode : '',
+                        defaultAddressInfo: event.target.value
+                    }));
+                    setClickShiLi(true);
+                } else {
+                    setInputVal(prevState => ({
+                        ...prevState,
+                        country: '',
+                        state: '',
+                        city: '',
+                        address: '',
+                        zipCode: '',
+                        defaultAddressInfo: event.target.value
+                    }));
+                    setClickShiLi(false);
+                }
+            }
         }
-
     };
-
 
     const handleChangeDate = (prop) => (newValue) => {
         if (prop === 'birthDate' && typeof newValue === "object") {
@@ -969,7 +916,6 @@ function Kyc(props) {
         }
         setInputVal({ ...inputVal, [prop]: newValue });
     };
-
 
 
     /**
@@ -982,6 +928,20 @@ function Kyc(props) {
         return resDate;
     }
 
+    const isCanSave = (bShowMsg) => {
+        // 格式验证
+        if (inputVal.birthDate != '') {
+            if (! /^[1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/.test(inputVal.birthDate)) {
+                if (bShowMsg) {
+                    dispatch(showMessage({ message: t('error_6'), code: 2 }));
+                }
+                return false;
+            }
+        }
+        return true;
+    };
+
+    //上传正面图片
     const uploadChange = async (file) => {
         const uploadRes = await dispatch(uploadStorage({
             file: file
@@ -994,7 +954,7 @@ function Kyc(props) {
         }
     };
 
-
+    //上传反面图片
     const uploadChange2 = async (file) => {
         const uploadRes = await dispatch(uploadStorage({
             file: file
@@ -1007,55 +967,43 @@ function Kyc(props) {
         }
     };
 
-
-    //刷新KYC
-    const refreshKycInfo = () => {
-        dispatch(getKycInfo()).then((value) => {
-            let resultData = { ...value.payload.data };
-            if (!resultData || Object.entries(resultData).length < 1) return;
-            let copyData = {};
-            Object.keys(inputVal).map((prop, index) => {
-                copyData[prop] = resultData[prop];
-            });
-            setInputVal(copyData);
-        });
+    //是否显示保存按钮
+    const showBtnFunc = () => {
+        if (inputVal.email !== '' && inputVal.idNo !== '' && inputVal.address !== '' && inputVal.zipCode !== '' && inputVal.city !== '' && inputVal.state !== '' && inputVal.country !== '' && inputVal.birthDate !== '' && inputVal.firstName !== '' && inputVal.phoneCountry !== '' && inputVal.phoneNumber !== '' && inputVal.idType !== '' && inputVal.idFrontUrl !== '' && inputVal.idBackUrl !== '') {
+            setShowSaveBtn(false)
+        } else
+            setShowSaveBtn(true)
     };
 
-
-    const isAlreadySumbit = () => {
-        if (kycInfo) {
-            return kycInfo.isAlreadySumbit();
-        }
-        return false;
-    };
-
-    const isCanSave = (bShowMsg) => {
-        if (isAlreadySumbit()) return false;
-        // if (typeof inputVal.birthDate === 'object') {
-        //     handleChangeDate('birthDate', inputVal.birthDate);
-        // }
-        // 格式验证
-        if (inputVal.birthDate != '') {
-            if (! /^[1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/.test(inputVal.birthDate)) {
-                if (bShowMsg) {
-                    dispatch(showMessage({ message: t('error_6'), code: 2 }));
-                }
-
-                return false;
-            }
-        }
-
-        return true;
-    };
-
+    //保存信息
     const onSave = () => {
-        if (inputVal.email !== undefined && inputVal.idNo !== undefined && inputVal.address !== undefined && inputVal.zipcode !== undefined && inputVal.city !== undefined && inputVal.state !== undefined && inputVal.country !== undefined && inputVal.firstName !== undefined && inputVal.phoneCountry !== undefined && inputVal.phoneNumber !== undefined && inputVal.idType !== undefined && inputVal.idFrontUrl !== undefined && inputVal.idBackUrl !== undefined) {
-            if (inputVal.email !== '' && inputVal.idNo !== '' && inputVal.address !== '' && inputVal.zipcode !== '' && inputVal.city !== '' && inputVal.state !== '' && inputVal.country !== '' && inputVal.firstName !== '' && inputVal.phoneCountry !== '' && inputVal.phoneNumber !== '' && inputVal.idType !== '' && inputVal.idFrontUrl !== '' && inputVal.idBackUrl !== '') {
-                console.log(inputVal, "tttttttttttttttttttttttttttttttttttttt")
+        if (inputVal.email !== undefined && inputVal.idNo !== undefined && inputVal.address !== undefined && inputVal.zipCode !== undefined && inputVal.city !== undefined && inputVal.state !== undefined && inputVal.country !== undefined && inputVal.firstName !== undefined && inputVal.phoneCountry !== undefined && inputVal.phoneNumber !== undefined && inputVal.idType !== undefined && inputVal.idFrontUrl !== undefined && inputVal.idBackUrl !== undefined) {
+            if (inputVal.email !== '' && inputVal.idNo !== '' && inputVal.address !== '' && inputVal.zipCode !== '' && inputVal.city !== '' && inputVal.state !== '' && inputVal.country !== '' && inputVal.firstName !== '' && inputVal.phoneCountry !== '' && inputVal.phoneNumber !== '' && inputVal.idType !== '' && inputVal.idFrontUrl !== '' && inputVal.idBackUrl !== '') {
+                if (inputVal.defaultAddressInfo == 2) {
+                    inputVal.userAddressTwo = JSON.stringify(
+                        {
+                            country: inputVal.country,
+                            city: inputVal.city,
+                            state: inputVal.state,
+                            address: inputVal.address,
+                            zipCode: inputVal.zipCode,
+                        }
+                    )
+                } else if (inputVal.defaultAddressInfo == 3) {
+                    inputVal.userAddressThree = JSON.stringify(
+                        {
+                            country: inputVal.country,
+                            city: inputVal.city,
+                            state: inputVal.state,
+                            address: inputVal.address,
+                            zipCode: inputVal.zipCode,
+                        }
+                    )
+                }
                 dispatch(updateKycInfo(inputVal)).then(
                     (value) => {
                         if (value.payload) {
-                            refreshKycInfo();
+                            // refreshKycInfo();
                             dispatch(showMessage({ message: "Success", code: 1 }));
                             props.updatedKycInfo();
                         }
@@ -1070,58 +1018,74 @@ function Kyc(props) {
     };
 
 
-    useEffect(() => {
-        refreshKycInfo();
-        return () => {
-            try {
-                window.zE('webWidget', 'hide');
-            } catch (e) {
-            }
-        };
-    }, []);
+    //刷新KYC
+    const refreshKycInfo = () => {
+        dispatch(getKycInfo()).then((value) => {
+            let resultData = { ...value.payload.data };
+            if (!resultData || Object.entries(resultData).length < 1) return;
+            let copyData = {};
+            Object.keys(inputVal).map((prop, index) => {
+                copyData[prop] = resultData[prop];
+            });
+            setInputVal(copyData);//重新填充数据
+        });
+        console.log("刷了填");
+    };
 
-    useEffect(() => {
-        if (user.profile?.nation) {
-            handleChangeApproveDataVal('nationCode', user.profile?.nation)
-        }
-    }, [user.profile]);
-
-    // useEffect(() => {
-    //     setPageState(1);
-    //     if (kycInfo.init) {
-    //         if (!kycInfo.havePhone() && !kycInfo.haveEmail()) {
-    //             setOpenAnimateModal(true)
-    //         } else {
-    //             if (kycInfo.havePhone()) {
-    //                 setPageState(2);
-    //                 setTabValue(1);
-    //             } else if (kycInfo.haveEmail()) {
-    //                 setPageState(1);
-    //             }
-    //         }
-    //         setOpenAnimateModal(false)
-    //         let copyData = {};
-    //         Object.keys(inputVal).map((prop, index) => {
-    //             copyData[prop] = kycInfo[prop];
-    //         });
-    //         setInputVal(copyData);
-    //         setPageState(0);
-    //     }
-    // }, [kycInfo]);
-
+    //KYC数据发生改变后填充数据
     useEffect(() => {
         if (kycInfo.init) {
             let copyData = {};
             Object.keys(inputVal).map((prop, index) => {
                 copyData[prop] = kycInfo[prop];
             });
-            setInputVal(copyData);
             changeBiState(copyData);
+            if (kycInfo.defaultAddressInfo === 1) {
+                setAddressKyc(1);
+                setInputVal(copyData);
+            } else if (kycInfo.defaultAddressInfo === 2) {
+                setAddressKyc(2);
+                setInputVal(copyData);
+                setTimeout(() => {
+                    if (kycInfo.userAddressTwo != null) {
+                        setInputVal(prevState => ({
+                            ...prevState,
+                            country: kycInfo.userAddressTwo.country ? kycInfo.userAddressTwo.country : '',
+                            state: kycInfo.userAddressTwo.state ? kycInfo.userAddressTwo.state : '',
+                            city: kycInfo.userAddressTwo.city ? kycInfo.userAddressTwo.city : '',
+                            address: kycInfo.userAddressTwo.address ? kycInfo.userAddressTwo.address : '',
+                            zipCode: kycInfo.userAddressTwo.zipCode ? kycInfo.userAddressTwo.zipCode : '',
+                            defaultAddressInfo: 2
+                        }));
+                        setClickShiLi(true);
+                    } else {
+                        setInputVal({ ...inputVal, country: '', state: '', city: '', address: '', zipCode: '', defaultAddressInfo: 2 });
+                        setClickShiLi(false);
+                    }
+                }, 0);
+            } else if (kycInfo.defaultAddressInfo === 3) {
+                setAddressKyc(3);
+                setInputVal(copyData);
+                setTimeout(() => {
+                    if (kycInfo.userAddressThree != null) {
+                        setInputVal(prevState => ({
+                            ...prevState,
+                            country: kycInfo.userAddressThree.country ? kycInfo.userAddressThree.country : '',
+                            state: kycInfo.userAddressThree.state ? kycInfo.userAddressThree.state : '',
+                            city: kycInfo.userAddressThree.city ? kycInfo.userAddressThree.city : '',
+                            address: kycInfo.userAddressThree.address ? kycInfo.userAddressThree.address : '',
+                            zipCode: kycInfo.userAddressThree.zipCode ? kycInfo.userAddressThree.zipCode : '',
+                            defaultAddressInfo: 3
+                        }));
+                        setClickShiLi(true);
+                    } else {
+                        setInputVal({ ...inputVal, country: '', state: '', city: '', address: '', zipCode: '', defaultAddressInfo: 3 });
+                        setClickShiLi(false);
+                    }
+                }, 0);
+            }
         }
     }, [kycInfo]);
-
-
-
 
 
     return (
@@ -1347,18 +1311,18 @@ function Kyc(props) {
                                     onChange={handleChangeInputVal16}
                                     className='addressKyc'
                                 >
-                                    <MenuItem value={'1'}>地址1</MenuItem>
-                                    <MenuItem value={'2'}>地址2</MenuItem>
-                                    <MenuItem value={'3'}>地址3</MenuItem>
+                                    <MenuItem value={1}>{t('kyc_68')}</MenuItem>
+                                    <MenuItem value={2}>{t('kyc_69')}</MenuItem>
+                                    <MenuItem value={3}>{t('kyc_70')}</MenuItem>
                                 </Select>
                             </FormControl>
                         </div>
 
                         <div className="flex items-center justify-between">
                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                <InputLabel htmlFor="outlined-adornment-address">{t('kyc_8')}*</InputLabel>
+                                <InputLabel htmlFor="outlined-adornment-country">{t('kyc_8')}*</InputLabel>
                                 <OutlinedInput
-                                    id="outlined-adornment-address"
+                                    id="outlined-adornment-country"
                                     label="country"
                                     value={inputVal.country}
                                     onChange={handleChangeInputVal8('country')}
@@ -1373,9 +1337,9 @@ function Kyc(props) {
                                     endAdornment={
                                         <InputAdornment position="end" className='flex justify-end' style={{ width: "160px", }}>
                                             {
-                                                !clickShiLi && <IconButton edge="end" onClick={() => editShiLiCountry()}>
+                                                !clickShiLi && <IconButton edge="end" onClick={() => onSubmitKycAddress()}>
                                                     <div className='px-5' style={{ backgroundColor: "#374252", minWidth: "50px", color: "#ffffff", fontSize: "12px", lineHeight: "26px", height: "26px", borderRadius: "50px" }}>
-                                                        示例
+                                                        {t('kyc_71')}
                                                     </div>
                                                 </IconButton>
                                             }
@@ -1464,16 +1428,16 @@ function Kyc(props) {
 
                         <div className="flex items-center justify-between">
                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-16">
-                                <InputLabel id="demo-simple-select-label">{t('kyc_13')} *</InputLabel>
+                                <InputLabel id="demo-simple-select-zipCode">{t('kyc_13')} *</InputLabel>
                                 <OutlinedInput
-                                    id="outlined-adornment-address"
-                                    label="Zipcode"
-                                    value={inputVal.zipcode}
-                                    onChange={handleChangeInputVal13('zipcode')}
+                                    id="outlined-adornment-zipCode"
+                                    label="zipCode"
+                                    value={inputVal.zipCode}
+                                    onChange={handleChangeInputVal13('zipCode')}
                                     aria-describedby="outlined-weight-helper-text"
                                     error={zipcodeError}
                                     inputProps={{
-                                        'aria-label': 'zipcode',
+                                        'aria-label': 'zipCode',
                                     }}
                                     onBlur={handleBlur13}
                                     disabled={zipCodeInput}

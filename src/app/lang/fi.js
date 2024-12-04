@@ -830,6 +830,14 @@ card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yett
 card_255:"Apple, ",
 
     
+kyc_68:"Osoite1",
+kyc_69:"Osoite2",
+kyc_70:"Osoite3",
+kyc_71:"Esimerkki",
+
+    
+
+
 
 
 

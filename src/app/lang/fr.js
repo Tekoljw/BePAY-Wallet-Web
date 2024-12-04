@@ -828,6 +828,14 @@ const locale = {
     card_255:"Apple, ",
 
     
+    kyc_68:"Adresse1",
+    kyc_69:"Adresse2",
+    kyc_70:"Adresse3",
+    kyc_71:"Exemple",
+
+    
+
+
 
 
 

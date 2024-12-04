@@ -49,32 +49,73 @@ export const updateKycInfo = createAsyncThunk(
         settings = settings || {};
         const { config } = getState();
         const kycInfo = config.kycInfo;
-        let data = {
-            email: settings.email,
-            phoneCountry: settings.phoneCountry,
-            phoneNumber: settings.phoneNumber,
-            firstName: settings.firstName,
-            middleName: settings.middleName,
-            lastName: settings.lastName,
-            birthDate: settings.birthDate,
-            country: settings.country,
-            state: settings.state,
-            city: settings.city,
-            address: settings.address,
-            addressTwo: settings.addressTwo,
-            zipcode: settings.zipcode,
-            idNo: settings.idNo,
-            idType: settings.idType,
-            idFrontUrl: settings.idFrontUrl,
-            idBackUrl: settings.idBackUrl,
-            selfPhotoUrl: settings.selfPhotoUrl,
-            proofOfAddressUrl: settings.proofOfAddressUrl,
-            defaultAddressInfo: settings.defaultAddressInfo,
-            userAddressTwo: settings.userAddressTwo,
-            userAddressThree: settings.userAddressThree,
-            usSsn: settings.usSsn,
-        };
-        console.log(data, "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+        let data = {};
+        if (settings.defaultAddressInfo === 1) {
+            data = {
+                email: settings.email,
+                phoneCountry: settings.phoneCountry,
+                phoneNumber: settings.phoneNumber,
+                firstName: settings.firstName,
+                middleName: settings.middleName,
+                lastName: settings.lastName,
+                birthDate: settings.birthDate,
+                country: settings.country,
+                state: settings.state,
+                city: settings.city,
+                address: settings.address,
+                addressTwo: settings.addressTwo,
+                zipCode: settings.zipCode,
+                idNo: settings.idNo,
+                idType: settings.idType,
+                idFrontUrl: settings.idFrontUrl,
+                idBackUrl: settings.idBackUrl,
+                selfPhotoUrl: settings.selfPhotoUrl,
+                proofOfAddressUrl: settings.proofOfAddressUrl,
+                defaultAddressInfo: settings.defaultAddressInfo,
+                usSsn: settings.usSsn,
+            };
+        } else if (settings.defaultAddressInfo === 2) {
+            data = {
+                email: settings.email,
+                phoneCountry: settings.phoneCountry,
+                phoneNumber: settings.phoneNumber,
+                firstName: settings.firstName,
+                middleName: settings.middleName,
+                lastName: settings.lastName,
+                birthDate: settings.birthDate,
+                addressTwo: settings.addressTwo,
+                idNo: settings.idNo,
+                idType: settings.idType,
+                idFrontUrl: settings.idFrontUrl,
+                idBackUrl: settings.idBackUrl,
+                selfPhotoUrl: settings.selfPhotoUrl,
+                proofOfAddressUrl: settings.proofOfAddressUrl,
+                defaultAddressInfo: settings.defaultAddressInfo,
+                usSsn: settings.usSsn,
+                userAddressTwo: settings.userAddressTwo,
+            }
+        } else if (settings.defaultAddressInfo === 3) {
+            data = {
+                email: settings.email,
+                phoneCountry: settings.phoneCountry,
+                phoneNumber: settings.phoneNumber,
+                firstName: settings.firstName,
+                middleName: settings.middleName,
+                lastName: settings.lastName,
+                birthDate: settings.birthDate,
+                addressTwo: settings.addressTwo,
+                idNo: settings.idNo,
+                idType: settings.idType,
+                idFrontUrl: settings.idFrontUrl,
+                idBackUrl: settings.idBackUrl,
+                selfPhotoUrl: settings.selfPhotoUrl,
+                proofOfAddressUrl: settings.proofOfAddressUrl,
+                defaultAddressInfo: settings.defaultAddressInfo,
+                usSsn: settings.usSsn,
+                userAddressThree: settings.userAddressThree,
+            }
+        }
+
         const kycData = await React.$api("payment.kycUpdate", data);
         if (kycData.errno === 0) {
             // 直接返回处理
