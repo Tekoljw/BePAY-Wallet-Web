@@ -472,7 +472,7 @@ const locale = {
     card_129: "lợi nhuận hôm nay",
     card_130: "truy cập TOP.ONE để bắt đầu giao dịch",
     card_131: "mở thẻ BeingFi",
-    card_132: "Đăng ký hàng tuần và nhận phần thưởng tương ứng.",
+    card_132: "Đăng nhập mỗi 7 ngày để tích lũy và nhận phần thưởng tương ứng",
     card_133: "thứ hai",
     card_134: "thứ ba",
     card_135: "thứ tư",

@@ -482,7 +482,7 @@ const locale = {
     card_129: "rendimento de hoje",
     card_130: "vá para TOP.ONE para começar a negociar",
     card_131: "ativar o cartão BeingFi",
-    card_132: "Faça check-in semanalmente e receba recompensas correspondentes.",
+    card_132: "Faça o check-in a cada 7 dias para acumular e receber recompensas correspondentes",
     card_133: "segunda-feira",
     card_134: "terça-feira",
     card_135: "quarta-feira",

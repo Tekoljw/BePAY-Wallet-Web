@@ -482,7 +482,7 @@ const locale = {
     card_129: "pendapatan hari ini",
     card_130: "ke TOP.ONE untuk memulakan perdagangan",
     card_131: "aktifkan kad BeingFi",
-    card_132: "Lakukan pendaftaran setiap minggu dan terima ganjaran yang sesuai.",
+    card_132: "Daftar masuk setiap 7 hari untuk mengumpul dan menerima ganjaran yang sepadan",
     card_133: "Isnin",
     card_134: "Selasa",
     card_135: "Rabu",

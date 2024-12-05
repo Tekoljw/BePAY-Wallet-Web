@@ -483,7 +483,7 @@ const locale = {
     card_129: "Ngayong araw na kita",
     card_130: "Pumunta sa TOP.ONE para magsimula ng trading",
     card_131: "Mag-activate ng BeingFi card",
-    card_132: "Mag-accumulate ng weekly check-ins at makakuha ng kaukulang gantimpala.",
+    card_132: "Mag-check in tuwing ika-7 araw upang mag-ipon at makatanggap ng kaukulang gantimpala",
     card_133: "Lunes",
     card_134: "Martes",
     card_135: "Miracles",

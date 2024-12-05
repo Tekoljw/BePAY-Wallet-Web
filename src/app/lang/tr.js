@@ -480,7 +480,7 @@ const locale = {
     card_129: "bugünkü kazanç",
     card_130: "TOP.ONE’a giderek işlem yapmaya başlayın",
     card_131: "BeingFi kartını aktifleştirin",
-    card_132: "Her hafta toplam raporlama yapın ve karşılığında ödüller kazanın.",
+    card_132: "Her 7 günde bir giriş yaparak, uygun ödülleri biriktirip kazanın",
     card_133: "Pazartesi",
     card_134: "Salı",
     card_135: "Çarşamba",

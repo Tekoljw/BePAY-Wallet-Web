@@ -481,7 +481,7 @@ const locale = {
     card_129: "tämän päivän tuotto",
     card_130: "Siirry TOP.ONE aloittamaan kaupankäynti",
     card_131: "Avaa BeingFi-kortti",
-    card_132: "Ilmoittaudu viikoittain ja saa vastaavat palkinnot.",
+    card_132: "Kirjaudu sisään joka 7. päivä kerryttääksesi ja saadaksesi vastaavat palkinnot",
     card_133: "maanantai",
     card_134: "tiistai",
     card_135: "keskiviikko",

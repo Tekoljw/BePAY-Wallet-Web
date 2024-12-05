@@ -72,9 +72,6 @@ function Kyc(props) {
         baseImgUrl = config.system.cdnUrl.substr(0, config.system.cdnUrl.length - 1);
     }
 
-
-
-
     const [inputVal, setInputVal] = useState({
         address: '',
         addressTwo: '',
@@ -100,8 +97,6 @@ function Kyc(props) {
         userAddressTwo: {},
         userAddressThree: {},
     });
-
-
 
     //获取示例数据
     const onSubmitKycAddress = async () => {
@@ -132,6 +127,7 @@ function Kyc(props) {
     const [stateError, setStateError] = useState(false);
     const [countryError, setCountryError] = useState(false);
     const [firstNameError, setFirstNameError] = useState(false);
+    const [lastNameError, setLastNameError] = useState(false);
     const [phoneNumberError, setPhoneNumberError] = useState(false);
     const [phoneCountryError, setPhoneCountryError] = useState(false);
     const [idFrontUrlError, setIdFrontUrlError] = useState(false);
@@ -198,7 +194,6 @@ function Kyc(props) {
     const [usSsnInputShow, setUsSsnInputShow] = useState(false);
     const usSsnInputRef = useRef(null);
     const [addressKyc, setAddressKyc] = useState(1);
-
 
     //文凯改
     const changeBiState = (copyData) => {
@@ -331,6 +326,11 @@ function Kyc(props) {
         } else {
             setFirstNameError(false);
         }
+        if (inputVal.lastName === '') {
+            setLastNameError(true);
+        } else {
+            setLastNameError(false);
+        }
         if (inputVal.country === '') {
             setCountryError(true);
         } else {
@@ -341,32 +341,26 @@ function Kyc(props) {
         } else {
             setStateError(false);
         }
-
         if (inputVal.city === '') {
             setCityError(true);
         } else {
             setCityError(false);
         }
-
         if (inputVal.address === '') {
             setAddressError(true);
         } else {
             setAddressError(false);
         }
-
-
         if (inputVal.zipCode === '') {
             setZipcodeError(true);
         } else {
             setZipcodeError(false);
         }
-
         if (inputVal.idNo === '') {
             setIdNoError(true);
         } else {
             setIdNoError(false);
         }
-
         showBtnFunc();//显示保存按钮
 
         if (inputVal.country != '' && inputVal.state != '' && inputVal.city != '' && inputVal.address != '' && inputVal.zipCode != '') {
@@ -456,8 +450,6 @@ function Kyc(props) {
             setFirstNameInputShow(false)
         }
     };
-
-
     const handleBlur5 = () => {
         if (inputVal.middleName) {
             setMiddleNameInput(true)
@@ -468,9 +460,12 @@ function Kyc(props) {
             setMiddleNameInputShow(false)
         }
     };
-
-
     const handleBlur6 = () => {
+        if (inputVal.lastName === '') {
+            setLastNameError(true);
+        } else {
+            setLastNameError(false);
+        }
         if (inputVal.lastName) {
             setLastNameInput(true)
             setLastNameInputShow(true)
@@ -768,6 +763,15 @@ function Kyc(props) {
             setFirstNameError(true);
         } else {
             setFirstNameError(false);
+        }
+    };
+    
+    const handleChangeInputVal6 = (prop) => (event) => {
+        setInputVal({ ...inputVal, [prop]: event.target.value });
+        if (event.target.value === '') {
+            setLastNameError(true);
+        } else {
+            setLastNameError(false);
         }
     };
 
