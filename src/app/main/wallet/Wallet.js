@@ -18,7 +18,7 @@ import {
   canLoginAfterRequest,
   setPhoneTab
 } from "../../util/tools/function";
-import { updateCurrency, updateWalletDisplay } from "../../store/user";
+import { updateCurrency, updateWalletDisplay, updateWalletLoading } from "../../store/user";
 import { showMessage } from "app/store/fuse/messageSlice";
 import { centerGetNftList } from '../../store/wallet/walletThunk';
 
@@ -182,6 +182,7 @@ function Wallet(props) {
   const [networkData, setNetworkData] = useState([]);
   const [copyTiShi, setCopyTiShi] = useState(false);
   const currentLanguage = useSelector(selectCurrentLanguage);
+
 
   useEffect(() => {
     setRanges([t('home_deposite_1'), t('home_deposite_2')]);
@@ -348,6 +349,14 @@ function Wallet(props) {
     });
   };
 
+  useEffect(() => {
+    if (!userData.walletLoading) {
+      setLoadingShow(false);
+    } else {
+      setLoadingShow(true);
+    }
+  }, [userData.walletLoading])
+
   // useEffect(() => {
   //   if (symbols.length > 0) {
   //     setLoadingShow(true);
@@ -369,7 +378,7 @@ function Wallet(props) {
   const backPageEvt = () => {
     setOpenBindPhone(false)
     setOpenBindEmail(false);
-    dispatch(userProfile())
+    dispatch(userProfile({ forceUpdate: true}))
     myFunction;
   }
 
@@ -637,7 +646,7 @@ function Wallet(props) {
   };
 
   const getUserMoney = (symbol) => {
-    let arr = userData.wallet.inner || [];
+    let arr = userData?.wallet?.inner || [];
     let balance = arrayLookup(arr, "symbol", symbol, "balance") || 0;
     return balance.toFixed(6);
   };
@@ -712,7 +721,7 @@ function Wallet(props) {
     getUserCurrencyMoney();
   }, [
     symbolsData,
-    userData.wallet.inner,
+    userData?.wallet?.inner,
     decenterSymbols,
     decenterSymbolsSearch,
     currencyCode,
@@ -735,7 +744,7 @@ function Wallet(props) {
 
   // token数据整理
   const symbolsFormatAmount = () => {
-    if (symbolsData.length === 0 || !userData.wallet.inner) {
+    if (symbolsData.length === 0 || !userData?.wallet?.inner) {
       return;
     }
 
@@ -822,7 +831,7 @@ function Wallet(props) {
     }
   }, [
     symbolsData,
-    userData.wallet.inner,
+    userData?.wallet?.inner,
     currencyCode,
     isFait,
     cryptoDisplayData,
@@ -1060,6 +1069,8 @@ function Wallet(props) {
       // console.timeEnd('keyxxxx')
     });
 
+    // dispatch(updateWalletLoading(false))
+
     // 获取nft数据
     // dispatch(getNftConfig()).then((res) => {
     //   let result = res.payload;
@@ -1072,17 +1083,23 @@ function Wallet(props) {
   };
   useEffect(() => {
     setPhoneTab('wallet');
+    window.localStorage.setItem('backBtn', 'wallet');
     setTimeout(() => {
       if (canLoginAfterRequest(userData)) { //登录过以后才会获取余额值
         dispatch(userProfile());
         dispatch(centerGetTokenBalanceList());
-        dispatch(centerGetUserFiat());
+        dispatch(centerGetUserFiat()).then(() => {
+          // setLoadingShow(false)
+          dispatch(updateWalletLoading(false))
+        });
+      } else {
+        dispatch(updateWalletLoading(false))
       }
     }, 500)
   }, []);
 
   useEffect(() => {
-    if(canLoginAfterRequest(userData)){ //已经进行过登录流程了
+    if (canLoginAfterRequest(userData)) { //已经进行过登录流程了
       initWalletData();
     }
   }, [loginState]);
@@ -3313,7 +3330,7 @@ function Wallet(props) {
               </div>
             </AnimateModal2>
 
-           <ReloginDialog openLoginWinow={ openLoginWinow } closeLoginWindow={()=>{ setOpenLoginWinow(false) }} ></ReloginDialog>
+            <ReloginDialog openLoginWinow={openLoginWinow} closeLoginWindow={() => { setOpenLoginWinow(false) }} ></ReloginDialog>
 
             {openBindEmail && <div style={{ position: "absolute", width: "100%", height: `${document.getElementById('mainWallet').offsetHeight}px`, top: "0%", zIndex: "998", backgroundColor: "#0E1421" }} >
               <motion.div

@@ -26,6 +26,7 @@
         "@reduxjs/toolkit": "1.8.3",
         "@solana/wallet-adapter-base": "^0.9.22",
         "@solana/web3.js": "^1.73.3",
+        "@telegram-apps/sdk": "^2.8.0",
         "@truffle/contract": "^4.6.1",
         "@uniswap/sdk-core": "^4.0.6",
         "@uniswap/v3-sdk": "^3.10.0",

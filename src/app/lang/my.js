@@ -823,7 +823,35 @@ const locale = {
 
     card_249: "Tambah",
     card_250: "Sila tutup aplikasi mini dan klik butang segar semula untuk mencuba lagi.",
+    card_251: "Kad Pembayaran Apple",
+    card_252: "Aktifkan kad sedia ada",
+    card_253: "Utamakan menggunakan alamat AS, jika tiada, sila klik [Contoh] dalam KYC untuk menyediakan maklumat yang berkaitan.",
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
 
+    kyc_68:"Alamat1",
+    kyc_69:"Alamat2",
+    kyc_70:"Alamat3",
+    kyc_71:"Contoh",
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
 
 

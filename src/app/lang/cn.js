@@ -79,6 +79,9 @@ const locale = {
     home_record_17: '志愿者解质押',
     home_record_18: '任务代码',
     home_record_19: '操作',
+    home_record_20: '活动奖励',
+    home_record_21: '邀请奖励',
+
 
     home_sendTips_1: '地址',
     home_sendTips_2: 'Funi ID',
@@ -166,7 +169,7 @@ const locale = {
     home_withdraw_12: '快速',
     home_withdraw_13: '慢速',
     home_withdraw_14: '地址',
-    home_withdraw_15: '交易手续费 ',
+    home_withdraw_15: '预估网络费 ',
     home_withdraw_16: '。处理时间为0-2小时。',
     home_withdraw_17: '不包括网络确认时间，可能需要额外的时间。',
     home_withdraw_18: '银行',
@@ -667,7 +670,6 @@ const locale = {
     login_1: "登录失败请关闭小程序重新打开",
     deposite_35: "超出限制金额",
 
-
     server_error_10008: "无效的请求金额",
     server_error_10009: "触发严重错误",
     server_error_10010: "未获得授权",
@@ -818,11 +820,29 @@ const locale = {
     recordInfo_29: "信用卡虚拟币交易撤销",
     recordInfo_30: "信用卡法币交易退款",
     recordInfo_31: "信用卡虚拟币交易退款",
+    recordInfo_32: "邀请法币奖励",
+    recordInfo_33: "邀请虚拟币奖励",
+    recordInfo_34: "活动奖励法币",
+    recordInfo_35: "活动奖励虚拟币",
     card_246: "撤消",
     card_247: "申请中",
     card_248: "审核中",
     card_249: "添加",
     card_250: "请关闭小程序并点击刷新按钮重试",
+
+    card_251: "苹果支付卡",
+    card_252: "激活已有卡片",
+    card_253: "优先使用美国地址，没有请点击KYC中的[示例]提供相关信息。",
+    card_254:" 阿里巴巴, 拼多多, 腾讯, 12306, Facebook, steam, Pubg, 淘宝, Yettel, Yandex, 谷歌, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"苹果,",
+    kyc_68:"地址1",
+    kyc_69:"地址2",
+    kyc_70:"地址3",
+    kyc_71:"示例",
+
+
+
+
 };
 
 export default locale;

@@ -826,7 +826,30 @@ const locale = {
 
     card_249: "जोडा",
     card_250: "कृपया मिनी अ‍ॅप बंद करा आणि पुन्हा प्रयत्न करण्यासाठी रिफ्रेश बटणावर क्लिक करा.",
+    card_251: "अॅपल पेमेंट कार्ड",
+    card_252: "विद्यमान कार्ड सक्रिय करा",
+    card_253: "अमेरिकेचा पत्ता वापरण्याला प्राधान्य द्या, जर तो नसेल तर KYC मधील [उदाहरण] वर क्लिक करून संबंधित माहिती द्या.",
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
 
+    kyc_68:"पत्ता1",
+    kyc_69:"पत्ता2",
+    kyc_70:"पत्ता3",
+    kyc_71:"उदाहरण",
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    
 
 
 

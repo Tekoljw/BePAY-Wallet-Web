@@ -823,7 +823,35 @@ const locale = {
 
     card_249: "Dodaj",
     card_250: "Proszę zamknąć miniaplikację i kliknąć przycisk odświeżania, aby spróbować ponownie.",
+    card_251: "Karta Płatnicza Apple",
+    card_252: "Aktywuj istniejącą kartę",
+    card_253: "Preferuj użycie adresu z USA, jeśli go nie masz, kliknij [Przykład] w KYC, aby dostarczyć odpowiednie informacje.",
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
 
+    kyc_68:"Adres1",
+    kyc_69:"Adres2",
+    kyc_70:"Adres3",
+    kyc_71:"Przykład",
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
 
 

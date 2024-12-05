@@ -821,6 +821,27 @@ const locale = {
 
     card_249: "Ekle",
     card_250: "Lütfen mini uygulamayı kapatın ve yeniden denemek için yenile düğmesine tıklayın.",
+    card_251: "Apple Ödeme Kartı",
+    card_252: "Mevcut kartı etkinleştir",
+    card_253: "Amerikan adresini tercih edin, yoksa KYC'deki [Örnek]e tıklayarak ilgili bilgileri sağlayın",
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
+
+    kyc_68:"Adres1",
+    kyc_69:"Adres2",
+    kyc_70:"Adres3",
+    kyc_71:"Örnek",
+
+    
+
+
+
+
+
+
+
+
+
 
 
 

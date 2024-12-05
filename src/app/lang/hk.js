@@ -162,7 +162,7 @@ const locale = {
     home_withdraw_12: '快速',
     home_withdraw_13: '慢速',
     home_withdraw_14: '地址',
-    home_withdraw_15: '交易手續費 ',
+    home_withdraw_15: '預估網絡費 ',
     home_withdraw_16: '所需時間 - 0-2 小時。',
     home_withdraw_17: '網絡確認未包含在內，可能需要額外的時間',
     home_withdraw_18: '銀行',
@@ -821,6 +821,29 @@ const locale = {
     
     card_249: "添加",
     card_250: "請關閉小程序並點擊刷新按鈕重試。",
+    card_251: "蘋果支付卡",
+    card_252: "激活已有卡片",
+    card_253: "優先使用美國地址，沒有請點擊KYC中的[示例]提供相關資訊。",
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
+
+    
+    kyc_68:"地址1",
+    kyc_69:"地址2",
+    kyc_70:"地址3",
+    kyc_71:"示例",
+
+    
+
+
+
+
+
+
+
+
+
+
     
 
 

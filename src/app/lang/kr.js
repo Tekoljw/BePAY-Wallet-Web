@@ -824,7 +824,30 @@ const locale = {
 
     card_249: "추가",
     card_250: "미니 프로그램을 닫고 새로 고침 버튼을 눌러 다시 시도하세요.",
+    card_251: "애플 결제 카드",
+    card_252: "기존 카드를 활성화하다",
+    card_253: "미국 주소를 우선 사용하십시오. 없다면 KYC의 [예시]를 클릭하여 관련 정보를 제공해 주세요.",
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
 
+    kyc_68:"주소1",
+    kyc_69:"주소2",
+    kyc_70:"주소3",
+    kyc_71:"예시",
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    
 
 
 

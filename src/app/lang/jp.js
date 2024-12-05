@@ -822,7 +822,30 @@ const locale = {
     
     card_249: "追加",
     card_250: "ミニプログラムを閉じて、更新ボタンをクリックして再試行してください。",
+    card_251: "Appleペイメントカード",
+    card_252: "既存のカードを有効化する",
+    card_253: "アメリカの住所を優先して使用してください。もしなければ、KYC内の[例]をクリックして関連情報を提供してください。",
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
 
+    kyc_68:"住所1",
+    kyc_69:"住所2",
+    kyc_70:"住所3",
+    kyc_71:"例",
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    
 
 
 

@@ -463,7 +463,7 @@ const locale = {
     card_100: "Card number too short - should be 9 chars minimum",
     card_101: "Check code too short - should be 6 chars minimum",
     card_102: "Receiving address",
-    card_103: "sky",
+    card_103: "day",
     card_104: "annual fee",
     card_105: "prepaid card",
     card_106: "usage tips",
@@ -473,19 +473,19 @@ const locale = {
     card_110: "select currency for payment",
     card_111: "card mailing address",
     card_112: "change address",
-    card_113: "new user benefits",
-    card_114: "spin wheel",
+    card_113: "New User Benefits",
+    card_114: "Spin wheel",
     card_115: "bonus",
     card_116: "event ended",
-    card_117: "interest on savings account",
+    card_117: "Interest On Savings Account",
     card_118: "million-dollar airdrop",
     card_119: "divide",
-    card_120: "contract trading mining",
+    card_120: "Contract Trading Mining",
     card_121: "trade contract",
     card_122: "Instant delivery",
     card_123: "Compensate all transaction fees",
     card_124: "compensation",
-    card_125: "referral reward",
+    card_125: "Referral Reward",
     card_126: "Invite friends",
     card_127: "receive cash reward!",
     card_128: "total revenue",
@@ -532,7 +532,7 @@ const locale = {
     card_169: "more",
     card_170: "In",
     card_171: "Out",
-    card_172: "check in",
+    card_172: "Check in",
     card_173: "yesterday's total trading volume",
     kyc_41: "Required fields cannot be empty",
     home_record_0: 'All',
@@ -824,6 +824,37 @@ const locale = {
 
     card_249: "Add",
     card_250: "Please close the mini program and click the refresh button to try again.",
+    card_251: "Apple Payment Card",
+    card_252: "Activate existing card",
+    card_253: "Prefer to use a US address, if not available, please click on [Example] in KYC to provide the relevant information.",
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
+
+    kyc_68:"Address1",
+    kyc_69:"Address2",
+    kyc_70:"Address3",
+    kyc_71:"Example",
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 };
 
 export default locale;

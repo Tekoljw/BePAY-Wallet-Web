@@ -773,7 +773,6 @@ const locale = {
     server_error_40002: "Lỗi tham gia cầm cố NFT",
     server_error_40101: "Không tìm thấy mã quà tặng trong tệp văn bản",
 
-
     recordInfo_0: "Chuyển đổi tài sản giữa người bán và người dùng bằng tiền tệ pháp định",
     recordInfo_1: "Chuyển đổi tài sản giữa người bán và người dùng bằng tiền ảo",
     recordInfo_2: "Nạp tiền tệ pháp định vào tài khoản",
@@ -810,9 +809,35 @@ const locale = {
     card_247: "Đang xin",
     card_248: "Đang kiểm tra",
 
-
     card_249: "Thêm",
     card_250: "Vui lòng đóng ứng dụng mini và nhấn nút làm mới để thử lại.",
+    card_251: "Thẻ thanh toán Apple",
+    card_252: "Kích hoạt thẻ hiện có",
+    card_253: "Amerikan adresini tercih edin, yoksa KYC'deki [Örnek]e tıklayarak ilgili bilgileri sağlayın",
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
+
+    kyc_68:"Địa chỉ1",
+    kyc_69:"Địa chỉ2",
+    kyc_70:"Địa chỉ3",
+    kyc_71:"Ví dụ",
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 };
 
 export default locale;

@@ -236,8 +236,8 @@ function Withdraw(props) {
     const [withDrawOrderID, setWithDrawOrderID] = useState('');
     const [openLoad, setOpenLoad] = useState(false);
     const userData = useSelector(selectUserData);
-    const fiatData = userData.fiat;
-    const walletData = userData.wallet;
+    const fiatData = userData.fiat || [];
+    const walletData = userData.wallet || {};
     const transferStats = userData.transferStats;
     const loginState = userData.loginState;
     const hasAuthGoogle = userData.userInfo?.hasAuthGoogle;
@@ -432,7 +432,7 @@ function Withdraw(props) {
                     setTiJiaoState(1);
                     setWithDrawOrderID(result.data);
                 }, 1200);
-                dispatch(centerGetTokenBalanceList());
+                dispatch(centerGetTokenBalanceList({forceUpdate: true}));
             } else if (result.errno == -2) { //需要google验证
                 setTwiceVerifyType(0);
                 setTypeBined(hasAuthEmail ? true : false);
@@ -531,7 +531,7 @@ function Withdraw(props) {
                 setTimeout(() => {
                     setZhuanQuan(false);
                     setTiJiaoState(1);
-                    dispatch(centerGetTokenBalanceList());
+                    dispatch(centerGetTokenBalanceList({ forceUpdate: true}));
                 }, 1200);
             } else if (resData.errno == -2) {
                 setTwiceVerifyType(0);
@@ -631,7 +631,7 @@ function Withdraw(props) {
     
 
     const evalFee2 = (networkId, coinName, amount, address) => {
-        let usdtGass = userData.wallet.inner?.find(item => Object.values(item).includes("USDT"));
+        let usdtGass = userData?.wallet?.inner?.find(item => Object.values(item).includes("USDT"));
         dispatch(cryptoWithdrawFee({
             networkId: networkId,
             coinName: coinName,
@@ -669,15 +669,16 @@ function Withdraw(props) {
         });
     };
     useEffect(() => {
+        // setLoadingShow(true)
         setPhoneTab('withdraw');
-        setLoadingShow(false);
         dispatch(getWithdrawHistoryAddress()).then((res) => {
-            setLoadingShow(false);
+            // setLoadingShow(false)
             if (res.payload?.data?.length > 0) {
                 setHistoryAddress(res.payload.data);
             }
         });
     }, []);
+
 
     const defaultValues = {
         email: '',
@@ -764,7 +765,7 @@ function Withdraw(props) {
     };
 
     const getSymbolMoney = (symbol) => {
-        let arr = userData.wallet.inner || [];
+        let arr = userData?.wallet?.inner || [];
         let balance = arrayLookup(arr, 'symbol', symbol, 'balance') || 0;
         return balance.toFixed(6)
     };
@@ -916,12 +917,12 @@ function Withdraw(props) {
         if (tabValue === cryptoSelect) {
             setOpenYanZheng(false);
             setOpenGoogleCode(true);
-            dispatch(userProfile());
+            dispatch(userProfile({ forceUpdate: true}));
             setTypeBined(true);
         } else if (tabValue === fiatSelect) {
             setOpenYanZheng(false);
             setFiatVerifiedAuth(true);
-            dispatch(userProfile());
+            dispatch(userProfile({ forceUpdate: true}));
             setTypeBined(true);
         }
     }
@@ -1058,7 +1059,7 @@ function Withdraw(props) {
     const backPageEvt = () => {
         setOpenBindPhone(false)
         setOpenBindEmail(false);
-        dispatch(userProfile());
+        dispatch(userProfile({ forceUpdate: true}));
         setTypeBined(true);
         myFunction;
         setOpenGoogleCode(true);
@@ -1277,7 +1278,7 @@ function Withdraw(props) {
                                             <Typography className="text-16 cursor-pointer mt-16">
                                                 {t('home_withdraw_3')}
                                             </Typography>
-                                            <div className="flex items-center py-16 justify-between" style={{}}>
+                                            <div className="flex items-start py-16 justify-between" style={{}}>
                                                 <FormControl sx={{ width: '80%', borderColor: '#94A3B8' }} variant="outlined">
                                                     <TextField
                                                         error={ismore(inputVal.amount)}
@@ -1348,7 +1349,7 @@ function Withdraw(props) {
                                                 }}
                                             >
                                                 <Typography className="text-14 px-16">
-                                                    <span style={{ color: '#FCE100' }}>⚠</span> {t('home_withdraw_15')}{TransactionFee}  {symbol}{t('home_withdraw_16')}{t('home_withdraw_17')}
+                                                    <span style={{ color: '#FCE100' }}>⚠</span> {t('home_withdraw_15')}{TransactionFee}  USDT{t('home_withdraw_16')}{t('home_withdraw_17')}
                                                 </Typography>
                                             </Box>
 
@@ -1402,7 +1403,8 @@ function Withdraw(props) {
                                             <Typography className="text-16 cursor-pointer mt-16" >
                                                 {t('home_withdraw_3')}
                                             </Typography>
-                                            <div className="flex items-center justify-between" style={{ paddingTop: "1.6rem", paddingBottom: "0.5rem" }}>
+                                            
+                                            <div className="flex items-start justify-between" style={{ paddingTop: "1.6rem", paddingBottom: "0.5rem" }}>
                                                 <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
                                                     <TextField
                                                         error={ismore(inputVal.amount)}

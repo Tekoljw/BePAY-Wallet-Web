@@ -245,7 +245,7 @@ function Fiat(props) {
                         setTimeout(() => {
                             setZhuanQuan(false);
                             setTiJiaoState(1);
-                            dispatch(centerGetUserFiat());
+                            dispatch(centerGetUserFiat({ forceUpdate: true}));
                         }, 1200);
                     } else {
                         setOpenSuccess(false)
@@ -324,7 +324,7 @@ function Fiat(props) {
                         setTimeout(() => {
                             setZhuanQuan(false);
                             setTiJiaoState(1);
-                            dispatch(centerGetUserFiat());
+                            dispatch(centerGetUserFiat({ forceUpdate: true}));
                         }, 1200);
                     } else {
                         setOpenSuccess(false)
@@ -831,9 +831,11 @@ function Fiat(props) {
             displayFiatData.push(item.name);
             tmpFiatDisplayData[item.name] = item
         });
-        fiatData?.map((item, index) => {
-            tmpFiatsData[item.currencyCode] = item;
-        });
+        if(fiatData?.length> 0){
+            fiatData.map((item, index) => {
+                tmpFiatsData[item.currencyCode] = item;
+            });
+        }
 
         displayFiatData.forEach((item) => {
             // var tmpShow = arrayLookup(fiatDisplayData, 'name', item, 'show');
@@ -951,7 +953,7 @@ function Fiat(props) {
     const backPageEvt = () => {
         setOpenBindPhone(false)
         setOpenBindEmail(false);
-        dispatch(userProfile());
+        dispatch(userProfile({ forceUpdate: true}));
         setTypeBined(true);
         myFunction;
         setOpenGoogleCode(true);

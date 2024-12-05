@@ -820,10 +820,33 @@ const locale = {
     card_247: "Sedang diproses",
     card_248: "Sedang dalam peninjauan",
 
-
     card_249: "Tambahkan",
     card_250: "Silakan tutup aplikasi mini dan klik tombol refresh untuk mencoba lagi.",
+    card_251: "Kartu Pembayaran Apple",
+    card_252: "Aktifkan kartu yang ada",
+    card_253: "Utamakan menggunakan alamat AS, jika tidak ada, silakan klik [Contoh] di KYC untuk memberikan informasi terkait.",
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
 
+    kyc_68:"Alamat1",
+    kyc_69:"Alamat2",
+    kyc_70:"Alamat3",
+    kyc_71:"Contoh",
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
 
 

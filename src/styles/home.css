@@ -852,6 +852,11 @@ input[type='number'] {
     width: 33.33% !important;
 }
 
+.addressKyc {
+    height: 52px !important;
+    line-height: 52px !important;
+}
+
 .jinDuDi1 {
     background-color: #17D8B7;
     width: 0%;
@@ -2022,6 +2027,10 @@ input[type='number'] {
 .accountGoneNengZi {
     width: 100%;
     text-align: center;
+}
+
+.noMargin .muiltr-1djq1mv-MuiFormControlLabel-root {
+    margin-right: 0px;
 }
 
 .wallet-network-btn {
@@ -3605,9 +3614,6 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     width: 375px !important;
 }
 
-.loginMarginZhong {
-    margin-right: -10px;
-}
 
 .checkInDi {
     background-image: url("../../public/assets/images/earn/phoneQianDao.png");

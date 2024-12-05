@@ -20,6 +20,7 @@ service.interceptors.request.use(
     config => {
         const OpenAppId = getOpenAppId();
         const OpenAppIndex = getOpenAppIndex();
+        
         if (!config.headers['Finger-Nft-Token']) {
             config.headers['Finger-Nft-Token'] = `${window.localStorage.getItem(
                 `Authorization-${OpenAppId}-${OpenAppIndex}`

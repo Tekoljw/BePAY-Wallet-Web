@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import React from "react";
 import { showMessage } from 'app/store/fuse/messageSlice';
 import { setKycInfo } from "../config/index";
+import { updatePayoutBankList, updatePayoutWays, updateCreditConfig } from "../user/index"
 
 import format from 'date-fns/format';
 
@@ -21,7 +22,7 @@ export const getKycInfo = createAsyncThunk(
             if (kycData.data && kycData.data.birthDate != undefined) {
                 kycData.data.birthDate = format(new Date(kycData.data.birthDate), 'yyyy-MM-dd');
             }
-            await dispatch(setKycInfo(kycData));
+            dispatch(setKycInfo(kycData));
             return kycData;
         } else {
             if (!unloginerror && kycData.errmsg === 'unlogin') {
@@ -32,6 +33,15 @@ export const getKycInfo = createAsyncThunk(
     }
 );
 
+//返回示例地址
+export const kycAddress = createAsyncThunk(
+    '/payment/kycAddress',
+    async (settings, { dispatch, getState }) => {
+        const result = await React.$api("payment.kycAddress", settings);
+        return result;
+    }
+);
+
 
 export const updateKycInfo = createAsyncThunk(
     '/payment/kycUpdate',
@@ -39,29 +49,73 @@ export const updateKycInfo = createAsyncThunk(
         settings = settings || {};
         const { config } = getState();
         const kycInfo = config.kycInfo;
-        let data = {
-            email: settings.email,
-            phoneCountry: settings.phoneCountry,
-            phoneNumber: settings.phoneNumber,
-            firstName: settings.firstName,
-            middleName: settings.middleName,
-            lastName: settings.lastName,
-            birthDate: settings.birthDate,
-            country: settings.country,
-            state: settings.state,
-            city: settings.city,
-            address: settings.address,
-            addressTwo: settings.addressTwo,
-            zipcode: settings.zipcode,
-            idNo: settings.idNo,
-            idType: settings.idType,
-            idFrontUrl: settings.idFrontUrl,
-            idBackUrl: settings.idBackUrl,
-            selfPhotoUrl: settings.selfPhotoUrl,
-            proofOfAddressUrl: settings.proofOfAddressUrl,
-            usSsn: settings.usSsn,
-        };
-        console.log(data, "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+        let data = {};
+        if (settings.defaultAddressInfo === 1) {
+            data = {
+                email: settings.email,
+                phoneCountry: settings.phoneCountry,
+                phoneNumber: settings.phoneNumber,
+                firstName: settings.firstName,
+                middleName: settings.middleName,
+                lastName: settings.lastName,
+                birthDate: settings.birthDate,
+                country: settings.country,
+                state: settings.state,
+                city: settings.city,
+                address: settings.address,
+                addressTwo: settings.addressTwo,
+                zipCode: settings.zipCode,
+                idNo: settings.idNo,
+                idType: settings.idType,
+                idFrontUrl: settings.idFrontUrl,
+                idBackUrl: settings.idBackUrl,
+                selfPhotoUrl: settings.selfPhotoUrl,
+                proofOfAddressUrl: settings.proofOfAddressUrl,
+                defaultAddressInfo: settings.defaultAddressInfo,
+                usSsn: settings.usSsn,
+            };
+        } else if (settings.defaultAddressInfo === 2) {
+            data = {
+                email: settings.email,
+                phoneCountry: settings.phoneCountry,
+                phoneNumber: settings.phoneNumber,
+                firstName: settings.firstName,
+                middleName: settings.middleName,
+                lastName: settings.lastName,
+                birthDate: settings.birthDate,
+                addressTwo: settings.addressTwo,
+                idNo: settings.idNo,
+                idType: settings.idType,
+                idFrontUrl: settings.idFrontUrl,
+                idBackUrl: settings.idBackUrl,
+                selfPhotoUrl: settings.selfPhotoUrl,
+                proofOfAddressUrl: settings.proofOfAddressUrl,
+                defaultAddressInfo: settings.defaultAddressInfo,
+                usSsn: settings.usSsn,
+                userAddressTwo: settings.userAddressTwo,
+            }
+        } else if (settings.defaultAddressInfo === 3) {
+            data = {
+                email: settings.email,
+                phoneCountry: settings.phoneCountry,
+                phoneNumber: settings.phoneNumber,
+                firstName: settings.firstName,
+                middleName: settings.middleName,
+                lastName: settings.lastName,
+                birthDate: settings.birthDate,
+                addressTwo: settings.addressTwo,
+                idNo: settings.idNo,
+                idType: settings.idType,
+                idFrontUrl: settings.idFrontUrl,
+                idBackUrl: settings.idBackUrl,
+                selfPhotoUrl: settings.selfPhotoUrl,
+                proofOfAddressUrl: settings.proofOfAddressUrl,
+                defaultAddressInfo: settings.defaultAddressInfo,
+                usSsn: settings.usSsn,
+                userAddressThree: settings.userAddressThree,
+            }
+        }
+
         const kycData = await React.$api("payment.kycUpdate", data);
         if (kycData.errno === 0) {
             // 直接返回处理
@@ -244,11 +298,17 @@ export const makeOrder = createAsyncThunk(
 export const payoutBank = createAsyncThunk(
     'payment/payoutBank',
     async (settings, { dispatch, getState }) => {
-        const result = await React.$api("payment.payoutBank");
-        if (result.errno === 0) {
-            return result.data
+        const state = getState();
+        if (state.user.payoutBank) {
+            return state.user.payoutBank
         } else {
-            dispatch(showMessage({ message: result.errmsg, code: 2 }))
+            const result = await React.$api("payment.payoutBank");
+            if (result.errno === 0) {
+                dispatch(updatePayoutBankList(result.data))
+                return result.data
+            } else {
+                dispatch(showMessage({ message: result.errmsg, code: 2 }))
+            }
         }
     }
 );
@@ -257,12 +317,19 @@ export const payoutBank = createAsyncThunk(
 export const payoutPayWays = createAsyncThunk(
     'payment/payoutPayWays',
     async (settings, { dispatch, getState }) => {
-        const result = await React.$api("payment.payoutPayWays");
-        if (result.errno === 0) {
-            return result.data
+        const state = getState();
+        if (state.user.payoutWays) {
+            return state.user.payoutWays
         } else {
-            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            const result = await React.$api("payment.payoutPayWays");
+            if (result.errno === 0) {
+                dispatch(updatePayoutWays(result.data))
+                return result.data
+            } else {
+                dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            }
         }
+
     }
 );
 
@@ -270,11 +337,17 @@ export const payoutPayWays = createAsyncThunk(
 export const getCreditConfig = createAsyncThunk(
     'credit/creditConfig',
     async (settings, { dispatch, getState }) => {
-        const result = await React.$api("credit.config");
-        if (result.errno === 0) {
-            return result.data
+        const state = getState();
+        if (state.user.creditConfig) {
+            return state.user.creditConfig
         } else {
-            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            const result = await React.$api("credit.config");
+            if (result.errno === 0) {
+                dispatch(updateCreditConfig(result.data))
+                return result.data
+            } else {
+                dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            }
         }
     }
 );
@@ -302,7 +375,7 @@ export const creditCardUpdate = createAsyncThunk(
     async (settings, { dispatch, getState }) => {
         const result = await React.$api("credit.creditCardUpdate", settings);
         if (result.errno === 0) {
-            if(!settings.ignoreMessage){
+            if (!settings.ignoreMessage) {
                 if (result.data.status === 'success') {
                     dispatch(showMessage({ message: result.errmsg, code: 1 }));
                 } else {
@@ -322,7 +395,7 @@ export const exchangeCreditCard = createAsyncThunk(
         const result = await React.$api("credit.exchangeCreditCard", settings);
         return result;
         if (result.errno === 0) {
-            if(!settings.ignoreMessage){
+            if (!settings.ignoreMessage) {
                 if (result.data.status === 'success') {
                     dispatch(showMessage({ message: result.errmsg, code: 1 }));
                 } else {

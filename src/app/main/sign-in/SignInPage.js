@@ -89,7 +89,7 @@ function SignInPage() {
           <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight">
             Sign in
           </Typography>
-          <div className="flex items-baseline mt-2 font-medium">
+          <div className="flex items-baseline mt-2 font-medium ">
             <Typography>Don't have an account?</Typography>
             <Link className="ml-4" to="/sign-up">
               Sign up

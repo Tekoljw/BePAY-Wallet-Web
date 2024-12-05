@@ -824,7 +824,30 @@ const locale = {
     
     card_249: "Hinzufügen",
     card_250: "Bitte schließen Sie die Mini-App und klicken Sie auf die Schaltfläche „Aktualisieren“, um es erneut zu versuchen.",
+    card_251: "Apple Pay-Karte",
+    card_252: "Vorhandene Karte aktivieren",
+    card_253: "Bevorzugen Sie die Verwendung einer US-Adresse. Wenn Sie keine haben, klicken Sie bitte auf [Beispiel] im KYC, um die entsprechenden Informationen bereitzustellen.",
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
+    kyc_68:"Adresse1",
+    kyc_69:"Adresse2",
+    kyc_70:"Adresse3",
+    kyc_71:"Beispiel",
 
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
 };
 
 export default locale;

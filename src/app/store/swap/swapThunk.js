@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import React from "react";
 import { showMessage } from 'app/store/fuse/messageSlice';
+import { updateSwapFee } from '../user/index'
 
 // import { setSwapConfig } from "../config/index";
 
@@ -61,13 +62,20 @@ export const getSwapFee = createAsyncThunk(
     '/swap/swapFee',
     async (settings, { dispatch, getState }) => {
 
-        const resultData = await React.$api("swap.swapFee", {});
+        const state = getState();
+        if(state.user.swapFee) {
+            return state.user.swapFee
+        }else {
+            const resultData = await React.$api("swap.swapFee", {});
 
-        if (resultData.errno === 0) {
-            return resultData;
-        } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            if (resultData.errno === 0) {
+                dispatch(updateSwapFee(resultData))
+                return resultData;
+            } else {
+                dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            }
         }
+       
     }
 );
 

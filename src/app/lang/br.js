@@ -821,6 +821,31 @@ const locale = {
     
     card_249: "Adicionar",
     card_250: "Por favor, feche o mini aplicativo e clique no botão de atualizar para tentar novamente.",
+    card_251: "Cartão de Pagamento Apple",
+    card_252: "Ativar cartão existente",
+    card_253: "Priorize o uso de um endereço dos EUA, se não tiver, clique em [Exemplo] no KYC para fornecer as informações necessárias",
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
+
+    kyc_68:"Endereço1",
+    kyc_69:"Endereço2",
+    kyc_70:"Endereço3",
+    kyc_71:"Exemplo",
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
 };
 export default locale;
 

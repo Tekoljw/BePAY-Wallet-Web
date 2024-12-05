@@ -80,7 +80,7 @@ function Buy(props) {
     const [amount, setAmount] = useState('');
     const userData = useSelector(selectUserData);
     const fiatsData = userData.fiat || [];
-    const walletData = userData.wallet;
+    const walletData = userData.wallet || {};
     const config = useSelector(selectConfig);
     const currencys = useSelector(selectConfig).payment.currency || [];
     const symbols = useSelector(selectConfig).symbols || [];

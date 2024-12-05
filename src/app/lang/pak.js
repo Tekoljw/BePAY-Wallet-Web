@@ -819,6 +819,34 @@ card_248: "جائزہ کے مرحلے میں ہے",
     
 card_249: "شامل کریں",
 card_250: "براہ کرم مِنی ایپ کو بند کریں اور دوبارہ کوشش کرنے کے لیے ریفریش بٹن پر کلک کریں۔",
+card_251: "ایپل ادائیگی کارڈ",
+card_252: "موجودہ کارڈ کو فعال کریں",
+card_253: "امریکی ایڈریس کو ترجیح دیں، اگر نہیں ہے تو براہ کرم KYC میں [مثال] پر کلک کر کے متعلقہ معلومات فراہم کریں۔",
+card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+card_255:"Apple, ",
+
+kyc_68:"پتا1",
+kyc_69:"پتا2",
+kyc_70:"پتا3",
+kyc_71:"مثال",
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 
     

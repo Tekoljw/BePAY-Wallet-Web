@@ -822,10 +822,28 @@ const locale = {
     card_246: "إلغاء",
     card_247: "قيد التقديم",
     card_248: "قيد المراجعة",
-
     
     card_249: "إضافة",
     card_250: "يرجى إغلاق التطبيق المصغر والنقر على زر التحديث لإعادة المحاولة.",
+    card_251: "بطاقة دفع آبل",
+    card_252: "تفعيل بطاقة موجودة",
+    card_253: "يفضل استخدام عنوان أمريكي، إذا لم يكن لديك، يرجى النقر على [المثال] في KYC لتوفير المعلومات ذات الصلة.",
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
+
+    kyc_68:"عنوان1",
+    kyc_69:"عنوان2",
+    kyc_70:"عنوان3",
+    kyc_71:"مثال",
+
+    
+
+
+
+
+
+
+
 
 };
 

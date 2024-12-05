@@ -97,7 +97,7 @@ function RetiedEmail(props) {
                 if (result && result.errno === 0) {
                     dispatch(showMessage({ message: 'Success', code: 1 }));
                     props.backPage()
-                    dispatch(userProfile());
+                    dispatch(userProfile({ forceUpdate: true}));
                     dispatch(getUserData());
                     // changePhoneTab('withdraw');
                     // history.push('/wallet/home/wallet')

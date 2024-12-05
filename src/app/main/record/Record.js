@@ -15,6 +15,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import history from "@history";
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { transferRecords } from '../../store/user/userThunk';
 import { selectUserData } from '../../store/user';
@@ -87,7 +88,12 @@ function Record() {
     // public static final int LOG_TYPE_CREDIT_REVERSAL_CRYPTO = 29;
     // public static final int LOG_TYPE_CREDIT_REFUND_FIAT = 30;
     // public static final int LOG_TYPE_CREDIT_REFUND_CRYPTO = 31;
-    
+    // public static final int LOG_TYPE_ASSETS_FIAT_INVITE_REWARD= 32;     //邀请法币奖励
+    // public static final int LOG_TYPE_ASSETS_CRYPTO_INVITE_REWARD = 33;  //邀请虚拟币奖励
+    // public static final int LOG_TYPE_ASSETS_ACTIVITY_FIAT = 34; //活动奖励法币
+    // public static final int LOG_TYPE_ASSETS_ACTIVITY_CRYPTO = 35; //活动奖励虚拟币
+    // public static final int LOG_TYPE_ASSETS_NO_EXIST = 1000;      //不存在的类型
+
     const typeList = [
         { key: 0, label: t('recordInfo_0')},
         { key: 1, label: t('recordInfo_1')},
@@ -120,7 +126,11 @@ function Record() {
         { key: 28, label: t('recordInfo_28')},
         { key: 29, label: t('recordInfo_29')},
         { key: 30, label: t('recordInfo_30')},
-        { key: 31, label: t('recordInfo_31')}
+        { key: 31, label: t('recordInfo_31')},
+        { key: 32, label: t('recordInfo_32')},
+        { key: 33, label: t('recordInfo_33')},
+        { key: 34, label: t('recordInfo_34')},
+        { key: 35, label: t('recordInfo_35')}
     ]
 
     const showTypeList = [
@@ -143,6 +153,8 @@ function Record() {
         // { id: 16, label: 'TRANSFER_TO_GAME' },
         // { id: 17, label: 'TRANSFER_FROM_GAME' },
         { id: 5, label: t('menu_18') },
+        { id: 10, label: t('home_record_20') },
+        { id: 11, label: t('home_record_21') },
     ];
 
     const [timeItem, setTimeItem] = React.useState(new Date().getMonth() + 1);
@@ -166,6 +178,10 @@ function Record() {
             limit: rowsPerPage
         }));
     };
+
+    const changePhoneTab = (tab) => {
+        window.localStorage.setItem('phoneTab', tab);
+    }
 
     //获取Config
     const getCardConfig = () => {
@@ -223,7 +239,7 @@ function Record() {
                 limit: rowsPerPage,
                 userCreditNo: kaPianItem == 0 ? null : kaPianItem,
             })).then((res) => {
-                setLoadingShow(false)
+                // setLoadingShow(false)
                 setTimeout(() => {
                     setIsLoading(false)
                 }, 500)
@@ -250,7 +266,7 @@ function Record() {
 
 
     useEffect(() => {
-        setLoadingShow(false)
+        // setLoadingShow(true)
         handleTransferRecord()
     }, [type, timeItem, kaPianItem]);
 
@@ -278,11 +294,27 @@ function Record() {
         setKaPianItem(event.target.value);
     };
 
+    const fanHuiFunc = () => {
+        if (window.localStorage.getItem('backBtn') === "card") {
+            changePhoneTab('card');
+            history.push('/wallet/home/card')
+        } else {
+            changePhoneTab('wallet');
+            history.push('/wallet/home/wallet')
+        }
+    }
+
 
     const [loadingShow, setLoadingShow] = useState(false);
 
     return (
         <div>
+            <div className='flex mb-2 mt-10' onClick={() => {
+                fanHuiFunc();
+            }}   >
+                <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
+            </div>
+
             {/* <motion.div
                 variants={container}
                 initial="hidden"
@@ -609,7 +641,7 @@ function Record() {
                                                 </div>
                                                 <div className='recordListSmallZi'>{t('home_borrow_18')} <span>{transferItem.serviceFee}</span>
                                                 </div>
-                                                <div className='recordListSmallZi'>{ 
+                                                <div className='recordListSmallZi'>{
                                                     typeList.find(v => {
                                                         return v.key == (transferItem.type)
                                                     })?.label

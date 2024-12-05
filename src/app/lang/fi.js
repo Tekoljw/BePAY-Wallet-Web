@@ -820,11 +820,33 @@ card_246: "Peruuta",
 card_247: "Hakemus käsittelyssä",
 card_248: "Tarkastuksessa",
 
-
     
 card_249: "Lisää",
 card_250: "Sulje mini-ohjelma ja napsauta päivityspainiketta yrittääksesi uudelleen.",
+card_251: "Apple Pay -kortti",
+card_252: "Aktivoi olemassa oleva kortti",
+card_253: "Suositellaan Yhdysvaltojen osoitteen käyttöä, jos ei ole, klikkaa KYC:ssä [Esimerkki] ja anna tarvittavat tiedot.",
+card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+card_255:"Apple, ",
 
+    
+kyc_68:"Osoite1",
+kyc_69:"Osoite2",
+kyc_70:"Osoite3",
+kyc_71:"Esimerkki",
+
+    
+
+
+
+
+
+
+
+
+
+
+    
 
 
 
