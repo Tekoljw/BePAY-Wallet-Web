@@ -341,7 +341,6 @@ function Wallet(props) {
     }, 800);
   }
 
-
   const myFunction = () => {
     window.scrollTo({
       top: 0,

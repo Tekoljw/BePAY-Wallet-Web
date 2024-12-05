@@ -834,7 +834,12 @@ const locale = {
     kyc_71:"Ejemplo",
 
     
-
+    card_256:"Por favor, asegúrese de que su información de KYC esté correcta y seleccione la dirección solicitada.",
+    card_257:"Modificar información de KYC",
+    card_258:"Pagar la tarifa de reemplazo de tarjeta:",
+    card_259:"",
+    card_260:"",
+    card_261:"",
 
 
 

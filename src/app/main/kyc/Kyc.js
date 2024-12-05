@@ -67,6 +67,7 @@ function Kyc(props) {
     const config = useSelector(selectConfig);
     const user = useSelector(selectUserData);
     const kycInfo = config.kycInfo || {};
+    const [tmpPhoneCode, setTmpPhoneCode] = useState('');
     let baseImgUrl = "";
     if (config.system.cdnUrl) {
         baseImgUrl = config.system.cdnUrl.substr(0, config.system.cdnUrl.length - 1);
@@ -300,8 +301,8 @@ function Kyc(props) {
             setUsSsnInput(true)
             setUsSsnInputShow(true)
         } else {
-            setIdNoInput(false)
-            setIdNoInputShow(false)
+            setUsSsnInput(false)
+            setUsSsnInputShow(false)
         }
     };
 
@@ -362,9 +363,8 @@ function Kyc(props) {
             setIdNoError(false);
         }
         showBtnFunc();//显示保存按钮
-
         if (inputVal.country != '' && inputVal.state != '' && inputVal.city != '' && inputVal.address != '' && inputVal.zipCode != '') {
-            setClickShiLi(true);//显示示例按钮
+            setClickShiLi(true);//不显示示例按钮
         } else {
             setClickShiLi(false);
         }
@@ -483,15 +483,6 @@ function Kyc(props) {
         } else {
             setCountryError(false);
         }
-        if (inputVal.country) {
-            setCountryInput(true)
-            setCountryInputShow(true)
-            countryInputRef.current.blur();// 取消到输入框
-        } else {
-            setCountryInput(false)
-            setCountryInputShow(false)
-        }
-
     };
 
     const handleBlur9 = () => {
@@ -1009,7 +1000,7 @@ function Kyc(props) {
                         if (value.payload) {
                             // refreshKycInfo();
                             dispatch(showMessage({ message: "Success", code: 1 }));
-                            dispatch(userProfile({ forceUpdate: true}));
+                            dispatch(userProfile({ forceUpdate: true }));
                             props.updatedKycInfo();
                         }
                     }
@@ -1047,6 +1038,11 @@ function Kyc(props) {
             if (kycInfo.defaultAddressInfo === 1) {
                 setAddressKyc(1);
                 setInputVal(copyData);
+                if (copyData.country !== '' && copyData.state !== '' && copyData.city !== '' && copyData.address !== '' && copyData.zipCode !== '') {
+                    setClickShiLi(true);//不显示示例按钮
+                } else {
+                    setClickShiLi(false);
+                }
             } else if (kycInfo.defaultAddressInfo === 2) {
                 setAddressKyc(2);
                 setInputVal(copyData);
@@ -1263,12 +1259,12 @@ function Kyc(props) {
 
                         <div className="flex items-center justify-between">
                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                <InputLabel id="demo-simple-select-label">{t('kyc_6')} </InputLabel>
+                                <InputLabel id="demo-simple-select-label">{t('kyc_6')} *</InputLabel>
                                 <OutlinedInput
                                     id="outlined-adornment-address"
                                     label="LastName"
                                     value={inputVal.lastName}
-                                    onChange={handleChangeInputVal4('lastName')}
+                                    onChange={handleChangeInputVal6('lastName')}
                                     aria-describedby="outlined-weight-helper-text"
                                     inputProps={{
                                         'aria-label': 'lastName',
@@ -1308,23 +1304,88 @@ function Kyc(props) {
                             </Stack>
                         </div>
 
-                        <div className="flex items-center justify-between">
-                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} className="mb-24">
-                                <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    value={addressKyc}
-                                    onChange={handleChangeInputVal16}
-                                    className='addressKyc'
-                                >
-                                    <MenuItem value={1}>{t('kyc_68')}</MenuItem>
-                                    <MenuItem value={2}>{t('kyc_69')}</MenuItem>
-                                    <MenuItem value={3}>{t('kyc_70')}</MenuItem>
-                                </Select>
-                            </FormControl>
+                        <div className="flex items-center justify-between mt-8">
+                            <div style={{ position: "relative", width: '100%' }}>
+                                <div style={{ position: "absolute", width: '100%' }}>
+                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} className="mb-24">
+                                        <Select
+                                            labelId="demo-simple-select-label"
+                                            id="demo-simple-select"
+                                            value={addressKyc}
+                                            onChange={handleChangeInputVal16}
+                                            className='addressKyc'
+                                        >
+                                            <MenuItem value={1}>{t('kyc_68')}</MenuItem>
+                                            <MenuItem value={2}>{t('kyc_69')}</MenuItem>
+                                            <MenuItem value={3}>{t('kyc_70')}</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </div>
+
+                                <div style={{ position: "absolute", right: "0%", marginTop: '5px', marginRight: "36px" }}>
+                                    {
+                                        !clickShiLi && <IconButton onClick={() => onSubmitKycAddress()}>
+                                            <div className='px-8' style={{ backgroundColor: "#374252", minWidth: "50px", color: "#ffffff", fontSize: "12px", lineHeight: "26px", height: "26px", borderRadius: "50px" }}>
+                                                {t('kyc_71')}
+                                            </div>
+                                        </IconButton>
+                                    }
+                                </div>
+                            </div>
                         </div>
 
-                        <div className="flex items-center justify-between">
+
+                        <div className="mb-24" style={{ marginTop: "76px" }}>
+                            <Autocomplete
+                                options={phoneCode.list}
+                                autoHighlight
+                                value={phoneCode.list.find(option => option.country_code === inputVal.country) || null}
+                                onInputChange={(event, newInputValue) => {
+                                    setTmpPhoneCode(newInputValue.replace(/\+/g, ""));
+                                }}
+                                filterOptions={(options) => {
+                                    const reg = new RegExp(tmpPhoneCode, 'i');
+                                    const array = options.filter((item) => {
+                                        return reg.test(item.country_code) || reg.test(item.local_name)
+                                    });
+                                    return array;
+                                }}
+                                onChange={(event, option) => {
+                                    if (option) {
+                                        setInputVal(prevState => ({
+                                            ...prevState,
+                                            country: option.country_code ? option.country_code : '',
+                                        }));
+                                    }
+                                }}
+                                error={countryError}
+                                onBlur={handleBlur8}
+                                getOptionLabel={(option) => option.country_code}
+                                renderOption={(props, option) => (
+                                    <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                                        <img
+                                            loading="lazy"
+                                            width="20"
+                                            src={`/wallet/assets/images/country/${option.country_code}.png`}
+                                            alt=""
+                                        />
+                                        <span style={{ color: "#94A3B8" }}>{option.local_name}</span>&nbsp;&nbsp;{option.country_code}
+                                    </Box>
+                                )}
+                                renderInput={(params) => (
+                                    <TextField
+                                        label={t('kyc_8') + " *"}
+                                        {...params}
+                                        inputProps={{ ...params.inputProps }}
+                                    />
+                                )}
+                            />
+                            {countryError && (<FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' style={{ marginLeft: "14px" }} > {t('kyc_41')}</FormHelperText>)}
+                        </div>
+
+
+
+                        {/* <div className="flex items-center justify-between">
                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
                                 <InputLabel htmlFor="outlined-adornment-country">{t('kyc_8')}*</InputLabel>
                                 <OutlinedInput
@@ -1363,7 +1424,8 @@ function Kyc(props) {
                                     <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
                                 )}
                             </FormControl>
-                        </div>
+                        </div> */}
+
 
                         <div className="flex items-center justify-between">
                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">

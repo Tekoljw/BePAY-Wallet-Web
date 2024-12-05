@@ -835,7 +835,12 @@ const locale = {
     kyc_71:"Contoh",
 
     
-
+    card_256:"Sila pastikan maklumat KYC anda betul dan pilih alamat yang anda mohon.",
+    card_257:"Ubah Maklumat KYC",
+    card_258:"Bayar yuran penggantian kad:",
+    card_259:"",
+    card_260:"",
+    card_261:"",
 
 
 

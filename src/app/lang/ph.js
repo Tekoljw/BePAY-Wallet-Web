@@ -831,7 +831,12 @@ const locale = {
     kyc_70:"Address3",
     kyc_71:"Halimbawa",
 
-    
+    card_256:"Mangyaring tiyakin na tama ang inyong KYC na impormasyon at piliin ang address na inyong inapply.",
+    card_257:"Baguhin ang Impormasyon ng KYC",
+    card_258:"Magbayad ng bayad sa pagpapalit ng card:",
+    card_259:"",
+    card_260:"",
+    card_261:"",
 
 
 

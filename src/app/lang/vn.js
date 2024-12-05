@@ -822,6 +822,13 @@ const locale = {
     kyc_70:"Địa chỉ3",
     kyc_71:"Ví dụ",
 
+
+    card_256:"Vui lòng đảm bảo thông tin KYC của bạn chính xác và chọn địa chỉ bạn đã đăng ký.",
+    card_257:"Sửa đổi thông tin KYC",
+    card_258:"Thanh toán phí thay thế thẻ:",
+    card_259:"",
+    card_260:"",
+    card_261:"",
     
 
 

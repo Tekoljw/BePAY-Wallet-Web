@@ -832,7 +832,12 @@ const locale = {
     kyc_70:"Adres3",
     kyc_71:"Örnek",
 
-    
+    card_256:"Lütfen KYC bilgilerinizin doğru olduğundan emin olun ve başvurduğunuz adresi seçin.",
+    card_257:"KYC Bilgilerini Düzenle",
+    card_258:"Kart değişim ücretini ödeyin:",
+    card_259:"",
+    card_260:"",
+    card_261:"", 
 
 
 
