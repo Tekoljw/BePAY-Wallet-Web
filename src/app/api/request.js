@@ -8,6 +8,7 @@ import { isMobile } from "../util/tools/function";
 import userLoginType from "../define/userLoginType";
 import {useTranslation} from "react-i18next";
 import {showMessage} from "app/store/fuse/messageSlice";
+import {useDispatch} from "react-redux";
 
 const service = axios.create({
     timeout: 50000, // request timeout
@@ -70,6 +71,7 @@ service.interceptors.response.use(
             return res;
         } else if(res.errno > 501){ //比如大于501的就属于服务器提示错误
 
+            const dispatch = useDispatch();
             const { t } = useTranslation('mainPage');
             const error_tips_code = 'server_error_' + res.errno;
             dispatch(showMessage({ message: t(error_tips_code), code: 2 }));
