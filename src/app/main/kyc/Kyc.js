@@ -765,7 +765,7 @@ function Kyc(props) {
             setFirstNameError(false);
         }
     };
-    
+
     const handleChangeInputVal6 = (prop) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
         if (event.target.value === '') {
@@ -973,7 +973,7 @@ function Kyc(props) {
 
     //是否显示保存按钮
     const showBtnFunc = () => {
-        if (inputVal.email !== '' && inputVal.idNo !== '' && inputVal.address !== '' && inputVal.zipCode !== '' && inputVal.city !== '' && inputVal.state !== '' && inputVal.country !== '' && inputVal.birthDate !== '' && inputVal.firstName !== '' && inputVal.phoneCountry !== '' && inputVal.phoneNumber !== '' && inputVal.idType !== '' && inputVal.idFrontUrl !== '' && inputVal.idBackUrl !== '') {
+        if (inputVal.email !== '' && inputVal.idNo !== '' && inputVal.address !== '' && inputVal.zipCode !== '' && inputVal.city !== '' && inputVal.state !== '' && inputVal.country !== '' && inputVal.birthDate !== '' && inputVal.firstName !== '' && inputVal.lastName !== '' && inputVal.phoneCountry !== '' && inputVal.phoneNumber !== '' && inputVal.idType !== '' && inputVal.idFrontUrl !== '' && inputVal.idBackUrl !== '') {
             setShowSaveBtn(false)
         } else
             setShowSaveBtn(true)
@@ -981,8 +981,8 @@ function Kyc(props) {
 
     //保存信息
     const onSave = () => {
-        if (inputVal.email !== undefined && inputVal.idNo !== undefined && inputVal.address !== undefined && inputVal.zipCode !== undefined && inputVal.city !== undefined && inputVal.state !== undefined && inputVal.country !== undefined && inputVal.firstName !== undefined && inputVal.phoneCountry !== undefined && inputVal.phoneNumber !== undefined && inputVal.idType !== undefined && inputVal.idFrontUrl !== undefined && inputVal.idBackUrl !== undefined) {
-            if (inputVal.email !== '' && inputVal.idNo !== '' && inputVal.address !== '' && inputVal.zipCode !== '' && inputVal.city !== '' && inputVal.state !== '' && inputVal.country !== '' && inputVal.firstName !== '' && inputVal.phoneCountry !== '' && inputVal.phoneNumber !== '' && inputVal.idType !== '' && inputVal.idFrontUrl !== '' && inputVal.idBackUrl !== '') {
+        if (inputVal.email !== undefined && inputVal.idNo !== undefined && inputVal.address !== undefined && inputVal.zipCode !== undefined && inputVal.city !== undefined && inputVal.state !== undefined && inputVal.country !== undefined && inputVal.firstName !== undefined && inputVal.lastName !== undefined && inputVal.phoneCountry !== undefined && inputVal.phoneNumber !== undefined && inputVal.idType !== undefined && inputVal.idFrontUrl !== undefined && inputVal.idBackUrl !== undefined) {
+            if (inputVal.email !== '' && inputVal.idNo !== '' && inputVal.address !== '' && inputVal.zipCode !== '' && inputVal.city !== '' && inputVal.state !== '' && inputVal.country !== '' && inputVal.firstName !== '' && inputVal.lastName !== '' && inputVal.phoneCountry !== '' && inputVal.phoneNumber !== '' && inputVal.idType !== '' && inputVal.idFrontUrl !== '' && inputVal.idBackUrl !== '') {
                 if (inputVal.defaultAddressInfo == 2) {
                     inputVal.userAddressTwo = JSON.stringify(
                         {
@@ -1033,7 +1033,6 @@ function Kyc(props) {
             });
             setInputVal(copyData);//重新填充数据
         });
-        console.log("刷了填");
     };
 
     //KYC数据发生改变后填充数据
@@ -1268,12 +1267,13 @@ function Kyc(props) {
                                     id="outlined-adornment-address"
                                     label="LastName"
                                     value={inputVal.lastName}
-                                    onChange={handleChangeInputVal('lastName')}
+                                    onChange={handleChangeInputVal4('lastName')}
                                     aria-describedby="outlined-weight-helper-text"
                                     inputProps={{
                                         'aria-label': 'lastName',
                                     }}
                                     onBlur={handleBlur6}
+                                    error={lastNameError}
                                     disabled={lastNameInput}
                                     inputRef={lastNameInputRef}
                                     endAdornment={
@@ -1287,6 +1287,7 @@ function Kyc(props) {
                                         </InputAdornment>
                                     }
                                 />
+                                {lastNameError && (<FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>)}
                             </FormControl>
                         </div>
 
