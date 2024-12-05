@@ -835,9 +835,9 @@ const locale = {
     card_256:"Lütfen KYC bilgilerinizin doğru olduğundan emin olun ve başvurduğunuz adresi seçin.",
     card_257:"KYC Bilgilerini Düzenle",
     card_258:"Kart değişim ücretini ödeyin:",
-    card_259:"",
-    card_260:"",
-    card_261:"", 
+    card_259:"KYC Doğrulama",
+    card_260:"Kart başvurusunda bulunmadan önce KYC doğrulamasını tamamlamanız gerekir.",
+    card_261:"Lütfen spesifik detaylar için çevrimiçi müşteri hizmetleri ile iletişime geçin.", 
 
 
 

@@ -837,9 +837,9 @@ const locale = {
     card_256:"Harap pastikan informasi KYC Anda benar dan pilih alamat yang Anda ajukan.",
     card_257:"Ubah informasi KYC",
     card_258:"Bayar biaya penggantian kartu:",
-    card_259:"",
-    card_260:"",
-    card_261:"",
+    card_259:"Verifikasi KYC",
+    card_260:"Anda harus menyelesaikan verifikasi KYC sebelum mengajukan kartu.",
+    card_261:"Harap hubungi layanan pelanggan online untuk informasi lebih lanjut.",
 
 
 

@@ -834,9 +834,9 @@ const locale = {
     card_256:"Mangyaring tiyakin na tama ang inyong KYC na impormasyon at piliin ang address na inyong inapply.",
     card_257:"Baguhin ang Impormasyon ng KYC",
     card_258:"Magbayad ng bayad sa pagpapalit ng card:",
-    card_259:"",
-    card_260:"",
-    card_261:"",
+    card_259:"Pagpapatunay ng KYC",
+    card_260:"Kailangang kumpletuhin ang KYC verification bago mag-apply para sa card.",
+    card_261:"Mangyaring makipag-ugnayan sa online na serbisyo ng customer para sa mga partikular na detalye.",
 
 
 

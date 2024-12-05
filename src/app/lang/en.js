@@ -839,9 +839,9 @@ const locale = {
     card_256:"Please ensure that your KYC information is correct and select the address you have applied for.",
     card_257:"Modify KYC Information",
     card_258:"Pay card replacement fee:",
-    card_259:"",
-    card_260:"",
-    card_261:"",
+    card_259:"KYC Verification",
+    card_260:"You need to complete KYC verification before applying for the card.",
+    card_261:"Please contact online customer service for specific details.",
     
 
 

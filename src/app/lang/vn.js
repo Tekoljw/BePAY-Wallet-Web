@@ -826,9 +826,9 @@ const locale = {
     card_256:"Vui lòng đảm bảo thông tin KYC của bạn chính xác và chọn địa chỉ bạn đã đăng ký.",
     card_257:"Sửa đổi thông tin KYC",
     card_258:"Thanh toán phí thay thế thẻ:",
-    card_259:"",
-    card_260:"",
-    card_261:"",
+    card_259:"Xác minh KYC",
+    card_260:"Bạn cần hoàn thành xác minh KYC trước khi đăng ký thẻ.",
+    card_261:"Vui lòng liên hệ với dịch vụ khách hàng trực tuyến để biết chi tiết cụ thể.",
     
 
 

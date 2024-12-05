@@ -838,9 +838,9 @@ const locale = {
     card_256: "Varmistathan, että KYC-tietosi ovat oikein ja valitse hakemasi osoite.",
     card_257: "Muokkaa KYC-tietoja",
     card_258: "Maksa kortin vaihdon maksu:",
-    card_259: "",
-    card_260: "",
-    card_261: "",
+    card_259: "KYC-tarkistus",
+    card_260: "KYC-todennus on suoritettava ennen kortin hakemista.",
+    card_261: "Ole hyvä ja ota yhteyttä verkkopalvelun asiakaspalveluun saadaksesi tarkempia tietoja.",
 
 
 
