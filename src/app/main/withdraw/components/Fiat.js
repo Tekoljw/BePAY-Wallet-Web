@@ -116,8 +116,8 @@ function Fiat(props) {
         let tmpInputVal = { ...inputVal, ...value };
         setInputVal(tmpInputVal);
     };
-    const [historyAddress, setHistoryAddress] = useState([]);
-    const [historyAddressBak, setHistoryAddressBak] = useState([]);
+    const [historyAddressFiat, setHistoryAddressFiat] = useState([]);
+    const [historyAddressFiatBak, setHistoryAddressFiatBak] = useState([]);
     const [openWithdrawLog, setOpenWithdrawLog] = useState(false);
     const config = useSelector(selectConfig);
     const mounted = useRef();
@@ -730,8 +730,8 @@ function Fiat(props) {
             // setLoadingShow(false)
             const resultData = res?.payload?.data;
             if(resultData) {
-                setHistoryAddress(resultData);
-                setHistoryAddressBak(resultData);
+                setHistoryAddressFiat(resultData);
+                setHistoryAddressFiatBak(resultData);
             }
         });
     }
@@ -966,26 +966,28 @@ function Fiat(props) {
 
     const handleEditAddressNote = (currentIndex, editData, isBlur) => {
         let tmpList = []
-        historyAddress.map(async (item, index) => {
-            if (index === currentIndex) {
-                tmpList.push({
-                    ...item, ...editData
-                })
-
-                if ((editData.editMode === true || isBlur) && historyAddressBak[index].note != item.note) {
-                    dispatch(editOrQueryWithdrawalHistoryInfo({
-                       withdrawalType: 'internal',
-                        currencyType:  'fiat',
-                        editId: item.id,
-                        note: item.note
-                    }))
+        if(historyAddressFiat.length > 0) {
+            historyAddressFiat.map(async (item, index) => {
+                if (index === currentIndex) {
+                    tmpList.push({
+                        ...item, ...editData
+                    })
+    
+                    if ((editData.editMode === true || isBlur) && historyAddressFiatBak[index].note != item.note) {
+                        dispatch(editOrQueryWithdrawalHistoryInfo({
+                           withdrawalType: 'internal',
+                            currencyType:  'fiat',
+                            editId: item.id,
+                            note: item.note
+                        }))
+                    }
+                } else {
+                    tmpList.push({ ...item })
                 }
-            } else {
-                tmpList.push({ ...item })
-            }
-        })
+            })   
+        }
 
-        setHistoryAddress(tmpList)
+        setHistoryAddressFiat(tmpList)
     }
 
     return (
@@ -1542,7 +1544,6 @@ function Fiat(props) {
                                                     />
                                                     <div className='flex pasteSty  items-center'>
                                                         <img className='pasteJianTou' src="wallet/assets/images/withdraw/pasteJianTou.png" alt="" onClick={() => {
-                                                            console.log(historyAddress);
                                                             setOpenPasteWindow(true)
                                                         }} />
                                                     </div>
@@ -2088,7 +2089,7 @@ function Fiat(props) {
 
                         <div className='pasteW'>
                                 {
-                                    historyAddress && historyAddress.map((addressItem, index) => {
+                                    historyAddressFiat.length > 0 && historyAddressFiat.map((addressItem, index) => {
                                         return (
                                             <div className='pasteDiZhi'>
                                                 <div className='flex'>
@@ -2120,10 +2121,10 @@ function Fiat(props) {
                                                 </div>
                                                 <div className='pasteDi' onClick={()=>{ 
                                                      if(smallTabValue === 1) {
-                                                        setInputVal({ ...inputVal, 'userId': item.internalToUserId  });
+                                                        setInputVal({ ...inputVal, 'userId': addressItem.internalToUserId  });
                                                         closePasteFunc()
                                                     }
-                                                }}>{ item.internalToUserId}</div>
+                                                }}>{ addressItem.internalToUserId}</div>
                                             </div>
                                         )
                                     })
@@ -2357,7 +2358,7 @@ function Fiat(props) {
                     </div>
                 </BootstrapDialog>
 
-                <BootstrapDialog
+                {/* <BootstrapDialog
                     onClose={() => {
                         closePasteFunc();
                     }}
@@ -2377,7 +2378,7 @@ function Fiat(props) {
 
                         <div className='pasteW'>
                             {
-                                historyAddress && historyAddress.map((item, index) => {
+                                historyAddressFiat && historyAddressFiat.map((item, index) => {
                                     return (
                                         <div className='pasteDiZhi'>
                                             <div className='flex'>
@@ -2391,7 +2392,7 @@ function Fiat(props) {
                             }
                         </div>
                     </div>
-                </BootstrapDialog>
+                </BootstrapDialog> */}
 
                 <AnimateModal
                     className="faBiDiCard tanChuanDiSe"

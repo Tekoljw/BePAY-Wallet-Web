@@ -56,6 +56,7 @@ import userLoginType from "../../define/userLoginType";
 import RetiedEmail from "../login/RetiedEmail";
 import RetiedPhone from "../login/RetiedPhone";
 import MenuItem from '@mui/material/MenuItem';
+import phoneCode from "../../../phone/phoneCode";
 import { Carousel } from "react-responsive-carousel";
 import styles from "react-responsive-carousel/lib/styles/carousel.min.css";
 
@@ -772,24 +773,27 @@ function Card(props) {
             const result = value.payload && value.payload.data;
             let tempAddressList = [];
             if(result.address) {
-                const adr1 = result.country + ' ' + result.state + ', ' + result.city + ',' + result.address
+                const adr1 = _.find(phoneCode.list, { country_code: result.country}).local_name + ' ' + result.state + ', ' + result.city + ',' + result.address
                 tempAddressList.push({
                     id: 1,
-                    label: adr1
+                    label: adr1,
+                    countryCode: result.country
                 })
             }
             if(result.userAddressTwo && result.userAddressTwo.address){
-                const adr2 = result.userAddressTwo.country + ' ' + result.userAddressTwo.state + ' ,' + result.userAddressTwo.city + ',' + result.userAddressTwo.address
+                const adr2 = _.find(phoneCode.list, { country_code: result.userAddressTwo.country}).local_name  + ' ' + result.userAddressTwo.state + ' ,' + result.userAddressTwo.city + ',' + result.userAddressTwo.address
                 tempAddressList.push({
                     id: 2,
-                    label: adr2
+                    label: adr2,
+                    countryCode: result.userAddressTwo.country
                 })
             }
             if(result.userAddressThree && result.userAddressThree.address){
-                const adr3 = result.userAddressThree.country + ' ' + result.userAddressThree.state + ',' + result.userAddressThree.city + ',' + result.userAddressThree.address
+                const adr3 = _.find(phoneCode.list, { country_code: result.userAddressThree.country}).local_name  + ' ' + result.userAddressThree.state + ',' + result.userAddressThree.city + ',' + result.userAddressThree.address
                 tempAddressList.push({
                     id: 3,
-                    label: adr3
+                    label: adr3,
+                    countryCode: result.userAddressThree.country
                 })
             }
             setAddressList(tempAddressList)
@@ -837,9 +841,7 @@ function Card(props) {
 
     //获取Config
     const getCardConfig = () => {
-        setLoadingShow(false)
         dispatch(getCreditConfig()).then((res) => {
-            setLoadingShow(false)
             let result = res.payload
             if (result) {
                 let tmpConfig = { 2: [], 3: [] }
@@ -1063,7 +1065,6 @@ function Card(props) {
     // 获取卡列表
     const getCardList = () => {
         dispatch(getUserCreditCard()).then((res) => {
-            setLoadingShow(false)
             let result = res.payload
             let tmpCardList = { 2: [], 3: [] }
             let tmpCardListObj = {}
@@ -1233,7 +1234,6 @@ function Card(props) {
     }
 
     useEffect(() => {
-        setLoadingShow(true);
         getCardConfig()
         getCardList()
     }, []);
@@ -1860,7 +1860,7 @@ function Card(props) {
                                                                                             {t('card_17')}
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div className='cardErrorZi'>请联系在线客服了解具体原因</div>
+                                                                                    <div className='cardErrorZi'>{t('card_261')}</div>
 
                                                                                     <div className='twoSamllBtn flex justify-between'>
                                                                                         <div className='cardErrorBtn2 txtColorTitleSmall' onClick={()=>{
@@ -2396,6 +2396,25 @@ function Card(props) {
                     </motion.div>
                 </div>
             }
+            {   !loadingShow && openYanZheng && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
+                    <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className='mt-12'
+                        id="topGo"
+                    >
+                        <div className='flex mb-10' onClick={() => {
+                            setOpenYanZheng(false);
+                            myFunction;
+                        }}   >
+                            <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
+                        </div>
+                        <Enable2FA verifiedVAuth={() => verifiedVAuthEvt()} />
+                        <div style={{ height: "5rem" }}></div>
+                    </motion.div>
+                </div>
+            }
             {
                 loadingShow &&
                 <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }}>
@@ -2749,7 +2768,7 @@ function Card(props) {
                     }}
                 >
                     <div className="dialog-select-fiat danChuangTxt">
-                        请确保您的KYC信息正确并选择申请的地址
+                        {t('card_256')}
                     </div>
                 </Box>
                 {/* <div className={clsx('exchange-credit-fee', balanceNotEnough && 'error-msg-font')}>{t('home_borrow_18')}: {exchangeCreditFee} USDT</div> */}
@@ -2766,7 +2785,7 @@ function Card(props) {
                         >
                             {
                                 addressList && addressList.map((adr, i)=>{
-                                    return <MenuItem value={adr.id} style={{ color: "#909EB0" }}>{t('home_sendTips_1')}{adr.id}: {adr.label}</MenuItem>
+                                    return <MenuItem value={adr.id} disabled={ cardConfigList[currentCardItem?.creditConfigId]?.country === '' ? false : !(cardConfigList[currentCardItem?.creditConfigId]?.country === adr.countryCode) } style={{ color: "#909EB0" }}>{t('home_sendTips_1')}{adr.id}: {adr.label}</MenuItem>
                                 })
                             }
 
@@ -2781,12 +2800,14 @@ function Card(props) {
                         color="secondary"
                         loading={openCardBtnShow}
                         variant="contained"
-                        style={{ width: "60%" }}
+                        style={{ width: "70%" }}
                         onClick={() => {
                             exChangeCard()
                         }}
                     >
-                        支付换卡费 {exchangeCreditFee} U
+                        {
+                            t('card_258') + ' ' + exchangeCreditFee + 'U'
+                        }
                     </LoadingButton>
                 </div>
 
@@ -2796,7 +2817,7 @@ function Card(props) {
                     setOpenAnimateHuanKa(false);
                     setExchangeCreditFee(0);
                     openKycFunc();
-                }}>修改KYC信息</span>
+                }}>{ t('card_257') }</span>
                 </div>
 
                 {/* <div className='flex mt-16 mb-20 px-15 position-re' style={{ height: "40px" }} >
@@ -3759,25 +3780,6 @@ function Card(props) {
                 </div>
             </BootstrapDialog>
 
-            {openYanZheng && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
-                <motion.div
-                    variants={container}
-                    initial="hidden"
-                    animate="show"
-                    className='mt-12'
-                    id="topGo"
-                >
-                    <div className='flex mb-10' onClick={() => {
-                        setOpenYanZheng(false);
-                        myFunction;
-                    }}   >
-                        <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
-                    </div>
-                    <Enable2FA verifiedVAuth={() => verifiedVAuthEvt()} />
-                    <div style={{ height: "5rem" }}></div>
-                </motion.div>
-            </div>}
-
             {/* pin码界面 */}
             <BootstrapDialog
                 onClose={() => {
@@ -4227,7 +4229,7 @@ function Card(props) {
                     }}
                 >
                     <div className="danChuangTxt ">
-                        请确保您的KYC信息正确并选择申请的地址
+                        {t('card_256')}
                     </div>
                 </Box>
 
@@ -4243,7 +4245,7 @@ function Card(props) {
                         >
                             {
                                 addressList && addressList.map((adr, i)=>{
-                                    return <MenuItem value={adr.id} style={{ color: "#909EB0" }}>{t('home_sendTips_1')}{adr.id}: {adr.label}</MenuItem>
+                                    return <MenuItem value={adr.id} disabled={ cardConfigList[cardConfigID]?.country === '' ? false : !(cardConfigList[cardConfigID]?.country === adr.countryCode) } style={{ color: "#909EB0" }}>{t('home_sendTips_1')}{adr.id}: {adr.label}</MenuItem>
                                 })
                             }
 
@@ -4273,7 +4275,7 @@ function Card(props) {
                     setKycInfoNavAction('applyStep2')
                     setOpenKycAddress(false)
                     setOpenKyc(true)
-                }}>修改KYC信息</span>
+                }}>{ t('card_257') }</span>
                 </div>
 
             </AnimateModal >
@@ -4286,7 +4288,7 @@ function Card(props) {
                 <div className='flex justify-center mb-16' style={{ width: "100%" }}>
                     <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                     <div className='TanHaoCardZi '>
-                        KYC认证
+                        {t('card_259')}
                     </div>
                 </div>
 
@@ -4300,7 +4302,7 @@ function Card(props) {
                     }}
                 >
                     <div className="danChuangTxt ">
-                       申请卡片前需完成KYC认证
+                       {t('card_260')}
                     </div>
                 </Box>
 
