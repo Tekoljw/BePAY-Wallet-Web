@@ -117,6 +117,7 @@ function Fiat(props) {
         setInputVal(tmpInputVal);
     };
     const [historyAddress, setHistoryAddress] = useState([]);
+    const [historyAddressBak, setHistoryAddressBak] = useState([]);
     const [openWithdrawLog, setOpenWithdrawLog] = useState(false);
     const config = useSelector(selectConfig);
     const mounted = useRef();
@@ -727,10 +728,10 @@ function Fiat(props) {
             currencyType: (!_.isUndefined(objTab)) ? ( (objTab.tabValue === 0) ? 'crypto' : 'fiat' ) : tabValue === cryptoSelect ? 'crypto' : 'fiat'
         })).then((res) => {
             // setLoadingShow(false)
-            if (res.payload?.data?.length > 0) {
-                setHistoryAddress(res.payload.data);
-            }else {
-                setHistoryAddress([])
+            const resultData = res?.payload?.data;
+            if(resultData) {
+                setHistoryAddress(resultData);
+                setHistoryAddressBak(resultData);
             }
         });
     }
@@ -963,6 +964,30 @@ function Fiat(props) {
         setOpenGoogleCode(true);
     }
 
+    const handleEditAddressNote = (currentIndex, editData, isBlur) => {
+        let tmpList = []
+        historyAddress.map(async (item, index) => {
+            if (index === currentIndex) {
+                tmpList.push({
+                    ...item, ...editData
+                })
+
+                if ((editData.editMode === true || isBlur) && historyAddressBak[index].note != item.note) {
+                    dispatch(editOrQueryWithdrawalHistoryInfo({
+                       withdrawalType: 'internal',
+                        currencyType:  'fiat',
+                        editId: item.id,
+                        note: item.note
+                    }))
+                }
+            } else {
+                tmpList.push({ ...item })
+            }
+        })
+
+        setHistoryAddress(tmpList)
+    }
+
     return (
         <div>
             <div>
@@ -1073,7 +1098,9 @@ function Fiat(props) {
                                         value={smallTabValue}
                                         onChange={(ev, value) => {
                                             setSmallTabValue(value)
-                                            editOrQueryHistoryAddress({tabValue: 1, smallTabValue: value})
+                                            if(value == 1){
+                                                editOrQueryHistoryAddress({tabValue: 1, smallTabValue: value})
+                                            }
                                         }}
                                         indicatorColor="secondary"
                                         textColor="inherit"
@@ -2060,24 +2087,47 @@ function Fiat(props) {
                         </div>
 
                         <div className='pasteW'>
-                            {
-                                historyAddress.map((item, index) => {
-                                    return (
-                                        <div className='pasteDiZhi'>
-                                            <div className='flex'>
-                                                <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
-                                                <div className='bianJiBiZi'>{item.note}</div>
+                                {
+                                    historyAddress && historyAddress.map((addressItem, index) => {
+                                        return (
+                                            <div className='pasteDiZhi'>
+                                                <div className='flex'>
+                                                    <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"  onClick={() => {
+                                                        handleEditAddressNote(index, { editMode: !addressItem.editMode })
+                                                    }}></img>
+                                                        <OutlinedInput
+                                                        className='diZhiShuRu'
+                                                        sx={{
+                                                            padding: '0rem',
+                                                            '& .MuiOutlinedInput-notchedOutline': {
+                                                                border: 'none',
+                                                            },
+                                                            color: addressItem.editMode ? '#ffffff' : '#94A3B8'
+                                                        }}
+                                                        value={addressItem.note}
+                                                        inputProps={{ 'aria-label': 'weight' }}
+                                                        onFocus={(event) => {
+                                                            handleEditAddressNote(index, { editMode: true })
+                                                        }}
+                                                        onChange={(event) => {
+                                                            handleEditAddressNote(index, { note: event.target.value, editMode: true })
+                                                        }}
+                                                        onBlur={(event) => {
+                                                            handleEditAddressNote(index, { note: event.target.value, editMode: false }, true)
+                                                        }}
+                                                    />
+                                                    {/* <div className='bianJiBiZi'>{item.note}</div> */}
+                                                </div>
+                                                <div className='pasteDi' onClick={()=>{ 
+                                                     if(smallTabValue === 1) {
+                                                        setInputVal({ ...inputVal, 'userId': item.internalToUserId  });
+                                                        closePasteFunc()
+                                                    }
+                                                }}>{ item.internalToUserId}</div>
                                             </div>
-                                            <div className='pasteDi'  onClick={()=>{ 
-                                                if(smallTabValue === 1) {
-                                                    setInputVal({ ...inputVal, 'userId': item.internalToUserId  });
-                                                    closePasteFunc()
-                                                }
-                                        }}>{item.internalToUserId}</div>
-                                        </div>
-                                    )
-                                })
-                            }
+                                        )
+                                    })
+                                }
                         </div>
                     </div>
                 </BootstrapDialog>

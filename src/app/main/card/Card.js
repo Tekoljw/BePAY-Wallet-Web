@@ -1285,10 +1285,12 @@ function Card(props) {
         refreshKycInfo();
         if(kycInfoNavAction == 'applyStep1' || kycInfoNavAction == 'applyStep2' || kycInfoNavAction == 'applyStep3'){
             kycInfoDialogControl();
-        } else if(kycInfoNavAction == 'changeCard1'){
+        } else if(kycInfoNavAction == 'changeCard1' || kycInfoNavAction == 'cardHome') {
             const index = _.findIndex(cardList[2], { id: currentCardItem.id });
             setTimeout(() => {
-                document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`).click();
+                if(kycInfoNavAction == 'changeCard1' &&  document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`)) {
+                    document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`).click();
+                }
                 setCurrentCardItem(currentCardItem)
                 setExchangeCreditFee(cardConfigList[currentCardItem.creditConfigId]?.exchangeCreditFee)
                 setBalanceNotEnough(false);
@@ -1863,6 +1865,8 @@ function Card(props) {
                                                                                     <div className='twoSamllBtn flex justify-between'>
                                                                                         <div className='cardErrorBtn2 txtColorTitleSmall' onClick={()=>{
                                                                                             setKycInfoNavAction('cardHome')
+                                                                                            setCurrentCardItem(cardItem)
+                                                                                            setCurrUserCardInfo(cardItem)
                                                                                             openKycFunc();
                                                                                         }}>
                                                                                             {t('card_19')}
@@ -2610,7 +2614,9 @@ function Card(props) {
                         } else if(kycInfoNavAction === 'changeCard1'){
                             const index = _.findIndex(cardList[2], { id: currentCardItem.id });
                             setTimeout(() => {
-                                document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`).click();
+                                if (document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`)){
+                                    document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`).click();
+                                }
                                 setCurrentCardItem(currentCardItem)
                                 setExchangeCreditFee(cardConfigList[currentCardItem.creditConfigId]?.exchangeCreditFee)
                                 setBalanceNotEnough(false);

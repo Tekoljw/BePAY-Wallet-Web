@@ -228,6 +228,7 @@ function Withdraw(props) {
         setInputVal({ ...inputVal, [prop]: value });
     };
     const [historyAddress, setHistoryAddress] = useState([]);
+    const [historyAddressBak, setHistoryAddressBak] = useState([]);
     const [transferState, setTransferState] = useState([]);
     const [googleCode, setGoogleCode] = useState('');
     const [openChangeCurrency, setOpenChangeCurrency] = useState(false);
@@ -676,15 +677,22 @@ function Withdraw(props) {
     }, []);
 
     const editOrQueryHistoryAddress = (objTab) => {
-        dispatch(editOrQueryWithdrawalHistoryInfo({
+        const data = {
             withdrawalType: (!_.isUndefined(objTab))? ((objTab.smallTabValue === 0) ? 'external' : 'internal') : smallTabValue === 0 ? 'external': 'internal',
             currencyType: (!_.isUndefined(objTab)) ? ( (objTab.tabValue === 0) ? 'crypto' : 'fiat' ) : tabValue === cryptoSelect ? 'crypto' : 'fiat'
-        })).then((res) => {
+        }
+        if(objTab && objTab.editId && objTab.note){
+            data.editId = objTab.editId
+            data.note = objTab.note
+        }
+        dispatch(editOrQueryWithdrawalHistoryInfo(data)).then((res) => {
             // setLoadingShow(false)
             if (res.payload?.data?.length > 0) {
                 setHistoryAddress(res.payload.data);
+                setHistoryAddressBak(res.payload.data);
             }else {
                 setHistoryAddress([])
+                setHistoryAddressBak();
             }
         });
     }
@@ -1092,6 +1100,30 @@ function Withdraw(props) {
             };
             sendRes = await dispatch(sendSms(data));
         }
+    }
+
+    const handleEditAddressNote = (currentIndex, editData, isBlur) => {
+        let tmpList = []
+        historyAddress.map(async (item, index) => {
+            if (index === currentIndex) {
+                tmpList.push({
+                    ...item, ...editData
+                })
+
+                if ((editData.editMode === true || isBlur) && historyAddressBak[index].note != item.note) {
+                    dispatch(editOrQueryWithdrawalHistoryInfo({
+                       withdrawalType: smallTabValue === 0 ? 'external': 'internal',
+                        currencyType: tabValue === cryptoSelect ? 'crypto' : 'fiat',
+                        editId: item.id,
+                        note: item.note
+                    }))
+                }
+            } else {
+                tmpList.push({ ...item })
+            }
+        })
+
+        setHistoryAddress(tmpList)
     }
 
     return (
@@ -2312,17 +2344,40 @@ function Withdraw(props) {
 
                     <div className='pasteW'>
                         {
-                            historyAddress.map((item, index) => {
+                            historyAddress.map((addressItem, index) => {
                                 return (
                                     <div className='pasteDiZhi'>
                                         <div className='flex'>
-                                            <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
-                                            <div className='bianJiBiZi'>{item.note}</div>
+                                            <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"  onClick={() => {
+                                                handleEditAddressNote(index, { editMode: !addressItem.editMode })
+                                            }}></img>
+                                             <OutlinedInput
+                                                className='diZhiShuRu'
+                                                sx={{
+                                                    padding: '0rem',
+                                                    '& .MuiOutlinedInput-notchedOutline': {
+                                                        border: 'none',
+                                                    },
+                                                    color: addressItem.editMode ? '#ffffff' : '#94A3B8'
+                                                }}
+                                                value={addressItem.note}
+                                                inputProps={{ 'aria-label': 'weight' }}
+                                                onFocus={(event) => {
+                                                    handleEditAddressNote(index, { editMode: true })
+                                                }}
+                                                onChange={(event) => {
+                                                    handleEditAddressNote(index, { note: event.target.value, editMode: true })
+                                                }}
+                                                onBlur={(event) => {
+                                                    handleEditAddressNote(index, { note: event.target.value, editMode: false }, true)
+                                                }}
+                                            />
+                                            {/* <div className='bianJiBiZi'>{item.note}</div> */}
                                         </div>
                                         <div className='pasteDi' onClick={()=>{ 
-                                            smallTabValue === 0 ? setInputVal({ ...inputVal,  'address': item.address }): setInputIDVal(item.internalToUserId);
+                                            smallTabValue === 0 ? setInputVal({ ...inputVal,  'address': addressItem.address }): setInputIDVal(addressItem.internalToUserId);
                                             closePasteFunc()
-                                        }}>{ smallTabValue === 0 ?  item.address: item.internalToUserId}</div>
+                                        }}>{ smallTabValue === 0 ?  addressItem.address: addressItem.internalToUserId}</div>
                                     </div>
                                 )
                             })
