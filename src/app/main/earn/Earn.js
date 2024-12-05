@@ -86,6 +86,15 @@ function Earn(props) {
     const [demandInterestActivityData, setDemandInterestActivityData] = useState({});
     const [inviteLevelConfig, setInviteLevelConfig] = useState([]);
     const [inviteRewardAllInfo, setInviteRewardAllInfo] = useState([]);
+    const [ inviteDefferentTypeReward, setInviteDefferentTypeReward] = useState({
+        activityId1: {},
+        activityId2: {},
+        activityId3: {},
+        activityId4: {},
+        activityId5: {},
+        activityId6: {},
+        activityId7: {},
+    });
     const [copyTiShi, setCopyTiShi] = useState(false);
     const [weight, setWeight] = useState('');
     const [loadingShow, setLoadingShow] = useState(false);
@@ -168,10 +177,20 @@ function Earn(props) {
                 setInviteRewardAllInfo(result.data)
             }
         });
-        dispatch(getInviteRewardDetail({activityId: 1} )).then((res) => {
+
+        loopCallInviteRewardDetails(1);
+    }
+
+    const loopCallInviteRewardDetails = (i)=>{
+        let index = i;
+        dispatch(getInviteRewardDetail({activityId: index} )).then((res) => {
             const result = res.payload
             if(result.errno === 0 ) {
-                setInviteRewardAllInfo(result.data)
+                setInviteDefferentTypeReward(result.data)
+                if(index < 8) {
+                    index += 1
+                    loopCallInviteRewardDetails(index)
+                }
             }
         });
     }

@@ -55,6 +55,7 @@ import { fontSize } from '@mui/system';
 import userLoginType from "../../../define/userLoginType";
 import RetiedEmail from "../../login/RetiedEmail";
 import RetiedPhone from "../../login/RetiedPhone";
+import { editOrQueryWithdrawalHistoryInfo } from "../../../store/transfer/transferThunk";
 
 
 const container = {
@@ -368,15 +369,6 @@ function Fiat(props) {
             setOpenGoogleCode(true);
         }
     }, [fiatVerifiedAuth])
-
-    useEffect(() => {
-        dispatch(getListBank()).then((res) => {
-            let result = res.payload;
-            if (result) {
-                setHistoryAddress(result);
-            }
-        });
-    }, []);
 
     useEffect(() => {
         if (googleCode.length === 6) {
@@ -729,7 +721,19 @@ function Fiat(props) {
         })
     }
 
-
+    const editOrQueryHistoryAddress = (objTab) => {
+        dispatch(editOrQueryWithdrawalHistoryInfo({
+            withdrawalType: (!_.isUndefined(objTab))? ((objTab.smallTabValue === 0) ? 'external' : 'internal') : smallTabValue === 0 ? 'external': 'internal',
+            currencyType: (!_.isUndefined(objTab)) ? ( (objTab.tabValue === 0) ? 'crypto' : 'fiat' ) : tabValue === cryptoSelect ? 'crypto' : 'fiat'
+        })).then((res) => {
+            // setLoadingShow(false)
+            if (res.payload?.data?.length > 0) {
+                setHistoryAddress(res.payload.data);
+            }else {
+                setHistoryAddress([])
+            }
+        });
+    }
 
 
     //从大到小排列
@@ -1067,7 +1071,10 @@ function Fiat(props) {
                                         component={motion.div}
                                         variants={item}
                                         value={smallTabValue}
-                                        onChange={(ev, value) => setSmallTabValue(value)}
+                                        onChange={(ev, value) => {
+                                            setSmallTabValue(value)
+                                            editOrQueryHistoryAddress({tabValue: 1, smallTabValue: value})
+                                        }}
                                         indicatorColor="secondary"
                                         textColor="inherit"
                                         variant="scrollable"
@@ -1508,6 +1515,7 @@ function Fiat(props) {
                                                     />
                                                     <div className='flex pasteSty  items-center'>
                                                         <img className='pasteJianTou' src="wallet/assets/images/withdraw/pasteJianTou.png" alt="" onClick={() => {
+                                                            console.log(historyAddress);
                                                             setOpenPasteWindow(true)
                                                         }} />
                                                     </div>
@@ -2058,14 +2066,14 @@ function Fiat(props) {
                                         <div className='pasteDiZhi'>
                                             <div className='flex'>
                                                 <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
-                                                <div className='bianJiBiZi'>{t('card_74')}</div>
+                                                <div className='bianJiBiZi'>{item.note}</div>
                                             </div>
                                             <div className='pasteDi'  onClick={()=>{ 
                                                 if(smallTabValue === 1) {
-                                                    setInputVal({ ...inputVal, 'userId': item });
+                                                    setInputVal({ ...inputVal, 'userId': item.internalToUserId  });
                                                     closePasteFunc()
                                                 }
-                                        }}>{item}</div>
+                                        }}>{item.internalToUserId}</div>
                                         </div>
                                     )
                                 })
@@ -2075,7 +2083,7 @@ function Fiat(props) {
                 </BootstrapDialog>
 
                 {/*打开历史记录*/}
-                <BootstrapDialog
+                {/* <BootstrapDialog
                     onClose={() => { setOpenWithdrawLog(false); }}
                     aria-labelledby="customized-dialog-title"
                     open={openWithdrawLog}
@@ -2119,7 +2127,7 @@ function Fiat(props) {
                             </Box>
                         </Box>
                     </DialogContent>
-                </BootstrapDialog>
+                </BootstrapDialog> */}
 
                 {/*填写google验证码*/}
                 <BootstrapDialog
@@ -2319,7 +2327,7 @@ function Fiat(props) {
 
                         <div className='pasteW'>
                             {
-                                historyAddress.map((item, index) => {
+                                historyAddress && historyAddress.map((item, index) => {
                                     return (
                                         <div className='pasteDiZhi'>
                                             <div className='flex'>

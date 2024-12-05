@@ -56,6 +56,7 @@ import { selectCurrentLanguage } from "app/store/i18nSlice";
 import userLoginType from "../../define/userLoginType";
 import RetiedEmail from "../login/RetiedEmail";
 import RetiedPhone from "../login/RetiedPhone";
+import { editOrQueryWithdrawalHistoryInfo } from "../../store/transfer/transferThunk";
 
 
 const container = {
@@ -671,13 +672,22 @@ function Withdraw(props) {
     useEffect(() => {
         // setLoadingShow(true)
         setPhoneTab('withdraw');
-        dispatch(getWithdrawHistoryAddress()).then((res) => {
+        editOrQueryHistoryAddress();
+    }, []);
+
+    const editOrQueryHistoryAddress = (objTab) => {
+        dispatch(editOrQueryWithdrawalHistoryInfo({
+            withdrawalType: (!_.isUndefined(objTab))? ((objTab.smallTabValue === 0) ? 'external' : 'internal') : smallTabValue === 0 ? 'external': 'internal',
+            currencyType: (!_.isUndefined(objTab)) ? ( (objTab.tabValue === 0) ? 'crypto' : 'fiat' ) : tabValue === cryptoSelect ? 'crypto' : 'fiat'
+        })).then((res) => {
             // setLoadingShow(false)
             if (res.payload?.data?.length > 0) {
                 setHistoryAddress(res.payload.data);
+            }else {
+                setHistoryAddress([])
             }
         });
-    }, []);
+    }
 
 
     const defaultValues = {
@@ -1098,7 +1108,10 @@ function Withdraw(props) {
                             component={motion.div}
                             variants={item}
                             value={tabValue}
-                            onChange={(ev, value) => setTabValue(value)}
+                            onChange={(ev, value) => {
+                                setTabValue(value)
+                                editOrQueryHistoryAddress({tabValue: value, smallTabValue: smallTabValue})
+                            }}
                             indicatorColor="secondary"
                             textColor="inherit"
                             variant="scrollable"
@@ -1209,7 +1222,10 @@ function Withdraw(props) {
                                         component={motion.div}
                                         variants={item}
                                         value={smallTabValue}
-                                        onChange={(ev, value) => setSmallTabValue(value)}
+                                        onChange={(ev, value) => {
+                                            setSmallTabValue(value);
+                                            editOrQueryHistoryAddress({tabValue: tabValue, smallTabValue: value});
+                                        }}
                                         indicatorColor="secondary"
                                         textColor="inherit"
                                         variant="scrollable"
@@ -1479,7 +1495,7 @@ function Withdraw(props) {
                         </BootstrapDialog>
 
                         {/*打开历史记录*/}
-                        <BootstrapDialog
+                        {/* <BootstrapDialog
                             onClose={() => { setOpenWithdrawLog(false); }}
                             aria-labelledby="customized-dialog-title"
                             open={openWithdrawLog}
@@ -1523,7 +1539,7 @@ function Withdraw(props) {
                                     </Box>
                                 </Box>
                             </DialogContent>
-                        </BootstrapDialog>
+                        </BootstrapDialog> */}
 
                         {/*填写google验证码*/}
                         <BootstrapDialog
@@ -2301,12 +2317,12 @@ function Withdraw(props) {
                                     <div className='pasteDiZhi'>
                                         <div className='flex'>
                                             <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
-                                            <div className='bianJiBiZi'>{t('card_74')}</div>
+                                            <div className='bianJiBiZi'>{item.note}</div>
                                         </div>
                                         <div className='pasteDi' onClick={()=>{ 
-                                            smallTabValue === 0 ? setInputVal({ ...inputVal,  'address': item }): setInputIDVal(item);
+                                            smallTabValue === 0 ? setInputVal({ ...inputVal,  'address': item.address }): setInputIDVal(item.internalToUserId);
                                             closePasteFunc()
-                                        }}>{item}</div>
+                                        }}>{ smallTabValue === 0 ?  item.address: item.internalToUserId}</div>
                                     </div>
                                 )
                             })
