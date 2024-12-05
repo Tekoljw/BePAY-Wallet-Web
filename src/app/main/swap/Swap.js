@@ -577,7 +577,7 @@ function Swap() {
 
   useEffect(() => {
     hasData && symbolsFormatAmount();
-  }, [hasData, swapData, inputVal.amount, fiatsData]);
+  }, [hasData, swapData, inputVal.amount, fiatsData, userData?.wallet]);
 
   useEffect(() => {
     // setLoadingShow(true)

@@ -36,7 +36,8 @@ import {
     getCreditConfig,
     getUserCreditCard,
     exchangeCreditCard,
-    getCreditCardBalance
+    getCreditCardBalance,
+    kycAddress
 } from "app/store/payment/paymentThunk";
 import { createPin, verifyPin } from "app/store/wallet/walletThunk";
 import { showMessage } from "app/store/fuse/messageSlice";
@@ -130,7 +131,7 @@ function Card(props) {
     const [openChongZhi, setOpenChongZhi] = useState(false);
     const [huaZhuanValue, setHuaZhuanValue] = useState(0);
     const [openChangeBi, setOpenChangeBi] = useState(false);
-    const [address, setAddress] = useState("");
+    const [addressList, setAddressList] = useState("");
     const [lookDataId, setLookDataId] = useState("");
     const [openPinWindow, setOpenPinWindow] = useState(false);
     const [movePinWindow, setMovePinWindow] = useState(false);
@@ -155,7 +156,7 @@ function Card(props) {
     const [cardFlexibleHeight, setCardFlexibleHeight] = useState(false);
     const [openKycAddress, setOpenKycAddress] = useState(false);
     const [openKycAuth, setOpenKycAuth] = useState(false);
-    const [addressKyc, setAddressKyc] = useState("location1");
+    const [selectedKycAddress, setSelectedKycAddress] = useState(1);
 
     const divRef = useRef(null);
     const [pin, setPin] = useState('');
@@ -168,6 +169,7 @@ function Card(props) {
     const [exchangeCreditFee, setExchangeCreditFee] = useState(0);
     const [balanceNotEnough, setBalanceNotEnough] = useState(false);
     const [updatedKycInfoFlag, setUpdatedKycInfoFlag] = useState(false);
+    const [kycInfoNavAction, setKycInfoNavAction] = useState('');
 
     const openPinFunc = () => {
         setTimeout(() => {
@@ -380,7 +382,7 @@ function Card(props) {
     };
 
     const handleChangeInputVal = (event) => {
-        setAddressKyc(event.target.value);
+        setSelectedKycAddress(event.target.value);
     };
 
 
@@ -767,12 +769,31 @@ function Card(props) {
     const refreshKycInfo = () => {
         dispatch(getKycInfo()).then((value) => {
             if (!value.payload) return;
-            let tempAddress = value.payload.data.address;
-            if (tempAddress) {
-                setAddress(tempAddress)
-            } else {
-                return;
+            const result = value.payload && value.payload.data;
+            let tempAddressList = [];
+            if(result.address) {
+                const adr1 = result.country + ' ' + result.state + ', ' + result.city + ',' + result.address
+                tempAddressList.push({
+                    id: 1,
+                    label: adr1
+                })
             }
+            if(result.userAddressTwo && result.userAddressTwo.address){
+                const adr2 = result.userAddressTwo.country + ' ' + result.userAddressTwo.state + ' ,' + result.userAddressTwo.city + ',' + result.userAddressTwo.address
+                tempAddressList.push({
+                    id: 2,
+                    label: adr2
+                })
+            }
+            if(result.userAddressThree && result.userAddressThree.address){
+                const adr3 = result.userAddressThree.country + ' ' + result.userAddressThree.state + ',' + result.userAddressThree.city + ',' + result.userAddressThree.address
+                tempAddressList.push({
+                    id: 3,
+                    label: adr3
+                })
+            }
+            setAddressList(tempAddressList)
+            setSelectedKycAddress(result.defaultAddressInfo? result.defaultAddressInfo: 1)
         });
     };
 
@@ -959,7 +980,8 @@ function Card(props) {
         setOpenCardBtnShow(true)
         dispatch(exchangeCreditCard({
             creditType: currUserCardInfo.creditType,
-            userCreditId: currUserCardInfo.id
+            userCreditId: currUserCardInfo.id,
+            defaultAddressInfo: selectedKycAddress
         })).then((res) => {
             const result = res.payload;
             if (result.errno === 0) {
@@ -1003,7 +1025,8 @@ function Card(props) {
             quotaAmount: 1,
             applyFeeSymbol: applyFeeSymbol,
             configId: cardConfigList[cardConfigID].configId,
-            applyDesc: 'card applyDesc'
+            applyDesc: 'card applyDesc',
+            defaultAddressInfo: selectedKycAddress
         })).then((res) => {
             let result = res.payload
             setUpdateCard(true)
@@ -1259,15 +1282,20 @@ function Card(props) {
 
     const updatedKycInfoEvt = () => {
         setOpenKyc(false);
-        const index = _.findIndex(cardList[2], { id: currentCardItem.id });
-        setTimeout(() => {
-            document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`).click();
-            setCurrentCardItem(currentCardItem)
-            setExchangeCreditFee(cardConfigList[currentCardItem.creditConfigId]?.exchangeCreditFee)
-            setBalanceNotEnough(false);
-            setUpdatedKycInfoFlag(true);
-            setOpenAnimateHuanKa(true);
-        }, 100)
+        refreshKycInfo();
+        if(kycInfoNavAction == 'applyStep1' || kycInfoNavAction == 'applyStep2' || kycInfoNavAction == 'applyStep3'){
+            kycInfoDialogControl();
+        } else if(kycInfoNavAction == 'changeCard1'){
+            const index = _.findIndex(cardList[2], { id: currentCardItem.id });
+            setTimeout(() => {
+                document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`).click();
+                setCurrentCardItem(currentCardItem)
+                setExchangeCreditFee(cardConfigList[currentCardItem.creditConfigId]?.exchangeCreditFee)
+                setBalanceNotEnough(false);
+                setUpdatedKycInfoFlag(true);
+                setOpenAnimateHuanKa(true);
+            }, 100)
+        }
     }
 
     const reciveCode = async () => {
@@ -1362,6 +1390,16 @@ function Card(props) {
     const confirmHeld = (configId) => {
         let index = _.findIndex(cardList[2], { creditConfigId: _.toNumber(configId) });
         return index < 0 ? false : true
+    }
+
+    const kycInfoDialogControl = () => {
+        if(userData?.profile?.user?.bindKyc) {
+            setOpenKycAuth(false)
+            setOpenKycAddress(true)
+        }else{
+            setOpenKycAddress(false)
+            setOpenKycAuth(true)
+        }
     }
 
 
@@ -1820,16 +1858,19 @@ function Card(props) {
                                                                                             {t('card_17')}
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div className='cardErrorZi'>{t('card_18')}</div>
+                                                                                    <div className='cardErrorZi'>请联系在线客服了解具体原因</div>
 
                                                                                     <div className='twoSamllBtn flex justify-between'>
-                                                                                        <div className='cardErrorBtn2 txtColorTitleSmall' >
-                                                                                            {t('card_72')}
+                                                                                        <div className='cardErrorBtn2 txtColorTitleSmall' onClick={()=>{
+                                                                                            setKycInfoNavAction('cardHome')
+                                                                                            openKycFunc();
+                                                                                        }}>
+                                                                                            {t('card_19')}
                                                                                         </div>
 
-                                                                                        <div className='cardErrorBtn2 txtColorTitleSmall'>
+                                                                                        {/* <div className='cardErrorBtn2 txtColorTitleSmall'>
                                                                                             {t('card_246')}
-                                                                                        </div>
+                                                                                        </div> */}
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -2542,13 +2583,7 @@ function Card(props) {
                             onClick={() => {
                                 // openChangeBiFunc()
                                 // refreshKycInfo()
-                                if(userData?.profile?.user?.bindKyc) {
-                                    setOpenKycAuth(false)
-                                    setOpenKycAddress(true)
-                                }else{
-                                    setOpenKycAddress(false)
-                                    setOpenKycAuth(true)
-                                }
+                                kycInfoDialogControl();
                             }}
                         >
                             {t('card_36')}
@@ -2570,14 +2605,18 @@ function Card(props) {
                 >
                     <div className='flex mb-10' onClick={() => {
                         setOpenKyc(false);
-                        const index = _.findIndex(cardList[2], { id: currentCardItem.id });
-                        setTimeout(() => {
-                            document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`).click();
-                            setCurrentCardItem(currentCardItem)
-                            setExchangeCreditFee(cardConfigList[currentCardItem.creditConfigId]?.exchangeCreditFee)
-                            setBalanceNotEnough(false);
-                            setOpenAnimateHuanKa(true);
-                        }, 100)
+                        if(kycInfoNavAction === 'applyStep1' || kycInfoNavAction === 'applyStep2' || kycInfoNavAction === 'applyStep3') {
+                            kycInfoDialogControl();
+                        } else if(kycInfoNavAction === 'changeCard1'){
+                            const index = _.findIndex(cardList[2], { id: currentCardItem.id });
+                            setTimeout(() => {
+                                document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`).click();
+                                setCurrentCardItem(currentCardItem)
+                                setExchangeCreditFee(cardConfigList[currentCardItem.creditConfigId]?.exchangeCreditFee)
+                                setBalanceNotEnough(false);
+                                setOpenAnimateHuanKa(true);
+                            }, 100)
+                        }
                     }}   >
                         <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                     </div>
@@ -2704,12 +2743,57 @@ function Card(props) {
                     }}
                 >
                     <div className="dialog-select-fiat danChuangTxt">
-                        {t('card_108')}
+                        请确保您的KYC信息正确并选择申请的地址
                     </div>
                 </Box>
-                <div className={clsx('exchange-credit-fee', balanceNotEnough && 'error-msg-font')}>{t('home_borrow_18')}: {exchangeCreditFee} USDT</div>
+                {/* <div className={clsx('exchange-credit-fee', balanceNotEnough && 'error-msg-font')}>{t('home_borrow_18')}: {exchangeCreditFee} USDT</div> */}
+                
+                <div className="flex items-center justify-between mt-20">
+                    <FormControl sx={{ width: '100%', borderColor: '#525A67' }} className="mb-16">
+                       <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={selectedKycAddress}
+                            onChange={handleChangeInputVal}
+                            className='addressKyc'
+                            style={{ color: "#909EB0", backgroundColor: "#1E293A" }}
+                        >
+                            {
+                                addressList && addressList.map((adr, i)=>{
+                                    return <MenuItem value={adr.id} style={{ color: "#909EB0" }}>{t('home_sendTips_1')}{adr.id}: {adr.label}</MenuItem>
+                                })
+                            }
 
-                <div className='flex mt-16 mb-20 px-15 position-re' style={{ height: "40px" }} >
+                        </Select>
+                    </FormControl>
+                </div>
+
+                <div className='flex mt-10  justify-center' >
+                    <LoadingButton
+                        disabled={false}
+                        className="boxCardBtn"
+                        color="secondary"
+                        loading={openCardBtnShow}
+                        variant="contained"
+                        style={{ width: "60%" }}
+                        onClick={() => {
+                            exChangeCard()
+                        }}
+                    >
+                        支付换卡费 {exchangeCreditFee} U
+                    </LoadingButton>
+                </div>
+
+                <div className='mt-16 mb-20' style={{ textDecoration: "underline", textAlign: "center" }}>
+                    <span  onClick={ ()=> {
+                    setKycInfoNavAction('changeCard1')
+                    setOpenAnimateHuanKa(false);
+                    setExchangeCreditFee(0);
+                    openKycFunc();
+                }}>修改KYC信息</span>
+                </div>
+
+                {/* <div className='flex mt-16 mb-20 px-15 position-re' style={{ height: "40px" }} >
                     <LoadingButton
                         disabled={false}
                         className="boxCardBtn position-ab"
@@ -2739,7 +2823,7 @@ function Card(props) {
                         openKycFunc();
                     }}>{t('card_76')}</div>
 
-                </div>
+                </div> */}
 
             </AnimateModal>
 
@@ -4031,11 +4115,14 @@ function Card(props) {
                         <div className='flex justify-between mt-12'>
                             <div className='' style={{ color: "#94A3B8" }}>{t('card_174')}</div>
                             <div className='' style={{ color: "#2DD4BF", textDecoration: "underline" }} onClick={() => {
+                                setKycInfoNavAction('applyStep3')
                                 setOpenChangeBi(false);
                                 openKycFunc();
                             }} >{t('card_112')}</div>
                         </div>
-                        <div className='mt-20' style={{ marginBottom: "6rem" }}>{address}</div>
+                        <div className='mt-20' style={{ marginBottom: "6rem" }}>{
+                            addressList ? addressList[selectedKycAddress -1].label : ''
+                        }</div>
                         <LoadingButton
                             disabled={false}
                             className="boxCardBtn3 mb-12"
@@ -4140,17 +4227,19 @@ function Card(props) {
 
                 <div className="flex items-center justify-between mt-20">
                     <FormControl sx={{ width: '100%', borderColor: '#525A67' }} className="mb-16">
-                        <Select
+                       <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={addressKyc}
+                            value={selectedKycAddress}
                             onChange={handleChangeInputVal}
                             className='addressKyc'
                             style={{ color: "#909EB0", backgroundColor: "#1E293A" }}
                         >
-                            <MenuItem value={'location1'} style={{ color: "#909EB0" }}>地址1：中国，上海</MenuItem>
-                            <MenuItem value={'location2'} style={{ color: "#909EB0" }}>地址2：广州</MenuItem>
-                            <MenuItem value={'location3'} style={{ color: "#909EB0" }}>地址3：中国，杭州</MenuItem>
+                            {
+                                addressList && addressList.map((adr, i)=>{
+                                    return <MenuItem value={adr.id} style={{ color: "#909EB0" }}>{t('home_sendTips_1')}{adr.id}: {adr.label}</MenuItem>
+                                })
+                            }
 
                         </Select>
                     </FormControl>
@@ -4165,18 +4254,20 @@ function Card(props) {
                         variant="contained"
                         style={{ width: "60%" }}
                         onClick={() => {
-
+                            setOpenKycAddress(false)
+                            openChangeBiFunc()
                         }}
                     >
-                        确定
+                        { t('home_borrow_17')}
                     </LoadingButton>
                 </div>
 
-                <div className='mt-16 mb-20' style={{ textDecoration: "underline", textAlign: "center" }} onClick={ ()=>{
+                <div className='mt-16 mb-20' style={{ textDecoration: "underline", textAlign: "center" }}>
+                    <span  onClick={ ()=> {
+                    setKycInfoNavAction('applyStep2')
                     setOpenKycAddress(false)
                     setOpenKyc(true)
-                }}>
-                    修改KYC信息
+                }}>修改KYC信息</span>
                 </div>
 
             </AnimateModal >
@@ -4216,10 +4307,12 @@ function Card(props) {
                         variant="contained"
                         style={{ width: "60%" }}
                         onClick={() => {
+                            setKycInfoNavAction('applyStep1')
+                            setOpenKycAuth(false);
                             setOpenKyc(true);
                         }}
                     >
-                        确定
+                        { t('home_borrow_17')}
                     </LoadingButton>
                 </div>
 

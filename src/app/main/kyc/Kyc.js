@@ -22,7 +22,7 @@ import FusePageCarded from '@fuse/core/FusePageCarded';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import HomeSidebarContent from "../home/HomeSidebarContent";
 import MobileDetect from 'mobile-detect';
-import { getUserData } from "../../store/user/userThunk";
+import { userProfile } from '../../store/user/userThunk';
 import { uploadStorage } from "../../store/tools/toolThunk";
 import { getKycInfo, updateKycInfo, submitKycInfo, kycAddress } from "app/store/payment/paymentThunk";
 import { selectConfig } from "../../store/config";
@@ -1009,6 +1009,7 @@ function Kyc(props) {
                         if (value.payload) {
                             // refreshKycInfo();
                             dispatch(showMessage({ message: "Success", code: 1 }));
+                            dispatch(userProfile({ forceUpdate: true}));
                             props.updatedKycInfo();
                         }
                     }

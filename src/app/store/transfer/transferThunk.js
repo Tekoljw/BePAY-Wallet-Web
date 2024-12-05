@@ -341,3 +341,27 @@ export const sendTransactionBgt = createAsyncThunk(
         console.log('transferRes ====> ', transferRes);
     }
 );
+
+// 获取或者编辑出款历史地址
+export const editOrQueryWithdrawalHistoryInfo = createAsyncThunk(
+    'transfer/editOrQueryWithdrawalHistoryInfo',
+    async (settings, { dispatch, getState }) => {
+        let data = {
+            withdrawalType: settings.withdrawalType,
+            currencyType: settings.currencyType,
+        };
+        if(settings.editId){
+            data.editId = settings.editId
+        };
+        if(settings.note) {
+            data.note = settings.note
+        }
+
+        const resultData = await React.$api("transfer.editOrQueryWithdrawalHistoryInfo", data);
+        if (resultData.errno === 0) {
+            return resultData;
+        } else {
+            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+        }
+    }
+);
