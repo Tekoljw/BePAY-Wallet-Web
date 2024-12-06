@@ -494,13 +494,15 @@ function Swap() {
       ).then((res) => {
         let result = res.payload;
         if (result && result.errno === 0) {
+          //只有虚拟币的不稳定币兑换的时候会用到
           let qty_base = result.data.qty_base;
           let qty_quote = result.data.qty_quote;
-          if (result.data.pair !== (symbol + formatSymbol)) {
-            qty_base = result.data.qty_quote;
-          } else {
-            qty_quote = result.data.qty_base;
-          }
+          // 没有意义，暂时删除
+          //if (result.data.pair !== (symbol + formatSymbol)) {
+          //  qty_base = result.data.qty_quote;
+          //} else {
+          //  qty_quote = result.data.qty_base;
+          //}
           setPriceData(result.data);
           dispatch(
             getSwapCrypto({
