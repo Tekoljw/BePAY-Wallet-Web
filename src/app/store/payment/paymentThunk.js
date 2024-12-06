@@ -5,6 +5,7 @@ import { setKycInfo } from "../config/index";
 import { updatePayoutBankList, updatePayoutWays, updateCreditConfig } from "../user/index"
 
 import format from 'date-fns/format';
+import {showServerErrorTips} from "../../util/tools/function";
 
 // action/thunk
 // 获取kyc状态
@@ -28,7 +29,7 @@ export const getKycInfo = createAsyncThunk(
             if (!unloginerror && kycData.errmsg === 'unlogin') {
                 return false
             }
-            dispatch(showMessage({ message: kycData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, kycData);
         }
     }
 );
@@ -122,7 +123,7 @@ export const updateKycInfo = createAsyncThunk(
             dispatch(showMessage({ message: 'saved', code: 1 }));
             return true;
         } else {
-            dispatch(showMessage({ message: kycData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, kycData);
         }
         return false;
     }
@@ -138,7 +139,7 @@ export const submitKycInfo = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             return true;
         } else {
-            dispatch(showMessage({ message: kycData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, kycData);
         }
 
         return false;
@@ -151,7 +152,7 @@ export const getLegendTradingConfig = createAsyncThunk(
     async (settings, { dispatch, getState }) => {
         const configData = await React.$api("payment.LegendTrading.config");
         // 直接返回处理
-        return configData;
+        return showServerErrorTips(dispatch, configData);
     }
 );
 
@@ -171,7 +172,7 @@ export const getFaTPayConfig = createAsyncThunk(
 
         const configData = await React.$api("payment.FaTPay.config", settings);
         // 直接返回处理
-        return configData;
+        return showServerErrorTips(dispatch, configData);
     }
 );
 
@@ -181,7 +182,7 @@ export const getLegendTradingPaymentOption = createAsyncThunk(
     async (settings, { dispatch, getState }) => {
         const paymentOption = await React.$api("payment.LegendTrading.paymentOption");
         // 直接返回处理
-        return paymentOption;
+        return showServerErrorTips(dispatch, paymentOption);
     }
 );
 
@@ -191,7 +192,7 @@ export const getLegendTradingCryptoTarget = createAsyncThunk(
     async (settings, { dispatch, getState }) => {
         const cryptoTarget = await React.$api("payment.LegendTrading.cryptoTarget");
         // 直接返回处理
-        return cryptoTarget;
+        return showServerErrorTips(dispatch, cryptoTarget);
     }
 );
 
@@ -201,7 +202,7 @@ export const getFaTPayPaymentOption = createAsyncThunk(
     async (settings, { dispatch, getState }) => {
         const paymentOption = await React.$api("payment.FaTPay.paymentOption");
         // 直接返回处理
-        return paymentOption;
+        return showServerErrorTips(dispatch, paymentOption);
     }
 );
 
@@ -211,7 +212,7 @@ export const getFaTPayCryptoTarget = createAsyncThunk(
     async (settings, { dispatch, getState }) => {
         const cryptoTarget = await React.$api("payment.FaTPay.cryptoTarget");
         // 直接返回处理
-        return cryptoTarget;
+        return showServerErrorTips(dispatch, cryptoTarget);
     }
 );
 
@@ -221,7 +222,7 @@ export const getStarPayPaymentOption = createAsyncThunk(
     async (settings, { dispatch, getState }) => {
         const paymentOption = await React.$api("payment.StarPay.paymentOption");
         // 直接返回处理
-        return paymentOption;
+        return showServerErrorTips(dispatch, paymentOption);
     }
 );
 
@@ -231,7 +232,7 @@ export const getStarPayCryptoTarget = createAsyncThunk(
     async (settings, { dispatch, getState }) => {
         const cryptoTarget = await React.$api("payment.StarPay.cryptoTarget");
         // 直接返回处理
-        return cryptoTarget;
+        return showServerErrorTips(dispatch, cryptoTarget);
     }
 );
 
@@ -242,7 +243,7 @@ export const getStarPayConfig = createAsyncThunk(
         if (result.errno === 0) {
             return result.data
         } else {
-            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, result);
             return false
         }
     }
@@ -253,7 +254,7 @@ export const makeWithdrawOrder = createAsyncThunk(
     'payment/makeWithdrawOrder',
     async (settings, { dispatch, getState }) => {
         const result = await React.$api("payment.makeWithdrawOrder", settings);
-        return result
+        return  showServerErrorTips(dispatch, result);
     }
 );
 
@@ -262,7 +263,7 @@ export const fiatSendTips = createAsyncThunk(
     'transfer/fiat/sendTips',
     async (settings, { dispatch, getState }) => {
         const result = await React.$api("payment.sendTips", settings);
-        return result
+        return  showServerErrorTips(dispatch, result);
     }
 );
 
@@ -274,7 +275,7 @@ export const getFiatFee = createAsyncThunk(
         if (result.errno === 0) {
             return result.data
         } else {
-            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, result);
             return false
         }
     }
@@ -288,7 +289,7 @@ export const makeOrder = createAsyncThunk(
         if (result.errno === 0) {
             return result.data
         } else {
-            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, result);
         }
     }
 );
@@ -307,7 +308,7 @@ export const payoutBank = createAsyncThunk(
                 dispatch(updatePayoutBankList(result.data))
                 return result.data
             } else {
-                dispatch(showMessage({ message: result.errmsg, code: 2 }))
+                showServerErrorTips(dispatch, result);
             }
         }
     }
@@ -326,7 +327,7 @@ export const payoutPayWays = createAsyncThunk(
                 dispatch(updatePayoutWays(result.data))
                 return result.data
             } else {
-                dispatch(showMessage({ message: result.errmsg, code: 2 }));
+                showServerErrorTips(dispatch, result);
             }
         }
 
@@ -346,7 +347,7 @@ export const getCreditConfig = createAsyncThunk(
                 dispatch(updateCreditConfig(result.data))
                 return result.data
             } else {
-                dispatch(showMessage({ message: result.errmsg, code: 2 }));
+                showServerErrorTips(dispatch, result);
             }
         }
     }
@@ -364,7 +365,7 @@ export const applyCreditCard = createAsyncThunk(
                 dispatch(showMessage({ message: result.data.msg, code: 2 }));
             }
         } else {
-            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, result);
         }
     }
 );
@@ -383,7 +384,7 @@ export const creditCardUpdate = createAsyncThunk(
                 }
             }
         } else {
-            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, result);
         }
     }
 );
@@ -403,7 +404,7 @@ export const exchangeCreditCard = createAsyncThunk(
                 }
             }
         } else {
-            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, result);
         }
     }
 );
@@ -416,7 +417,7 @@ export const getCreditCardBalance = createAsyncThunk(
         if (result.errno === 0) {
             return result.data
         } else {
-            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, result);
         }
     }
 );
@@ -430,7 +431,7 @@ export const getUserCreditCard = createAsyncThunk(
         if (result.errno === 0) {
             return result.data
         } else {
-            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, result);
         }
     }
 );
@@ -440,7 +441,7 @@ export const creditCardCryptoDeposit = createAsyncThunk(
     'credit/creditCardCryptoDeposit',
     async (settings, { dispatch, getState }) => {
         const result = await React.$api("credit.creditCardCryptoDeposit", settings);
-        return result
+        return showServerErrorTips(dispatch, result);
         // if (result.errno === 0) {
         //     return result.data
         // } else {
@@ -454,7 +455,7 @@ export const creditCardCryptoWithdraw = createAsyncThunk(
     'credit/creditCardCryptoWithdraw',
     async (settings, { dispatch, getState }) => {
         const result = await React.$api("credit.creditCardCryptoWithdraw", settings);
-        return result
+        return showServerErrorTips(dispatch, result);
         // if (result.errno === 0) {
         //     return result.data
         // } else {
@@ -468,7 +469,7 @@ export const getDepositeFiatOrderStatus = createAsyncThunk(
     'payment/fiatPayQueryOrder',
     async (settings, { dispatch, getState }) => {
         const result = await React.$api("payment.fiatPayQueryOrder", settings);
-        return result
+        return showServerErrorTips(dispatch, result);
     }
 );
 

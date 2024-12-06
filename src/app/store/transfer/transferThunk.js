@@ -3,7 +3,7 @@ import React from "react";
 import utils from '../../util/tools/utils'
 import BN from "bn.js";
 import { showMessage } from 'app/store/fuse/messageSlice';
-import { arrayLookup } from "../../util/tools/function";
+import {arrayLookup, showServerErrorTips} from "../../util/tools/function";
 import web3 from "../../util/web3";
 // import coinbaseWallet from '../../util/web3/coinbase';
 // import trustProvider from '../../util/web3/trustwallet';
@@ -248,7 +248,7 @@ export const manualCryptoNotify = createAsyncThunk(
         };
         const resultData = await React.$api("payment.manualCryptoNotify", data);
         if (resultData.errno !== 0) {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, resultData);
         } else {
             // console.log(resultData)
         }

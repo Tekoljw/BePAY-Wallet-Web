@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import React from "react";
 import { showMessage } from 'app/store/fuse/messageSlice';
 import { setConfig, setNetworks, setContactAddress, setSymbols, setPaymentConfig, setPhoneCode as setPhone } from "./index";
+import {showServerErrorTips} from "../../util/tools/function";
 
 // action/thunk
 // 获取config
@@ -76,7 +77,7 @@ export const getContactAddress = createAsyncThunk(
             dispatch(setContactAddress(configData));
             return configData.data;
         } else {
-            dispatch(showMessage({ message: configData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, configData);
         }
     }
 );
