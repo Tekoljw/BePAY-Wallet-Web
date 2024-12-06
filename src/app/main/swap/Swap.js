@@ -548,10 +548,11 @@ function Swap() {
           amount: inputVal.amount,
         })
       ).then((res) => {
+        debugger;
         let result = res.payload
-        lookData.id = result.data.orderId;
-        lookData.newNum = (result.data.targetAmount).toFixed(2);
-        lookData.fee = (result.data.premium).toFixed(6);
+        lookData.id = result?.data?.orderId;
+        lookData.newNum = (result?.data?.targetAmount)?.toFixed(2);
+        lookData.fee = (result?.data?.premium)?.toFixed(6);
         if (result && result.errno === 0) {
           setTimeout(() => {
             setZhuanQuan(false);
