@@ -92,6 +92,12 @@ function Record() {
     // public static final int LOG_TYPE_ASSETS_CRYPTO_INVITE_REWARD = 33;  //邀请虚拟币奖励
     // public static final int LOG_TYPE_ASSETS_ACTIVITY_FIAT = 34; //活动奖励法币
     // public static final int LOG_TYPE_ASSETS_ACTIVITY_CRYPTO = 35; //活动奖励虚拟币
+    // public static final int LOG_TYPE_ASSETS_FIAT_FROZEN = 38; // 法币资产冻结
+    // public static final int LOG_TYPE_ASSETS_CRYPTO_FROZEN = 39; // 虚拟币资产冻结
+    // public static final int LOG_TYPE_ASSETS_FIAT_UN_FROZEN_SUCCESS = 40; // 法币资产解冻(提现成功)
+    // public static final int LOG_TYPE_ASSETS_CRYPTO_UN_FROZEN_SUCCESS = 41; // 虚拟币资产解冻(提现成功)
+    // public static final int LOG_TYPE_ASSETS_FIAT_UN_FROZEN_FAIL = 42; // 法币资产解冻(提现失败)
+    // public static final int LOG_TYPE_ASSETS_CRYPTO_UN_FROZEN_FAIL = 43; // 虚拟币资产解冻(提现失败)
     // public static final int LOG_TYPE_ASSETS_NO_EXIST = 1000;      //不存在的类型
 
     const typeList = [
@@ -130,7 +136,13 @@ function Record() {
         { key: 32, label: t('recordInfo_32')},
         { key: 33, label: t('recordInfo_33')},
         { key: 34, label: t('recordInfo_34')},
-        { key: 35, label: t('recordInfo_35')}
+        { key: 35, label: t('recordInfo_35')},
+        { key: 38, label: t('card_262')},
+        { key: 39, label: t('card_262')},
+        { key: 40, label: t('card_263')},
+        { key: 41, label: t('card_263')},
+        { key: 42, label: t('card_264')},
+        { key: 43, label: t('card_264')},
     ]
 
     const showTypeList = [
@@ -160,6 +172,7 @@ function Record() {
     const [timeItem, setTimeItem] = React.useState(new Date().getMonth() + 1);
     const [kaPianItem, setKaPianItem] = React.useState(0);
     const [selectCardID, setSelectCardID] = React.useState(0);
+    const freezeBalanceTypes = [38, 39, 40, 41, 42, 43]
 
 
     const [isLoading, setIsLoading] = React.useState(true);
@@ -637,7 +650,7 @@ function Record() {
                                                     </div>
                                                     <div className='recordListZi2'>{transferItem.amount}</div>
                                                 </div>
-                                                <div className='recordListSmallZi'>{t('home_deposite_24')} <span>{transferItem.balance}</span>
+                                                <div className='recordListSmallZi'>{ freezeBalanceTypes.indexOf(transferItem.type) > -1 ? t('card_265') : t('home_deposite_24')} <span>{transferItem.balance}</span>
                                                 </div>
                                                 <div className='recordListSmallZi'>{t('home_borrow_18')} <span>{transferItem.serviceFee}</span>
                                                 </div>
