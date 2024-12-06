@@ -72,9 +72,11 @@ service.interceptors.response.use(
         } else if(res.errno > 501){ //比如大于501的就属于服务器提示错误
 
             const dispatch = useDispatch();
+            dispatch(showMessage({ message: "server error tips", code: 2 }));
             const { t } = useTranslation('mainPage');
             const error_tips_code = 'server_error_' + res.errno;
-            dispatch(showMessage({ message: t(error_tips_code), code: 2 }));
+            console.log("request server_error ： ", error_tips_code);
+            console.log("request server_error tips： ", t(error_tips_code));
             return {
                 errno: 400,
                 errmsg: "",
