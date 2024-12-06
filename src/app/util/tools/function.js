@@ -173,20 +173,16 @@ export const canLoginAfterRequest = (userData) =>  {
     return true;
 }
 
-//显示服务器常规的错误提示
-export const showCommonServerErrorTips = (dispatch, errno) =>  {
-    showServerErrorTips(dispatch, errno, "");
-}
-
 //显示服务器错误提示
-export const showServerErrorTips = (dispatch, errno, errorMsg) =>  {
-    if(errno > 501){
+export const showServerErrorTips = (dispatch, resultData) =>  {
+    if (resultData?.errno > 501){ //服务器返回提示错误
         const timestamp = new Date().getTime();
-        const serverErrorCodeAndTime = errno  + '-' + timestamp;
+        const serverErrorCodeAndTime = resultData?.errno  + '-' + timestamp;
         dispatch(updateUserRequestError(serverErrorCodeAndTime));
-    }else if(errorMsg && errorMsg !== ""){
-        dispatch(showMessage({ message: errorMsg, code: 2 }));
+        resultData.errno = 400;
+        resultData.errmsg = "";
     }
+    return resultData;
 }
 
 export const isMobile = () =>  {
