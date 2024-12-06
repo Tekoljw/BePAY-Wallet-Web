@@ -44,6 +44,8 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     response => {
         const res = response.data;
+        console.log(res.errno, "request server_error errno");
+        console.log(res.errmsg, "request server_error errmsg");
         if (res.errno === 501) { //api 请求返回没有验证登录就跳转登录页面
             const loginType = getUserLoginType();
             if(loginType === userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP){ //其他第三方自动登录成功后，开启请求基础数据
@@ -75,8 +77,8 @@ service.interceptors.response.use(
             dispatch(showMessage({ message: "server error tips", code: 2 }));
             const { t } = useTranslation('mainPage');
             const error_tips_code = 'server_error_' + res.errno;
-            console.log("request server_error ： ", error_tips_code);
-            console.log("request server_error tips： ", t(error_tips_code));
+            console.log(error_tips_code, "request server_error");
+            console.log(t(error_tips_code), "request server_error tips");
             return {
                 errno: 400,
                 errmsg: "",

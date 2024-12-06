@@ -427,7 +427,7 @@ function Withdraw(props) {
             let result = res.payload
             setGoogleCode('');
             // setOpenPinWindow(false);
-            if (result.errno == 0) { //成功
+            if (result.errno === 0) { //成功
                 setOpenSuccess(false);
                 setTimeout(() => {
                     setZhuanQuan(false);
@@ -435,7 +435,7 @@ function Withdraw(props) {
                     setWithDrawOrderID(result.data);
                 }, 1200);
                 dispatch(centerGetTokenBalanceList({forceUpdate: true}));
-            } else if (result.errno == -2) { //需要google验证
+            } else if (result.errno === -2) { //需要google验证
                 setTwiceVerifyType(0);
                 setTypeBined(hasAuthEmail ? true : false);
                 // if (!hasAuthGoogle) {
@@ -527,7 +527,7 @@ function Withdraw(props) {
             setOpenLoad(false);
             setGoogleCode('');
             let resData = res.payload;
-            if (resData.errno == 0) {
+            if (resData.errno === 0) {
                 setCurrRequestId(res.meta.requestId)
                 setOpenSuccess(false);
                 setTimeout(() => {
@@ -535,7 +535,7 @@ function Withdraw(props) {
                     setTiJiaoState(1);
                     dispatch(centerGetTokenBalanceList({ forceUpdate: true}));
                 }, 1200);
-            } else if (resData.errno == -2) {
+            } else if (resData.errno === -2) {
                 setTwiceVerifyType(0);
                 setTypeBined(hasAuthEmail ? true : false);
                 // if (!hasAuthGoogle) {
