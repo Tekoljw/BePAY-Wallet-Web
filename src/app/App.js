@@ -143,7 +143,7 @@ const App = () => {
             const parts = userRequestError.split('-')
             if(parts.length > 1){
                 const errno = parts[0];
-                const error_tips_code = 'code server_error_' + errno;
+                const error_tips_code = 'server_error_' + errno;
                 console.log(error_tips_code, "show request server_error code");
                 dispatch(showMessage({ message: t(error_tips_code), code: 2 }));;
             }
