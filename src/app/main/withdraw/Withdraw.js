@@ -458,7 +458,7 @@ function Withdraw(props) {
                 } else if (result.errmsg.includes("用户可用余额不足")) {
                     dispatch(showMessage({ message: t('card_61'), code: 2 }));
                 } else {
-                    dispatch(showMessage({ message: t('error_22'), code: 2 }));
+                    //dispatch(showMessage({ message: t('error_22'), code: 2 }));
                 }
             }
         });
@@ -554,7 +554,7 @@ function Withdraw(props) {
                 if (resData.errmsg.includes("security code error")) {
                     dispatch(showMessage({ message: t('card_224'), code: 2 }));
                 } else {
-                    dispatch(showMessage({ message: t('error_22'), code: 2 }));
+                    //dispatch(showMessage({ message: t('error_22'), code: 2 }));
                 }
             }
         });

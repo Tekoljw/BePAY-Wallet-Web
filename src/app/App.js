@@ -139,12 +139,13 @@ const App = () => {
     //总的错误提示显示
     useEffect(() => {
         if(userRequestError && userRequestError !== ""){
-            console.log("app show request server error", "request server_error");
+            console.log(userRequestError, "request server_error");
             const parts = userRequestError.split('-')
             if(parts.length > 1){
                 const errno = parts[0];
                 const error_tips_code = 'server_error_' + errno;
                 console.log(error_tips_code, "show request server_error code");
+                console.log(t(error_tips_code), "show request server_error string");
                 dispatch(showMessage({ message: t(error_tips_code), code: 2 }));
             }
         }
