@@ -109,10 +109,15 @@ function Kyc(props) {
                 setInputVal({ ...inputVal, country: resultData.country, state: resultData.state, city: resultData.city, address: resultData.street, zipCode: resultData.zip });
                 setTimeout(() => {
                     setClickShiLi(true);
+                    setCountryInput(true);
                     setCountryInputShow(true);
+                    setStateInput(true);
                     setStateInputShow(true);
+                    setCityInput(true);
                     setCityInputShow(true);
+                    setAddressInput(true);
                     setAddressInputShow(true);
+                    setZipCodeInput(true);
                     setZipCodeInputShow(true);
                 }, 0);
             }
@@ -362,13 +367,17 @@ function Kyc(props) {
         } else {
             setIdNoError(false);
         }
+
         showBtnFunc();//显示保存按钮
+
         if (inputVal.country != '' && inputVal.state != '' && inputVal.city != '' && inputVal.address != '' && inputVal.zipCode != '') {
             setClickShiLi(true);//不显示示例按钮
         } else {
             setClickShiLi(false);
         }
-
+        if (inputVal.country === undefined && inputVal.state === undefined && inputVal.city === undefined && inputVal.address === undefined && inputVal.zipCode === undefined) {
+            setClickShiLi(false);//显示示例按钮
+        }
         if (inputVal.defaultAddressInfo === 2 || inputVal.defaultAddressInfo === 3) {
             addAddressTwoOrThree()
         }
@@ -1038,11 +1047,6 @@ function Kyc(props) {
             if (kycInfo.defaultAddressInfo === 1) {
                 setAddressKyc(1);
                 setInputVal(copyData);
-                if (copyData.country !== '' && copyData.state !== '' && copyData.city !== '' && copyData.address !== '' && copyData.zipCode !== '') {
-                    setClickShiLi(true);//不显示示例按钮
-                } else {
-                    setClickShiLi(false);
-                }
             } else if (kycInfo.defaultAddressInfo === 2) {
                 setAddressKyc(2);
                 setInputVal(copyData);
