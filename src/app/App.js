@@ -22,6 +22,8 @@ import {checkLoginState} from "app/store/user/userThunk";
 import {requestUserLoginData} from "./util/tools/loginFunction";
 import userLoginState from "./define/userLoginState";
 import ReloginDialog from './components/ReloginDialog';
+import {useTranslation} from "react-i18next";
+import {showMessage} from "app/store/fuse/messageSlice";
 
 const emotionCacheOptions = {
     rtl: {
@@ -38,6 +40,7 @@ const emotionCacheOptions = {
 
 const App = () => {
     const dispatch = useDispatch();
+    const { t } = useTranslation('mainPage');
     const openAppId = getUrlParam('openAppId') || 0;
     const openIndex = getUrlParam('openIndex') || 0;
     const thirdPartId = getUrlParam('thirdPartId') || 0;
@@ -52,6 +55,7 @@ const App = () => {
     const lang = currentLanguage.id === getUrlParam('lang') ? currentLanguage.id : getUrlParam('lang');
     const userData = useSelector(selectUserData);
     const loginState = userData.loginState;
+    const userRequestError = userData.userRequestError;
 
     useEffect(() => {
 
@@ -131,6 +135,19 @@ const App = () => {
             }
         }
     }, [loginState]);
+
+    //总的错误提示显示
+    useEffect(() => {
+        if(userRequestError && userRequestError !== ""){
+            console.log("app show request server error", "request server_error");
+            const parts = userRequestError.split('-')
+            if(parts.length > 1){
+                const errno = parts[0];
+                const error_tips_code = 'code server_error_' + errno;
+                dispatch(showMessage({ message: t(error_tips_code), code: 2 }));;
+            }
+        }
+    }, [userRequestError]);
 
     useEffect(() => {
         dispatch(getKycInfo({

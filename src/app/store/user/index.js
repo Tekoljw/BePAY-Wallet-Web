@@ -29,7 +29,8 @@ const initialState = {
     swapFee: null,
     creditConfig: null,
     currencyCode: localStorage.getItem('currencyCode') || 'USD',
-    loginState: userLoginState.USER_LOGIN_STATE_UN,
+    loginState: userLoginState.USER_LOGIN_STATE_UN, //登录状态
+    userRequestError: null, //用户请求错误
 };
 
 const userSlice = createSlice({
@@ -157,8 +158,12 @@ const userSlice = createSlice({
         updateCreditConfig: (state, action) => {
             let res = action.payload;
             state.creditConfig = res;
-        }
+        },
 
+        updateUserRequestError: (state, action) => {
+            let res = action.payload;
+            state.userRequestError = res;
+        }
     },
     extraReducers: (builder) => {
         // builder
@@ -201,7 +206,8 @@ const userSlice = createSlice({
         },
 });
 
-export const { updateWalletLoading, updateUser, updateUserToken, updateTransfer, updateWallet, updateFiat, updateCryptoDisplay, updateFiatDisplay, updateNftDisplay, updateWalletDisplay, updateCurrency, setTransferStats, updateLoginState, updateBankList, updatePayoutBankList, updatePayoutWays, updateSwapFee, updateCreditConfig} = userSlice.actions;
+export const { updateWalletLoading, updateUser, updateUserToken, updateTransfer, updateWallet, updateFiat, updateCryptoDisplay, updateFiatDisplay, updateNftDisplay, updateWalletDisplay, updateCurrency, setTransferStats
+    , updateLoginState, updateBankList, updatePayoutBankList, updatePayoutWays, updateSwapFee, updateCreditConfig, updateUserRequestError} = userSlice.actions;
 
 export const selectUserData = ({ user }) => user;
 

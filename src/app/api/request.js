@@ -1,14 +1,8 @@
 import axios from 'axios'
 import history from '@history'
 import {getOpenAppId, getOpenAppIndex, getUserLoginType} from "../util/tools/function";
-import {requestUserLoginData} from "../util/tools/loginFunction";
-import MobileDetect from 'mobile-detect';
-import useThemeMediaQuery from "../../@fuse/hooks/useThemeMediaQuery";
 import { isMobile } from "../util/tools/function";
 import userLoginType from "../define/userLoginType";
-import {useTranslation} from "react-i18next";
-import {showMessage} from "app/store/fuse/messageSlice";
-import {useDispatch} from "react-redux";
 
 const service = axios.create({
     timeout: 50000, // request timeout
@@ -44,8 +38,8 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     response => {
         const res = response.data;
-        console.log(res.errno, "request server_error errno");
-        console.log(res.errmsg, "request server_error errmsg");
+        //console.log(res.errno, "request server_error errno");
+        //console.log(res.errmsg, "request server_error errmsg");
         if (res.errno === 501) { //api 请求返回没有验证登录就跳转登录页面
             const loginType = getUserLoginType();
             if(loginType === userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP){ //其他第三方自动登录成功后，开启请求基础数据
@@ -70,20 +64,6 @@ service.interceptors.response.use(
                     }
                 }, 500);
             }
-            return res;
-        } else if (res.errno > 501){ //比如大于501的就属于服务器提示错误
-
-            console.log("server error start", "request server_error");
-
-            const error_tips_code = 'code server_error_' + res.errno;
-            console.log(error_tips_code, "request server_error");
-            const { t } = useTranslation('mainPage');
-            console.log(t(error_tips_code), "request server_error tips");
-            const dispatch = useDispatch();
-            dispatch(showMessage({ message: "server error tips", code: 2 }));
-            //强制改为不返回提示文字
-            res.errno = 400;
-            res.errmsg = "";
             return res;
         }else{
             return res;

@@ -5,6 +5,7 @@ import userLoginState from "../../define/userLoginState";
 import copy from 'copy-to-clipboard';
 import {showMessage} from "app/store/fuse/messageSlice";
 import {useDispatch} from "react-redux";
+import {updateUserRequestError} from "app/store/user";
 
 export const getUrlParam = (param) => {
     const res = window.location.href;
@@ -170,6 +171,22 @@ export const canLoginAfterRequest = (userData) =>  {
         return false;
     }
     return true;
+}
+
+//显示服务器常规的错误提示
+export const showCommonServerErrorTips = (dispatch, errno) =>  {
+    showServerErrorTips(dispatch, errno, "");
+}
+
+//显示服务器错误提示
+export const showServerErrorTips = (dispatch, errno, errorMsg) =>  {
+    if(errno > 501){
+        const timestamp = new Date().getTime();
+        const serverErrorCodeAndTime = errno  + '-' + timestamp;
+        dispatch(updateUserRequestError(serverErrorCodeAndTime));
+    }else if(errorMsg && errorMsg !== ""){
+        dispatch(showMessage({ message: errorMsg, code: 2 }));
+    }
 }
 
 export const isMobile = () =>  {
