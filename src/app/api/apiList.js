@@ -221,6 +221,10 @@ export default {
             url: "/transfer/creditTradeRecords",
             method: "post",
         },
+        editOrQueryWithdrawalHistoryInfo: {
+            url: "/transfer/editOrQueryWithdrawalHistoryInfo",
+            method: "post",
+        }
     },
 
     paytoken: {
@@ -317,6 +321,11 @@ export default {
     payment: {
         config: {
             url: "/payment/config",
+            method: "post",
+        },
+
+        kycAddress: {
+            url: "/payment/kycAddress",
             method: "post",
         },
 
@@ -589,6 +598,58 @@ export default {
         participate: {
             url: "/activity/nftPledge/participate",
             method: "post",
+        },
+        beingFiActivityInfo:{
+            url: "/activity/beingFiActivityInfo/info",
+            method: "get",
+        },
+        beingFiActivityControl: {
+            url: "/activity/beingFiActivityControl/list",
+            method: "get",
+        },
+        signInActivityConfig: {
+            url: "/activity/signInActivity/list",
+            method: "get",
+        },
+        signInActivityInfo: {
+            url: "/activity/signInActivity/info",
+            method: "get",
+        },
+        signIn: {
+            url: "/unique_invite/signIn",
+            method: "post",
+        },
+        demandInterestActivity: {
+            url: "/activity/demandInterestActivity/info",
+            method: "get",
+        },
+        walletPayRewardActivity: {
+            url: "/activity/walletPayRewardActivity/info",
+            method: "get",
+        },
+        swapRewardActivity: {
+            url: "/activity/swapRewardActivity/info",
+            method: "get",
+        },
+        uniqueInvite: {
+            url: "/unique_invite/useInviteCode",
+            method: "post",
+        },
+        getInviteRewardConfig: {
+            url: "/unique_invite/getInviteRewardConfig",
+            method: "get",
+        },
+        resetInvite: {
+            url: "/unique_invite/resetInvite",
+            method: "post",
+        },
+        getInviteRewardAllInfo: {
+            url: "/unique_invite/getInviteRewardAllInfo",
+            method: "get",
+        },
+        getInviteRewardDetail: {
+            url: "/unique_invite/getInviteRewardDetail",
+            method: "get"
         }
     },
 

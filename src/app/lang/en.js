@@ -402,7 +402,7 @@ const locale = {
     card_29: "Total Assets",
     card_30: "Done",
     card_31: "Freeze",
-    card_32: "Change",
+    card_32: "Renew",
     card_33: "Card issuance",
     card_34: "Activate card",
     card_35: "Apply now",
@@ -463,7 +463,7 @@ const locale = {
     card_100: "Card number too short - should be 9 chars minimum",
     card_101: "Check code too short - should be 6 chars minimum",
     card_102: "Receiving address",
-    card_103: "sky",
+    card_103: "day",
     card_104: "annual fee",
     card_105: "prepaid card",
     card_106: "usage tips",
@@ -472,27 +472,27 @@ const locale = {
     card_109: "application details",
     card_110: "select currency for payment",
     card_111: "card mailing address",
-    card_112: "change address",
-    card_113: "new user benefits",
-    card_114: "spin wheel",
+    card_112: "Change address",
+    card_113: "New User Benefits",
+    card_114: "Spin wheel",
     card_115: "bonus",
     card_116: "event ended",
-    card_117: "interest on savings account",
+    card_117: "Interest On Savings Account",
     card_118: "million-dollar airdrop",
     card_119: "divide",
-    card_120: "contract trading mining",
+    card_120: "Contract Trading Mining",
     card_121: "trade contract",
     card_122: "Instant delivery",
     card_123: "Compensate all transaction fees",
     card_124: "compensation",
-    card_125: "referral reward",
+    card_125: "Referral Reward",
     card_126: "Invite friends",
     card_127: "receive cash reward!",
     card_128: "total revenue",
     card_129: "daily earnings",
     card_130: "Go to TOP.ONE start trading",
     card_131: "activate BeingFi card",
-    card_132: "Weekly check-ins accumulate, earning you corresponding rewards.",
+    card_132: "Check in every 7 days to accumulate and receive corresponding rewards",
     card_133: "Monday",
     card_134: "Tuesday",
     card_135: "Wednesday",
@@ -532,11 +532,11 @@ const locale = {
     card_169: "more",
     card_170: "In",
     card_171: "Out",
-    card_172: "check in",
+    card_172: "Check in",
     card_173: "yesterday's total trading volume",
     kyc_41: "Required fields cannot be empty",
     home_record_0: 'All',
-    card_174: "mailing address",
+    card_174: "Mailing Address",
     card_175: "user",
     card_176: "enter the 6-digit dynamic password",
     card_177: "No fees, instant transfer!",
@@ -668,7 +668,7 @@ const locale = {
     login_1: "Login failed. Please close the mini app and reopen it",
     deposite_35: "Exceeded limit amount",
     server_error_10008: "Invalid request amount",
-    server_error_10009: "Triggered a serious error",
+    server_error_10009: "Exception occurred, contact the platform",
     server_error_10010: "Unauthorized",
     server_error_10011: "Object not found",
     server_error_10012: "Failed to update data",
@@ -725,8 +725,8 @@ const locale = {
     server_error_12007: "Failed to save virtual token balance",
     server_error_12008: "Disabled virtual currency",
     server_error_12009: "Unknown contract address",
-    server_error_12510: "Virtual currency not supported",
-    server_error_12511: "Failed to call remote API for virtual currency",
+    server_error_12010: "Virtual currency not supported",
+    server_error_12011: "Failed to call remote API for virtual currency",
     server_error_12501: "Invalid fiat currency",
     server_error_12502: "Insufficient fiat currency balance",
     server_error_12503: "Failed to save fiat currency balance",
@@ -734,22 +734,15 @@ const locale = {
     server_error_12505: "Fiat currency service command not supported",
     server_error_12506: "Fiat currency service command failed",
     server_error_12507: "Fiat currency not supported",
-    server_error_12501: "Invalid NFT query ID",
-    server_error_12502: "NFT minting failed",
-    server_error_12503: "Failed to call NFT minting",
-    server_error_12504: "NFT token not found",
-    server_error_12505: "NFT token is frozen",
-    server_error_12506: "Failed to read NFT owner",
-    server_error_12507: "Not the owner of the NFT",
-    server_error_12801: "Failed to save NFT balance",
-    server_error_12802: "Insufficient NFT balance",
+    server_error_12801: "Invalid NFT query ID",
+    server_error_12802: "NFT minting failed",
     server_error_12803: "Failed to call NFT minting",
     server_error_12804: "NFT token not found",
     server_error_12805: "NFT token is frozen",
     server_error_12806: "Failed to read NFT owner",
     server_error_12807: "Not the owner of the NFT",
-    server_error_12008: "Failed to save NFT balance",
-    server_error_12009: "Insufficient NFT balance",
+    server_error_12808: "Failed to save NFT balance",
+    server_error_12809: "Insufficient NFT balance",
     server_error_13205: "Failed to delete credit card",
     server_error_13206: "Failed to exchange credit card",
     server_error_14002: "KYC user information does not exist",
@@ -831,6 +824,47 @@ const locale = {
 
     card_249: "Add",
     card_250: "Please close the mini program and click the refresh button to try again.",
+    card_251: "Apple Payment Card",
+    card_252: "Activate existing card",
+    card_253: "Prefer to use a US address, if not available, please click on [Example] in KYC to provide the relevant information.",
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
+
+    kyc_68:"Address1",
+    kyc_69:"Address2",
+    kyc_70:"Address3",
+    kyc_71:"Example",
+
+
+    card_256:"Please ensure that your KYC information is correct and select the address you have applied for.",
+    card_257:"Modify KYC Information",
+    card_258:"Pay card replacement fee:",
+    card_259:"KYC Verification",
+    card_260:"You need to complete KYC verification before applying for the card.",
+    card_261:"Please contact online customer service for specific details.",
+    card_262:"Under review, assets have been frozen",
+    card_263:"Review successful, frozen assets have been released",
+    card_264:"Withdrawal failed, frozen assets have been released",
+    card_265:"Frozen Balance",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 };
 
 export default locale;

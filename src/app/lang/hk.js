@@ -162,7 +162,7 @@ const locale = {
     home_withdraw_12: '快速',
     home_withdraw_13: '慢速',
     home_withdraw_14: '地址',
-    home_withdraw_15: '交易手續費 ',
+    home_withdraw_15: '預估網絡費 ',
     home_withdraw_16: '所需時間 - 0-2 小時。',
     home_withdraw_17: '網絡確認未包含在內，可能需要額外的時間',
     home_withdraw_18: '銀行',
@@ -481,7 +481,7 @@ const locale = {
     card_129: "今日收益",
     card_130: "前往TOP.ONE開始交易",
     card_131: "開通BeingFi卡片",
-    card_132: "每週累計報到，並獲得相應獎勵。",
+    card_132: "每7天累積簽到，獲得相應獎勳",
     card_133: "星期一",
     card_134: "星期二",
     card_135: "星期三",
@@ -821,6 +821,37 @@ const locale = {
     
     card_249: "添加",
     card_250: "請關閉小程序並點擊刷新按鈕重試。",
+    card_251: "蘋果支付卡",
+    card_252: "激活已有卡片",
+    card_253: "優先使用美國地址，沒有請點擊KYC中的[示例]提供相關資訊。",
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
+
+    
+    kyc_68:"地址1",
+    kyc_69:"地址2",
+    kyc_70:"地址3",
+    kyc_71:"示例",
+
+    
+    card_256:"請確保您的KYC信息正確並選擇申請的地址。",
+    card_257:"修改KYC資訊",
+    card_258:"支付换卡费用：",
+    card_259:"KYC認證",
+    card_260:"申請卡片前需完成KYC認證。",
+    card_261:"請聯繫在線客服了解具體原因",
+    card_262:"審核中，資產已凍結",
+    card_263:"審核成功，凍結資產已解除",
+    card_264:"提幣失敗，凍結資產已解除",
+    card_265:"凍結餘額",
+
+
+
+
+
+
+
+
     
 
 

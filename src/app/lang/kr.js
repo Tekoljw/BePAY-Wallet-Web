@@ -484,7 +484,7 @@ const locale = {
     card_129: "오늘 수익",
     card_130: "TOP.ONE으로 가서 거래 시작하기",
     card_131: "BeingFi 카드 개통하기",
-    card_132: "매주 누적 출석하면 해당 보상을 받을 수 있습니다.",
+    card_132: "7일마다 체크인하여 해당 보상을 받으세요",
     card_133: "월요일",
     card_134: "화요일",
     card_135: "수요일",
@@ -824,7 +824,38 @@ const locale = {
 
     card_249: "추가",
     card_250: "미니 프로그램을 닫고 새로 고침 버튼을 눌러 다시 시도하세요.",
+    card_251: "애플 결제 카드",
+    card_252: "기존 카드를 활성화하다",
+    card_253: "미국 주소를 우선 사용하십시오. 없다면 KYC의 [예시]를 클릭하여 관련 정보를 제공해 주세요.",
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
 
+    kyc_68:"주소1",
+    kyc_69:"주소2",
+    kyc_70:"주소3",
+    kyc_71:"예시",
+
+    card_256:"KYC 정보가 정확한지 확인하고 신청한 주소를 선택하세요.",
+    card_257:"KYC 정보를 수정하다",
+    card_258:"카드 교체 수수료 지불:",
+    card_259:"KYC 인증",
+    card_260:"카드 신청 전에 KYC 인증을 완료해야 합니다.",
+    card_261:"구체적인 내용을 확인하려면 온라인 고객 서비스에 문의하십시오.",
+    card_262:"검토 중, 자산이 동결되었습니다",
+    card_263:"검토 성공, 동결된 자산이 해제되었습니다.",
+    card_264:"출금 실패, 동결된 자산이 해제되었습니다",
+    card_265:"동결 잔액",
+
+
+
+
+
+
+
+
+
+
+    
 
 
 

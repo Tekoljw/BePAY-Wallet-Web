@@ -25,6 +25,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
 import Typography from '@mui/material/Typography';
 import {
     getKycInfo,
@@ -35,14 +36,17 @@ import {
     getCreditConfig,
     getUserCreditCard,
     exchangeCreditCard,
-    getCreditCardBalance
+    getCreditCardBalance,
+    kycAddress
 } from "app/store/payment/paymentThunk";
 import { createPin, verifyPin } from "app/store/wallet/walletThunk";
 import { showMessage } from "app/store/fuse/messageSlice";
 import { borderBottom } from '@mui/system';
 import Kyc from "../kyc/Kyc";
+import InputLabel from '@mui/material/InputLabel';
 import _ from 'lodash';
 import { selectCurrentLanguage } from "app/store/i18nSlice";
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Enable2FA from "../2fa/Enable2FA";
 import { centerGetTokenBalanceList, userProfile, sendEmail, sendSms } from "app/store/user/userThunk";
 import { centerGetUserFiat } from "app/store/wallet/walletThunk";
@@ -51,6 +55,8 @@ import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import userLoginType from "../../define/userLoginType";
 import RetiedEmail from "../login/RetiedEmail";
 import RetiedPhone from "../login/RetiedPhone";
+import MenuItem from '@mui/material/MenuItem';
+import phoneCode from "../../../phone/phoneCode";
 import { Carousel } from "react-responsive-carousel";
 import styles from "react-responsive-carousel/lib/styles/carousel.min.css";
 
@@ -117,7 +123,7 @@ function Card(props) {
     const [openJiHuoWindow, setOpenJiHuoWindow] = useState(false);
     const [applyOver, setApplyOver] = useState(false);
     const [symbol, setSymbol] = useState('');
-    const walletData = useSelector(selectUserData).wallet;
+    const walletData = useSelector(selectUserData).wallet || {};
     const config = useSelector(selectConfig);
     const symbols = config.symbols;
     const [symbolWallet, setSymbolWallet] = useState([]);
@@ -126,7 +132,7 @@ function Card(props) {
     const [openChongZhi, setOpenChongZhi] = useState(false);
     const [huaZhuanValue, setHuaZhuanValue] = useState(0);
     const [openChangeBi, setOpenChangeBi] = useState(false);
-    const [address, setAddress] = useState("");
+    const [addressList, setAddressList] = useState("");
     const [lookDataId, setLookDataId] = useState("");
     const [openPinWindow, setOpenPinWindow] = useState(false);
     const [movePinWindow, setMovePinWindow] = useState(false);
@@ -149,8 +155,11 @@ function Card(props) {
     const [currentCardItem, setCurrentCardItem] = useState(null);
     const [cardHeight, setCardHeight] = useState(0);
     const [cardFlexibleHeight, setCardFlexibleHeight] = useState(false);
-    const divRef = useRef(null);
+    const [openKycAddress, setOpenKycAddress] = useState(false);
+    const [openKycAuth, setOpenKycAuth] = useState(false);
+    const [selectedKycAddress, setSelectedKycAddress] = useState(0);
 
+    const divRef = useRef(null);
     const [pin, setPin] = useState('');
     const [hasPin, setHasPin] = useState(false)
 
@@ -161,6 +170,7 @@ function Card(props) {
     const [exchangeCreditFee, setExchangeCreditFee] = useState(0);
     const [balanceNotEnough, setBalanceNotEnough] = useState(false);
     const [updatedKycInfoFlag, setUpdatedKycInfoFlag] = useState(false);
+    const [kycInfoNavAction, setKycInfoNavAction] = useState('');
 
     const openPinFunc = () => {
         setTimeout(() => {
@@ -348,7 +358,7 @@ function Card(props) {
         getCardConfig()
         getCardList()
         setHasPin(userData.profile?.user?.hasSetPaymentPassword ?? false)
-
+        refreshKycInfo()
     }, [userData.profile]);
 
     useEffect(() => {
@@ -370,6 +380,10 @@ function Card(props) {
             top: 0,
             behavior: 'smooth' // 平滑滚动
         });
+    };
+
+    const handleChangeInputVal = (event) => {
+        setSelectedKycAddress(event.target.value);
     };
 
 
@@ -618,6 +632,7 @@ function Card(props) {
 
 
     useEffect(() => {
+        window.localStorage.setItem('backBtn', 'card');
         setTimeout(() => {
             document.getElementById("cardHeights") && setCardHeight(document.getElementById("cardHeights").offsetHeight)
         }, 1000);
@@ -722,7 +737,7 @@ function Card(props) {
                         withdrawLock: arrayLookup(walletData.inner, 'symbol', symbols[i].symbol, 'withdrawLock') || 0
                     })
                 }
-                const tmpSwapRate = arrayLookup(symbols, 'symbol', 'USDT', (huaZhuanValue === 0? 'buyRate' : 'sellRate'));
+                const tmpSwapRate = arrayLookup(symbols, 'symbol', 'USDT', (huaZhuanValue === 0 ? 'buyRate' : 'sellRate'));
                 setSwapRate(tmpSwapRate)
             }
 
@@ -755,12 +770,34 @@ function Card(props) {
     const refreshKycInfo = () => {
         dispatch(getKycInfo()).then((value) => {
             if (!value.payload) return;
-            let tempAddress = value.payload.data.address;
-            if (tempAddress) {
-                setAddress(tempAddress)
-            } else {
-                return;
+            const result = value.payload && value.payload.data;
+            let tempAddressList = [];
+            if(result.address) {
+                const adr1 = _.find(phoneCode.list, { country_code: result.country}).local_name + ' ' + result.state + ', ' + result.city + ',' + result.address
+                tempAddressList.push({
+                    id: 1,
+                    label: adr1,
+                    countryCode: result.country
+                })
             }
+            if(result.userAddressTwo && result.userAddressTwo.address){
+                const adr2 = _.find(phoneCode.list, { country_code: result.userAddressTwo.country}).local_name  + ' ' + result.userAddressTwo.state + ' ,' + result.userAddressTwo.city + ',' + result.userAddressTwo.address
+                tempAddressList.push({
+                    id: 2,
+                    label: adr2,
+                    countryCode: result.userAddressTwo.country
+                })
+            }
+            if(result.userAddressThree && result.userAddressThree.address){
+                const adr3 = _.find(phoneCode.list, { country_code: result.userAddressThree.country}).local_name  + ' ' + result.userAddressThree.state + ',' + result.userAddressThree.city + ',' + result.userAddressThree.address
+                tempAddressList.push({
+                    id: 3,
+                    label: adr3,
+                    countryCode: result.userAddressThree.country
+                })
+            }
+            setAddressList(tempAddressList)
+            setSelectedKycAddress(result.defaultAddressInfo? result.defaultAddressInfo: 1)
         });
     };
 
@@ -804,9 +841,7 @@ function Card(props) {
 
     //获取Config
     const getCardConfig = () => {
-        setLoadingShow(false)
         dispatch(getCreditConfig()).then((res) => {
-            setLoadingShow(false)
             let result = res.payload
             if (result) {
                 let tmpConfig = { 2: [], 3: [] }
@@ -816,7 +851,7 @@ function Card(props) {
                     if (item.state === 1) {
                         if (item.creditType === 2) {
                             tmpConfig[2].push(item)
-                            if (item.creditConfigName.includes("支付")) {
+                            if (item.creditConfigName.includes("线上")) {
                                 tmpLanguageList.push(t('card_190'));
                             } else if (item.creditConfigName.includes("购物")) {
                                 tmpLanguageList.push(t('card_191'));
@@ -826,10 +861,12 @@ function Card(props) {
                                 tmpLanguageList.push(t('card_193'));
                             } else if (item.creditConfigName.includes("采购")) {
                                 tmpLanguageList.push(t('card_194'));
+                            } else if (item.creditConfigName.includes("苹果")) {
+                                tmpLanguageList.push(t('card_251'));
                             }
                         } else if (item.creditType === 3) {
                             tmpConfig[3].push(item)
-                            if (item.creditConfigName.includes("支付")) {
+                            if (item.creditConfigName.includes("线上")) {
                                 tmpLanguageList.push(t('card_190'));
                             } else if (item.creditConfigName.includes("购物")) {
                                 tmpLanguageList.push(t('card_191'));
@@ -839,6 +876,8 @@ function Card(props) {
                                 tmpLanguageList.push(t('card_193'));
                             } else if (item.creditConfigName.includes("采购")) {
                                 tmpLanguageList.push(t('card_194'));
+                            } else if (item.creditConfigName.includes("苹果")) {
+                                tmpLanguageList.push(t('card_251'));
                             }
                         }
                         tmpConfigList[item.configId] = item
@@ -855,7 +894,7 @@ function Card(props) {
 
     const infoShenQinTxt = (type) => {
         if (type?.includes("visa")) {
-            if (type?.includes("支付")) {
+            if (type?.includes("线上")) {
                 return t('card_211')
             }
             if (type?.includes("购物")) {
@@ -870,8 +909,11 @@ function Card(props) {
             if (type?.includes("采购")) {
                 return t('card_219')
             }
+            if (type?.includes("苹果")) {
+                return t('card_255')
+            }
         } else if (type?.includes("Master")) {
-            if (type?.includes("支付")) {
+            if (type?.includes("线上")) {
                 return t('card_201')
             }
             if (type?.includes("购物")) {
@@ -886,6 +928,9 @@ function Card(props) {
             if (type?.includes("采购")) {
                 return t('card_219')
             }
+            if (type?.includes("苹果")) {
+                return t('card_255')
+            }
         }
         return "";
     }
@@ -893,7 +938,7 @@ function Card(props) {
 
     const infoShenQinTxt2 = (type) => {
         if (type?.includes("visa")) {
-            if (type?.includes("支付")) {
+            if (type?.includes("线上")) {
                 return t('card_212')
             }
             if (type?.includes("购物")) {
@@ -908,8 +953,11 @@ function Card(props) {
             if (type?.includes("采购")) {
                 return t('card_220')
             }
+            if (type?.includes("苹果")) {
+                return t('card_254')
+            }
         } else if (type?.includes("Master")) {
-            if (type?.includes("支付")) {
+            if (type?.includes("线上")) {
                 return t('card_202')
             }
             if (type?.includes("购物")) {
@@ -924,6 +972,9 @@ function Card(props) {
             if (type?.includes("采购")) {
                 return t('card_210')
             }
+            if (type?.includes("苹果")) {
+                return t('card_254')
+            }
         }
         return "";
     }
@@ -931,7 +982,8 @@ function Card(props) {
         setOpenCardBtnShow(true)
         dispatch(exchangeCreditCard({
             creditType: currUserCardInfo.creditType,
-            userCreditId: currUserCardInfo.id
+            userCreditId: currUserCardInfo.id,
+            defaultAddressInfo: selectedKycAddress
         })).then((res) => {
             const result = res.payload;
             if (result.errno === 0) {
@@ -975,7 +1027,8 @@ function Card(props) {
             quotaAmount: 1,
             applyFeeSymbol: applyFeeSymbol,
             configId: cardConfigList[cardConfigID].configId,
-            applyDesc: 'card applyDesc'
+            applyDesc: 'card applyDesc',
+            defaultAddressInfo: selectedKycAddress
         })).then((res) => {
             let result = res.payload
             setUpdateCard(true)
@@ -1101,7 +1154,7 @@ function Card(props) {
                         setZhuanQuan(false);
                         setTiJiaoState(1);
                         setUpdateCard(true)
-                        dispatch(centerGetTokenBalanceList());
+                        dispatch(centerGetTokenBalanceList({ forceUpdate: true}));
                         setUpdateCard(true)
                         setTimer(timer + 1)
                         // setOpenSuccess(true);
@@ -1112,7 +1165,7 @@ function Card(props) {
                         setZhuanQuan(false);
                         setTiJiaoState(3);
                         setUpdateCard(true)
-                        dispatch(centerGetTokenBalanceList());
+                        dispatch(centerGetTokenBalanceList({ forceUpdate: true}));
                         setUpdateCard(true)
                         setTimer(timer + 1)
                         // setOpenSuccess(true);
@@ -1176,7 +1229,7 @@ function Card(props) {
     const verifiedVAuthEvt = () => {
         setOpenYanZheng(false);
         setOpenGoogleCode(true);
-        dispatch(userProfile());
+        dispatch(userProfile({ forceUpdate: true}));
         setTypeBined(true);
     }
 
@@ -1187,22 +1240,22 @@ function Card(props) {
 
     useEffect(() => {
         if (cardID) {
-            if(huaZhuanValue === 0){
+            if (huaZhuanValue === 0) {
                 //划入
                 let tmpTransferFeeIn = 0
                 if (transferMoney) {
                     tmpTransferFeeIn = Number(maxValue ? maxValue : transferMoney) * Number(cardConfigList[cardConfigID].creditRate) + Number(cardConfigList[cardConfigID].basicFee)
                 }
                 setTransferFee(tmpTransferFeeIn)
-                setRecivedAmount((transferMoney - tmpTransferFeeIn)* swapRate)
-            }else if(huaZhuanValue === 1) {
+                setRecivedAmount((transferMoney - tmpTransferFeeIn) * swapRate)
+            } else if (huaZhuanValue === 1) {
                 //划出
                 let tmpTransferFeeOut = 0
                 if (transferMoney) {
-                    tmpTransferFeeOut = Number(maxValue ? maxValue : transferMoney)/swapRate * Number(cardConfigList[cardConfigID].creditRate) + Number(cardConfigList[cardConfigID].basicFee)
+                    tmpTransferFeeOut = Number(maxValue ? maxValue : transferMoney) / swapRate * Number(cardConfigList[cardConfigID].creditRate) + Number(cardConfigList[cardConfigID].basicFee)
                 }
                 setTransferFee(tmpTransferFeeOut)
-                setRecivedAmount((transferMoney/swapRate - tmpTransferFeeOut))
+                setRecivedAmount((transferMoney / swapRate - tmpTransferFeeOut))
             }
         }
 
@@ -1229,15 +1282,24 @@ function Card(props) {
 
     const updatedKycInfoEvt = () => {
         setOpenKyc(false);
-        const index = _.findIndex(cardList[2], { id: currentCardItem.id });
-        setTimeout(() => {
-            document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`).click();
-            setCurrentCardItem(currentCardItem)
-            setExchangeCreditFee(cardConfigList[currentCardItem.creditConfigId]?.exchangeCreditFee)
-            setBalanceNotEnough(false);
-            setUpdatedKycInfoFlag(true);
-            setOpenAnimateHuanKa(true);
-        }, 100)
+        refreshKycInfo();
+        if(kycInfoNavAction == 'applyStep1' || kycInfoNavAction == 'applyStep2' || kycInfoNavAction == 'applyStep3'){
+           setTimeout(()=> {
+            kycInfoDialogControl();
+           }, 300)
+        } else if(kycInfoNavAction == 'changeCard1' || kycInfoNavAction == 'cardHome') {
+            const index = _.findIndex(cardList[2], { id: currentCardItem.id });
+            setTimeout(() => {
+                if(kycInfoNavAction == 'changeCard1' &&  document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`)) {
+                    document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`).click();
+                }
+                setCurrentCardItem(currentCardItem)
+                setExchangeCreditFee(cardConfigList[currentCardItem.creditConfigId]?.exchangeCreditFee)
+                setBalanceNotEnough(false);
+                setUpdatedKycInfoFlag(true);
+                setOpenAnimateHuanKa(true);
+            }, 100)
+        }
     }
 
     const reciveCode = async () => {
@@ -1281,7 +1343,7 @@ function Card(props) {
     const backPageEvt = () => {
         setOpenBindPhone(false)
         setOpenBindEmail(false);
-        dispatch(userProfile());
+        dispatch(userProfile({ forceUpdate: true}));
         setTypeBined(true);
         myFunction;
         setOpenGoogleCode(true);
@@ -1332,6 +1394,16 @@ function Card(props) {
     const confirmHeld = (configId) => {
         let index = _.findIndex(cardList[2], { creditConfigId: _.toNumber(configId) });
         return index < 0 ? false : true
+    }
+
+    const kycInfoDialogControl = () => {
+        if(userData?.profile?.user?.bindKyc) {
+            setOpenKycAuth(false)
+            setOpenKycAddress(true)
+        }else{
+            setOpenKycAddress(false)
+            setOpenKycAuth(true)
+        }
     }
 
 
@@ -1787,19 +1859,24 @@ function Card(props) {
                                                                                     <div className='flex justify-center mt-16' style={{ width: "100%" }}>
                                                                                         <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                                                                                         <div className='TanHaoCardZi'>
-                                                                                        {t('card_17')}
+                                                                                            {t('card_17')}
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div className='cardErrorZi'>{ t('card_18') }</div>
+                                                                                    <div className='cardErrorZi'>{t('card_261')}</div>
 
                                                                                     <div className='twoSamllBtn flex justify-between'>
-                                                                                        <div className='cardErrorBtn2 txtColorTitleSmall' >
-                                                                                            {t('card_72')}
+                                                                                        <div className='cardErrorBtn2 txtColorTitleSmall' onClick={()=>{
+                                                                                            setKycInfoNavAction('cardHome')
+                                                                                            setCurrentCardItem(cardItem)
+                                                                                            setCurrUserCardInfo(cardItem)
+                                                                                            openKycFunc();
+                                                                                        }}>
+                                                                                            {t('card_19')}
                                                                                         </div>
 
-                                                                                        <div className='cardErrorBtn2 txtColorTitleSmall'>
+                                                                                        {/* <div className='cardErrorBtn2 txtColorTitleSmall'>
                                                                                             {t('card_246')}
-                                                                                        </div>
+                                                                                        </div> */}
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1875,7 +1952,7 @@ function Card(props) {
                                                                                         <div className='smallYuanDian'></div>
                                                                                     </div>
                                                                                 </div>
-                                                                                
+
                                                                             </div>
 
                                                                             <div style={{ width: "100%", margin: "0rem auto" }}>
@@ -1897,9 +1974,17 @@ function Card(props) {
                                                         <div className='tianJiaKaPian flex items-center pl-16' onClick={() => {
                                                             setTabValue(1);
                                                         }}>
-                                                            <img className='cardIconW' src="wallet/assets/images/card/jiaHao.png" alt="" />
+                                                            <img className='cardIconW ' src="wallet/assets/images/card/jiaHao.png" alt="" />
                                                             <div className='zhangDanZi' >{t('card_25')}</div>
                                                         </div>
+
+                                                        {/* <div className='tianJiaKaPian flex items-center  pl-16' style={{ marginTop: "20px" }} onClick={() => {
+                                                            setOpenJiHuoWindow(true)
+                                                            openJiHuoFunc();
+                                                        }}>
+                                                            <img className='cardIconW ' src="wallet/assets/images/card/jiaHao.png" alt="" />
+                                                            <div className='zhangDanZi' >{t('card_252')}</div>
+                                                        </div> */}
 
                                                         <div>
                                                             <div className='text-16 mt-28 ml-10'> {t('card_225')}</div>
@@ -2218,12 +2303,12 @@ function Card(props) {
                                                             animate="show"
                                                             className='cardJianGe'
                                                         >
-                                                            <div className='cardName'>{cardLanguage[index]}</div>
+                                                            <div className='cardName '>{cardLanguage[index]}</div>
                                                             <div className="responsive-div">
                                                                 <div className="responsive-div-content card1Bg" style={{ background: `url(${configItem?.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }} onClick={() => {
                                                                     setOpenXiangQing(true);
                                                                     setClickShenQinCard(true);
-                                                                    setCardConfigID(currentCardItem?.creditConfigId || currUserCardInfo?.creditConfigId);
+                                                                    setCardConfigID(configItem.configId);
                                                                     myFunction;
                                                                 }}   >
                                                                 </div>
@@ -2233,7 +2318,7 @@ function Card(props) {
                                                                 <div className='flex justify-between'>
                                                                     <div className='kaPianInfoLeiXing' onClick={() => {
                                                                     }} >{configItem.cardOrganizations} Card</div>
-                                                                    <div className='kaPianInfo ' onClick={() => {
+                                                                    <div className='kaPianInfo' onClick={() => {
                                                                         setOpenXiangQing(true);
                                                                         setClickShenQinCard(true);
                                                                         setCardConfigID(configItem.configId);
@@ -2310,6 +2395,25 @@ function Card(props) {
                                 </div>
                             </div>
                         }
+                    </motion.div>
+                </div>
+            }
+            {   !loadingShow && openYanZheng && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
+                    <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className='mt-12'
+                        id="topGo"
+                    >
+                        <div className='flex mb-10' onClick={() => {
+                            setOpenYanZheng(false);
+                            myFunction;
+                        }}   >
+                            <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
+                        </div>
+                        <Enable2FA verifiedVAuth={() => verifiedVAuthEvt()} />
+                        <div style={{ height: "5rem" }}></div>
                     </motion.div>
                 </div>
             }
@@ -2440,7 +2544,7 @@ function Card(props) {
 
                             <div className='flex justify-between mt-10'>
                                 <div className='quanYiHuiZi'>{t('card_46')}</div>
-                                <div>{cardConfigList[cardConfigID]?.cardOrganizations == 'visa' ? 'VISA' : 'MASTER'}</div>
+                                <div>{cardConfigList[cardConfigID]?.cardOrganizations == 'Visa' ? 'VISA' : 'MASTER'}</div>
                             </div>
 
 
@@ -2486,8 +2590,9 @@ function Card(props) {
                             </div>
 
                             <div className='flex justify-start mt-10'>
-                                <div className='quanYiHuiZi pb-8'>{t('card_107')}</div>
+                                <div className='quanYiHuiZi pb-8 '>{t('card_107')}</div>
                             </div>
+                            {!cardConfigList[cardConfigID]?.creditConfigName.includes("苹果") && <div className=' pb-8 ' style={{ color: "#19D5B8" }}>{t('card_253')}</div>}
                         </div>
                     </motion.div>
 
@@ -2501,12 +2606,9 @@ function Card(props) {
                             sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
                             style={{ width: '100%', height: '4rem', fontSize: "20px", margin: '1rem auto 2.8rem', display: 'block', lineHeight: "inherit" }}
                             onClick={() => {
-                                // setOpenApplyWindow(true)
-                                // openApplyFunc()
-                                // setOpenChongZhi(true)
-                                // applyCard()
-                                openChangeBiFunc()
-                                refreshKycInfo()
+                                // openChangeBiFunc()
+                                // refreshKycInfo()
+                                kycInfoDialogControl();
                             }}
                         >
                             {t('card_36')}
@@ -2528,14 +2630,20 @@ function Card(props) {
                 >
                     <div className='flex mb-10' onClick={() => {
                         setOpenKyc(false);
-                        const index = _.findIndex(cardList[2], { id: currentCardItem.id });
-                        setTimeout(() => {
-                            document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`).click();
-                            setCurrentCardItem(currentCardItem)
-                            setExchangeCreditFee(cardConfigList[currentCardItem.creditConfigId]?.exchangeCreditFee)
-                            setBalanceNotEnough(false);
-                            setOpenAnimateHuanKa(true);
-                        }, 100)
+                        if(kycInfoNavAction === 'applyStep1' || kycInfoNavAction === 'applyStep2' || kycInfoNavAction === 'applyStep3') {
+                            kycInfoDialogControl();
+                        } else if(kycInfoNavAction === 'changeCard1'){
+                            const index = _.findIndex(cardList[2], { id: currentCardItem.id });
+                            setTimeout(() => {
+                                if (document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`)){
+                                    document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`).click();
+                                }
+                                setCurrentCardItem(currentCardItem)
+                                setExchangeCreditFee(cardConfigList[currentCardItem.creditConfigId]?.exchangeCreditFee)
+                                setBalanceNotEnough(false);
+                                setOpenAnimateHuanKa(true);
+                            }, 100)
+                        }
                     }}   >
                         <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                     </div>
@@ -2662,12 +2770,59 @@ function Card(props) {
                     }}
                 >
                     <div className="dialog-select-fiat danChuangTxt">
-                        {t('card_108')}
+                        {t('card_256')}
                     </div>
                 </Box>
-                <div className={clsx('exchange-credit-fee', balanceNotEnough && 'error-msg-font')}>{t('home_borrow_18')}: {exchangeCreditFee} USDT</div>
+                {/* <div className={clsx('exchange-credit-fee', balanceNotEnough && 'error-msg-font')}>{t('home_borrow_18')}: {exchangeCreditFee} USDT</div> */}
+                
+                <div className="flex items-center justify-between mt-20">
+                    <FormControl sx={{ width: '100%', borderColor: '#525A67' }} className="mb-16">
+                       <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={selectedKycAddress}
+                            onChange={handleChangeInputVal}
+                            className='addressKyc'
+                            style={{ color: "#909EB0", backgroundColor: "#1E293A" }}
+                        >
+                            {
+                                addressList && addressList.map((adr, i)=>{
+                                    return <MenuItem value={adr.id} disabled={ cardConfigList[currentCardItem?.creditConfigId]?.country === '' ? false : !(cardConfigList[currentCardItem?.creditConfigId]?.country === adr.countryCode) } style={{ color: "#909EB0" }}>{t('home_sendTips_1')}{adr.id}: {adr.label}</MenuItem>
+                                })
+                            }
 
-                <div className='flex mt-16 mb-20 px-15 position-re' style={{ height: "40px" }} >
+                        </Select>
+                    </FormControl>
+                </div>
+
+                <div className='flex mt-10  justify-center' >
+                    <LoadingButton
+                        disabled={addressList.length == 0}
+                        className="boxCardBtn"
+                        color="secondary"
+                        loading={openCardBtnShow}
+                        variant="contained"
+                        style={{ width: "70%" }}
+                        onClick={() => {
+                            exChangeCard()
+                        }}
+                    >
+                        {
+                            t('card_258') + ' ' + exchangeCreditFee + 'U'
+                        }
+                    </LoadingButton>
+                </div>
+
+                <div className='mt-16 mb-20' style={{ textDecoration: "underline", textAlign: "center" }}>
+                    <span  onClick={ ()=> {
+                    setKycInfoNavAction('changeCard1')
+                    setOpenAnimateHuanKa(false);
+                    setExchangeCreditFee(0);
+                    openKycFunc();
+                }}>{ t('card_257') }</span>
+                </div>
+
+                {/* <div className='flex mt-16 mb-20 px-15 position-re' style={{ height: "40px" }} >
                     <LoadingButton
                         disabled={false}
                         className="boxCardBtn position-ab"
@@ -2697,7 +2852,7 @@ function Card(props) {
                         openKycFunc();
                     }}>{t('card_76')}</div>
 
-                </div>
+                </div> */}
 
             </AnimateModal>
 
@@ -2728,7 +2883,7 @@ function Card(props) {
                                         setTransferMoney(0)
                                         setTransferFee(0)
                                         setRecivedAmount(0)
-                                        const tmpSwapRate = arrayLookup(symbols, 'symbol', 'USDT', (huaZhuanValue === 0? 'sellRate' : 'buyRate'));
+                                        const tmpSwapRate = arrayLookup(symbols, 'symbol', 'USDT', (huaZhuanValue === 0 ? 'sellRate' : 'buyRate'));
                                         setSwapRate(tmpSwapRate)
                                     }}
                                     indicatorColor="secondary"
@@ -2807,13 +2962,13 @@ function Card(props) {
                                 <div className='flex justify-between mt-16'>
                                     <div className='flex'>
                                         <div className='' style={{ color: "#94A3B8" }}>{t('card_223')}</div>
-                                        <div className='ml-10'>{ huaZhuanValue === 0 ? ( Number(recivedAmount.toFixed(2)) || '0.00') + ' USD' : ( Number(recivedAmount.toFixed(6)) || '0.00') + ' USDT'}</div>
+                                        <div className='ml-10'>{huaZhuanValue === 0 ? (Number(recivedAmount.toFixed(2)) || '0.00') + ' USD' : (Number(recivedAmount.toFixed(6)) || '0.00') + ' USDT'}</div>
                                     </div>
                                 </div>
                                 <div className='flex justify-between mt-16'>
                                     <div className='flex'>
                                         <div className='' style={{ color: "#94A3B8" }}>{t('home_borrow_16')}</div>
-                                        <div className='ml-10'>{ Number(transferFee.toFixed(6))|| '0.00' } USDT</div>
+                                        <div className='ml-10'>{Number(transferFee.toFixed(6)) || '0.00'} USDT</div>
                                     </div>
                                 </div>
                             </div>
@@ -2991,12 +3146,12 @@ function Card(props) {
 
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
                             <div style={{ color: "#888B92" }}>{t('home_borrow_18')}</div>
-                            <div>{ Number(transferFee.toFixed(6))|| '0.00' } USDT</div>
+                            <div>{Number(transferFee.toFixed(6)) || '0.00'} USDT</div>
                         </motion.div>
 
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
                             <div style={{ color: "#888B92" }}>{t('card_223')}</div>
-                            <div>{ huaZhuanValue === 0 ? ( Number(recivedAmount.toFixed(2)) || '0.00') + ' USD' : ( Number(recivedAmount.toFixed(6)) || '0.00') + ' USDT'} </div>
+                            <div>{huaZhuanValue === 0 ? (Number(recivedAmount.toFixed(2)) || '0.00') + ' USD' : (Number(recivedAmount.toFixed(6)) || '0.00') + ' USDT'} </div>
                         </motion.div>
 
                         <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
@@ -3295,7 +3450,7 @@ function Card(props) {
                             render={({ field }) => (
                                 <TextField
                                     {...field}
-                                    className="mb-36"
+                                    className="mb-20"
                                     label={t('card_86')}
                                     type="number"
                                     error={!!errors.cardNumber}
@@ -3307,15 +3462,19 @@ function Card(props) {
                             )}
                         />
 
+
+                        <div className='flex  justify-between pb-20' >
+                            <div className='text-16'>CVV</div>
+                        </div>
+
                         <Controller
                             name="checkCode"
                             control={control}
                             render={({ field }) => (
                                 <TextField
                                     {...field}
-                                    disabled={true}
                                     className="mb-36"
-                                    label={t('card_87')}
+                                    label="CCV"
                                     type="number"
                                     error={!!errors.checkCode}
                                     helperText={errors?.checkCode?.message}
@@ -3339,7 +3498,6 @@ function Card(props) {
                         >
                             {t('kyc_23')}
                         </LoadingButton>
-
                     </div>
                 </div>
             </BootstrapDialog >
@@ -3623,25 +3781,6 @@ function Card(props) {
                     </div>
                 </div>
             </BootstrapDialog>
-
-            {openYanZheng && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
-                <motion.div
-                    variants={container}
-                    initial="hidden"
-                    animate="show"
-                    className='mt-12'
-                    id="topGo"
-                >
-                    <div className='flex mb-10' onClick={() => {
-                        setOpenYanZheng(false);
-                        myFunction;
-                    }}   >
-                        <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
-                    </div>
-                    <Enable2FA verifiedVAuth={() => verifiedVAuthEvt()} />
-                    <div style={{ height: "5rem" }}></div>
-                </motion.div>
-            </div>}
 
             {/* pin码界面 */}
             <BootstrapDialog
@@ -3986,11 +4125,14 @@ function Card(props) {
                         <div className='flex justify-between mt-12'>
                             <div className='' style={{ color: "#94A3B8" }}>{t('card_174')}</div>
                             <div className='' style={{ color: "#2DD4BF", textDecoration: "underline" }} onClick={() => {
+                                setKycInfoNavAction('applyStep3')
                                 setOpenChangeBi(false);
                                 openKycFunc();
                             }} >{t('card_112')}</div>
                         </div>
-                        <div className='mt-20' style={{ marginBottom: "6rem" }}>{address}</div>
+                        <div className='mt-20' style={{ marginBottom: "6rem" }}>{
+                            addressList ? addressList[selectedKycAddress -1]?.label : ''
+                        }</div>
                         <LoadingButton
                             disabled={false}
                             className="boxCardBtn3 mb-12"
@@ -4064,7 +4206,131 @@ function Card(props) {
                     </LoadingButton>
                 </div>
             </AnimateModal>
-        </div>
+
+
+
+            <AnimateModal
+                className="faBiDiCard tanChuanDiSe"
+                open={openKycAddress}
+                onClose={() => setOpenKycAddress(false)}
+            >
+                <div className='flex justify-center mb-16' style={{ width: "100%" }}>
+                    <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
+                    <div className='TanHaoCardZi '>
+                        提交申请
+                    </div>
+                </div>
+
+                <Box
+                    className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard flex justify-center"
+                    sx={{
+                        backgroundColor: "#2C394D",
+                        padding: "1rem 0rem",
+                        overflow: "hidden",
+                        margin: "0rem auto 0rem auto"
+                    }}
+                >
+                    <div className="danChuangTxt ">
+                        {t('card_256')}
+                    </div>
+                </Box>
+
+                <div className="flex items-center justify-between mt-20">
+                    <FormControl sx={{ width: '100%', borderColor: '#525A67' }} className="mb-16">
+                       <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={selectedKycAddress}
+                            onChange={handleChangeInputVal}
+                            className='addressKyc'
+                            style={{ color: "#909EB0", backgroundColor: "#1E293A" }}
+                        >
+                            {
+                                addressList && addressList.map((adr, i)=>{
+                                    return <MenuItem value={adr.id} disabled={ cardConfigList[cardConfigID]?.country === '' ? false : !(cardConfigList[cardConfigID]?.country === adr.countryCode) } style={{ color: "#909EB0" }}>{t('home_sendTips_1')}{adr.id}: {adr.label}</MenuItem>
+                                })
+                            }
+
+                        </Select>
+                    </FormControl>
+                </div>
+
+                <div className='flex mt-10  justify-center' >
+                    <LoadingButton
+                        disabled={addressList.length == 0}
+                        className="boxCardBtn"
+                        color="secondary"
+                        loading={openCardBtnShow}
+                        variant="contained"
+                        style={{ width: "60%" }}
+                        onClick={() => {
+                            setOpenKycAddress(false)
+                            openChangeBiFunc()
+                        }}
+                    >
+                        { t('home_borrow_17')}
+                    </LoadingButton>
+                </div>
+
+                <div className='mt-16 mb-20' style={{ textDecoration: "underline", textAlign: "center" }}>
+                    <span  onClick={ ()=> {
+                    setKycInfoNavAction('applyStep2')
+                    setOpenKycAddress(false)
+                    setOpenKyc(true)
+                }}>{ t('card_257') }</span>
+                </div>
+
+            </AnimateModal >
+            
+            <AnimateModal
+                className="faBiDiCard tanChuanDiSe"
+                open={openKycAuth}
+                onClose={() => setOpenKycAuth(false)}
+            >
+                <div className='flex justify-center mb-16' style={{ width: "100%" }}>
+                    <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
+                    <div className='TanHaoCardZi '>
+                        {t('card_259')}
+                    </div>
+                </div>
+
+                <Box
+                    className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard flex justify-center"
+                    sx={{
+                        backgroundColor: "#2C394D",
+                        padding: "1rem 0rem",
+                        overflow: "hidden",
+                        margin: "0rem auto 0rem auto"
+                    }}
+                >
+                    <div className="danChuangTxt ">
+                       {t('card_260')}
+                    </div>
+                </Box>
+
+                <div className='flex mt-16 mb-28 justify-center' >
+                    <LoadingButton
+                        disabled={false}
+                        className="boxCardBtn"
+                        color="secondary"
+                        loading={openCardBtnShow}
+                        variant="contained"
+                        style={{ width: "60%" }}
+                        onClick={() => {
+                            setKycInfoNavAction('applyStep1')
+                            setOpenKycAuth(false);
+                            setOpenKyc(true);
+                        }}
+                    >
+                        { t('home_borrow_17')}
+                    </LoadingButton>
+                </div>
+
+            </AnimateModal >
+
+
+
+        </div >
     )
 }
 

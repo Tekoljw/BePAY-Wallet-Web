@@ -47,7 +47,7 @@ import QRCode from "qrcode.react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { getCryptoDisplay } from "../../store/wallet/walletThunk";
-import { getDecenterWalletBalance } from "../../store/user/userThunk";
+import { getDecenterWalletBalance, centerGetTokenBalanceList} from "../../store/user/userThunk";
 import FuseLoading from '@fuse/core/FuseLoading';
 import { useTranslation } from "react-i18next";
 import { makeOrder, getDepositeFiatOrderStatus } from "../../store/payment/paymentThunk";
@@ -229,11 +229,11 @@ function Deposite() {
     const [submitDisabled, setSubmitDisabled] = useState(false);
     const [isGetWalletAddress, setIsGetWalletAddress] = useState(false);
     const userData = useSelector(selectUserData);
-    const walletData = userData.wallet;
+    const walletData = userData.wallet || {};
     // 法币余额数据
-    const fiatData = userData.fiat;
+    const fiatData = userData.fiat || [];
     const loginState = userData.loginState;
-    const [currencyCode, setCurrencyCode] = useState(fiatData[0]?.currencyCode || 'USD');
+    const [currencyCode, setCurrencyCode] = useState(fiatData && fiatData[0]?.currencyCode || 'USD');
     const config = useSelector(selectConfig);
     const nftConfig = config.nftConfig;
     const networks = config.networks;
@@ -265,6 +265,8 @@ function Deposite() {
     const [nftId, setNftId] = useState('');
     const [isConfirmTransfer, setIsConfirmTransfer] = useState(false);
     const [tokenId, setTokenId] = useState('');
+    const [openExtraAddressFeeModal, setOpenExtraAddressFeeModal] = useState(false);
+    const [balanceNotEnough, setBalanceNotEnough] = useState(false);
 
     console.log('enter deposit page')
     const changePhoneTab = (tab) => {
@@ -423,7 +425,7 @@ function Deposite() {
     };
 
     useEffect(() => {
-        setLoadingShow(false);
+        // setLoadingShow(true);
         setPhoneTab('deposite');
     }, []);
 
@@ -431,7 +433,7 @@ function Deposite() {
     useEffect(() => {
         if(canLoginAfterRequest(userData)){ //已经进行过登录流程了
             dispatch(getCryptoDisplay()).then((res) => {
-                setLoadingShow(false);
+                // setLoadingShow(false);
                 let result = res.payload;
                 setCryptoDisplayData(result?.data);
             });
@@ -454,6 +456,7 @@ function Deposite() {
 
         dispatch(getWalletAddress({ networkId: id, symbol: symbol })).then((res) => {
             setIsLoading(false);
+            setOpenExtraAddressFeeModal(false);
             const result = res.payload;
             if (result.errno === 0) {
                 setCryptoOpenLoad(false);
@@ -470,13 +473,16 @@ function Deposite() {
                 if (result?.data?.address) {
                     setWalletAddressList([...walletAddressList, {
                         address: result?.data?.address ?? '',
+                        addressDesc: '收款地址'
                     }])
                     setWalletAddressListBak([...walletAddressList, {
                         address: result?.data?.address ?? '',
+                        addressDesc: '收款地址'
                     }])
                 }
+                dispatch(centerGetTokenBalanceList( {forceUpdate: true}))
             } else {
-                dispatch(showMessage({ message: t('error_39'), code: 2 }));
+                dispatch(showMessage({ message: result.errmsg, code: 2 }));
             }
         });
     };
@@ -698,7 +704,8 @@ function Deposite() {
     }, [networkId]);
 
     const getSymbolMoney = (symbol) => {
-        let arr = userData.wallet.inner || [];
+        let arr = userData?.wallet?.inner || [];
+        console.log(arr);
         let balance = arrayLookup(arr, 'symbol', symbol, 'balance') || 0;
         return balance.toFixed(6)
     };
@@ -935,7 +942,7 @@ function Deposite() {
     const [showQRcode, setShowQRcode] = useState(false);
 
     const fiatsFormatAmount = () => {
-        if (fiatData.length === 0 && paymentFiat.length === 0) {
+        if (fiatData && fiatData.length === 0 && paymentFiat && paymentFiat.length === 0) {
             return
         }
         let tmpFiatDisplayData = {};
@@ -956,8 +963,8 @@ function Deposite() {
             displayFiatData.push(item.name);
             tmpFiatDisplayData[item.name] = item
         });
-        if (fiatData.length > 0) {
-            fiatData?.map((item, index) => {
+        if (fiatData && fiatData.length > 0) {
+            fiatData.map((item, index) => {
                 tmpFiatsData[item.currencyCode] = item;
             });
         }
@@ -1126,8 +1133,8 @@ function Deposite() {
                                 <div className="addressW2 flex justify-between guoDuDongHua">
                                     <div className='idZi guoDuDongHua'> <span style={{ color: "#ffffff", marginRight: "10px" }}>UserID</span>  {userData?.profile?.user?.id}</div>
                                     <img onClick={() => {
+                                        handleCopyText(userData?.profile?.user?.id);
                                         copyTiShiFunc();
-                                        handleCopyText(userData?.profile?.user?.id)
                                     }} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png" />
                                 </div>
                                 <QRCode
@@ -1215,7 +1222,7 @@ function Deposite() {
                                             <div>
                                                 <div className='flex ml-10'>
                                                     <img onClick={() => {
-                                                        handleEditAddressDesc(index, { eidtMode: !addressItem.eidtMode })
+                                                        handleEditAddressDesc(index, { editMode: !addressItem.editMode })
                                                     }} className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
                                                     <OutlinedInput
                                                         className='diZhiShuRu'
@@ -1224,18 +1231,18 @@ function Deposite() {
                                                             '& .MuiOutlinedInput-notchedOutline': {
                                                                 border: 'none',
                                                             },
-                                                            color: addressItem.eidtMode ? '#ffffff' : '#94A3B8'
+                                                            color: addressItem.editMode ? '#ffffff' : '#94A3B8'
                                                         }}
                                                         value={addressItem.addressDesc}
                                                         inputProps={{ 'aria-label': 'weight' }}
                                                         onFocus={(event) => {
-                                                            handleEditAddressDesc(index, { eidtMode: true })
+                                                            handleEditAddressDesc(index, { editMode: true })
                                                         }}
                                                         onChange={(event) => {
-                                                            handleEditAddressDesc(index, { addressDesc: event.target.value, eidtMode: true })
+                                                            handleEditAddressDesc(index, { addressDesc: event.target.value, editMode: true })
                                                         }}
                                                         onBlur={(event) => {
-                                                            handleEditAddressDesc(index, { addressDesc: event.target.value, eidtMode: false }, true)
+                                                            handleEditAddressDesc(index, { addressDesc: event.target.value, editMode: false }, true)
                                                         }}
                                                     />
                                                 </div>
@@ -1252,8 +1259,8 @@ function Deposite() {
                                                         </div>
                                                         <img
                                                             onClick={() => {
+                                                                handleCopyText(addressItem.address);
                                                                 copyTiShiFunc();
-                                                                handleCopyText(addressItem.address)
                                                             }}
                                                             className='bianJiBiImg '
                                                             src="wallet/assets/images/deposite/newCopy.png"
@@ -1292,7 +1299,11 @@ function Deposite() {
                                 {walletAddressList.length < 10 && (
                                     <div className='mb-16'>
                                         <div className='addressBigW flex justify-between mt-10' onClick={() => {
-                                            handleWalletAddress(networkId)
+                                           if(walletAddressList.length < 1 ){
+                                             handleWalletAddress(networkId)
+                                           }else{
+                                             setOpenExtraAddressFeeModal(true)
+                                           }
                                         }}>
                                             <div className="addressW flex justify-between">
                                                 <div className='addressZi2 flex'>
@@ -1457,7 +1468,8 @@ function Deposite() {
                                                                     <IconButton
                                                                         aria-label="toggle password visibility "
                                                                         onClick={() => {
-                                                                            handleCopyText(walletAddress)
+                                                                            handleCopyText(walletAddress);
+                                                                            copyTiShiFunc();
                                                                         }}
                                                                         edge="end"
                                                                     >
@@ -1843,8 +1855,8 @@ function Deposite() {
                                     <div className="addressW2 flex justify-between guoDuDongHua">
                                         <div className='idZi guoDuDongHua' > <span style={{ color: "#ffffff", marginRight: "10px" }}>UserID</span>  {userData?.profile?.user?.id}</div>
                                         <img onClick={() => {
+                                            handleCopyText(userData?.profile?.user?.id);
                                             copyTiShiFunc();
-                                            handleCopyText(userData?.profile?.user?.id)
                                         }} className='bianJiBiImg' src="wallet/assets/images/deposite/newCopy.png" />
                                     </div>
                                     <QRCode
@@ -2462,6 +2474,53 @@ function Deposite() {
                 }
 
             </AnimateModal >
+
+            <AnimateModal
+                className="faBiDiCard tanChuanDiSe"
+                open={openExtraAddressFeeModal }
+                onClose={() => setOpenExtraAddressFeeModal(false)}
+            >
+
+                <div className='flex justify-center mb-16' style={{ width: "100%" }}>
+                    <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
+                    <div className='TanHaoCardZi'>
+                        {t('home_withdraw_2')}
+                    </div>
+                </div>
+
+                <Box
+                    className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard flex justify-center"
+                    sx={{
+                        backgroundColor: "#2C394D",
+                        padding: "1.5rem",
+                        overflow: "hidden",
+                        margin: "0rem auto 0rem auto"
+                    }}
+                >
+                    <div className="dialog-select-fiat danChuangTxt">
+                       首地址免费,新增地址需额外收费
+                    </div>
+                </Box>
+                <div className={clsx('exchange-credit-fee', balanceNotEnough && 'error-msg-font')}>{t('home_borrow_18')}: 5 USDT</div>
+
+                <div className='flex mt-16 mb-20 px-15 position-re' style={{ height: "40px" }} >
+                    <LoadingButton
+                        disabled={false}
+                        className="boxCardBtn position-ab"
+                        color="secondary"
+                        loading={isLoading}
+                        variant="contained"
+                        style={{ bottom: "0%", left: "0%", right: "0%", margin: "0 auto" }}
+                        onClick={() => {
+                            handleWalletAddress(networkId)
+                        }}
+                    >
+                        {t('card_249')}
+                    </LoadingButton>
+
+                </div>
+
+            </AnimateModal>
 
             <BootstrapDialog
                 onClose={() => {

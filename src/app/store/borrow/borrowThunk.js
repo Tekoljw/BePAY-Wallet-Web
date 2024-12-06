@@ -3,6 +3,7 @@ import React from "react";
 import { showMessage } from 'app/store/fuse/messageSlice';
 
 import { setBorrowConfig } from "../config/index";
+import {showServerErrorTips} from "../../util/tools/function";
 
 // action/thunk
 // 获取借贷配置信息
@@ -38,7 +39,7 @@ export const getBorrowConfig = createAsyncThunk(
             dispatch(setBorrowConfig(configData));
             return configData.data;
         } else {
-            dispatch(showMessage({ message: configData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, configData);
         }
     }
 );
@@ -61,7 +62,7 @@ export const getBorrowOrderList = createAsyncThunk(
             // dispatch(showMessage({ message: 'success' }));
             return resultData.data;
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -83,7 +84,7 @@ export const afterBorrowToken = createAsyncThunk(
             // dispatch(showMessage({ message: 'success' }));
             return resultData.data;
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -105,7 +106,7 @@ export const afterRepayToken = createAsyncThunk(
             // dispatch(showMessage({ message: 'success' }));
             return resultData.data;
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -126,7 +127,7 @@ export const directRepayToken = createAsyncThunk(
             // dispatch(showMessage({ message: 'success' }));
             return resultData.data;
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );

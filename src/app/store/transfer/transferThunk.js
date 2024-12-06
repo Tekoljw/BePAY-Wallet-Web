@@ -3,7 +3,7 @@ import React from "react";
 import utils from '../../util/tools/utils'
 import BN from "bn.js";
 import { showMessage } from 'app/store/fuse/messageSlice';
-import { arrayLookup } from "../../util/tools/function";
+import {arrayLookup, showServerErrorTips} from "../../util/tools/function";
 import web3 from "../../util/web3";
 // import coinbaseWallet from '../../util/web3/coinbase';
 // import trustProvider from '../../util/web3/trustwallet';
@@ -248,7 +248,7 @@ export const manualCryptoNotify = createAsyncThunk(
         };
         const resultData = await React.$api("payment.manualCryptoNotify", data);
         if (resultData.errno !== 0) {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, resultData);
         } else {
             // console.log(resultData)
         }
@@ -339,5 +339,29 @@ export const sendTransactionBgt = createAsyncThunk(
         });
         dispatch(showMessage({ message: e.message, code: 1 }));
         console.log('transferRes ====> ', transferRes);
+    }
+);
+
+// 获取或者编辑出款历史地址
+export const editOrQueryWithdrawalHistoryInfo = createAsyncThunk(
+    'transfer/editOrQueryWithdrawalHistoryInfo',
+    async (settings, { dispatch, getState }) => {
+        let data = {
+            withdrawalType: settings.withdrawalType,
+            currencyType: settings.currencyType,
+        };
+        if(settings.editId){
+            data.editId = settings.editId
+        };
+        if(settings.note) {
+            data.note = settings.note
+        }
+
+        const resultData = await React.$api("transfer.editOrQueryWithdrawalHistoryInfo", data);
+        if (resultData.errno === 0) {
+            return resultData;
+        } else {
+            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+        }
     }
 );

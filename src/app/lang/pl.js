@@ -483,7 +483,7 @@ const locale = {
     card_129: "Dzisiejszy zysk",
     card_130: "Przejdź do TOP.ONE, aby rozpocząć handel",
     card_131: "Aktywuj kartę BeingFi",
-    card_132: "Codziennie rejestruj się w tygodniu i otrzymuj odpowiednie nagrody.",
+    card_132: "Zaloguj się co 7 dni, aby zebrać i otrzymać odpowiednie nagrody",
     card_133: "Poniedziałek",
     card_134: "Wtorek",
     card_135: "Środa",
@@ -823,7 +823,44 @@ const locale = {
 
     card_249: "Dodaj",
     card_250: "Proszę zamknąć miniaplikację i kliknąć przycisk odświeżania, aby spróbować ponownie.",
+    card_251: "Karta Płatnicza Apple",
+    card_252: "Aktywuj istniejącą kartę",
+    card_253: "Preferuj użycie adresu z USA, jeśli go nie masz, kliknij [Przykład] w KYC, aby dostarczyć odpowiednie informacje.",
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
 
+    kyc_68:"Adres1",
+    kyc_69:"Adres2",
+    kyc_70:"Adres3",
+    kyc_71:"Przykład",
+
+    card_256:"Proszę upewnić się, że Twoje dane KYC są poprawne i wybierz adres, o który się ubiegasz.",
+    card_257:"Zmodyfikuj informacje KYC",
+    card_258:"Zapłać opłatę za wymianę karty:",
+    card_259:"Weryfikacja KYC",
+    card_260:"Musisz ukończyć weryfikację KYC przed złożeniem wniosku o kartę.",
+    card_261:"Proszę skontaktować się z obsługą klienta online, aby uzyskać szczegółowe informacje.", 
+
+    card_262:"W trakcie weryfikacji, aktywa zostały zamrożone",
+    card_263:"Weryfikacja zakończona sukcesem, zamrożone aktywa zostały uwolnione",
+    card_264:"Nieudana wypłata, zamrożone aktywa zostały uwolnione",
+    card_265:"Zablokowane Saldo",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
 
 

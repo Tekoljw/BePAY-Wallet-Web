@@ -1,6 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import React from "react";
 import { showMessage } from 'app/store/fuse/messageSlice';
+import { updateSwapFee } from '../user/index'
+import {showServerErrorTips} from "../../util/tools/function";
 
 // import { setSwapConfig } from "../config/index";
 
@@ -27,7 +29,7 @@ export const getSwapConfig = createAsyncThunk(
             // dispatch(setSwapConfig(configData));
             return configData;
         } else {
-            dispatch(showMessage({ message: configData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, configData);
         }
     }
 );
@@ -50,7 +52,7 @@ export const getSwapPrice = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData;
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -61,13 +63,20 @@ export const getSwapFee = createAsyncThunk(
     '/swap/swapFee',
     async (settings, { dispatch, getState }) => {
 
-        const resultData = await React.$api("swap.swapFee", {});
+        const state = getState();
+        if(state.user.swapFee) {
+            return state.user.swapFee
+        }else {
+            const resultData = await React.$api("swap.swapFee", {});
 
-        if (resultData.errno === 0) {
-            return resultData;
-        } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            if (resultData.errno === 0) {
+                dispatch(updateSwapFee(resultData))
+                return resultData;
+            } else {
+                showServerErrorTips(dispatch, resultData);
+            }
         }
+       
     }
 );
 
@@ -89,7 +98,7 @@ export const getSwapFiat = createAsyncThunk(
             // dispatch(showMessage({ message: 'success', code: 1 }));
             return resultData;
         } else {
-            // dispatch(showMessage({ message: t('error_2'), code: 2 }));
+            return showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -113,13 +122,7 @@ export const getSwapCrypto = createAsyncThunk(
         };
 
         const resultData = await React.$api("swap.crypto", data);
-        return resultData;
-        // if (resultData.errno === 0) {
-        //     // dispatch(showMessage({ message: 'success', code: 1 }));
-        //     return resultData;
-        // } else {
-        //     // dispatch(showMessage({ message: t('error_2'), code: 2 }));
-        // }
+        return showServerErrorTips(dispatch, resultData);
     }
 );
 
@@ -139,7 +142,7 @@ export const getSwapOrderDetail = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData;
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            return showServerErrorTips(dispatch, resultData);
         }
     }
 );

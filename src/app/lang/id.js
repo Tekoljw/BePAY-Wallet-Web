@@ -482,7 +482,7 @@ const locale = {
     card_129: "pendapatan hari ini",
     card_130: "Pergi ke TOP.ONE untuk mulai berdagang",
     card_131: "Aktifkan kartu BeingFi",
-    card_132: "Lakukan check-in setiap minggu untuk mengumpulkan dan mendapatkan hadiah yang sesuai",
+    card_132: "Check-in setiap 7 hari untuk mengumpulkan dan menerima hadiah yang sesuai",
     card_133: "Senin",
     card_134: "Selasa",
     card_135: "Rabu",
@@ -820,10 +820,41 @@ const locale = {
     card_247: "Sedang diproses",
     card_248: "Sedang dalam peninjauan",
 
-
     card_249: "Tambahkan",
     card_250: "Silakan tutup aplikasi mini dan klik tombol refresh untuk mencoba lagi.",
+    card_251: "Kartu Pembayaran Apple",
+    card_252: "Aktifkan kartu yang ada",
+    card_253: "Utamakan menggunakan alamat AS, jika tidak ada, silakan klik [Contoh] di KYC untuk memberikan informasi terkait.",
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
 
+    kyc_68:"Alamat1",
+    kyc_69:"Alamat2",
+    kyc_70:"Alamat3",
+    kyc_71:"Contoh",
+
+    
+    card_256:"Harap pastikan informasi KYC Anda benar dan pilih alamat yang Anda ajukan.",
+    card_257:"Ubah informasi KYC",
+    card_258:"Bayar biaya penggantian kartu:",
+    card_259:"Verifikasi KYC",
+    card_260:"Anda harus menyelesaikan verifikasi KYC sebelum mengajukan kartu.",
+    card_261:"Harap hubungi layanan pelanggan online untuk informasi lebih lanjut.",
+    card_262:"Sedang ditinjau, aset telah dibekukan",
+    card_263:"Pemeriksaan berhasil, aset beku telah dilepaskan",
+    card_264:"Penarikan gagal, aset yang dibekukan telah dibebaskan",
+    card_265:"Saldo Beku",
+
+
+
+
+
+
+
+
+
+
+    
 
 
 

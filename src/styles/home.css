@@ -2029,6 +2029,10 @@ input[type='number'] {
     text-align: center;
 }
 
+.noMargin .muiltr-1djq1mv-MuiFormControlLabel-root {
+    margin-right: 0px;
+}
+
 .wallet-network-btn {
     margin: .5rem 1%;
     border-radius: 8px;
@@ -3610,9 +3614,6 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     width: 375px !important;
 }
 
-.loginMarginZhong {
-    margin-right: -10px;
-}
 
 .checkInDi {
     background-image: url("../../public/assets/images/earn/phoneQianDao.png");

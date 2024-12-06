@@ -3,6 +3,11 @@ import history from '@history';
 import {getOpenAppId, getOpenAppIndex, getUserLoginType} from "../../util/tools/function";
 import userLoginType from "../../define/userLoginType";
 import userLoginState from "../../define/userLoginState";
+import { userProfile, centerGetTokenBalanceList, getListBank } from "../user/userThunk"
+import { getCryptoDisplay, centerGetUserFiat, getFiatDisplay, getNftDisplay, getWalletDisplay} from "../wallet/walletThunk"
+import { payoutBank, payoutPayWays, getCreditConfig } from "../payment/paymentThunk"
+import { getSwapFee } from "../swap/swapThunk"
+
 // state
 const initialState = {
     token: '', //网站自己的验证token
@@ -10,19 +15,32 @@ const initialState = {
     userInfo: {},
     profile: {},
     transferList: {},
-    wallet: {},
-    fiat: {},
-    cryptoDisplay: [],
+    wallet: null,
+    fiat: null,
+    cryptoDisplay: null,
+    fiatDisplay: null,
+    nftDisplay: null,
     transferStats: {},
-    walletDisplay: [],
+    walletDisplay: null,
+    walletLoading: true,
+    bankList: null,
+    payoutBank: null,
+    payoutWays: null,
+    swapFee: null,
+    creditConfig: null,
     currencyCode: localStorage.getItem('currencyCode') || 'USD',
-    loginState: userLoginState.USER_LOGIN_STATE_UN,
+    loginState: userLoginState.USER_LOGIN_STATE_UN, //登录状态
+    userRequestError: null, //用户请求错误
 };
 
 const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
+        updateWalletLoading: (state, action)=> {
+            let res = action.payload;
+            state.walletLoading = res;
+        },
         updateUser: (state, action) => {
             // console.log(action,'action.......................................111212121212121212');
             let res = action.payload;
@@ -89,10 +107,17 @@ const userSlice = createSlice({
             let res = action.payload;
             state.cryptoDisplay = res.data;
         },
-        updateWalletDisplay: (state, action) => {
-
+        updateFiatDisplay:(state, action) => {
             let res = action.payload;
-            state.walletDisplay = res.payload?.data;
+            state.fiatDisplay = res.data;
+        },
+        updateNftDisplay:(state, action) => {
+            let res = action.payload;
+            state.nftDisplay = res.data;
+        },
+        updateWalletDisplay: (state, action) => {
+            let res = action.payload;
+            state.walletDisplay = res.data;
         },
         updateCurrency: (state, action) => {
             let res = action.payload;
@@ -109,13 +134,80 @@ const userSlice = createSlice({
             window.sessionStorage.setItem('loginState', res);
             state.loginState = res;
         },
+
+        updateBankList: (state, action) => {
+            let res = action.payload;
+            state.bankList = res;
+        },
+
+        updatePayoutBankList: (state, action) => {
+            let res = action.payload;
+            state.payoutBank = res;
+        },
+
+        updatePayoutWays: (state, action) => {
+            let res = action.payload;
+            state.payoutWays = res;
+        },
+
+        updateSwapFee: (state, action) => {
+            let res = action.payload;
+            state.swapFee = res;
+        },
+
+        updateCreditConfig: (state, action) => {
+            let res = action.payload;
+            state.creditConfig = res;
+        },
+
+        updateUserRequestError: (state, action) => {
+            let res = action.payload;
+            state.userRequestError = res;
+        }
     },
-    extraReducers: {
-        // [doLogin.fulfilled]: (state, action) => action.payload,
-    }
+    extraReducers: (builder) => {
+        // builder
+        //     .addCase(userProfile.fulfilled, (state, action) => {
+        //         state.profile = action.payload;
+        //     })
+        //     .addCase(getCryptoDisplay.fulfilled, (state, action) => {
+        //         state.cryptoDisplay = action.payload;
+        //     })
+        //     .addCase(centerGetUserFiat.fulfilled, (state, action) => {
+        //         state.fiat = action.payload;
+        //     })
+        //     .addCase(getFiatDisplay.fulfilled, (state, action) => {
+        //         state.fiatDisplay = action.payload;
+        //     })
+        //     .addCase(getNftDisplay.fulfilled, (state, action) => {
+        //         state.nftDisplay = action.payload;
+        //     })
+        //     .addCase(getWalletDisplay.fulfilled, (state, action) => {
+        //         state.walletDisplay = action.payload;
+        //     })
+        //     .addCase(centerGetTokenBalanceList.fulfilled, (state, action) => {
+        //         state.wallet = action.payload;
+        //     })
+        //     .addCase(getListBank.fulfilled, (state, action) => {
+        //         state.bankList = action.payload;
+        //     })
+        //     .addCase(payoutBank.fulfilled, (state, action) => {
+        //         state.payoutBank = action.payload;
+        //     })
+        //     .addCase(payoutPayWays.fulfilled, (state, action) => {
+        //         state.payoutWays = action.payload;
+        //     })
+        //     .addCase(getSwapFee.fulfilled, (state, action) => {
+        //         state.swapFee = action.payload;
+        //     })
+        //     .addCase(getCreditConfig.fulfilled, (state, action) => {
+        //         state.creditConfig = action.payload;
+        //     })
+        },
 });
 
-export const { updateUser, updateUserToken, updateTransfer, updateWallet, updateFiat, updateCryptoDisplay, updateWalletDisplay, updateCurrency, setTransferStats, updateLoginState } = userSlice.actions;
+export const { updateWalletLoading, updateUser, updateUserToken, updateTransfer, updateWallet, updateFiat, updateCryptoDisplay, updateFiatDisplay, updateNftDisplay, updateWalletDisplay, updateCurrency, setTransferStats
+    , updateLoginState, updateBankList, updatePayoutBankList, updatePayoutWays, updateSwapFee, updateCreditConfig, updateUserRequestError} = userSlice.actions;
 
 export const selectUserData = ({ user }) => user;
 

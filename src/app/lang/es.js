@@ -482,7 +482,7 @@ const locale = {
     card_129: "ingresos del día",
     card_130: "dirígete a TOP.ONE para comenzar a operar",
     card_131: "habilitar la tarjeta BeingFi",
-    card_132: "Registra tu presencia semanalmente y recibe las recompensas correspondientes",
+    card_132: "Regístrate cada 7 días para acumular y recibir recompensas correspondientes",
     card_133: "lunes",
     card_134: "martes",
     card_135: "miércoles",
@@ -820,9 +820,39 @@ const locale = {
     card_247: "En proceso",
     card_248: "En revisión",
 
-
     card_249: "Agregar",
     card_250: "Por favor, cierre la mini aplicación y haga clic en el botón de actualizar para intentarlo de nuevo.",
+    card_251: "Tarjeta de pago Apple",
+    card_252: "Activar tarjeta existente",
+    card_253: "Preferiblemente use una dirección de EE. UU., si no tiene una, haga clic en [Ejemplo] en KYC para proporcionar la información relevante.",
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
+
+    kyc_68:"Dirección1",
+    kyc_69:"Dirección2",
+    kyc_70:"Dirección3",
+    kyc_71:"Ejemplo",
+
+    
+    card_256:"Por favor, asegúrese de que su información de KYC esté correcta y seleccione la dirección solicitada.",
+    card_257:"Modificar información de KYC",
+    card_258:"Pagar la tarifa de reemplazo de tarjeta:",
+    card_259:"Verificación KYC",
+    card_260:"Debe completar la verificación KYC antes de solicitar la tarjeta.",
+    card_261:"Por favor, póngase en contacto con el servicio de atención al cliente en línea para obtener detalles específicos.",
+    card_262:"En revisión, los activos han sido congelados",
+    card_263:"Revisión exitosa, los activos congelados han sido liberados",
+    card_264:"Falló el retiro, los activos congelados han sido liberados",
+    card_265:"Saldo Congelado",
+
+
+
+
+
+
+
+
+
     
     
 

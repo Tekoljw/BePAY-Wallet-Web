@@ -485,7 +485,7 @@ const locale = {
     card_129: "Heutiger Gewinn",
     card_130: "Gehe zu TOP.ONE, um mit dem Handel zu beginnen",
     card_131: "Beantragen Sie die BeingFi-Karte",
-    card_132: "Wöchentlich anmelden und entsprechende Belohnungen erhalten.",
+    card_132: "Melden Sie sich alle 7 Tage an, um entsprechende Belohnungen zu erhalten",
     card_133: "Montag",
     card_134: "Dienstag",
     card_135: "Mittwoch",
@@ -824,7 +824,38 @@ const locale = {
     
     card_249: "Hinzufügen",
     card_250: "Bitte schließen Sie die Mini-App und klicken Sie auf die Schaltfläche „Aktualisieren“, um es erneut zu versuchen.",
+    card_251: "Apple Pay-Karte",
+    card_252: "Vorhandene Karte aktivieren",
+    card_253: "Bevorzugen Sie die Verwendung einer US-Adresse. Wenn Sie keine haben, klicken Sie bitte auf [Beispiel] im KYC, um die entsprechenden Informationen bereitzustellen.",
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
+    kyc_68:"Adresse1",
+    kyc_69:"Adresse2",
+    kyc_70:"Adresse3",
+    kyc_71:"Beispiel",
 
+    
+    card_256:"Bitte stellen Sie sicher, dass Ihre KYC-Daten korrekt sind und wählen Sie die angegebene Adresse aus.",
+    card_257:"KYC-Informationen ändern",
+    card_258:"Zahlung der Kartenersatzgebühr:",
+    card_259:"KYC-Überprüfung",
+    card_260:"Die KYC-Verifizierung muss abgeschlossen sein, bevor Sie die Karte beantragen.",
+    card_261:"Bitte wenden Sie sich an den Online-Kundendienst, um weitere Details zu erfahren.",
+    card_262:"Unter Überprüfung, Vermögenswerte wurden eingefroren",
+    card_263:"Überprüfung erfolgreich, eingefrorene Vermögenswerte wurden freigegeben",
+    card_264:"Abhebung fehlgeschlagen, eingefrorene Vermögenswerte wurden freigegeben",
+    card_265:"Gefrorenes Guthaben",
+
+
+
+
+
+
+
+
+
+
+    
 };
 
 export default locale;

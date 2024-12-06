@@ -3,13 +3,12 @@ import Web3 from "../../util/web3";
 import React from "react";
 import history from '@history';
 import { showMessage } from 'app/store/fuse/messageSlice';
-import {selectUserData, updateLoginState, updateTransfer, updateUser, updateUserToken, updateWallet} from "./index";
+import { updateLoginState, updateTransfer, updateUser, updateUserToken, updateWallet, updateBankList} from "./index";
 import utils from "../../util/tools/utils";
 import BN from "bn.js";
 import { getWithdrawTransferStats } from '../wallet/walletThunk';
 import coinbaseWallet from '../../util/web3/coinbase';
 import walletEthereum from '../../util/web3/walletEthereum';
-import settingsConfig from 'app/configs/settingsConfig';
 import loginWays from '../../main/login/loginWays'
 import { EthereumProvider } from '@walletconnect/ethereum-provider';
 import { requestUserLoginData } from "../../util/tools/loginFunction";
@@ -17,8 +16,8 @@ import { changeLanguage } from "app/store/i18nSlice";
 import userLoginType from "../../define/userLoginType";
 import { sendLogInfo } from "app/store/log/logThunk";
 import { getSymbols } from "app/store/config/configThunk";
-import { useTranslation } from "react-i18next";
 import userLoginState from "../../define/userLoginState";
+import {showServerErrorTips} from "../../util/tools/function";
 
 // 检查用户是否已经登录
 export const checkLoginState = createAsyncThunk(
@@ -57,7 +56,7 @@ export const checkLoginState = createAsyncThunk(
             //请求对应的数据
             requestUserLoginData(dispatch);
         } else { //其他错误
-            dispatch(showMessage({ message: loginState.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, loginState);
         }
     }
 );
@@ -66,11 +65,18 @@ export const checkLoginState = createAsyncThunk(
 export const userProfile = createAsyncThunk(
     'user/userProfile',
     async (settings, { dispatch, getState }) => {
-        const userProfile = await React.$api("user.profile");
-        if (userProfile.errno === 0) {
-            dispatch(updateUser(userProfile));
-        } else {
-            dispatch(showMessage({ message: userProfile.errmsg, code: 2 }));
+        const state = getState();
+        if (state.user.profile && !settings.forceUpdate) {
+            dispatch(updateUser(state.data.profile));
+            return userProfile;
+        }else{
+            const userProfile = await React.$api("user.profile");
+            if (userProfile.errno === 0) {
+                dispatch(updateUser(userProfile));
+                return userProfile;
+            } else {
+                showServerErrorTips(dispatch, userProfile);
+            }
         }
     }
 );
@@ -87,7 +93,7 @@ export const setCurrencySelect = createAsyncThunk(
         if (setCurrencySelect.errno === 0) {
             // dispatch(updateUser(setCurrencySelect));
         } else {
-            dispatch(showMessage({ message: setCurrencySelect.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, setCurrencySelect);
         }
     }
 );
@@ -98,7 +104,7 @@ export const getCurrencySelect = createAsyncThunk(
         if (getCurrencySelect.errno === 0) {
             // dispatch(updateUser(getCurrencySelect));
         } else {
-            dispatch(showMessage({ message: getCurrencySelect.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, getCurrencySelect);
         }
     }
 )
@@ -154,7 +160,7 @@ export const doLogin = createAsyncThunk(
             }
         } else {
             dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_FAILURE));
-            dispatch(showMessage({ message: userLoginData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, userLoginData);
         }
     }
 );
@@ -186,7 +192,7 @@ export const mobileLogin = createAsyncThunk(
             }
         } else {
             dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_FAILURE));
-            dispatch(showMessage({ message: userLoginData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, userLoginData);
         }
     }
 );
@@ -209,7 +215,7 @@ export const facebookLoginApi = createAsyncThunk(
             }
         } else {
             dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_FAILURE));
-            dispatch(showMessage({ message: userLoginData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, userLoginData);
         }
     }
 );
@@ -232,7 +238,7 @@ export const telegramLoginApi = createAsyncThunk(
             }
         } else {
             dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_FAILURE));
-            dispatch(showMessage({ message: userLoginData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, userLoginData);
         }
     }
 );
@@ -261,7 +267,7 @@ export const telegramWebAppLoginApi = createAsyncThunk(
                 dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_FAILURE));
             }
 
-            dispatch(showMessage({ message: userLoginData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, userLoginData);
         }
     }
 );
@@ -284,7 +290,7 @@ export const googleLoginApi = createAsyncThunk(
             }
         } else {
             dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_FAILURE));
-            dispatch(showMessage({ message: userLoginData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, userLoginData);
         }
     }
 );
@@ -317,8 +323,7 @@ export const sendSms = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             return true
         } else {
-            const msg = res?.errmsg;
-            dispatch(showMessage({ message: res.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, res);
             return false
         }
     }
@@ -337,8 +342,7 @@ export const sendEmail = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             return true
         } else {
-            const msg = res?.errmsg;
-            dispatch(showMessage({ message: res.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, res);
             return false
         }
     }
@@ -355,6 +359,7 @@ export const bindPhone = createAsyncThunk(
             smsCode: settings.smsCode,
         };
         const result = await React.$api("user.bindPhone", data);
+        showServerErrorTips(dispatch, result);
         return result;
     }
 );
@@ -375,10 +380,11 @@ export const bindEmail = createAsyncThunk(
             dispatch(getUserData());
             return true
         } else {
-            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, result);
         }
     }
 );
+
 
 // 手机注册
 export const signUp = createAsyncThunk(
@@ -396,7 +402,7 @@ export const signUp = createAsyncThunk(
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userSignUpData));
         } else {
-            dispatch(showMessage({ message: userSignUpData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, userSignUpData);
         }
     }
 );
@@ -416,7 +422,7 @@ export const emailSignUp = createAsyncThunk(
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userSignUpData));
         } else {
-            dispatch(showMessage({ message: userSignUpData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, userSignUpData);
         }
     }
 );
@@ -434,7 +440,7 @@ export const resetPass = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             history.push('/wallet/login');
         } else {
-            dispatch(showMessage({ message: userResetPassData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, userResetPassData);
         }
     }
 );
@@ -453,7 +459,7 @@ export const editPin = createAsyncThunk(
         if (userResetPassData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
         } else {
-            dispatch(showMessage({ message: userResetPassData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, userResetPassData);
         }
     }
 );
@@ -473,7 +479,7 @@ export const changePhone = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             history.push('/wallet/home');
         } else {
-            dispatch(showMessage({ message: userResetPassData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, userResetPassData);
         }
     }
 );
@@ -492,7 +498,7 @@ export const changeEmail = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             history.push('/wallet/home');;
         } else {
-            dispatch(showMessage({ message: userResetPassData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, userResetPassData);
         }
     }
 );
@@ -513,7 +519,7 @@ export const forgotPass = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             history.push('/wallet/login');
         } else {
-            dispatch(showMessage({ message: userForgotData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, userForgotData);
         }
     }
 );
@@ -529,8 +535,9 @@ export const doSetNetwork = createAsyncThunk(
             dispatch(getUserData());
             dispatch(showMessage({ message: 'success', code: 1 }));
             return true
+        }else{
+            showServerErrorTips(dispatch, networkRes);
         }
-        dispatch(showMessage({ message: doSetNetwork.errmsg, code: 2 }));
     }
 );
 
@@ -848,7 +855,7 @@ export const doBindWallet = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             return true
         } else {
-            dispatch(showMessage({ message: sendResult.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, sendResult);
             return false
         }
     }
@@ -865,7 +872,7 @@ export const googleQrText = createAsyncThunk(
         if (userGoogleData?.errno === 0) {
             return userGoogleData?.data
         }
-
+        showServerErrorTips(dispatch, userGoogleData);
         return {}
     }
 );
@@ -878,7 +885,7 @@ export const verifyGAuth = createAsyncThunk(
             checkCode: settings.checkCode,
         };
         const googleRes = await React.$api("security.verifyGAuth", data);
-        return googleRes;
+        return showServerErrorTips(dispatch, googleRes);
     }
 );
 
@@ -893,12 +900,11 @@ export const getUserData = createAsyncThunk(
             if (userData.data.user && userData.data.user.language) {
                 dispatch(changeLanguage(userData.data.user.language)).then(r => {
                     console.log("change language success")
-                }
-                )
+                })
             }
             return userData
         } else {
-            dispatch(showMessage({ message: userData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, userData);
         }
     }
 );
@@ -920,7 +926,7 @@ export const transferRecords = createAsyncThunk(
                 return tranferList.data
                 dispatch(updateTransfer(tranferList));
             } else {
-                dispatch(showMessage({ message: tranferList.errmsg, code: 2 }));
+                showServerErrorTips(dispatch, tranferList);
             }
         } else {
             let data = {
@@ -934,7 +940,7 @@ export const transferRecords = createAsyncThunk(
                 return tranferList.data
                 dispatch(updateTransfer(tranferList));
             } else {
-                dispatch(showMessage({ message: tranferList.errmsg, code: 2 }));
+                showServerErrorTips(dispatch, tranferList);
             }
         }
     }
@@ -944,14 +950,23 @@ export const transferRecords = createAsyncThunk(
 export const centerGetTokenBalanceList = createAsyncThunk(
     'user/centerGetTokenBalanceList',
     async (settings, { dispatch, getState }) => {
-        const balanceList = await React.$api("wallet.centerGetTokenBalanceList");
-        if (balanceList.errno === 0) {
-            dispatch(updateWallet(balanceList));
-        } else {
-            dispatch(showMessage({ message: balanceList.errmsg, code: 2 }));
-        }
-        if (settings.requestSymbol) { //需要请求币种信息
-            dispatch(getSymbols());
+        const state = getState();
+        if(state.user.wallet && !settings.forceUpdate ) {
+            if (settings.requestSymbol) { //需要请求币种信息
+                dispatch(getSymbols());
+            }
+            return state.user.wallet;
+        }else {
+            const balanceList = await React.$api("wallet.centerGetTokenBalanceList");
+            if (balanceList.errno === 0) {
+                dispatch(updateWallet(balanceList));
+                // return balanceList;
+            } else {
+                showServerErrorTips(dispatch, balanceList);
+            }
+            if (settings.requestSymbol) { //需要请求币种信息
+                dispatch(getSymbols());
+            }
         }
     }
 );
@@ -976,8 +991,7 @@ export const sendTips = createAsyncThunk(
         } else if (sendTipsRes.errno === -2) {
             return sendTipsRes;
         } else {
-            // dispatch(showMessage({ message: sendTipsRes.errmsg, code: 2 }));
-            return sendTipsRes;
+            return showServerErrorTips(dispatch, sendTipsRes);;
         }
     }
 );
@@ -1009,8 +1023,7 @@ export const tokenTransfer = createAsyncThunk(
         } else if (transferRes.errno === -2) {
             return transferRes
         } else {
-            // dispatch(showMessage({ message: transferRes.errmsg, code: 2 }));
-            return transferRes
+            return showServerErrorTips(dispatch, transferRes);
         }
     }
 );
@@ -1034,11 +1047,11 @@ export const getTransferOrder = createAsyncThunk(
                         return true
                     } else if (result.data[0].orderStatus === 72) {
                         clearInterval(timer);
-                        dispatch(showMessage({ message: result.errmsg, code: 2 }));
+                        showServerErrorTips(dispatch, result);
                     }
                 }
             } else {
-                dispatch(showMessage({ message: result.errmsg, code: 2 }));
+                showServerErrorTips(dispatch, result);
             }
         }, 5000);
     }
@@ -1158,11 +1171,17 @@ export const getDecenterWalletBalance = createAsyncThunk(
 export const getListBank = createAsyncThunk(
     'user/getListBank',
     async (settings, { dispatch, getState }) => {
-        const result = await React.$api("bank.listBank");
-        if (result.errno === 0) {
-            return result.data
+        const state  = getState();
+        if(state.user.bankList) {
+            return state.user.bankList
         } else {
-            dispatch(showMessage({ message: result.errmsg, code: 2 }));
+            const result = await React.$api("bank.listBank");
+            if (result.errno === 0) {
+                dispatch(updateBankList(result.data))
+                return result.data
+            } else {
+                showServerErrorTips(dispatch, result);
+            }
         }
     }
 );

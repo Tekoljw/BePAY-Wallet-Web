@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { styled, ThemeProvider, useTheme } from '@mui/material/styles';
 import ReactApexChart from 'react-apexcharts';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
@@ -15,13 +15,32 @@ const Root = styled(Paper)(({ theme }) => ({
   color: theme.palette.primary.contrastText,
 }));
 
-function VisitorsOverviewWidget() {
+function VisitorsOverviewWidget(props) {
+  const { demandInterestHistory = [] } = props;
   const theme = useTheme();
   const contrastTheme = useSelector(selectContrastMainTheme(theme.palette.primary.main));
   const widgets = useSelector(selectWidgets);
   const { series, ranges } = widgets?.visitors;
   const [tabValue, setTabValue] = useState(0);
   const currentRange = Object.keys(ranges)[tabValue];
+  const [chartData, setChartData] = useState([])
+  
+  useEffect(()=>{
+    let tempData = []
+    if(demandInterestHistory.length> 0) {
+      tempData = demandInterestHistory.map((item)=>{
+        return {
+          x: d.createTime,
+          y: d.todayInterestValue
+        }
+      })
+    }
+    const chartInfoArr = [{
+      data: tempData,
+      name: chartData.name
+    }]
+    setChartData(chartInfoArr)
+  }, [demandInterestHistory])
 
   const chartOptions = {
     chart: {
@@ -125,7 +144,7 @@ function VisitorsOverviewWidget() {
         <div className="flex flex-col flex-auto" style={{ height: "190px" }}>
           <ReactApexChart
             options={chartOptions}
-            series={series[currentRange]}
+            series={ chartData }
             type={chartOptions.chart.type}
             height={chartOptions.chart.height}
           />

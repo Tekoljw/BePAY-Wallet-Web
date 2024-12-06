@@ -15,7 +15,7 @@ function getApiObj(url, data = {}) {
 const BASE_API = '//api.beingfi.com';
 
 const URL_PREFIX = BASE_API + "/fingernft";
-export default function api(url, data = {}) {
+export function api(url, data = {}) {
     var api = getApiObj(url);
 
     var post = {
@@ -31,7 +31,9 @@ export default function api(url, data = {}) {
     } else if (url == "log.info") {
         post.url = api.url;
         post.data = data;
-    } else {
+    } else if(url === "activity.demandInterestActivity"){
+        post.url = api.url + '?day=' + data.day;
+    } else{
         var method = api.method.toLowerCase();
         if (method == "post") {
             post.data = qs.stringify(data);
@@ -43,4 +45,18 @@ export default function api(url, data = {}) {
         post.url = api.url;
     }
     return request(post);
+};
+
+export function apiGet(url, params = {}) {
+    var api = getApiObj(url);
+
+    var get = {
+        url: URL_PREFIX + api.url,
+        method: api.method
+    };
+    get.params = params;
+    return request(get);
 }
+
+
+

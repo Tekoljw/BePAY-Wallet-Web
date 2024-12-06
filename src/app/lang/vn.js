@@ -472,7 +472,7 @@ const locale = {
     card_129: "lợi nhuận hôm nay",
     card_130: "truy cập TOP.ONE để bắt đầu giao dịch",
     card_131: "mở thẻ BeingFi",
-    card_132: "Đăng ký hàng tuần và nhận phần thưởng tương ứng.",
+    card_132: "Đăng nhập mỗi 7 ngày để tích lũy và nhận phần thưởng tương ứng",
     card_133: "thứ hai",
     card_134: "thứ ba",
     card_135: "thứ tư",
@@ -773,7 +773,6 @@ const locale = {
     server_error_40002: "Lỗi tham gia cầm cố NFT",
     server_error_40101: "Không tìm thấy mã quà tặng trong tệp văn bản",
 
-
     recordInfo_0: "Chuyển đổi tài sản giữa người bán và người dùng bằng tiền tệ pháp định",
     recordInfo_1: "Chuyển đổi tài sản giữa người bán và người dùng bằng tiền ảo",
     recordInfo_2: "Nạp tiền tệ pháp định vào tài khoản",
@@ -810,9 +809,44 @@ const locale = {
     card_247: "Đang xin",
     card_248: "Đang kiểm tra",
 
-
     card_249: "Thêm",
     card_250: "Vui lòng đóng ứng dụng mini và nhấn nút làm mới để thử lại.",
+    card_251: "Thẻ thanh toán Apple",
+    card_252: "Kích hoạt thẻ hiện có",
+    card_253: "Amerikan adresini tercih edin, yoksa KYC'deki [Örnek]e tıklayarak ilgili bilgileri sağlayın",
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
+
+    kyc_68:"Địa chỉ1",
+    kyc_69:"Địa chỉ2",
+    kyc_70:"Địa chỉ3",
+    kyc_71:"Ví dụ",
+
+    card_256:"Vui lòng đảm bảo thông tin KYC của bạn chính xác và chọn địa chỉ bạn đã đăng ký.",
+    card_257:"Sửa đổi thông tin KYC",
+    card_258:"Thanh toán phí thay thế thẻ:",
+    card_259:"Xác minh KYC",
+    card_260:"Bạn cần hoàn thành xác minh KYC trước khi đăng ký thẻ.",
+    card_261:"Vui lòng liên hệ với dịch vụ khách hàng trực tuyến để biết chi tiết cụ thể.",
+    
+    card_262:"Đang xem xét, tài sản đã bị đóng băng",
+    card_263:"Kiểm tra thành công, tài sản bị đóng băng đã được giải phóng",
+    card_264:"Rút tiền thất bại, tài sản bị đóng băng đã được giải phóng",
+    card_265:"Số Dư Bị Đóng Băng",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 };
 
 export default locale;

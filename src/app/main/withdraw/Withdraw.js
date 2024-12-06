@@ -25,7 +25,7 @@ import {
     getOpenAppId,
     getOpenAppIndex, getUserLoginType,
     handleCopyText, canLoginAfterRequest,
-    setPhoneTab
+    setPhoneTab, readClipboardText
 } from "../../util/tools/function";
 import { openScan, closeScan } from "../../util/tools/scanqrcode";
 import { evalTokenTransferFee, cryptoWithdrawFee, getWithdrawHistoryAddress, delWithdrawHistoryAddress, createPin, verifyPin } from "app/store/wallet/walletThunk";
@@ -56,6 +56,7 @@ import { selectCurrentLanguage } from "app/store/i18nSlice";
 import userLoginType from "../../define/userLoginType";
 import RetiedEmail from "../login/RetiedEmail";
 import RetiedPhone from "../login/RetiedPhone";
+import { editOrQueryWithdrawalHistoryInfo } from "../../store/transfer/transferThunk";
 
 
 const container = {
@@ -227,6 +228,7 @@ function Withdraw(props) {
         setInputVal({ ...inputVal, [prop]: value });
     };
     const [historyAddress, setHistoryAddress] = useState([]);
+    const [historyAddressBak, setHistoryAddressBak] = useState([]);
     const [transferState, setTransferState] = useState([]);
     const [googleCode, setGoogleCode] = useState('');
     const [openChangeCurrency, setOpenChangeCurrency] = useState(false);
@@ -236,8 +238,8 @@ function Withdraw(props) {
     const [withDrawOrderID, setWithDrawOrderID] = useState('');
     const [openLoad, setOpenLoad] = useState(false);
     const userData = useSelector(selectUserData);
-    const fiatData = userData.fiat;
-    const walletData = userData.wallet;
+    const fiatData = userData.fiat || [];
+    const walletData = userData.wallet || {};
     const transferStats = userData.transferStats;
     const loginState = userData.loginState;
     const hasAuthGoogle = userData.userInfo?.hasAuthGoogle;
@@ -425,15 +427,15 @@ function Withdraw(props) {
             let result = res.payload
             setGoogleCode('');
             // setOpenPinWindow(false);
-            if (result.errno == 0) { //成功
+            if (result.errno === 0) { //成功
                 setOpenSuccess(false);
                 setTimeout(() => {
                     setZhuanQuan(false);
                     setTiJiaoState(1);
                     setWithDrawOrderID(result.data);
                 }, 1200);
-                dispatch(centerGetTokenBalanceList());
-            } else if (result.errno == -2) { //需要google验证
+                dispatch(centerGetTokenBalanceList({forceUpdate: true}));
+            } else if (result.errno === -2) { //需要google验证
                 setTwiceVerifyType(0);
                 setTypeBined(hasAuthEmail ? true : false);
                 // if (!hasAuthGoogle) {
@@ -456,7 +458,7 @@ function Withdraw(props) {
                 } else if (result.errmsg.includes("用户可用余额不足")) {
                     dispatch(showMessage({ message: t('card_61'), code: 2 }));
                 } else {
-                    dispatch(showMessage({ message: t('error_22'), code: 2 }));
+                    //dispatch(showMessage({ message: t('error_22'), code: 2 }));
                 }
             }
         });
@@ -525,15 +527,15 @@ function Withdraw(props) {
             setOpenLoad(false);
             setGoogleCode('');
             let resData = res.payload;
-            if (resData.errno == 0) {
+            if (resData.errno === 0) {
                 setCurrRequestId(res.meta.requestId)
                 setOpenSuccess(false);
                 setTimeout(() => {
                     setZhuanQuan(false);
                     setTiJiaoState(1);
-                    dispatch(centerGetTokenBalanceList());
+                    dispatch(centerGetTokenBalanceList({ forceUpdate: true}));
                 }, 1200);
-            } else if (resData.errno == -2) {
+            } else if (resData.errno === -2) {
                 setTwiceVerifyType(0);
                 setTypeBined(hasAuthEmail ? true : false);
                 // if (!hasAuthGoogle) {
@@ -552,7 +554,7 @@ function Withdraw(props) {
                 if (resData.errmsg.includes("security code error")) {
                     dispatch(showMessage({ message: t('card_224'), code: 2 }));
                 } else {
-                    dispatch(showMessage({ message: t('error_22'), code: 2 }));
+                    //dispatch(showMessage({ message: t('error_22'), code: 2 }));
                 }
             }
         });
@@ -631,7 +633,7 @@ function Withdraw(props) {
     
 
     const evalFee2 = (networkId, coinName, amount, address) => {
-        let usdtGass = userData.wallet.inner?.find(item => Object.values(item).includes("USDT"));
+        let usdtGass = userData?.wallet?.inner?.find(item => Object.values(item).includes("USDT"));
         dispatch(cryptoWithdrawFee({
             networkId: networkId,
             coinName: coinName,
@@ -669,15 +671,32 @@ function Withdraw(props) {
         });
     };
     useEffect(() => {
+        // setLoadingShow(true)
         setPhoneTab('withdraw');
-        setLoadingShow(false);
-        dispatch(getWithdrawHistoryAddress()).then((res) => {
-            setLoadingShow(false);
+        editOrQueryHistoryAddress();
+    }, []);
+
+    const editOrQueryHistoryAddress = (objTab) => {
+        const data = {
+            withdrawalType: (!_.isUndefined(objTab))? ((objTab.smallTabValue === 0) ? 'external' : 'internal') : smallTabValue === 0 ? 'external': 'internal',
+            currencyType: (!_.isUndefined(objTab)) ? ( (objTab.tabValue === 0) ? 'crypto' : 'fiat' ) : tabValue === cryptoSelect ? 'crypto' : 'fiat'
+        }
+        if(objTab && objTab.editId && objTab.note){
+            data.editId = objTab.editId
+            data.note = objTab.note
+        }
+        dispatch(editOrQueryWithdrawalHistoryInfo(data)).then((res) => {
+            // setLoadingShow(false)
             if (res.payload?.data?.length > 0) {
                 setHistoryAddress(res.payload.data);
+                setHistoryAddressBak(res.payload.data);
+            }else {
+                setHistoryAddress([])
+                setHistoryAddressBak();
             }
         });
-    }, []);
+    }
+
 
     const defaultValues = {
         email: '',
@@ -764,7 +783,7 @@ function Withdraw(props) {
     };
 
     const getSymbolMoney = (symbol) => {
-        let arr = userData.wallet.inner || [];
+        let arr = userData?.wallet?.inner || [];
         let balance = arrayLookup(arr, 'symbol', symbol, 'balance') || 0;
         return balance.toFixed(6)
     };
@@ -916,12 +935,12 @@ function Withdraw(props) {
         if (tabValue === cryptoSelect) {
             setOpenYanZheng(false);
             setOpenGoogleCode(true);
-            dispatch(userProfile());
+            dispatch(userProfile({ forceUpdate: true}));
             setTypeBined(true);
         } else if (tabValue === fiatSelect) {
             setOpenYanZheng(false);
             setFiatVerifiedAuth(true);
-            dispatch(userProfile());
+            dispatch(userProfile({ forceUpdate: true}));
             setTypeBined(true);
         }
     }
@@ -1058,7 +1077,7 @@ function Withdraw(props) {
     const backPageEvt = () => {
         setOpenBindPhone(false)
         setOpenBindEmail(false);
-        dispatch(userProfile());
+        dispatch(userProfile({ forceUpdate: true}));
         setTypeBined(true);
         myFunction;
         setOpenGoogleCode(true);
@@ -1083,6 +1102,30 @@ function Withdraw(props) {
         }
     }
 
+    const handleEditAddressNote = (currentIndex, editData, isBlur) => {
+        let tmpList = []
+        historyAddress.map(async (item, index) => {
+            if (index === currentIndex) {
+                tmpList.push({
+                    ...item, ...editData
+                })
+
+                if ((editData.editMode === true || isBlur) && historyAddressBak[index].note != item.note) {
+                    dispatch(editOrQueryWithdrawalHistoryInfo({
+                       withdrawalType: smallTabValue === 0 ? 'external': 'internal',
+                        currencyType: tabValue === cryptoSelect ? 'crypto' : 'fiat',
+                        editId: item.id,
+                        note: item.note
+                    }))
+                }
+            } else {
+                tmpList.push({ ...item })
+            }
+        })
+
+        setHistoryAddress(tmpList)
+    }
+
     return (
         <div style={{ position: "relative" }}>
             {!loadingShow &&
@@ -1097,7 +1140,10 @@ function Withdraw(props) {
                             component={motion.div}
                             variants={item}
                             value={tabValue}
-                            onChange={(ev, value) => setTabValue(value)}
+                            onChange={(ev, value) => {
+                                setTabValue(value)
+                                editOrQueryHistoryAddress({tabValue: value, smallTabValue: smallTabValue})
+                            }}
                             indicatorColor="secondary"
                             textColor="inherit"
                             variant="scrollable"
@@ -1208,7 +1254,10 @@ function Withdraw(props) {
                                         component={motion.div}
                                         variants={item}
                                         value={smallTabValue}
-                                        onChange={(ev, value) => setSmallTabValue(value)}
+                                        onChange={(ev, value) => {
+                                            setSmallTabValue(value);
+                                            editOrQueryHistoryAddress({tabValue: tabValue, smallTabValue: value});
+                                        }}
                                         indicatorColor="secondary"
                                         textColor="inherit"
                                         variant="scrollable"
@@ -1262,9 +1311,9 @@ function Withdraw(props) {
                                                     </div>
                                                 </FormControl>
                                                 <img className='nianTieIcon ' src="wallet/assets/images/withdraw/zhanTie.png" alt="" onClick={() => {
-                                                    navigator.clipboard.readText().then(clipText => {
-                                                        changeAddress('address', clipText)
-                                                    })
+                                                    readClipboardText().then(readText => {
+                                                        changeAddress('address', readText)
+                                                    });
                                                 }} />
                                                 {
                                                     isMobileMedia &&
@@ -1277,7 +1326,7 @@ function Withdraw(props) {
                                             <Typography className="text-16 cursor-pointer mt-16">
                                                 {t('home_withdraw_3')}
                                             </Typography>
-                                            <div className="flex items-center py-16 justify-between" style={{}}>
+                                            <div className="flex items-start py-16 justify-between" style={{}}>
                                                 <FormControl sx={{ width: '80%', borderColor: '#94A3B8' }} variant="outlined">
                                                     <TextField
                                                         error={ismore(inputVal.amount)}
@@ -1348,7 +1397,7 @@ function Withdraw(props) {
                                                 }}
                                             >
                                                 <Typography className="text-14 px-16">
-                                                    <span style={{ color: '#FCE100' }}>⚠</span> {t('home_withdraw_15')}{TransactionFee}  {symbol}{t('home_withdraw_16')}{t('home_withdraw_17')}
+                                                    <span style={{ color: '#FCE100' }}>⚠</span> {t('home_withdraw_15')}{TransactionFee}  USDT{t('home_withdraw_16')}{t('home_withdraw_17')}
                                                 </Typography>
                                             </Box>
 
@@ -1387,9 +1436,9 @@ function Withdraw(props) {
                                                     </div>
                                                 </FormControl>
                                                 <img className='nianTieIcon' src="wallet/assets/images/withdraw/zhanTie.png" alt="" onClick={() => {
-                                                    navigator.clipboard.readText().then(clipText => {
-                                                        setInputIDVal(clipText)
-                                                    })
+                                                    readClipboardText().then(readText => {
+                                                        changeAddress('address', readText)
+                                                    });
                                                 }} />
                                                 {
                                                     isMobileMedia &&
@@ -1402,7 +1451,8 @@ function Withdraw(props) {
                                             <Typography className="text-16 cursor-pointer mt-16" >
                                                 {t('home_withdraw_3')}
                                             </Typography>
-                                            <div className="flex items-center justify-between" style={{ paddingTop: "1.6rem", paddingBottom: "0.5rem" }}>
+                                            
+                                            <div className="flex items-start justify-between" style={{ paddingTop: "1.6rem", paddingBottom: "0.5rem" }}>
                                                 <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
                                                     <TextField
                                                         error={ismore(inputVal.amount)}
@@ -1477,7 +1527,7 @@ function Withdraw(props) {
                         </BootstrapDialog>
 
                         {/*打开历史记录*/}
-                        <BootstrapDialog
+                        {/* <BootstrapDialog
                             onClose={() => { setOpenWithdrawLog(false); }}
                             aria-labelledby="customized-dialog-title"
                             open={openWithdrawLog}
@@ -1508,7 +1558,7 @@ function Withdraw(props) {
                                                         >
                                                             {item}
                                                         </Typography>
-                                                        <IconButton onClick={() => { handleCopyText(item).then(r => { }) }}>
+                                                        <IconButton onClick={() => { handleCopyText(item); }}>
                                                             <img src="wallet/assets/images/deposite/copy.png" alt="" />
                                                         </IconButton>
                                                         <IconButton onClick={() => { del(item) }}>
@@ -1521,7 +1571,7 @@ function Withdraw(props) {
                                     </Box>
                                 </Box>
                             </DialogContent>
-                        </BootstrapDialog>
+                        </BootstrapDialog> */}
 
                         {/*填写google验证码*/}
                         <BootstrapDialog
@@ -2294,17 +2344,40 @@ function Withdraw(props) {
 
                     <div className='pasteW'>
                         {
-                            historyAddress.map((item, index) => {
+                            historyAddress.map((addressItem, index) => {
                                 return (
                                     <div className='pasteDiZhi'>
                                         <div className='flex'>
-                                            <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
-                                            <div className='bianJiBiZi'>{t('card_74')}</div>
+                                            <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"  onClick={() => {
+                                                handleEditAddressNote(index, { editMode: !addressItem.editMode })
+                                            }}></img>
+                                             <OutlinedInput
+                                                className='diZhiShuRu'
+                                                sx={{
+                                                    padding: '0rem',
+                                                    '& .MuiOutlinedInput-notchedOutline': {
+                                                        border: 'none',
+                                                    },
+                                                    color: addressItem.editMode ? '#ffffff' : '#94A3B8'
+                                                }}
+                                                value={addressItem.note}
+                                                inputProps={{ 'aria-label': 'weight' }}
+                                                onFocus={(event) => {
+                                                    handleEditAddressNote(index, { editMode: true })
+                                                }}
+                                                onChange={(event) => {
+                                                    handleEditAddressNote(index, { note: event.target.value, editMode: true })
+                                                }}
+                                                onBlur={(event) => {
+                                                    handleEditAddressNote(index, { note: event.target.value, editMode: false }, true)
+                                                }}
+                                            />
+                                            {/* <div className='bianJiBiZi'>{item.note}</div> */}
                                         </div>
                                         <div className='pasteDi' onClick={()=>{ 
-                                            smallTabValue === 0 ? setInputVal({ ...inputVal,  'address': item }): setInputIDVal(item);
+                                            smallTabValue === 0 ? setInputVal({ ...inputVal,  'address': addressItem.address }): setInputIDVal(addressItem.internalToUserId);
                                             closePasteFunc()
-                                        }}>{item}</div>
+                                        }}>{ smallTabValue === 0 ?  addressItem.address: addressItem.internalToUserId}</div>
                                     </div>
                                 )
                             })

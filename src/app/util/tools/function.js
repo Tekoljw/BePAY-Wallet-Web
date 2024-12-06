@@ -2,6 +2,10 @@
 
 import userLoginType from "../../define/userLoginType";
 import userLoginState from "../../define/userLoginState";
+import copy from 'copy-to-clipboard';
+import {showMessage} from "app/store/fuse/messageSlice";
+import {useDispatch} from "react-redux";
+import {updateUserRequestError} from "app/store/user";
 
 export const getUrlParam = (param) => {
     const res = window.location.href;
@@ -116,11 +120,41 @@ export const getNowTime = (time) => {
 }
 
 //复制文本到粘贴板
-export const handleCopyText = async (text) => {
+export const handleCopyText = (text) => {
     try {
-        await navigator.clipboard.writeText(text);
+        if(copy(text)){
+            console.error("copy success");
+        }else{
+            console.error("copy failure");
+        }
     } catch (error) {
         console.error(error.message);
+        const dispatch = useDispatch();
+        dispatch(showMessage({ message: "copy exception:", code: 2 }));
+    }
+};
+
+//复制文本到粘贴板（旧的复制）
+export const handleCopyTextOLd = (text) => {
+    let input = document.createElement("input");
+    document.body.appendChild(input);
+    input.setAttribute("value", text);
+    input.select();
+    document.execCommand("copy"); // 执行浏览器复制命令
+    if (document.execCommand("copy")) {
+        document.execCommand("copy");
+    }
+    document.body.removeChild(input);
+};
+
+//读取粘贴板内容
+export const readClipboardText = async () => {
+    try {
+        return await navigator.clipboard.readText();
+    } catch (err) {
+        console.error('Failed to read clipboard contents:', err);
+        const dispatch = useDispatch();
+        dispatch(showMessage({ message: "read fail :" + err, code: 2 }));
     }
 };
 
@@ -137,6 +171,18 @@ export const canLoginAfterRequest = (userData) =>  {
         return false;
     }
     return true;
+}
+
+//显示服务器错误提示
+export const showServerErrorTips = (dispatch, resultData) =>  {
+    if (resultData?.errno > 501){ //服务器返回提示错误
+        const timestamp = new Date().getTime();
+        const serverErrorCodeAndTime = resultData?.errno  + '-' + timestamp;
+        dispatch(updateUserRequestError(serverErrorCodeAndTime));
+        resultData.errno = 400;
+        resultData.errmsg = "";
+    }
+    return resultData;
 }
 
 export const isMobile = () =>  {

@@ -114,7 +114,7 @@ function Borrow() {
 
 
     const [symbol, setSymbol] = useState('');
-    const walletData = useSelector(selectUserData).wallet;
+    const walletData = useSelector(selectUserData).wallet || {};
     const config = useSelector(selectConfig);
     const symbols = config.symbols;
     const [symbolWallet, setSymbolWallet] = useState([]);

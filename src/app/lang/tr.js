@@ -480,7 +480,7 @@ const locale = {
     card_129: "bugünkü kazanç",
     card_130: "TOP.ONE’a giderek işlem yapmaya başlayın",
     card_131: "BeingFi kartını aktifleştirin",
-    card_132: "Her hafta toplam raporlama yapın ve karşılığında ödüller kazanın.",
+    card_132: "Her 7 günde bir giriş yaparak, uygun ödülleri biriktirip kazanın",
     card_133: "Pazartesi",
     card_134: "Salı",
     card_135: "Çarşamba",
@@ -821,6 +821,35 @@ const locale = {
 
     card_249: "Ekle",
     card_250: "Lütfen mini uygulamayı kapatın ve yeniden denemek için yenile düğmesine tıklayın.",
+    card_251: "Apple Ödeme Kartı",
+    card_252: "Mevcut kartı etkinleştir",
+    card_253: "Amerikan adresini tercih edin, yoksa KYC'deki [Örnek]e tıklayarak ilgili bilgileri sağlayın",
+    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255:"Apple, ",
+
+    kyc_68:"Adres1",
+    kyc_69:"Adres2",
+    kyc_70:"Adres3",
+    kyc_71:"Örnek",
+
+    card_256:"Lütfen KYC bilgilerinizin doğru olduğundan emin olun ve başvurduğunuz adresi seçin.",
+    card_257:"KYC Bilgilerini Düzenle",
+    card_258:"Kart değişim ücretini ödeyin:",
+    card_259:"KYC Doğrulama",
+    card_260:"Kart başvurusunda bulunmadan önce KYC doğrulamasını tamamlamanız gerekir.",
+    card_261:"Lütfen spesifik detaylar için çevrimiçi müşteri hizmetleri ile iletişime geçin.", 
+
+    card_262:"İnceleniyor, varlıklar dondurulmuş durumda",
+    card_263:"İnceleme başarılı, dondurulmuş varlıklar serbest bırakıldı",
+    card_264:"Çekim başarısız, dondurulmuş varlıklar serbest bırakıldı",
+    card_265:"Donmuş Bakiye",
+
+
+
+
+
+
+
 
 
 

@@ -445,7 +445,7 @@ function Swap() {
 
 
   const getUserMoney = (symbol) => {
-    let arr = userData.wallet.inner || [];
+    let arr = userData?.wallet?.inner || [];
     let fiatArr = userData.fiat || [];
     let balance = arrayLookup(arr, "symbol", symbol, "balance") || 0;
     if (balance > 0) {
@@ -494,13 +494,15 @@ function Swap() {
       ).then((res) => {
         let result = res.payload;
         if (result && result.errno === 0) {
+          //只有虚拟币的不稳定币兑换的时候会用到
           let qty_base = result.data.qty_base;
           let qty_quote = result.data.qty_quote;
-          if (result.data.pair !== (symbol + formatSymbol)) {
-            qty_base = result.data.qty_quote;
-          } else {
-            qty_quote = result.data.qty_base;
-          }
+          // 没有意义，暂时删除
+          //if (result.data.pair !== (symbol + formatSymbol)) {
+          //  qty_base = result.data.qty_quote;
+          //} else {
+          //  qty_quote = result.data.qty_base;
+          //}
           setPriceData(result.data);
           dispatch(
             getSwapCrypto({
@@ -521,8 +523,8 @@ function Swap() {
               setTimeout(() => {
                 setZhuanQuan(false);
                 setTiJiaoState(1);
-                dispatch(centerGetTokenBalanceList());
-                dispatch(centerGetUserFiat());
+                dispatch(centerGetTokenBalanceList({ forceUpdate: true}));
+                dispatch(centerGetUserFiat({ forceUpdate: true}));
                 setTimeout(() => {
                   // userData = useSelector(selectUserData);
                   symbolsFormatAmount();
@@ -548,14 +550,17 @@ function Swap() {
           amount: inputVal.amount,
         })
       ).then((res) => {
+        debugger;
         let result = res.payload
-        lookData.id = result.data.orderId;
-        lookData.newNum = (result.data.targetAmount).toFixed(2);
-        lookData.fee = (result.data.premium).toFixed(6);
+        lookData.id = result?.data?.orderId;
+        lookData.newNum = (result?.data?.targetAmount)?.toFixed(2);
+        lookData.fee = (result?.data?.premium)?.toFixed(6);
         if (result && result.errno === 0) {
           setTimeout(() => {
             setZhuanQuan(false);
             setTiJiaoState(1);
+            dispatch(centerGetTokenBalanceList({ forceUpdate: true}));
+            dispatch(centerGetUserFiat({ forceUpdate: true}));
           }, 1200);
         } else {
           setTimeout(() => {
@@ -577,16 +582,16 @@ function Swap() {
 
   useEffect(() => {
     hasData && symbolsFormatAmount();
-  }, [hasData, swapData, inputVal.amount, fiatsData]);
+  }, [hasData, swapData, inputVal.amount, fiatsData, userData?.wallet]);
 
   useEffect(() => {
-    setLoadingShow(false)
+    // setLoadingShow(true)
     setPhoneTab('swap');
     dispatch(getSwapConfig()).then((res) => {
-      setLoadingShow(false)
       res.payload?.errno === 0 && dispatch(setSwapConfig(res.payload));
     });
     dispatch(getSwapFee()).then((res) => {
+      // setLoadingShow(false)
       const result = res.payload;
       setSwapFee(result.data);
     })
