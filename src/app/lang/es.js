@@ -482,7 +482,7 @@ const locale = {
     card_129: "ingresos del día",
     card_130: "dirígete a TOP.ONE para comenzar a operar",
     card_131: "habilitar la tarjeta BeingFi",
-    card_132: "Registra tu presencia semanalmente y recibe las recompensas correspondientes",
+    card_132: "Regístrate cada 7 días para acumular y recibir recompensas correspondientes",
     card_133: "lunes",
     card_134: "martes",
     card_135: "miércoles",
@@ -834,7 +834,12 @@ const locale = {
     kyc_71:"Ejemplo",
 
     
-
+    card_256:"Por favor, asegúrese de que su información de KYC esté correcta y seleccione la dirección solicitada.",
+    card_257:"Modificar información de KYC",
+    card_258:"Pagar la tarifa de reemplazo de tarjeta:",
+    card_259:"Verificación KYC",
+    card_260:"Debe completar la verificación KYC antes de solicitar la tarjeta.",
+    card_261:"Por favor, póngase en contacto con el servicio de atención al cliente en línea para obtener detalles específicos.",
 
 
 

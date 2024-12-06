@@ -221,6 +221,10 @@ export default {
             url: "/transfer/creditTradeRecords",
             method: "post",
         },
+        editOrQueryWithdrawalHistoryInfo: {
+            url: "/transfer/editOrQueryWithdrawalHistoryInfo",
+            method: "post",
+        }
     },
 
     paytoken: {
@@ -645,8 +649,7 @@ export default {
         },
         getInviteRewardDetail: {
             url: "/unique_invite/getInviteRewardDetail",
-            method: "get",
-            json: true
+            method: "get"
         }
     },
 

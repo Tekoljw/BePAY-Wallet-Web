@@ -485,7 +485,7 @@ const locale = {
     card_129: "Heutiger Gewinn",
     card_130: "Gehe zu TOP.ONE, um mit dem Handel zu beginnen",
     card_131: "Beantragen Sie die BeingFi-Karte",
-    card_132: "Wöchentlich anmelden und entsprechende Belohnungen erhalten.",
+    card_132: "Melden Sie sich alle 7 Tage an, um entsprechende Belohnungen zu erhalten",
     card_133: "Montag",
     card_134: "Dienstag",
     card_135: "Mittwoch",
@@ -835,7 +835,12 @@ const locale = {
     kyc_71:"Beispiel",
 
     
-
+    card_256:"Bitte stellen Sie sicher, dass Ihre KYC-Daten korrekt sind und wählen Sie die angegebene Adresse aus.",
+    card_257:"KYC-Informationen ändern",
+    card_258:"Zahlung der Kartenersatzgebühr:",
+    card_259:"KYC-Überprüfung",
+    card_260:"Die KYC-Verifizierung muss abgeschlossen sein, bevor Sie die Karte beantragen.",
+    card_261:"Bitte wenden Sie sich an den Online-Kundendienst, um weitere Details zu erfahren.",
 
 
 

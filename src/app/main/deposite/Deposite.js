@@ -1222,7 +1222,7 @@ function Deposite() {
                                             <div>
                                                 <div className='flex ml-10'>
                                                     <img onClick={() => {
-                                                        handleEditAddressDesc(index, { eidtMode: !addressItem.eidtMode })
+                                                        handleEditAddressDesc(index, { editMode: !addressItem.editMode })
                                                     }} className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
                                                     <OutlinedInput
                                                         className='diZhiShuRu'
@@ -1231,18 +1231,18 @@ function Deposite() {
                                                             '& .MuiOutlinedInput-notchedOutline': {
                                                                 border: 'none',
                                                             },
-                                                            color: addressItem.eidtMode ? '#ffffff' : '#94A3B8'
+                                                            color: addressItem.editMode ? '#ffffff' : '#94A3B8'
                                                         }}
                                                         value={addressItem.addressDesc}
                                                         inputProps={{ 'aria-label': 'weight' }}
                                                         onFocus={(event) => {
-                                                            handleEditAddressDesc(index, { eidtMode: true })
+                                                            handleEditAddressDesc(index, { editMode: true })
                                                         }}
                                                         onChange={(event) => {
-                                                            handleEditAddressDesc(index, { addressDesc: event.target.value, eidtMode: true })
+                                                            handleEditAddressDesc(index, { addressDesc: event.target.value, editMode: true })
                                                         }}
                                                         onBlur={(event) => {
-                                                            handleEditAddressDesc(index, { addressDesc: event.target.value, eidtMode: false }, true)
+                                                            handleEditAddressDesc(index, { addressDesc: event.target.value, editMode: false }, true)
                                                         }}
                                                     />
                                                 </div>

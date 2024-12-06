@@ -22,7 +22,7 @@ import FusePageCarded from '@fuse/core/FusePageCarded';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import HomeSidebarContent from "../home/HomeSidebarContent";
 import MobileDetect from 'mobile-detect';
-import { getUserData } from "../../store/user/userThunk";
+import { userProfile } from '../../store/user/userThunk';
 import { uploadStorage } from "../../store/tools/toolThunk";
 import { getKycInfo, updateKycInfo, submitKycInfo, kycAddress } from "app/store/payment/paymentThunk";
 import { selectConfig } from "../../store/config";
@@ -67,13 +67,11 @@ function Kyc(props) {
     const config = useSelector(selectConfig);
     const user = useSelector(selectUserData);
     const kycInfo = config.kycInfo || {};
+    const [tmpPhoneCode, setTmpPhoneCode] = useState('');
     let baseImgUrl = "";
     if (config.system.cdnUrl) {
         baseImgUrl = config.system.cdnUrl.substr(0, config.system.cdnUrl.length - 1);
     }
-
-
-
 
     const [inputVal, setInputVal] = useState({
         address: '',
@@ -101,8 +99,6 @@ function Kyc(props) {
         userAddressThree: {},
     });
 
-
-
     //获取示例数据
     const onSubmitKycAddress = async () => {
         await dispatch(kycAddress({
@@ -113,10 +109,15 @@ function Kyc(props) {
                 setInputVal({ ...inputVal, country: resultData.country, state: resultData.state, city: resultData.city, address: resultData.street, zipCode: resultData.zip });
                 setTimeout(() => {
                     setClickShiLi(true);
+                    setCountryInput(true);
                     setCountryInputShow(true);
+                    setStateInput(true);
                     setStateInputShow(true);
+                    setCityInput(true);
                     setCityInputShow(true);
+                    setAddressInput(true);
                     setAddressInputShow(true);
+                    setZipCodeInput(true);
                     setZipCodeInputShow(true);
                 }, 0);
             }
@@ -132,6 +133,7 @@ function Kyc(props) {
     const [stateError, setStateError] = useState(false);
     const [countryError, setCountryError] = useState(false);
     const [firstNameError, setFirstNameError] = useState(false);
+    const [lastNameError, setLastNameError] = useState(false);
     const [phoneNumberError, setPhoneNumberError] = useState(false);
     const [phoneCountryError, setPhoneCountryError] = useState(false);
     const [idFrontUrlError, setIdFrontUrlError] = useState(false);
@@ -198,7 +200,6 @@ function Kyc(props) {
     const [usSsnInputShow, setUsSsnInputShow] = useState(false);
     const usSsnInputRef = useRef(null);
     const [addressKyc, setAddressKyc] = useState(1);
-
 
     //文凯改
     const changeBiState = (copyData) => {
@@ -305,8 +306,8 @@ function Kyc(props) {
             setUsSsnInput(true)
             setUsSsnInputShow(true)
         } else {
-            setIdNoInput(false)
-            setIdNoInputShow(false)
+            setUsSsnInput(false)
+            setUsSsnInputShow(false)
         }
     };
 
@@ -331,6 +332,11 @@ function Kyc(props) {
         } else {
             setFirstNameError(false);
         }
+        if (inputVal.lastName === '') {
+            setLastNameError(true);
+        } else {
+            setLastNameError(false);
+        }
         if (inputVal.country === '') {
             setCountryError(true);
         } else {
@@ -341,26 +347,21 @@ function Kyc(props) {
         } else {
             setStateError(false);
         }
-
         if (inputVal.city === '') {
             setCityError(true);
         } else {
             setCityError(false);
         }
-
         if (inputVal.address === '') {
             setAddressError(true);
         } else {
             setAddressError(false);
         }
-
-
         if (inputVal.zipCode === '') {
             setZipcodeError(true);
         } else {
             setZipcodeError(false);
         }
-
         if (inputVal.idNo === '') {
             setIdNoError(true);
         } else {
@@ -370,11 +371,13 @@ function Kyc(props) {
         showBtnFunc();//显示保存按钮
 
         if (inputVal.country != '' && inputVal.state != '' && inputVal.city != '' && inputVal.address != '' && inputVal.zipCode != '') {
-            setClickShiLi(true);//显示示例按钮
+            setClickShiLi(true);//不显示示例按钮
         } else {
             setClickShiLi(false);
         }
-
+        if (inputVal.country === undefined && inputVal.state === undefined && inputVal.city === undefined && inputVal.address === undefined && inputVal.zipCode === undefined) {
+            setClickShiLi(false);//显示示例按钮
+        }
         if (inputVal.defaultAddressInfo === 2 || inputVal.defaultAddressInfo === 3) {
             addAddressTwoOrThree()
         }
@@ -456,8 +459,6 @@ function Kyc(props) {
             setFirstNameInputShow(false)
         }
     };
-
-
     const handleBlur5 = () => {
         if (inputVal.middleName) {
             setMiddleNameInput(true)
@@ -468,9 +469,12 @@ function Kyc(props) {
             setMiddleNameInputShow(false)
         }
     };
-
-
     const handleBlur6 = () => {
+        if (inputVal.lastName === '') {
+            setLastNameError(true);
+        } else {
+            setLastNameError(false);
+        }
         if (inputVal.lastName) {
             setLastNameInput(true)
             setLastNameInputShow(true)
@@ -488,15 +492,6 @@ function Kyc(props) {
         } else {
             setCountryError(false);
         }
-        if (inputVal.country) {
-            setCountryInput(true)
-            setCountryInputShow(true)
-            countryInputRef.current.blur();// 取消到输入框
-        } else {
-            setCountryInput(false)
-            setCountryInputShow(false)
-        }
-
     };
 
     const handleBlur9 = () => {
@@ -771,6 +766,15 @@ function Kyc(props) {
         }
     };
 
+    const handleChangeInputVal6 = (prop) => (event) => {
+        setInputVal({ ...inputVal, [prop]: event.target.value });
+        if (event.target.value === '') {
+            setLastNameError(true);
+        } else {
+            setLastNameError(false);
+        }
+    };
+
     const handleChangeInputVal8 = (prop) => (event) => {
         if (event.target.value === '') {
             setCountryError(true);
@@ -969,7 +973,7 @@ function Kyc(props) {
 
     //是否显示保存按钮
     const showBtnFunc = () => {
-        if (inputVal.email !== '' && inputVal.idNo !== '' && inputVal.address !== '' && inputVal.zipCode !== '' && inputVal.city !== '' && inputVal.state !== '' && inputVal.country !== '' && inputVal.birthDate !== '' && inputVal.firstName !== '' && inputVal.phoneCountry !== '' && inputVal.phoneNumber !== '' && inputVal.idType !== '' && inputVal.idFrontUrl !== '' && inputVal.idBackUrl !== '') {
+        if (inputVal.email !== '' && inputVal.idNo !== '' && inputVal.address !== '' && inputVal.zipCode !== '' && inputVal.city !== '' && inputVal.state !== '' && inputVal.country !== '' && inputVal.birthDate !== '' && inputVal.firstName !== '' && inputVal.lastName !== '' && inputVal.phoneCountry !== '' && inputVal.phoneNumber !== '' && inputVal.idType !== '' && inputVal.idFrontUrl !== '' && inputVal.idBackUrl !== '') {
             setShowSaveBtn(false)
         } else
             setShowSaveBtn(true)
@@ -977,8 +981,8 @@ function Kyc(props) {
 
     //保存信息
     const onSave = () => {
-        if (inputVal.email !== undefined && inputVal.idNo !== undefined && inputVal.address !== undefined && inputVal.zipCode !== undefined && inputVal.city !== undefined && inputVal.state !== undefined && inputVal.country !== undefined && inputVal.firstName !== undefined && inputVal.phoneCountry !== undefined && inputVal.phoneNumber !== undefined && inputVal.idType !== undefined && inputVal.idFrontUrl !== undefined && inputVal.idBackUrl !== undefined) {
-            if (inputVal.email !== '' && inputVal.idNo !== '' && inputVal.address !== '' && inputVal.zipCode !== '' && inputVal.city !== '' && inputVal.state !== '' && inputVal.country !== '' && inputVal.firstName !== '' && inputVal.phoneCountry !== '' && inputVal.phoneNumber !== '' && inputVal.idType !== '' && inputVal.idFrontUrl !== '' && inputVal.idBackUrl !== '') {
+        if (inputVal.email !== undefined && inputVal.idNo !== undefined && inputVal.address !== undefined && inputVal.zipCode !== undefined && inputVal.city !== undefined && inputVal.state !== undefined && inputVal.country !== undefined && inputVal.firstName !== undefined && inputVal.lastName !== undefined && inputVal.phoneCountry !== undefined && inputVal.phoneNumber !== undefined && inputVal.idType !== undefined && inputVal.idFrontUrl !== undefined && inputVal.idBackUrl !== undefined) {
+            if (inputVal.email !== '' && inputVal.idNo !== '' && inputVal.address !== '' && inputVal.zipCode !== '' && inputVal.city !== '' && inputVal.state !== '' && inputVal.country !== '' && inputVal.firstName !== '' && inputVal.lastName !== '' && inputVal.phoneCountry !== '' && inputVal.phoneNumber !== '' && inputVal.idType !== '' && inputVal.idFrontUrl !== '' && inputVal.idBackUrl !== '') {
                 if (inputVal.defaultAddressInfo == 2) {
                     inputVal.userAddressTwo = JSON.stringify(
                         {
@@ -1005,6 +1009,7 @@ function Kyc(props) {
                         if (value.payload) {
                             // refreshKycInfo();
                             dispatch(showMessage({ message: "Success", code: 1 }));
+                            dispatch(userProfile({ forceUpdate: true }));
                             props.updatedKycInfo();
                         }
                     }
@@ -1029,7 +1034,6 @@ function Kyc(props) {
             });
             setInputVal(copyData);//重新填充数据
         });
-        console.log("刷了填");
     };
 
     //KYC数据发生改变后填充数据
@@ -1259,17 +1263,18 @@ function Kyc(props) {
 
                         <div className="flex items-center justify-between">
                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
-                                <InputLabel id="demo-simple-select-label">{t('kyc_6')} </InputLabel>
+                                <InputLabel id="demo-simple-select-label">{t('kyc_6')} *</InputLabel>
                                 <OutlinedInput
                                     id="outlined-adornment-address"
                                     label="LastName"
                                     value={inputVal.lastName}
-                                    onChange={handleChangeInputVal('lastName')}
+                                    onChange={handleChangeInputVal6('lastName')}
                                     aria-describedby="outlined-weight-helper-text"
                                     inputProps={{
                                         'aria-label': 'lastName',
                                     }}
                                     onBlur={handleBlur6}
+                                    error={lastNameError}
                                     disabled={lastNameInput}
                                     inputRef={lastNameInputRef}
                                     endAdornment={
@@ -1283,6 +1288,7 @@ function Kyc(props) {
                                         </InputAdornment>
                                     }
                                 />
+                                {lastNameError && (<FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>)}
                             </FormControl>
                         </div>
 
@@ -1302,23 +1308,88 @@ function Kyc(props) {
                             </Stack>
                         </div>
 
-                        <div className="flex items-center justify-between">
-                            <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} className="mb-24">
-                                <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    value={addressKyc}
-                                    onChange={handleChangeInputVal16}
-                                    className='addressKyc'
-                                >
-                                    <MenuItem value={1}>{t('kyc_68')}</MenuItem>
-                                    <MenuItem value={2}>{t('kyc_69')}</MenuItem>
-                                    <MenuItem value={3}>{t('kyc_70')}</MenuItem>
-                                </Select>
-                            </FormControl>
+                        <div className="flex items-center justify-between mt-8">
+                            <div style={{ position: "relative", width: '100%' }}>
+                                <div style={{ position: "absolute", width: '100%' }}>
+                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} className="mb-24">
+                                        <Select
+                                            labelId="demo-simple-select-label"
+                                            id="demo-simple-select"
+                                            value={addressKyc}
+                                            onChange={handleChangeInputVal16}
+                                            className='addressKyc'
+                                        >
+                                            <MenuItem value={1}>{t('kyc_68')}</MenuItem>
+                                            <MenuItem value={2}>{t('kyc_69')}</MenuItem>
+                                            <MenuItem value={3}>{t('kyc_70')}</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </div>
+
+                                <div style={{ position: "absolute", right: "0%", marginTop: '5px', marginRight: "36px" }}>
+                                    {
+                                        !clickShiLi && <IconButton onClick={() => onSubmitKycAddress()}>
+                                            <div className='px-8' style={{ backgroundColor: "#374252", minWidth: "50px", color: "#ffffff", fontSize: "12px", lineHeight: "26px", height: "26px", borderRadius: "50px" }}>
+                                                {t('kyc_71')}
+                                            </div>
+                                        </IconButton>
+                                    }
+                                </div>
+                            </div>
                         </div>
 
-                        <div className="flex items-center justify-between">
+
+                        <div className="mb-24" style={{ marginTop: "76px" }}>
+                            <Autocomplete
+                                options={phoneCode.list}
+                                autoHighlight
+                                value={phoneCode.list.find(option => option.country_code === inputVal.country) || null}
+                                onInputChange={(event, newInputValue) => {
+                                    setTmpPhoneCode(newInputValue.replace(/\+/g, ""));
+                                }}
+                                filterOptions={(options) => {
+                                    const reg = new RegExp(tmpPhoneCode, 'i');
+                                    const array = options.filter((item) => {
+                                        return reg.test(item.country_code) || reg.test(item.local_name)
+                                    });
+                                    return array;
+                                }}
+                                onChange={(event, option) => {
+                                    if (option) {
+                                        setInputVal(prevState => ({
+                                            ...prevState,
+                                            country: option.country_code ? option.country_code : '',
+                                        }));
+                                    }
+                                }}
+                                error={countryError}
+                                onBlur={handleBlur8}
+                                getOptionLabel={(option) => option.country_code}
+                                renderOption={(props, option) => (
+                                    <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                                        <img
+                                            loading="lazy"
+                                            width="20"
+                                            src={`/wallet/assets/images/country/${option.country_code}.png`}
+                                            alt=""
+                                        />
+                                        <span style={{ color: "#94A3B8" }}>{option.local_name}</span>&nbsp;&nbsp;{option.country_code}
+                                    </Box>
+                                )}
+                                renderInput={(params) => (
+                                    <TextField
+                                        label={t('kyc_8') + " *"}
+                                        {...params}
+                                        inputProps={{ ...params.inputProps }}
+                                    />
+                                )}
+                            />
+                            {countryError && (<FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' style={{ marginLeft: "14px" }} > {t('kyc_41')}</FormHelperText>)}
+                        </div>
+
+
+
+                        {/* <div className="flex items-center justify-between">
                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">
                                 <InputLabel htmlFor="outlined-adornment-country">{t('kyc_8')}*</InputLabel>
                                 <OutlinedInput
@@ -1357,7 +1428,8 @@ function Kyc(props) {
                                     <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt' > {t('kyc_41')}</FormHelperText>
                                 )}
                             </FormControl>
-                        </div>
+                        </div> */}
+
 
                         <div className="flex items-center justify-between">
                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined" className="mb-24">

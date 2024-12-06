@@ -55,6 +55,7 @@ import { fontSize } from '@mui/system';
 import userLoginType from "../../../define/userLoginType";
 import RetiedEmail from "../../login/RetiedEmail";
 import RetiedPhone from "../../login/RetiedPhone";
+import { editOrQueryWithdrawalHistoryInfo } from "../../../store/transfer/transferThunk";
 
 
 const container = {
@@ -115,7 +116,8 @@ function Fiat(props) {
         let tmpInputVal = { ...inputVal, ...value };
         setInputVal(tmpInputVal);
     };
-    const [historyAddress, setHistoryAddress] = useState([]);
+    const [historyAddressFiat, setHistoryAddressFiat] = useState([]);
+    const [historyAddressFiatBak, setHistoryAddressFiatBak] = useState([]);
     const [openWithdrawLog, setOpenWithdrawLog] = useState(false);
     const config = useSelector(selectConfig);
     const mounted = useRef();
@@ -368,15 +370,6 @@ function Fiat(props) {
             setOpenGoogleCode(true);
         }
     }, [fiatVerifiedAuth])
-
-    useEffect(() => {
-        dispatch(getListBank()).then((res) => {
-            let result = res.payload;
-            if (result) {
-                setHistoryAddress(result);
-            }
-        });
-    }, []);
 
     useEffect(() => {
         if (googleCode.length === 6) {
@@ -729,7 +722,19 @@ function Fiat(props) {
         })
     }
 
-
+    const editOrQueryHistoryAddress = (objTab) => {
+        dispatch(editOrQueryWithdrawalHistoryInfo({
+            withdrawalType: (!_.isUndefined(objTab))? ((objTab.smallTabValue === 0) ? 'external' : 'internal') : smallTabValue === 0 ? 'external': 'internal',
+            currencyType: (!_.isUndefined(objTab)) ? ( (objTab.tabValue === 0) ? 'crypto' : 'fiat' ) : tabValue === cryptoSelect ? 'crypto' : 'fiat'
+        })).then((res) => {
+            // setLoadingShow(false)
+            const resultData = res?.payload?.data;
+            if(resultData) {
+                setHistoryAddressFiat(resultData);
+                setHistoryAddressFiatBak(resultData);
+            }
+        });
+    }
 
 
     //从大到小排列
@@ -959,6 +964,32 @@ function Fiat(props) {
         setOpenGoogleCode(true);
     }
 
+    const handleEditAddressNote = (currentIndex, editData, isBlur) => {
+        let tmpList = []
+        if(historyAddressFiat.length > 0) {
+            historyAddressFiat.map(async (item, index) => {
+                if (index === currentIndex) {
+                    tmpList.push({
+                        ...item, ...editData
+                    })
+    
+                    if ((editData.editMode === true || isBlur) && historyAddressFiatBak[index].note != item.note) {
+                        dispatch(editOrQueryWithdrawalHistoryInfo({
+                           withdrawalType: 'internal',
+                            currencyType:  'fiat',
+                            editId: item.id,
+                            note: item.note
+                        }))
+                    }
+                } else {
+                    tmpList.push({ ...item })
+                }
+            })   
+        }
+
+        setHistoryAddressFiat(tmpList)
+    }
+
     return (
         <div>
             <div>
@@ -1067,7 +1098,12 @@ function Fiat(props) {
                                         component={motion.div}
                                         variants={item}
                                         value={smallTabValue}
-                                        onChange={(ev, value) => setSmallTabValue(value)}
+                                        onChange={(ev, value) => {
+                                            setSmallTabValue(value)
+                                            if(value == 1){
+                                                editOrQueryHistoryAddress({tabValue: 1, smallTabValue: value})
+                                            }
+                                        }}
                                         indicatorColor="secondary"
                                         textColor="inherit"
                                         variant="scrollable"
@@ -2052,30 +2088,53 @@ function Fiat(props) {
                         </div>
 
                         <div className='pasteW'>
-                            {
-                                historyAddress.map((item, index) => {
-                                    return (
-                                        <div className='pasteDiZhi'>
-                                            <div className='flex'>
-                                                <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"></img>
-                                                <div className='bianJiBiZi'>{t('card_74')}</div>
+                                {
+                                    historyAddressFiat.length > 0 && historyAddressFiat.map((addressItem, index) => {
+                                        return (
+                                            <div className='pasteDiZhi'>
+                                                <div className='flex'>
+                                                    <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"  onClick={() => {
+                                                        handleEditAddressNote(index, { editMode: !addressItem.editMode })
+                                                    }}></img>
+                                                        <OutlinedInput
+                                                        className='diZhiShuRu'
+                                                        sx={{
+                                                            padding: '0rem',
+                                                            '& .MuiOutlinedInput-notchedOutline': {
+                                                                border: 'none',
+                                                            },
+                                                            color: addressItem.editMode ? '#ffffff' : '#94A3B8'
+                                                        }}
+                                                        value={addressItem.note}
+                                                        inputProps={{ 'aria-label': 'weight' }}
+                                                        onFocus={(event) => {
+                                                            handleEditAddressNote(index, { editMode: true })
+                                                        }}
+                                                        onChange={(event) => {
+                                                            handleEditAddressNote(index, { note: event.target.value, editMode: true })
+                                                        }}
+                                                        onBlur={(event) => {
+                                                            handleEditAddressNote(index, { note: event.target.value, editMode: false }, true)
+                                                        }}
+                                                    />
+                                                    {/* <div className='bianJiBiZi'>{item.note}</div> */}
+                                                </div>
+                                                <div className='pasteDi' onClick={()=>{ 
+                                                     if(smallTabValue === 1) {
+                                                        setInputVal({ ...inputVal, 'userId': addressItem.internalToUserId  });
+                                                        closePasteFunc()
+                                                    }
+                                                }}>{ addressItem.internalToUserId}</div>
                                             </div>
-                                            <div className='pasteDi'  onClick={()=>{ 
-                                                if(smallTabValue === 1) {
-                                                    setInputVal({ ...inputVal, 'userId': item });
-                                                    closePasteFunc()
-                                                }
-                                        }}>{item}</div>
-                                        </div>
-                                    )
-                                })
-                            }
+                                        )
+                                    })
+                                }
                         </div>
                     </div>
                 </BootstrapDialog>
 
                 {/*打开历史记录*/}
-                <BootstrapDialog
+                {/* <BootstrapDialog
                     onClose={() => { setOpenWithdrawLog(false); }}
                     aria-labelledby="customized-dialog-title"
                     open={openWithdrawLog}
@@ -2119,7 +2178,7 @@ function Fiat(props) {
                             </Box>
                         </Box>
                     </DialogContent>
-                </BootstrapDialog>
+                </BootstrapDialog> */}
 
                 {/*填写google验证码*/}
                 <BootstrapDialog
@@ -2299,7 +2358,7 @@ function Fiat(props) {
                     </div>
                 </BootstrapDialog>
 
-                <BootstrapDialog
+                {/* <BootstrapDialog
                     onClose={() => {
                         closePasteFunc();
                     }}
@@ -2319,7 +2378,7 @@ function Fiat(props) {
 
                         <div className='pasteW'>
                             {
-                                historyAddress.map((item, index) => {
+                                historyAddressFiat && historyAddressFiat.map((item, index) => {
                                     return (
                                         <div className='pasteDiZhi'>
                                             <div className='flex'>
@@ -2333,7 +2392,7 @@ function Fiat(props) {
                             }
                         </div>
                     </div>
-                </BootstrapDialog>
+                </BootstrapDialog> */}
 
                 <AnimateModal
                     className="faBiDiCard tanChuanDiSe"

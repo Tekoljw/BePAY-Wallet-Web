@@ -483,7 +483,7 @@ const locale = {
     card_129: "Ngayong araw na kita",
     card_130: "Pumunta sa TOP.ONE para magsimula ng trading",
     card_131: "Mag-activate ng BeingFi card",
-    card_132: "Mag-accumulate ng weekly check-ins at makakuha ng kaukulang gantimpala.",
+    card_132: "Mag-check in tuwing ika-7 araw upang mag-ipon at makatanggap ng kaukulang gantimpala",
     card_133: "Lunes",
     card_134: "Martes",
     card_135: "Miracles",
@@ -831,7 +831,12 @@ const locale = {
     kyc_70:"Address3",
     kyc_71:"Halimbawa",
 
-    
+    card_256:"Mangyaring tiyakin na tama ang inyong KYC na impormasyon at piliin ang address na inyong inapply.",
+    card_257:"Baguhin ang Impormasyon ng KYC",
+    card_258:"Magbayad ng bayad sa pagpapalit ng card:",
+    card_259:"Pagpapatunay ng KYC",
+    card_260:"Kailangang kumpletuhin ang KYC verification bago mag-apply para sa card.",
+    card_261:"Mangyaring makipag-ugnayan sa online na serbisyo ng customer para sa mga partikular na detalye.",
 
 
 

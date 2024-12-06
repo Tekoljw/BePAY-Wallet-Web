@@ -472,7 +472,7 @@ const locale = {
     card_129: "lợi nhuận hôm nay",
     card_130: "truy cập TOP.ONE để bắt đầu giao dịch",
     card_131: "mở thẻ BeingFi",
-    card_132: "Đăng ký hàng tuần và nhận phần thưởng tương ứng.",
+    card_132: "Đăng nhập mỗi 7 ngày để tích lũy và nhận phần thưởng tương ứng",
     card_133: "thứ hai",
     card_134: "thứ ba",
     card_135: "thứ tư",
@@ -822,6 +822,13 @@ const locale = {
     kyc_70:"Địa chỉ3",
     kyc_71:"Ví dụ",
 
+
+    card_256:"Vui lòng đảm bảo thông tin KYC của bạn chính xác và chọn địa chỉ bạn đã đăng ký.",
+    card_257:"Sửa đổi thông tin KYC",
+    card_258:"Thanh toán phí thay thế thẻ:",
+    card_259:"Xác minh KYC",
+    card_260:"Bạn cần hoàn thành xác minh KYC trước khi đăng ký thẻ.",
+    card_261:"Vui lòng liên hệ với dịch vụ khách hàng trực tuyến để biết chi tiết cụ thể.",
     
 
 

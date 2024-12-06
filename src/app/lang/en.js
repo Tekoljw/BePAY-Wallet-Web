@@ -402,7 +402,7 @@ const locale = {
     card_29: "Total Assets",
     card_30: "Done",
     card_31: "Freeze",
-    card_32: "Change",
+    card_32: "Renew",
     card_33: "Card issuance",
     card_34: "Activate card",
     card_35: "Apply now",
@@ -472,7 +472,7 @@ const locale = {
     card_109: "application details",
     card_110: "select currency for payment",
     card_111: "card mailing address",
-    card_112: "change address",
+    card_112: "Change address",
     card_113: "New User Benefits",
     card_114: "Spin wheel",
     card_115: "bonus",
@@ -492,7 +492,7 @@ const locale = {
     card_129: "daily earnings",
     card_130: "Go to TOP.ONE start trading",
     card_131: "activate BeingFi card",
-    card_132: "Weekly check-ins accumulate, earning you corresponding rewards.",
+    card_132: "Check in every 7 days to accumulate and receive corresponding rewards",
     card_133: "Monday",
     card_134: "Tuesday",
     card_135: "Wednesday",
@@ -536,7 +536,7 @@ const locale = {
     card_173: "yesterday's total trading volume",
     kyc_41: "Required fields cannot be empty",
     home_record_0: 'All',
-    card_174: "mailing address",
+    card_174: "Mailing Address",
     card_175: "user",
     card_176: "enter the 6-digit dynamic password",
     card_177: "No fees, instant transfer!",
@@ -668,7 +668,7 @@ const locale = {
     login_1: "Login failed. Please close the mini app and reopen it",
     deposite_35: "Exceeded limit amount",
     server_error_10008: "Invalid request amount",
-    server_error_10009: "Triggered a serious error",
+    server_error_10009: "Exception occurred, contact the platform",
     server_error_10010: "Unauthorized",
     server_error_10011: "Object not found",
     server_error_10012: "Failed to update data",
@@ -835,6 +835,13 @@ const locale = {
     kyc_70:"Address3",
     kyc_71:"Example",
 
+
+    card_256:"Please ensure that your KYC information is correct and select the address you have applied for.",
+    card_257:"Modify KYC Information",
+    card_258:"Pay card replacement fee:",
+    card_259:"KYC Verification",
+    card_260:"You need to complete KYC verification before applying for the card.",
+    card_261:"Please contact online customer service for specific details.",
     
 
 
