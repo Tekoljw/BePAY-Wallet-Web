@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import React from "react";
 import { showMessage } from 'app/store/fuse/messageSlice';
+import {showServerErrorTips} from "../../util/tools/function";
 
 // 获取活动基础信息接口（赚钱页面）
 export const beingFiActivityInfo = createAsyncThunk(
@@ -12,7 +13,7 @@ export const beingFiActivityInfo = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -27,7 +28,7 @@ export const beingFiActivityControl = createAsyncThunk(
         if (resultData.errno === 0) {
            return resultData
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -42,7 +43,7 @@ export const signInActivityConfig = createAsyncThunk(
         if (resultData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -57,7 +58,7 @@ export const signInActivityInfo = createAsyncThunk(
         if (resultData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -72,7 +73,7 @@ export const signIn = createAsyncThunk(
         if (resultData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -91,7 +92,7 @@ export const demandInterestActivity = createAsyncThunk(
         if (resultData.errno === 0) {
            return resultData;
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -106,7 +107,7 @@ export const walletPayRewardActivity = createAsyncThunk(
         if (resultData.errno === 0) {
            return resultData;
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -121,7 +122,7 @@ export const swapRewardActivity = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData;
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -140,7 +141,7 @@ export const uniqueInvite = createAsyncThunk(
         if (resultData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -154,7 +155,7 @@ export const getInviteRewardConfig = createAsyncThunk(
         if (resultData.errno === 0) {
            return resultData;
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -173,7 +174,7 @@ export const resetInvite = createAsyncThunk(
         if (resultData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -187,7 +188,7 @@ export const getInviteRewardAllInfo = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData;
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -204,7 +205,7 @@ export const getInviteRewardDetail = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );

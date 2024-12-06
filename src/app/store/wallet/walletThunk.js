@@ -8,6 +8,7 @@ import { setTransferStats } from '../user'
 import BN from "bn.js";
 import { getSymbols, paymentConfig } from "app/store/config/configThunk";
 import { setBorrowConfig, setNftConfig } from "app/store/config";
+import {showServerErrorTips} from "../../util/tools/function";
 
 const checkCached = (key, getState) => {
     const state = getState();
@@ -59,7 +60,7 @@ export const centerGetUserFiat = createAsyncThunk(
             if (balanceList.errno === 0) {
                 dispatch(updateFiat(balanceList));
             } else {
-                dispatch(showMessage({ message: balanceList.errmsg, code: 2 }));
+                showServerErrorTips(dispatch, balanceList);
             }
             if (settings.requestPayment) { //需要请求支付方式
                 dispatch(paymentConfig());
@@ -76,6 +77,8 @@ export const getWithDrawConfig = createAsyncThunk(
         const resultData = await React.$api("wallet.getWithDrawConfig");
         if (resultData.errno === 0) {
             return resultData;
+        }else{
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -115,6 +118,8 @@ export const evalTokenTransferFee = createAsyncThunk(
         const resultData = await React.$api("wallet.evalTokenTransferFee", data);
         if (resultData.errno === 0) {
             return resultData;
+        }else{
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -134,6 +139,8 @@ export const cryptoWithdrawFee = createAsyncThunk(
         const resultData = await React.$api("wallet.cryptoWithdrawFee", data);
         if (resultData.errno === 0) {
             return resultData;
+        }else{
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -145,6 +152,8 @@ export const getWalletAddressConfig = createAsyncThunk(
         const resultData = await React.$api("wallet.getWalletAddressConfig");
         if (resultData.errno === 0) {
             return resultData;
+        }else{
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -166,7 +175,7 @@ export const getWalletAddress = createAsyncThunk(
         };
 
         const resultData = await React.$api("wallet.getWalletAddress", data);
-        return resultData
+        return showServerErrorTips(dispatch, resultData);
         // if (resultData.errno === 0) {
         //     return resultData;
         // }
@@ -189,8 +198,9 @@ export const getAddressListDesc = createAsyncThunk(
         const resultData = await React.$api("wallet.addOrQueryAddressDesc", data);
         if (resultData.errno === 0) {
             return resultData.data;
+        }else{
+            showServerErrorTips(dispatch, resultData);
         }
-        dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
     }
 );
 
@@ -209,8 +219,9 @@ export const checkWalletAddress = createAsyncThunk(
         const resultData = await React.$api("wallet.checkWalletAddress", data);
         if (resultData.errno === 0) {
             return resultData;
+        }else{
+            showServerErrorTips(dispatch, resultData);
         }
-        dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
     }
 );
 
@@ -227,6 +238,8 @@ export const getCryptoDisplay = createAsyncThunk(
             if (resultData.errno === 0) {
                 dispatch(updateCryptoDisplay(resultData));
                 return resultData;
+            }else{
+                showServerErrorTips(dispatch, resultData);
             }
         }
     }
@@ -249,6 +262,8 @@ export const setCryptoDisplay = createAsyncThunk(
         if (resultData.errno === 0) {
             dispatch(updateCryptoDisplay(resultData));
             return resultData;
+        }else{
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -264,7 +279,7 @@ export const getWalletDisplay = createAsyncThunk(
             const resultData = await React.$api("account.getWalletDisplay");
             // if (resultData.errno === 0) {
             dispatch(updateWalletDisplay(resultData));
-            return resultData;
+            return showServerErrorTips(dispatch, resultData);;
             // }
         }
     }
@@ -287,6 +302,8 @@ export const setWalletDisplay = createAsyncThunk(
         if (resultData.errno === 0) {
             dispatch(updateWalletDisplay(resultData));
             return resultData;
+        }else{
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -303,6 +320,8 @@ export const getFiatDisplay = createAsyncThunk(
             if (resultData.errno === 0) {
                 dispatch(updateFiatDisplay(resultData));
                 return resultData;
+            }else{
+                showServerErrorTips(dispatch, resultData);
             }
         }
     }
@@ -325,6 +344,8 @@ export const setCurrencyDisplay = createAsyncThunk(
         if (resultData.errno === 0) {
             // dispatch(updateWalletDisplay(resultData));
             return resultData;
+        }else{
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -341,6 +362,8 @@ export const getNftDisplay = createAsyncThunk(
             if (resultData.errno === 0) {
                 dispatch(updateNftDisplay(resultData));
                 return resultData;
+            }else{
+                showServerErrorTips(dispatch, resultData);
             }
         }
     }
@@ -362,6 +385,8 @@ export const setNftDisplay = createAsyncThunk(
         if (resultData.errno === 0) {
             // dispatch(updateWalletDisplay(resultData));
             return resultData;
+        }else{
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -375,6 +400,8 @@ export const getWithdrawHistoryAddress = createAsyncThunk(
         const resultData = await React.$api("account.getWithdrawHistoryAddress");
         if (resultData.errno === 0) {
             return resultData;
+        }else{
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -387,6 +414,8 @@ export const getSendTipsHistoryAddress = createAsyncThunk(
         const resultData = await React.$api("account.getSendTipsHistoryAddress");
         if (resultData.errno === 0) {
             return resultData;
+        }else{
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -398,6 +427,8 @@ export const delSendTipsHistoryAddress = createAsyncThunk(
         const resultData = await React.$api("account.removeHistoryAddress", { address: settings, historyType: 2 });
         if (resultData.errno === 0) {
             return resultData;
+        }else{
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -409,6 +440,8 @@ export const delWithdrawHistoryAddress = createAsyncThunk(
         const resultData = await React.$api("account.removeHistoryAddress", { address: settings, historyType: 1 });
         if (resultData.errno === 0) {
             return resultData;
+        }else{
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -421,6 +454,8 @@ export const getWithdrawTransferStats = createAsyncThunk(
         if (resultData.errno === 0) {
             dispatch(setTransferStats(resultData.data));
             return resultData;
+        }else{
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -434,6 +469,8 @@ export const getNftConfig = createAsyncThunk(
         if (resultData.errno === 0) {
             dispatch(setNftConfig(resultData));
             return resultData;
+        }else{
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -458,6 +495,8 @@ export const evalWithdrawFee = createAsyncThunk(
         const resultData = await React.$api("nft.evalWithdrawFee", settings);
         if (resultData.errno === 0) {
             return resultData.data;
+        }else{
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -471,7 +510,7 @@ export const nftWithdraw = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData.data;
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -491,7 +530,7 @@ export const createPin = createAsyncThunk(
         if (resultData.errno === 0) {
             return true
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -514,7 +553,7 @@ export const changePin = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             return true
         } else {
-            dispatch(showMessage({ message: resultData.errmsg, code: 2 }));
+            showServerErrorTips(dispatch, resultData);
         }
     }
 );
@@ -531,6 +570,7 @@ export const verifyPin = createAsyncThunk(
         if (resultData.errno === 0) {
             return resultData.data
         } else {
+            showServerErrorTips(dispatch, resultData);
             return false
         }
     }
