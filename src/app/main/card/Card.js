@@ -157,7 +157,7 @@ function Card(props) {
     const [cardFlexibleHeight, setCardFlexibleHeight] = useState(false);
     const [openKycAddress, setOpenKycAddress] = useState(false);
     const [openKycAuth, setOpenKycAuth] = useState(false);
-    const [selectedKycAddress, setSelectedKycAddress] = useState(1);
+    const [selectedKycAddress, setSelectedKycAddress] = useState(0);
 
     const divRef = useRef(null);
     const [pin, setPin] = useState('');
@@ -1284,7 +1284,9 @@ function Card(props) {
         setOpenKyc(false);
         refreshKycInfo();
         if(kycInfoNavAction == 'applyStep1' || kycInfoNavAction == 'applyStep2' || kycInfoNavAction == 'applyStep3'){
+           setTimeout(()=> {
             kycInfoDialogControl();
+           }, 300)
         } else if(kycInfoNavAction == 'changeCard1' || kycInfoNavAction == 'cardHome') {
             const index = _.findIndex(cardList[2], { id: currentCardItem.id });
             setTimeout(() => {
@@ -2795,7 +2797,7 @@ function Card(props) {
 
                 <div className='flex mt-10  justify-center' >
                     <LoadingButton
-                        disabled={false}
+                        disabled={addressList.length == 0}
                         className="boxCardBtn"
                         color="secondary"
                         loading={openCardBtnShow}
@@ -4129,7 +4131,7 @@ function Card(props) {
                             }} >{t('card_112')}</div>
                         </div>
                         <div className='mt-20' style={{ marginBottom: "6rem" }}>{
-                            addressList ? addressList[selectedKycAddress -1].label : ''
+                            addressList ? addressList[selectedKycAddress -1]?.label : ''
                         }</div>
                         <LoadingButton
                             disabled={false}
@@ -4255,7 +4257,7 @@ function Card(props) {
 
                 <div className='flex mt-10  justify-center' >
                     <LoadingButton
-                        disabled={false}
+                        disabled={addressList.length == 0}
                         className="boxCardBtn"
                         color="secondary"
                         loading={openCardBtnShow}
