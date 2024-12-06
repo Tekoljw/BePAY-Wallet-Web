@@ -17,7 +17,7 @@ import userLoginType from "../../define/userLoginType";
 import { sendLogInfo } from "app/store/log/logThunk";
 import { getSymbols } from "app/store/config/configThunk";
 import userLoginState from "../../define/userLoginState";
-import {showCommonServerErrorTips, showServerErrorTips} from "../../util/tools/function";
+import {showServerErrorTips} from "../../util/tools/function";
 
 // 检查用户是否已经登录
 export const checkLoginState = createAsyncThunk(
@@ -56,7 +56,7 @@ export const checkLoginState = createAsyncThunk(
             //请求对应的数据
             requestUserLoginData(dispatch);
         } else { //其他错误
-            showServerErrorTips(dispatch, loginState.errno, loginState.errmsg);
+            showServerErrorTips(dispatch, loginState);
         }
     }
 );
@@ -75,7 +75,7 @@ export const userProfile = createAsyncThunk(
                 dispatch(updateUser(userProfile));
                 return userProfile;
             } else {
-                showServerErrorTips(dispatch, userProfile.errno, userProfile.errmsg);
+                showServerErrorTips(dispatch, userProfile);
             }
         }
     }
@@ -93,7 +93,7 @@ export const setCurrencySelect = createAsyncThunk(
         if (setCurrencySelect.errno === 0) {
             // dispatch(updateUser(setCurrencySelect));
         } else {
-            showServerErrorTips(dispatch, setCurrencySelect.errno, setCurrencySelect.errmsg);
+            showServerErrorTips(dispatch, setCurrencySelect);
         }
     }
 );
@@ -104,7 +104,7 @@ export const getCurrencySelect = createAsyncThunk(
         if (getCurrencySelect.errno === 0) {
             // dispatch(updateUser(getCurrencySelect));
         } else {
-            showServerErrorTips(dispatch, getCurrencySelect.errno, getCurrencySelect.errmsg);
+            showServerErrorTips(dispatch, getCurrencySelect);
         }
     }
 )
@@ -160,7 +160,7 @@ export const doLogin = createAsyncThunk(
             }
         } else {
             dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_FAILURE));
-            showServerErrorTips(dispatch, userLoginData.errno, userLoginData.errmsg);
+            showServerErrorTips(dispatch, userLoginData);
         }
     }
 );
@@ -192,7 +192,7 @@ export const mobileLogin = createAsyncThunk(
             }
         } else {
             dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_FAILURE));
-            showServerErrorTips(dispatch, userLoginData.errno, userLoginData.errmsg);
+            showServerErrorTips(dispatch, userLoginData);
         }
     }
 );
@@ -215,7 +215,7 @@ export const facebookLoginApi = createAsyncThunk(
             }
         } else {
             dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_FAILURE));
-            showServerErrorTips(dispatch, userLoginData.errno, userLoginData.errmsg);
+            showServerErrorTips(dispatch, userLoginData);
         }
     }
 );
@@ -238,7 +238,7 @@ export const telegramLoginApi = createAsyncThunk(
             }
         } else {
             dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_FAILURE));
-            showServerErrorTips(dispatch, userLoginData.errno, userLoginData.errmsg);
+            showServerErrorTips(dispatch, userLoginData);
         }
     }
 );
@@ -267,7 +267,7 @@ export const telegramWebAppLoginApi = createAsyncThunk(
                 dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_FAILURE));
             }
 
-            showServerErrorTips(dispatch, userLoginData.errno, userLoginData.errmsg);
+            showServerErrorTips(dispatch, userLoginData);
         }
     }
 );
@@ -290,7 +290,7 @@ export const googleLoginApi = createAsyncThunk(
             }
         } else {
             dispatch(updateLoginState(userLoginState.USER_LOGIN_STATE_FAILURE));
-            showServerErrorTips(dispatch, userLoginData.errno, userLoginData.errmsg);
+            showServerErrorTips(dispatch, userLoginData);
         }
     }
 );
@@ -323,7 +323,7 @@ export const sendSms = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             return true
         } else {
-            showServerErrorTips(dispatch, res?.errno, res?.errmsg);
+            showServerErrorTips(dispatch, res);
             return false
         }
     }
@@ -342,7 +342,7 @@ export const sendEmail = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             return true
         } else {
-            showServerErrorTips(dispatch, res?.errno, res?.errmsg);
+            showServerErrorTips(dispatch, res);
             return false
         }
     }
@@ -359,7 +359,7 @@ export const bindPhone = createAsyncThunk(
             smsCode: settings.smsCode,
         };
         const result = await React.$api("user.bindPhone", data);
-        showCommonServerErrorTips(dispatch, result.errno);
+        showServerErrorTips(dispatch, result);
         return result;
     }
 );
@@ -380,7 +380,7 @@ export const bindEmail = createAsyncThunk(
             dispatch(getUserData());
             return true
         } else {
-            showServerErrorTips(dispatch, result?.errno, result?.errmsg);
+            showServerErrorTips(dispatch, result);
         }
     }
 );
@@ -402,7 +402,7 @@ export const signUp = createAsyncThunk(
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userSignUpData));
         } else {
-            showServerErrorTips(dispatch, userSignUpData?.errno, userSignUpData?.errmsg);
+            showServerErrorTips(dispatch, userSignUpData);
         }
     }
 );
@@ -422,7 +422,7 @@ export const emailSignUp = createAsyncThunk(
             dispatch(showMessage({ message: 'Sign Success', code: 1 }));
             dispatch(updateUser(userSignUpData));
         } else {
-            showServerErrorTips(dispatch, userSignUpData?.errno, userSignUpData?.errmsg);
+            showServerErrorTips(dispatch, userSignUpData);
         }
     }
 );
@@ -440,7 +440,7 @@ export const resetPass = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             history.push('/wallet/login');
         } else {
-            showServerErrorTips(dispatch, userResetPassData?.errno, userResetPassData?.errmsg);
+            showServerErrorTips(dispatch, userResetPassData);
         }
     }
 );
@@ -459,7 +459,7 @@ export const editPin = createAsyncThunk(
         if (userResetPassData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
         } else {
-            showServerErrorTips(dispatch, userResetPassData?.errno, userResetPassData?.errmsg);
+            showServerErrorTips(dispatch, userResetPassData);
         }
     }
 );
@@ -479,7 +479,7 @@ export const changePhone = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             history.push('/wallet/home');
         } else {
-            showServerErrorTips(dispatch, userResetPassData?.errno, userResetPassData?.errmsg);
+            showServerErrorTips(dispatch, userResetPassData);
         }
     }
 );
@@ -498,7 +498,7 @@ export const changeEmail = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             history.push('/wallet/home');;
         } else {
-            showServerErrorTips(dispatch, userResetPassData?.errno, userResetPassData?.errmsg);
+            showServerErrorTips(dispatch, userResetPassData);
         }
     }
 );
@@ -519,7 +519,7 @@ export const forgotPass = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             history.push('/wallet/login');
         } else {
-            showServerErrorTips(dispatch, userForgotData?.errno, userForgotData?.errmsg);
+            showServerErrorTips(dispatch, userForgotData);
         }
     }
 );
@@ -536,7 +536,7 @@ export const doSetNetwork = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             return true
         }else{
-            showServerErrorTips(dispatch, networkRes?.errno, networkRes?.errmsg);
+            showServerErrorTips(dispatch, networkRes);
         }
     }
 );
@@ -585,7 +585,7 @@ export const selNetwork = createAsyncThunk(
                         return true;
                     } catch (e) {
                         if (e.code == 4001) {
-                            showServerErrorTips(dispatch, e.code, e.message);
+                            dispatch(showMessage({ message: e.message, code: 2 }));
                             return false
                         }
                         try {
@@ -615,7 +615,7 @@ export const selNetwork = createAsyncThunk(
                             }));
                             return true;
                         } catch (e) {
-                            showServerErrorTips(dispatch, e.code, e.message);
+                            dispatch(showMessage({ message: e.message, code: 2 }));
                             return false
                         }
                     };
@@ -855,7 +855,7 @@ export const doBindWallet = createAsyncThunk(
             dispatch(showMessage({ message: 'success', code: 1 }));
             return true
         } else {
-            showServerErrorTips(dispatch, sendResult.errno, sendResult.errmsg);
+            showServerErrorTips(dispatch, sendResult);
             return false
         }
     }
@@ -872,7 +872,7 @@ export const googleQrText = createAsyncThunk(
         if (userGoogleData?.errno === 0) {
             return userGoogleData?.data
         }
-        showCommonServerErrorTips(dispatch, userGoogleData.errno);
+        showServerErrorTips(dispatch, userGoogleData);
         return {}
     }
 );
@@ -885,8 +885,7 @@ export const verifyGAuth = createAsyncThunk(
             checkCode: settings.checkCode,
         };
         const googleRes = await React.$api("security.verifyGAuth", data);
-        showCommonServerErrorTips(dispatch, googleRes.errno);
-        return googleRes;
+        return showServerErrorTips(dispatch, googleRes);
     }
 );
 
@@ -905,7 +904,7 @@ export const getUserData = createAsyncThunk(
             }
             return userData
         } else {
-            showServerErrorTips(dispatch, userData.errno, userData.errmsg);
+            showServerErrorTips(dispatch, userData);
         }
     }
 );
@@ -927,7 +926,7 @@ export const transferRecords = createAsyncThunk(
                 return tranferList.data
                 dispatch(updateTransfer(tranferList));
             } else {
-                showServerErrorTips(dispatch, tranferList.errno, tranferList.errmsg);
+                showServerErrorTips(dispatch, tranferList);
             }
         } else {
             let data = {
@@ -941,7 +940,7 @@ export const transferRecords = createAsyncThunk(
                 return tranferList.data
                 dispatch(updateTransfer(tranferList));
             } else {
-                showServerErrorTips(dispatch, tranferList.errno, tranferList.errmsg);
+                showServerErrorTips(dispatch, tranferList);
             }
         }
     }
@@ -963,7 +962,7 @@ export const centerGetTokenBalanceList = createAsyncThunk(
                 dispatch(updateWallet(balanceList));
                 // return balanceList;
             } else {
-                showServerErrorTips(dispatch, balanceList.errno, balanceList.errmsg);
+                showServerErrorTips(dispatch, balanceList);
             }
             if (settings.requestSymbol) { //需要请求币种信息
                 dispatch(getSymbols());
@@ -992,8 +991,7 @@ export const sendTips = createAsyncThunk(
         } else if (sendTipsRes.errno === -2) {
             return sendTipsRes;
         } else {
-            showCommonServerErrorTips(dispatch, sendTipsRes.errno);
-            return sendTipsRes;
+            return showServerErrorTips(dispatch, sendTipsRes);;
         }
     }
 );
@@ -1025,8 +1023,7 @@ export const tokenTransfer = createAsyncThunk(
         } else if (transferRes.errno === -2) {
             return transferRes
         } else {
-            showCommonServerErrorTips(dispatch, sendTipsRes.errno);
-            return transferRes
+            return showServerErrorTips(dispatch, transferRes);
         }
     }
 );
@@ -1050,11 +1047,11 @@ export const getTransferOrder = createAsyncThunk(
                         return true
                     } else if (result.data[0].orderStatus === 72) {
                         clearInterval(timer);
-                        showServerErrorTips(dispatch, result.errno, result.errmsg);
+                        showServerErrorTips(dispatch, result);
                     }
                 }
             } else {
-                showServerErrorTips(dispatch, result.errno, result.errmsg);
+                showServerErrorTips(dispatch, result);
             }
         }, 5000);
     }
@@ -1183,7 +1180,7 @@ export const getListBank = createAsyncThunk(
                 dispatch(updateBankList(result.data))
                 return result.data
             } else {
-                showServerErrorTips(dispatch, result.errno, result.errmsg);
+                showServerErrorTips(dispatch, result);
             }
         }
     }
