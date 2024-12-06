@@ -71,18 +71,20 @@ service.interceptors.response.use(
                 }, 500);
             }
             return res;
-        } else if(res.errno > 501){ //比如大于501的就属于服务器提示错误
+        } else if (res.errno > 501){ //比如大于501的就属于服务器提示错误
 
+            console.log("server error start", "request server_error");
+
+            const error_tips_code = 'code server_error_' + res.errno;
+            console.log(error_tips_code, "request server_error");
+            const { t } = useTranslation('mainPage');
+            console.log(t(error_tips_code), "request server_error tips");
             const dispatch = useDispatch();
             dispatch(showMessage({ message: "server error tips", code: 2 }));
-            const { t } = useTranslation('mainPage');
-            const error_tips_code = 'server_error_' + res.errno;
-            console.log(error_tips_code, "request server_error");
-            console.log(t(error_tips_code), "request server_error tips");
-            return {
-                errno: 400,
-                errmsg: "",
-            }
+            //强制改为不返回提示文字
+            res.errno = 400;
+            res.errmsg = "";
+            return res;
         }else{
             return res;
         }
