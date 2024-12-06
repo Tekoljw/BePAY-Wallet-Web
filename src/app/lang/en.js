@@ -842,7 +842,10 @@ const locale = {
     card_259:"KYC Verification",
     card_260:"You need to complete KYC verification before applying for the card.",
     card_261:"Please contact online customer service for specific details.",
-    
+    card_262:"Under review, assets have been frozen",
+    card_263:"Review successful, frozen assets have been released",
+    card_264:"Withdrawal failed, frozen assets have been released",
+    card_265:"Frozen Balance",
 
 
 

@@ -838,7 +838,10 @@ const locale = {
     card_260:"Kailangang kumpletuhin ang KYC verification bago mag-apply para sa card.",
     card_261:"Mangyaring makipag-ugnayan sa online na serbisyo ng customer para sa mga partikular na detalye.",
 
-
+    card_262:"Sa ilalim ng pagsusuri, ang mga ari-arian ay na-freeze",
+    card_263:"Matagumpay na pagsusuri, ang mga nagyeyelong asset ay nailabas",
+    card_264:"Nabigong pag-withdraw, na-release ang mga nakafreeze na asset",
+    card_265:"Naka-freeze",
 
 
 

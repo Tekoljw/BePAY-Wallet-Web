@@ -842,6 +842,10 @@ const locale = {
     card_260:"Anda perlu melengkapkan pengesahan KYC sebelum memohon kad.",
     card_261:"Sila hubungi perkhidmatan pelanggan dalam talian untuk butiran lanjut.",
 
+    card_262:"Sedang disemak, aset telah dibekukan",
+    card_263:"Semakan berjaya, aset beku telah dilepaskan",
+    card_264:"Pengeluaran gagal, aset beku telah dibebaskan",
+    card_265:"Baki Beku",
 
 
 

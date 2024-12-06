@@ -839,7 +839,10 @@ const locale = {
     card_260:"Kart başvurusunda bulunmadan önce KYC doğrulamasını tamamlamanız gerekir.",
     card_261:"Lütfen spesifik detaylar için çevrimiçi müşteri hizmetleri ile iletişime geçin.", 
 
-
+    card_262:"İnceleniyor, varlıklar dondurulmuş durumda",
+    card_263:"İnceleme başarılı, dondurulmuş varlıklar serbest bırakıldı",
+    card_264:"Çekim başarısız, dondurulmuş varlıklar serbest bırakıldı",
+    card_265:"Donmuş Bakiye",
 
 
 

@@ -841,7 +841,10 @@ const locale = {
     card_259: "KYC-tarkistus",
     card_260: "KYC-todennus on suoritettava ennen kortin hakemista.",
     card_261: "Ole hyvä ja ota yhteyttä verkkopalvelun asiakaspalveluun saadaksesi tarkempia tietoja.",
-
+    card_262:"Tarkistuksessa, varat on jäädytetty",
+    card_263:"Tarkistus onnistui, jäädytetyt varat on vapautettu",
+    card_264:"Nostopyyntö epäonnistui, jäädytetyt varat on vapautettu",
+    card_265:"Jäädytetty Saldo",
 
 
 

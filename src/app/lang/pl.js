@@ -841,6 +841,10 @@ const locale = {
     card_260:"Musisz ukończyć weryfikację KYC przed złożeniem wniosku o kartę.",
     card_261:"Proszę skontaktować się z obsługą klienta online, aby uzyskać szczegółowe informacje.", 
 
+    card_262:"W trakcie weryfikacji, aktywa zostały zamrożone",
+    card_263:"Weryfikacja zakończona sukcesem, zamrożone aktywa zostały uwolnione",
+    card_264:"Nieudana wypłata, zamrożone aktywa zostały uwolnione",
+    card_265:"Zablokowane Saldo",
 
 
 

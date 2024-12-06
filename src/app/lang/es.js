@@ -840,7 +840,10 @@ const locale = {
     card_259:"Verificación KYC",
     card_260:"Debe completar la verificación KYC antes de solicitar la tarjeta.",
     card_261:"Por favor, póngase en contacto con el servicio de atención al cliente en línea para obtener detalles específicos.",
-
+    card_262:"En revisión, los activos han sido congelados",
+    card_263:"Revisión exitosa, los activos congelados han sido liberados",
+    card_264:"Falló el retiro, los activos congelados han sido liberados",
+    card_265:"Saldo Congelado",
 
 
 

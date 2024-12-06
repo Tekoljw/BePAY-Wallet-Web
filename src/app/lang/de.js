@@ -841,7 +841,10 @@ const locale = {
     card_259:"KYC-Überprüfung",
     card_260:"Die KYC-Verifizierung muss abgeschlossen sein, bevor Sie die Karte beantragen.",
     card_261:"Bitte wenden Sie sich an den Online-Kundendienst, um weitere Details zu erfahren.",
-
+    card_262:"Unter Überprüfung, Vermögenswerte wurden eingefroren",
+    card_263:"Überprüfung erfolgreich, eingefrorene Vermögenswerte wurden freigegeben",
+    card_264:"Abhebung fehlgeschlagen, eingefrorene Vermögenswerte wurden freigegeben",
+    card_265:"Gefrorenes Guthaben",
 
 
 

@@ -840,7 +840,10 @@ const locale = {
     card_259:"Verifikasi KYC",
     card_260:"Anda harus menyelesaikan verifikasi KYC sebelum mengajukan kartu.",
     card_261:"Harap hubungi layanan pelanggan online untuk informasi lebih lanjut.",
-
+    card_262:"Sedang ditinjau, aset telah dibekukan",
+    card_263:"Pemeriksaan berhasil, aset beku telah dilepaskan",
+    card_264:"Penarikan gagal, aset yang dibekukan telah dibebaskan",
+    card_265:"Saldo Beku",
 
 
 
