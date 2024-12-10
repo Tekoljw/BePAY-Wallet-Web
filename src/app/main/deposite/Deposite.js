@@ -351,10 +351,12 @@ function Deposite() {
 
     // 获取地址列表
     const getWalletAddressList = (selectNetworkId) => {
+        setLoadingShow(true);
         dispatch(getAddressListDesc({
             networkId: selectNetworkId,
             symbol: symbol,
         })).then((res) => {
+            setLoadingShow(false);
             let result = res.payload
             if (result) {
                 let tmpList = []
@@ -425,7 +427,6 @@ function Deposite() {
     };
 
     useEffect(() => {
-        // setLoadingShow(true);
         setPhoneTab('deposite');
     }, []);
 
@@ -433,7 +434,6 @@ function Deposite() {
     useEffect(() => {
         if(canLoginAfterRequest(userData)){ //已经进行过登录流程了
             dispatch(getCryptoDisplay()).then((res) => {
-                // setLoadingShow(false);
                 let result = res.payload;
                 setCryptoDisplayData(result?.data);
             });
@@ -489,6 +489,7 @@ function Deposite() {
 
     const handleWalletAddress = (id) => {
         // if (networkData[symbol] && (!addressData[symbol]|| addressData[symbol][id] === undefined)) {
+    
         setIsLoading(true);
         getWalletAddressClick(id);
         // }

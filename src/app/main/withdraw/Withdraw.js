@@ -671,7 +671,7 @@ function Withdraw(props) {
         });
     };
     useEffect(() => {
-        // setLoadingShow(true)
+        setLoadingShow(true)
         setPhoneTab('withdraw');
         editOrQueryHistoryAddress();
     }, []);
@@ -686,7 +686,7 @@ function Withdraw(props) {
             data.note = objTab.note
         }
         dispatch(editOrQueryWithdrawalHistoryInfo(data)).then((res) => {
-            // setLoadingShow(false)
+            setLoadingShow(false)
             if (res.payload?.data?.length > 0) {
                 setHistoryAddress(res.payload.data);
                 setHistoryAddressBak(res.payload.data);

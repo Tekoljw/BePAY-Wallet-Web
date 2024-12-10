@@ -1065,6 +1065,7 @@ function Card(props) {
     // 获取卡列表
     const getCardList = () => {
         dispatch(getUserCreditCard()).then((res) => {
+            setLoadingShow(false);
             let result = res.payload
             let tmpCardList = { 2: [], 3: [] }
             let tmpCardListObj = {}
@@ -1234,6 +1235,7 @@ function Card(props) {
     }
 
     useEffect(() => {
+        setLoadingShow(true)
         getCardConfig()
         getCardList()
     }, []);

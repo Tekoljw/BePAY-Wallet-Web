@@ -550,7 +550,6 @@ function Swap() {
           amount: inputVal.amount,
         })
       ).then((res) => {
-        debugger;
         let result = res.payload
         lookData.id = result?.data?.orderId;
         lookData.newNum = (result?.data?.targetAmount)?.toFixed(2);
