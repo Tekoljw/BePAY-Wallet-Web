@@ -1386,6 +1386,12 @@ input[type='number'] {
     color: #94a3b8;
 }
 
+.huiZhangWH {
+    width: 60px;
+    height: 60px;
+    margin-right: 6px;
+}
+
 .huiZiColor {
     color: #94A3B8;
 }
