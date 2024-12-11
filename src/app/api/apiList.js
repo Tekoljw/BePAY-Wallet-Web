@@ -616,7 +616,31 @@ export default {
             method: "get",
         },
         signIn: {
-            url: "/unique_invite/signIn",
+            url: "/activity/signInActivity/signIn",
+            method: "post",
+        },
+        turnTableActivityConfig:{
+            url: "/activity/turntableActivity/list",
+            method: "get",
+        },
+        turnTableActivityInfo: {
+            url: "/activity/turntableActivity/info",
+            method: "get",
+        },
+        turntable:{
+            url: "/activity/turntableActivity/turntable",
+            method: "post",
+        },
+        tokenPledgeActivityConfig: {
+            url: "/activity/tokenPledgeActivity/list",
+            method: "get",
+        },
+        tokenPledgeActivityInfo: {
+            url: "/activity/tokenPledgeActivity/info",
+            method: "get",
+        },
+        pledge: {
+            url: "/activity/tokenPledgeActivity/pledge",
             method: "post",
         },
         demandInterestActivity: {

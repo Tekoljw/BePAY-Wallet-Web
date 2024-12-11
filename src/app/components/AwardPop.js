@@ -29,7 +29,7 @@ function AwardPop(props) {
                         <div style={{ fontSize: "32px", color: "#ffc600" }} >奖励</div>
                         {/* <img className="mt-16" src={symbolImg} id="test-click" /> */}
                         <img className="" style={{ margin: "1.6rem auto" }} src="wallet/assets/images/symbol/USD.png" id="test-click" />
-                        <div className='text-44 fontBold mt-4 flex justify-center items-center' style={{ color: "#ffffff" }} >+&nbsp;1.00</div>
+                        <div className='text-44 fontBold mt-4 flex justify-center items-center' style={{ color: "#ffffff" }} >+&nbsp;{ balance }</div>
                         <div className='mt-2'>
                             <div id="button-party" className={clsx("containerSpinBtn align-item flex justifyContent ", clickShow && 'displayNone')} onClick={() => {
                                 setClickShow(true);

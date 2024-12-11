@@ -12,26 +12,27 @@ import history from "@history";
 import { useDispatch, useSelector } from "react-redux";
 import AwardPop from "../../components/AwardPop";
 import { selectUserProperties } from "app/store/user/userProperties";
+import { turntable, turnTableActivityInfo} from '../../store/activity/activityThunk';
 
 
 
 function Spin(props) {
+  const { turnTableConfigList } = props;
   const { t } = useTranslation("mainPage");
   const dispatch = useDispatch();
   const [turnConfig, setTurnConfig] = useState([]);
   const [turnRecord, setTurnRecord] = useState({});
   const [offOn, setOffOn] = useState(false);
-  const [userTurnTimes, setUserTurnTime] = useState(1);
-  const [spinRewardBalance, setSpinRewardBalance] = useState({
-    balance: 0,
-    symbol: "USDT",
-  });
+  const [userTurnTimes, setUserTurnTimes] = useState(1);
+  const [spinRewardBalance, setSpinRewardBalance] = useState({});
+  const [spinTodayRewardBalance, setSpinTodayRewardBalance] = useState({});
   const userProperties = useSelector(selectUserProperties);
   const [vipConfig, setVipConfig] = useState({});
   const [chargeTotal, setChargeTotal] = useState(0);
   const [betTotal, setBetTotal] = useState(0);
   const [vipLevel, setVipLevel] = useState(0);
   const [vipExperience, setVipExperience] = useState(0.0);
+  const [currentTimeBalance, setCurrentTimeBalance] = useState('0.00')
 
 
   const [popAward, setPopAward] = useState(false);
@@ -66,6 +67,30 @@ function Spin(props) {
 
   ];
 
+  const invokeTurnTableActivityInfo = () => {
+    dispatch(turnTableActivityInfo()).then((res) => {
+      const result = res.payload
+      if (result.errno === 0) {
+         setUserTurnTimes(result?.data?.cutTimes)
+         const totalReward =  {
+          balance: result?.data?.totalRewardData ? JSON.parse(result.data.totalRewardData.all).symbol.usdt: '0.00',
+          symbol: "USDT",
+        }
+        const todayReward =  {
+          balance: result?.data?.todayRewardData ? JSON.parse(result.data.todayRewardData.td).symbol.usdt : '0.00',
+          symbol: "USDT",
+        }
+         setSpinRewardBalance(totalReward);
+         setSpinTodayRewardBalance(todayReward)
+        if (userTurnTimes <= 0) {
+          notSpinClick();
+        }
+      }
+  });
+  }
+  useEffect(()=> {
+    invokeTurnTableActivityInfo();
+  }, [])
   // VIP等级
 
   // const handleGetVIPConfig = () => {
@@ -93,22 +118,13 @@ function Spin(props) {
 
   // 转动转盘
 
-  // const handleDoTurn = async () => {
-  //   let res = await dispatch(doTurn());
-  //   let result = res.payload;
-  //   if (result.RemainTimes <= 0) {
-  //     notSpinClick();
-  //   }
-  //   setUserTurnTime(result.RemainTimes);
-  //   setSpinRewardBalance({
-  //     balance: result.AwardCashCouponNum / 100,
-  //     symbol: "USDT",
-  //   });
-  //   dispatch(getUserSetting({
-  //     callback: () => { }
-  //   }));
-  //   return result;
-  // };
+  const handleDoTurn = async () => {
+    await dispatch( turntable()).then((res)=>{
+      let result = res.payload;
+      invokeTurnTableActivityInfo();
+      return result;
+    });
+  };
 
   // 可选中状态
   const canSpinClick = () => {
@@ -148,16 +164,11 @@ function Spin(props) {
 
     // 真正会去调用接口
 
-    // let doTurnResult = await handleDoTurn();
-    // if (!doTurnResult) {
-    //   return false;
-    // }
-
-    // 测试数据
-
-    let doTurnResult = {
-      ItemID: 5
-    };
+    let doTurnResult = await handleDoTurn();
+    if (!doTurnResult?.data) {
+      return false;
+    }
+    setCurrentTimeBalance(doTurnResult?.data?.rewardValue || '0.00')
 
     var oTurntable = document.getElementById("spin");
     var cat = 22.5; //总共12个扇形区域，每个区域约30度
@@ -174,9 +185,9 @@ function Spin(props) {
       var rdm = 0; //随机度数
       clearInterval(timer);
       timer = setInterval(function () {
-        let rewardKey = turnConfig
-          .map((item) => item.itemID)
-          .indexOf(doTurnResult.ItemID);
+        let rewardKey = turnTableConfigList
+          .map((item) => item.id)
+          .indexOf(doTurnResult?.data?.id);
         console.log(Math.floor(rdm / 360), "rewardKey......");
         if (Math.floor(rdm / 360) < 3) {
           rdm = Math.floor(0.5 * 3600) - cat * rewardKey;
@@ -266,14 +277,14 @@ function Spin(props) {
   }, []);
 
   useEffect(() => {
-    if (userProperties?.properties?.TurntableRemain) {
+    if (userTurnTimes) {
       canSpinClick();
-      setUserTurnTime(userProperties.properties.TurntableRemain);
+      // setUserTurnTimes(userTurnTimes);
     } else {
       notSpinClick();
     }
 
-  }, [userProperties, isMoveShow, vipActive]);
+  }, [isMoveShow]);
 
   useEffect(() => {
     handleChangeExperience();
@@ -319,7 +330,7 @@ function Spin(props) {
               }}
             >
               <div className="text-13 fontBold">
-                0.0
+                { turnTableConfigList[0] ? turnTableConfigList[0].rewardValue : 0.00 }
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
@@ -336,7 +347,7 @@ function Spin(props) {
               }}
             >
               <div className="text-13 fontBold">
-                0.0
+              { turnTableConfigList[1] ? turnTableConfigList[1].rewardValue : 0.00 }
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
@@ -353,7 +364,7 @@ function Spin(props) {
               }}
             >
               <div className="text-13 fontBold">
-                0.0
+              { turnTableConfigList[2] ? turnTableConfigList[2].rewardValue : 0.00 }
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
@@ -370,7 +381,7 @@ function Spin(props) {
               }}
             >
               <div className="text-13 fontBold">
-                0.0
+              { turnTableConfigList[3] ? turnTableConfigList[3].rewardValue : 0.00 }
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
@@ -387,7 +398,7 @@ function Spin(props) {
               }}
             >
               <div className="text-13 fontBold">
-                0.0
+              { turnTableConfigList[4] ? turnTableConfigList[4].rewardValue : 0.00 }
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
@@ -404,7 +415,7 @@ function Spin(props) {
               }}
             >
               <div className="text-13 fontBold">
-                0.0
+              { turnTableConfigList[5] ? turnTableConfigList[5].rewardValue : 0.00 }
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
@@ -421,7 +432,7 @@ function Spin(props) {
               }}
             >
               <div className="text-13 fontBold">
-                0.0
+              { turnTableConfigList[6] ? turnTableConfigList[6].rewardValue : 0.00 }
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
@@ -438,7 +449,7 @@ function Spin(props) {
               }}
             >
               <div className="text-13 fontBold">
-                0.0
+              { turnTableConfigList[7] ? turnTableConfigList[7].rewardValue : 0.00 }
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
@@ -455,7 +466,7 @@ function Spin(props) {
               }}
             >
               <div className="text-13 fontBold">
-                0.0
+              { turnTableConfigList[8] ? turnTableConfigList[8].rewardValue : 0.00 }
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
@@ -472,7 +483,7 @@ function Spin(props) {
               }}
             >
               <div className="text-13 fontBold">
-                0.0
+              { turnTableConfigList[9] ? turnTableConfigList[9].rewardValue : 0.00 }
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
@@ -489,7 +500,7 @@ function Spin(props) {
               }}
             >
               <div className="text-13 fontBold">
-                0.0
+              { turnTableConfigList[10] ? turnTableConfigList[10].rewardValue : 0.00 }
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
@@ -506,7 +517,7 @@ function Spin(props) {
               }}
             >
               <div className="text-13 fontBold">
-                0.0
+              { turnTableConfigList[11] ? turnTableConfigList[11].rewardValue : 0.00 }
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
@@ -523,7 +534,7 @@ function Spin(props) {
               }}
             >
               <div className="text-13 fontBold">
-                0.0
+              { turnTableConfigList[12] ? turnTableConfigList[12].rewardValue : 0.00 }
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
@@ -540,7 +551,7 @@ function Spin(props) {
               }}
             >
               <div className="text-13 fontBold">
-                0.0
+              { turnTableConfigList[13] ? turnTableConfigList[13].rewardValue : 0.00 }
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
@@ -557,7 +568,7 @@ function Spin(props) {
               }}
             >
               <div className="text-13 fontBold">
-                0.0
+              { turnTableConfigList[14] ? turnTableConfigList[14].rewardValue : 0.00 }
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
@@ -574,7 +585,7 @@ function Spin(props) {
               }}
             >
               <div className="text-13 fontBold">
-                0.0
+              { turnTableConfigList[15] ? turnTableConfigList[15].rewardValue : 0.00 }
               </div>
               <img
                 className="height-28 ml-4 borderRadius spinIconShadow"
@@ -662,7 +673,7 @@ function Spin(props) {
                       style={{ fontSize: "20px", color: "#ffffff" }}
                     >
                       {/* {t("home_Times")} */}
-                      times 1
+                      times { userTurnTimes }
                     </a>
                   </div>
                 </div>
@@ -733,11 +744,11 @@ function Spin(props) {
                     fontWeight: "800",
                   }}
                 >
-                  0.0
+                  { spinRewardBalance.balance }
                 </div>
               </div>
               <div className="spin-bonus px-6 py-8 flex">
-                <div className="spin-user-avatar" style={{ minWidth: "28px" }}>
+                {/* <div className="spin-user-avatar" style={{ minWidth: "28px" }}>
                   <img
                     style={{
                       width: "28px",
@@ -746,12 +757,12 @@ function Spin(props) {
                     }}
                     src="wallet/assets/images/symbol/1.png"
                   />
-                </div>
+                </div> */}
                 <div className="spin-record ml-6">
                   <div style={{ color: "#8997B9" }}>
                     奖励
                   </div>
-                  <div> 胜利  <span style={{ color: "#45CB1D" }}> 0</span>&nbsp;<span style={{ color: "#ffffff" }}>USDT</span> <br />
+                  <div> 胜利  <span style={{ color: "#45CB1D" }}> { spinTodayRewardBalance.balance } </span>&nbsp;<span style={{ color: "#ffffff" }}>USDT</span> <br />
                     <span
                       style={{
                         fontSize: "16px",
@@ -780,7 +791,7 @@ function Spin(props) {
         }}
         symbol={1}
         symbolImg={"wallet/assets/images/symbol/USD.png"}
-        balance={1.00}
+        balance={currentTimeBalance}
       />
 
     </>

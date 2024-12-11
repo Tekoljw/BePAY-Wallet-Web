@@ -32,7 +32,25 @@ import clsx from 'clsx';
 import { FormHelperText } from '@mui/material';
 import { handleCopyText } from "../../util/tools/function";
 import { useNavigate } from 'react-router-dom';
-import { signInActivityConfig, signInActivityInfo, beingFiActivityInfo, beingFiActivityControl, demandInterestActivity, swapRewardActivity, walletPayRewardActivity, getInviteRewardConfig, getInviteRewardAllInfo, getInviteRewardDetail } from '../../store/activity/activityThunk';
+import { 
+    signInActivityConfig,
+    signInActivityInfo,
+    signIn,
+    turnTableActivityConfig,
+    turnTableActivityInfo,
+    turntable,
+    tokenPledgeActivityConfig,
+    tokenPledgeActivityInfo,
+    pledge,
+    beingFiActivityInfo,
+    beingFiActivityControl,
+    demandInterestActivity,
+    swapRewardActivity,
+    walletPayRewardActivity,
+    getInviteRewardConfig,
+    getInviteRewardAllInfo,
+    getInviteRewardDetail
+} from '../../store/activity/activityThunk';
 import { shareURL } from '@telegram-apps/sdk';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -93,6 +111,14 @@ function Earn(props) {
     const [loadingShow, setLoadingShow] = useState(false);
     const textRef = useRef(null);
     const [openSheQu, setOpenSheQu] = useState(false);
+    const [turnTableConfigList, setTurnTableConfigList] = useState([]);
+    const [signInConfig, setSignInConfig] = useState([]);
+    const [cumulativeConfig, setCumulativeConfig] = useState([]);
+    const [signInInfo, setSignInInfo] = useState({});
+    const [curDay, setCurDay] = useState(0);
+    const [days, setDays] = useState([]);
+    const [signInState, setSignInState] = useState([]);
+    const [currentStep, setCurrentStep] = useState(0);
     const handleChangeInputVal2 = (event) => {
         setInputIDVal(event.target.value);
     };
@@ -113,6 +139,25 @@ function Earn(props) {
             const result = res.payload
             if (result.errno === 0) {
                 setActivityInfo(result.data)
+            }
+        });
+        dispatch(signInActivityConfig()).then((res) => {
+            const result = res.payload
+            if (result.errno === 0) {
+                setSignInConfig(result?.data?.signInConfig || [])
+                setCumulativeConfig(result?.data?.cumulativeConfig || [])
+            }
+        });
+        dispatch(turnTableActivityConfig()).then((res) => {
+            const result = res.payload
+            if (result.errno === 0) {
+                setTurnTableConfigList(result.data.list)
+            }
+        });
+        dispatch(tokenPledgeActivityConfig()).then((res) => {
+            const result = res.payload
+            if (result.errno === 0) {
+                // setActivityInfo(result.data)
             }
         });
     }, []);
@@ -368,6 +413,78 @@ function Earn(props) {
         }
     }
 
+    const startCheckIn = async() => {
+        setOpenCheckIn(true)
+        await invokeSignInInfo();
+    }
+
+    const invokeSignInInfo = async() => {
+        await dispatch(signInActivityInfo()).then((res)=>{
+            const result = res.payload;
+            const days = calculateDaysForDisplay(result?.data?.curDay || 0);
+            setSignInInfo(result?.data);
+            setCurDay(result?.data?.curDay);
+            setDays(days)
+            setSignInState(result?.data?.signInData ?  result.data.signInData.signInState :[])
+            retriveCurrentStep(result?.data?.signInData ?  result.data.signInData.signInState :[]);
+        })
+    }
+
+    const retriveCurrentStep = (list)=> {
+        const signedDays = _.size(list);
+        if(signedDays === 0){
+            return 0
+        } else if( 0 < signedDays < cumulativeConfig[0]?.cumulativeDay ){
+            return 1
+        } else if( signedDays === cumulativeConfig[0]?.cumulativeDay ){
+            return 2
+        } else if( cumulativeConfig[0]?.cumulativeDay < signedDays < cumulativeConfig[1]?.cumulativeDay ){
+            return 3
+        } else if(  signedDays ===  cumulativeConfig[2]?.cumulativeDay ){
+            return 4
+        } else if( cumulativeConfig[2]?.cumulativeDay  < signedDays < cumulativeConfig[3]?.cumulativeDay ){
+            return 5
+        } else if( signedDays === cumulativeConfig[3]?.cumulativeDay ){
+            return 6
+        } else {
+            return 7
+        }
+
+    }
+
+    const handleSignin = async() =>{
+        await dispatch(signIn()).then((res)=>{
+            const result = res.payload;
+            if(result.errno === 0){
+                invokeSignInInfo()
+            }
+        })
+    }
+
+    const calculateDaysForDisplay = (currentDay) => {
+        const daysInWeek = 7; // 每周 7 天
+
+        // 计算当前天在表盘的位置 (1~7)，余数为 0 则放在第 7 个位置
+        const positionInWeek = currentDay % daysInWeek || daysInWeek;
+    
+        const result = [];
+    
+        // 补充当前天之前的天数（正序）
+        for (let i = positionInWeek - 1; i > 0; i--) {
+            result.push(currentDay - i);
+        }
+    
+        // 加入当前天
+        result.push(currentDay);
+    
+        // 补充当前天之后的天数（顺序）
+        for (let i = 1; i <= daysInWeek - positionInWeek; i++) {
+            result.push(currentDay + i);
+        }
+    
+        return result;
+    }
+
     return (
         <div className=''>
             {
@@ -384,7 +501,7 @@ function Earn(props) {
                         <div className='newBlocak'>
                             <div className='flex mt-12'>
                                 {existCurrentActivity(1) && <div className='qianDaoSty flex justify-between px-10' onClick={() => {
-                                    setOpenCheckIn(true)
+                                    startCheckIn()
                                 }}>
                                     <div className='mt-6'>
                                         <div>{t('card_172')}</div>
@@ -788,7 +905,7 @@ function Earn(props) {
                                         <div
                                             className="borderRadius"
                                             style={{
-                                                width: 14.3 * 1 + "%",
+                                                width: 14.3 * { currentStep } + "%",
                                                 height: "13px",
                                                 backgroundColor: "#EA9B13",
                                                 position: "absolute",
@@ -808,14 +925,14 @@ function Earn(props) {
                                             className="width-85 align-item text-align"
                                         >
                                             <div className="text-14" style={{ color: "#FFD569" }}>
-                                                3{t('card_103')}
+                                                { cumulativeConfig[0]?.cumulativeDay || 0 }{t('card_103')}
                                             </div>
                                             <img
                                                 src="wallet/assets/images/earn/jinBi2.png"
                                                 style={{ width: "64px" }}
                                             />
                                             <div className="text-14" style={{ color: "#ffffff" }}>
-                                                {100 / 100 || 0}U
+                                                { cumulativeConfig[0]?.rewardValue || 0 } U
                                             </div>
                                         </motion.div>
                                         <motion.div
@@ -824,14 +941,14 @@ function Earn(props) {
                                             style={{ marginLeft: "3%" }}
                                         >
                                             <div className="text-14" style={{ color: "#FFD569" }}>
-                                                5{t('card_103')}
+                                            { cumulativeConfig[1]?.cumulativeDay || 0 }{t('card_103')}
                                             </div>
                                             <img
                                                 src="wallet/assets/images/earn/jinBi3.png"
                                                 style={{ width: "64px" }}
                                             />
                                             <div className="text-14" style={{ color: "#ffffff" }}>
-                                                {200 / 100 || 0}U
+                                                { cumulativeConfig[1]?.rewardValue || 0 } U
                                             </div>
                                         </motion.div>
                                         <motion.div
@@ -840,14 +957,14 @@ function Earn(props) {
                                             style={{ marginLeft: "3%" }}
                                         >
                                             <div className="text-14" style={{ color: "#FFD569" }}>
-                                                7{t('card_103')}
+                                                { cumulativeConfig[2]?.cumulativeDay || 0 }{t('card_103')}
                                             </div>
                                             <img
                                                 src="wallet/assets/images/earn/jinBi3.png"
                                                 style={{ width: "64px" }}
                                             />
                                             <div className="text-14" style={{ color: "#ffffff" }}>
-                                                {200 / 100 || 0}U
+                                                { cumulativeConfig[2]?.rewardValue || 0 } U
                                             </div>
                                         </motion.div>
                                     </motion.div>
@@ -873,7 +990,7 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            {t('card_139')}
+                                            Day { days[0]}
                                         </div>
                                         <img
                                             className="positionAb marginJuZhong"
@@ -889,23 +1006,23 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            {200 / 100 || 0}U
+                                            {  signInConfig[0]?.rewardValue || 0 } U
                                         </div>
-                                        {1 <= 2 && (
+                                        { signInState && days[0] && signInState.indexOf(days[0]) >-1 && (
                                             <img
                                                 className="positionAb"
                                                 style={{ top: "0px", left: "0px" }}
                                                 src="wallet/assets/images/earn/checkOver1.png"
                                             />
                                         )}
-                                        {!false &&
-                                            1 == 0 + 1 && (
+                                        {(!signInState || (days[0] && signInState && signInState.indexOf(days[0]) < 0)) && (
                                                 <img
                                                     className="positionAb"
                                                     style={{ top: "0px", left: "0px" }}
                                                     src="wallet/assets/images/earn/checkOver_1.png"
                                                     onClick={() => {
-
+                                                        if (days[0] != curDay) return;
+                                                        handleSignin()
                                                     }}
                                                 />
                                             )}
@@ -930,7 +1047,7 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            {t('card_133')}
+                                            Day { days[1]}
                                         </div>
                                         <img
                                             className="positionAb marginJuZhong"
@@ -946,23 +1063,23 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            {100 / 100 || 0}U
+                                             {  signInConfig[1]?.rewardValue || 0 } U
                                         </div>
-                                        {2 <= 1 && (
+                                        { signInState && days[1] && signInState.indexOf(days[1]) >-1 && (
                                             <img
                                                 className="positionAb"
                                                 style={{ top: "0px", left: "0px" }}
                                                 src="wallet/assets/images/earn/checkOver1.png"
                                             />
                                         )}
-                                        {!false &&
-                                            2 == 1 + 0 && (
+                                        { (!signInState || (days[1] && signInState && signInState.indexOf(days[1]) < 0)) && (
                                                 <img
                                                     className="positionAb"
                                                     style={{ top: "0px", left: "0px" }}
                                                     src="wallet/assets/images/earn/checkOver_1.png"
                                                     onClick={() => {
-
+                                                        if (days[1] != curDay) return;
+                                                        handleSignin()
                                                     }}
                                                 />
                                             )}
@@ -987,7 +1104,7 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            {t('card_134')}
+                                           Day { days[2]}
                                         </div>
                                         <img
                                             className="positionAb marginJuZhong"
@@ -1003,23 +1120,23 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            {200 / 100 || 0}U
+                                            {  signInConfig[2]?.rewardValue || 0 } U
                                         </div>
-                                        {3 <= 2 && (
+                                        { signInState && days[2] && signInState.indexOf(days[2]) >-1 && (
                                             <img
                                                 className="positionAb"
                                                 style={{ top: "0px", left: "0px" }}
                                                 src="wallet/assets/images/earn/checkOver1.png"
                                             />
                                         )}
-                                        {!false &&
-                                            3 == 1 + 1 && (
+                                        { (!signInState || (days[2] && signInState && signInState.indexOf(days[2]) < 0)) && (
                                                 <img
                                                     className="positionAb"
                                                     style={{ top: "0px", left: "0px" }}
                                                     src="wallet/assets/images/earn/checkOver_1.png"
                                                     onClick={() => {
-
+                                                        if (days[2] != curDay) return;
+                                                        handleSignin()
                                                     }}
                                                 />
                                             )}
@@ -1044,7 +1161,7 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            {t('card_135')}
+                                            Day { days[3]}
                                         </div>
                                         <img
                                             className="positionAb marginJuZhong"
@@ -1060,23 +1177,23 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            {200 / 100 || 0}U
+                                            {  signInConfig[3]?.rewardValue || 0 } U
                                         </div>
-                                        {4 <= 3 && (
+                                        { signInState && days[3] && signInState.indexOf(days[3]) >-1 && (
                                             <img
                                                 className="positionAb"
                                                 style={{ top: "0px", left: "0px" }}
                                                 src="wallet/assets/images/earn/checkOver1.png"
                                             />
                                         )}
-                                        {!false &&
-                                            4 == 3 + 0 && (
+                                        {(!signInState || (days[3] && signInState && signInState.indexOf(days[3]) < 0)) && (
                                                 <img
                                                     className="positionAb"
                                                     style={{ top: "0px", left: "0px" }}
                                                     src="wallet/assets/images/earn/checkOver_1.png"
                                                     onClick={() => {
-
+                                                        if (days[3] != curDay) return;
+                                                        handleSignin()
                                                     }}
                                                 />
                                             )}
@@ -1106,7 +1223,7 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            {t('card_136')}
+                                            Day { days[4]}
                                         </div>
                                         <img
                                             className="positionAb marginJuZhong"
@@ -1122,23 +1239,23 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            {100 / 100 || 0}U
+                                            {  signInConfig[4]?.rewardValue || 0 } U
                                         </div>
-                                        {5 <= 4 && (
+                                        { signInState && days[4] && signInState.indexOf(days[4]) >-1 && (
                                             <img
                                                 className="positionAb"
                                                 style={{ top: "0px", left: "0px" }}
                                                 src="wallet/assets/images/earn/checkOver1.png"
                                             />
                                         )}
-                                        {!false &&
-                                            5 == 3 + 1 && (
+                                        { (!signInState || (days[4] && signInState && signInState.indexOf(days[4]) < 0)) && (
                                                 <img
                                                     className="positionAb"
                                                     style={{ top: "0px", left: "0px" }}
                                                     src="wallet/assets/images/earn/checkOver_1.png"
                                                     onClick={() => {
-
+                                                        if (days[4] != curDay) return;
+                                                        handleSignin()
                                                     }}
                                                 />
                                             )}
@@ -1163,7 +1280,7 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            {t('card_137')}
+                                             Day { days[5]}
                                         </div>
                                         <img
                                             className="positionAb marginJuZhong"
@@ -1179,23 +1296,23 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            {200 / 100 || 0}U
+                                            { signInConfig[5]?.rewardValue || 0 } U
                                         </div>
-                                        {6 <= 4 && (
+                                        { signInState && days[5] && signInState.indexOf(days[5]) >-1 &&  (
                                             <img
                                                 className="positionAb"
                                                 style={{ top: "0px", left: "0px" }}
                                                 src="wallet/assets/images/earn/checkOver1.png"
                                             />
                                         )}
-                                        {!false &&
-                                            6 == 4 + 1 && (
+                                        { (!signInState || (days[5] && signInState && signInState.indexOf(days[5]) < 0)) && (
                                                 <img
                                                     className="positionAb"
                                                     style={{ top: "0px", left: "0px" }}
                                                     src="wallet/assets/images/earn/checkOver_1.png"
                                                     onClick={() => {
-
+                                                        if (days[5] != curDay) return;
+                                                        handleSignin()
                                                     }}
                                                 />
                                             )}
@@ -1205,7 +1322,9 @@ function Earn(props) {
                                         variants={item}
                                         className=" align-item text-align  btnPointer txtBrightness mx-4"
                                         style={{ position: "relative", width: "23%" }}
-                                        onClick={() => { }}
+                                        onClick={() => { 
+
+                                        }}
                                     >
                                         <img
                                             className="positionAb"
@@ -1220,7 +1339,7 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            {t('card_137')}
+                                             Day { days[6]}
                                         </div>
                                         <img
                                             className="positionAb marginJuZhong"
@@ -1236,23 +1355,23 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            {200 / 100 || 0}U
+                                            {  signInConfig[6]?.rewardValue || 0 } U
                                         </div>
-                                        {7 <= 4 && (
+                                        {  signInState && days[6] && signInState.indexOf(days[6]) >-1  && (
                                             <img
                                                 className="positionAb"
                                                 style={{ top: "0px", left: "0px" }}
                                                 src="wallet/assets/images/earn/checkOver1.png "
                                             />
                                         )}
-                                        {!false &&
-                                            7 == 4 + 1 && (
+                                        { (!signInState || (days[6] && signInState && signInState.indexOf(days[6]) < 0)) && (
                                                 <img
                                                     className="positionAb"
                                                     style={{ top: "0px", left: "0px" }}
                                                     src="wallet/assets/images/earn/checkOver_1.png"
                                                     onClick={() => {
-
+                                                        if (days[6] != curDay) return;
+                                                        handleSignin()
                                                     }}
                                                 />
                                             )}
@@ -1268,7 +1387,7 @@ function Earn(props) {
                         open={openSpin}
                         onClose={() => setOpenSpin(false)}
                     >
-                        <Spin />
+                        <Spin turnTableConfigList= { turnTableConfigList}/>
                     </AnimateModal>
 
                     <BootstrapDialog

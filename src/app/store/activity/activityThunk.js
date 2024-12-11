@@ -41,7 +41,7 @@ export const signInActivityConfig = createAsyncThunk(
 
         const resultData = await React.$apiGet("activity.signInActivityConfig", {});
         if (resultData.errno === 0) {
-            dispatch(showMessage({ message: 'success', code: 1 }));
+            return resultData
         } else {
             showServerErrorTips(dispatch, resultData);
         }
@@ -56,7 +56,7 @@ export const signInActivityInfo = createAsyncThunk(
         
         const resultData = await React.$apiGet("activity.signInActivityInfo", {});
         if (resultData.errno === 0) {
-            dispatch(showMessage({ message: 'success', code: 1 }));
+            return resultData
         } else {
             showServerErrorTips(dispatch, resultData);
         }
@@ -71,7 +71,97 @@ export const signIn = createAsyncThunk(
         
         const resultData = await React.$api("activity.signIn", {});
         if (resultData.errno === 0) {
-            dispatch(showMessage({ message: 'success', code: 1 }));
+            return resultData
+        } else {
+            showServerErrorTips(dispatch, resultData);
+        }
+    }
+);
+
+// 获取转盘配置
+export const turnTableActivityConfig = createAsyncThunk(
+    'activity/turnTableActivityConfig',
+    async (settings, { dispatch, getState }) => {
+        settings = settings || {};
+
+        const resultData = await React.$apiGet("activity.turnTableActivityConfig", {});
+        if (resultData.errno === 0) {
+            return resultData
+        } else {
+            showServerErrorTips(dispatch, resultData);
+        }
+    }
+);
+
+// 获取转盘信息
+export const turnTableActivityInfo = createAsyncThunk(
+    'activity/turnTableActivityInfo',
+    async (settings, { dispatch, getState }) => {
+        settings = settings || {};
+        
+        const resultData = await React.$apiGet("activity.turnTableActivityInfo", {});
+        if (resultData.errno === 0) {
+            return resultData
+        } else {
+            showServerErrorTips(dispatch, resultData);
+        }
+    }
+);
+
+// 进行转动
+export const turntable = createAsyncThunk(
+    'activity/turntable',
+    async (settings, { dispatch, getState }) => {
+        settings = settings || {};
+        
+        const resultData = await React.$api("activity.turntable", {});
+        if (resultData.errno === 0) {
+            return resultData
+        } else {
+            showServerErrorTips(dispatch, resultData);
+        }
+    }
+);
+
+// 获取质押挖矿配置
+export const tokenPledgeActivityConfig = createAsyncThunk(
+    'activity/tokenPledgeActivityConfig',
+    async (settings, { dispatch, getState }) => {
+        settings = settings || {};
+
+        const resultData = await React.$apiGet("activity.tokenPledgeActivityConfig", {});
+        if (resultData.errno === 0) {
+            return resultData
+        } else {
+            showServerErrorTips(dispatch, resultData);
+        }
+    }
+);
+
+// 获取质押挖矿信息
+export const tokenPledgeActivityInfo = createAsyncThunk(
+    'activity/tokenPledgeActivityInfo',
+    async (settings, { dispatch, getState }) => {
+        settings = settings || {};
+        
+        const resultData = await React.$apiGet("activity.tokenPledgeActivityInfo", {});
+        if (resultData.errno === 0) {
+            return resultData
+        } else {
+            showServerErrorTips(dispatch, resultData);
+        }
+    }
+);
+
+// 质押挖矿
+export const pledge = createAsyncThunk(
+    'activity/pledge',
+    async (settings, { dispatch, getState }) => {
+        settings = settings || {};
+        
+        const resultData = await React.$api("activity.pledge", {});
+        if (resultData.errno === 0) {
+            return resultData
         } else {
             showServerErrorTips(dispatch, resultData);
         }
