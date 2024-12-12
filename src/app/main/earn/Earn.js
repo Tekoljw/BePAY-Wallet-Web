@@ -2367,10 +2367,6 @@ function Earn(props) {
                                 </Accordion>
                             </div>
 
-
-
-
-
                             <div className='mt-24' style={{ paddingInline: "1.5rem" }}>
                                 <Accordion className='gongNengTan10' style={{ border: "1px solid #374252" }}>
 
@@ -2546,12 +2542,8 @@ function Earn(props) {
                                         </div>
                                     </div>
 
-                                    <div className='' style={{ height: "10px" }}>
-
+                                    <div className='' style={{ height: "16px" }}>
                                     </div>
-
-
-
                                 </Accordion>
                             </div>
 
@@ -2630,6 +2622,9 @@ function Earn(props) {
                             </div>
                         </motion.div>
                     </div>}
+
+                    
+
                     <div style={{ height: "50px" }}></div>
                 </div>
             }
