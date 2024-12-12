@@ -32,7 +32,7 @@ import clsx from 'clsx';
 import { FormHelperText } from '@mui/material';
 import { handleCopyText } from "../../util/tools/function";
 import { useNavigate } from 'react-router-dom';
-import { 
+import {
     signInActivityConfig,
     signInActivityInfo,
     signIn,
@@ -431,38 +431,38 @@ function Earn(props) {
         }
     }
 
-    const startCheckIn = async() => {
+    const startCheckIn = async () => {
         setOpenCheckIn(true)
         await invokeSignInInfo();
     }
 
-    const invokeSignInInfo = async() => {
-        await dispatch(signInActivityInfo()).then((res)=>{
+    const invokeSignInInfo = async () => {
+        await dispatch(signInActivityInfo()).then((res) => {
             const result = res.payload;
             const days = calculateDaysForDisplay(result?.data?.curDay || 0);
             setSignInInfo(result?.data);
             setCurDay(result?.data?.curDay);
             setDays(days)
-            setSignInState(result?.data?.signInData ?  result.data.signInData.signInState :[])
-            retriveCurrentStep(result?.data?.signInData ?  result.data.signInData.signInState :[]);
+            setSignInState(result?.data?.signInData ? result.data.signInData.signInState : [])
+            retriveCurrentStep(result?.data?.signInData ? result.data.signInData.signInState : []);
         })
     }
 
-    const retriveCurrentStep = (list)=> {
+    const retriveCurrentStep = (list) => {
         const signedDays = _.size(list);
-        if(signedDays === 0){
+        if (signedDays === 0) {
             return 0
-        } else if( 0 < signedDays < cumulativeConfig[0]?.cumulativeDay ){
+        } else if (0 < signedDays < cumulativeConfig[0]?.cumulativeDay) {
             return 1
-        } else if( signedDays === cumulativeConfig[0]?.cumulativeDay ){
+        } else if (signedDays === cumulativeConfig[0]?.cumulativeDay) {
             return 2
-        } else if( cumulativeConfig[0]?.cumulativeDay < signedDays < cumulativeConfig[1]?.cumulativeDay ){
+        } else if (cumulativeConfig[0]?.cumulativeDay < signedDays < cumulativeConfig[1]?.cumulativeDay) {
             return 3
-        } else if(  signedDays ===  cumulativeConfig[2]?.cumulativeDay ){
+        } else if (signedDays === cumulativeConfig[2]?.cumulativeDay) {
             return 4
-        } else if( cumulativeConfig[2]?.cumulativeDay  < signedDays < cumulativeConfig[3]?.cumulativeDay ){
+        } else if (cumulativeConfig[2]?.cumulativeDay < signedDays < cumulativeConfig[3]?.cumulativeDay) {
             return 5
-        } else if( signedDays === cumulativeConfig[3]?.cumulativeDay ){
+        } else if (signedDays === cumulativeConfig[3]?.cumulativeDay) {
             return 6
         } else {
             return 7
@@ -470,10 +470,10 @@ function Earn(props) {
 
     }
 
-    const handleSignin = async() =>{
-        await dispatch(signIn()).then((res)=>{
+    const handleSignin = async () => {
+        await dispatch(signIn()).then((res) => {
             const result = res.payload;
-            if(result?.errno === 0){
+            if (result?.errno === 0) {
                 invokeSignInInfo()
             }
         })
@@ -499,22 +499,22 @@ function Earn(props) {
 
         // 计算当前天在表盘的位置 (1~7)，余数为 0 则放在第 7 个位置
         const positionInWeek = currentDay % daysInWeek || daysInWeek;
-    
+
         const result = [];
-    
+
         // 补充当前天之前的天数（正序）
         for (let i = positionInWeek - 1; i > 0; i--) {
             result.push(currentDay - i);
         }
-    
+
         // 加入当前天
         result.push(currentDay);
-    
+
         // 补充当前天之后的天数（顺序）
         for (let i = 1; i <= daysInWeek - positionInWeek; i++) {
             result.push(currentDay + i);
         }
-    
+
         return result;
     }
 
@@ -650,7 +650,7 @@ function Earn(props) {
                         variants={container}
                         initial="hidden"
                         animate="show"
-                        className='mt-20'
+                        className='mt-10'
                         style={{ paddingInline: "1.5rem" }}
                     >
                         <div className='text-16'>质押挖矿</div>
@@ -725,31 +725,6 @@ function Earn(props) {
                     </motion.div>
                     }
 
-                    <motion.div
-                        variants={container}
-                        initial="hidden"
-                        animate="show"
-                        className='mt-20'
-                        style={{ paddingInline: "1.5rem" }}
-                    >
-                        <div className='text-16'>社区大使</div>
-                        <div className='lanDi mt-16' onClick={() => {
-                            setOpenSheQu(true)
-                            openSheQuFunc();
-                        }}>
-                            <div className='flex justify-between pt-4'>
-                                <div className='huangDiZi'>
-                                    <div className='flex'>
-                                        <div className='' style={{ fontSize: "20px", overflow: 'hidden' }}>社区大使<span style={{ color: "#ffc600", fontSize: "20px" }}>召集令</span></div>
-                                        <img className='ml-10' style={{ width: "26px", height: "26px" }} src="wallet/assets/images/earn/laBa.png" />
-                                    </div>
-                                    <div>引领社区</div>
-                                    <div>铸就<span style={{ color: "#649DFF", fontSize: "22px", fontWeight: "bold" }}>Web3</span>财富</div>
-                                </div>
-                                <img className='earnYouTu2 mt-16' src="wallet/assets/images/earn/bi6.png" />
-                            </div>
-                        </div>
-                    </motion.div>
 
                     {!openXiangQing && <motion.div
                         variants={container}
@@ -831,7 +806,6 @@ function Earn(props) {
                                     </div>
                                 </motion.div>
 
-                                <div className='mt-28' style={{ width: "100%", textAlign: "center", fontSize: "16px" }}>下级收益：50%</div>
 
                                 <motion.div
                                     variants={item}
@@ -960,14 +934,14 @@ function Earn(props) {
                                             className="width-85 align-item text-align"
                                         >
                                             <div className="text-14" style={{ color: "#FFD569" }}>
-                                                { cumulativeConfig[0]?.cumulativeDay || 0 }{t('card_103')}
+                                                {cumulativeConfig[0]?.cumulativeDay || 0}{t('card_103')}
                                             </div>
                                             <img
                                                 src="wallet/assets/images/earn/jinBi2.png"
                                                 style={{ width: "64px" }}
                                             />
                                             <div className="text-14" style={{ color: "#ffffff" }}>
-                                                { cumulativeConfig[0]?.rewardValue || 0 } U
+                                                {cumulativeConfig[0]?.rewardValue || 0} U
                                             </div>
                                         </motion.div>
                                         <motion.div
@@ -976,14 +950,14 @@ function Earn(props) {
                                             style={{ marginLeft: "3%" }}
                                         >
                                             <div className="text-14" style={{ color: "#FFD569" }}>
-                                            { cumulativeConfig[1]?.cumulativeDay || 0 }{t('card_103')}
+                                                {cumulativeConfig[1]?.cumulativeDay || 0}{t('card_103')}
                                             </div>
                                             <img
                                                 src="wallet/assets/images/earn/jinBi3.png"
                                                 style={{ width: "64px" }}
                                             />
                                             <div className="text-14" style={{ color: "#ffffff" }}>
-                                                { cumulativeConfig[1]?.rewardValue || 0 } U
+                                                {cumulativeConfig[1]?.rewardValue || 0} U
                                             </div>
                                         </motion.div>
                                         <motion.div
@@ -992,14 +966,14 @@ function Earn(props) {
                                             style={{ marginLeft: "3%" }}
                                         >
                                             <div className="text-14" style={{ color: "#FFD569" }}>
-                                                { cumulativeConfig[2]?.cumulativeDay || 0 }{t('card_103')}
+                                                {cumulativeConfig[2]?.cumulativeDay || 0}{t('card_103')}
                                             </div>
                                             <img
                                                 src="wallet/assets/images/earn/jinBi3.png"
                                                 style={{ width: "64px" }}
                                             />
                                             <div className="text-14" style={{ color: "#ffffff" }}>
-                                                { cumulativeConfig[2]?.rewardValue || 0 } U
+                                                {cumulativeConfig[2]?.rewardValue || 0} U
                                             </div>
                                         </motion.div>
                                     </motion.div>
@@ -1025,7 +999,7 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            Day { days[0]}
+                                            Day {days[0]}
                                         </div>
                                         <img
                                             className="positionAb marginJuZhong"
@@ -1041,9 +1015,9 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            {  signInConfig[0]?.rewardValue || 0 } U
+                                            {signInConfig[0]?.rewardValue || 0} U
                                         </div>
-                                        { signInState && days[0] && signInState.indexOf(days[0]) >-1 && (
+                                        {signInState && days[0] && signInState.indexOf(days[0]) > -1 && (
                                             <img
                                                 className="positionAb"
                                                 style={{ top: "0px", left: "0px" }}
@@ -1051,16 +1025,16 @@ function Earn(props) {
                                             />
                                         )}
                                         {(!signInState || (days[0] && signInState && signInState.indexOf(days[0]) < 0)) && (
-                                                <img
-                                                    className="positionAb"
-                                                    style={{ top: "0px", left: "0px" }}
-                                                    src="wallet/assets/images/earn/checkOver_1.png"
-                                                    onClick={() => {
-                                                        if (days[0] != curDay) return;
-                                                        handleSignin()
-                                                    }}
-                                                />
-                                            )}
+                                            <img
+                                                className="positionAb"
+                                                style={{ top: "0px", left: "0px" }}
+                                                src="wallet/assets/images/earn/checkOver_1.png"
+                                                onClick={() => {
+                                                    if (days[0] != curDay) return;
+                                                    handleSignin()
+                                                }}
+                                            />
+                                        )}
                                     </motion.div>
 
                                     <motion.div
@@ -1082,7 +1056,7 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            Day { days[1]}
+                                            Day {days[1]}
                                         </div>
                                         <img
                                             className="positionAb marginJuZhong"
@@ -1098,26 +1072,26 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                             {  signInConfig[1]?.rewardValue || 0 } U
+                                            {signInConfig[1]?.rewardValue || 0} U
                                         </div>
-                                        { signInState && days[1] && signInState.indexOf(days[1]) >-1 && (
+                                        {signInState && days[1] && signInState.indexOf(days[1]) > -1 && (
                                             <img
                                                 className="positionAb"
                                                 style={{ top: "0px", left: "0px" }}
                                                 src="wallet/assets/images/earn/checkOver1.png"
                                             />
                                         )}
-                                        { (!signInState || (days[1] && signInState && signInState.indexOf(days[1]) < 0)) && (
-                                                <img
-                                                    className="positionAb"
-                                                    style={{ top: "0px", left: "0px" }}
-                                                    src="wallet/assets/images/earn/checkOver_1.png"
-                                                    onClick={() => {
-                                                        if (days[1] != curDay) return;
-                                                        handleSignin()
-                                                    }}
-                                                />
-                                            )}
+                                        {(!signInState || (days[1] && signInState && signInState.indexOf(days[1]) < 0)) && (
+                                            <img
+                                                className="positionAb"
+                                                style={{ top: "0px", left: "0px" }}
+                                                src="wallet/assets/images/earn/checkOver_1.png"
+                                                onClick={() => {
+                                                    if (days[1] != curDay) return;
+                                                    handleSignin()
+                                                }}
+                                            />
+                                        )}
                                     </motion.div>
 
                                     <motion.div
@@ -1139,7 +1113,7 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                           Day { days[2]}
+                                            Day {days[2]}
                                         </div>
                                         <img
                                             className="positionAb marginJuZhong"
@@ -1155,26 +1129,26 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            {  signInConfig[2]?.rewardValue || 0 } U
+                                            {signInConfig[2]?.rewardValue || 0} U
                                         </div>
-                                        { signInState && days[2] && signInState.indexOf(days[2]) >-1 && (
+                                        {signInState && days[2] && signInState.indexOf(days[2]) > -1 && (
                                             <img
                                                 className="positionAb"
                                                 style={{ top: "0px", left: "0px" }}
                                                 src="wallet/assets/images/earn/checkOver1.png"
                                             />
                                         )}
-                                        { (!signInState || (days[2] && signInState && signInState.indexOf(days[2]) < 0)) && (
-                                                <img
-                                                    className="positionAb"
-                                                    style={{ top: "0px", left: "0px" }}
-                                                    src="wallet/assets/images/earn/checkOver_1.png"
-                                                    onClick={() => {
-                                                        if (days[2] != curDay) return;
-                                                        handleSignin()
-                                                    }}
-                                                />
-                                            )}
+                                        {(!signInState || (days[2] && signInState && signInState.indexOf(days[2]) < 0)) && (
+                                            <img
+                                                className="positionAb"
+                                                style={{ top: "0px", left: "0px" }}
+                                                src="wallet/assets/images/earn/checkOver_1.png"
+                                                onClick={() => {
+                                                    if (days[2] != curDay) return;
+                                                    handleSignin()
+                                                }}
+                                            />
+                                        )}
                                     </motion.div>
 
                                     <motion.div
@@ -1196,7 +1170,7 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            Day { days[3]}
+                                            Day {days[3]}
                                         </div>
                                         <img
                                             className="positionAb marginJuZhong"
@@ -1212,9 +1186,9 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            {  signInConfig[3]?.rewardValue || 0 } U
+                                            {signInConfig[3]?.rewardValue || 0} U
                                         </div>
-                                        { signInState && days[3] && signInState.indexOf(days[3]) >-1 && (
+                                        {signInState && days[3] && signInState.indexOf(days[3]) > -1 && (
                                             <img
                                                 className="positionAb"
                                                 style={{ top: "0px", left: "0px" }}
@@ -1222,16 +1196,16 @@ function Earn(props) {
                                             />
                                         )}
                                         {(!signInState || (days[3] && signInState && signInState.indexOf(days[3]) < 0)) && (
-                                                <img
-                                                    className="positionAb"
-                                                    style={{ top: "0px", left: "0px" }}
-                                                    src="wallet/assets/images/earn/checkOver_1.png"
-                                                    onClick={() => {
-                                                        if (days[3] != curDay) return;
-                                                        handleSignin()
-                                                    }}
-                                                />
-                                            )}
+                                            <img
+                                                className="positionAb"
+                                                style={{ top: "0px", left: "0px" }}
+                                                src="wallet/assets/images/earn/checkOver_1.png"
+                                                onClick={() => {
+                                                    if (days[3] != curDay) return;
+                                                    handleSignin()
+                                                }}
+                                            />
+                                        )}
                                     </motion.div>
                                 </div>
 
@@ -1258,7 +1232,7 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            Day { days[4]}
+                                            Day {days[4]}
                                         </div>
                                         <img
                                             className="positionAb marginJuZhong"
@@ -1274,26 +1248,26 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            {  signInConfig[4]?.rewardValue || 0 } U
+                                            {signInConfig[4]?.rewardValue || 0} U
                                         </div>
-                                        { signInState && days[4] && signInState.indexOf(days[4]) >-1 && (
+                                        {signInState && days[4] && signInState.indexOf(days[4]) > -1 && (
                                             <img
                                                 className="positionAb"
                                                 style={{ top: "0px", left: "0px" }}
                                                 src="wallet/assets/images/earn/checkOver1.png"
                                             />
                                         )}
-                                        { (!signInState || (days[4] && signInState && signInState.indexOf(days[4]) < 0)) && (
-                                                <img
-                                                    className="positionAb"
-                                                    style={{ top: "0px", left: "0px" }}
-                                                    src="wallet/assets/images/earn/checkOver_1.png"
-                                                    onClick={() => {
-                                                        if (days[4] != curDay) return;
-                                                        handleSignin()
-                                                    }}
-                                                />
-                                            )}
+                                        {(!signInState || (days[4] && signInState && signInState.indexOf(days[4]) < 0)) && (
+                                            <img
+                                                className="positionAb"
+                                                style={{ top: "0px", left: "0px" }}
+                                                src="wallet/assets/images/earn/checkOver_1.png"
+                                                onClick={() => {
+                                                    if (days[4] != curDay) return;
+                                                    handleSignin()
+                                                }}
+                                            />
+                                        )}
                                     </motion.div>
 
                                     <motion.div
@@ -1315,7 +1289,7 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                             Day { days[5]}
+                                            Day {days[5]}
                                         </div>
                                         <img
                                             className="positionAb marginJuZhong"
@@ -1331,33 +1305,33 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            { signInConfig[5]?.rewardValue || 0 } U
+                                            {signInConfig[5]?.rewardValue || 0} U
                                         </div>
-                                        { signInState && days[5] && signInState.indexOf(days[5]) >-1 &&  (
+                                        {signInState && days[5] && signInState.indexOf(days[5]) > -1 && (
                                             <img
                                                 className="positionAb"
                                                 style={{ top: "0px", left: "0px" }}
                                                 src="wallet/assets/images/earn/checkOver1.png"
                                             />
                                         )}
-                                        { (!signInState || (days[5] && signInState && signInState.indexOf(days[5]) < 0)) && (
-                                                <img
-                                                    className="positionAb"
-                                                    style={{ top: "0px", left: "0px" }}
-                                                    src="wallet/assets/images/earn/checkOver_1.png"
-                                                    onClick={() => {
-                                                        if (days[5] != curDay) return;
-                                                        handleSignin()
-                                                    }}
-                                                />
-                                            )}
+                                        {(!signInState || (days[5] && signInState && signInState.indexOf(days[5]) < 0)) && (
+                                            <img
+                                                className="positionAb"
+                                                style={{ top: "0px", left: "0px" }}
+                                                src="wallet/assets/images/earn/checkOver_1.png"
+                                                onClick={() => {
+                                                    if (days[5] != curDay) return;
+                                                    handleSignin()
+                                                }}
+                                            />
+                                        )}
                                     </motion.div>
 
                                     <motion.div
                                         variants={item}
                                         className=" align-item text-align  btnPointer txtBrightness mx-4"
                                         style={{ position: "relative", width: "23%" }}
-                                        onClick={() => { 
+                                        onClick={() => {
 
                                         }}
                                     >
@@ -1374,7 +1348,7 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                             Day { days[6]}
+                                            Day {days[6]}
                                         </div>
                                         <img
                                             className="positionAb marginJuZhong"
@@ -1390,26 +1364,26 @@ function Earn(props) {
                                                 color: "#ffffff",
                                             }}
                                         >
-                                            {  signInConfig[6]?.rewardValue || 0 } U
+                                            {signInConfig[6]?.rewardValue || 0} U
                                         </div>
-                                        {  signInState && days[6] && signInState.indexOf(days[6]) >-1  && (
+                                        {signInState && days[6] && signInState.indexOf(days[6]) > -1 && (
                                             <img
                                                 className="positionAb"
                                                 style={{ top: "0px", left: "0px" }}
                                                 src="wallet/assets/images/earn/checkOver1.png "
                                             />
                                         )}
-                                        { (!signInState || (days[6] && signInState && signInState.indexOf(days[6]) < 0)) && (
-                                                <img
-                                                    className="positionAb"
-                                                    style={{ top: "0px", left: "0px" }}
-                                                    src="wallet/assets/images/earn/checkOver_1.png"
-                                                    onClick={() => {
-                                                        if (days[6] != curDay) return;
-                                                        handleSignin()
-                                                    }}
-                                                />
-                                            )}
+                                        {(!signInState || (days[6] && signInState && signInState.indexOf(days[6]) < 0)) && (
+                                            <img
+                                                className="positionAb"
+                                                style={{ top: "0px", left: "0px" }}
+                                                src="wallet/assets/images/earn/checkOver_1.png"
+                                                onClick={() => {
+                                                    if (days[6] != curDay) return;
+                                                    handleSignin()
+                                                }}
+                                            />
+                                        )}
                                     </motion.div>
                                 </div>
                             </motion.div>
@@ -1422,7 +1396,7 @@ function Earn(props) {
                         open={openSpin}
                         onClose={() => setOpenSpin(false)}
                     >
-                        <Spin turnTableConfigList= { turnTableConfigList}/>
+                        <Spin turnTableConfigList={turnTableConfigList} />
                     </AnimateModal>
 
                     <BootstrapDialog
@@ -2105,7 +2079,7 @@ function Earn(props) {
                                                     <img className='mr-10' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/menu/deposite3-active.png" alt="" />
                                                 </div>
                                                 <div>
-                                                    <div className='ml-8 fenChengZi'>活期利益分成<br /> <p className='fenChengZi2 mt-4'>直接邀请：{inviteRewardAllInfo.demandInterestData ? inviteRewardAllInfo.demandInterestData.direct : 0}人，间接邀请：{inviteRewardAllInfo.demandInterestData ? inviteRewardAllInfo.demandInterestData.indirect : 0}人。</p> </div>
+                                                    <div className='ml-8 fenChengZi'>活期利益分成<br /> <p className='fenChengZi2 mt-4'>直接邀请：{inviteRewardAllInfo.demandInterestData ? inviteRewardAllInfo.demandInterestData.direct : 0}人，间接邀请：{inviteRewardAllInfo.demandInterestData ? inviteRewardAllInfo.demandInterestData.indirect : 0}人</p> </div>
                                                 </div>
                                             </div>
                                             <div className='flex earnDepositeDi'>
@@ -2169,7 +2143,7 @@ function Earn(props) {
                                                     <img className='mr-10' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/menu/icon-pools-active.png" alt="" />
                                                 </div>
                                                 <div>
-                                                    <div className='ml-8 fenChengZi'>质押收益分成<br /> <p className='fenChengZi2 mt-4'>直接邀请：{inviteRewardAllInfo.tokenPledgeRewardData ? inviteRewardAllInfo.tokenPledgeRewardData.direct : 0}人，间接邀请：{inviteRewardAllInfo.tokenPledgeRewardData ? inviteRewardAllInfo.tokenPledgeRewardData.indirect : 0}人。</p> </div>
+                                                    <div className='ml-8 fenChengZi'>质押收益分成<br /> <p className='fenChengZi2 mt-4'>直接邀请：{inviteRewardAllInfo.tokenPledgeRewardData ? inviteRewardAllInfo.tokenPledgeRewardData.direct : 0}人，间接邀请：{inviteRewardAllInfo.tokenPledgeRewardData ? inviteRewardAllInfo.tokenPledgeRewardData.indirect : 0}人</p> </div>
                                                 </div>
                                             </div>
                                             <div className='flex earnDepositeDi'>
@@ -2233,7 +2207,7 @@ function Earn(props) {
                                                     <img className='mr-10' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/menu/daE.png" alt="" />
                                                 </div>
                                                 <div>
-                                                    <div className='ml-8 fenChengZi'>合约挖矿分成<br /> <p className='fenChengZi2 mt-4'>直接邀请：{inviteRewardAllInfo.tokenContractRewardData ? inviteRewardAllInfo.tokenContractRewardData.direct : 0}人，间接邀请：{inviteRewardAllInfo.tokenContractRewardData ? inviteRewardAllInfo.tokenContractRewardData.indirect : 0}人。</p> </div>
+                                                    <div className='ml-8 fenChengZi'>合约挖矿分成<br /> <p className='fenChengZi2 mt-4'>直接邀请：{inviteRewardAllInfo.tokenContractRewardData ? inviteRewardAllInfo.tokenContractRewardData.direct : 0}人，间接邀请：{inviteRewardAllInfo.tokenContractRewardData ? inviteRewardAllInfo.tokenContractRewardData.indirect : 0}人</p> </div>
                                                 </div>
                                             </div>
                                             <div className='flex earnDepositeDi'>
@@ -2297,7 +2271,7 @@ function Earn(props) {
                                                     <img className='mr-10' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/menu/buyCrypto-active.png" alt="" />
                                                 </div>
                                                 <div>
-                                                    <div className='ml-8 fenChengZi'>支付手续费佣金<br /> <p className='fenChengZi2 mt-4'>直接邀请：{inviteRewardAllInfo.payCommissionRewardData ? inviteRewardAllInfo.payCommissionRewardData.direct : 0}人，间接邀请：{inviteRewardAllInfo.walletPayRewardData ? inviteRewardAllInfo.walletPayRewardData.indirect : 0}人。</p> </div>
+                                                    <div className='ml-8 fenChengZi'>支付手续费佣金<br /> <p className='fenChengZi2 mt-4'>直接邀请：{inviteRewardAllInfo.payCommissionRewardData ? inviteRewardAllInfo.payCommissionRewardData.direct : 0}人，间接邀请：{inviteRewardAllInfo.walletPayRewardData ? inviteRewardAllInfo.walletPayRewardData.indirect : 0}人</p> </div>
                                                 </div>
                                             </div>
                                             <div className='flex earnDepositeDi'>
@@ -2347,8 +2321,13 @@ function Earn(props) {
                                 </Accordion>
                             </div>
 
+
+
+
+
                             <div className='mt-24' style={{ paddingInline: "1.5rem" }}>
                                 <Accordion className='gongNengTan10' style={{ border: "1px solid #374252" }}>
+
                                     <AccordionSummary
                                         expandIcon={<ExpandMoreIcon />}
                                         aria-controls="panel1-content"
@@ -2361,7 +2340,7 @@ function Earn(props) {
                                                     <img className='mr-10' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/menu/icon-borrow-active.png" alt="" />
                                                 </div>
                                                 <div>
-                                                    <div className='ml-8 fenChengZi'>换汇手续费佣金<br /> <p className='fenChengZi2 mt-4'>直接邀请：{inviteRewardAllInfo.swapRewardData ? inviteRewardAllInfo.swapRewardData.direct : 0} 人，间接邀请： {inviteRewardAllInfo.swapRewardData ? inviteRewardAllInfo.swapRewardData.indirect : 0} 人。</p> </div>
+                                                    <div className='ml-8 fenChengZi'>换汇手续费佣金<br /> <p className='fenChengZi2 mt-4'>直接邀请：{inviteRewardAllInfo.swapRewardData ? inviteRewardAllInfo.swapRewardData.direct : 0}人，间接邀请： {inviteRewardAllInfo.swapRewardData ? inviteRewardAllInfo.swapRewardData.indirect : 0}人</p> </div>
                                                 </div>
                                             </div>
                                             <div className='flex earnDepositeDi'>
@@ -2374,6 +2353,7 @@ function Earn(props) {
                                             </div>
                                         </div>
                                     </AccordionSummary>
+
                                     <div className='earnBg'>
                                         <AccordionDetails >
                                             <div className=''>
@@ -2410,6 +2390,127 @@ function Earn(props) {
                                     </div>
                                 </Accordion>
                             </div>
+
+
+
+                            <div className='mt-24' style={{ paddingInline: "1.5rem" }}>
+                                <Accordion className='gongNengTan10' style={{ border: "1px solid #374252" }}>
+                                    <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon />}
+                                        aria-controls="panel1-content"
+                                        id="panel1-header"
+                                        className='gongNengTan20'
+                                    >
+                                        <div className='flex justify-between w-full' style={{ height: "40px" }}>
+                                            <div className='flex'>
+                                                <div className='flex  align-item' style={{ height: "100%" }}>
+                                                    <img className='mr-10' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/earn/team.png" alt="" />
+                                                </div>
+                                                <div>
+                                                    <div className='ml-8 fenChengZi'>社区大使佣金<br /> <p className='fenChengZi2 mt-4'>社区人数：0人，当前收益： 0人</p> </div>
+                                                </div>
+                                            </div>
+                                            <div className='flex earnDepositeDi'>
+                                                <div className='flex  align-item' style={{ height: "100%" }}>
+                                                    <div style={{}}>{inviteRewardAllInfo.swapRewardData && inviteRewardAllInfo.swapRewardData.reward ? (Number(inviteRewardAllInfo.swapRewardData.reward.symbol.usdt) === 0 ? '0.00' : Number(inviteRewardAllInfo.swapRewardData.reward.symbol.usdt)) : '0.00'} </div>
+                                                </div>
+                                                <div className='flex  align-item' style={{ height: "100%" }}>
+                                                    <img className='ml-10 mr-6' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </AccordionSummary>
+
+                                    <div className='earnBg'>
+                                        <AccordionDetails >
+                                            <div className=''>
+                                                <div className='flex' style={{ width: "100%", height: "" }}>
+                                                    <div className='' style={{ width: "30%", textAlign: "left" }}></div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>今日</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>昨日</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>本月</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>上月</div>
+                                                </div>
+                                                <div className='flex mt-4' style={{ width: "100%", height: "" }}>
+                                                    <div className='' style={{ width: "30%", textAlign: "left" }}>提成USDT</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.today)?.reward ? parseJson(inviteDefferentTypeReward[4].today).reward.symbol.usdt : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.yesterday)?.reward ? parseJson(inviteDefferentTypeReward[4].yesterday).reward.symbol.usdt : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.curMonth)?.reward ? parseJson(inviteDefferentTypeReward[4].curMonth).reward.symbol.usdt : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.beforeMonth)?.reward ? parseJson(inviteDefferentTypeReward[4].beforeMonth).reward.symbol.usdt : '0.00'}</div>
+                                                </div>
+                                                <div className='flex mt-4' style={{ width: "100%", height: "" }}>
+                                                    <div className='' style={{ width: "30%", textAlign: "left" }}>直接邀请人数</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.today)?.direct ? parseJson(inviteDefferentTypeReward[4].today).direct : 0}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.yesterday)?.direct ? parseJson(inviteDefferentTypeReward[4].yesterday).direct : 0}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.curMonth)?.direct ? parseJson(inviteDefferentTypeReward[4].curMonth).direct : 0}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.beforeMonth)?.direct ? parseJson(inviteDefferentTypeReward[4].beforeMonth).direct : 0}</div>
+                                                </div>
+                                                <div className='flex mt-4' style={{ width: "100%", height: "" }}>
+                                                    <div className='' style={{ width: "30%", textAlign: "left" }}>间接邀请人数</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.today)?.indirect ? parseJson(inviteDefferentTypeReward[4].today).indirect : 0}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.yesterday)?.indirect ? parseJson(inviteDefferentTypeReward[4].yesterday).indirect : 0}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.curMonth)?.indirect ? parseJson(inviteDefferentTypeReward[4].curMonth).indirect : 0}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.beforeMonth)?.indirect ? parseJson(inviteDefferentTypeReward[4].beforeMonth).indirect : 0}</div>
+                                                </div>
+                                            </div>
+                                        </AccordionDetails>
+                                    </div>
+
+                                    <div className='' style={{ marginLeft: "3%", width: "94%", height: "1px", borderTop: "1px solid #374252" }}>   </div>
+
+                                    <div className='flex justify-between px-10 mt-10'>
+                                        <div>下级收益：<span>50%</span></div>
+                                        <div className='xiaHuaXian ' style={{ color: "#00F0C5" }}>规则说明</div>
+                                    </div>
+
+
+                                    <div
+                                        className='mt-10 ' style={{ width: "100%", height: "40px" }}>
+                                        <div className='flex  px-10'>
+                                            <div className='' style={{ width: "100%", height: "40px", }}>
+                                                <div className='text-14 flex justify-between px-4' ><div>个人质押/BFT</div><div>800/1000</div></div>
+                                                <div className='mt-10 mb-2' style={{ width: "100%", height: "6px", position: "relative", background: "#191A1B", borderRadius: "50px" }}>
+                                                    <div style={{ width: "80%", height: "6px", position: "absolute", background: "#0D9488", borderRadius: "50px" }}></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        className='mt-10 ' style={{ width: "100%", height: "40px" }}>
+                                        <div className='flex  px-10'>
+                                            <div className='' style={{ width: "100%", height: "40px", }}>
+                                                <div className='text-14 flex justify-between px-4' ><div>社区V5成员</div><div>10/20</div></div>
+                                                <div className='mt-10 mb-2' style={{ width: "100%", height: "6px", position: "relative", background: "#191A1B", borderRadius: "50px" }}>
+                                                    <div style={{ width: "50%", height: "6px", position: "absolute", background: "#0D9488", borderRadius: "50px" }}></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        className='mt-10 ' style={{ width: "100%", height: "40px" }}>
+                                        <div className='flex  px-10'>
+                                            <div className='' style={{ width: "100%", height: "40px", }}>
+                                                <div className='text-14 flex justify-between px-4' ><div>社区总质押</div><div>100000/200000</div></div>
+                                                <div className='mt-10 mb-2' style={{ width: "100%", height: "6px", position: "relative", background: "#191A1B", borderRadius: "50px" }}>
+                                                    <div style={{ width: "50%", height: "6px", position: "absolute", background: "#0D9488", borderRadius: "50px" }}></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='' style={{ height: "10px" }}>
+
+                                    </div>
+
+
+
+                                </Accordion>
+                            </div>
+
+
+
 
                             <div className='mt-40 lvGuangDi'>
                                 <div className='yaoQingTitleZi'>奖励规则</div>
