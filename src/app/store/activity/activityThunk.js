@@ -158,8 +158,13 @@ export const pledge = createAsyncThunk(
     'activity/pledge',
     async (settings, { dispatch, getState }) => {
         settings = settings || {};
+
+        let data = {
+            configId: settings.configId,
+            pledgeAmount: settings.pledgeAmount
+        }
         
-        const resultData = await React.$api("activity.pledge", {});
+        const resultData = await React.$api("activity.pledge", data);
         if (resultData.errno === 0) {
             return resultData
         } else {

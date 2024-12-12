@@ -52,6 +52,7 @@ import {
     getInviteRewardDetail
 } from '../../store/activity/activityThunk';
 import { shareURL } from '@telegram-apps/sdk';
+import format from 'date-fns/format';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -79,6 +80,7 @@ function Earn(props) {
     const { t } = useTranslation('mainPage');
     const navigate = useNavigate()
     const userData = useSelector(selectUserData);
+    const [btnLoading, setBtnLoading] = useState(false);
     const [openCheckIn, setOpenCheckIn] = useState(false);
     const [openSpin, setOpenSpin] = useState(false);
     const [openKXian, setOpenKXian] = useState(false);
@@ -108,6 +110,7 @@ function Earn(props) {
     const [inviteDefferentTypeReward, setInviteDefferentTypeReward] = useState([]);
     const [copyTiShi, setCopyTiShi] = useState(false);
     const [weight, setWeight] = useState('');
+    const [estimateTokenPledgeAmount, setEstimateTokenPledgeAmount] = useState('0.00');
     const [loadingShow, setLoadingShow] = useState(false);
     const textRef = useRef(null);
     const [openSheQu, setOpenSheQu] = useState(false);
@@ -119,6 +122,10 @@ function Earn(props) {
     const [days, setDays] = useState([]);
     const [signInState, setSignInState] = useState([]);
     const [currentStep, setCurrentStep] = useState(0);
+    const [tokenPledgeActivityConfigList, setTokenPledgeActivityConfigList] = useState([]);
+    const [tokenPledgeActivityAllInfo, setTokenPledgeActivityAllInfo] = useState({});
+    const [currentTolkenPledgeActivityInfo, setCurrentTolkenPledgeActivityInfo] = useState({});
+    const [userPledgeRecordList, setUserPledgeRecordList] = useState([]);
     const handleChangeInputVal2 = (event) => {
         setInputIDVal(event.target.value);
     };
@@ -157,7 +164,7 @@ function Earn(props) {
         dispatch(tokenPledgeActivityConfig()).then((res) => {
             const result = res.payload
             if (result.errno === 0) {
-                // setActivityInfo(result.data)
+                setTokenPledgeActivityConfigList(result.data)
             }
         });
     }, []);
@@ -288,7 +295,8 @@ function Earn(props) {
         }, 300);
     };
 
-    const openZhiYaFunc = () => {
+    const openZhiYaFunc = async() => {
+        await invokeTokenPledgeActivityInfo()
         setOpenZhiYa(true)
         setShowZhiYa(true);
         setShowLiShi(false);
@@ -297,6 +305,16 @@ function Earn(props) {
         setTimeout(() => {
             document.getElementById('openZhiYa').classList.add('PinMoveAni');
         }, 0);
+    }
+
+    const invokeTokenPledgeActivityInfo= async()=> {
+        await dispatch(tokenPledgeActivityInfo()).then((res) => {
+            const result = res.payload
+            if (result.errno === 0) {
+                setTokenPledgeActivityAllInfo(result.data)
+                setUserPledgeRecordList(result?.data?.userPledgeRecord || []);
+            }
+        });
     }
 
     const closeZhiYaFunc = () => {
@@ -351,13 +369,13 @@ function Earn(props) {
 
 
     function ismore(inputVal, MaxVal, MinValue) {
-        // if (inputVal > MaxVal || inputVal < MinValue) {
-        //     if (inputVal === 0) {
-        //         return false
-        //     } else {
-        //         return true
-        //     }
-        // } else return false
+        if (inputVal > MaxVal || inputVal < MinValue) {
+            if (inputVal === 0) {
+                return false
+            } else {
+                return true
+            }
+        } else return false
     }
 
     const openLiShiFunc = () => {
@@ -461,6 +479,21 @@ function Earn(props) {
         })
     }
 
+    const handlePledge = async()=> {
+        setBtnLoading(true);
+        let data = {
+            configId: currentTolkenPledgeActivityInfo.id,
+            pledgeAmount: weight
+        }
+        await dispatch(pledge(data)).then((res)=>{
+            setBtnLoading(false);
+            const result = res.payload;
+            if(result?.errno === 0){
+                invokeTokenPledgeActivityInfo();
+            }
+        })
+    }
+
     const calculateDaysForDisplay = (currentDay) => {
         const daysInWeek = 7; // 每周 7 天
 
@@ -490,7 +523,8 @@ function Earn(props) {
             {
                 !loadingShow &&
                 <div style={{ width: "100%" }}>
-                    <motion.div
+                    {
+                        (existCurrentActivity(1) || existCurrentActivity(5)) && <motion.div
                         variants={container}
                         initial="hidden"
                         animate="show"
@@ -498,39 +532,40 @@ function Earn(props) {
                         style={{ paddingInline: "1.5rem" }}
                     >
                         <div className='text-16'>{t('card_113')}</div>
-                        <div className='newBlocak'>
-                            <div className='flex mt-12'>
-                                {existCurrentActivity(1) && <div className='qianDaoSty flex justify-between px-10' onClick={() => {
-                                    startCheckIn()
-                                }}>
-                                    <div className='mt-6'>
-                                        <div>{t('card_172')}</div>
-                                        <div style={{ color: "#9a9a9a" }}>{t('card_115')}</div>
+                            <div className='newBlocak'>
+                                <div className='flex mt-12'>
+                                    {existCurrentActivity(1) && <div className='qianDaoSty flex justify-between px-10' onClick={() => {
+                                        startCheckIn()
+                                    }}>
+                                        <div className='mt-6'>
+                                            <div>{t('card_172')}</div>
+                                            <div style={{ color: "#9a9a9a" }}>{t('card_115')}</div>
+                                        </div>
+                                        <img src="wallet/assets/images/earn/qianDao.png" />
                                     </div>
-                                    <img src="wallet/assets/images/earn/qianDao.png" />
-                                </div>
-                                }
+                                    }
 
-                                {existCurrentActivity(5) && <div className='zhuanPanSty flex justify-between px-10' onClick={() => {
-                                    setOpenSpin(true)
-                                }}>
-                                    <div className='mt-6'>
-                                        <div>{t('card_114')}</div>
-                                        <div style={{ color: "#9a9a9a" }}>{t('card_115')}</div>
+                                    {existCurrentActivity(5) && <div className='zhuanPanSty flex justify-between px-10' onClick={() => {
+                                        setOpenSpin(true)
+                                    }}>
+                                        <div className='mt-6'>
+                                            <div>{t('card_114')}</div>
+                                            <div style={{ color: "#9a9a9a" }}>{t('card_115')}</div>
+                                        </div>
+                                        <div className='' style={{ position: "relative", width: "5.2rem", height: "5.2rem" }}>
+                                            <img className='zhuanPanDongHua0' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan3.png" />
+                                            <img className='zhuanPanDongHua' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan2.png" />
+                                            <img className='zhuanPanDongHua0' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan1.png" />
+                                        </div>
                                     </div>
-                                    <div className='' style={{ position: "relative", width: "5.2rem", height: "5.2rem" }}>
-                                        <img className='zhuanPanDongHua0' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan3.png" />
-                                        <img className='zhuanPanDongHua' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan2.png" />
-                                        <img className='zhuanPanDongHua0' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan1.png" />
-                                    </div>
+                                    }
                                 </div>
-                                }
+                                <div className='flex mt-16 justify-center'>
+                                    <img className='naoZhongImg' src="wallet/assets/images/earn/naoZhong.png" />  <div className='naoZhongZi ml-10'>{t('card_116')}</div> <div className='ml-10 naoZhongZi' >{activityInfo?.limitActivityTime === '0' ? '00:00:00' : activityInfo?.limitActivityTime}</div>
+                                </div>
                             </div>
-                            <div className='flex mt-16 justify-center'>
-                                <img className='naoZhongImg' src="wallet/assets/images/earn/naoZhong.png" />  <div className='naoZhongZi ml-10'>{t('card_116')}</div> <div className='ml-10 naoZhongZi' >{activityInfo?.limitActivityTime === '0' ? '00:00:00' : activityInfo?.limitActivityTime}</div>
-                            </div>
-                        </div>
-                    </motion.div>
+                        </motion.div>
+                    }
 
                     {existCurrentActivity(3) && <motion.div
                         variants={container}
@@ -627,8 +662,8 @@ function Earn(props) {
                                     <div className='tuoYuanDi2'>
                                         <div className='' style={{ textAlign: "center", fontSize: "20px", whiteSpace: 'nowrap', overflow: 'hidden' }}><span style={{ color: "#ffffff" }}>超高的收益</span> </div>
                                     </div>
-                                    <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>净赚收益，</span><span style={{ color: "#5BEA9C", fontWeight: "bold", fontSize: "29px" }}>0 </span><span style={{ color: "#ffffff", fontSize: "14px" }}>GAS</span></div>
-                                    <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>质押BFT，年化 </span><span style={{ color: "#ffc600", fontWeight: "bold", fontSize: "29px" }}>292%</span></div>
+                                    <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>净赚收益，</span><span style={{ color: "#5BEA9C", fontWeight: "bold", fontSize: "29px" }}>{activityInfo?.tokenPledgeShowReward}</span><span style={{ color: "#ffffff", fontSize: "14px" }}> GAS</span></div>
+                                    <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>质押BFT，年化 </span><span style={{ color: "#ffc600", fontWeight: "bold", fontSize: "29px" }}>{activityInfo?.tokenPledgeShowYearRate}%</span></div>
                                 </div>
                                 <img className='earnYouTu2 mt-16' src="wallet/assets/images/earn/bi3.png" />
                             </div>
@@ -1532,11 +1567,11 @@ function Earn(props) {
                                         className='pt-10 pb-12 mt-20 flex justify-between' style={{ backgroundColor: "#191A1B", borderRadius: "10px", border: "4px solid #151617" }}>
                                         <div style={{ width: "60%" }}>
                                             <div className='text-14 ml-10' style={{ textAlign: "left" }}>质押总资产(BFT)</div>
-                                            <div className='text-12 ml-10 mt-12' style={{ textAlign: "left" }}>100.00 ≈ 14.42USD</div>
+                                            <div className='text-12 ml-10 mt-12' style={{ textAlign: "left" }}>{ tokenPledgeActivityAllInfo.tokenPledgeRewardData ? strJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData?.all).symbol.bft : '0.00' } ≈ {tokenPledgeActivityAllInfo.tokenPledgeRewardData ? strJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData?.all).symbol.usd : '0.00'} USD</div>
                                         </div>
                                         <div style={{ width: "40%" }}>
                                             <div className='text-14 mr-10' style={{ textAlign: "right" }}>质押笔数</div>
-                                            <div className='text-12 mr-10 mt-12' style={{ textAlign: "right" }}>10</div>
+                                            <div className='text-12 mr-10 mt-12' style={{ textAlign: "right" }}>{ userPledgeRecordList?.length }</div>
                                         </div>
                                     </motion.div>
 
@@ -1545,73 +1580,29 @@ function Earn(props) {
                                         <VisitsWidget />
                                     </motion.div>
 
-                                    <motion.div
-                                        variants={item}
-                                        className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
-                                        <div className='flex justify-between px-10' onClick={() => {
-                                            openZhiYaXinXi();
-                                        }} >
-                                            <div className='' style={{ width: "60%", height: "60px", paddingTop: "10px" }}>
-                                                <div className='text-14'><span style={{ color: "#14C2A3" }}>182.50%</span> 年利率</div>
-                                                <div style={{ color: "#A4A4A4", fontSize: "12px" }}> ≈ 0.50% 日利率 </div>
-                                            </div>
-                                            <div className='flex justify-end' style={{ width: "40%" }}>
-                                                <div style={{ height: "60px", lineHeight: "60px", color: "#7D9BB0", fontSize: "14px" }}>15天</div>
-                                                <img style={{ marginTop: "20px", width: "20px", height: "20px" }} src="wallet/assets/images/card/goJianTou.png" ></img>
-                                            </div>
-                                        </div>
-                                    </motion.div>
-
-                                    <motion.div
-                                        variants={item}
-                                        className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
-                                        <div className='flex justify-between px-10' onClick={() => {
-                                            openZhiYaXinXi();
-                                        }}>
-                                            <div className='' style={{ width: "60%", height: "60px", paddingTop: "10px" }}>
-                                                <div className='text-14'><span style={{ color: "#14C2A3" }}>182.50%</span> 年利率</div>
-                                                <div style={{ color: "#A4A4A4", fontSize: "12px" }}> ≈ 0.50% 日利率 </div>
-                                            </div>
-                                            <div className='flex justify-end' style={{ width: "40%" }}>
-                                                <div style={{ height: "60px", lineHeight: "60px", color: "#7D9BB0", fontSize: "14px" }}>30天</div>
-                                                <img style={{ marginTop: "20px", width: "20px", height: "20px" }} src="wallet/assets/images/card/goJianTou.png" ></img>
-                                            </div>
-                                        </div>
-                                    </motion.div>
-
-                                    <motion.div
-                                        variants={item}
-                                        className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
-                                        <div className='flex justify-between px-10' onClick={() => {
-                                            openZhiYaXinXi();
-                                        }}>
-                                            <div className='' style={{ width: "60%", height: "60px", paddingTop: "10px" }}>
-                                                <div className='text-14'><span style={{ color: "#14C2A3" }}>182.50%</span> 年利率</div>
-                                                <div style={{ color: "#A4A4A4", fontSize: "12px" }}> ≈ 0.50% 日利率 </div>
-                                            </div>
-                                            <div className='flex justify-end' style={{ width: "40%" }}>
-                                                <div style={{ height: "60px", lineHeight: "60px", color: "#7D9BB0", fontSize: "14px" }}>90天</div>
-                                                <img style={{ marginTop: "20px", width: "20px", height: "20px" }} src="wallet/assets/images/card/goJianTou.png" ></img>
-                                            </div>
-                                        </div>
-                                    </motion.div>
-
-                                    <motion.div
-                                        variants={item}
-                                        className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
-                                        <div className='flex justify-between px-10' onClick={() => {
-                                            openZhiYaXinXi();
-                                        }}>
-                                            <div className='' style={{ width: "60%", height: "60px", paddingTop: "10px" }}>
-                                                <div className='text-14'><span style={{ color: "#14C2A3" }}>182.50%</span> 年利率</div>
-                                                <div style={{ color: "#A4A4A4", fontSize: "12px" }}> ≈ 0.50% 日利率 </div>
-                                            </div>
-                                            <div className='flex justify-end' style={{ width: "40%" }}>
-                                                <div style={{ height: "60px", lineHeight: "60px", color: "#7D9BB0", fontSize: "14px" }}>180天</div>
-                                                <img style={{ marginTop: "20px", width: "20px", height: "20px" }} src="wallet/assets/images/card/goJianTou.png" ></img>
-                                            </div>
-                                        </div>
-                                    </motion.div>
+                                    {
+                                        tokenPledgeActivityConfigList && tokenPledgeActivityConfigList.map((pledage)=>{
+                                            return (
+                                                <motion.div
+                                                variants={item}
+                                                className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
+                                                <div className='flex justify-between px-10' onClick={() => {
+                                                    setCurrentTolkenPledgeActivityInfo(pledage)
+                                                    openZhiYaXinXi();
+                                                }} >
+                                                    <div className='' style={{ width: "60%", height: "60px", paddingTop: "10px" }}>
+                                                        <div className='text-14'><span style={{ color: "#14C2A3" }}>{pledage?.yearRate }%</span> 年利率</div>
+                                                        <div style={{ color: "#A4A4A4", fontSize: "12px" }}> ≈ {pledage?.yearRate/365 }% 日利率 </div>
+                                                    </div>
+                                                    <div className='flex justify-end' style={{ width: "40%" }}>
+                                                        <div style={{ height: "60px", lineHeight: "60px", color: "#7D9BB0", fontSize: "14px" }}>{pledage?.pledgeDay}天</div>
+                                                        <img style={{ marginTop: "20px", width: "20px", height: "20px" }} src="wallet/assets/images/card/goJianTou.png" ></img>
+                                                    </div>
+                                                </div>
+                                            </motion.div>
+                                            )
+                                        })
+                                    }
                                     <div className='' style={{ height: "30px" }}></div>
                                 </motion.div>
                             }
@@ -1626,78 +1617,36 @@ function Earn(props) {
                                         variants={item}
                                         className='mt-12 mb-12' style={{ textAlign: "center", color: "#A4A4A4" }}>BFT质押记录</motion.div>
                                     <div style={{ height: `${divHeight - 24}px`, overflowY: "auto", paddingRight: "2px" }} >
-                                        <motion.div
-                                            variants={item}
-                                            className='zhiYaLiShi px-10 py-10'>
-                                            <div className='flex'>
-                                                <img style={{ width: "18px", height: "18px" }} src="wallet/assets/images/earn/naoZhong.png"></img>
-                                                <div className='ml-10 text-12' style={{ color: "#9A9A9A" }}> 2024-11-06 14:34:26 </div>
-                                            </div>
-                                            <div className='mt-10 flex justify-between'>
-                                                <div className='text-12'> 总收益</div>
-                                                <div className='text-12'> 120 BFT </div>
-                                            </div>
-                                            <div className='mt-10 flex justify-between'>
-                                                <div className='text-12'> 质押金额</div>
-                                                <div className='text-12'> 300 BFT </div>
-                                            </div>
-                                            <div className='mt-10 flex justify-between'>
-                                                <div className='text-12'> 状态</div>
-                                                <div className='text-12'> 质押中 </div>
-                                            </div>
-                                            <div className='mt-10 flex justify-between'>
-                                                <div className='text-12'> 结束日期</div>
-                                                <div className='text-12'> 2024-11-06 14:34:26 </div>
-                                            </div>
-                                        </motion.div>
-                                        <motion.div
-                                            variants={item}
-                                            className='zhiYaLiShi px-10 py-10 '>
-                                            <div className='flex'>
-                                                <img style={{ width: "18px", height: "18px" }} src="wallet/assets/images/earn/naoZhong.png" ></img>
-                                                <div className='ml-10 text-12' style={{ color: "#9A9A9A" }}> 2024-11-06 14:34:26 </div>
-                                            </div>
-                                            <div className='mt-10 flex justify-between'>
-                                                <div className='text-12'> 总收益</div>
-                                                <div className='text-12'> 120 BFT </div>
-                                            </div>
-                                            <div className='mt-10 flex justify-between'>
-                                                <div className='text-12'> 质押金额</div>
-                                                <div className='text-12'> 300 BFT </div>
-                                            </div>
-                                            <div className='mt-10 flex justify-between'>
-                                                <div className='text-12'> 状态</div>
-                                                <div className='text-12'> 质押中 </div>
-                                            </div>
-                                            <div className='mt-10 flex justify-between'>
-                                                <div className='text-12'> 结束日期</div>
-                                                <div className='text-12'> 2024-11-06 14:34:26 </div>
-                                            </div>
-                                        </motion.div>
-                                        <motion.div
-                                            variants={item}
-                                            className='zhiYaLiShi px-10 py-10 '>
-                                            <div className='flex'>
-                                                <img style={{ width: "18px", height: "18px" }} src="wallet/assets/images/earn/naoZhong.png" ></img>
-                                                <div className='ml-10 text-12' style={{ color: "#9A9A9A" }}> 2024-11-06 14:34:26 </div>
-                                            </div>
-                                            <div className='mt-10 flex justify-between'>
-                                                <div className='text-12'> 总收益</div>
-                                                <div className='text-12'> 120 BFT </div>
-                                            </div>
-                                            <div className='mt-10 flex justify-between'>
-                                                <div className='text-12'> 质押金额</div>
-                                                <div className='text-12'> 300 BFT </div>
-                                            </div>
-                                            <div className='mt-10 flex justify-between'>
-                                                <div className='text-12'> 状态</div>
-                                                <div className='text-12'> 质押中 </div>
-                                            </div>
-                                            <div className='mt-10 flex justify-between'>
-                                                <div className='text-12'> 结束日期</div>
-                                                <div className='text-12'> 2024-11-06 14:34:26 </div>
-                                            </div>
-                                        </motion.div>
+                                        {
+                                            userPledgeRecordList && userPledgeRecordList.map((record)=> {
+                                                return (
+                                                    <motion.div
+                                                        variants={item}
+                                                        className='zhiYaLiShi px-10 py-10'>
+                                                        <div className='flex'>
+                                                            <img style={{ width: "18px", height: "18px" }} src="wallet/assets/images/earn/naoZhong.png"></img>
+                                                            <div className='ml-10 text-12' style={{ color: "#9A9A9A" }}> { format(Number(record?.createTime)*1000, 'yyyy-MM-dd HH:mm:ss')} </div>
+                                                        </div>
+                                                        <div className='mt-10 flex justify-between'>
+                                                            <div className='text-12'> 总收益</div>
+                                                            <div className='text-12'> { record?.curPledgeRewardAmount || '0.00' } {record?.interestSymbol} </div>
+                                                        </div>
+                                                        <div className='mt-10 flex justify-between'>
+                                                            <div className='text-12'> 质押金额</div>
+                                                            <div className='text-12'> { record?.pledgeAmount || '0.00' } {record?.interestSymbol} </div>
+                                                        </div>
+                                                        <div className='mt-10 flex justify-between'>
+                                                            <div className='text-12'> 状态</div>
+                                                            <div className='text-12'> { (record?.deleted) ? '已结束': '质押中'} </div>
+                                                        </div>
+                                                        <div className='mt-10 flex justify-between'>
+                                                            <div className='text-12'> 结束日期</div>
+                                                            <div className='text-12'> { format(Number(record?.pledgeEndTime) * 1000, 'yyyy-MM-dd HH:mm:ss')} </div>
+                                                        </div>
+                                                    </motion.div>
+                                                )
+                                            })
+                                        }
                                     </div>
                                 </motion.div>
                             }
@@ -1713,7 +1662,7 @@ function Earn(props) {
                                             className='mt-32'>
                                             <div className='flex justify-between'>
                                                 <div className='text-16' style={{ color: "#ffffff" }}> 当前年利率 </div>
-                                                <div className='text-16' style={{ color: "#ffffff" }}> 292.00% </div>
+                                                <div className='text-16' style={{ color: "#ffffff" }}> {currentTolkenPledgeActivityInfo?.yearRate }% </div>
                                             </div>
                                         </motion.div >
 
@@ -1722,7 +1671,7 @@ function Earn(props) {
                                             className='mt-16'>
                                             <div className='flex justify-between'>
                                                 <div className='text-16' style={{ color: "#ffffff" }}> 账户剩余 </div>
-                                                <div className='text-16' style={{ color: "#ffffff" }}> 500 BFT</div>
+                                                <div className='text-16' style={{ color: "#ffffff" }}> {(userData.profile.wallet?.Crypto + userData.profile.wallet?.Fiat).toFixed(2) ?? '0.00'} </div>
                                             </div>
                                         </motion.div>
 
@@ -1740,7 +1689,8 @@ function Earn(props) {
                                                         <InputAdornment
                                                             position="end"
                                                             onClick={() => {
-                                                                setWeight(10000)
+                                                                setWeight(currentTolkenPledgeActivityInfo?.pledgeMinAmount * currentTolkenPledgeActivityInfo?.pledgeMaxCount)
+                                                                setEstimateTokenPledgeAmount((currentTolkenPledgeActivityInfo?.pledgeMinAmount * currentTolkenPledgeActivityInfo?.pledgeMaxCount) * currentTolkenPledgeActivityInfo?.yearRate/100/365 * currentTolkenPledgeActivityInfo?.pledgeDay)
                                                             }}
                                                         >MAX</InputAdornment>}
                                                     aria-describedby="outlined-weight-helper-text"
@@ -1749,8 +1699,8 @@ function Earn(props) {
                                                         inputMode: 'numeric',
                                                         pattern: '[0-9]*',
                                                     }}
-                                                    error={ismore(weight, 10000, 100)}
-                                                    placeholder="100起投"
+                                                    error={ismore(weight, currentTolkenPledgeActivityInfo?.pledgeMinAmount * currentTolkenPledgeActivityInfo?.pledgeMaxCount, currentTolkenPledgeActivityInfo?.pledgeMinAmount)}
+                                                    placeholder={ currentTolkenPledgeActivityInfo?.pledgeMinAmount + '起投'}
                                                     onChange={(event) => {
                                                         if (event.target.value === '') {
                                                             setWeight('')
@@ -1764,27 +1714,28 @@ function Earn(props) {
                                                         if (numericValue > 0) {
                                                             setCanDeposite(false);
                                                         }
-                                                        if (numericValue > 10000 || numericValue == 0 || numericValue < 100) {
+                                                        if (numericValue > currentTolkenPledgeActivityInfo?.pledgeMinAmount * currentTolkenPledgeActivityInfo?.pledgeMaxCount || numericValue == 0 || numericValue < currentTolkenPledgeActivityInfo?.pledgeMinAmount) {
                                                             setCanDeposite(true);
                                                         }
                                                         setWeight(numericValue);
+                                                        setEstimateTokenPledgeAmount(numericValue ? (numericValue * currentTolkenPledgeActivityInfo?.yearRate/100/365 * currentTolkenPledgeActivityInfo.pledgeDay): '0.00')
                                                     }}
                                                 />
                                             </FormControl>
-                                            {ismore(weight, 10000, 100) && (
+                                            {ismore(weight, currentTolkenPledgeActivityInfo?.pledgeMinAmount * currentTolkenPledgeActivityInfo?.pledgeMaxCount, currentTolkenPledgeActivityInfo?.pledgeMinAmount) && (
                                                 <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt2' > {t('deposite_35')}</FormHelperText>
                                             )}
 
                                             <div className='mt-12'>
                                                 <div>预估收益</div>
-                                                <div className='text-18 mt-4' style={{ color: "#14C2A3", fontWeight: "600" }}>0 BFT</div>
+                                                <div className='text-18 mt-4' style={{ color: "#14C2A3", fontWeight: "600" }}>{estimateTokenPledgeAmount} BFT</div>
                                             </div>
 
-                                            <div className='flex justify-between mt-20'>
+                                            <div className='flex justify-between mt-20' style={{ textAlign: 'center' }}>
                                                 <div className='liXiTimeZi'>
                                                     <div>开始日期</div>
-                                                    <div>2024-08-29</div>
-                                                    <div>00:00:00</div>
+                                                    <div>{format(new Date(), 'yyyy-MM-dd')}</div>
+                                                    <div>{format(new Date(), 'yyyy-MM-dd HH:mm:ss').split(' ') [1]}</div>
                                                 </div>
 
                                                 <div className='flex align-item' style={{}}>
@@ -1793,8 +1744,8 @@ function Earn(props) {
 
                                                 <div className='liXiTimeZi'>
                                                     <div>计息日期</div>
-                                                    <div>2024-08-30</div>
-                                                    <div>00:00:00</div>
+                                                    <div>{format(new Date().getTime() + Number(currentTolkenPledgeActivityInfo?.pledgeInterestStartTime)*1000, 'yyyy-MM-dd')}</div>
+                                                    <div>{format(new Date().getTime() + Number(currentTolkenPledgeActivityInfo?.pledgeInterestStartTime)*1000, 'yyyy-MM-dd HH:mm:ss').split(' ') [1]}</div>
                                                 </div>
 
                                                 <div className='flex align-item' style={{}}>
@@ -1803,8 +1754,8 @@ function Earn(props) {
 
                                                 <div className='liXiTimeZi'>
                                                     <div style={{ textAlign: "right" }}>结束日期</div>
-                                                    <div style={{ textAlign: "right" }}>2024-09-15</div>
-                                                    <div style={{ textAlign: "right" }}>00:00:00</div>
+                                                    <div>{format(new Date().getTime() + Number(currentTolkenPledgeActivityInfo?.pledgeInterestStartTime)*1000 + currentTolkenPledgeActivityInfo.pledgeDay * 24 * 3600 * 1000 , 'yyyy-MM-dd')}</div>
+                                                    <div>{format(new Date().getTime() + Number(currentTolkenPledgeActivityInfo?.pledgeInterestStartTime)*1000  + currentTolkenPledgeActivityInfo.pledgeDay * 24 * 3600 * 1000, 'yyyy-MM-dd HH:mm:ss').split(' ') [1]}</div>
                                                 </div>
                                             </div>
 
@@ -1813,8 +1764,11 @@ function Earn(props) {
                                                     size="large"
                                                     color="secondary"
                                                     variant="contained"
-                                                    loading={false}
+                                                    loading={btnLoading}
                                                     sx={{ paddingTop: "2px!important", paddingBottom: "2px!important", fontSize: "20px!important" }}
+                                                    onClick={ ()=> {
+                                                        handlePledge()
+                                                    }}
                                                 >
                                                     立即质押
                                                 </LoadingButton>
