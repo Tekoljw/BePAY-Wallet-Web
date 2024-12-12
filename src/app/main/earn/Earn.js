@@ -455,7 +455,7 @@ function Earn(props) {
     const handleSignin = async() =>{
         await dispatch(signIn()).then((res)=>{
             const result = res.payload;
-            if(result.errno === 0){
+            if(result?.errno === 0){
                 invokeSignInInfo()
             }
         })
@@ -2513,7 +2513,7 @@ function Earn(props) {
                                         <div className='fangFaBtn'>方法 1</div>
                                         <div className='fangFaBtn2'>分享 https://www.beingfi.com</div>
                                         <img className='ml-10' style={{ width: "20px", height: "20px", marginTop: "3px" }} src="wallet/assets/images/deposite/newCopy2.png" onClick={() => {
-                                            handleCopyText('https://t.me/BeingFiWalletBot?start=' + userData?.userInfo?.address);
+                                            handleCopyText('https://t.me/beingFiVip_bot?start=' + userData?.userInfo?.address);
                                             copyTiShiFunc();
                                         }} />
                                     </div>
