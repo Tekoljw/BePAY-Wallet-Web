@@ -1901,6 +1901,15 @@ input[type='number'] {
     margin-bottom: 32px;
 }
 
+.guiZeShuoMing {
+    margin-left: 4%;
+    width: 92%;
+    border-bottom: 1px solid #374252;
+    padding-bottom: 12px;
+    margin-top: 16px;
+}
+
+
 .yaoQingxiaHuaXian {
     background: linear-gradient(to right, rgba(46, 56, 71, 1), rgba(46, 56, 71, 0));
     height: 1px;
