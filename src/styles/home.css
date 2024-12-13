@@ -1010,6 +1010,12 @@ input[type='number'] {
     padding: 0 1rem 2rem 1rem;
 }
 
+.fulibaoTipsZi {
+    width: 100%;
+    text-align: center;
+    margin-top: 16px;
+}
+
 .payButtom {
     width: 12.5rem;
     height: 4rem;

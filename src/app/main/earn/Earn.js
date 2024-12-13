@@ -9,6 +9,7 @@ import Dialog from "@mui/material/Dialog/Dialog";
 import { useTranslation } from "react-i18next";
 import withReducer from 'app/store/withReducer';
 import _ from '@lodash';
+import Box from '@mui/material/Box';
 import reducer from './store';
 import { getWidgets, selectWidgets } from './store/widgetsSlice';
 import VisitorsOverviewWidget from './widgets/VisitorsOverviewWidget';
@@ -27,7 +28,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import FormControl from '@mui/material/FormControl';
 import StyledAccordionSelect from "../../components/StyledAccordionSelect";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { lineHeight } from '@mui/system';
+import { height, lineHeight } from '@mui/system';
 import clsx from 'clsx';
 import { FormHelperText } from '@mui/material';
 import { handleCopyText } from "../../util/tools/function";
@@ -98,6 +99,7 @@ function Earn(props) {
     const [showZhiYaInfo, setShowZhiYaInfo] = useState(false);
     const [showZhiYaXinXi, setShowZhiYaXinXi] = useState(false);
     const [canDeposite, setCanDeposite] = useState(true);
+    const [openFuLiBao, setOpenFuLiBao] = useState(false);
     const [activityList, setActivityList] = useState([]);
     const [activityInfo, setActivityInfo] = useState({});
     const [swapData, setSwapData] = useState({});
@@ -108,10 +110,12 @@ function Earn(props) {
     const [inviteRewardAllInfo, setInviteRewardAllInfo] = useState([]);
     const [inviteDefferentTypeReward, setInviteDefferentTypeReward] = useState([]);
     const [copyTiShi, setCopyTiShi] = useState(false);
-    const [weight, setWeight] = useState('');
+    const [weight, setWeight] = useState(0);
     const [loadingShow, setLoadingShow] = useState(false);
     const textRef = useRef(null);
     const [openSheQu, setOpenSheQu] = useState(false);
+    const [fuLiBaoTips, setFuLiBaoTips] = useState(false);
+    const [openQuKuan, setOpenQuKuan] = useState(false);
     const [turnTableConfigList, setTurnTableConfigList] = useState([]);
     const [signInConfig, setSignInConfig] = useState([]);
     const [cumulativeConfig, setCumulativeConfig] = useState([]);
@@ -123,6 +127,10 @@ function Earn(props) {
     const handleChangeInputVal2 = (event) => {
         setInputIDVal(event.target.value);
     };
+    const [symbol, setSymbol] = useState('');
+    const [symbolWallet, setSymbolWallet] = useState([]);
+    const [symbolList, setSymbolList] = useState([]);
+
 
     //activityId:  1:签到, 2:钱包支付分成, 3:活期利息 4:swap兑换分成 5:转盘 6:质押挖矿 7:合约交易 8:复利宝 9:社区活动 10:钱包全球节点
 
@@ -201,8 +209,6 @@ function Earn(props) {
         }, 300);
     };
 
-
-
     const openKongTouFunc = () => {
         setTimeout(() => {
             document.getElementById('openKongTou').classList.add('PinMoveAni');
@@ -257,6 +263,16 @@ function Earn(props) {
         });
     }
 
+    // 处理手指按下事件
+    const handleTouchStart = () => {
+        setFuLiBaoTips(true);
+    };
+
+    // 处理手指松开事件
+    const handleTouchEnd = () => {
+        setFuLiBaoTips(false);
+    };
+
 
     const closesBindFunc = () => {
         document.getElementById('openBind').classList.remove('PinMoveAni');
@@ -273,6 +289,16 @@ function Earn(props) {
             setOpenKongTou(false)
         }, 300);
     };
+
+
+
+    const openQuKuanFunc = () => {
+        getDivHeight("openFuLiBao");
+        setTimeout(() => {
+            setOpenQuKuan(true);
+        }, 0);
+    };
+
 
 
     const openWaKuangFunc = () => {
@@ -402,6 +428,24 @@ function Earn(props) {
         });
     }
 
+    const openFuLiBaoFunc = () => {
+        setOpenFuLiBao(true);
+        setTimeout(() => {
+            document.getElementById('openFuLiBao').classList.add('PinMoveAni');
+        }, 0);
+    }
+
+    const closeFuLiBaoFunc = () => {
+        document.getElementById('openFuLiBao').classList.remove('PinMoveAni');
+        document.getElementById('openFuLiBao').classList.add('PinMoveOut');
+        setTimeout(() => {
+            setOpenFuLiBao(false)
+        }, 300);
+    };
+
+
+
+
     const copyTiShiFunc = () => {
         setCopyTiShi(true)
         setTimeout(() => {
@@ -496,7 +540,7 @@ function Earn(props) {
                         variants={container}
                         initial="hidden"
                         animate="show"
-                        className='mt-12'
+                        className='mt-16'
                         style={{ paddingInline: "1.5rem" }}
                     >
                         <div className='text-16'>{t('card_113')}</div>
@@ -542,7 +586,6 @@ function Earn(props) {
                         style={{ paddingInline: "1.5rem" }}
                     >
                         <div className='text-16'>{t('card_117')}</div>
-
                     </motion.div>
                     }
 
@@ -587,6 +630,37 @@ function Earn(props) {
                         </div>
                     </motion.div> */}
 
+
+
+                    {existCurrentActivity(8) && <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className=''
+                        style={{ paddingInline: "1.5rem" }}
+                    >
+                        <div className='text-16'>复利宝</div>
+                    </motion.div>
+                    }
+
+                    {existCurrentActivity(8) && (
+                        <motion.div
+                            className="w-full"
+                            variants={container}
+                            initial="hidden"
+                            animate="show"
+                            style={{ padding: "1.5rem", backgroundColor: "#0E1421" }}
+                        >
+                            <motion.div variants={item} className="" onClick={() => {
+                                openFuLiBaoFunc();
+                            }}>
+                                <ImpressionsWidget activityInfo={activityInfo} />
+                            </motion.div>
+                        </motion.div>
+                    )
+                    }
+
+
                     {existCurrentActivity(7) && <motion.div
                         variants={container}
                         initial="hidden"
@@ -617,7 +691,7 @@ function Earn(props) {
                         variants={container}
                         initial="hidden"
                         animate="show"
-                        className='mt-10'
+                        className='mt-8'
                         style={{ paddingInline: "1.5rem" }}
                     >
                         <div className='text-16'>质押挖矿</div>
@@ -1710,6 +1784,174 @@ function Earn(props) {
                         </div>
                     </BootstrapDialog>
 
+                    <BootstrapDialog
+                        closeClass="closeBtnspin"
+                        open={openFuLiBao}
+                        onClose={() => setOpenFuLiBao(false)}
+                    >
+                        {
+                            !openQuKuan &&
+                            <div id='openFuLiBao' className="px-15 pt-10 zhiYaDi">
+                                {
+                                    fuLiBaoTips && <div className='' style={{ width: "100%", position: "relative", left: "0%", right: "0%", top: "0%", }}>
+                                        <div className='spinIconShadow text-12 pb-16' style={{ maxWidth: "50%", borderRadius: "10px", backgroundColor: "#374252", position: "absolute", left: "0%", right: "0%", margin: "0 auto" }}>
+                                            <div className='fulibaoTipsZi'> 今日收益：20 BFT  </div>
+                                            <div className='fulibaoTipsZi'> 昨日收益：20 BFT  </div>
+                                            <div className='fulibaoTipsZi'> 本月收益：20 BFT  </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                <div className='flex mt-10' style={{ justifyContent: "space-between", width: "100%" }}>
+                                    <div className='text-18 kongTouTitle' style={{ paddingLeft: "25px" }}>复利宝</div>
+                                    <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                                        closeFuLiBaoFunc();
+                                    }} ></img>
+                                </div>
+
+                                <div className='mt-16 text-12' style={{ textAlign: "center", color: "#A4A4A4" }}>
+                                    1.复利宝资产收益为质押挖矿利息及全球招募节点收益。
+                                </div>
+                                <div className='mt-8 text-12' style={{ textAlign: "center", color: "#A4A4A4" }}>
+                                    2.复利宝资产按1%的年利率计算收益。
+                                </div>
+                                <div className='mt-8 text-12' style={{ textAlign: "center", color: "#A4A4A4" }}>
+                                    3.取款后，资产需锁定3天，期间继续计息，3天后到账。
+                                </div>
+
+                                <div className='flex  mt-20 justify-center'>
+                                    <img onTouchStart={handleTouchStart}
+                                        onTouchEnd={handleTouchEnd}
+                                        style={{ width: "24px", height: "24px" }} src="wallet/assets/images/card/yanJing.png"></img>
+                                    <div className='text-14 ml-6' style={{ height: "24px", lineHeight: "24px" }}>总计资产 (BFT)</div>
+                                </div>
+
+                                <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "center", color: "#00FF96" }}>100.00</div>
+
+                                <motion.div id="pinDivHeight"
+                                    variants={container}
+                                    initial="hidden"
+                                    animate="show"
+                                    className=''>
+
+                                    <motion.div variants={item} className="mt-20">
+                                        <VisitsWidget />
+                                    </motion.div>
+                                </motion.div>
+
+
+                                <div className='flex  justify-between mt-28'>
+                                    <div>
+                                        <div style={{ textAlign: "center" }}>质押收益(BFT)</div>
+                                        <div className='mt-6' style={{ textAlign: "center" }}>100.00</div>
+                                    </div>
+
+                                    <div>
+                                        <div style={{ textAlign: "center" }}>节点收益(BFT)</div>
+                                        <div className='mt-4' style={{ textAlign: "center" }}>100.00</div>
+                                    </div>
+
+                                    <div>
+                                        <div style={{ textAlign: "center" }}>年化</div>
+                                        <div className='mt-6' style={{ textAlign: "center" }}>10%</div>
+                                    </div>
+                                </div>
+
+                                <div className='txtBrightness text-20 px-15' style={{ margin: "40px auto 20px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}
+                                    onClick={() => {
+                                        openQuKuanFunc();
+                                    }}
+                                >取款</div>
+                            </div>
+                        }
+                        {
+                            openQuKuan &&
+                            <div className="px-15 pt-10 zhiYaDi" style={{ height: `${divHeight}px` }}>
+                                <div className='flex mt-10' style={{ justifyContent: "space-between", width: "100%" }}>
+                                    <div className='text-18 kongTouTitle' style={{ paddingLeft: "25px" }}>复利宝</div>
+                                    <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                                        setOpenQuKuan(false)
+                                    }} ></img>
+                                </div>
+
+                                <div className='mt-16 text-16' >
+                                    选择币种
+                                </div>
+
+
+                                <Box
+                                    className="w-full border flex flex-col mt-16 "
+                                    sx={{
+                                        backgroundColor: '#374252!important',
+                                        borderRadius: "10px",
+                                        border: 'none',
+                                        height: "67px",
+                                    }}
+                                >
+                                    <StyledAccordionSelect
+                                        symbol={symbolWallet}
+                                        currencyCode="USDT"
+                                        setSymbol={setSymbol}
+                                    />
+                                </Box>
+
+                                <div className='mt-16 text-16' >
+                                    取款数量
+                                </div>
+
+
+                                <FormControl className="mt-10 mb-4" sx={{ width: '100%' }} variant="outlined">
+                                    <OutlinedInput
+                                        type='text'
+                                        disabled={false}
+                                        id="outlined-adornment-weight send-tips-container-amount"
+                                        value={weight}
+                                        endAdornment={
+                                            <InputAdornment
+                                                position="end"
+                                                onClick={() => {
+                                                    setWeight(0)
+                                                    setCanDeposite(false);
+                                                }}
+                                            >MAX</InputAdornment>}
+                                        aria-describedby="outlined-weight-helper-text"
+                                        inputProps={{
+                                            'aria-label': 'weight',
+                                            inputMode: 'numeric',
+                                            pattern: '[0-9]*',
+                                        }}
+                                        error={ismore(weight, 0, 1000)}
+                                        onChange={(event) => {
+                                            if (event.target.value === '') {
+                                                setWeight('')
+                                                setCanDeposite(true);
+                                                return
+                                            }
+                                            let numericValue = event.target.value.replace(/[^0-9.]/g, '');
+                                            if (numericValue.startsWith('0') && numericValue.length > 1 && numericValue[1] !== '.') {
+                                                numericValue = numericValue.replace(/^0+/, '');
+                                            }
+                                            if (numericValue > 0) {
+                                                setCanDeposite(false);
+                                            }
+                                            if (numericValue > 1000 || numericValue == 0 || numericValue < 0) {
+                                                setCanDeposite(true);
+                                            }
+                                            setWeight(numericValue);
+                                        }}
+                                    />
+                                </FormControl>
+
+
+                                <div className='txtBrightness text-20 px-15' style={{ margin: "206px auto 20px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}
+                                    onClick={() => {
+
+                                    }}
+                                >提现</div>
+                            </div>
+                        }
+                    </BootstrapDialog>
+
 
 
                     <BootstrapDialog
@@ -1718,12 +1960,14 @@ function Earn(props) {
                         onClose={() => setOpenWaKuang(false)}
                     >
                         <div id='openWaKuang' className="px-15 pt-10 waKuangDi">
+
                             <div className='flex mt-10' style={{ justifyContent: "space-between", width: "100%" }}>
                                 <div className='text-18 kongTouTitle'>{t('card_120')}</div>
                                 <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                     closesWaKuangFunc();
                                 }} ></img>
                             </div>
+
                             <div className='mt-20 text-12' style={{ textAlign: "left", color: "#A4A4A4" }}>
                                 {t('card_162')}
                             </div>
@@ -1731,6 +1975,7 @@ function Earn(props) {
                             <motion.div variants={item} className="mt-28">
                                 <VisitsWidget />
                             </motion.div>
+
 
                             <div className='flex  mt-32'>
                                 <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/card/usd.png"></img>
@@ -1773,9 +2018,7 @@ function Earn(props) {
                             <div className='mt-28' style={{ textAlign: "center" }}>
                                 {t('card_163')}
                             </div>
-
                             <img className='cardEarnTips' src="wallet/assets/images/card/card1.png"></img>
-
                             <div className='txtBrightness text-16 px-15' style={{ margin: "40px auto 0px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}>{t('card_164')}</div>
                         </div>
                     </BootstrapDialog>
@@ -1799,7 +2042,6 @@ function Earn(props) {
                             aria-describedby="outlined-weight-helper-text"
                             className='inputYaoQing'
                         />
-
                         <LoadingButton className="text-lg btnColorTitleBig inputYaoQingBtan"
                             size="large"
                             color="secondary"
@@ -1812,7 +2054,6 @@ function Earn(props) {
                             {t('card_167')}
                         </LoadingButton>
                     </AnimateModal>
-
 
                     <BootstrapDialog
                         closeClass="closeBtnspin"
@@ -1859,7 +2100,6 @@ function Earn(props) {
                             <div style={{ height: "20px" }}></div>
                         </div>
                     </BootstrapDialog>
-
 
                     <BootstrapDialog
                         closeClass="closeBtnspin"
@@ -1916,10 +2156,7 @@ function Earn(props) {
                         <div style={{ textAlign: "center", padding: "1rem 1rem 1rem 1rem" }}>
                             {t('card_195')}
                         </div>
-
                     </BootstrapDialog>
-
-
 
 
                     {openXiangQing && <div id="target" style={{ position: "absolute", width: "100%", zIndex: "998", backgroundColor: "#0E1421", top: "0%", bottom: "0%" }} >

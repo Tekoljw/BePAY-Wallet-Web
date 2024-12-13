@@ -1,3 +1,4 @@
+import { useState, useEffect, default as React, useRef } from 'react';
 import { useTheme } from '@mui/material/styles';
 import ReactApexChart from 'react-apexcharts';
 import { useSelector } from 'react-redux';
@@ -44,6 +45,7 @@ function Impressions(props) {
     },
   };
 
+
   return (
     <Paper className="flex flex-col flex-auto shadow  overflow-hidden" style={{ backgroundColor: "#1E293B", borderRadius: "10px" }}>
       <div className="flex items-start justify-between m-12 mb-0">
@@ -57,19 +59,19 @@ function Impressions(props) {
       <div className="flex mt-2  mx-12 ">
 
         <Typography className="text-6xl font-bold tracking-tighter leading-tight mr-10">
-          { Number(activityInfo?.demandInterestMonthReward) === 0 ? '0.00'.toLocaleString('en-US'): Number(activityInfo?.demandInterestMonthReward)?.toLocaleString('en-US')}
+          {Number(activityInfo?.demandInterestMonthReward) === 0 ? '0.00'.toLocaleString('en-US') : Number(activityInfo?.demandInterestMonthReward)?.toLocaleString('en-US')}
         </Typography>
 
         <div className="flex lg:flex-col lg:ml-12">
           <FuseSvgIcon size={20} className="text-red-500">
             heroicons-solid:trending-down
           </FuseSvgIcon>
-          
+
           <Typography
             className="flex items-center ml-4 lg:ml-0 lg:mt-2 text-md leading-none whitespace-nowrap"
             color="text.secondary"
           >
-            <span className="font-medium text-red-500">{activityInfo?.demandInterestRewardTrend }%</span>
+            <span className="font-medium text-red-500">{activityInfo?.demandInterestRewardTrend}%</span>
             <span className="ml-4">below target</span>
           </Typography>
         </div>
