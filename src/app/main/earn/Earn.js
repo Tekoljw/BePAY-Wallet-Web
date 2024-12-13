@@ -1882,7 +1882,7 @@ function Earn(props) {
                                 <Box
                                     className="w-full border flex flex-col mt-16 "
                                     sx={{
-                                        backgroundColor: '#374252!important',
+                                        backgroundColor: '#1E293B!important',
                                         borderRadius: "10px",
                                         border: 'none',
                                         height: "67px",
@@ -1942,8 +1942,23 @@ function Earn(props) {
                                     />
                                 </FormControl>
 
+                                <div className='flex mt-16 justify-between'>
+                                    <div>实际到账</div>
+                                    <div>100.00 USDT</div>
+                                </div>
 
-                                <div className='txtBrightness text-20 px-15' style={{ margin: "206px auto 20px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}
+                                <div className='flex mt-16 justify-between'>
+                                    <div>手续费</div>
+                                    <div>10.00 USDT</div>
+                                </div>
+
+
+                                <div className='flex mt-16 justify-between'>
+                                    <div>费率</div>
+                                    <div>5%</div>
+                                </div>
+
+                                <div className='txtBrightness text-20 px-15' style={{ margin: "96px auto 20px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}
                                     onClick={() => {
 
                                     }}
