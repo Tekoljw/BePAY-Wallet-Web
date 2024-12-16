@@ -124,6 +124,10 @@ function Earn(props) {
     const [days, setDays] = useState([]);
     const [signInState, setSignInState] = useState([]);
     const [currentStep, setCurrentStep] = useState(0);
+
+    const [biZhongU, setBiZhongU] = useState("usdt");
+    const [biZhongB, setBiZhongB] = useState("bft");
+
     const handleChangeInputVal2 = (event) => {
         setInputIDVal(event.target.value);
     };
@@ -301,6 +305,7 @@ function Earn(props) {
 
 
 
+
     const openWaKuangFunc = () => {
         setTimeout(() => {
             document.getElementById('openWaKuang').classList.add('PinMoveAni');
@@ -442,8 +447,6 @@ function Earn(props) {
             setOpenFuLiBao(false)
         }, 300);
     };
-
-
 
 
     const copyTiShiFunc = () => {
@@ -600,7 +603,7 @@ function Earn(props) {
                             <motion.div variants={item} className="" onClick={() => {
                                 openDemandInterestResult()
                             }}>
-                                <ImpressionsWidget activityInfo={activityInfo} />
+                                <ImpressionsWidget activityInfo={activityInfo} biZhong={biZhongU} />
                             </motion.div>
                         </motion.div>
                     )
@@ -654,12 +657,11 @@ function Earn(props) {
                             <motion.div variants={item} className="" onClick={() => {
                                 openFuLiBaoFunc();
                             }}>
-                                <ImpressionsWidget activityInfo={activityInfo} />
+                                <ImpressionsWidget activityInfo={activityInfo} biZhong={biZhongB} />
                             </motion.div>
                         </motion.div>
                     )
                     }
-
 
                     {existCurrentActivity(7) && <motion.div
                         variants={container}

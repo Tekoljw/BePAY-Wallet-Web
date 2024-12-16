@@ -9,10 +9,11 @@ import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { selectWidgets } from '../store/widgetsSlice';
 
 function Impressions(props) {
-  const { activityInfo } = props;
+  const { activityInfo, biZhong } = props;
   const theme = useTheme();
   const widgets = useSelector(selectWidgets);
   const { series, amount, labels } = widgets?.impressions;
+
 
   const chartOptions = {
     chart: {
@@ -77,14 +78,18 @@ function Impressions(props) {
         </div>
 
       </div>
-      <div className="flex flex-col flex-auto h-80">
-        <ReactApexChart
-          options={chartOptions}
-          series={series}
-          type={chartOptions.chart.type}
-          height={chartOptions.chart.height}
-        />
-      </div>
+      
+      {
+        biZhong === "usdt" && (<div className="flex flex-col flex-auto h-80">
+          <ReactApexChart
+            options={chartOptions}
+            series={series}
+            type={chartOptions.chart.type}
+            height={chartOptions.chart.height}
+          />
+        </div>)
+      }
+
     </Paper>
   );
 }
