@@ -46,6 +46,37 @@ function Impressions(props) {
     },
   };
 
+  const chartOptions2 = {
+    chart: {
+      animations: {
+        enabled: false,
+      },
+      fontFamily: 'inherit',
+      foreColor: 'inherit',
+      height: '100%',
+      type: 'area',
+      sparkline: {
+        enabled: true,
+      },
+    },
+    colors: [theme.palette.error.main],
+    fill: {
+      colors: [theme.palette.error.light],
+      opacity: 0.5,
+    },
+    stroke: {
+      curve: 'smooth',
+    },
+    tooltip: {
+      followCursor: true,
+      theme: 'dark',
+    },
+    xaxis: {
+      type: 'category',
+      categories: labels,
+    },
+  };
+
 
   return (
     <Paper className="flex flex-col flex-auto shadow  overflow-hidden" style={{ backgroundColor: "#1E293B", borderRadius: "10px" }}>
@@ -54,7 +85,13 @@ function Impressions(props) {
           本月收益
         </Typography>
         <div className="ml-8">
-          <Chip size="small" className="font-medium text-sm pt-2" label=" USDT" />
+          {
+            biZhong === "usdt" && <Chip size="small" className="font-medium text-sm pt-2" label="USDT" />
+          }
+          {
+            biZhong === "bft" && <Chip size="small" className="font-medium text-sm pt-2" label="BFT" />
+          }
+
         </div>
       </div>
       <div className="flex mt-2  mx-12 ">
@@ -73,12 +110,11 @@ function Impressions(props) {
             color="text.secondary"
           >
             <span className="font-medium text-red-500">{activityInfo?.demandInterestRewardTrend}%</span>
-            <span className="ml-4">below target</span>
           </Typography>
         </div>
 
       </div>
-      
+
       {
         biZhong === "usdt" && (<div className="flex flex-col flex-auto h-80">
           <ReactApexChart
@@ -86,6 +122,17 @@ function Impressions(props) {
             series={series}
             type={chartOptions.chart.type}
             height={chartOptions.chart.height}
+          />
+        </div>)
+      }
+
+      {
+        biZhong === "bft" && (<div className="flex flex-col flex-auto h-80">
+          <ReactApexChart
+            options={chartOptions2}
+            series={series}
+            type={chartOptions2.chart.type}
+            height={chartOptions2.chart.height}
           />
         </div>)
       }
