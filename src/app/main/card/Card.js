@@ -36,6 +36,7 @@ import {
     getCreditConfig,
     getUserCreditCard,
     exchangeCreditCard,
+    activeCreditCard,
     getCreditCardBalance,
     kycAddress
 } from "app/store/payment/paymentThunk";
@@ -59,6 +60,7 @@ import MenuItem from '@mui/material/MenuItem';
 import phoneCode from "../../../phone/phoneCode";
 import { Carousel } from "react-responsive-carousel";
 import styles from "react-responsive-carousel/lib/styles/carousel.min.css";
+import {showServerErrorTips} from "../../util/tools/function";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -615,6 +617,8 @@ function Card(props) {
         checkCode: '',
         password: '',
         passwordConfirm: '',
+        userCreditKey: '',
+        userCreditNo: ''
     };
 
 
@@ -659,11 +663,17 @@ function Card(props) {
             .string()
             .required(t("card_101"))
             .min(6, t("card_101")),
-
+        userCreditKey: yup
+            .string()
+            .required('Please enter CVV.'),
+        userCreditNo: yup
+            .string()
+            .required('Please enter card number.')
+            .min(9, t("card_100")),
         passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
     });
 
-    const { control, formState, handleSubmit, reset } = useForm({
+    const { control, formState, handleSubmit, reset, getValues, setValue } = useForm({
         mode: 'onChange',
         defaultValues,
         resolver: yupResolver(schema),
@@ -1019,6 +1029,28 @@ function Card(props) {
             }
         })
     }
+
+    // 卡激活
+    const handleActiveCreditCard = () => {
+        setIsLoadingBtn(true)
+        dispatch(activeCreditCard({
+            userCreditNo: getValues('userCreditNo'),
+            userCreditKey: getValues('userCreditKey')
+        })).then((res) => {
+            setIsLoadingBtn(false)
+            let result = res.payload
+            if(result?.data?.status === 'success'){
+                setUpdateCard(true)
+                setTimer(timer + 1)
+                setOpenJiHuoWindow(false)
+                closesJiHuoFunc();
+                myFunction();
+            }else {
+                dispatch(showMessage({ message: result?.msg, code: 2 }));
+            }
+           
+        })
+    }
     // 申请卡
     const applyCard = () => {
         setIsLoadingBtn(true)
@@ -1156,6 +1188,7 @@ function Card(props) {
                         setTiJiaoState(1);
                         setUpdateCard(true)
                         dispatch(centerGetTokenBalanceList({ forceUpdate: true}));
+                        dispatch(userProfile({ forceUpdate: true}))
                         setUpdateCard(true)
                         setTimer(timer + 1)
                         // setOpenSuccess(true);
@@ -1167,6 +1200,7 @@ function Card(props) {
                         setTiJiaoState(3);
                         setUpdateCard(true)
                         dispatch(centerGetTokenBalanceList({ forceUpdate: true}));
+                        dispatch(userProfile({ forceUpdate: true}))
                         setUpdateCard(true)
                         setTimer(timer + 1)
                         // setOpenSuccess(true);
@@ -1981,6 +2015,8 @@ function Card(props) {
                                                         </div>
 
                                                         <div className='tianJiaKaPian flex items-center  pl-16' style={{ marginTop: "20px" }} onClick={() => {
+                                                            setValue('userCreditNo', '')
+                                                            setValue('userCreditKey', '')
                                                             setOpenJiHuoWindow(true)
                                                             openJiHuoFunc();
                                                         }}>
@@ -3447,7 +3483,7 @@ function Card(props) {
                         </div>
 
                         <Controller
-                            name="cardNumber"
+                            name="userCreditNo"
                             control={control}
                             render={({ field }) => (
                                 <TextField
@@ -3455,8 +3491,8 @@ function Card(props) {
                                     className="mb-20"
                                     label={t('card_86')}
                                     type="number"
-                                    error={!!errors.cardNumber}
-                                    helperText={errors?.cardNumber?.message}
+                                    error={!!errors.userCreditNo}
+                                    helperText={errors?.userCreditNo?.message}
                                     variant="outlined"
                                     required
                                     fullWidth
@@ -3470,16 +3506,16 @@ function Card(props) {
                         </div>
 
                         <Controller
-                            name="checkCode"
+                            name="userCreditKey"
                             control={control}
                             render={({ field }) => (
                                 <TextField
                                     {...field}
                                     className="mb-36"
-                                    label="CCV"
+                                    label="CVV"
                                     type="number"
-                                    error={!!errors.checkCode}
-                                    helperText={errors?.checkCode?.message}
+                                    error={!!errors.userCreditKey}
+                                    helperText={errors?.userCreditKey?.message}
                                     variant="outlined"
                                     required
                                     fullWidth
@@ -3488,14 +3524,13 @@ function Card(props) {
                         />
 
                         <LoadingButton
-                            disabled={false}
+                            disabled={!getValues('userCreditNo') || !getValues('userCreditKey') || (getValues('userCreditNo') && getValues('userCreditNo').length < 9) }
                             className="boxCardBtn3 mt-48"
                             color="secondary"
-                            loading={false}
+                            loading={isLoadingBtn}
                             variant="contained"
                             onClick={() => {
-                                setOpenJiHuoWindow(false)
-                                closesJiHuoFunc();
+                                handleActiveCreditCard()
                             }}
                         >
                             {t('kyc_23')}
