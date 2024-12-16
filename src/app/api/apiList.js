@@ -753,6 +753,10 @@ export default {
             url: "/credit/exchangeCreditCard",
             method: "post",
         },
+        creditCardBindWallet: {
+            url: "/credit/creditCardBindWallet",
+            method: "post",
+        },
         queryCreditBalance: {
             url: "/credit/queryCreditBalance",
             method: "post",
