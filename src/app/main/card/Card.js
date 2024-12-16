@@ -1188,6 +1188,7 @@ function Card(props) {
                         setTiJiaoState(1);
                         setUpdateCard(true)
                         dispatch(centerGetTokenBalanceList({ forceUpdate: true}));
+                        dispatch(userProfile({ forceUpdate: true}))
                         setUpdateCard(true)
                         setTimer(timer + 1)
                         // setOpenSuccess(true);
@@ -1199,6 +1200,7 @@ function Card(props) {
                         setTiJiaoState(3);
                         setUpdateCard(true)
                         dispatch(centerGetTokenBalanceList({ forceUpdate: true}));
+                        dispatch(userProfile({ forceUpdate: true}))
                         setUpdateCard(true)
                         setTimer(timer + 1)
                         // setOpenSuccess(true);
