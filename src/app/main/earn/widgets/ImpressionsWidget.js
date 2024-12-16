@@ -110,6 +110,10 @@ function Impressions(props) {
             color="text.secondary"
           >
             <span className="font-medium text-red-500">{activityInfo?.demandInterestRewardTrend}%</span>
+            {
+              biZhong === "bft" && <span className="ml-10 text-14">T+3</span>
+            }
+
           </Typography>
         </div>
 

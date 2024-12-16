@@ -328,7 +328,7 @@ function Earn(props) {
         }, 300);
     };
 
-    const openZhiYaFunc = async() => {
+    const openZhiYaFunc = async () => {
         await invokeTokenPledgeActivityInfo()
         setOpenZhiYa(true)
         setShowZhiYa(true);
@@ -340,7 +340,7 @@ function Earn(props) {
         }, 0);
     }
 
-        const invokeTokenPledgeActivityInfo= async()=> {
+    const invokeTokenPledgeActivityInfo = async () => {
         await dispatch(tokenPledgeActivityInfo()).then((res) => {
             const result = res.payload
             if (result.errno === 0) {
@@ -529,18 +529,18 @@ function Earn(props) {
         })
     }
 
-    const handlePledge = async()=> {
+    const handlePledge = async () => {
         setBtnLoading(true);
         let data = {
             configId: currentTolkenPledgeActivityInfo.id,
             pledgeAmount: weight
         }
-        await dispatch(pledge(data)).then((res)=>{
+        await dispatch(pledge(data)).then((res) => {
             setBtnLoading(false);
             const result = res.payload;
-            if(result?.errno === 0){
+            if (result?.errno === 0) {
                 invokeTokenPledgeActivityInfo();
-                dispatch(centerGetTokenBalanceList({ forceUpdate: true}));
+                dispatch(centerGetTokenBalanceList({ forceUpdate: true }));
             }
         })
     }
@@ -574,47 +574,47 @@ function Earn(props) {
             {
                 !loadingShow &&
                 <div style={{ width: "100%" }}>
-                    { (existCurrentActivity(1) || existCurrentActivity(5)) && <motion.div
-                            variants={container}
-                            initial="hidden"
-                            animate="show"
-                            className='mt-16'
-                            style={{ paddingInline: "1.5rem" }}
-                        >
-                            <div className='text-16'>{t('card_113')}</div>
-                            <div className='newBlocak'>
-                                <div className='flex mt-12'>
-                                    {existCurrentActivity(1) && <div className='qianDaoSty flex justify-between px-10' onClick={() => {
-                                        startCheckIn()
-                                    }}>
-                                        <div className='mt-6'>
-                                            <div>{t('card_172')}</div>
-                                            <div style={{ color: "#9a9a9a" }}>{t('card_115')}</div>
-                                        </div>
-                                        <img src="wallet/assets/images/earn/qianDao.png" />
+                    {(existCurrentActivity(1) || existCurrentActivity(5)) && <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className='mt-16'
+                        style={{ paddingInline: "1.5rem" }}
+                    >
+                        <div className='text-16'>{t('card_113')}</div>
+                        <div className='newBlocak'>
+                            <div className='flex mt-12'>
+                                {existCurrentActivity(1) && <div className='qianDaoSty flex justify-between px-10' onClick={() => {
+                                    startCheckIn()
+                                }}>
+                                    <div className='mt-6'>
+                                        <div>{t('card_172')}</div>
+                                        <div style={{ color: "#9a9a9a" }}>{t('card_115')}</div>
                                     </div>
-                                    }
+                                    <img src="wallet/assets/images/earn/qianDao.png" />
+                                </div>
+                                }
 
-                                    {existCurrentActivity(5) && <div className='zhuanPanSty flex justify-between px-10' onClick={() => {
-                                        setOpenSpin(true)
-                                    }}>
-                                        <div className='mt-6'>
-                                            <div>{t('card_114')}</div>
-                                            <div style={{ color: "#9a9a9a" }}>{t('card_115')}</div>
-                                        </div>
-                                        <div className='' style={{ position: "relative", width: "5.2rem", height: "5.2rem" }}>
-                                            <img className='zhuanPanDongHua0' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan3.png" />
-                                            <img className='zhuanPanDongHua' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan2.png" />
-                                            <img className='zhuanPanDongHua0' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan1.png" />
-                                        </div>
+                                {existCurrentActivity(5) && <div className='zhuanPanSty flex justify-between px-10' onClick={() => {
+                                    setOpenSpin(true)
+                                }}>
+                                    <div className='mt-6'>
+                                        <div>{t('card_114')}</div>
+                                        <div style={{ color: "#9a9a9a" }}>{t('card_115')}</div>
                                     </div>
-                                    }
+                                    <div className='' style={{ position: "relative", width: "5.2rem", height: "5.2rem" }}>
+                                        <img className='zhuanPanDongHua0' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan3.png" />
+                                        <img className='zhuanPanDongHua' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan2.png" />
+                                        <img className='zhuanPanDongHua0' style={{ position: "absolute" }} src="wallet/assets/images/earn/zhuanPan1.png" />
+                                    </div>
                                 </div>
-                                <div className='flex mt-16 justify-center'>
-                                    <img className='naoZhongImg' src="wallet/assets/images/earn/naoZhong.png" />  <div className='naoZhongZi ml-10'>{t('card_116')}</div> <div className='ml-10 naoZhongZi' >{activityInfo?.limitActivityTime === '0' ? '00:00:00' : activityInfo?.limitActivityTime}</div>
-                                </div>
+                                }
                             </div>
-                        </motion.div>
+                            <div className='flex mt-16 justify-center'>
+                                <img className='naoZhongImg' src="wallet/assets/images/earn/naoZhong.png" />  <div className='naoZhongZi ml-10'>{t('card_116')}</div> <div className='ml-10 naoZhongZi' >{activityInfo?.limitActivityTime === '0' ? '00:00:00' : activityInfo?.limitActivityTime}</div>
+                            </div>
+                        </div>
+                    </motion.div>
                     }
 
                     {existCurrentActivity(3) && <motion.div
@@ -796,7 +796,7 @@ function Earn(props) {
                                         <div className='' style={{ fontSize: "20px", overflow: 'hidden' }}>BeingFi 支付</div>
                                     </div>
                                     <div><span >小费，</span><span style={{ fontSize: "20px", color: "#30F2DD" }}>大收益</span></div>
-                                    <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>享受佣金 </span><span style={{ color: "#ffc600", fontWeight: "bold", fontSize: "29px" }}>{activityInfo?.walletPayRate * 100 }%</span></div>
+                                    <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>享受佣金 </span><span style={{ color: "#ffc600", fontWeight: "bold", fontSize: "29px" }}>{activityInfo?.walletPayRate * 100}%</span></div>
                                 </div>
                                 <img className='earnYouTu2 mt-16' src="wallet/assets/images/earn/bi5.png" />
                             </div>
@@ -899,7 +899,7 @@ function Earn(props) {
                                         <div
                                             className="borderRadius"
                                             style={{
-                                                width:  14.3 * currentStep  + "%",
+                                                width: 14.3 * currentStep + "%",
                                                 height: "13px",
                                                 backgroundColor: "#EA9B13",
                                                 position: "absolute",
@@ -968,7 +968,7 @@ function Earn(props) {
                                     <motion.div
                                         variants={item}
                                         className="align-item text-align  btnPointer  mx-4"
-                                        style={{ position: "relative", width: "23%", opacity: days[0] < curDay ? '0.4' : '1'}}
+                                        style={{ position: "relative", width: "23%", opacity: days[0] < curDay ? '0.4' : '1' }}
                                         onClick={() => { }}
                                     >
                                         <img
@@ -1009,7 +1009,7 @@ function Earn(props) {
                                                 src="wallet/assets/images/earn/checkOver1.png"
                                             />
                                         )}
-                                        {(days[0] === curDay && (!signInState ||  (days[0] && signInState && signInState.indexOf(days[0]) < 0) )) && (
+                                        {(days[0] === curDay && (!signInState || (days[0] && signInState && signInState.indexOf(days[0]) < 0))) && (
                                             <img
                                                 className="positionAb"
                                                 style={{ top: "0px", left: "0px" }}
@@ -1066,7 +1066,7 @@ function Earn(props) {
                                                 src="wallet/assets/images/earn/checkOver1.png"
                                             />
                                         )}
-                                        {(days[1] === curDay && (!signInState ||  (days[1] && signInState && signInState.indexOf(days[1]) < 0) ))  && (
+                                        {(days[1] === curDay && (!signInState || (days[1] && signInState && signInState.indexOf(days[1]) < 0))) && (
                                             <img
                                                 className="positionAb"
                                                 style={{ top: "0px", left: "0px" }}
@@ -1123,7 +1123,7 @@ function Earn(props) {
                                                 src="wallet/assets/images/earn/checkOver1.png"
                                             />
                                         )}
-                                        {(days[2] === curDay && (!signInState ||  (days[2] && signInState && signInState.indexOf(days[2]) < 0) )) && (
+                                        {(days[2] === curDay && (!signInState || (days[2] && signInState && signInState.indexOf(days[2]) < 0))) && (
                                             <img
                                                 className="positionAb"
                                                 style={{ top: "0px", left: "0px" }}
@@ -1180,7 +1180,7 @@ function Earn(props) {
                                                 src="wallet/assets/images/earn/checkOver1.png"
                                             />
                                         )}
-                                        {(days[3] === curDay && (!signInState ||  (days[3] && signInState && signInState.indexOf(days[3]) < 0) )) && (
+                                        {(days[3] === curDay && (!signInState || (days[3] && signInState && signInState.indexOf(days[3]) < 0))) && (
                                             <img
                                                 className="positionAb"
                                                 style={{ top: "0px", left: "0px" }}
@@ -1242,7 +1242,7 @@ function Earn(props) {
                                                 src="wallet/assets/images/earn/checkOver1.png"
                                             />
                                         )}
-                                        {(days[4] === curDay && (!signInState ||  (days[4] && signInState && signInState.indexOf(days[4]) < 0) )) && (
+                                        {(days[4] === curDay && (!signInState || (days[4] && signInState && signInState.indexOf(days[4]) < 0))) && (
                                             <img
                                                 className="positionAb"
                                                 style={{ top: "0px", left: "0px" }}
@@ -1299,7 +1299,7 @@ function Earn(props) {
                                                 src="wallet/assets/images/earn/checkOver1.png"
                                             />
                                         )}
-                                        {(days[5] === curDay && (!signInState ||  (days[5] && signInState && signInState.indexOf(days[5]) < 0) )) && (
+                                        {(days[5] === curDay && (!signInState || (days[5] && signInState && signInState.indexOf(days[5]) < 0))) && (
                                             <img
                                                 className="positionAb"
                                                 style={{ top: "0px", left: "0px" }}
@@ -1358,7 +1358,7 @@ function Earn(props) {
                                                 src="wallet/assets/images/earn/checkOver1.png "
                                             />
                                         )}
-                                        {(days[6] === curDay && (!signInState ||  (days[6] && signInState && signInState.indexOf(days[6]) < 0) )) && (
+                                        {(days[6] === curDay && (!signInState || (days[6] && signInState && signInState.indexOf(days[6]) < 0))) && (
                                             <img
                                                 className="positionAb"
                                                 style={{ top: "0px", left: "0px" }}
@@ -1526,11 +1526,11 @@ function Earn(props) {
                                         className='pt-10 pb-12 mt-20 flex justify-between' style={{ backgroundColor: "#191A1B", borderRadius: "10px", border: "4px solid #151617" }}>
                                         <div style={{ width: "60%" }}>
                                             <div className='text-14 ml-10' style={{ textAlign: "left" }}>质押总资产(BFT)</div>
-                                            <div className='text-12 ml-10 mt-12' style={{ textAlign: "left" }}>{ tokenPledgeActivityAllInfo.tokenPledgeRewardData ? parseJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData?.all).symbol.BFT : '0.00' } ≈ {tokenPledgeActivityAllInfo.tokenPledgeRewardData ? parseJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData?.all).symbol.usd : '0.00'} USD</div>
+                                            <div className='text-12 ml-10 mt-12' style={{ textAlign: "left" }}>{tokenPledgeActivityAllInfo.tokenPledgeRewardData ? parseJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData?.all).symbol.BFT : '0.00'} ≈ {tokenPledgeActivityAllInfo.tokenPledgeRewardData ? parseJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData?.all).symbol.usd : '0.00'} USD</div>
                                         </div>
                                         <div style={{ width: "40%" }}>
                                             <div className='text-14 mr-10' style={{ textAlign: "right" }}>质押笔数</div>
-                                            <div className='text-12 mr-10 mt-12' style={{ textAlign: "right" }}>{ userPledgeRecordList?.length }</div>
+                                            <div className='text-12 mr-10 mt-12' style={{ textAlign: "right" }}>{userPledgeRecordList?.length}</div>
                                         </div>
                                     </motion.div>
 
@@ -1540,25 +1540,25 @@ function Earn(props) {
                                     </motion.div>
 
                                     {
-                                        tokenPledgeActivityConfigList && tokenPledgeActivityConfigList.map((pledage)=>{
+                                        tokenPledgeActivityConfigList && tokenPledgeActivityConfigList.map((pledage) => {
                                             return (
                                                 <motion.div
-                                                variants={item}
-                                                className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
-                                                <div className='flex justify-between px-10' onClick={() => {
-                                                    setCurrentTolkenPledgeActivityInfo(pledage)
-                                                    openZhiYaXinXi();
-                                                }} >
-                                                    <div className='' style={{ width: "60%", height: "60px", paddingTop: "10px" }}>
-                                                        <div className='text-14'><span style={{ color: "#14C2A3" }}>{pledage?.yearRate * 100}%</span> 年利率</div>
-                                                        <div style={{ color: "#A4A4A4", fontSize: "12px" }}> ≈ {pledage?.yearRate * 100/365}% 日利率 </div>
+                                                    variants={item}
+                                                    className='mt-12 spinIconShadow2' style={{ width: "100%", height: "60px", borderRadius: "10px", background: "#1E293B", }}>
+                                                    <div className='flex justify-between px-10' onClick={() => {
+                                                        setCurrentTolkenPledgeActivityInfo(pledage)
+                                                        openZhiYaXinXi();
+                                                    }} >
+                                                        <div className='' style={{ width: "60%", height: "60px", paddingTop: "10px" }}>
+                                                            <div className='text-14'><span style={{ color: "#14C2A3" }}>{pledage?.yearRate * 100}%</span> 年利率</div>
+                                                            <div style={{ color: "#A4A4A4", fontSize: "12px" }}> ≈ {pledage?.yearRate * 100 / 365}% 日利率 </div>
+                                                        </div>
+                                                        <div className='flex justify-end' style={{ width: "40%" }}>
+                                                            <div style={{ height: "60px", lineHeight: "60px", color: "#7D9BB0", fontSize: "14px" }}>{pledage?.pledgeDay}天</div>
+                                                            <img style={{ marginTop: "20px", width: "20px", height: "20px" }} src="wallet/assets/images/card/goJianTou.png" ></img>
+                                                        </div>
                                                     </div>
-                                                    <div className='flex justify-end' style={{ width: "40%" }}>
-                                                        <div style={{ height: "60px", lineHeight: "60px", color: "#7D9BB0", fontSize: "14px" }}>{pledage?.pledgeDay}天</div>
-                                                        <img style={{ marginTop: "20px", width: "20px", height: "20px" }} src="wallet/assets/images/card/goJianTou.png" ></img>
-                                                    </div>
-                                                </div>
-                                            </motion.div>
+                                                </motion.div>
                                             )
                                         })
                                     }
@@ -1577,30 +1577,30 @@ function Earn(props) {
                                         className='mt-12 mb-12' style={{ textAlign: "center", color: "#A4A4A4" }}>BFT质押记录</motion.div>
                                     <div style={{ height: `${divHeight - 24}px`, overflowY: "auto", paddingRight: "2px" }} >
                                         {
-                                            userPledgeRecordList && userPledgeRecordList.map((record)=> {
+                                            userPledgeRecordList && userPledgeRecordList.map((record) => {
                                                 return (
                                                     <motion.div
                                                         variants={item}
                                                         className='zhiYaLiShi px-10 py-10'>
                                                         <div className='flex'>
                                                             <img style={{ width: "18px", height: "18px" }} src="wallet/assets/images/earn/naoZhong.png"></img>
-                                                            <div className='ml-10 text-12' style={{ color: "#9A9A9A" }}> { format(Number(record?.createTime)*1000, 'yyyy-MM-dd HH:mm:ss')} </div>
+                                                            <div className='ml-10 text-12' style={{ color: "#9A9A9A" }}> {format(Number(record?.createTime) * 1000, 'yyyy-MM-dd HH:mm:ss')} </div>
                                                         </div>
                                                         <div className='mt-10 flex justify-between'>
                                                             <div className='text-12'> 总收益</div>
-                                                            <div className='text-12'> { record?.curPledgeRewardAmount || '0.00' } {record?.interestSymbol} </div>
+                                                            <div className='text-12'> {record?.curPledgeRewardAmount || '0.00'} {record?.interestSymbol} </div>
                                                         </div>
                                                         <div className='mt-10 flex justify-between'>
                                                             <div className='text-12'> 质押金额</div>
-                                                            <div className='text-12'> { record?.pledgeAmount || '0.00' } {record?.interestSymbol} </div>
+                                                            <div className='text-12'> {record?.pledgeAmount || '0.00'} {record?.interestSymbol} </div>
                                                         </div>
                                                         <div className='mt-10 flex justify-between'>
                                                             <div className='text-12'> 状态</div>
-                                                            <div className='text-12'> { (record?.deleted) ? '已结束': '质押中'} </div>
+                                                            <div className='text-12'> {(record?.deleted) ? '已结束' : '质押中'} </div>
                                                         </div>
                                                         <div className='mt-10 flex justify-between'>
                                                             <div className='text-12'> 结束日期</div>
-                                                            <div className='text-12'> { format(Number(record?.pledgeEndTime) * 1000, 'yyyy-MM-dd HH:mm:ss')} </div>
+                                                            <div className='text-12'> {format(Number(record?.pledgeEndTime) * 1000, 'yyyy-MM-dd HH:mm:ss')} </div>
                                                         </div>
                                                     </motion.div>
                                                 )
@@ -1621,7 +1621,7 @@ function Earn(props) {
                                             className='mt-32'>
                                             <div className='flex justify-between'>
                                                 <div className='text-16' style={{ color: "#ffffff" }}> 当前年利率 </div>
-                                                <div className='text-16' style={{ color: "#ffffff" }}> {currentTolkenPledgeActivityInfo?.yearRate * 100 }% </div>
+                                                <div className='text-16' style={{ color: "#ffffff" }}> {currentTolkenPledgeActivityInfo?.yearRate * 100}% </div>
                                             </div>
                                         </motion.div >
 
@@ -1630,7 +1630,7 @@ function Earn(props) {
                                             className='mt-16'>
                                             <div className='flex justify-between'>
                                                 <div className='text-16' style={{ color: "#ffffff" }}> 账户剩余 </div>
-                                                <div className='text-16' style={{ color: "#ffffff" }}> { userData?.wallet?.inner?.find((item)=> { return item.symbol === 'BFT'}).balance } </div>
+                                                <div className='text-16' style={{ color: "#ffffff" }}> {userData?.wallet?.inner?.find((item) => { return item.symbol === 'BFT' }).balance} </div>
                                             </div>
                                         </motion.div>
 
@@ -1648,8 +1648,8 @@ function Earn(props) {
                                                         <InputAdornment
                                                             position="end"
                                                             onClick={() => {
-                                                                setWeight(userData?.wallet?.inner?.find((item)=> { return item.symbol === 'BFT'}).balance)
-                                                                setEstimateTokenPledgeAmount((userData?.wallet?.inner?.find((item)=> { return item.symbol === 'BFT'}).balance) * currentTolkenPledgeActivityInfo?.yearRate/365 * currentTolkenPledgeActivityInfo?.pledgeDay)
+                                                                setWeight(userData?.wallet?.inner?.find((item) => { return item.symbol === 'BFT' }).balance)
+                                                                setEstimateTokenPledgeAmount((userData?.wallet?.inner?.find((item) => { return item.symbol === 'BFT' }).balance) * currentTolkenPledgeActivityInfo?.yearRate / 365 * currentTolkenPledgeActivityInfo?.pledgeDay)
                                                                 setCanDeposite(false);
                                                             }}
                                                         >MAX</InputAdornment>}
@@ -1659,8 +1659,8 @@ function Earn(props) {
                                                         inputMode: 'numeric',
                                                         pattern: '[0-9]*',
                                                     }}
-                                                    error={ismore(weight, userData?.wallet?.inner?.find((item)=> { return item.symbol === 'BFT'}).balance, currentTolkenPledgeActivityInfo?.pledgeMinAmount)}
-                                                    placeholder={ currentTolkenPledgeActivityInfo?.pledgeMinAmount + '起投'}
+                                                    error={ismore(weight, userData?.wallet?.inner?.find((item) => { return item.symbol === 'BFT' }).balance, currentTolkenPledgeActivityInfo?.pledgeMinAmount)}
+                                                    placeholder={currentTolkenPledgeActivityInfo?.pledgeMinAmount + '起投'}
                                                     onChange={(event) => {
                                                         if (event.target.value === '') {
                                                             setWeight('')
@@ -1675,15 +1675,15 @@ function Earn(props) {
                                                         if (numericValue > 0) {
                                                             setCanDeposite(false);
                                                         }
-                                                        if (numericValue > userData?.wallet?.inner?.find((item)=> { return item.symbol === 'BFT'}).balance || numericValue == 0 || numericValue < currentTolkenPledgeActivityInfo?.pledgeMinAmount) {
+                                                        if (numericValue > userData?.wallet?.inner?.find((item) => { return item.symbol === 'BFT' }).balance || numericValue == 0 || numericValue < currentTolkenPledgeActivityInfo?.pledgeMinAmount) {
                                                             setCanDeposite(true);
                                                         }
                                                         setWeight(numericValue);
-                                                        setEstimateTokenPledgeAmount(numericValue ? (numericValue * currentTolkenPledgeActivityInfo?.yearRate/365 * currentTolkenPledgeActivityInfo.pledgeDay): '0.00')
+                                                        setEstimateTokenPledgeAmount(numericValue ? (numericValue * currentTolkenPledgeActivityInfo?.yearRate / 365 * currentTolkenPledgeActivityInfo.pledgeDay) : '0.00')
                                                     }}
                                                 />
                                             </FormControl>
-                                            {ismore(weight, userData?.wallet?.inner?.find((item)=> { return item.symbol === 'BFT'}).balance, currentTolkenPledgeActivityInfo?.pledgeMinAmount) && (
+                                            {ismore(weight, userData?.wallet?.inner?.find((item) => { return item.symbol === 'BFT' }).balance, currentTolkenPledgeActivityInfo?.pledgeMinAmount) && (
                                                 <FormHelperText id="outlined-weight-helper-text" className='redHelpTxt2' > {t('deposite_35')}</FormHelperText>
                                             )}
 
@@ -1696,7 +1696,7 @@ function Earn(props) {
                                                 <div className='liXiTimeZi'>
                                                     <div>开始日期</div>
                                                     <div>{format(new Date(), 'yyyy-MM-dd')}</div>
-                                                    <div>{format(new Date(), 'yyyy-MM-dd HH:mm:ss').split(' ') [1]}</div>
+                                                    <div>{format(new Date(), 'yyyy-MM-dd HH:mm:ss').split(' ')[1]}</div>
                                                 </div>
 
                                                 <div className='flex align-item' style={{}}>
@@ -1705,8 +1705,8 @@ function Earn(props) {
 
                                                 <div className='liXiTimeZi'>
                                                     <div>计息日期</div>
-                                                    <div>{format(new Date().getTime() + Number(currentTolkenPledgeActivityInfo?.pledgeInterestStartTime)*1000, 'yyyy-MM-dd')}</div>
-                                                    <div>{format(new Date().getTime() + Number(currentTolkenPledgeActivityInfo?.pledgeInterestStartTime)*1000, 'yyyy-MM-dd HH:mm:ss').split(' ') [1]}</div>
+                                                    <div>{format(new Date().getTime() + Number(currentTolkenPledgeActivityInfo?.pledgeInterestStartTime) * 1000, 'yyyy-MM-dd')}</div>
+                                                    <div>{format(new Date().getTime() + Number(currentTolkenPledgeActivityInfo?.pledgeInterestStartTime) * 1000, 'yyyy-MM-dd HH:mm:ss').split(' ')[1]}</div>
                                                 </div>
 
                                                 <div className='flex align-item' style={{}}>
@@ -1715,8 +1715,8 @@ function Earn(props) {
 
                                                 <div className='liXiTimeZi'>
                                                     <div style={{ textAlign: "right" }}>结束日期</div>
-                                                    <div>{format(new Date().getTime() + Number(currentTolkenPledgeActivityInfo?.pledgeInterestStartTime)*1000 + currentTolkenPledgeActivityInfo.pledgeDay * 24 * 3600 * 1000 , 'yyyy-MM-dd')}</div>
-                                                    <div>{format(new Date().getTime() + Number(currentTolkenPledgeActivityInfo?.pledgeInterestStartTime)*1000  + currentTolkenPledgeActivityInfo.pledgeDay * 24 * 3600 * 1000, 'yyyy-MM-dd HH:mm:ss').split(' ') [1]}</div>
+                                                    <div>{format(new Date().getTime() + Number(currentTolkenPledgeActivityInfo?.pledgeInterestStartTime) * 1000 + currentTolkenPledgeActivityInfo.pledgeDay * 24 * 3600 * 1000, 'yyyy-MM-dd')}</div>
+                                                    <div>{format(new Date().getTime() + Number(currentTolkenPledgeActivityInfo?.pledgeInterestStartTime) * 1000 + currentTolkenPledgeActivityInfo.pledgeDay * 24 * 3600 * 1000, 'yyyy-MM-dd HH:mm:ss').split(' ')[1]}</div>
                                                 </div>
                                             </div>
 
@@ -1727,8 +1727,8 @@ function Earn(props) {
                                                     variant="contained"
                                                     loading={btnLoading}
                                                     sx={{ paddingTop: "2px!important", paddingBottom: "2px!important", fontSize: "20px!important" }}
-                                                    onClick={ ()=> {
-                                                        if(canDeposite) return;
+                                                    onClick={() => {
+                                                        if (canDeposite) return;
                                                         handlePledge()
                                                     }}
                                                 >
@@ -1800,7 +1800,7 @@ function Earn(props) {
                                 </motion.div>
 
 
-                                <div className='flex  justify-between mt-28'>
+                                <div className='flex  justify-between mt-28 mb-20'>
                                     <div>
                                         <div style={{ textAlign: "center" }}>质押收益(BFT)</div>
                                         <div className='mt-6' style={{ textAlign: "center" }}>100.00</div>
@@ -1817,7 +1817,7 @@ function Earn(props) {
                                     </div>
                                 </div>
 
-                                <div className='txtBrightness text-20 px-15' style={{ margin: "40px auto 20px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}
+                                <div className='txtBrightness text-20 px-15' style={{ position: "relative", bottom: "0%", margin: "0%  auto 6.93% auto", left: "0%", right: "0%", width: "99.4%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}
                                     onClick={() => {
                                         openQuKuanFunc();
                                     }}
@@ -1833,12 +1833,9 @@ function Earn(props) {
                                         setOpenQuKuan(false)
                                     }} ></img>
                                 </div>
-
                                 <div className='mt-16 text-16' >
                                     选择币种
                                 </div>
-
-
                                 <Box
                                     className="w-full border flex flex-col mt-16 "
                                     sx={{
@@ -1854,12 +1851,9 @@ function Earn(props) {
                                         setSymbol={setSymbol}
                                     />
                                 </Box>
-
                                 <div className='mt-16 text-16' >
                                     取款数量
                                 </div>
-
-
                                 <FormControl className="mt-10 mb-4" sx={{ width: '100%' }} variant="outlined">
                                     <OutlinedInput
                                         type='text'
@@ -1918,9 +1912,8 @@ function Earn(props) {
                                     <div>5%</div>
                                 </div>
 
-                                <div className='txtBrightness text-20 px-15' style={{ margin: "96px auto 20px auto", width: "100%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}
+                                <div className='txtBrightness text-20' style={{ position: "fixed", left: "0%", right: "0%", bottom: "3%", margin: "0 auto", width: "92%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}
                                     onClick={() => {
-
                                     }}
                                 >提现</div>
                             </div>
