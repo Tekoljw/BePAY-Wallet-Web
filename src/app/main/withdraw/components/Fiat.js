@@ -22,7 +22,7 @@ import { makeWithdrawOrder, fiatSendTips, getFiatFee, payoutBank, payoutPayWays 
 import BN from "bn.js";
 import StyledAccordionSelect from "../../../components/StyledAccordionSelect";
 import { selectConfig } from "../../../store/config";
-import {arrayLookup, getNowTime, getUserLoginType, readClipboardText} from "../../../util/tools/function";
+import { arrayLookup, getNowTime, getUserLoginType, readClipboardText } from "../../../util/tools/function";
 import { openScan, closeScan } from "../../../util/tools/scanqrcode";
 import {
     getWithDrawConfig,
@@ -247,7 +247,7 @@ function Fiat(props) {
                         setTimeout(() => {
                             setZhuanQuan(false);
                             setTiJiaoState(1);
-                            dispatch(centerGetUserFiat({ forceUpdate: true}));
+                            dispatch(centerGetUserFiat({ forceUpdate: true }));
                         }, 1200);
                     } else {
                         setOpenSuccess(false)
@@ -284,7 +284,10 @@ function Fiat(props) {
                         dispatch(showMessage({ message: t('card_224'), code: 2 }));
                     } else if (result.errmsg.includes("商户共管资金余额不足")) {
                         dispatch(showMessage({ message: t('wallet_30'), code: 2 }));
-                    } else {
+                    } else if (result.errno === 400) {//拦截机制有BUG，修复后要改回来
+                        dispatch(showMessage({ message: t('server_error_12502'), code: 2 }));
+                    }
+                    else {
                         dispatch(showMessage({ message: result.errmsg, code: 2 }));
                     }
                 }
@@ -326,7 +329,7 @@ function Fiat(props) {
                         setTimeout(() => {
                             setZhuanQuan(false);
                             setTiJiaoState(1);
-                            dispatch(centerGetUserFiat({ forceUpdate: true}));
+                            dispatch(centerGetUserFiat({ forceUpdate: true }));
                         }, 1200);
                     } else {
                         setOpenSuccess(false)
@@ -724,12 +727,12 @@ function Fiat(props) {
 
     const editOrQueryHistoryAddress = (objTab) => {
         dispatch(editOrQueryWithdrawalHistoryInfo({
-            withdrawalType: (!_.isUndefined(objTab))? ((objTab.smallTabValue === 0) ? 'external' : 'internal') : smallTabValue === 0 ? 'external': 'internal',
-            currencyType: (!_.isUndefined(objTab)) ? ( (objTab.tabValue === 0) ? 'crypto' : 'fiat' ) : tabValue === cryptoSelect ? 'crypto' : 'fiat'
+            withdrawalType: (!_.isUndefined(objTab)) ? ((objTab.smallTabValue === 0) ? 'external' : 'internal') : smallTabValue === 0 ? 'external' : 'internal',
+            currencyType: (!_.isUndefined(objTab)) ? ((objTab.tabValue === 0) ? 'crypto' : 'fiat') : tabValue === cryptoSelect ? 'crypto' : 'fiat'
         })).then((res) => {
             // setLoadingShow(false)
             const resultData = res?.payload?.data;
-            if(resultData) {
+            if (resultData) {
                 setHistoryAddressFiat(resultData);
                 setHistoryAddressFiatBak(resultData);
             }
@@ -836,7 +839,7 @@ function Fiat(props) {
             displayFiatData.push(item.name);
             tmpFiatDisplayData[item.name] = item
         });
-        if(fiatData?.length> 0){
+        if (fiatData?.length > 0) {
             fiatData.map((item, index) => {
                 tmpFiatsData[item.currencyCode] = item;
             });
@@ -958,7 +961,7 @@ function Fiat(props) {
     const backPageEvt = () => {
         setOpenBindPhone(false)
         setOpenBindEmail(false);
-        dispatch(userProfile({ forceUpdate: true}));
+        dispatch(userProfile({ forceUpdate: true }));
         setTypeBined(true);
         myFunction;
         setOpenGoogleCode(true);
@@ -966,17 +969,17 @@ function Fiat(props) {
 
     const handleEditAddressNote = (currentIndex, editData, isBlur) => {
         let tmpList = []
-        if(historyAddressFiat.length > 0) {
+        if (historyAddressFiat.length > 0) {
             historyAddressFiat.map(async (item, index) => {
                 if (index === currentIndex) {
                     tmpList.push({
                         ...item, ...editData
                     })
-    
+
                     if ((editData.editMode === true || isBlur) && historyAddressFiatBak[index].note != item.note) {
                         dispatch(editOrQueryWithdrawalHistoryInfo({
-                           withdrawalType: 'internal',
-                            currencyType:  'fiat',
+                            withdrawalType: 'internal',
+                            currencyType: 'fiat',
                             editId: item.id,
                             note: item.note
                         }))
@@ -984,7 +987,7 @@ function Fiat(props) {
                 } else {
                     tmpList.push({ ...item })
                 }
-            })   
+            })
         }
 
         setHistoryAddressFiat(tmpList)
@@ -1100,8 +1103,8 @@ function Fiat(props) {
                                         value={smallTabValue}
                                         onChange={(ev, value) => {
                                             setSmallTabValue(value)
-                                            if(value == 1){
-                                                editOrQueryHistoryAddress({tabValue: 1, smallTabValue: value})
+                                            if (value == 1) {
+                                                editOrQueryHistoryAddress({ tabValue: 1, smallTabValue: value })
                                             }
                                         }}
                                         indicatorColor="secondary"
@@ -2088,47 +2091,47 @@ function Fiat(props) {
                         </div>
 
                         <div className='pasteW'>
-                                {
-                                    historyAddressFiat.length > 0 && historyAddressFiat.map((addressItem, index) => {
-                                        return (
-                                            <div className='pasteDiZhi'>
-                                                <div className='flex'>
-                                                    <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"  onClick={() => {
-                                                        handleEditAddressNote(index, { editMode: !addressItem.editMode })
-                                                    }}></img>
-                                                        <OutlinedInput
-                                                        className='diZhiShuRu'
-                                                        sx={{
-                                                            padding: '0rem',
-                                                            '& .MuiOutlinedInput-notchedOutline': {
-                                                                border: 'none',
-                                                            },
-                                                            color: addressItem.editMode ? '#ffffff' : '#94A3B8'
-                                                        }}
-                                                        value={addressItem.note}
-                                                        inputProps={{ 'aria-label': 'weight' }}
-                                                        onFocus={(event) => {
-                                                            handleEditAddressNote(index, { editMode: true })
-                                                        }}
-                                                        onChange={(event) => {
-                                                            handleEditAddressNote(index, { note: event.target.value, editMode: true })
-                                                        }}
-                                                        onBlur={(event) => {
-                                                            handleEditAddressNote(index, { note: event.target.value, editMode: false }, true)
-                                                        }}
-                                                    />
-                                                    {/* <div className='bianJiBiZi'>{item.note}</div> */}
-                                                </div>
-                                                <div className='pasteDi' onClick={()=>{ 
-                                                     if(smallTabValue === 1) {
-                                                        setInputVal({ ...inputVal, 'userId': addressItem.internalToUserId  });
-                                                        closePasteFunc()
-                                                    }
-                                                }}>{ addressItem.internalToUserId}</div>
+                            {
+                                historyAddressFiat.length > 0 && historyAddressFiat.map((addressItem, index) => {
+                                    return (
+                                        <div className='pasteDiZhi'>
+                                            <div className='flex'>
+                                                <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png" onClick={() => {
+                                                    handleEditAddressNote(index, { editMode: !addressItem.editMode })
+                                                }}></img>
+                                                <OutlinedInput
+                                                    className='diZhiShuRu'
+                                                    sx={{
+                                                        padding: '0rem',
+                                                        '& .MuiOutlinedInput-notchedOutline': {
+                                                            border: 'none',
+                                                        },
+                                                        color: addressItem.editMode ? '#ffffff' : '#94A3B8'
+                                                    }}
+                                                    value={addressItem.note}
+                                                    inputProps={{ 'aria-label': 'weight' }}
+                                                    onFocus={(event) => {
+                                                        handleEditAddressNote(index, { editMode: true })
+                                                    }}
+                                                    onChange={(event) => {
+                                                        handleEditAddressNote(index, { note: event.target.value, editMode: true })
+                                                    }}
+                                                    onBlur={(event) => {
+                                                        handleEditAddressNote(index, { note: event.target.value, editMode: false }, true)
+                                                    }}
+                                                />
+                                                {/* <div className='bianJiBiZi'>{item.note}</div> */}
                                             </div>
-                                        )
-                                    })
-                                }
+                                            <div className='pasteDi' onClick={() => {
+                                                if (smallTabValue === 1) {
+                                                    setInputVal({ ...inputVal, 'userId': addressItem.internalToUserId });
+                                                    closePasteFunc()
+                                                }
+                                            }}>{addressItem.internalToUserId}</div>
+                                        </div>
+                                    )
+                                })
+                            }
                         </div>
                     </div>
                 </BootstrapDialog>

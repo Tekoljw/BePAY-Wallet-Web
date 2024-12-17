@@ -102,7 +102,6 @@ export const appendScript = async(scriptToAppend, isAsync) => {
 
 export const consoleText = (words, id, colors) => {
   return new Promise((resolve, reject)=>{
-    console.log("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
     if (colors === undefined) colors = ['#fff'];
     var visible = true;
     var con = document.getElementById('console');
