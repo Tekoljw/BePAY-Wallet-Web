@@ -165,6 +165,7 @@ function Withdraw(props) {
         address: '',
         amount: '',
         showAmount: 0.00,
+        addressTwo: '',
     });
     const [withdrawConfig, setWithdrawConfig] = useState({});
     const [walletName, setWalletName] = useState('');
@@ -180,6 +181,7 @@ function Withdraw(props) {
     const [openSuccess, setOpenSuccess] = useState(true);
     const [isOkTijiao, setIsOkTijiao] = useState(false);
     const [divHeight, setDivHeight] = useState(0);
+    const divRef = useRef(null);
     const [currRequestId, setCurrRequestId] = useState(0);
     const [isLoadingBtn, setIsLoadingBtn] = useState(false);
     const [zhuanQuan, setZhuanQuan] = useState(true);
@@ -188,6 +190,7 @@ function Withdraw(props) {
     const [typeBinded, setTypeBined] = useState(false);
     const [openBindEmail, setOpenBindEmail] = useState(false);
     const [openBindPhone, setOpenBindPhone] = useState(false);
+    const [addressShuoDuan, setAddressShuoDuan] = useState("");
     const handleChangeInputVal = (prop, value) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
         if (prop == 'amount' && event.target.value != '' && event.target.value != 0) {
@@ -585,6 +588,17 @@ function Withdraw(props) {
         setTransferState(transferStats);
     }, [transferStats]);
 
+
+    const truncateString = (str, length) => {
+        if (str.length <= length * 2) {
+            return str; // 如果字符串长度不够前后截取的要求，则直接返回
+        }
+        const start = str.slice(0, length); // 获取前 n 个字符
+        const end = str.slice(-length); // 获取后 n 个字符
+        return `${start}...${end}`; // 拼接结果
+    };
+
+
     const startScanQRCode = () => {
         openScan((result, err) => {
             if (result && result.text && result.text.length > 0) {
@@ -889,7 +903,7 @@ function Withdraw(props) {
     // 输入PIN Page
     const openInputPin = () => {
         setTimeout(() => {
-            applyMiddleEllipsis(document.getElementById('AddressText'), 32);
+            applyMiddleEllipsis(document.getElementById('AddressText'), 28);
         }, 100);
         setPin('')
         setOpenPinWindow(true)
@@ -1300,15 +1314,12 @@ function Withdraw(props) {
                                     {
                                         smallTabValue === 0 && <div className="px-10 ">
                                             <div className="flex items-center justify-between">
-                                                <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
+                                                <FormControl className='addressShuoDuan' sx={{ width: '100%', borderColor: '#94A3B8', backgroundColor: "#151C2A" }} variant="outlined">
                                                     <OutlinedInput
                                                         id="outlined-adornment-address send-tips-container-address"
-                                                        value={inputVal.address}
+                                                        value={truncateString(inputVal.address, 9)}
                                                         onChange={handleChangeInputVal('address')}
                                                         aria-describedby="outlined-weight-helper-text"
-                                                        inputProps={{
-                                                            'aria-label': 'address',
-                                                        }}
                                                     />
                                                     <div className='flex pasteSty  items-center'>
                                                         <img className='pasteJianTou' src="wallet/assets/images/withdraw/pasteJianTou.png" alt="" onClick={() => {
@@ -1972,7 +1983,7 @@ function Withdraw(props) {
                                         closePinFunc();
                                     }} />
                                 </div>
-                                <div id="AddressText" className='py-4' style={{ fontSize: smallTabValue == 0 ? "16px" : "20px", textAlign: "center", margin: "0 auto", color: "#909FB4", width: "100%", overflow: "hidden", whiteSpace: "nowrap" }}>{smallTabValue == 0 ? "Address" : "UserID"}  {smallTabValue == 0 ? inputVal.address : inputIDVal} </div>
+                                <div id="AddressText" className='py-4' style={{ fontSize: smallTabValue == 0 ? "16px" : "20px", textAlign: "center", margin: "0 auto", color: "#909FB4", width: "100%", overflow: "hidden", whiteSpace: "nowrap" }}>{smallTabValue == 0 ? "Address:" : "UserID:"}  <span style={{ color: "#ffffff" }}> {smallTabValue == 0 ? inputVal.address : inputIDVal}</span> </div>
                                 <div className='flex justify-center mt-10 ' style={{ width: "100%", overflow: "hidden", borderBottom: "1px solid #2C3950", paddingBottom: "2rem" }}>
                                     <img className='MoneyWithdraw' style={{ borderRadius: '50%' }} src={arrayLookup(symbolsData, 'symbol', symbol, 'avatar') || ''}></img>
                                     <div className='flex'>
@@ -2141,35 +2152,35 @@ function Withdraw(props) {
                             }
                         </div>
                         <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "8px", fontSize: "24px" }}> -{inputVal.amount} {symbol}</motion.div>
-                        <motion.div variants={item} className='mx-20  mt-24' style={{ borderTop: "1px solid #2C3950" }}>
+                        <motion.div variants={item} className='mx-20  mt-20' style={{ borderTop: "1px solid #2C3950" }}>
                         </motion.div>
-                        <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                        <motion.div variants={item} className='flex justify-content-space px-20 mt-20' >
                             <div style={{ color: "#888B92" }}>{t('home_Type')}</div>
                             <div>{t('home_deposite_1')}</div>
                         </motion.div>
                         {
-                            smallTabValue === 1 && <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                            smallTabValue === 1 && <motion.div variants={item} className='flex justify-content-space px-20 mt-20' >
                                 <div style={{ color: "#888B92" }}>{t('card_7')}</div>
                                 <div style={{ width: "50%", wordWrap: "break-word", textAlign: "right" }}>{inputIDVal}</div>
                             </motion.div>
                         }
                         {
-                            smallTabValue === 0 && <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                            smallTabValue === 0 && <motion.div variants={item} className='flex justify-content-space px-20 mt-20' >
                                 <div style={{ color: "#888B92" }}>{t('home_withdraw_14')}</div>
                                 <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{inputVal.address}</div>
                             </motion.div>
                         }
 
-                        <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                        <motion.div variants={item} className='flex justify-content-space px-20 mt-20' >
                             <div style={{ color: "#888B92" }}>{t('home_borrow_18')}</div>
                             <div>{smallTabValue === 0 ? fee : 0}  {symbol} </div>
                         </motion.div>
 
-                        <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                        <motion.div variants={item} className='flex justify-content-space px-20 mt-20' >
                             <div style={{ color: "#888B92" }}>{t('home_ID')}</div>
                             <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{smallTabValue === 0 ? withDrawOrderID : currRequestId}</div>
                         </motion.div>
-                        <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                        <motion.div variants={item} className='flex justify-content-space px-20 mt-20' >
                             <div style={{ color: "#888B92" }}>{t('home_Time')}</div>
                             <div>{getNowTime()}</div>
                         </motion.div>

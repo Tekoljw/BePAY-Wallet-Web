@@ -1,4 +1,3 @@
-
 .font-furore {
     font-family: "Furore";
 }
@@ -910,7 +909,7 @@ input[type='number'] {
 .pasteJianTou {
     width: 2.6rem;
     height: 2.6rem;
-    margin: 0 0.5rem;
+    margin: 0 0.4rem;
 }
 
 .pasteSty {
@@ -1023,14 +1022,14 @@ input[type='number'] {
 }
 
 .PinMoveAni {
-    bottom: -60%;
+    bottom: -75%;
     animation: testMove3 0.3s ease-in-out;
     animation-fill-mode: forwards;
 }
 
 @keyframes testMove3 {
     from {
-        bottom: -60%;
+        bottom: -75%;
     }
 
     to {
@@ -1682,6 +1681,10 @@ input[type='number'] {
     position: absolute;
     width: 100%;
     aspect-ratio: 716 / 416;
+}
+
+.addressShuoDuan .muiltr-m96d3a-MuiInputBase-input-MuiOutlinedInput-input {
+    padding: 15px 34px 15px 10px !important;
 }
 
 .cardErrorZi {
