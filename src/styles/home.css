@@ -909,7 +909,7 @@ input[type='number'] {
 .pasteJianTou {
     width: 2.6rem;
     height: 2.6rem;
-    margin: 0 0.4rem;
+    margin: 0 0rem;
 }
 
 .pasteSty {
@@ -1684,7 +1684,7 @@ input[type='number'] {
 }
 
 .addressShuoDuan .muiltr-m96d3a-MuiInputBase-input-MuiOutlinedInput-input {
-    padding: 15px 34px 15px 10px !important;
+    padding: 15px 28px 15px 8px !important;
 }
 
 .cardErrorZi {

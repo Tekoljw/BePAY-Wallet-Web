@@ -190,7 +190,6 @@ function Withdraw(props) {
     const [typeBinded, setTypeBined] = useState(false);
     const [openBindEmail, setOpenBindEmail] = useState(false);
     const [openBindPhone, setOpenBindPhone] = useState(false);
-    const [addressShuoDuan, setAddressShuoDuan] = useState("");
     const handleChangeInputVal = (prop, value) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
         if (prop == 'amount' && event.target.value != '' && event.target.value != 0) {
@@ -626,7 +625,6 @@ function Withdraw(props) {
 
     const evalFee = (coinName, networkId, priceLevel) => {
         let decimals = (arrayLookup(symbolsData, 'symbol', coinName, 'decimals') || 18) - 4;
-        console.log('decimals', decimals)
         dispatch(evalTokenTransferFee({
             coinName: coinName,
             networkId: networkId,
@@ -1317,7 +1315,7 @@ function Withdraw(props) {
                                                 <FormControl className='addressShuoDuan' sx={{ width: '100%', borderColor: '#94A3B8', backgroundColor: "#151C2A" }} variant="outlined">
                                                     <OutlinedInput
                                                         id="outlined-adornment-address send-tips-container-address"
-                                                        value={truncateString(inputVal.address, 9)}
+                                                        value={inputVal.address}
                                                         onChange={handleChangeInputVal('address')}
                                                         aria-describedby="outlined-weight-helper-text"
                                                     />
