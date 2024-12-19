@@ -16,12 +16,10 @@ import { loadCss } from './app/util/tools/utils';
 import MobileDetect from 'mobile-detect';
 
 const isMobileMedia = new MobileDetect(window.navigator.userAgent).mobile();
-
 const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(<App />);
-
 // 挂载全局方法
 React.$api = api;
 React.$apiGet = apiGet;
@@ -31,12 +29,11 @@ React.$store = store;
 //判断是否需要加载字体包
 setTimeout(() => {
     if (isMobileMedia) {
-
+        loadCss("https://scource-static.funibet.com/funibet/css/font.css");
     } else {
         loadCss("https://scource-static.funibet.com/funibet/css/font.css");
     }
 }, 0);
-
 
 reportWebVitals();
 

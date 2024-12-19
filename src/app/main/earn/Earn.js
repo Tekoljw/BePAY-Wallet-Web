@@ -134,6 +134,7 @@ function Earn(props) {
     const [userPledgeRecordList, setUserPledgeRecordList] = useState([]);
     const [biZhongU, setBiZhongU] = useState("usdt");
     const [biZhongB, setBiZhongB] = useState("bft");
+    const [openTianXie, setOpenTianXie] = useState(false);
 
     const handleChangeInputVal2 = (event) => {
         setInputIDVal(event.target.value);
@@ -254,7 +255,6 @@ function Earn(props) {
                 setInviteRewardAllInfo(result.data)
             }
         });
-
         loopCallInviteRewardDetails(1);
     }
 
@@ -302,15 +302,12 @@ function Earn(props) {
     };
 
 
-
     const openQuKuanFunc = () => {
         getDivHeight("openFuLiBao");
         setTimeout(() => {
             setOpenQuKuan(true);
         }, 0);
     };
-
-
 
 
     const openWaKuangFunc = () => {
@@ -349,6 +346,7 @@ function Earn(props) {
             }
         });
     }
+
 
     const closeZhiYaFunc = () => {
         document.getElementById('openZhiYa').classList.remove('PinMoveAni');
@@ -581,7 +579,11 @@ function Earn(props) {
                         className='mt-16'
                         style={{ paddingInline: "1.5rem" }}
                     >
-                        <div className='text-16'>{t('card_113')}</div>
+                        <div className='flex  justify-between'>
+                            <div className='text-16' style={{ height: "24px", lineHeight: "24px" }}>{t('card_113')}</div>
+                            <div className='px-12' style={{ backgroundColor: "#0D9488", borderRadius: "99px", height: "24px", lineHeight: "24px" }} >填写邀请码</div>
+                        </div>
+
                         <div className='newBlocak'>
                             <div className='flex mt-12'>
                                 {existCurrentActivity(1) && <div className='qianDaoSty flex justify-between px-10' onClick={() => {
@@ -1518,14 +1520,14 @@ function Earn(props) {
                                     <motion.div
                                         variants={item}
                                         className='mt-20 text-12' style={{ textAlign: "center", color: "#A4A4A4" }}>
-                                        质押BFT获得超高收益，每日返利，到期归还质押本金。
+                                        质押BFT获得超高收益，每日返利，到期归还质押本金，收益自动结算到复利宝。
                                     </motion.div>
 
                                     <motion.div
                                         variants={item}
                                         className='pt-10 pb-12 mt-20 flex justify-between' style={{ backgroundColor: "#191A1B", borderRadius: "10px", border: "4px solid #151617" }}>
                                         <div style={{ width: "60%" }}>
-                                            <div className='text-14 ml-10' style={{ textAlign: "left" }}>质押总资产(BFT)</div>
+                                            <div className='text-14 ml-10' style={{ textAlign: "left" }}>质押总收益(BFT)</div>
                                             <div className='text-12 ml-10 mt-12' style={{ textAlign: "left" }}>{tokenPledgeActivityAllInfo.tokenPledgeRewardData ? parseJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData?.all).symbol.BFT : '0.00'} ≈ {tokenPledgeActivityAllInfo.tokenPledgeRewardData ? parseJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData?.all).symbol.usd : '0.00'} USD</div>
                                         </div>
                                         <div style={{ width: "40%" }}>
@@ -2125,6 +2127,16 @@ function Earn(props) {
                             {t('card_195')}
                         </div>
                     </BootstrapDialog>
+
+
+                    <AnimateModal
+                        className=""
+                        open={openTianXie}
+                        onClose={() => setOpenTianXie(false)}
+                    >
+                        <div>aaaaaa</div>
+                    </AnimateModal>
+
 
 
                     {openXiangQing && <div id="target" style={{ position: "absolute", width: "100%", zIndex: "998", backgroundColor: "#0E1421", top: "0%", bottom: "0%" }} >
@@ -2794,10 +2806,6 @@ function Earn(props) {
 
                         </motion.div>
                     </div>}
-
-
-
-
                     <div style={{ height: "50px" }}></div>
                 </div>
             }
