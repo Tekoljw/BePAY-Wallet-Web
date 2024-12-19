@@ -834,11 +834,8 @@ const locale = {
     card_264:"Rút tiền thất bại, tài sản bị đóng băng đã được giải phóng",
     card_265:"Số Dư Bị Đóng Băng",
 
-
-
-
-
-
+    earn_1:"mã mời",
+    earn_2:"Nhập mã giới thiệu",
 
 
 

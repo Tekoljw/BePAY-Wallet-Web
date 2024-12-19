@@ -848,6 +848,20 @@ const locale = {
     card_265:"Baki Beku",
 
 
+    earn_1:"kod jemputan",
+    earn_2:"Masukkan kod rujukan",
+
+
+
+    
+
+
+
+
+
+
+
+
 
 
 

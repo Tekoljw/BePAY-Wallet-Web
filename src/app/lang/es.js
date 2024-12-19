@@ -845,6 +845,20 @@ const locale = {
     card_264:"Falló el retiro, los activos congelados han sido liberados",
     card_265:"Saldo Congelado",
 
+    earn_1:"código de invitación",
+    earn_2:"Introducir código de invitación",
+
+
+
+    
+
+
+
+
+
+
+
+
 
 
 

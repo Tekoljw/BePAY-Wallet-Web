@@ -847,6 +847,20 @@ const locale = {
     card_264:"Withdrawal failed, frozen assets have been released",
     card_265:"Frozen Balance",
 
+    earn_1:"Invitation code",
+    earn_2:"Enter referral code",
+
+
+
+    
+
+
+
+
+
+
+
+
 
 
 

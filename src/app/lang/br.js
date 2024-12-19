@@ -844,6 +844,19 @@ const locale = {
     card_264:"Falha na retirada, ativos congelados foram liberados",
     card_265:"Saldo",
 
+    earn_1:"código de convite",
+    earn_2:"Preencher o código de convite",
+
+
+
+    
+
+
+
+
+
+
+
 
 
 

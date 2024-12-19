@@ -845,6 +845,20 @@ const locale = {
     card_264:"Penarikan gagal, aset yang dibekukan telah dibebaskan",
     card_265:"Saldo Beku",
 
+    earn_1:"kode undangan",
+    earn_2:"Masukkan kode undangan",
+
+
+
+    
+
+
+
+
+
+
+
+
 
 
 

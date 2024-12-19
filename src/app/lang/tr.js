@@ -845,6 +845,20 @@ const locale = {
     card_265:"Donmuş Bakiye",
 
 
+    earn_1:"davet kodu",
+    earn_2:"Davet kodunu girin",
+
+
+
+    
+
+
+
+
+
+
+
+
 
 
 

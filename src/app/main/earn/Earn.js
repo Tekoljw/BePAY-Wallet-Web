@@ -136,16 +136,19 @@ function Earn(props) {
     const [biZhongU, setBiZhongU] = useState("usdt");
     const [biZhongB, setBiZhongB] = useState("bft");
     const [openTianXie, setOpenTianXie] = useState(false);
-
+    const [yaoQingMa, setYaoQingMa] = useState(0);
     const handleChangeInputVal2 = (event) => {
         setInputIDVal(event.target.value);
     };
     const [symbol, setSymbol] = useState('');
     const [symbolWallet, setSymbolWallet] = useState([]);
     const [symbolList, setSymbolList] = useState([]);
-
-
     //activityId:  1:签到, 2:钱包支付分成, 3:活期利息 4:swap兑换分成 5:转盘 6:质押挖矿 7:合约交易 8:复利宝 9:社区活动 10:钱包全球节点
+
+    const handleChangeInputVal = (event) => {
+        setYaoQingMa(event.target.value);
+    };
+
 
     useEffect(() => {
         setPhoneTab('card');
@@ -492,42 +495,42 @@ function Earn(props) {
             setCurDay(result?.data?.curDay);
             setDays(days)
             setSignInState(result?.data?.signInData ? parseJson(result.data.signInData).signInState : [])
-            const tempCumculative = findAndSlice(cumulativeConfig.map((item)=>{return item.cumulativeDay}), _.size(result?.data?.signInData ? parseJson(result.data.signInData).signInState : []));
+            const tempCumculative = findAndSlice(cumulativeConfig.map((item) => { return item.cumulativeDay }), _.size(result?.data?.signInData ? parseJson(result.data.signInData).signInState : []));
             setCurrentCumculativeVal(tempCumculative);
             const step = retriveCurrentStep(result?.data?.signInData ? parseJson(result.data.signInData).signInState : []);
             setCurrentStep(step);
         })
     }
 
-    const findAndSlice =  (arr, val) => {
+    const findAndSlice = (arr, val) => {
         // 判断如果 val 大于数组的最后一位
         if (val > arr[arr.length - 1]) {
-          // 获取数组中最后一个 3 的倍数索引
-          let lastIndex = arr
-            .map((_, index) => index) // 获取所有索引
-            .filter(index => (index + 1) % 3 === 0) // 只保留 3 的倍数索引
-            .pop(); // 获取最后一个 3 的倍数索引
-      
-          if (lastIndex !== undefined) {
-            return arr.slice(lastIndex, lastIndex + 3); // 截取 3 个值
-          }
+            // 获取数组中最后一个 3 的倍数索引
+            let lastIndex = arr
+                .map((_, index) => index) // 获取所有索引
+                .filter(index => (index + 1) % 3 === 0) // 只保留 3 的倍数索引
+                .pop(); // 获取最后一个 3 的倍数索引
+
+            if (lastIndex !== undefined) {
+                return arr.slice(lastIndex, lastIndex + 3); // 截取 3 个值
+            }
         } else {
-          // 筛选出索引是 3 的倍数的位置
-          let indices = arr
-            .map((_, index) => index)
-            .filter(index => (index) % 3 === 0); // 筛选索引是 3 的倍数的
-      
-          // 找到满足条件的位置
-          let startIndex = indices.find(index => arr[index] <= val);
-      
-          if (startIndex !== undefined) {
-            return arr.slice(startIndex, startIndex + 3); // 截取 3 个值
-          }
+            // 筛选出索引是 3 的倍数的位置
+            let indices = arr
+                .map((_, index) => index)
+                .filter(index => (index) % 3 === 0); // 筛选索引是 3 的倍数的
+
+            // 找到满足条件的位置
+            let startIndex = indices.find(index => arr[index] <= val);
+
+            if (startIndex !== undefined) {
+                return arr.slice(startIndex, startIndex + 3); // 截取 3 个值
+            }
         }
-      
+
         return "没有满足条件的索引"; // 如果没有找到满足条件的值
-      }
-      
+    }
+
 
     const retriveCurrentStep = (list) => {
         const signedDays = _.size(list);
@@ -537,11 +540,11 @@ function Earn(props) {
             return 1
         } else if (signedDays === cumulativeConfig[0].cumulativeDay) {
             return 2
-        } else if (cumulativeConfig[0].cumulativeDay < signedDays &&  signedDays < cumulativeConfig[1].cumulativeDay) {
+        } else if (cumulativeConfig[0].cumulativeDay < signedDays && signedDays < cumulativeConfig[1].cumulativeDay) {
             return 3
         } else if (signedDays === cumulativeConfig[1].cumulativeDay) {
             return 4
-        } else if (cumulativeConfig[1].cumulativeDay < signedDays &&  signedDays < cumulativeConfig[2].cumulativeDay) {
+        } else if (cumulativeConfig[1].cumulativeDay < signedDays && signedDays < cumulativeConfig[2].cumulativeDay) {
             return 5
         } else if (signedDays === cumulativeConfig[2].cumulativeDay) {
             return 6
@@ -613,8 +616,12 @@ function Earn(props) {
                         style={{ paddingInline: "1.5rem" }}
                     >
                         <div className='flex  justify-between'>
-                            <div className='text-16' style={{ height: "24px", lineHeight: "24px" }}>{t('card_113')}</div>
-                            <div className='px-12' style={{ backgroundColor: "#0D9488", borderRadius: "99px", height: "24px", lineHeight: "24px" }} >填写邀请码</div>
+                            <div className='text-16' style={{ height: "26px", lineHeight: "26px" }}>{t('card_113')}</div>
+                            <div className='px-10' style={{ backgroundColor: "#0D9488", borderRadius: "99px", height: "26px", lineHeight: "26px" }}
+                                onClick={() => {
+                                    setOpenTianXie(true)
+                                }}
+                            >{t("earn_2")}</div>
                         </div>
 
                         <div className='newBlocak'>
@@ -831,7 +838,7 @@ function Earn(props) {
                                         <div className='' style={{ fontSize: "20px", overflow: 'hidden' }}>BeingFi 支付</div>
                                     </div>
                                     <div><span >小费，</span><span style={{ fontSize: "20px", color: "#30F2DD" }}>大收益</span></div>
-                                    <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>享受佣金 </span><span style={{ color: "#ffc600", fontWeight: "bold", fontSize: "29px" }}>{(activityInfo?.walletPayRate * 100)?.toFixed(3) }%</span></div>
+                                    <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>享受佣金 </span><span style={{ color: "#ffc600", fontWeight: "bold", fontSize: "29px" }}>{(activityInfo?.walletPayRate * 100)?.toFixed(3)}%</span></div>
                                 </div>
                                 <img className='earnYouTu2 mt-16' src="wallet/assets/images/earn/bi5.png" />
                             </div>
@@ -898,516 +905,515 @@ function Earn(props) {
                         open={openCheckIn}
                         onClose={() => setOpenCheckIn(false)}
                     >
-                        <div>
-                            <Typography className="textAlignRight">
-                                <span
-                                    style={{ display: "block", color: "#FFD569" }}
-                                    className=" checkInTitleMt  text-align titleTxt"
-                                >
-                                    {t('card_172')}
-                                </span>
-                            </Typography>
-                            <motion.div variants={container} initial="hidden" animate="show">
-                                <motion.div
-                                    variants={item}
-                                    className="text-16  text-align checkInTxtmtMiaoShu"
-                                >
-                                    {t('card_132')}
-                                </motion.div>
-                                <motion.div
-                                    variants={item}
+
+                        <Typography className="textAlignRight">
+                            <span
+                                style={{ display: "block", color: "#FFD569" }}
+                                className=" checkInTitleMt  text-align titleTxt"
+                            >
+                                {t('card_172')}
+                            </span>
+                        </Typography>
+
+
+                        <motion.div variants={container} initial="hidden" animate="show">
+                            <motion.div
+                                variants={item}
+                                className="text-16  text-align checkInTxtmtMiaoShu"
+                            >
+                                {t('card_132')}
+                            </motion.div>
+                            <motion.div
+                                variants={item}
+                                style={{
+                                    position: "relative",
+                                    paddingTop: "15%",
+                                    marginLeft: "5%",
+                                }}
+                            >
+                                <div
+                                    className="borderRadius "
                                     style={{
-                                        position: "relative",
-                                        paddingTop: "15%",
-                                        marginLeft: "5%",
+                                        width: "90%",
+                                        height: "12px",
+                                        backgroundColor: "#0F1520",
+                                        position: "absolute",
                                     }}
                                 >
                                     <div
-                                        className="borderRadius "
+                                        className="borderRadius"
                                         style={{
-                                            width: "90%",
-                                            height: "12px",
-                                            backgroundColor: "#0F1520",
+                                            width: 14.3 * currentStep + "%",
+                                            height: "13px",
+                                            backgroundColor: "#EA9B13",
                                             position: "absolute",
                                         }}
                                     >
-                                        <div
-                                            className="borderRadius"
-                                            style={{
-                                                width: 14.3 * currentStep + "%",
-                                                height: "13px",
-                                                backgroundColor: "#EA9B13",
-                                                position: "absolute",
-                                            }}
-                                        >
-                                        </div>
                                     </div>
-                                    <motion.div
-                                        variants={container}
-                                        initial="hidden"
-                                        animate="show"
-                                        className="flex"
-                                        style={{ position: "absolute", top: "14%", left: "22%" }}
-                                    >
-                                        <motion.div
-                                            variants={item}
-                                            className="width-85 align-item text-align"
-                                        >
-                                            <div className="text-14" style={{ color: "#FFD569" }}>
-                                                {cumulativeConfig[0]?.cumulativeDay || 0}{t('card_103')}
-                                            </div>
-                                            <img
-                                                src="wallet/assets/images/earn/jinBi2.png"
-                                                style={{ width: "64px" }}
-                                            />
-                                            <div className="text-14" style={{ color: "#ffffff" }}>
-                                                {cumulativeConfig[0]?.rewardValue || 0} U
-                                            </div>
-                                        </motion.div>
-                                        <motion.div
-                                            variants={item}
-                                            className="width-85 align-item text-align"
-                                            style={{ marginLeft: "3%" }}
-                                        >
-                                            <div className="text-14" style={{ color: "#FFD569" }}>
-                                                {cumulativeConfig[1]?.cumulativeDay || 0}{t('card_103')}
-                                            </div>
-                                            <img
-                                                src="wallet/assets/images/earn/jinBi3.png"
-                                                style={{ width: "64px" }}
-                                            />
-                                            <div className="text-14" style={{ color: "#ffffff" }}>
-                                                {cumulativeConfig[1]?.rewardValue || 0} U
-                                            </div>
-                                        </motion.div>
-                                        <motion.div
-                                            variants={item}
-                                            className="width-85 align-item text-align"
-                                            style={{ marginLeft: "3%" }}
-                                        >
-                                            <div className="text-14" style={{ color: "#FFD569" }}>
-                                                {cumulativeConfig[2]?.cumulativeDay || 0}{t('card_103')}
-                                            </div>
-                                            <img
-                                                src="wallet/assets/images/earn/jinBi3.png"
-                                                style={{ width: "64px" }}
-                                            />
-                                            <div className="text-14" style={{ color: "#ffffff" }}>
-                                                {cumulativeConfig[2]?.rewardValue || 0} U
-                                            </div>
-                                        </motion.div>
-                                    </motion.div>
-                                </motion.div>
-
-                                <div className="flex px-2" style={{ marginTop: "20%" }}>
-                                    <motion.div
-                                        variants={item}
-                                        className="align-item text-align  btnPointer  mx-4"
-                                        style={{ position: "relative", width: "23%", opacity: Number(days[0]) < Number(curDay) ? 0.4 : 1}}
-                                        onClick={() => { }}
-                                    >
-                                        <img
-                                            className="positionAb"
-                                            style={{ top: "0px", left: "0px" }}
-                                            src="wallet/assets/images/earn/phoneQianDao1.png"
-                                        />
-                                        <div
-                                            className="positionAb text-14 marginJuZhong"
-                                            style={{
-                                                paddingTop: "8%",
-                                                width: "100%",
-                                                color: "#ffffff",
-                                            }}
-                                        >
-                                            Day {days[0]}
-                                        </div>
-                                        <img
-                                            className="positionAb marginJuZhong"
-                                            style={{ top: "24px", left: "8px", width: "80%" }}
-                                            src="wallet/assets/images/earn/jinBi1.png"
-                                        />
-                                        <div
-                                            className="positionAb text-14"
-                                            style={{
-                                                top: "92px",
-                                                left: "0px",
-                                                width: "100%",
-                                                color: "#ffffff",
-                                            }}
-                                        >
-                                            {signInConfig[0]?.rewardValue || 0} U
-                                        </div>
-                                        {signInState && days[0] && signInState.indexOf(days[0]) > -1 && (
-                                            <img
-                                                className="positionAb"
-                                                style={{ top: "0px", left: "0px" }}
-                                                src="wallet/assets/images/earn/checkOver1.png"
-                                            />
-                                        )}
-                                        {(days[0] === curDay && (!signInState || (days[0] && signInState && signInState.indexOf(days[0]) < 0))) && (
-                                            <img
-                                                className="positionAb"
-                                                style={{ top: "0px", left: "0px" }}
-                                                src="wallet/assets/images/earn/checkOver_1.png"
-                                                onClick={() => {
-                                                    if (days[0] != curDay) return;
-                                                    handleSignin()
-                                                }}
-                                            />
-                                        )}
-                                    </motion.div>
-
-                                    <motion.div
-                                        variants={item}
-                                        className="align-item text-align  btnPointer txtBrightness mx-4"
-                                        style={{ position: "relative", width: "23%", opacity: Number(days[1]) < Number(curDay) ? 0.4 : 1 }}
-                                        onClick={() => { }}
-                                    >
-                                        <img
-                                            className="positionAb"
-                                            style={{ top: "0px", left: "0px" }}
-                                            src="wallet/assets/images/earn/phoneQianDao1.png"
-                                        />
-                                        <div
-                                            className="positionAb text-14 marginJuZhong "
-                                            style={{
-                                                paddingTop: "8%",
-                                                width: "100%",
-                                                color: "#ffffff",
-                                            }}
-                                        >
-                                            Day {days[1]}
-                                        </div>
-                                        <img
-                                            className="positionAb marginJuZhong"
-                                            style={{ top: "24px", left: "8px", width: "80%" }}
-                                            src="wallet/assets/images/earn/jinBi1.png"
-                                        />
-                                        <div
-                                            className="positionAb text-14"
-                                            style={{
-                                                top: "92px",
-                                                left: "0px",
-                                                width: "100%",
-                                                color: "#ffffff",
-                                            }}
-                                        >
-                                            {signInConfig[1]?.rewardValue || 0} U
-                                        </div>
-                                        {signInState && days[1] && signInState.indexOf(days[1]) > -1 && (
-                                            <img
-                                                className="positionAb"
-                                                style={{ top: "0px", left: "0px" }}
-                                                src="wallet/assets/images/earn/checkOver1.png"
-                                            />
-                                        )}
-                                        {(days[1] === curDay && (!signInState || (days[1] && signInState && signInState.indexOf(days[1]) < 0))) && (
-                                            <img
-                                                className="positionAb"
-                                                style={{ top: "0px", left: "0px" }}
-                                                src="wallet/assets/images/earn/checkOver_1.png"
-                                                onClick={() => {
-                                                    if (days[1] != curDay) return;
-                                                    handleSignin()
-                                                }}
-                                            />
-                                        )}
-                                    </motion.div>
-
-                                    <motion.div
-                                        variants={item}
-                                        className="align-item text-align  btnPointer txtBrightness mx-4"
-                                        style={{ position: "relative", width: "23%", opacity: Number(days[2]) < Number(curDay) ? 0.4 : 1 }}
-                                        onClick={() => { }}
-                                    >
-                                        <img
-                                            className="positionAb"
-                                            style={{ top: "0px", left: "0px" }}
-                                            src="wallet/assets/images/earn/phoneQianDao1.png"
-                                        />
-                                        <div
-                                            className="positionAb text-14 marginJuZhong "
-                                            style={{
-                                                paddingTop: "8%",
-                                                width: "100%",
-                                                color: "#ffffff",
-                                            }}
-                                        >
-                                            Day {days[2]}
-                                        </div>
-                                        <img
-                                            className="positionAb marginJuZhong"
-                                            style={{ top: "24px", left: "8px", width: "80%" }}
-                                            src="wallet/assets/images/earn/jinBi2.png"
-                                        />
-                                        <div
-                                            className="positionAb text-14"
-                                            style={{
-                                                top: "92px",
-                                                left: "0px",
-                                                width: "100%",
-                                                color: "#ffffff",
-                                            }}
-                                        >
-                                            {signInConfig[2]?.rewardValue || 0} U
-                                        </div>
-                                        {signInState && days[2] && signInState.indexOf(days[2]) > -1 && (
-                                            <img
-                                                className="positionAb"
-                                                style={{ top: "0px", left: "0px" }}
-                                                src="wallet/assets/images/earn/checkOver1.png"
-                                            />
-                                        )}
-                                        {(days[2] === curDay && (!signInState || (days[2] && signInState && signInState.indexOf(days[2]) < 0))) && (
-                                            <img
-                                                className="positionAb"
-                                                style={{ top: "0px", left: "0px" }}
-                                                src="wallet/assets/images/earn/checkOver_1.png"
-                                                onClick={() => {
-                                                    if (days[2] != curDay) return;
-                                                    handleSignin()
-                                                }}
-                                            />
-                                        )}
-                                    </motion.div>
-
-                                    <motion.div
-                                        variants={item}
-                                        className=" align-item text-align  btnPointer txtBrightness mx-4"
-                                        style={{ position: "relative", width: "23%", opacity: Number(days[3]) < Number(curDay) ? 0.4 : 1 }}
-                                        onClick={() => { }}
-                                    >
-                                        <img
-                                            className="positionAb"
-                                            style={{ top: "0px", left: "0px" }}
-                                            src="wallet/assets/images/earn/phoneQianDao1.png"
-                                        />
-                                        <div
-                                            className="positionAb text-14 marginJuZhong "
-                                            style={{
-                                                paddingTop: "8%",
-                                                width: "100%",
-                                                color: "#ffffff",
-                                            }}
-                                        >
-                                            Day {days[3]}
-                                        </div>
-                                        <img
-                                            className="positionAb marginJuZhong"
-                                            style={{ top: "24px", left: "8px", width: "80%" }}
-                                            src="wallet/assets/images/earn/jinBi2.png"
-                                        />
-                                        <div
-                                            className="positionAb text-14"
-                                            style={{
-                                                top: "92px",
-                                                left: "0px",
-                                                width: "100%",
-                                                color: "#ffffff",
-                                            }}
-                                        >
-                                            {signInConfig[3]?.rewardValue || 0} U
-                                        </div>
-                                        {signInState && days[3] && signInState.indexOf(days[3]) > -1 && (
-                                            <img
-                                                className="positionAb"
-                                                style={{ top: "0px", left: "0px" }}
-                                                src="wallet/assets/images/earn/checkOver1.png"
-                                            />
-                                        )}
-                                        {(days[3] === curDay && (!signInState || (days[3] && signInState && signInState.indexOf(days[3]) < 0))) && (
-                                            <img
-                                                className="positionAb"
-                                                style={{ top: "0px", left: "0px" }}
-                                                src="wallet/assets/images/earn/checkOver_1.png"
-                                                onClick={() => {
-                                                    if (days[3] != curDay) return;
-                                                    handleSignin()
-                                                }}
-                                            />
-                                        )}
-                                    </motion.div>
                                 </div>
-
-                                <div
-                                    className="flex px-2 justifyContent"
-                                    style={{ marginTop: "40%" }}
+                                <motion.div
+                                    variants={container}
+                                    initial="hidden"
+                                    animate="show"
+                                    className="flex"
+                                    style={{ position: "absolute", top: "14%", left: "22%" }}
                                 >
                                     <motion.div
                                         variants={item}
-                                        className="align-item text-align  btnPointer txtBrightness mx-4"
-                                        style={{ position: "relative", width: "23%", opacity: Number(days[4]) < Number(curDay) ? 0.4 : 1}}
-                                        onClick={() => { }}
+                                        className="width-85 align-item text-align"
                                     >
-                                        <img
-                                            className="positionAb"
-                                            style={{ top: "0px", left: "0px" }}
-                                            src="wallet/assets/images/earn/phoneQianDao1.png"
-                                        />
-                                        <div
-                                            className="positionAb text-14 marginJuZhong"
-                                            style={{
-                                                paddingTop: "8%",
-                                                width: "100%",
-                                                color: "#ffffff",
-                                            }}
-                                        >
-                                            Day {days[4]}
+                                        <div className="text-14" style={{ color: "#FFD569" }}>
+                                            {cumulativeConfig[0]?.cumulativeDay || 0}{t('card_103')}
                                         </div>
                                         <img
-                                            className="positionAb marginJuZhong"
-                                            style={{ top: "24px", left: "8px", width: "80%" }}
-                                            src="wallet/assets/images/earn/jinBi3.png"
+                                            src="wallet/assets/images/earn/jinBi2.png"
+                                            style={{ width: "64px" }}
                                         />
-                                        <div
-                                            className="positionAb text-14"
-                                            style={{
-                                                top: "92px",
-                                                left: "0px",
-                                                width: "100%",
-                                                color: "#ffffff",
-                                            }}
-                                        >
-                                            {signInConfig[4]?.rewardValue || 0} U
+                                        <div className="text-14" style={{ color: "#ffffff" }}>
+                                            {cumulativeConfig[0]?.rewardValue || 0} U
                                         </div>
-                                        {signInState && days[4] && signInState.indexOf(days[4]) > -1 && (
-                                            <img
-                                                className="positionAb"
-                                                style={{ top: "0px", left: "0px" }}
-                                                src="wallet/assets/images/earn/checkOver1.png"
-                                            />
-                                        )}
-                                        {(days[4] === curDay && (!signInState || (days[4] && signInState && signInState.indexOf(days[4]) < 0))) && (
-                                            <img
-                                                className="positionAb"
-                                                style={{ top: "0px", left: "0px" }}
-                                                src="wallet/assets/images/earn/checkOver_1.png"
-                                                onClick={() => {
-                                                    if (days[4] != curDay) return;
-                                                    handleSignin()
-                                                }}
-                                            />
-                                        )}
                                     </motion.div>
-
                                     <motion.div
                                         variants={item}
-                                        className=" align-item text-align  btnPointer txtBrightness mx-4"
-                                        style={{ position: "relative", width: "23%", opacity: Number(days[5]) < Number(curDay) ? 0.4 : 1 }}
-                                        onClick={() => { }}
+                                        className="width-85 align-item text-align"
+                                        style={{ marginLeft: "3%" }}
                                     >
-                                        <img
-                                            className="positionAb"
-                                            style={{ top: "0px", left: "0px" }}
-                                            src="wallet/assets/images/earn/phoneQianDao1.png"
-                                        />
-                                        <div
-                                            className="positionAb text-14 marginJuZhong "
-                                            style={{
-                                                paddingTop: "8%",
-                                                width: "100%",
-                                                color: "#ffffff",
-                                            }}
-                                        >
-                                            Day {days[5]}
+                                        <div className="text-14" style={{ color: "#FFD569" }}>
+                                            {cumulativeConfig[1]?.cumulativeDay || 0}{t('card_103')}
                                         </div>
                                         <img
-                                            className="positionAb marginJuZhong"
-                                            style={{ top: "24px", left: "8px", width: "80%" }}
                                             src="wallet/assets/images/earn/jinBi3.png"
+                                            style={{ width: "64px" }}
                                         />
-                                        <div
-                                            className="positionAb text-14"
-                                            style={{
-                                                top: "92px",
-                                                left: "0px",
-                                                width: "100%",
-                                                color: "#ffffff",
-                                            }}
-                                        >
-                                            {signInConfig[5]?.rewardValue || 0} U
+                                        <div className="text-14" style={{ color: "#ffffff" }}>
+                                            {cumulativeConfig[1]?.rewardValue || 0} U
                                         </div>
-                                        {signInState && days[5] && signInState.indexOf(days[5]) > -1 && (
-                                            <img
-                                                className="positionAb"
-                                                style={{ top: "0px", left: "0px" }}
-                                                src="wallet/assets/images/earn/checkOver1.png"
-                                            />
-                                        )}
-                                        {(days[5] === curDay && (!signInState || (days[5] && signInState && signInState.indexOf(days[5]) < 0))) && (
-                                            <img
-                                                className="positionAb"
-                                                style={{ top: "0px", left: "0px" }}
-                                                src="wallet/assets/images/earn/checkOver_1.png"
-                                                onClick={() => {
-                                                    if (days[5] != curDay) return;
-                                                    handleSignin()
-                                                }}
-                                            />
-                                        )}
                                     </motion.div>
-
                                     <motion.div
                                         variants={item}
-                                        className=" align-item text-align  btnPointer txtBrightness mx-4"
-                                        style={{ position: "relative", width: "23%", opacity: Number(days[6]) < Number(curDay) ? 0.4 : 1 }}
-                                        onClick={() => {
-
-                                        }}
+                                        className="width-85 align-item text-align"
+                                        style={{ marginLeft: "3%" }}
                                     >
-                                        <img
-                                            className="positionAb"
-                                            style={{ top: "0px", left: "0px" }}
-                                            src="wallet/assets/images/earn/phoneQianDao1.png"
-                                        />
-                                        <div
-                                            className="positionAb text-14 marginJuZhong "
-                                            style={{
-                                                paddingTop: "8%",
-                                                width: "100%",
-                                                color: "#ffffff",
-                                            }}
-                                        >
-                                            Day {days[6]}
+                                        <div className="text-14" style={{ color: "#FFD569" }}>
+                                            {cumulativeConfig[2]?.cumulativeDay || 0}{t('card_103')}
                                         </div>
                                         <img
-                                            className="positionAb marginJuZhong"
-                                            style={{ top: "24px", left: "8px", width: "80%" }}
-                                            src="wallet/assets/images/earn/jinBi4.png"
+                                            src="wallet/assets/images/earn/jinBi3.png"
+                                            style={{ width: "64px" }}
                                         />
-                                        <div
-                                            className="positionAb text-14"
-                                            style={{
-                                                top: "92px",
-                                                left: "0px",
-                                                width: "100%",
-                                                color: "#ffffff",
-                                            }}
-                                        >
-                                            {signInConfig[6]?.rewardValue || 0} U
+                                        <div className="text-14" style={{ color: "#ffffff" }}>
+                                            {cumulativeConfig[2]?.rewardValue || 0} U
                                         </div>
-                                        {signInState && days[6] && signInState.indexOf(days[6]) > -1 && (
-                                            <img
-                                                className="positionAb"
-                                                style={{ top: "0px", left: "0px" }}
-                                                src="wallet/assets/images/earn/checkOver1.png "
-                                            />
-                                        )}
-                                        {(days[6] === curDay && (!signInState || (days[6] && signInState && signInState.indexOf(days[6]) < 0))) && (
-                                            <img
-                                                className="positionAb"
-                                                style={{ top: "0px", left: "0px" }}
-                                                src="wallet/assets/images/earn/checkOver_1.png"
-                                                onClick={() => {
-                                                    if (days[6] != curDay) return;
-                                                    handleSignin()
-                                                }}
-                                            />
-                                        )}
                                     </motion.div>
-                                </div>
+                                </motion.div>
                             </motion.div>
+
+                        </motion.div>
+
+
+                        <div className="flex px-2" style={{ marginTop: "20%" }}>
+
+                            <div
+                                className="align-item text-align  btnPointer  mx-4"
+                                style={{ position: "relative", width: "23%", opacity: Number(days[0]) < Number(curDay) ? 0.4 : 1 }}
+                                onClick={() => { }}
+                            >
+                                <img
+                                    className="positionAb"
+                                    style={{ top: "0px", left: "0px" }}
+                                    src="wallet/assets/images/earn/phoneQianDao1.png"
+                                />
+                                <div
+                                    className="positionAb text-14 marginJuZhong"
+                                    style={{
+                                        paddingTop: "8%",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    Day {days[0]}
+                                </div>
+                                <img
+                                    className="positionAb marginJuZhong"
+                                    style={{ top: "24px", left: "8px", width: "80%" }}
+                                    src="wallet/assets/images/earn/jinBi1.png"
+                                />
+                                <div
+                                    className="positionAb text-14"
+                                    style={{
+                                        top: "92px",
+                                        left: "0px",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    {signInConfig[0]?.rewardValue || 0} U
+                                </div>
+                                {signInState && days[0] && signInState.indexOf(days[0]) > -1 && (
+                                    <img
+                                        className="positionAb"
+                                        style={{ top: "0px", left: "0px" }}
+                                        src="wallet/assets/images/earn/checkOver1.png"
+                                    />
+                                )}
+                                {(days[0] === curDay && (!signInState || (days[0] && signInState && signInState.indexOf(days[0]) < 0))) && (
+                                    <img
+                                        className="positionAb"
+                                        style={{ top: "0px", left: "0px" }}
+                                        src="wallet/assets/images/earn/checkOver_1.png"
+                                        onClick={() => {
+                                            if (days[0] != curDay) return;
+                                            handleSignin()
+                                        }}
+                                    />
+                                )}
+                            </div>
+
+                            <div
+                                className="align-item text-align  btnPointer txtBrightness mx-4"
+                                style={{ position: "relative", width: "23%", opacity: Number(days[1]) < Number(curDay) ? 0.4 : 1 }}
+                                onClick={() => { }}
+                            >
+                                <img
+                                    className="positionAb"
+                                    style={{ top: "0px", left: "0px" }}
+                                    src="wallet/assets/images/earn/phoneQianDao1.png"
+                                />
+                                <div
+                                    className="positionAb text-14 marginJuZhong "
+                                    style={{
+                                        paddingTop: "8%",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    Day {days[1]}
+                                </div>
+                                <img
+                                    className="positionAb marginJuZhong"
+                                    style={{ top: "24px", left: "8px", width: "80%" }}
+                                    src="wallet/assets/images/earn/jinBi1.png"
+                                />
+                                <div
+                                    className="positionAb text-14"
+                                    style={{
+                                        top: "92px",
+                                        left: "0px",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    {signInConfig[1]?.rewardValue || 0} U
+                                </div>
+                                {signInState && days[1] && signInState.indexOf(days[1]) > -1 && (
+                                    <img
+                                        className="positionAb"
+                                        style={{ top: "0px", left: "0px" }}
+                                        src="wallet/assets/images/earn/checkOver1.png"
+                                    />
+                                )}
+                                {(days[1] === curDay && (!signInState || (days[1] && signInState && signInState.indexOf(days[1]) < 0))) && (
+                                    <img
+                                        className="positionAb"
+                                        style={{ top: "0px", left: "0px" }}
+                                        src="wallet/assets/images/earn/checkOver_1.png"
+                                        onClick={() => {
+                                            if (days[1] != curDay) return;
+                                            handleSignin()
+                                        }}
+                                    />
+                                )}
+                            </div>
+
+                            <div
+                                className="align-item text-align  btnPointer txtBrightness mx-4"
+                                style={{ position: "relative", width: "23%", opacity: Number(days[2]) < Number(curDay) ? 0.4 : 1 }}
+                                onClick={() => { }}
+                            >
+                                <img
+                                    className="positionAb"
+                                    style={{ top: "0px", left: "0px" }}
+                                    src="wallet/assets/images/earn/phoneQianDao1.png"
+                                />
+                                <div
+                                    className="positionAb text-14 marginJuZhong "
+                                    style={{
+                                        paddingTop: "8%",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    Day {days[2]}
+                                </div>
+                                <img
+                                    className="positionAb marginJuZhong"
+                                    style={{ top: "24px", left: "8px", width: "80%" }}
+                                    src="wallet/assets/images/earn/jinBi2.png"
+                                />
+                                <div
+                                    className="positionAb text-14"
+                                    style={{
+                                        top: "92px",
+                                        left: "0px",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    {signInConfig[2]?.rewardValue || 0} U
+                                </div>
+                                {signInState && days[2] && signInState.indexOf(days[2]) > -1 && (
+                                    <img
+                                        className="positionAb"
+                                        style={{ top: "0px", left: "0px" }}
+                                        src="wallet/assets/images/earn/checkOver1.png"
+                                    />
+                                )}
+                                {(days[2] === curDay && (!signInState || (days[2] && signInState && signInState.indexOf(days[2]) < 0))) && (
+                                    <img
+                                        className="positionAb"
+                                        style={{ top: "0px", left: "0px" }}
+                                        src="wallet/assets/images/earn/checkOver_1.png"
+                                        onClick={() => {
+                                            if (days[2] != curDay) return;
+                                            handleSignin()
+                                        }}
+                                    />
+                                )}
+                            </div>
+
+                            <div
+                                className=" align-item text-align  btnPointer txtBrightness mx-4"
+                                style={{ position: "relative", width: "23%", opacity: Number(days[3]) < Number(curDay) ? 0.4 : 1 }}
+                                onClick={() => { }}
+                            >
+                                <img
+                                    className="positionAb"
+                                    style={{ top: "0px", left: "0px" }}
+                                    src="wallet/assets/images/earn/phoneQianDao1.png"
+                                />
+                                <div
+                                    className="positionAb text-14 marginJuZhong "
+                                    style={{
+                                        paddingTop: "8%",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    Day {days[3]}
+                                </div>
+                                <img
+                                    className="positionAb marginJuZhong"
+                                    style={{ top: "24px", left: "8px", width: "80%" }}
+                                    src="wallet/assets/images/earn/jinBi2.png"
+                                />
+                                <div
+                                    className="positionAb text-14"
+                                    style={{
+                                        top: "92px",
+                                        left: "0px",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    {signInConfig[3]?.rewardValue || 0} U
+                                </div>
+                                {signInState && days[3] && signInState.indexOf(days[3]) > -1 && (
+                                    <img
+                                        className="positionAb"
+                                        style={{ top: "0px", left: "0px" }}
+                                        src="wallet/assets/images/earn/checkOver1.png"
+                                    />
+                                )}
+                                {(days[3] === curDay && (!signInState || (days[3] && signInState && signInState.indexOf(days[3]) < 0))) && (
+                                    <img
+                                        className="positionAb"
+                                        style={{ top: "0px", left: "0px" }}
+                                        src="wallet/assets/images/earn/checkOver_1.png"
+                                        onClick={() => {
+                                            if (days[3] != curDay) return;
+                                            handleSignin()
+                                        }}
+                                    />
+                                )}
+                            </div>
+
                         </div>
+
+                        <div
+                            className="flex px-2 justifyContent"
+                            style={{ marginTop: "40%" }}
+                        >
+                            <div
+                                className="align-item text-align  btnPointer txtBrightness mx-4"
+                                style={{ position: "relative", width: "23%", opacity: Number(days[4]) < Number(curDay) ? 0.4 : 1 }}
+                                onClick={() => { }}
+                            >
+                                <img
+                                    className="positionAb"
+                                    style={{ top: "0px", left: "0px" }}
+                                    src="wallet/assets/images/earn/phoneQianDao1.png"
+                                />
+                                <div
+                                    className="positionAb text-14 marginJuZhong"
+                                    style={{
+                                        paddingTop: "8%",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    Day {days[4]}
+                                </div>
+                                <img
+                                    className="positionAb marginJuZhong"
+                                    style={{ top: "24px", left: "8px", width: "80%" }}
+                                    src="wallet/assets/images/earn/jinBi3.png"
+                                />
+                                <div
+                                    className="positionAb text-14"
+                                    style={{
+                                        top: "92px",
+                                        left: "0px",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    {signInConfig[4]?.rewardValue || 0} U
+                                </div>
+                                {signInState && days[4] && signInState.indexOf(days[4]) > -1 && (
+                                    <img
+                                        className="positionAb"
+                                        style={{ top: "0px", left: "0px" }}
+                                        src="wallet/assets/images/earn/checkOver1.png"
+                                    />
+                                )}
+                                {(days[4] === curDay && (!signInState || (days[4] && signInState && signInState.indexOf(days[4]) < 0))) && (
+                                    <img
+                                        className="positionAb"
+                                        style={{ top: "0px", left: "0px" }}
+                                        src="wallet/assets/images/earn/checkOver_1.png"
+                                        onClick={() => {
+                                            if (days[4] != curDay) return;
+                                            handleSignin()
+                                        }}
+                                    />
+                                )}
+                            </div>
+
+                            <div
+                                className=" align-item text-align  btnPointer txtBrightness mx-4"
+                                style={{ position: "relative", width: "23%", opacity: Number(days[5]) < Number(curDay) ? 0.4 : 1 }}
+                                onClick={() => { }}
+                            >
+                                <img
+                                    className="positionAb"
+                                    style={{ top: "0px", left: "0px" }}
+                                    src="wallet/assets/images/earn/phoneQianDao1.png"
+                                />
+                                <div
+                                    className="positionAb text-14 marginJuZhong "
+                                    style={{
+                                        paddingTop: "8%",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    Day {days[5]}
+                                </div>
+                                <img
+                                    className="positionAb marginJuZhong"
+                                    style={{ top: "24px", left: "8px", width: "80%" }}
+                                    src="wallet/assets/images/earn/jinBi3.png"
+                                />
+                                <div
+                                    className="positionAb text-14"
+                                    style={{
+                                        top: "92px",
+                                        left: "0px",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    {signInConfig[5]?.rewardValue || 0} U
+                                </div>
+                                {signInState && days[5] && signInState.indexOf(days[5]) > -1 && (
+                                    <img
+                                        className="positionAb"
+                                        style={{ top: "0px", left: "0px" }}
+                                        src="wallet/assets/images/earn/checkOver1.png"
+                                    />
+                                )}
+                                {(days[5] === curDay && (!signInState || (days[5] && signInState && signInState.indexOf(days[5]) < 0))) && (
+                                    <img
+                                        className="positionAb"
+                                        style={{ top: "0px", left: "0px" }}
+                                        src="wallet/assets/images/earn/checkOver_1.png"
+                                        onClick={() => {
+                                            if (days[5] != curDay) return;
+                                            handleSignin()
+                                        }}
+                                    />
+                                )}
+                            </div>
+
+                            <div
+                                className=" align-item text-align  btnPointer txtBrightness mx-4"
+                                style={{ position: "relative", width: "23%", opacity: Number(days[6]) < Number(curDay) ? 0.4 : 1 }}
+                                onClick={() => {
+
+                                }}
+                            >
+                                <img
+                                    className="positionAb"
+                                    style={{ top: "0px", left: "0px" }}
+                                    src="wallet/assets/images/earn/phoneQianDao1.png"
+                                />
+                                <div
+                                    className="positionAb text-14 marginJuZhong "
+                                    style={{
+                                        paddingTop: "8%",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    Day {days[6]}
+                                </div>
+                                <img
+                                    className="positionAb marginJuZhong"
+                                    style={{ top: "24px", left: "8px", width: "80%" }}
+                                    src="wallet/assets/images/earn/jinBi4.png"
+                                />
+                                <div
+                                    className="positionAb text-14"
+                                    style={{
+                                        top: "92px",
+                                        left: "0px",
+                                        width: "100%",
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    {signInConfig[6]?.rewardValue || 0} U
+                                </div>
+                                {signInState && days[6] && signInState.indexOf(days[6]) > -1 && (
+                                    <img
+                                        className="positionAb"
+                                        style={{ top: "0px", left: "0px" }}
+                                        src="wallet/assets/images/earn/checkOver1.png "
+                                    />
+                                )}
+                                {(days[6] === curDay && (!signInState || (days[6] && signInState && signInState.indexOf(days[6]) < 0))) && (
+                                    <img
+                                        className="positionAb"
+                                        style={{ top: "0px", left: "0px" }}
+                                        src="wallet/assets/images/earn/checkOver_1.png"
+                                        onClick={() => {
+                                            if (days[6] != curDay) return;
+                                            handleSignin()
+                                        }}
+                                    />
+                                )}
+                            </div>
+                        </div>
+
                     </AnimateModal>
 
                     <AnimateModal
@@ -1448,7 +1454,7 @@ function Earn(props) {
 
                                 <div>
                                     <div style={{ textAlign: "center" }}>{t('card_155')}</div>
-                                    <div className='mt-6' style={{ textAlign: "center" }}> {(demandInterestActivityData?.curDemandInterest/365 * 100)?.toFixed(3)}%</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}> {(demandInterestActivityData?.curDemandInterest / 365 * 100)?.toFixed(3)}%</div>
                                 </div>
                             </div>
                             <VisitorsOverviewWidget demandInterestHistory={demandInterestActivityData?.demandInterestHistory} />
@@ -1561,7 +1567,7 @@ function Earn(props) {
                                         className='pt-10 pb-12 mt-20 flex justify-between' style={{ backgroundColor: "#191A1B", borderRadius: "10px", border: "4px solid #151617" }}>
                                         <div style={{ width: "60%" }}>
                                             <div className='text-14 ml-10' style={{ textAlign: "left" }}>质押总收益(BFT)</div>
-                                            <div className='text-12 ml-10 mt-12' style={{ textAlign: "left" }}>{ tokenPledgeActivityAllInfo.tokenPledgeRewardData ? parseJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData)?.all.symbol.BFT : '0.00' } ≈ {tokenPledgeActivityAllInfo.tokenPledgeRewardData ? parseJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData)?.all.symbol.usd : '0.00'} USD</div>
+                                            <div className='text-12 ml-10 mt-12' style={{ textAlign: "left" }}>{tokenPledgeActivityAllInfo.tokenPledgeRewardData ? parseJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData)?.all.symbol.BFT : '0.00'} ≈ {tokenPledgeActivityAllInfo.tokenPledgeRewardData ? parseJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData)?.all.symbol.usd : '0.00'} USD</div>
 
                                         </div>
                                         <div style={{ width: "40%" }}>
@@ -1586,8 +1592,8 @@ function Earn(props) {
                                                         openZhiYaXinXi();
                                                     }} >
                                                         <div className='' style={{ width: "60%", height: "60px", paddingTop: "10px" }}>
-                                                            <div className='text-14'><span style={{ color: "#14C2A3" }}>{ (pledage?.yearRate * 100)?.toFixed(3)}%</span> 年利率</div>
-                                                            <div style={{ color: "#A4A4A4", fontSize: "12px" }}> ≈ {(pledage?.yearRate * 100/365)?.toFixed(3)}% 日利率 </div>
+                                                            <div className='text-14'><span style={{ color: "#14C2A3" }}>{(pledage?.yearRate * 100)?.toFixed(3)}%</span> 年利率</div>
+                                                            <div style={{ color: "#A4A4A4", fontSize: "12px" }}> ≈ {(pledage?.yearRate * 100 / 365)?.toFixed(3)}% 日利率 </div>
                                                         </div>
                                                         <div className='flex justify-end' style={{ width: "40%" }}>
                                                             <div style={{ height: "60px", lineHeight: "60px", color: "#7D9BB0", fontSize: "14px" }}>{pledage?.pledgeDay}天</div>
@@ -1657,7 +1663,7 @@ function Earn(props) {
                                             className='mt-32'>
                                             <div className='flex justify-between'>
                                                 <div className='text-16' style={{ color: "#ffffff" }}> 当前年利率 </div>
-                                                <div className='text-16' style={{ color: "#ffffff" }}> {(currentTolkenPledgeActivityInfo?.yearRate * 100)?.toFixed(3) }% </div>
+                                                <div className='text-16' style={{ color: "#ffffff" }}> {(currentTolkenPledgeActivityInfo?.yearRate * 100)?.toFixed(3)}% </div>
                                             </div>
                                         </motion.div >
 
@@ -1666,7 +1672,7 @@ function Earn(props) {
                                             className='mt-16'>
                                             <div className='flex justify-between'>
                                                 <div className='text-16' style={{ color: "#ffffff" }}> 账户剩余 </div>
-                                                <div className='text-16' style={{ color: "#ffffff" }}> { userData?.wallet?.inner?.find((item)=> { return item.symbol === 'BFT'}).balance }BFT </div>
+                                                <div className='text-16' style={{ color: "#ffffff" }}> {userData?.wallet?.inner?.find((item) => { return item.symbol === 'BFT' }).balance}BFT </div>
                                             </div>
                                         </motion.div>
 
@@ -2162,16 +2168,59 @@ function Earn(props) {
                         </div>
                     </BootstrapDialog>
 
-
                     <AnimateModal
-                        className=""
+                        className="faBiDiCard tanChuanDiSe"
                         open={openTianXie}
-                        onClose={() => setOpenTianXie(false)}
+                        onClose={() => {
+                            setYaoQingMa(0)
+                            setOpenTianXie(false)
+                        }
+                        }
                     >
-                        <div>aaaaaa</div>
+                        <div className='flex justify-center mb-16' style={{ width: "100%" }}>
+                            <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
+                            <div className='TanHaoCardZi '>
+                                {t("earn_2")}
+                            </div>
+                        </div>
+
+                        <OutlinedInput
+                            id="outlined-adornment-address send-tips-container-address"
+                            className='inputYaoQing'
+                            value={yaoQingMa || ''}
+                            placeholder={t("earn_1")}
+                            onChange={handleChangeInputVal}
+                        />
+
+                        <div className='flex mt-16 mb-28 px-15 justify-between' >
+                            <LoadingButton
+                                disabled={false}
+                                className="boxCardBtn"
+                                color="secondary"
+                                loading={false}
+                                variant="contained"
+                                onClick={() => {
+
+                                }}
+                            >
+                                {t('kyc_23')}
+                            </LoadingButton>
+
+                            <LoadingButton
+                                disabled={false}
+                                className="boxCardBtn"
+                                color="secondary"
+                                loading={false}
+                                variant="contained"
+                                onClick={() => {
+                                    setYaoQingMa(0)
+                                    setOpenTianXie(false)
+                                }}
+                            >
+                                {t('home_pools_15')}
+                            </LoadingButton>
+                        </div>
                     </AnimateModal>
-
-
 
                     {openXiangQing && <div id="target" style={{ position: "absolute", width: "100%", zIndex: "998", backgroundColor: "#0E1421", top: "0%", bottom: "0%" }} >
                         <motion.div
@@ -2186,24 +2235,29 @@ function Earn(props) {
                             }}>
                                 <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
                             </div>
-                            {/* <div className='yaoQingTitleZi'>邀请码 {userData?.userInfo?.uniqueInviteCode}</div> */}
-                            <div className='my-16' style={{ textAlign: "center" }}>● 邀请好友加入，获得累计 <span style={{ color: "#00f0c5" }}>巨额奖励</span>！</div>
+
+                            <div style={{ fontSize: "20px", textAlign: "center" }}>邀请好友加入</div>
+                            <div className='my-16' style={{ textAlign: "center" }}>● 轻松赚取提成<span style={{ color: '#ffc600', fontSize: "16px" }} >30%</span>，累计<span style={{ color: "#00f0c5" }}>巨额奖励</span>！</div>
 
                             <div className='flex justify-center mt-10' style={{ paddingInline: "1.5rem" }}>
                                 <div style={{ width: "50%" }}>
                                     <div className='flex justify-center mb-10'>
-                                        <img className='' style={{ width: "3rem", height: "3rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
+                                        <img className='mt-2' style={{ width: "2.6rem", height: "2.6rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
                                         <div className='ml-10' style={{ height: "3rem", lineHeight: "3rem", fontSize: "2.8rem" }}>{Number(activityInfo?.inviteReward?.inviteRewardAllUSDT) === 0 ? '0.00' : Number(activityInfo?.inviteReward?.inviteRewardAllUSDT)} </div>
                                     </div>
-                                    <div className='bianShe1' style={{ borderRadius: "50px", height: "0.8rem", width: "90%" }}></div>
+                                    <div className='bianShe1' style={{ borderRadius: "50px", fontSize: "18px", height: "3.6rem", width: "80%", color: "#ffffff", lineHeight: "3.6rem", textAlign: "center" }}>
+                                        取款
+                                    </div>
                                 </div>
 
                                 <div style={{ width: "50%" }}>
                                     <div className='flex justify-center mb-10'>
-                                        <img className='' style={{ width: "3rem", height: "3rem" }} src="wallet/assets/images/symbol/bft.png" alt="" />
+                                        <img className='mt-2' style={{width: "2.6rem", height: "2.6rem"  }} src="wallet/assets/images/symbol/bft.png" alt="" />
                                         <div className='ml-10' style={{ height: "3rem", lineHeight: "3rem", fontSize: "2.8rem" }}> {Number(activityInfo?.inviteReward?.inviteRewardAllBFT) === 0 ? '0.00' : Number(activityInfo?.inviteReward?.inviteRewardAllBFT)} </div>
                                     </div>
-                                    <div className='bianShe2' style={{ borderRadius: "50px", height: "0.8rem", width: "90%" }}></div>
+                                    <div className='bianShe2' style={{ borderRadius: "50px", fontSize: "18px", height: "3.6rem", width: "80%", color: "#ffffff", lineHeight: "3.6rem", textAlign: "center" }}>
+                                        取款
+                                    </div>
                                 </div>
                             </div>
                             {/* 
@@ -2328,6 +2382,7 @@ function Earn(props) {
                                             </div>
                                         </AccordionDetails>
                                     </div>
+                                    <div className='' style={{ height: "6px" }}> </div>
                                 </Accordion>
                             </div>
 
@@ -2387,6 +2442,7 @@ function Earn(props) {
                                             </div>
                                         </AccordionDetails>
                                     </div>
+                                    <div className='' style={{ height: "6px" }}> </div>
                                 </Accordion>
                             </div>
 
@@ -2446,6 +2502,7 @@ function Earn(props) {
                                             </div>
                                         </AccordionDetails>
                                     </div>
+                                    <div className='' style={{ height: "6px" }}> </div>
                                 </Accordion>
                             </div>
 
@@ -2503,6 +2560,7 @@ function Earn(props) {
                                             </div>
                                         </AccordionDetails>
                                     </div>
+                                    <div className='' style={{ height: "6px" }}> </div>
                                 </Accordion>
                             </div>
 
@@ -2564,11 +2622,17 @@ function Earn(props) {
                                             </div>
                                         </AccordionDetails>
                                     </div>
+                                    <div className='' style={{ height: "6px" }}> </div>
                                 </Accordion>
                             </div>
 
 
                             <div className='mt-24' style={{ paddingInline: "1.5rem" }}>
+
+
+                                <div className='yaoQingTitleZi'>社区大使</div>
+                                <div className='mb-16' style={{ paddingInline: "15px", textAlign: "center" }}>●邀请好友，好友再邀请好友，你都能获得奖励</div>
+
                                 <Accordion className='gongNengTan10' style={{ border: "1px solid #374252" }}>
                                     <AccordionSummary
                                         expandIcon={<ExpandMoreIcon />}
@@ -2582,7 +2646,7 @@ function Earn(props) {
                                                     <img className='mr-10' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/earn/team.png" alt="" />
                                                 </div>
                                                 <div>
-                                                    <div className='ml-8 fenChengZi'>社区大使佣金<br /> <p className='fenChengZi2 mt-4'>社区人数：0人，当前收益： 0人</p> </div>
+                                                    <div className='ml-8 fenChengZi'>社区大使佣金<br /> <p className='fenChengZi2 mt-4'>社区人数：0人，当前收益： 40%</p> </div>
                                                 </div>
                                             </div>
                                             <div className='flex earnDepositeDi'>
@@ -2621,6 +2685,11 @@ function Earn(props) {
                                                     <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.beforeMonth)?.direct ? parseJson(inviteDefferentTypeReward[4].beforeMonth).direct : 0}</div>
                                                 </div>
                                                 <div className='flex mt-4' style={{ width: "100%", height: "" }}>
+                                                    <div className='' style={{ width: "30%", textAlign: "left" }}>间接邀请人数</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>10</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>10</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>10</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>10</div>
                                                 </div>
                                             </div>
                                         </AccordionDetails>
@@ -2678,80 +2747,41 @@ function Earn(props) {
                                         </div>
                                     </div>
 
-                                    <div className='' style={{ height: "16px" }}>
-                                    </div>
+                                    <div className='' style={{ height: "18px" }}> </div>
                                 </Accordion>
                             </div>
 
 
-                            <div className='mt-40 lvGuangDi'>
-                                <div className='yaoQingTitleZi'>奖励规则</div>
-                                <div className='mb-16' style={{ paddingInline: "15px", textAlign: "center" }}>●邀请好友，好友再邀请好友，<span style={{ color: '#16C2A3' }}>往下 {inviteLevelNum} 层</span>你都能获得奖励</div>
+                            <div className='mt-40 '>
 
-                                <div className='flex ' style={{ paddingInline: "15px", height: "40px", lineHeight: "40px" }}>
-                                    <div style={{ width: "30%", textAlign: "center", borderBottom: "1px solid #14C2A3" }}>层数</div>
-                                    <div style={{ width: "70%", marginLeft: "10px" }}>
-                                        <div style={{ width: "100%", textAlign: "right" }}>收益比例</div>
-                                        <div className='yaoQingxiaHuaXian' style={{ marginTop: "-1px" }}></div>
-                                    </div>
+
+                                <div className='' style={{ fontSize: "20px", textAlign: "center" }} >如何邀请</div>
+
+                                <div className='flex mt-20' style={{ paddingLeft: "15px" }}>
+                                    <div className='fangFaBtn'>方法 1</div>
+                                    <div className='fangFaBtn2'>分享邀请码 {userData?.userInfo?.uniqueInviteCode}</div>
+                                    <img className='ml-10' style={{ width: "20px", height: "20px", marginTop: "3px" }} src="wallet/assets/images/deposite/newCopy2.png" onClick={() => {
+                                    }} />
+                                </div>
+
+                                <div className='flex mt-20' style={{ paddingLeft: "15px" }}>
+                                    <div className='fangFaBtn'>方法 2</div>
+                                    <div className='fangFaBtn2'>分享邀请链接</div>
+                                    <img className='ml-10' style={{ width: "20px", height: "20px", marginTop: "3px" }} src="wallet/assets/images/deposite/newCopy2.png" onClick={() => {
+                                        handleCopyText('https://t.me/beingFiVip_bot?start=' + userData?.userInfo?.address);
+                                        copyTiShiFunc();
+                                    }} />
                                 </div>
 
 
-                                {
-                                    inviteLevelConfig && inviteLevelConfig[0] && <div className='flex mt-2' style={{ paddingInline: "15px", height: "40px", lineHeight: "40px" }}>
-                                        <div style={{ width: "30%", textAlign: "center", borderBottom: "1px solid #14C2A3" }}>{inviteLevelConfig[0]?.inviteLayer}</div>
-                                        <div style={{ width: "70%", marginLeft: "10px" }}>
-                                            <div style={{ width: "100%", textAlign: "right" }}>{(inviteLevelConfig[0]?.rewardRate * 100)?.toFixed(3)}%</div>
-                                            <div className='yaoQingxiaHuaXian' style={{ marginTop: "-1px" }}></div>
-                                        </div>
-                                    </div>
-                                }
-
-                                {inviteLevelConfig && inviteLevelConfig[1] && <div className='flex mt-2' style={{ paddingInline: "15px", height: "40px", lineHeight: "40px" }}>
-                                    <div style={{ width: "30%", textAlign: "center", borderBottom: "1px solid #14C2A3" }}>{inviteLevelConfig[1]?.inviteLayer}</div>
-                                    <div style={{ width: "70%", marginLeft: "10px" }}>
-                                        <div style={{ width: "100%", textAlign: "right" }}>{(inviteLevelConfig[1]?.rewardRate * 100)?.toFixed(3)}%</div>
-                                        <div className='yaoQingxiaHuaXian' style={{ marginTop: "-1px" }}></div>
-                                    </div>
+                                <div className='flex mt-20' style={{ paddingLeft: "15px" }}>
+                                    <div className='fangFaBtn'>方法 3</div>
+                                    <div className='fangFaBtn2'>邀请好友进入Telegram官方社群</div>
+                                    <img className='ml-10' style={{ width: "20px", height: "20px", marginTop: "3px" }} src="wallet/assets/images/deposite/fenXiang.png" onClick={() => {
+                                        shareURL('https://t.me/beingfibank/1');
+                                    }} />
                                 </div>
-                                }
 
-
-                                {inviteLevelConfig && inviteLevelConfig[2] && <div className='flex mt-2' style={{ paddingInline: "15px", height: "40px", lineHeight: "40px" }}>
-                                    <div style={{ width: "30%", textAlign: "center", borderBottom: "1px solid #14C2A3" }}>{inviteLevelConfig[2]?.inviteLayer}</div>
-                                    <div style={{ width: "70%", marginLeft: "10px" }}>
-                                        <div style={{ width: "100%", textAlign: "right" }}>{(inviteLevelConfig[2]?.rewardRate * 100)?.toFixed(3)}%</div>
-                                        <div className='yaoQingxiaHuaXian' style={{ marginTop: "-1px" }}></div>
-                                    </div>
-                                </div>
-                                }
-
-                                {inviteLevelConfig && inviteLevelConfig[3] && <div className='flex mt-2' style={{ paddingInline: "15px", height: "40px", lineHeight: "40px" }}>
-                                    <div style={{ width: "30%", textAlign: "center", borderBottom: "1px solid #14C2A3" }}>{inviteLevelConfig[3]?.inviteLayer} - {inviteLevelConfig[inviteLevelConfig.length]?.inviteLayer}</div>
-                                    <div style={{ width: "70%", marginLeft: "10px" }}>
-                                        <div style={{ width: "100%", textAlign: "right" }}>{(inviteLevelConfig[3]?.rewardRate * 100)?.toFixed(3)}%</div>
-                                        <div className='yaoQingxiaHuaXian' style={{ marginTop: "-1px" }}></div>
-                                    </div>
-                                </div>
-                                }
-                                <div className='mt-40'>
-                                    <div className='yaoQingTitleZi'>如何邀请</div>
-                                    <div className='flex' style={{ paddingLeft: "15px" }}>
-                                        <div className='fangFaBtn'>方法 1</div>
-                                        <div className='fangFaBtn2'>分享 https://www.beingfi.com</div>
-                                        <img className='ml-10' style={{ width: "20px", height: "20px", marginTop: "3px" }} src="wallet/assets/images/deposite/newCopy2.png" onClick={() => {
-                                            handleCopyText('https://t.me/beingFiVip_bot?start=' + userData?.userInfo?.address);
-                                            copyTiShiFunc();
-                                        }} />
-                                    </div>
-                                    <div className='flex mt-20' style={{ paddingLeft: "15px" }}>
-                                        <div className='fangFaBtn'>方法 2</div>
-                                        <div className='fangFaBtn2'>邀请好友进入Telegram官方社群</div>
-                                        <img className='ml-10' style={{ width: "20px", height: "20px", marginTop: "3px" }} src="wallet/assets/images/deposite/fenXiang.png" onClick={() => {
-                                            shareURL('https://t.me/beingfibank/1');
-                                        }} />
-                                    </div>
-                                </div>
                                 <div className='' style={{ height: "100px" }}></div>
                             </div>
                         </motion.div>

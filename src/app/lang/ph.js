@@ -843,6 +843,20 @@ const locale = {
     card_264:"Nabigong pag-withdraw, na-release ang mga nakafreeze na asset",
     card_265:"Naka-freeze",
 
+    earn_1:"code ng imbitasyon",
+    earn_2:"I-enter ang referral code",
+
+
+
+    
+
+
+
+
+
+
+
+
 
 
 

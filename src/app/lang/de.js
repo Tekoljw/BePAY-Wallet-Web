@@ -846,6 +846,20 @@ const locale = {
     card_264:"Abhebung fehlgeschlagen, eingefrorene Vermögenswerte wurden freigegeben",
     card_265:"Gefrorenes Guthaben",
 
+    earn_1:"Einladungscode",
+    earn_2:"Geben Sie den Einladungs-Code ein",
+
+
+
+    
+
+
+
+
+
+
+
+
 
 
 

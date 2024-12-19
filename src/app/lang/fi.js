@@ -846,6 +846,20 @@ const locale = {
     card_264:"Nostopyyntö epäonnistui, jäädytetyt varat on vapautettu",
     card_265:"Jäädytetty Saldo",
 
+    earn_1:"kutsukoodi",
+    earn_2:"Syötä kutsukoodi",
+
+
+
+    
+
+
+
+
+
+
+
+
 
 
 

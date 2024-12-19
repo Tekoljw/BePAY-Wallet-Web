@@ -844,6 +844,20 @@ const locale = {
     card_264:"Échec du retrait, les actifs gelés ont été libérés",
     card_265:"Solde Gelé",
 
+    earn_1:"code d'invitation",
+    earn_2:"Entrez le code de parrainage",
+
+
+
+    
+
+
+
+
+
+
+
+
 
 
 

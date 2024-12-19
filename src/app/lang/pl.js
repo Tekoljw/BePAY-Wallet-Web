@@ -846,6 +846,20 @@ const locale = {
     card_264:"Nieudana wypłata, zamrożone aktywa zostały uwolnione",
     card_265:"Zablokowane Saldo",
 
+    earn_1:"kod zaproszenia",
+    earn_2:"Wprowadź kod zaproszenia",
+
+
+
+    
+
+
+
+
+
+
+
+
 
 
 
