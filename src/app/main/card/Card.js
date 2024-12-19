@@ -1039,16 +1039,18 @@ function Card(props) {
         })).then((res) => {
             setIsLoadingBtn(false)
             let result = res.payload
-            if(result?.data?.status === 'success'){
-                setUpdateCard(true)
-                setTimer(timer + 1)
-                setOpenJiHuoWindow(false)
-                closesJiHuoFunc();
-                myFunction();
-            }else {
-                dispatch(showMessage({ message: result?.msg, code: 2 }));
+            if(result?.errno === 0){
+                if(result?.data?.status === 'success'){
+                    dispatch(showMessage({ message: 'success', code: 1 }));
+                    setUpdateCard(true)
+                    setTimer(timer + 1)
+                    setOpenJiHuoWindow(false)
+                    closesJiHuoFunc();
+                    myFunction();
+                } else {
+                    dispatch(showMessage({ message: result?.data?.msg, code: 2 }));
+                }
             }
-           
         })
     }
     // 申请卡

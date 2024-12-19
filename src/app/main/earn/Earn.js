@@ -74,8 +74,8 @@ const container = {
 };
 
 const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 },
+    hidden: { y: 20 },
+    show: { y: 0 },
 };
 
 function Earn(props) {
@@ -123,6 +123,7 @@ function Earn(props) {
     const [turnTableConfigList, setTurnTableConfigList] = useState([]);
     const [signInConfig, setSignInConfig] = useState([]);
     const [cumulativeConfig, setCumulativeConfig] = useState([]);
+    const [currentCumculativeVal, setCurrentCumculativeVal] = useState([]);
     const [signInInfo, setSignInInfo] = useState({});
     const [curDay, setCurDay] = useState(0);
     const [days, setDays] = useState([]);
@@ -151,32 +152,32 @@ function Earn(props) {
         dispatch(beingFiActivityControl()).then((res) => {
             const result = res.payload
             setLoadingShow(false);
-            if (result.errno === 0) {
+            if (result?.errno === 0) {
                 setActivityList(result.data)
             }
         });
         dispatch(beingFiActivityInfo()).then((res) => {
             const result = res.payload
-            if (result.errno === 0) {
+            if (result?.errno === 0) {
                 setActivityInfo(result.data)
             }
         });
         dispatch(signInActivityConfig()).then((res) => {
             const result = res.payload
-            if (result.errno === 0) {
+            if (result?.errno === 0) {
                 setSignInConfig(result?.data?.signInConfig || [])
                 setCumulativeConfig(result?.data?.cumulativeConfig || [])
             }
         });
         dispatch(turnTableActivityConfig()).then((res) => {
             const result = res.payload
-            if (result.errno === 0) {
+            if (result?.errno === 0) {
                 setTurnTableConfigList(result.data.list)
             }
         });
         dispatch(tokenPledgeActivityConfig()).then((res) => {
             const result = res.payload
-            if (result.errno === 0) {
+            if (result?.errno === 0) {
                 setTokenPledgeActivityConfigList(result.data)
             }
         });
@@ -238,7 +239,7 @@ function Earn(props) {
         setOpenZhiFu(false)
         dispatch(getInviteRewardConfig()).then((res) => {
             const result = res.payload
-            if (result.errno === 0) {
+            if (result?.errno === 0) {
                 setInviteLevelConfig(result.data)
                 setInviteLevelNum(result.data ? result.data.length : 0)
                 setOpenXiangQing(true)
@@ -250,7 +251,7 @@ function Earn(props) {
         });
         dispatch(getInviteRewardAllInfo()).then((res) => {
             const result = res.payload
-            if (result.errno === 0) {
+            if (result?.errno === 0) {
                 setInviteRewardAllInfo(result.data)
             }
         });
@@ -263,7 +264,7 @@ function Earn(props) {
         dispatch(getInviteRewardDetail({ activityId: index })).then((res) => {
             const result = res.payload
             const currentActivityId = 'activityId' + index;
-            if (result.errno === 0) {
+            if (result?.errno === 0) {
                 inviteDefferentTypeReward[index] = result.data;
                 setInviteDefferentTypeReward(inviteDefferentTypeReward)
                 if (index < 10) {
@@ -343,7 +344,7 @@ function Earn(props) {
     const invokeTokenPledgeActivityInfo = async () => {
         await dispatch(tokenPledgeActivityInfo()).then((res) => {
             const result = res.payload
-            if (result.errno === 0) {
+            if (result?.errno === 0) {
                 setTokenPledgeActivityAllInfo(result.data)
                 setUserPledgeRecordList(result?.data?.userPledgeRecord || []);
             }
@@ -361,7 +362,7 @@ function Earn(props) {
     const openHuanHuiFunc = () => {
         dispatch(swapRewardActivity()).then((res) => {
             const result = res.payload
-            if (result.errno === 0) {
+            if (result?.errno === 0) {
                 setSwapData(result.data)
                 setOpenHuanHui(true)
                 setTimeout(() => {
@@ -382,7 +383,7 @@ function Earn(props) {
     const openZhiFuFunc = () => {
         dispatch(walletPayRewardActivity()).then((res) => {
             const result = res.payload
-            if (result.errno === 0) {
+            if (result?.errno === 0) {
                 setWalletPayRewardData(result.data)
                 setOpenZhiFu(true)
                 setTimeout(() => {
@@ -443,7 +444,7 @@ function Earn(props) {
     const openDemandInterestResult = () => {
         dispatch(demandInterestActivity()).then((res) => {
             const result = res.payload
-            if (result.errno === 0) {
+            if (result?.errno === 0) {
                 setDemandInterestActivityData(result.data);
                 setOpenKXian(true);
                 openKXianFunc();
@@ -493,26 +494,58 @@ function Earn(props) {
             setCurDay(result?.data?.curDay);
             setDays(days)
             setSignInState(result?.data?.signInData ? parseJson(result.data.signInData).signInState : [])
+            const tempCumculative = findAndSlice(cumulativeConfig.map((item)=>{return item.cumulativeDay}), _.size(result?.data?.signInData ? parseJson(result.data.signInData).signInState : []));
+            setCurrentCumculativeVal(tempCumculative);
             const step = retriveCurrentStep(result?.data?.signInData ? parseJson(result.data.signInData).signInState : []);
             setCurrentStep(step);
         })
     }
 
+    const findAndSlice =  (arr, val) => {
+        // 判断如果 val 大于数组的最后一位
+        if (val > arr[arr.length - 1]) {
+          // 获取数组中最后一个 3 的倍数索引
+          let lastIndex = arr
+            .map((_, index) => index) // 获取所有索引
+            .filter(index => (index + 1) % 3 === 0) // 只保留 3 的倍数索引
+            .pop(); // 获取最后一个 3 的倍数索引
+      
+          if (lastIndex !== undefined) {
+            return arr.slice(lastIndex, lastIndex + 3); // 截取 3 个值
+          }
+        } else {
+          // 筛选出索引是 3 的倍数的位置
+          let indices = arr
+            .map((_, index) => index)
+            .filter(index => (index) % 3 === 0); // 筛选索引是 3 的倍数的
+      
+          // 找到满足条件的位置
+          let startIndex = indices.find(index => arr[index] <= val);
+      
+          if (startIndex !== undefined) {
+            return arr.slice(startIndex, startIndex + 3); // 截取 3 个值
+          }
+        }
+      
+        return "没有满足条件的索引"; // 如果没有找到满足条件的值
+      }
+      
+
     const retriveCurrentStep = (list) => {
         const signedDays = _.size(list);
         if (signedDays === 0) {
             return 0
-        } else if (0 < signedDays < cumulativeConfig[0]?.cumulativeDay) {
+        } else if (0 < signedDays && signedDays < cumulativeConfig[0]?.cumulativeDay) {
             return 1
-        } else if (signedDays === cumulativeConfig[0]?.cumulativeDay) {
+        } else if (signedDays === cumulativeConfig[0].cumulativeDay) {
             return 2
-        } else if (cumulativeConfig[0]?.cumulativeDay < signedDays < cumulativeConfig[1]?.cumulativeDay) {
+        } else if (cumulativeConfig[0].cumulativeDay < signedDays &&  signedDays < cumulativeConfig[1].cumulativeDay) {
             return 3
-        } else if (signedDays === cumulativeConfig[2]?.cumulativeDay) {
+        } else if (signedDays === cumulativeConfig[1].cumulativeDay) {
             return 4
-        } else if (cumulativeConfig[2]?.cumulativeDay < signedDays < cumulativeConfig[3]?.cumulativeDay) {
+        } else if (cumulativeConfig[1].cumulativeDay < signedDays &&  signedDays < cumulativeConfig[2].cumulativeDay) {
             return 5
-        } else if (signedDays === cumulativeConfig[3]?.cumulativeDay) {
+        } else if (signedDays === cumulativeConfig[2].cumulativeDay) {
             return 6
         } else {
             return 7
@@ -742,7 +775,7 @@ function Earn(props) {
                                         <div className='' style={{ textAlign: "center", fontSize: "20px", whiteSpace: 'nowrap', overflow: 'hidden' }}><span style={{ color: "#ffffff" }}>超高的收益</span> </div>
                                     </div>
                                     <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>净赚收益，</span><span style={{ color: "#5BEA9C", fontWeight: "bold", fontSize: "29px" }}>{activityInfo?.tokenPledgeShowReward}</span><span style={{ color: "#ffffff", fontSize: "14px" }}> GAS</span></div>
-                                    <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>质押BFT，年化 </span><span style={{ color: "#ffc600", fontWeight: "bold", fontSize: "29px" }}>{activityInfo?.tokenPledgeShowYearRate * 100}%</span></div>
+                                    <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>质押BFT，年化 </span><span style={{ color: "#ffc600", fontWeight: "bold", fontSize: "29px" }}>{(activityInfo?.tokenPledgeShowYearRate * 100)?.toFixed(3)}%</span></div>
                                 </div>
                                 <img className='earnYouTu2 mt-16' src="wallet/assets/images/earn/bi3.png" />
                             </div>
@@ -769,7 +802,7 @@ function Earn(props) {
                                         <div className='' style={{ fontSize: "20px", overflow: 'hidden' }}>Swap</div>
                                     </div>
                                     <div><span >换汇风暴，</span><span style={{ color: "#5BEA9C" }}>邀友共赢</span></div>
-                                    <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>享受佣金 </span><span style={{ color: "#ffc600", fontWeight: "bold", fontSize: "29px" }}>{activityInfo?.swapRewardRate * 100} %</span></div>
+                                    <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>享受佣金 </span><span style={{ color: "#ffc600", fontWeight: "bold", fontSize: "29px" }}>{(activityInfo?.swapRewardRate * 100)?.toFixed(3)} %</span></div>
                                 </div>
                                 <img className='earnYouTu2 mt-16' src="wallet/assets/images/earn/bi4.png" />
                             </div>
@@ -796,7 +829,7 @@ function Earn(props) {
                                         <div className='' style={{ fontSize: "20px", overflow: 'hidden' }}>BeingFi 支付</div>
                                     </div>
                                     <div><span >小费，</span><span style={{ fontSize: "20px", color: "#30F2DD" }}>大收益</span></div>
-                                    <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>享受佣金 </span><span style={{ color: "#ffc600", fontWeight: "bold", fontSize: "29px" }}>{activityInfo?.walletPayRate * 100}%</span></div>
+                                    <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>享受佣金 </span><span style={{ color: "#ffc600", fontWeight: "bold", fontSize: "29px" }}>{(activityInfo?.walletPayRate * 100)?.toFixed(3) }%</span></div>
                                 </div>
                                 <img className='earnYouTu2 mt-16' src="wallet/assets/images/earn/bi5.png" />
                             </div>
@@ -968,7 +1001,7 @@ function Earn(props) {
                                     <motion.div
                                         variants={item}
                                         className="align-item text-align  btnPointer  mx-4"
-                                        style={{ position: "relative", width: "23%", opacity: days[0] < curDay ? '0.4' : '1' }}
+                                        style={{ position: "relative", width: "23%", opacity: Number(days[0]) < Number(curDay) ? 0.4 : 1}}
                                         onClick={() => { }}
                                     >
                                         <img
@@ -1025,7 +1058,7 @@ function Earn(props) {
                                     <motion.div
                                         variants={item}
                                         className="align-item text-align  btnPointer txtBrightness mx-4"
-                                        style={{ position: "relative", width: "23%", opacity: days[1] < curDay ? '0.4' : '1' }}
+                                        style={{ position: "relative", width: "23%", opacity: Number(days[1]) < Number(curDay) ? 0.4 : 1 }}
                                         onClick={() => { }}
                                     >
                                         <img
@@ -1082,7 +1115,7 @@ function Earn(props) {
                                     <motion.div
                                         variants={item}
                                         className="align-item text-align  btnPointer txtBrightness mx-4"
-                                        style={{ position: "relative", width: "23%", opacity: days[2] < curDay ? '0.4' : '1' }}
+                                        style={{ position: "relative", width: "23%", opacity: Number(days[2]) < Number(curDay) ? 0.4 : 1 }}
                                         onClick={() => { }}
                                     >
                                         <img
@@ -1139,7 +1172,7 @@ function Earn(props) {
                                     <motion.div
                                         variants={item}
                                         className=" align-item text-align  btnPointer txtBrightness mx-4"
-                                        style={{ position: "relative", width: "23%", opacity: days[3] < curDay ? '0.4' : '1' }}
+                                        style={{ position: "relative", width: "23%", opacity: Number(days[3]) < Number(curDay) ? 0.4 : 1 }}
                                         onClick={() => { }}
                                     >
                                         <img
@@ -1201,7 +1234,7 @@ function Earn(props) {
                                     <motion.div
                                         variants={item}
                                         className="align-item text-align  btnPointer txtBrightness mx-4"
-                                        style={{ position: "relative", width: "23%", opacity: days[4] < curDay ? '0.4' : '1' }}
+                                        style={{ position: "relative", width: "23%", opacity: Number(days[4]) < Number(curDay) ? 0.4 : 1}}
                                         onClick={() => { }}
                                     >
                                         <img
@@ -1258,7 +1291,7 @@ function Earn(props) {
                                     <motion.div
                                         variants={item}
                                         className=" align-item text-align  btnPointer txtBrightness mx-4"
-                                        style={{ position: "relative", width: "23%", opacity: days[5] < curDay ? '0.4' : '1' }}
+                                        style={{ position: "relative", width: "23%", opacity: Number(days[5]) < Number(curDay) ? 0.4 : 1 }}
                                         onClick={() => { }}
                                     >
                                         <img
@@ -1315,7 +1348,7 @@ function Earn(props) {
                                     <motion.div
                                         variants={item}
                                         className=" align-item text-align  btnPointer txtBrightness mx-4"
-                                        style={{ position: "relative", width: "23%", opacity: days[6] < curDay ? '0.4' : '1' }}
+                                        style={{ position: "relative", width: "23%", opacity: Number(days[6]) < Number(curDay) ? 0.4 : 1 }}
                                         onClick={() => {
 
                                         }}
@@ -1413,7 +1446,7 @@ function Earn(props) {
 
                                 <div>
                                     <div style={{ textAlign: "center" }}>{t('card_155')}</div>
-                                    <div className='mt-6' style={{ textAlign: "center" }}> {demandInterestActivityData?.curDemandInterest * 100}%</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}> {(demandInterestActivityData?.curDemandInterest/365 * 100)?.toFixed(3)}%</div>
                                 </div>
                             </div>
                             <VisitorsOverviewWidget demandInterestHistory={demandInterestActivityData?.demandInterestHistory} />
@@ -1526,7 +1559,7 @@ function Earn(props) {
                                         className='pt-10 pb-12 mt-20 flex justify-between' style={{ backgroundColor: "#191A1B", borderRadius: "10px", border: "4px solid #151617" }}>
                                         <div style={{ width: "60%" }}>
                                             <div className='text-14 ml-10' style={{ textAlign: "left" }}>质押总资产(BFT)</div>
-                                            <div className='text-12 ml-10 mt-12' style={{ textAlign: "left" }}>{tokenPledgeActivityAllInfo.tokenPledgeRewardData ? parseJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData?.all).symbol.BFT : '0.00'} ≈ {tokenPledgeActivityAllInfo.tokenPledgeRewardData ? parseJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData?.all).symbol.usd : '0.00'} USD</div>
+                                            <div className='text-12 ml-10 mt-12' style={{ textAlign: "left" }}>{ tokenPledgeActivityAllInfo.tokenPledgeRewardData ? parseJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData)?.all.symbol.BFT : '0.00' } ≈ {tokenPledgeActivityAllInfo.tokenPledgeRewardData ? parseJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData)?.all.symbol.usd : '0.00'} USD</div>
                                         </div>
                                         <div style={{ width: "40%" }}>
                                             <div className='text-14 mr-10' style={{ textAlign: "right" }}>质押笔数</div>
@@ -1550,8 +1583,8 @@ function Earn(props) {
                                                         openZhiYaXinXi();
                                                     }} >
                                                         <div className='' style={{ width: "60%", height: "60px", paddingTop: "10px" }}>
-                                                            <div className='text-14'><span style={{ color: "#14C2A3" }}>{pledage?.yearRate * 100}%</span> 年利率</div>
-                                                            <div style={{ color: "#A4A4A4", fontSize: "12px" }}> ≈ {pledage?.yearRate * 100 / 365}% 日利率 </div>
+                                                            <div className='text-14'><span style={{ color: "#14C2A3" }}>{ (pledage?.yearRate * 100)?.toFixed(3)}%</span> 年利率</div>
+                                                            <div style={{ color: "#A4A4A4", fontSize: "12px" }}> ≈ {(pledage?.yearRate * 100/365)?.toFixed(3)}% 日利率 </div>
                                                         </div>
                                                         <div className='flex justify-end' style={{ width: "40%" }}>
                                                             <div style={{ height: "60px", lineHeight: "60px", color: "#7D9BB0", fontSize: "14px" }}>{pledage?.pledgeDay}天</div>
@@ -1621,7 +1654,7 @@ function Earn(props) {
                                             className='mt-32'>
                                             <div className='flex justify-between'>
                                                 <div className='text-16' style={{ color: "#ffffff" }}> 当前年利率 </div>
-                                                <div className='text-16' style={{ color: "#ffffff" }}> {currentTolkenPledgeActivityInfo?.yearRate * 100}% </div>
+                                                <div className='text-16' style={{ color: "#ffffff" }}> {(currentTolkenPledgeActivityInfo?.yearRate * 100)?.toFixed(3) }% </div>
                                             </div>
                                         </motion.div >
 
@@ -1630,7 +1663,7 @@ function Earn(props) {
                                             className='mt-16'>
                                             <div className='flex justify-between'>
                                                 <div className='text-16' style={{ color: "#ffffff" }}> 账户剩余 </div>
-                                                <div className='text-16' style={{ color: "#ffffff" }}> {userData?.wallet?.inner?.find((item) => { return item.symbol === 'BFT' }).balance} </div>
+                                                <div className='text-16' style={{ color: "#ffffff" }}> { userData?.wallet?.inner?.find((item)=> { return item.symbol === 'BFT'}).balance }BFT </div>
                                             </div>
                                         </motion.div>
 
@@ -2037,7 +2070,7 @@ function Earn(props) {
                             </div>
 
                             <div className='mt-20 text-12' style={{ textAlign: "center", color: "#A4A4A4" }}>
-                                邀请好友后可获得好友换汇后总金额的{activityInfo?.swapRewardRate * 100}%佣金！
+                                邀请好友后可获得好友换汇后总金额的{(activityInfo?.swapRewardRate * 100)?.toFixed(3)}%佣金！
                             </div>
                             <div className='flex  mt-32 justify-center'>
                                 <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/card/usd.png"></img>
@@ -2083,7 +2116,7 @@ function Earn(props) {
                             </div>
 
                             <div className='mt-20 text-12' style={{ textAlign: "center", color: "#A4A4A4" }}>
-                                邀请好友后可获得好友支付后总金额的{activityInfo?.walletPayRate * 100}%佣金！
+                                邀请好友后可获得好友支付后总金额的{(activityInfo?.walletPayRate * 100)?.toFixed(3)}%佣金！
                             </div>
                             <div className='flex  mt-32 justify-center'>
                                 <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/card/usd.png"></img>
@@ -2655,7 +2688,7 @@ function Earn(props) {
                                     inviteLevelConfig && inviteLevelConfig[0] && <div className='flex mt-2' style={{ paddingInline: "15px", height: "40px", lineHeight: "40px" }}>
                                         <div style={{ width: "30%", textAlign: "center", borderBottom: "1px solid #14C2A3" }}>{inviteLevelConfig[0]?.inviteLayer}</div>
                                         <div style={{ width: "70%", marginLeft: "10px" }}>
-                                            <div style={{ width: "100%", textAlign: "right" }}>{inviteLevelConfig[0]?.rewardRate * 100}%</div>
+                                            <div style={{ width: "100%", textAlign: "right" }}>{(inviteLevelConfig[0]?.rewardRate * 100)?.toFixed(3)}%</div>
                                             <div className='yaoQingxiaHuaXian' style={{ marginTop: "-1px" }}></div>
                                         </div>
                                     </div>
@@ -2664,7 +2697,7 @@ function Earn(props) {
                                 {inviteLevelConfig && inviteLevelConfig[1] && <div className='flex mt-2' style={{ paddingInline: "15px", height: "40px", lineHeight: "40px" }}>
                                     <div style={{ width: "30%", textAlign: "center", borderBottom: "1px solid #14C2A3" }}>{inviteLevelConfig[1]?.inviteLayer}</div>
                                     <div style={{ width: "70%", marginLeft: "10px" }}>
-                                        <div style={{ width: "100%", textAlign: "right" }}>{inviteLevelConfig[1]?.rewardRate * 100}%</div>
+                                        <div style={{ width: "100%", textAlign: "right" }}>{(inviteLevelConfig[1]?.rewardRate * 100)?.toFixed(3)}%</div>
                                         <div className='yaoQingxiaHuaXian' style={{ marginTop: "-1px" }}></div>
                                     </div>
                                 </div>
@@ -2674,7 +2707,7 @@ function Earn(props) {
                                 {inviteLevelConfig && inviteLevelConfig[2] && <div className='flex mt-2' style={{ paddingInline: "15px", height: "40px", lineHeight: "40px" }}>
                                     <div style={{ width: "30%", textAlign: "center", borderBottom: "1px solid #14C2A3" }}>{inviteLevelConfig[2]?.inviteLayer}</div>
                                     <div style={{ width: "70%", marginLeft: "10px" }}>
-                                        <div style={{ width: "100%", textAlign: "right" }}>{inviteLevelConfig[2]?.rewardRate * 100}%</div>
+                                        <div style={{ width: "100%", textAlign: "right" }}>{(inviteLevelConfig[2]?.rewardRate * 100)?.toFixed(3)}%</div>
                                         <div className='yaoQingxiaHuaXian' style={{ marginTop: "-1px" }}></div>
                                     </div>
                                 </div>
@@ -2683,7 +2716,7 @@ function Earn(props) {
                                 {inviteLevelConfig && inviteLevelConfig[3] && <div className='flex mt-2' style={{ paddingInline: "15px", height: "40px", lineHeight: "40px" }}>
                                     <div style={{ width: "30%", textAlign: "center", borderBottom: "1px solid #14C2A3" }}>{inviteLevelConfig[3]?.inviteLayer} - {inviteLevelConfig[inviteLevelConfig.length]?.inviteLayer}</div>
                                     <div style={{ width: "70%", marginLeft: "10px" }}>
-                                        <div style={{ width: "100%", textAlign: "right" }}>{inviteLevelConfig[3]?.rewardRate * 100}%</div>
+                                        <div style={{ width: "100%", textAlign: "right" }}>{(inviteLevelConfig[3]?.rewardRate * 100)?.toFixed(3)}%</div>
                                         <div className='yaoQingxiaHuaXian' style={{ marginTop: "-1px" }}></div>
                                     </div>
                                 </div>

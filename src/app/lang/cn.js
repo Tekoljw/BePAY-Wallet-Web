@@ -824,6 +824,8 @@ const locale = {
     recordInfo_33: "邀请虚拟币奖励",
     recordInfo_34: "活动奖励法币",
     recordInfo_35: "活动奖励虚拟币",
+    recordInfo_36: "质押资产出金",
+    recordInfo_37: "解质押",
     card_246: "撤消",
     card_247: "申请中",
     card_248: "审核中",

@@ -12,7 +12,7 @@ function Impressions(props) {
 
   const widgets = useSelector(selectWidgets);
   const { amount, series, labels } = {
-    "amount": 17663,
+    "amount": 0.1,
     "labels": [
       "05 Jan - 12 Jan",
       "13 Jan - 20 Jan",
@@ -85,7 +85,7 @@ function Impressions(props) {
               heroicons-solid:trending-down
             </FuseSvgIcon>
             <Typography className="font-medium text-sm text-secondary leading-none whitespace-nowrap">
-              <span className="text-green-500 ">2%</span>
+              <span className="text-green-500 ">0.1%</span>
             </Typography>
           </div>
         </div>
