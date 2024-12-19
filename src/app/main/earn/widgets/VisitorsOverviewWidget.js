@@ -30,8 +30,8 @@ function VisitorsOverviewWidget(props) {
     if(demandInterestHistory.length> 0) {
       tempData = demandInterestHistory.map((item)=>{
         return {
-          x: d.createTime,
-          y: d.todayInterestValue
+          x: Number(item.createTime*1000),
+          y: item.curInterestValue
         }
       })
     }

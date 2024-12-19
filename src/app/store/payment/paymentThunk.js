@@ -415,9 +415,10 @@ export const activeCreditCard = createAsyncThunk(
     async (settings, { dispatch, getState }) => {
         const result = await React.$api("credit.creditCardBindWallet", settings);
         if (result.errno === 0) {
-            return result.data
+            return result
         } else {
             showServerErrorTips(dispatch, result);
+            return;
         }
     }
 );
