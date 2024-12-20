@@ -137,6 +137,8 @@ function Earn(props) {
     const [biZhongB, setBiZhongB] = useState("bft");
     const [openTianXie, setOpenTianXie] = useState(false);
     const [yaoQingMa, setYaoQingMa] = useState(0);
+    const [openYaoQingQuKuan, setOpenYaoQingQuKuan] = useState(false);
+
     const handleChangeInputVal2 = (event) => {
         setInputIDVal(event.target.value);
     };
@@ -222,6 +224,22 @@ function Earn(props) {
         document.getElementById('openSheQu').classList.add('PinMoveOut');
         setTimeout(() => {
             setOpenSheQu(false)
+        }, 300);
+    };
+
+
+    const openYaoQingQuKuanFunc = () => {
+        setOpenYaoQingQuKuan(true)
+        setTimeout(() => {
+            document.getElementById('openYaoQingQuKuan').classList.add('PinMoveAni');
+        }, 0);
+    };
+
+    const closeYaoQingQuKuanFunc = () => {
+        document.getElementById('openYaoQingQuKuan').classList.remove('PinMoveAni');
+        document.getElementById('openYaoQingQuKuan').classList.add('PinMoveOut');
+        setTimeout(() => {
+            setOpenYaoQingQuKuan(false)
         }, 300);
     };
 
@@ -1870,7 +1888,7 @@ function Earn(props) {
                             openQuKuan &&
                             <div className="px-15 pt-10 zhiYaDi" style={{ height: `${divHeight}px` }}>
                                 <div className='flex mt-10' style={{ justifyContent: "space-between", width: "100%" }}>
-                                    <div className='text-18 kongTouTitle' style={{ paddingLeft: "25px" }}>复利宝</div>
+                                    <div className='text-18 kongTouTitle' style={{ paddingLeft: "25px" }}>取款</div>
                                     <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
                                         setOpenQuKuan(false)
                                     }} ></img>
@@ -1902,6 +1920,7 @@ function Earn(props) {
                                         disabled={false}
                                         id="outlined-adornment-weight send-tips-container-amount"
                                         value={weight}
+                                        style={{ backgroundColor: "#1E293B", borderRadius: "6px" }}
                                         endAdornment={
                                             <InputAdornment
                                                 position="end"
@@ -1960,6 +1979,110 @@ function Earn(props) {
                                 >提现</div>
                             </div>
                         }
+                    </BootstrapDialog>
+
+
+                    <BootstrapDialog
+                        closeClass="closeBtnspin"
+                        open={openYaoQingQuKuan}
+                        onClose={() => {
+                            closeYaoQingQuKuanFunc()
+                        }}
+                    >
+                        <div id='openYaoQingQuKuan' className="px-15 pt-10 zhiYaDi" style={{ height: "540px" }}>
+                            <div className='flex mt-10' style={{ justifyContent: "space-between", width: "100%" }}>
+                                <div className='text-18 kongTouTitle' style={{ paddingLeft: "25px" }}>取款</div>
+                                <img src="wallet/assets/images/logo/close_Btn.png" className='closePinBtn' onClick={() => {
+                                    closeYaoQingQuKuanFunc();
+                                }} ></img>
+                            </div>
+                            <div className='mt-16 text-16' >
+                                选择币种
+                            </div>
+                            <Box
+                                className="w-full border flex flex-col mt-16 "
+                                sx={{
+                                    backgroundColor: '#1E293B!important',
+                                    borderRadius: "10px",
+                                    border: 'none',
+                                    height: "67px",
+                                }}
+                            >
+                                <StyledAccordionSelect
+                                    symbol={symbolWallet}
+                                    currencyCode="USDT"
+                                    setSymbol={setSymbol}
+                                />
+                            </Box>
+                            <div className='mt-16 text-16' >
+                                取款数量
+                            </div>
+                            <FormControl className="mt-10 mb-4" sx={{ width: '100%' }} variant="outlined">
+                                <OutlinedInput
+                                    type='text'
+                                    disabled={false}
+                                    id="outlined-adornment-weight send-tips-container-amount"
+                                    value={weight}
+                                    style={{ backgroundColor: "#1E293B", borderRadius: "6px" }}
+                                    endAdornment={
+                                        <InputAdornment
+                                            position="end"
+                                            onClick={() => {
+                                                setWeight(0)
+                                                setCanDeposite(false);
+                                            }}
+                                        >MAX</InputAdornment>}
+                                    aria-describedby="outlined-weight-helper-text"
+                                    inputProps={{
+                                        'aria-label': 'weight',
+                                        inputMode: 'numeric',
+                                        pattern: '[0-9]*',
+                                    }}
+                                    error={ismore(weight, 0, 1000)}
+                                    onChange={(event) => {
+                                        if (event.target.value === '') {
+                                            setWeight('')
+                                            setCanDeposite(true);
+                                            return
+                                        }
+                                        let numericValue = event.target.value.replace(/[^0-9.]/g, '');
+                                        if (numericValue.startsWith('0') && numericValue.length > 1 && numericValue[1] !== '.') {
+                                            numericValue = numericValue.replace(/^0+/, '');
+                                        }
+                                        if (numericValue > 0) {
+                                            setCanDeposite(false);
+                                        }
+                                        if (numericValue > 1000 || numericValue == 0 || numericValue < 0) {
+                                            setCanDeposite(true);
+                                        }
+                                        setWeight(numericValue);
+                                    }}
+                                />
+                            </FormControl>
+
+                            <div className='flex mt-16 justify-between'>
+                                <div>实际到账</div>
+                                <div>100.00 USDT</div>
+                            </div>
+
+                            <div className='flex mt-16 justify-between'>
+                                <div>手续费</div>
+                                <div>10.00 USDT</div>
+                            </div>
+
+
+                            <div className='flex mt-16 justify-between'>
+                                <div>费率</div>
+                                <div>5%</div>
+                            </div>
+
+                            <div className='txtBrightness text-20' style={{ margin: "90px auto 0px auto", width: "92%", height: "46px", lineHeight: "46px", textAlign: "center", backgroundColor: "#0D9488", borderRadius: "999px" }}
+                                onClick={() => {
+                                }}
+                            >提现</div>
+                        </div>
+
+
                     </BootstrapDialog>
 
 
@@ -2178,7 +2301,6 @@ function Earn(props) {
                         }
                     >
                         <div className='flex justify-center mb-16' style={{ width: "100%" }}>
-                            <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                             <div className='TanHaoCardZi '>
                                 {t("earn_2")}
                             </div>
@@ -2245,17 +2367,25 @@ function Earn(props) {
                                         <img className='mt-2' style={{ width: "2.6rem", height: "2.6rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
                                         <div className='ml-10' style={{ height: "3rem", lineHeight: "3rem", fontSize: "2.8rem" }}>{Number(activityInfo?.inviteReward?.inviteRewardAllUSDT) === 0 ? '0.00' : Number(activityInfo?.inviteReward?.inviteRewardAllUSDT)} </div>
                                     </div>
-                                    <div className='bianShe1' style={{ borderRadius: "50px", fontSize: "18px", height: "3.6rem", width: "80%", color: "#ffffff", lineHeight: "3.6rem", textAlign: "center" }}>
+                                    <div className='bianShe1' style={{ borderRadius: "50px", fontSize: "18px", height: "3.6rem", width: "80%", color: "#ffffff", lineHeight: "3.6rem", textAlign: "center" }}
+                                        onClick={() => {
+                                            openYaoQingQuKuanFunc();
+                                        }}
+                                    >
                                         取款
                                     </div>
                                 </div>
 
                                 <div style={{ width: "50%" }}>
                                     <div className='flex justify-center mb-10'>
-                                        <img className='mt-2' style={{width: "2.6rem", height: "2.6rem"  }} src="wallet/assets/images/symbol/bft.png" alt="" />
+                                        <img className='mt-2' style={{ width: "2.6rem", height: "2.6rem" }} src="wallet/assets/images/symbol/bft.png" alt="" />
                                         <div className='ml-10' style={{ height: "3rem", lineHeight: "3rem", fontSize: "2.8rem" }}> {Number(activityInfo?.inviteReward?.inviteRewardAllBFT) === 0 ? '0.00' : Number(activityInfo?.inviteReward?.inviteRewardAllBFT)} </div>
                                     </div>
-                                    <div className='bianShe2' style={{ borderRadius: "50px", fontSize: "18px", height: "3.6rem", width: "80%", color: "#ffffff", lineHeight: "3.6rem", textAlign: "center" }}>
+                                    <div className='bianShe2' style={{ borderRadius: "50px", fontSize: "18px", height: "3.6rem", width: "80%", color: "#ffffff", lineHeight: "3.6rem", textAlign: "center" }}
+                                        onClick={() => {
+                                            openYaoQingQuKuanFunc();
+                                        }}
+                                    >
                                         取款
                                     </div>
                                 </div>
@@ -2626,10 +2756,7 @@ function Earn(props) {
                                 </Accordion>
                             </div>
 
-
                             <div className='mt-24' style={{ paddingInline: "1.5rem" }}>
-
-
                                 <div className='yaoQingTitleZi'>社区大使</div>
                                 <div className='mb-16' style={{ paddingInline: "15px", textAlign: "center" }}>●邀请好友，好友再邀请好友，你都能获得奖励</div>
 
@@ -2696,6 +2823,7 @@ function Earn(props) {
                                     </div>
 
                                     <div className='' style={{ marginLeft: "3%", width: "94%", height: "1px", borderTop: "1px solid #374252" }}>   </div>
+
 
                                     <div className='flex justify-between px-10 mt-10'>
                                         <div>下级收益：<span>50%</span></div>
