@@ -1275,7 +1275,7 @@ input[type='number'] {
 .walletBalanceZi {
     height: 2.4rem;
     line-height: 2.4rem;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
 }
 
 .cardGongNeng {
@@ -1287,7 +1287,7 @@ input[type='number'] {
     width: 30%;
     height: 3rem;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     text-decoration: underline;
     color: #ffffff;
     padding-right: 1.6rem;
@@ -1341,6 +1341,11 @@ input[type='number'] {
     border-radius: 1rem !important;
     background-color: #364151;
     border: none;
+}
+
+.yuEShuRu .muiltr-m96d3a-MuiInputBase-input-MuiOutlinedInput-input {
+    font-size: 14px !important;
+    padding: 0px 5px !important;
 }
 
 .gongNengTan2 {
@@ -1681,7 +1686,7 @@ input[type='number'] {
 }
 
 .addressShuoDuan .muiltr-m96d3a-MuiInputBase-input-MuiOutlinedInput-input {
-    padding: 15px 28px 15px 8px !important;
+    padding: 15px 28px 15px 5px !important;
 }
 
 .cardErrorZi {
@@ -2026,9 +2031,9 @@ input[type='number'] {
 }
 
 .eyeGongNengZi2 {
-    font-size: 3.2rem;
-    height: 3.2rem;
-    line-height: 3.2rem;
+    font-size: 3rem;
+    height: 3rem;
+    line-height: 3rem;
     margin-left: 1rem;
 }
 

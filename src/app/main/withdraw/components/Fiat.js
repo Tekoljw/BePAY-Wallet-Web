@@ -1058,12 +1058,12 @@ function Fiat(props) {
                                                         borderRadius: '99px'
                                                     }} src={row.avatar} alt="" />
                                                     <div className="px-12 font-medium">
-                                                        <Typography className="text-18 font-medium">{row.currencyCode}</Typography>
+                                                        <Typography className="text-16 font-medium">{row.currencyCode}</Typography>
                                                     </div>
                                                 </div>
                                                 <div style={{ marginLeft: 'auto' }}>
                                                     <div className="px-12 font-medium" style={{ textAlign: 'right' }}>
-                                                        <Typography className="text-18 font-medium">{row.balance}</Typography>
+                                                        <Typography className="text-16 font-medium">{row.balance}</Typography>
 
                                                     </div>
                                                 </div>
@@ -1128,7 +1128,7 @@ function Fiat(props) {
                                     >
                                         {Object.entries([t('card_8'), t('card_7')]).map(([key, label]) => (
                                             <Tab
-                                                className="text-16 font-semibold min-h-32 min-w-60 mx4 px-12 txtColorTitle opacity-100 zindex biZhongMR"
+                                                className="text-16  min-h-32 min-w-60 mx4 px-12 txtColorTitle opacity-100 zindex biZhongMR"
                                                 disableRipple
                                                 key={key}
                                                 label={label}
@@ -1318,6 +1318,7 @@ function Fiat(props) {
                                                     border: 'none',
                                                     borderRadius: '8px!important',
                                                     backgroundColor: '#1E293B!important',
+                                                    fontSize: "14px!important",
                                                     '&:before': {
                                                         display: 'none',
                                                     },
@@ -1353,7 +1354,7 @@ function Fiat(props) {
                                                                         className="flex items-center py-0 flex-grow"
                                                                         style={{ width: '100%' }}
                                                                     >
-                                                                        <Typography className="text-16 font-medium">{row.wayName}</Typography>
+                                                                        <Typography className="text-14 font-medium">{row.wayName}</Typography>
                                                                     </div>
                                                                 </MenuItem>
                                                             )
@@ -1449,10 +1450,11 @@ function Fiat(props) {
                                                 </div>
                                                 <div className="flex items-center justify-between">
                                                     <FormControl className='' sx={{ width: isMobileMedia ? '100%' : '89%', borderColor: '#94A3B8', backgroundColor: "#151C2A" }} variant="outlined">
-                                                        <InputLabel id="demo-simple-select-label">CPF</InputLabel>
+                                                        <InputLabel id="demo-simple-select-label" style={{ fontSize: "14px" }}>CPF</InputLabel>
                                                         <Select
                                                             labelId="demo-simple-select-label"
                                                             id="demo-simple-select"
+                                                            style={{ fontSize: "14px" }}
                                                             value={accountType}
                                                             label="CPF"
                                                             onChange={handleChangeAccountType}
@@ -1502,6 +1504,7 @@ function Fiat(props) {
                                         <div className="flex items-center py-16 justify-between" style={{}}>
                                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
                                                 <OutlinedInput
+                                                className='yuEShuRu'
                                                     id="outlined-adornment-address send-tips-container-amount"
                                                     value={inputVal.amount}
                                                     onChange={handleChangeInputVal('amount')}
@@ -1584,7 +1587,7 @@ function Fiat(props) {
                                                 />
                                             </FormControl>
                                         </div>
-                                        <div className=''><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8", fontSize: "1.3rem" }}>{t('card_177')}</span></div>
+                                        <div className=''><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8"}}>{t('card_177')}</span></div>
                                     </div>
                                 }
 

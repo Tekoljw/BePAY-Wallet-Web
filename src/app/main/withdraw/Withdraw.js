@@ -1298,7 +1298,7 @@ function Withdraw(props) {
                                     >
                                         {Object.entries([t('card_8'), t('card_7')]).map(([key, label]) => (
                                             <Tab
-                                                className="text-16 font-semibold min-h-32 min-w-60 mx4 px-12 txtColorTitle opacity-100 zindex"
+                                                className="text-16 min-h-32 min-w-60 mx4 px-12 txtColorTitle opacity-100 zindex"
                                                 disableRipple
                                                 key={key}
                                                 label={label}
@@ -1312,7 +1312,7 @@ function Withdraw(props) {
                                     {
                                         smallTabValue === 0 && <div className="px-10 ">
                                             <div className="flex items-center justify-between">
-                                                <FormControl className='addressShuoDuan' sx={{ width: '100%', borderColor: '#94A3B8', backgroundColor: "#151C2A" }} variant="outlined">
+                                                <FormControl className='addressShuoDuan' sx={{ width: '100%', borderRadius: "6px", borderColor: '#94A3B8', backgroundColor: "#151C2A" }} variant="outlined">
                                                     <OutlinedInput
                                                         id="outlined-adornment-address send-tips-container-address"
                                                         value={inputVal.address}
@@ -1345,17 +1345,12 @@ function Withdraw(props) {
                                             <div className="flex items-start py-16 justify-between" style={{}}>
                                                 <FormControl sx={{ width: '80%', borderColor: '#94A3B8' }} variant="outlined">
                                                     <TextField
+                                                        className='yuEShuRu'
                                                         error={ismore(inputVal.amount)}
                                                         helperText={ismore(inputVal.amount) ? t('home_deposite_28') : ''}
-                                                        step="0.000001"
                                                         id="outlined-adornment-address send-tips-container-amount"
                                                         value={inputVal.amount}
                                                         onChange={handleChangeInputVal('amount')}
-                                                        endAdornment={<InputAdornment position="end">
-                                                            <Typography className="text-16 font-medium cursor-pointer color-2DD4BF">
-                                                                {t('home_withdraw_5')}
-                                                            </Typography>
-                                                        </InputAdornment>}
                                                         aria-describedby="outlined-weight-helper-text"
                                                         inputProps={{
                                                             'aria-label': 'amount',
@@ -1383,8 +1378,8 @@ function Withdraw(props) {
                                             </div>
                                             {/* <div>{t('card_223')} {Math.max(0, Number(inputVal.amount) - Number(fee))} {symbol}</div> */}
                                             <div className="flex items-center justify-between mb-16" >
-                                                <Typography className="text-16 cursor-pointer">
-                                                    <p style={{ fontSize: '1.3rem' }}> {t('home_withdraw_7')}: {tokenFee}  {symbol}</p>
+                                                <Typography className="cursor-pointer">
+                                                    <p> {t('home_withdraw_7')}: {tokenFee}  {symbol}</p>
                                                 </Typography>
 
                                                 {/* <Typography
@@ -1497,7 +1492,7 @@ function Withdraw(props) {
                                                 {/* <Typography style={{ fontSize: '1.4rem' }}>
                                                 {t('home_sendTips_8')}
                                             </Typography> */}
-                                                <div className='mt-4'><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8", fontSize: "1.3rem" }}>{t('card_177')}</span></div>
+                                                <div className='mt-8'><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8" }}>{t('card_177')}</span></div>
                                             </div>
                                             <LoadingButton
                                                 disabled={isOkTijiao}

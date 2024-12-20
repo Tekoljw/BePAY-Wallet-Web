@@ -1156,7 +1156,7 @@ function Deposite() {
                                 setShowQRcode(!showQRcode);
                             }} ></img>
                         </div>
-                        <div className='px-10 mt-12'><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8", fontSize: "1.3rem" }}>{t('card_177')}</span></div>
+                        <div className='px-10 mt-12'><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8"}}>{t('card_177')}</span></div>
                     </motion.div>
 
                     <motion.div
@@ -1877,7 +1877,7 @@ function Deposite() {
                                     setShowQRcode(!showQRcode);
                                 }} ></img>
                             </div>
-                            <div className='px-10 mt-12'><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8", fontSize: "1.3rem" }}>{t('card_177')}</span></div>
+                            <div className='px-10 mt-12'><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8" }}>{t('card_177')}</span></div>
                         </motion.div>
 
                         <Typography className="text-16 pl-10 my-10">{t('home_deposite_17')}</Typography>
@@ -1925,6 +1925,7 @@ function Deposite() {
                                                         disabled={false}
                                                         id="outlined-adornment-weight send-tips-container-amount"
                                                         value={weight}
+                                                        className='yuEShuRu'
                                                         endAdornment={
                                                             <InputAdornment
                                                                 position="end"
@@ -1976,7 +1977,7 @@ function Deposite() {
                                                     })}
                                                 </div>}
 
-                                                <div className='ml-2 mt-10' style={{ fontSize: "13px" }} >{t('home_borrow_16')}  {(bankItem?.ifRate * weight + bankItem?.basicFee)?.toFixed(2)} </div>
+                                                <div className='ml-2 mt-10'>{t('home_borrow_16')}  {(bankItem?.ifRate * weight + bankItem?.basicFee)?.toFixed(2)} </div>
 
                                                 <div className="my-16 flex items-center justify-content-center">
                                                     <LoadingButton
