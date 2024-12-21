@@ -13,6 +13,7 @@ import Box from '@mui/material/Box';
 import reducer from './store';
 import { getWidgets, selectWidgets } from './store/widgetsSlice';
 import VisitorsOverviewWidget from './widgets/VisitorsOverviewWidget';
+import { selectConfig } from "../../store/config";
 import ConversionsWidget from './widgets/ConversionsWidget';
 import ImpressionsWidget from './widgets/ImpressionsWidget';
 import VisitsWidget from './widgets/VisitsWidget';
@@ -105,6 +106,7 @@ function Earn(props) {
     const [openFuLiBao, setOpenFuLiBao] = useState(false);
     const [activityList, setActivityList] = useState([]);
     const [activityInfo, setActivityInfo] = useState({});
+    const config = useSelector(selectConfig);
     const [swapData, setSwapData] = useState({});
     const [walletPayRewardData, setWalletPayRewardData] = useState({});
     const [demandInterestActivityData, setDemandInterestActivityData] = useState({});
@@ -277,20 +279,22 @@ function Earn(props) {
                 setInviteRewardAllInfo(result.data)
             }
         });
-        loopCallInviteRewardDetails(1);
+
+        loopCallInviteRewardDetails(1, []);
     }
 
-    const loopCallInviteRewardDetails = (i) => {
+    const loopCallInviteRewardDetails = (i, temArr) => {
         let index = i;
         dispatch(getInviteRewardDetail({ activityId: index })).then((res) => {
             const result = res.payload
-            const currentActivityId = 'activityId' + index;
             if (result?.errno === 0) {
-                inviteDefferentTypeReward[index] = result.data;
-                setInviteDefferentTypeReward(inviteDefferentTypeReward)
+                temArr[index] = result.data;
                 if (index < 10) {
                     index += 1
-                    loopCallInviteRewardDetails(index)
+                    loopCallInviteRewardDetails(index, temArr)
+                }else{
+                    setInviteDefferentTypeReward(temArr);
+                    return;
                 }
             }
         });
@@ -580,6 +584,11 @@ function Earn(props) {
             }
         })
     }
+
+    const currenyPaytoken = (currentSymbol, currentBalance) => {
+        const symbolRate = _.get(_.find(config.symbols, {symbol: currentSymbol }), 'sellRate', 0);
+        return (currentBalance * symbolRate).toFixed(2)
+    };
 
     const handlePledge = async () => {
         setBtnLoading(true);
@@ -1462,12 +1471,12 @@ function Earn(props) {
                             <div className='flex  justify-between mt-12'>
                                 <div>
                                     <div style={{ textAlign: "center" }}>{t('card_153')}(USDT)</div>
-                                    <div className='mt-6' style={{ textAlign: "center" }}>{demandInterestActivityData.demandInterestData ? (Number(parseJson(demandInterestActivityData?.demandInterestData)?.yd?.symbol?.USDT) === 0 ? '0.00' : Number(parseJson(demandInterestActivityData.demandInterestData)?.yd?.symbol?.USDT)) : '0.00'}</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}>{(demandInterestActivityData.demandInterestData && parseJson(demandInterestActivityData?.demandInterestData)?.yd) ? (Number(parseJson(demandInterestActivityData?.demandInterestData)?.yd?.symbol?.USDT) === 0 ? '0.00' : Number(parseJson(demandInterestActivityData.demandInterestData)?.yd?.symbol?.USDT)) : '0.00'}</div>
                                 </div>
 
                                 <div>
                                     <div style={{ textAlign: "center" }}>{t('card_154')}(USDT)</div>
-                                    <div className='mt-6' style={{ textAlign: "center" }}>{demandInterestActivityData.demandInterestData ? (Number(parseJson(demandInterestActivityData?.demandInterestData)?.cur_m?.symbol?.USDT) === 0 ? '0.00' : Number(parseJson(demandInterestActivityData.demandInterestData)?.cur_m?.symbol?.USDT)) : '0.00'}</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}>{(demandInterestActivityData.demandInterestData && parseJson(demandInterestActivityData?.demandInterestData)?.all) ? (Number(parseJson(demandInterestActivityData?.demandInterestData)?.all?.symbol?.USDT) === 0 ? '0.00' : Number(parseJson(demandInterestActivityData.demandInterestData)?.all?.symbol?.USDT)) : '0.00'}</div>
                                 </div>
 
                                 <div>
@@ -1584,9 +1593,8 @@ function Earn(props) {
                                         variants={item}
                                         className='pt-10 pb-12 mt-20 flex justify-between' style={{ backgroundColor: "#191A1B", borderRadius: "10px", border: "4px solid #151617" }}>
                                         <div style={{ width: "60%" }}>
-                                            <div className='text-14 ml-10' style={{ textAlign: "left" }}>质押总收益(BFT)</div>
-                                            <div className='text-12 ml-10 mt-12' style={{ textAlign: "left" }}>{tokenPledgeActivityAllInfo.tokenPledgeRewardData ? parseJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData)?.all.symbol.BFT : '0.00'} ≈ {tokenPledgeActivityAllInfo.tokenPledgeRewardData ? parseJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData)?.all.symbol.usd : '0.00'} USD</div>
-
+                                            <div className='text-14 ml-10' style={{ textAlign: "left" }}>质押总资产(BFT)</div>
+                                            <div className='text-12 ml-10 mt-12' style={{ textAlign: "left" }}>{ tokenPledgeActivityAllInfo.tokenPledgeRewardData ? parseJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData)?.all.symbol.BFT : '0.00' } ≈ {tokenPledgeActivityAllInfo.tokenPledgeRewardData ? currenyPaytoken('BFT', Number(parseJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData)?.all.symbol.BFT)) : '0.00'} USD</div>
                                         </div>
                                         <div style={{ width: "40%" }}>
                                             <div className='text-14 mr-10' style={{ textAlign: "right" }}>质押笔数</div>
@@ -2208,7 +2216,7 @@ function Earn(props) {
                                 <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/card/usd.png"></img>
                                 <div className='text-14 ml-6' style={{ height: "24px", lineHeight: "24px" }}>换汇总收益(USDT)</div>
                             </div>
-                            <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "center", color: "#00FF96" }}>{Number(swapData?.totalReward) === 0 ? '0.00' : Number(swapData?.totalReward?.reward?.symbol?.USDT)}</div>
+                            <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "center", color: "#00FF96" }}>{ swapData?.totalReward ? Number(parseJson(swapData.totalReward)?.reward?.symbol?.USDT) : '0.00'}</div>
                             <div className='flex  justify-between mt-20'>
                                 <div>
                                     <div style={{ textAlign: "center" }}>邀请人数</div>
@@ -2217,12 +2225,12 @@ function Earn(props) {
 
                                 <div>
                                     <div style={{ textAlign: "center" }}>{t('card_129')}</div>
-                                    <div className='mt-6' style={{ textAlign: "center" }}>{Number(swapData?.todayReward) === 0 ? '0.00' : Number(swapData?.todayReward?.reward?.symbol?.USDT)} USDT</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}>{ swapData?.todayReward ? Number(parseJson(swapData.todayReward)?.reward?.symbol?.USDT) : '0.00' } USDT</div>
                                 </div>
 
                                 <div>
                                     <div style={{ textAlign: "center" }}>{t('card_153')}</div>
-                                    <div className='mt-6' style={{ textAlign: "center" }}>{Number(swapData?.yesterdayReward) === 0 ? '0.00' : Number(swapData?.yesterdayReward?.reward?.symbol?.USDT)} USDT</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}>{ swapData?.yesterdayReward ? Number(parseJson(swapData.yesterdayReward)?.reward?.symbol?.USDT) : '0.00'} USDT</div>
                                 </div>
 
                             </div>
@@ -2254,7 +2262,7 @@ function Earn(props) {
                                 <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/card/usd.png"></img>
                                 <div className='text-14 ml-6' style={{ height: "24px", lineHeight: "24px" }}>支付总收益(USDT)</div>
                             </div>
-                            <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "center", color: "#00FF96" }}>{Number(walletPayRewardData?.totalReward) === 0 ? '0.00' : Number(walletPayRewardData?.totalReward?.reward?.symbol?.USDT)} </div>
+                            <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "center", color: "#00FF96" }}>{ walletPayRewardData?.totalReward ? Number( parseJson(walletPayRewardData.totalReward)?.reward?.symbol?.USDT): '0.00'} </div>
                             <div className='flex  justify-between mt-20'>
                                 <div>
                                     <div style={{ textAlign: "center" }}>邀请人数</div>
@@ -2263,12 +2271,12 @@ function Earn(props) {
 
                                 <div>
                                     <div style={{ textAlign: "center" }}>{t('card_129')}</div>
-                                    <div className='mt-6' style={{ textAlign: "center" }}>{Number(walletPayRewardData?.todayReward) === 0 ? '0.00' : Number(walletPayRewardData?.todayReward?.reward?.symbol?.USDT)} USDT</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}>{ walletPayRewardData?.todayReward ?  Number(parseJson(walletPayRewardData.todayReward)?.reward?.symbol?.USDT) :'0.00'} USDT</div>
                                 </div>
 
                                 <div>
                                     <div style={{ textAlign: "center" }}>{t('card_153')}</div>
-                                    <div className='mt-6' style={{ textAlign: "center" }}>{Number(walletPayRewardData?.yesterdayReward) === 0 ? '0.00' : Number(walletPayRewardData?.yesterdayReward?.reward?.symbol?.USDT)} USDT</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}>{ walletPayRewardData?.yesterdayReward ? Number(parseJson(walletPayRewardData.yesterdayReward)?.reward?.symbol?.USDT) : '0.00'} USDT</div>
                                 </div>
                             </div>
                             <div style={{ height: "40px" }}></div>
@@ -2470,12 +2478,12 @@ function Earn(props) {
                                                     <img className='mr-10' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/menu/deposite3-active.png" alt="" />
                                                 </div>
                                                 <div>
-                                                    <div className='ml-8 fenChengZi'>活期利益分成<br /> <p className='fenChengZi2 mt-4'>直接邀请：{inviteRewardAllInfo.demandInterestData ? inviteRewardAllInfo.demandInterestData.direct : 0}人</p> </div>
+                                                    <div className='ml-8 fenChengZi'>活期利益分成<br /> <p className='fenChengZi2 mt-4'>直接邀请：{inviteRewardAllInfo.demandInterestData ? parseJson(inviteRewardAllInfo.demandInterestData).direct : 0}人</p> </div>
                                                 </div>
                                             </div>
                                             <div className='flex earnDepositeDi'>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
-                                                    <div style={{}}>{inviteRewardAllInfo.demandInterestData && inviteRewardAllInfo.demandInterestData.reward ? (Number(inviteRewardAllInfo.demandInterestData.reward.symbol.USDT) === 0 ? '0.00' : Number(inviteRewardAllInfo.demandInterestData.reward.symbol.USDT)) : '0.00'}</div>
+                                                    <div style={{}}>{inviteRewardAllInfo.demandInterestData && parseJson(inviteRewardAllInfo.demandInterestData).reward ? (Number(parseJson(inviteRewardAllInfo.demandInterestData)?.reward?.symbol?.USDT) === 0 ? '0.00' : Number(parseJson(inviteRewardAllInfo.demandInterestData)?.reward?.symbol?.USDT)) : '0.00'}</div>
                                                 </div>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
                                                     <img className='ml-10 mr-6' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
@@ -2495,14 +2503,14 @@ function Earn(props) {
                                                 </div>
                                                 <div className='flex mt-4' style={{ width: "100%", height: "" }}>
                                                     <div className='' style={{ width: "30%", textAlign: "left" }}>提成USDT</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[3]?.today)?.reward ? parseJson(inviteDefferentTypeReward[3].today).reward.symbol.USDT : '0.00'}</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[3]?.yesterday)?.reward ? parseJson(inviteDefferentTypeReward[3].yesterday).reward.symbol.USDT : '0.00'}</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[3]?.curMonth)?.reward ? parseJson(inviteDefferentTypeReward[3].curMonth).reward.symbol.USDT : '0.00'}</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[3]?.beforeMonth)?.reward ? parseJson(inviteDefferentTypeReward[3].beforeMonth).reward.symbol.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{ (inviteDefferentTypeReward[3]?.today)? parseJson(inviteDefferentTypeReward[3].today)?.reward?.symbol?.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[3]?.yesterday)?.reward ? parseJson(inviteDefferentTypeReward[3].yesterday)?.reward?.symbol?.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[3]?.curMonth)?.reward ? parseJson(inviteDefferentTypeReward[3].curMonth)?.reward?.symbol?.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[3]?.beforeMonth)?.reward ? parseJson(inviteDefferentTypeReward[3].beforeMonth)?.reward?.symbol?.USDT : '0.00'}</div>
                                                 </div>
                                                 <div className='flex mt-4' style={{ width: "100%", height: "" }}>
                                                     <div className='' style={{ width: "30%", textAlign: "left" }}>直接邀请人数</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[3]?.today)?.direct ? parseJson(inviteDefferentTypeReward[3].today).direct : 0}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{(inviteDefferentTypeReward[3]?.today) ? parseJson(inviteDefferentTypeReward[3].today).direct : 0}</div>
                                                     <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[3]?.yesterday)?.direct ? parseJson(inviteDefferentTypeReward[3].yesterday).direct : 0}</div>
                                                     <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[3]?.curMonth)?.direct ? parseJson(inviteDefferentTypeReward[3].curMonth).direct : 0}</div>
                                                     <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[3]?.beforeMonth)?.direct ? parseJson(inviteDefferentTypeReward[3].beforeMonth).direct : 0}</div>
@@ -2530,12 +2538,12 @@ function Earn(props) {
                                                     <img className='mr-10' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/menu/icon-pools-active.png" alt="" />
                                                 </div>
                                                 <div>
-                                                    <div className='ml-8 fenChengZi'>质押收益分成<br /> <p className='fenChengZi2 mt-4'>直接邀请：{inviteRewardAllInfo.tokenPledgeRewardData ? inviteRewardAllInfo.tokenPledgeRewardData.direct : 0}人</p> </div>
+                                                    <div className='ml-8 fenChengZi'>质押收益分成<br /> <p className='fenChengZi2 mt-4'>直接邀请：{inviteRewardAllInfo.tokenPledgeRewardData ?  parseJson(inviteRewardAllInfo.tokenPledgeRewardData).direct : 0}人</p> </div>
                                                 </div>
                                             </div>
                                             <div className='flex earnDepositeDi'>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
-                                                    <div style={{}}>{inviteRewardAllInfo.tokenPledgeRewardData && inviteRewardAllInfo.tokenPledgeRewardData.reward ? (Number(inviteRewardAllInfo.tokenPledgeRewardData.reward.symbol.USDT) === 0 ? '0.00' : Number(inviteRewardAllInfo.tokenPledgeRewardData.reward.symbol.USDT)) : '0.00'}</div>
+                                                    <div style={{}}>{inviteRewardAllInfo.tokenPledgeRewardData && parseJson(inviteRewardAllInfo.tokenPledgeRewardData).reward ? (Number(parseJson(inviteRewardAllInfo.tokenPledgeRewardData)?.reward?.symbol?.USDT) === 0 ? '0.00' : Number(inviteRewardAllInfo.tokenPledgeRewardData?.reward?.symbol?.USDT)) : '0.00'}</div>
                                                 </div>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
                                                     <img className='ml-10 mr-6' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
@@ -2555,10 +2563,10 @@ function Earn(props) {
                                                 </div>
                                                 <div className='flex mt-4' style={{ width: "100%", height: "" }}>
                                                     <div className='' style={{ width: "30%", textAlign: "left" }}>提成USDT</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[6]?.today)?.reward ? parseJson(inviteDefferentTypeReward[6].today).reward.symbol.USDT : '0.00'}</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[6]?.yesterday)?.reward ? parseJson(inviteDefferentTypeReward[6].yesterday).reward.symbol.USDT : '0.00'}</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[6]?.curMonth)?.reward ? parseJson(inviteDefferentTypeReward[6].curMonth).reward.symbol.USDT : '0.00'}</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[6]?.beforeMonth)?.reward ? parseJson(inviteDefferentTypeReward[6].beforeMonth).reward.symbol.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[6]?.today)?.reward ? parseJson(inviteDefferentTypeReward[6].today)?.reward?.symbol?.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[6]?.yesterday)?.reward ? parseJson(inviteDefferentTypeReward[6].yesterday)?.reward?.symbol?.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[6]?.curMonth)?.reward ? parseJson(inviteDefferentTypeReward[6].curMonth)?.reward?.symbol?.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[6]?.beforeMonth)?.reward ? parseJson(inviteDefferentTypeReward[6].beforeMonth)?.reward?.symbol?.USDT : '0.00'}</div>
                                                 </div>
                                                 <div className='flex mt-4' style={{ width: "100%", height: "" }}>
                                                     <div className='' style={{ width: "30%", textAlign: "left" }}>直接邀请人数</div>
@@ -2590,12 +2598,12 @@ function Earn(props) {
                                                     <img className='mr-10' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/menu/daE.png" alt="" />
                                                 </div>
                                                 <div>
-                                                    <div className='ml-8 fenChengZi'>合约挖矿分成<br /> <p className='fenChengZi2 mt-4'>直接邀请：{inviteRewardAllInfo.tokenContractRewardData ? inviteRewardAllInfo.tokenContractRewardData.direct : 0}人</p> </div>
+                                                    <div className='ml-8 fenChengZi'>合约挖矿分成<br /> <p className='fenChengZi2 mt-4'>直接邀请：{inviteRewardAllInfo.tokenContractRewardData ? parseJson(inviteRewardAllInfo.tokenContractRewardData).direct : 0}人</p> </div>
                                                 </div>
                                             </div>
                                             <div className='flex earnDepositeDi'>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
-                                                    <div style={{}}>{inviteRewardAllInfo.tokenContractRewardData && inviteRewardAllInfo.tokenContractRewardData.reward ? (Number(inviteRewardAllInfo.tokenContractRewardData.reward.symbol.USDT) === 0 ? '0.00' : Number(inviteRewardAllInfo.tokenContractRewardData.reward.symbol.USDT)) : '0.00'}</div>
+                                                    <div style={{}}>{inviteRewardAllInfo.tokenContractRewardData && parseJson(inviteRewardAllInfo.tokenContractRewardData).reward ? (Number(parseJson(inviteRewardAllInfo.tokenContractRewardData)?.reward?.symbol?.USDT) === 0 ? '0.00' : Number(inviteRewardAllInfo.tokenContractRewardData?.reward?.symbol?.USDT)) : '0.00'}</div>
                                                 </div>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
                                                     <img className='ml-10 mr-6' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
@@ -2615,10 +2623,10 @@ function Earn(props) {
                                                 </div>
                                                 <div className='flex mt-4' style={{ width: "100%", height: "" }}>
                                                     <div className='' style={{ width: "30%", textAlign: "left" }}>提成USDT</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[7]?.today)?.reward ? parseJson(inviteDefferentTypeReward[7].today).reward.symbol.USDT : '0.00'}</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[7]?.yesterday)?.reward ? parseJson(inviteDefferentTypeReward[7].yesterday).reward.symbol.USDT : '0.00'}</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[7]?.curMonth)?.reward ? parseJson(inviteDefferentTypeReward[7].curMonth).reward.symbol.USDT : '0.00'}</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[7]?.beforeMonth)?.reward ? parseJson(inviteDefferentTypeReward[7].beforeMonth).reward.symbol.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[7]?.today)?.reward ? parseJson(inviteDefferentTypeReward[7].today)?.reward?.symbol?.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[7]?.yesterday)?.reward ? parseJson(inviteDefferentTypeReward[7].yesterday)?.reward?.symbol?.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[7]?.curMonth)?.reward ? parseJson(inviteDefferentTypeReward[7].curMonth)?.reward?.symbol?.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[7]?.beforeMonth)?.reward ? parseJson(inviteDefferentTypeReward[7].beforeMonth)?.reward?.symbol?.USDT : '0.00'}</div>
                                                 </div>
                                                 <div className='flex mt-4' style={{ width: "100%", height: "" }}>
                                                     <div className='' style={{ width: "30%", textAlign: "left" }}>直接邀请人数</div>
@@ -2650,12 +2658,12 @@ function Earn(props) {
                                                     <img className='mr-10' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/menu/buyCrypto-active.png" alt="" />
                                                 </div>
                                                 <div>
-                                                    <div className='ml-8 fenChengZi'>支付手续费佣金<br /> <p className='fenChengZi2 mt-4'>直接邀请：{inviteRewardAllInfo.payCommissionRewardData ? inviteRewardAllInfo.payCommissionRewardData.direct : 0}人</p> </div>
+                                                    <div className='ml-8 fenChengZi'>支付手续费佣金<br /> <p className='fenChengZi2 mt-4'>直接邀请：{inviteRewardAllInfo.payCommissionRewardData ? parseJson(inviteRewardAllInfo.payCommissionRewardData).direct : 0}人</p> </div>
                                                 </div>
                                             </div>
                                             <div className='flex earnDepositeDi'>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
-                                                    <div style={{}}>{inviteRewardAllInfo.payCommissionRewardData && inviteRewardAllInfo.payCommissionRewardData.reward ? (Number(inviteRewardAllInfo.payCommissionRewardData.reward.symbol.USDT) === 0 ? '0.00' : Number(inviteRewardAllInfo.payCommissionRewardData.reward.symbol.USDT)) : '0.00'}</div>
+                                                    <div style={{}}>{inviteRewardAllInfo.payCommissionRewardData && parseJson(inviteRewardAllInfo.payCommissionRewardData).reward ? (Number(parseJson(inviteRewardAllInfo.payCommissionRewardData)?.reward?.symbol?.USDT) === 0 ? '0.00' : Number(inviteRewardAllInfo.payCommissionRewardData?.reward?.symbol?.USDT)) : '0.00'}</div>
                                                 </div>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
                                                     <img className='ml-10 mr-6' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
@@ -2675,10 +2683,10 @@ function Earn(props) {
                                                 </div>
                                                 <div className='flex mt-4' style={{ width: "100%", height: "" }}>
                                                     <div className='' style={{ width: "30%", textAlign: "left" }}>提成USDT</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[2]?.today)?.reward ? parseJson(inviteDefferentTypeReward[2].today).reward.symbol.USDT : '0.00'}</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[2]?.yesterday)?.reward ? parseJson(inviteDefferentTypeReward[2].yesterday).reward.symbol.USDT : '0.00'}</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[2]?.curMonth)?.reward ? parseJson(inviteDefferentTypeReward[2].curMonth).reward.symbol.USDT : '0.00'}</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[2]?.beforeMonth)?.reward ? parseJson(inviteDefferentTypeReward[2].beforeMonth).reward.symbol.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[2]?.today)?.reward ? parseJson(inviteDefferentTypeReward[2].today)?.reward?.symbol?.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[2]?.yesterday)?.reward ? parseJson(inviteDefferentTypeReward[2].yesterday)?.reward?.symbol?.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[2]?.curMonth)?.reward ? parseJson(inviteDefferentTypeReward[2].curMonth)?.reward?.symbol?.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[2]?.beforeMonth)?.reward ? parseJson(inviteDefferentTypeReward[2].beforeMonth)?.reward?.symbol?.USDT : '0.00'}</div>
                                                 </div>
                                                 <div className='flex mt-4' style={{ width: "100%", height: "" }}>
                                                     <div className='' style={{ width: "30%", textAlign: "left" }}>直接邀请人数</div>
@@ -2709,12 +2717,12 @@ function Earn(props) {
                                                     <img className='mr-10' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/menu/icon-borrow-active.png" alt="" />
                                                 </div>
                                                 <div>
-                                                    <div className='ml-8 fenChengZi'>换汇手续费佣金<br /> <p className='fenChengZi2 mt-4'>直接邀请：{inviteRewardAllInfo.swapRewardData ? inviteRewardAllInfo.swapRewardData.direct : 0}人</p> </div>
+                                                    <div className='ml-8 fenChengZi'>换汇手续费佣金<br /> <p className='fenChengZi2 mt-4'>直接邀请：{inviteRewardAllInfo.swapRewardData ? parseJson(inviteRewardAllInfo.swapRewardData).direct : 0}人</p> </div>
                                                 </div>
                                             </div>
                                             <div className='flex earnDepositeDi'>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
-                                                    <div style={{}}>{inviteRewardAllInfo.swapRewardData && inviteRewardAllInfo.swapRewardData.reward ? (Number(inviteRewardAllInfo.swapRewardData.reward.symbol.USDT) === 0 ? '0.00' : Number(inviteRewardAllInfo.swapRewardData.reward.symbol.USDT)) : '0.00'} </div>
+                                                    <div style={{}}>{inviteRewardAllInfo.swapRewardData && parseJson(inviteRewardAllInfo.swapRewardData).reward ? (Number(parseJson(inviteRewardAllInfo.swapRewardData)?.reward?.symbol?.USDT) === 0 ? '0.00' : Number(inviteRewardAllInfo.swapRewardData?.reward?.symbol?.USDT)) : '0.00'} </div>
                                                 </div>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
                                                     <img className='ml-10 mr-6' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
@@ -2735,10 +2743,10 @@ function Earn(props) {
                                                 </div>
                                                 <div className='flex mt-4' style={{ width: "100%", height: "" }}>
                                                     <div className='' style={{ width: "30%", textAlign: "left" }}>提成USDT</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.today)?.reward ? parseJson(inviteDefferentTypeReward[4].today).reward.symbol.USDT : '0.00'}</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.yesterday)?.reward ? parseJson(inviteDefferentTypeReward[4].yesterday).reward.symbol.USDT : '0.00'}</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.curMonth)?.reward ? parseJson(inviteDefferentTypeReward[4].curMonth).reward.symbol.USDT : '0.00'}</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.beforeMonth)?.reward ? parseJson(inviteDefferentTypeReward[4].beforeMonth).reward.symbol.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.today)?.reward ? parseJson(inviteDefferentTypeReward[4].today)?.reward?.symbol?.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.yesterday)?.reward ? parseJson(inviteDefferentTypeReward[4].yesterday)?.reward?.symbol?.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.curMonth)?.reward ? parseJson(inviteDefferentTypeReward[4].curMonth)?.reward?.symbol?.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.beforeMonth)?.reward ? parseJson(inviteDefferentTypeReward[4].beforeMonth)?.reward?.symbol?.USDT : '0.00'}</div>
                                                 </div>
                                                 <div className='flex mt-4' style={{ width: "100%", height: "" }}>
                                                     <div className='' style={{ width: "30%", textAlign: "left" }}>直接邀请人数</div>
@@ -2778,7 +2786,7 @@ function Earn(props) {
                                             </div>
                                             <div className='flex earnDepositeDi'>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
-                                                    <div style={{}}>{inviteRewardAllInfo.swapRewardData && inviteRewardAllInfo.swapRewardData.reward ? (Number(inviteRewardAllInfo.swapRewardData.reward.symbol.USDT) === 0 ? '0.00' : Number(inviteRewardAllInfo.swapRewardData.reward.symbol.USDT)) : '0.00'} </div>
+                                                    <div style={{}}>{inviteRewardAllInfo.swapRewardData && inviteRewardAllInfo.swapRewardData.reward ? (Number(inviteRewardAllInfo.swapRewardData?.reward?.symbol?.USDT) === 0 ? '0.00' : Number(inviteRewardAllInfo.swapRewardData?.reward?.symbol?.USDT)) : '0.00'} </div>
                                                 </div>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
                                                     <img className='ml-10 mr-6' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
@@ -2799,10 +2807,10 @@ function Earn(props) {
                                                 </div>
                                                 <div className='flex mt-4' style={{ width: "100%", height: "" }}>
                                                     <div className='' style={{ width: "30%", textAlign: "left" }}>提成USDT</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.today)?.reward ? parseJson(inviteDefferentTypeReward[4].today).reward.symbol.USDT : '0.00'}</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.yesterday)?.reward ? parseJson(inviteDefferentTypeReward[4].yesterday).reward.symbol.USDT : '0.00'}</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.curMonth)?.reward ? parseJson(inviteDefferentTypeReward[4].curMonth).reward.symbol.USDT : '0.00'}</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.beforeMonth)?.reward ? parseJson(inviteDefferentTypeReward[4].beforeMonth).reward.symbol.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.today)?.reward ? parseJson(inviteDefferentTypeReward[4].today)?.reward?.symbol?.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.yesterday)?.reward ? parseJson(inviteDefferentTypeReward[4].yesterday)?.reward?.symbol?.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.curMonth)?.reward ? parseJson(inviteDefferentTypeReward[4].curMonth)?.reward?.symbol?.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[4]?.beforeMonth)?.reward ? parseJson(inviteDefferentTypeReward[4].beforeMonth)?.reward?.symbol?.USDT : '0.00'}</div>
                                                 </div>
                                                 <div className='flex mt-4' style={{ width: "100%", height: "" }}>
                                                     <div className='' style={{ width: "30%", textAlign: "left" }}>直接邀请人数</div>
