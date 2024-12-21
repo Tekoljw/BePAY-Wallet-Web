@@ -1808,9 +1808,7 @@ function Wallet(props) {
                                 inputProps={{
                                   "aria-label": "searchText",
                                 }}
-                                // autoFocus
                                 placeholder={t("home_account_2")}
-                              // onBlur={() => { setSearchInput(false) }}
                               />
                             </FormControl>
                           </>
@@ -1824,46 +1822,12 @@ function Wallet(props) {
                           className="text-48 cursor-pointer font-medium imgChangeColor"
                           alt="additions and deletions"
                         />
-                        {/* <FuseSvgIcon onClick={() => { setDoPlus(!doPlus) }} className="text-48 cursor-pointer font-medium jiaShow" size={24} color="action">feather:plus</FuseSvgIcon> */}
                       </div>
                       <motion.div
                         variants={container}
                         initial="hidden"
                         animate="show"
                       >
-                        {/* <Tabs
-                        component={motion.div}
-                        variants={item}
-                        value={showType}
-                        onChange={(ev, value) => setShowType(value)}
-                        indicatorColor="secondary"
-                        textColor="inherit"
-                        variant="fullWidth"
-                        scrollButtons={false}
-                        className="min-h-40 wallet-show-type wallet-show-type-tab ml-16 mr-12 wallet-show-type-radios"
-                        classes={{
-                          indicator:
-                            "flex justify-between bg-transparent w-full h-full",
-                        }}
-                        TabIndicatorProps={{
-                          children: (
-                            <Box className="w-full h-full rounded-full huaKuaBgColor" />
-                          ),
-                        }}
-                        sx={{
-                          // padding: '1rem 1.2rem',
-                          flex: 1,
-                        }}
-                      >
-                        {Object.entries(showTypeTab).map(([key, label]) => (
-                          <Tab
-                            className="text-14 font-semibold min-w-64 wallet-tab-item txtColorTitle zindex opacity-100"
-                            disableRipple
-                            key={key}
-                            label={label}
-                          />
-                        ))}
-                      </Tabs> */}
                         <Tabs
                           component={motion.div}
                           variants={item}
@@ -1966,7 +1930,7 @@ function Wallet(props) {
                                     )}
                                     key={index}
                                   >
-                                    <div className="flex px-10 items-center">
+                                    <div className="flex px-15 items-center">
                                       <img
                                         style={{ borderRadius: "50%" }}
                                         className="mr-4"
@@ -1977,12 +1941,12 @@ function Wallet(props) {
                                       {row.symbol}
                                     </div>
                                     {isFait && (
-                                      <div className="px-10">
+                                      <div className="px-15">
                                         {row.currencyAmount}
                                       </div>
                                     )}
                                     {!isFait && (
-                                      <div className="px-10">{row.balance}</div>
+                                      <div className="px-15">{row.balance}</div>
                                     )}
                                   </div>
                                 )
@@ -1997,7 +1961,7 @@ function Wallet(props) {
                                   )}
                                   key={index}
                                 >
-                                  <div className="flex px-10 items-center">
+                                  <div className="flex px-15 items-center">
                                     <img
                                       style={{ borderRadius: "50%" }}
                                       className="mr-4"
@@ -2008,12 +1972,12 @@ function Wallet(props) {
                                     {row.symbol}
                                   </div>
                                   {isFait && (
-                                    <div className="px-10">
+                                    <div className="px-15">
                                       {row.currencyAmount}
                                     </div>
                                   )}
                                   {!isFait && (
-                                    <div className="px-10">{row.balance}</div>
+                                    <div className="px-15">{row.balance}</div>
                                   )}
                                 </div>
                               );
@@ -2052,17 +2016,17 @@ function Wallet(props) {
                                   }}
                                   key={index}
                                 >
-                                  <div className="flex px-10 items-center">
+                                  <div className="flex px-15 items-center">
                                     <img style={{ borderRadius: '50%' }} className="mr-4" width="24" src={row.avatar} alt="" />
                                     {row.symbol}
                                   </div>
                                   {isFait && (
-                                    <div className="px-10">
+                                    <div className="px-15">
                                       {row.currencyAmount}
                                     </div>
                                   )}
                                   {!isFait && (
-                                    <div className="px-10">{row.balance}</div>
+                                    <div className="px-15">{row.balance}</div>
                                   )}
                                 </motion.div>
                               )
@@ -2080,7 +2044,7 @@ function Wallet(props) {
                                 }}
                                 key={index}
                               >
-                                <div className="flex px-10 items-center">
+                                <div className="flex px-15 items-center">
                                   <img
                                     style={{ borderRadius: "50%" }}
                                     className="mr-4"
@@ -2091,10 +2055,10 @@ function Wallet(props) {
                                   {row.symbol}
                                 </div>
                                 {isFait && (
-                                  <div className="px-10">{row.currencyAmount}</div>
+                                  <div className="px-15">{row.currencyAmount}</div>
                                 )}
                                 {!isFait && (
-                                  <div className="px-10">{row.balance}</div>
+                                  <div className="px-15">{row.balance}</div>
                                 )}
                               </motion.div>
                             );
@@ -2154,7 +2118,7 @@ function Wallet(props) {
                               }}
                               key={index}
                             >
-                              <div className="flex px-10 items-center">
+                              <div className="flex px-15 items-center">
                                 <img
                                   style={{ borderRadius: "5px" }}
                                   className="mr-4"
@@ -2164,7 +2128,7 @@ function Wallet(props) {
                                 />
                                 {row.currencyCode}
                               </div>
-                              <div className="px-10">{row.balance}</div>
+                              <div className="px-15">{row.balance}</div>
                             </motion.div>
                           );
                         }
@@ -2776,7 +2740,7 @@ function Wallet(props) {
                     border: "none",
                   }}
                 >
-                  <div className="mt-8 px-10">
+                  <div className="mt-8 px-15">
                     <div
                       className="flex justify-between items-center my-4 "
                       style={{ height: "2rem" }}

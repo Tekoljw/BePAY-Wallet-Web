@@ -1152,6 +1152,7 @@ function Fiat(props) {
                                                         id="outlined-adornment-address send-tips-container-address"
                                                         value={inputVal.accountNo}
                                                         onChange={handleChangeInputVal('accountNo')}
+                                                        className='yuEShuRu'
                                                         aria-describedby="outlined-weight-helper-text"
                                                         inputProps={{
                                                             'aria-label': 'accountNo',
@@ -1173,6 +1174,7 @@ function Fiat(props) {
                                                     <OutlinedInput
                                                         id="outlined-adornment-address send-tips-container-address"
                                                         value={inputVal.accountName}
+                                                        className='yuEShuRu'
                                                         onChange={handleChangeInputVal('accountName')}
                                                         aria-describedby="outlined-weight-helper-text"
                                                         inputProps={{
@@ -1195,6 +1197,7 @@ function Fiat(props) {
                                                     <OutlinedInput
                                                         id="outlined-adornment-address send-tips-container-address"
                                                         value={inputVal.mobile}
+                                                        className='yuEShuRu'
                                                         onChange={handleChangeInputVal('mobile')}
                                                         aria-describedby="outlined-weight-helper-text"
                                                         inputProps={{
@@ -1217,6 +1220,7 @@ function Fiat(props) {
                                                     <OutlinedInput
                                                         id="outlined-adornment-address send-tips-container-address"
                                                         value={inputVal.email}
+                                                        className='yuEShuRu'
                                                         onChange={handleChangeInputVal('email')}
                                                         aria-describedby="outlined-weight-helper-text"
                                                         inputProps={{
@@ -1243,6 +1247,7 @@ function Fiat(props) {
                                                                 id="outlined-adornment-address send-tips-container-address"
                                                                 value={inputVal.description}
                                                                 onChange={handleChangeInputVal('description')}
+                                                                className='yuEShuRu'
                                                                 aria-describedby="outlined-weight-helper-text"
                                                                 inputProps={{
                                                                     'aria-label': 'description',
@@ -1270,6 +1275,7 @@ function Fiat(props) {
                                                         id="outlined-adornment-address send-tips-container-address"
                                                         value={inputVal.accountNo}
                                                         onChange={handleChangeInputVal('accountNo')}
+                                                        className='yuEShuRu'
                                                         aria-describedby="outlined-weight-helper-text"
                                                         inputProps={{
                                                             'aria-label': 'accountNo',
@@ -1292,6 +1298,7 @@ function Fiat(props) {
                                                         id="outlined-adornment-address send-tips-container-address"
                                                         value={inputVal.accountName}
                                                         onChange={handleChangeInputVal('accountName')}
+                                                        className='yuEShuRu'
                                                         aria-describedby="outlined-weight-helper-text"
                                                         inputProps={{
                                                             'aria-label': 'accountName',
@@ -1333,8 +1340,7 @@ function Fiat(props) {
                                                         onChange={handleChangeEntryType}
                                                         displayEmpty
                                                         inputProps={{ "aria-label": "Without label" }}
-                                                        className="MuiSelect-icon "
-                                                        // IconComponent={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
+                                                        className="MuiSelect-icon  tiBiSelect"
                                                         MenuProps={{
                                                             PaperProps: {
                                                                 style: {
@@ -1390,7 +1396,7 @@ function Fiat(props) {
                                                         onChange={handleChangeBankId}
                                                         displayEmpty
                                                         inputProps={{ "aria-label": "Without label" }}
-                                                        className="MuiSelect-icon "
+                                                        className="MuiSelect-icon tiBiSelect"
                                                         // IconComponent={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
                                                         MenuProps={{
                                                             PaperProps: {
@@ -1411,7 +1417,7 @@ function Fiat(props) {
                                                                         className="flex items-center py-0 flex-grow"
                                                                         style={{ width: '100%' }}
                                                                     >
-                                                                        <Typography className="text-16 font-medium">{row.bankName}</Typography>
+                                                                        <Typography className="text-14 font-medium">{row.bankName}</Typography>
                                                                     </div>
                                                                 </MenuItem>
                                                             )
@@ -1431,6 +1437,7 @@ function Fiat(props) {
                                                         <OutlinedInput
                                                             id="outlined-adornment-address send-tips-container-address"
                                                             value={inputVal.pixId}
+                                                            className='yuEShuRu'
                                                             onChange={handleChangeInputVal('pixId')}
                                                             aria-describedby="outlined-weight-helper-text"
                                                             inputProps={{
@@ -1454,7 +1461,7 @@ function Fiat(props) {
                                                         <Select
                                                             labelId="demo-simple-select-label"
                                                             id="demo-simple-select"
-                                                            style={{ fontSize: "14px" }}
+                                                            className='tiBiSelect'                  
                                                             value={accountType}
                                                             label="CPF"
                                                             onChange={handleChangeAccountType}
@@ -1464,7 +1471,6 @@ function Fiat(props) {
                                                             <MenuItem value={"PHONE"}>PHONE</MenuItem>
                                                             <MenuItem value={"EMAIL"}>EMAIL</MenuItem>
                                                         </Select>
-
                                                     </FormControl>
                                                 </div>
 
@@ -1476,6 +1482,7 @@ function Fiat(props) {
                                                         <OutlinedInput
                                                             id="outlined-adornment-address send-tips-container-address"
                                                             value={inputVal.cardNo}
+                                                            className='yuEShuRu'
                                                             onChange={handleChangeInputVal('cardNo')}
                                                             aria-describedby="outlined-weight-helper-text"
                                                             inputProps={{
@@ -1504,7 +1511,7 @@ function Fiat(props) {
                                         <div className="flex items-center py-16 justify-between" style={{}}>
                                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
                                                 <OutlinedInput
-                                                className='yuEShuRu'
+                                                    className='yuEShuRu'
                                                     id="outlined-adornment-address send-tips-container-amount"
                                                     value={inputVal.amount}
                                                     onChange={handleChangeInputVal('amount')}
@@ -1525,7 +1532,7 @@ function Fiat(props) {
                                                 borderRadius: '8px'
                                             }}
                                         >
-                                            <Typography className="text-14 px-16">
+                                            <Typography className="text-14 px-10">
                                                 <span style={{ color: '#FCE100' }}>⚠</span>{t('home_withdraw_15')} {fee} {currencyCode} . {t('home_withdraw_16')} {t('home_withdraw_17')}
                                             </Typography>
                                         </Box>
@@ -1545,6 +1552,7 @@ function Fiat(props) {
                                                     <OutlinedInput
                                                         id="outlined-adornment-address send-tips-container-address"
                                                         value={inputVal.userId}
+                                                        className='yuEShuRu'
                                                         onChange={handleChangeInputVal('userId')}
                                                         aria-describedby="outlined-weight-helper-text"
                                                     />
@@ -1578,6 +1586,7 @@ function Fiat(props) {
                                                 <OutlinedInput
                                                     id="outlined-adornment-address send-tips-container-amount"
                                                     value={inputVal.amount}
+                                                    className='yuEShuRu'
                                                     onChange={handleChangeInputVal('amount')}
                                                     aria-describedby="outlined-weight-helper-text"
                                                     inputProps={{
@@ -1587,7 +1596,7 @@ function Fiat(props) {
                                                 />
                                             </FormControl>
                                         </div>
-                                        <div className=''><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8"}}>{t('card_177')}</span></div>
+                                        <div className=''><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8" }}>{t('card_177')}</span></div>
                                     </div>
                                 }
 

@@ -1407,7 +1407,7 @@ function Withdraw(props) {
                                                     borderRadius: '8px'
                                                 }}
                                             >
-                                                <Typography className="text-14 px-16">
+                                                <Typography className="text-14 px-10">
                                                     <span style={{ color: '#FCE100' }}>⚠</span> {t('home_withdraw_15')}{TransactionFee}  USDT{t('home_withdraw_16')}{t('home_withdraw_17')}
                                                 </Typography>
                                             </Box>
@@ -1472,6 +1472,7 @@ function Withdraw(props) {
                                                         id="outlined-adornment-address send-tips-container-amount"
                                                         value={inputVal.amount}
                                                         onChange={handleChangeInputVal('amount')}
+                                                        className='yuEShuRu'
                                                         endAdornment={<InputAdornment position="end">
                                                             <Typography className="text-16 font-medium cursor-pointer color-2DD4BF">
                                                                 {t('home_withdraw_5')}
@@ -1486,12 +1487,7 @@ function Withdraw(props) {
                                                     />
                                                 </FormControl>
                                             </div>
-
-                                            <div className="flex items-center mb-20 justify-content-start " style={{}}>
-                                                {/* <Checkbox defaultChecked /> */}
-                                                {/* <Typography style={{ fontSize: '1.4rem' }}>
-                                                {t('home_sendTips_8')}
-                                            </Typography> */}
+                                            <div className="flex items-center mb-20 justify-content-start ">
                                                 <div className='mt-8'><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8" }}>{t('card_177')}</span></div>
                                             </div>
                                             <LoadingButton

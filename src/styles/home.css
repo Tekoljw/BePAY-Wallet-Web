@@ -1345,7 +1345,12 @@ input[type='number'] {
 
 .yuEShuRu .muiltr-m96d3a-MuiInputBase-input-MuiOutlinedInput-input {
     font-size: 14px !important;
-    padding: 0px 5px !important;
+    padding: 0px 10px !important;
+}
+
+.yuEShuRu .muiltr-bdvqlr-MuiInputBase-input-MuiOutlinedInput-input {
+    font-size: 14px !important;
+    padding: 0px 10px !important;
 }
 
 .gongNengTan2 {
@@ -1378,7 +1383,6 @@ input[type='number'] {
     font-weight: 600;
 }
 
-.fenChengZi {}
 
 .fenChengZi2 {
     font-size: 1.2rem;
@@ -1489,6 +1493,13 @@ input[type='number'] {
     height: 3.6rem
 }
 
+
+.tiBiSelect .muiltr-1y1awvf-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+    padding-left: 10px !important;
+}
+
+
+
 .openingFee {
     color: #46DFB7;
 }
@@ -1509,7 +1520,6 @@ input[type='number'] {
 .openCardBtn {
     background-color: #0D9488;
     border-radius: 5rem;
-    font-weight: bold;
     height: 3rem;
     line-height: 3rem;
     text-align: center;
@@ -1686,7 +1696,7 @@ input[type='number'] {
 }
 
 .addressShuoDuan .muiltr-m96d3a-MuiInputBase-input-MuiOutlinedInput-input {
-    padding: 15px 28px 15px 5px !important;
+    padding: 15px 28px 15px 10px !important;
 }
 
 .cardErrorZi {
@@ -2566,8 +2576,6 @@ input[type='number'] {
 }
 
 
-
-
 .recordSelectHeight {
     height: 50px;
     font-size: 1.6rem !important;
@@ -2928,7 +2936,7 @@ input#outlined-adornment-address\ outlined-adornment-address-wallet-input-meta {
 }
 
 input#outlined-adornment-address\ send-tips-container-address {
-    padding: 0 2.7rem 0 0.5rem;
+    padding: 0 2.8rem 0 1rem;
     height: 5rem;
     box-sizing: border-box;
     font-size: 1.4rem;
@@ -2971,6 +2979,7 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     height: 26px;
     line-height: 26px;
 }
+
 
 
 

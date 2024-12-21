@@ -60,7 +60,7 @@ import MenuItem from '@mui/material/MenuItem';
 import phoneCode from "../../../phone/phoneCode";
 import { Carousel } from "react-responsive-carousel";
 import styles from "react-responsive-carousel/lib/styles/carousel.min.css";
-import {showServerErrorTips} from "../../util/tools/function";
+import { showServerErrorTips } from "../../util/tools/function";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -782,24 +782,24 @@ function Card(props) {
             if (!value.payload) return;
             const result = value.payload && value.payload.data;
             let tempAddressList = [];
-            if(result.address) {
-                const adr1 = _.find(phoneCode.list, { country_code: result.country}).local_name + ' ' + result.state + ', ' + result.city + ',' + result.address
+            if (result.address) {
+                const adr1 = _.find(phoneCode.list, { country_code: result.country }).local_name + ' ' + result.state + ', ' + result.city + ',' + result.address
                 tempAddressList.push({
                     id: 1,
                     label: adr1,
                     countryCode: result.country
                 })
             }
-            if(result.userAddressTwo && result.userAddressTwo.address){
-                const adr2 = _.find(phoneCode.list, { country_code: result.userAddressTwo.country}).local_name  + ' ' + result.userAddressTwo.state + ' ,' + result.userAddressTwo.city + ',' + result.userAddressTwo.address
+            if (result.userAddressTwo && result.userAddressTwo.address) {
+                const adr2 = _.find(phoneCode.list, { country_code: result.userAddressTwo.country }).local_name + ' ' + result.userAddressTwo.state + ' ,' + result.userAddressTwo.city + ',' + result.userAddressTwo.address
                 tempAddressList.push({
                     id: 2,
                     label: adr2,
                     countryCode: result.userAddressTwo.country
                 })
             }
-            if(result.userAddressThree && result.userAddressThree.address){
-                const adr3 = _.find(phoneCode.list, { country_code: result.userAddressThree.country}).local_name  + ' ' + result.userAddressThree.state + ',' + result.userAddressThree.city + ',' + result.userAddressThree.address
+            if (result.userAddressThree && result.userAddressThree.address) {
+                const adr3 = _.find(phoneCode.list, { country_code: result.userAddressThree.country }).local_name + ' ' + result.userAddressThree.state + ',' + result.userAddressThree.city + ',' + result.userAddressThree.address
                 tempAddressList.push({
                     id: 3,
                     label: adr3,
@@ -807,7 +807,7 @@ function Card(props) {
                 })
             }
             setAddressList(tempAddressList)
-            setSelectedKycAddress(result.defaultAddressInfo? result.defaultAddressInfo: 1)
+            setSelectedKycAddress(result.defaultAddressInfo ? result.defaultAddressInfo : 1)
         });
     };
 
@@ -1039,8 +1039,8 @@ function Card(props) {
         })).then((res) => {
             setIsLoadingBtn(false)
             let result = res.payload
-            if(result?.errno === 0){
-                if(result?.data?.status === 'success'){
+            if (result?.errno === 0) {
+                if (result?.data?.status === 'success') {
                     dispatch(showMessage({ message: 'success', code: 1 }));
                     setUpdateCard(true)
                     setTimer(timer + 1)
@@ -1189,8 +1189,8 @@ function Card(props) {
                         setZhuanQuan(false);
                         setTiJiaoState(1);
                         setUpdateCard(true)
-                        dispatch(centerGetTokenBalanceList({ forceUpdate: true}));
-                        dispatch(userProfile({ forceUpdate: true}))
+                        dispatch(centerGetTokenBalanceList({ forceUpdate: true }));
+                        dispatch(userProfile({ forceUpdate: true }))
                         setUpdateCard(true)
                         setTimer(timer + 1)
                         // setOpenSuccess(true);
@@ -1201,8 +1201,8 @@ function Card(props) {
                         setZhuanQuan(false);
                         setTiJiaoState(3);
                         setUpdateCard(true)
-                        dispatch(centerGetTokenBalanceList({ forceUpdate: true}));
-                        dispatch(userProfile({ forceUpdate: true}))
+                        dispatch(centerGetTokenBalanceList({ forceUpdate: true }));
+                        dispatch(userProfile({ forceUpdate: true }))
                         setUpdateCard(true)
                         setTimer(timer + 1)
                         // setOpenSuccess(true);
@@ -1266,7 +1266,7 @@ function Card(props) {
     const verifiedVAuthEvt = () => {
         setOpenYanZheng(false);
         setOpenGoogleCode(true);
-        dispatch(userProfile({ forceUpdate: true}));
+        dispatch(userProfile({ forceUpdate: true }));
         setTypeBined(true);
     }
 
@@ -1321,14 +1321,14 @@ function Card(props) {
     const updatedKycInfoEvt = () => {
         setOpenKyc(false);
         refreshKycInfo();
-        if(kycInfoNavAction == 'applyStep1' || kycInfoNavAction == 'applyStep2' || kycInfoNavAction == 'applyStep3'){
-           setTimeout(()=> {
-            kycInfoDialogControl();
-           }, 300)
-        } else if(kycInfoNavAction == 'changeCard1' || kycInfoNavAction == 'cardHome') {
+        if (kycInfoNavAction == 'applyStep1' || kycInfoNavAction == 'applyStep2' || kycInfoNavAction == 'applyStep3') {
+            setTimeout(() => {
+                kycInfoDialogControl();
+            }, 300)
+        } else if (kycInfoNavAction == 'changeCard1' || kycInfoNavAction == 'cardHome') {
             const index = _.findIndex(cardList[2], { id: currentCardItem.id });
             setTimeout(() => {
-                if(kycInfoNavAction == 'changeCard1' &&  document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`)) {
+                if (kycInfoNavAction == 'changeCard1' && document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`)) {
                     document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`).click();
                 }
                 setCurrentCardItem(currentCardItem)
@@ -1381,7 +1381,7 @@ function Card(props) {
     const backPageEvt = () => {
         setOpenBindPhone(false)
         setOpenBindEmail(false);
-        dispatch(userProfile({ forceUpdate: true}));
+        dispatch(userProfile({ forceUpdate: true }));
         setTypeBined(true);
         myFunction;
         setOpenGoogleCode(true);
@@ -1435,10 +1435,10 @@ function Card(props) {
     }
 
     const kycInfoDialogControl = () => {
-        if(userData?.profile?.user?.bindKyc) {
+        if (userData?.profile?.user?.bindKyc) {
             setOpenKycAuth(false)
             setOpenKycAddress(true)
-        }else{
+        } else {
             setOpenKycAddress(false)
             setOpenKycAuth(true)
         }
@@ -1570,7 +1570,7 @@ function Card(props) {
 
                                 {
                                     !openBindEmail && !openBindPhone && <div className='cardSelectBg'>
-                                        <div className='cardSelectBgPadding '>
+                                        <div className='cardSelectBgPadding'>
                                             {!openKyc && <div style={{ padding: '1rem 1.5rem 1.5rem 1.5rem' }} >
                                                 <Tabs
                                                     component={motion.div}
@@ -1600,7 +1600,7 @@ function Card(props) {
                                                 >
                                                     {Object.entries([t('card_12'), t('card_13')]).map(([key, label]) => (
                                                         <Tab
-                                                            className="text-16 font-semibold min-h-32 min-w-64 mx4 px-12 txtColorTitle opacity-100 zindex"
+                                                            className="text-16  min-h-32 min-w-64 mx4 px-12 txtColorTitle opacity-100 zindex"
                                                             disableRipple
                                                             key={key}
                                                             label={label}
@@ -1903,7 +1903,7 @@ function Card(props) {
                                                                                     <div className='cardErrorZi'>{t('card_261')}</div>
 
                                                                                     <div className='twoSamllBtn flex justify-between'>
-                                                                                        <div className='cardErrorBtn2 txtColorTitleSmall' onClick={()=>{
+                                                                                        <div className='cardErrorBtn2 txtColorTitleSmall' onClick={() => {
                                                                                             setKycInfoNavAction('cardHome')
                                                                                             setCurrentCardItem(cardItem)
                                                                                             setCurrUserCardInfo(cardItem)
@@ -2320,7 +2320,7 @@ function Card(props) {
                                         >
                                             {Object.entries([t('card_12'), t('card_13')]).map(([key, label]) => (
                                                 <Tab
-                                                    className="text-16 font-semibold min-h-32 min-w-64 mx4 px-12 txtColorTitle opacity-100 zindex"
+                                                    className="text-16  min-h-32 min-w-64 mx4 px-12 txtColorTitle opacity-100 zindex"
                                                     disableRipple
                                                     key={key}
                                                     label={label}
@@ -2438,24 +2438,24 @@ function Card(props) {
                     </motion.div>
                 </div>
             }
-            {   !loadingShow && openYanZheng && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
-                    <motion.div
-                        variants={container}
-                        initial="hidden"
-                        animate="show"
-                        className='mt-12'
-                        id="topGo"
-                    >
-                        <div className='flex mb-10' onClick={() => {
-                            setOpenYanZheng(false);
-                            myFunction;
-                        }}   >
-                            <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
-                        </div>
-                        <Enable2FA verifiedVAuth={() => verifiedVAuthEvt()} />
-                        <div style={{ height: "5rem" }}></div>
-                    </motion.div>
-                </div>
+            {!loadingShow && openYanZheng && <div style={{ position: "absolute", width: "100%", height: "100vh", zIndex: "100", backgroundColor: "#0E1421" }} >
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
+                    className='mt-12'
+                    id="topGo"
+                >
+                    <div className='flex mb-10' onClick={() => {
+                        setOpenYanZheng(false);
+                        myFunction;
+                    }}   >
+                        <img className='cardIconInFoW' src="wallet/assets/images/card/goJianTou.png" alt="" /><span className='zhangDanZi'>{t('kyc_24')}</span>
+                    </div>
+                    <Enable2FA verifiedVAuth={() => verifiedVAuthEvt()} />
+                    <div style={{ height: "5rem" }}></div>
+                </motion.div>
+            </div>
             }
             {
                 loadingShow &&
@@ -2670,12 +2670,12 @@ function Card(props) {
                 >
                     <div className='flex mb-10' onClick={() => {
                         setOpenKyc(false);
-                        if(kycInfoNavAction === 'applyStep1' || kycInfoNavAction === 'applyStep2' || kycInfoNavAction === 'applyStep3') {
+                        if (kycInfoNavAction === 'applyStep1' || kycInfoNavAction === 'applyStep2' || kycInfoNavAction === 'applyStep3') {
                             kycInfoDialogControl();
-                        } else if(kycInfoNavAction === 'changeCard1'){
+                        } else if (kycInfoNavAction === 'changeCard1') {
                             const index = _.findIndex(cardList[2], { id: currentCardItem.id });
                             setTimeout(() => {
-                                if (document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`)){
+                                if (document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`)) {
                                     document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`).click();
                                 }
                                 setCurrentCardItem(currentCardItem)
@@ -2814,10 +2814,10 @@ function Card(props) {
                     </div>
                 </Box>
                 {/* <div className={clsx('exchange-credit-fee', balanceNotEnough && 'error-msg-font')}>{t('home_borrow_18')}: {exchangeCreditFee} USDT</div> */}
-                
+
                 <div className="flex items-center justify-between mt-20">
                     <FormControl sx={{ width: '100%', borderColor: '#525A67' }} className="mb-16">
-                       <Select
+                        <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             value={selectedKycAddress}
@@ -2826,8 +2826,8 @@ function Card(props) {
                             style={{ color: "#909EB0", backgroundColor: "#1E293A" }}
                         >
                             {
-                                addressList && addressList.map((adr, i)=>{
-                                    return <MenuItem value={adr.id} disabled={ cardConfigList[currentCardItem?.creditConfigId]?.country === '' ? false : !(cardConfigList[currentCardItem?.creditConfigId]?.country === adr.countryCode) } style={{ color: "#909EB0" }}>{t('home_sendTips_1')}{adr.id}: {adr.label}</MenuItem>
+                                addressList && addressList.map((adr, i) => {
+                                    return <MenuItem value={adr.id} disabled={cardConfigList[currentCardItem?.creditConfigId]?.country === '' ? false : !(cardConfigList[currentCardItem?.creditConfigId]?.country === adr.countryCode)} style={{ color: "#909EB0" }}>{t('home_sendTips_1')}{adr.id}: {adr.label}</MenuItem>
                                 })
                             }
 
@@ -2854,12 +2854,12 @@ function Card(props) {
                 </div>
 
                 <div className='mt-16 mb-20' style={{ textDecoration: "underline", textAlign: "center" }}>
-                    <span  onClick={ ()=> {
-                    setKycInfoNavAction('changeCard1')
-                    setOpenAnimateHuanKa(false);
-                    setExchangeCreditFee(0);
-                    openKycFunc();
-                }}>{ t('card_257') }</span>
+                    <span onClick={() => {
+                        setKycInfoNavAction('changeCard1')
+                        setOpenAnimateHuanKa(false);
+                        setExchangeCreditFee(0);
+                        openKycFunc();
+                    }}>{t('card_257')}</span>
                 </div>
 
                 {/* <div className='flex mt-16 mb-20 px-15 position-re' style={{ height: "40px" }} >
@@ -3526,7 +3526,7 @@ function Card(props) {
                         />
 
                         <LoadingButton
-                            disabled={!getValues('userCreditNo') || !getValues('userCreditKey') || (getValues('userCreditNo') && getValues('userCreditNo').length < 9) }
+                            disabled={!getValues('userCreditNo') || !getValues('userCreditKey') || (getValues('userCreditNo') && getValues('userCreditNo').length < 9)}
                             className="boxCardBtn3 mt-48"
                             color="secondary"
                             loading={isLoadingBtn}
@@ -4170,7 +4170,7 @@ function Card(props) {
                             }} >{t('card_112')}</div>
                         </div>
                         <div className='mt-20' style={{ marginBottom: "6rem" }}>{
-                            addressList ? addressList[selectedKycAddress -1]?.label : ''
+                            addressList ? addressList[selectedKycAddress - 1]?.label : ''
                         }</div>
                         <LoadingButton
                             disabled={false}
@@ -4276,7 +4276,7 @@ function Card(props) {
 
                 <div className="flex items-center justify-between mt-20">
                     <FormControl sx={{ width: '100%', borderColor: '#525A67' }} className="mb-16">
-                       <Select
+                        <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             value={selectedKycAddress}
@@ -4285,8 +4285,8 @@ function Card(props) {
                             style={{ color: "#909EB0", backgroundColor: "#1E293A" }}
                         >
                             {
-                                addressList && addressList.map((adr, i)=>{
-                                    return <MenuItem value={adr.id} disabled={ cardConfigList[cardConfigID]?.country === '' ? false : !(cardConfigList[cardConfigID]?.country === adr.countryCode) } style={{ color: "#909EB0" }}>{t('home_sendTips_1')}{adr.id}: {adr.label}</MenuItem>
+                                addressList && addressList.map((adr, i) => {
+                                    return <MenuItem value={adr.id} disabled={cardConfigList[cardConfigID]?.country === '' ? false : !(cardConfigList[cardConfigID]?.country === adr.countryCode)} style={{ color: "#909EB0" }}>{t('home_sendTips_1')}{adr.id}: {adr.label}</MenuItem>
                                 })
                             }
 
@@ -4307,20 +4307,20 @@ function Card(props) {
                             openChangeBiFunc()
                         }}
                     >
-                        { t('home_borrow_17')}
+                        {t('home_borrow_17')}
                     </LoadingButton>
                 </div>
 
                 <div className='mt-16 mb-20' style={{ textDecoration: "underline", textAlign: "center" }}>
-                    <span  onClick={ ()=> {
-                    setKycInfoNavAction('applyStep2')
-                    setOpenKycAddress(false)
-                    setOpenKyc(true)
-                }}>{ t('card_257') }</span>
+                    <span onClick={() => {
+                        setKycInfoNavAction('applyStep2')
+                        setOpenKycAddress(false)
+                        setOpenKyc(true)
+                    }}>{t('card_257')}</span>
                 </div>
 
             </AnimateModal >
-            
+
             <AnimateModal
                 className="faBiDiCard tanChuanDiSe"
                 open={openKycAuth}
@@ -4343,7 +4343,7 @@ function Card(props) {
                     }}
                 >
                     <div className="danChuangTxt ">
-                       {t('card_260')}
+                        {t('card_260')}
                     </div>
                 </Box>
 
@@ -4361,7 +4361,7 @@ function Card(props) {
                             setOpenKyc(true);
                         }}
                     >
-                        { t('home_borrow_17')}
+                        {t('home_borrow_17')}
                     </LoadingButton>
                 </div>
 

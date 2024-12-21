@@ -1189,8 +1189,8 @@ function Deposite() {
                                             className={clsx('flex items-center rounded-8 border cursor-pointer deposite-token', networkId === item.id && 'active-border')}
                                             key={index}
                                             style={{
-                                                margin: '1rem 0rem 1.4rem 0.6rem',
-                                                paddingLeft: '0.2rem',
+                                                margin: '1rem 0rem 1.4rem 0.7rem',
+                                                paddingLeft: '0.3rem',
                                                 paddingRight: '0rem',
                                                 borderRadius: '0.5rem'
                                             }}
