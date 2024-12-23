@@ -594,6 +594,7 @@ function ResetPin(props) {
                                                                 {time <= 0 && <IconButton
                                                                     aria-label="toggle password visibility"
                                                                     onClick={sendCode}
+                                                                    className='txtSend'
                                                                     edge="end"
                                                                     sx={{
                                                                         fontSize: '1.4rem',
@@ -790,6 +791,7 @@ function ResetPin(props) {
                                                                 {time <= 0 && <IconButton
                                                                     aria-label="toggle password visibility"
                                                                     onClick={sendPhoneCode}
+                                                                    className='txtSend'
                                                                     edge="end"
                                                                     sx={{
                                                                         fontSize: '1.4rem',

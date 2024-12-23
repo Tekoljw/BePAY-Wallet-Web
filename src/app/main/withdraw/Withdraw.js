@@ -901,7 +901,7 @@ function Withdraw(props) {
     // 输入PIN Page
     const openInputPin = () => {
         setTimeout(() => {
-            applyMiddleEllipsis(document.getElementById('AddressText'), 28);
+            applyMiddleEllipsis(document.getElementById('AddressText'), 22);
         }, 100);
         setPin('')
         setOpenPinWindow(true)
@@ -1972,7 +1972,11 @@ function Withdraw(props) {
                                         closePinFunc();
                                     }} />
                                 </div>
-                                <div id="AddressText" className='py-4' style={{ fontSize: smallTabValue == 0 ? "16px" : "20px", textAlign: "center", margin: "0 auto", color: "#909FB4", width: "100%", overflow: "hidden", whiteSpace: "nowrap" }}>{smallTabValue == 0 ? "Address:" : "UserID:"}  <span style={{ color: "#ffffff" }}> {smallTabValue == 0 ? inputVal.address : inputIDVal}</span> </div>
+                                <div className='py-4  flex justify-center' style={{ fontSize: smallTabValue == 0 ? "16px" : "20px", textAlign: "center", margin: "0 auto", width: "100%" }}>
+                                    <div style={{ color: "#5E687A", marginRight: "10px" }}>{smallTabValue == 0 ? "Address " : "UserID "}</div>
+                                    <div id="AddressText" style={{ color: "white", overflow: "hidden", whiteSpace: "nowrap" }}>{smallTabValue == 0 ? inputVal.address : inputIDVal}</div> </div>
+
+
                                 <div className='flex justify-center mt-10 ' style={{ width: "100%", overflow: "hidden", borderBottom: "1px solid #2C3950", paddingBottom: "2rem" }}>
                                     <img className='MoneyWithdraw' style={{ borderRadius: '50%' }} src={arrayLookup(symbolsData, 'symbol', symbol, 'avatar') || ''}></img>
                                     <div className='flex'>

@@ -1765,7 +1765,6 @@ function Card(props) {
                                                                                 {cardItem?.state == 9 && (
                                                                                     <div className='cardErrorBg'>
                                                                                         <div className={clsx("flex justify-center", (cardItem?.freezeType === 'admin' || cardItem?.freezeType === 'delete') ? 'mt-28' : 'mt-88')} style={{ width: "100%" }}>
-                                                                                            <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                                                                                             <div className='TanHaoCardZi'>
                                                                                                 {t('card_178')}
                                                                                             </div>
@@ -1895,7 +1894,6 @@ function Card(props) {
                                                                                 <div className='cardErrorBg'>
 
                                                                                     <div className='flex justify-center mt-16' style={{ width: "100%" }}>
-                                                                                        <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                                                                                         <div className='TanHaoCardZi'>
                                                                                             {t('card_17')}
                                                                                         </div>
@@ -2016,7 +2014,7 @@ function Card(props) {
                                                             <div className='zhangDanZi' >{t('card_25')}</div>
                                                         </div>
 
-                                                        <div className='tianJiaKaPian flex items-center  pl-16' style={{ marginTop: "20px" }} onClick={() => {
+                                                        {/* <div className='tianJiaKaPian flex items-center  pl-16' style={{ marginTop: "20px" }} onClick={() => {
                                                             setValue('userCreditNo', '')
                                                             setValue('userCreditKey', '')
                                                             setOpenJiHuoWindow(true)
@@ -2024,7 +2022,7 @@ function Card(props) {
                                                         }}>
                                                             <img className='cardIconW ' src="wallet/assets/images/card/jiaHao.png" alt="" />
                                                             <div className='zhangDanZi' >{t('card_252')}</div>
-                                                        </div>
+                                                        </div> */}
 
                                                         <div>
                                                             <div className='text-16 mt-28 ml-10'> {t('card_225')}</div>
@@ -2625,7 +2623,6 @@ function Card(props) {
                     <motion.div variants={item} className='flex mt-20'>
                         <div className='quanYiDi' style={{ padding: "1.5rem" }}>
                             <div className='mt-10 flex'>
-                                <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                                 <div className='text-16'>{t('card_106')}</div>
                             </div>
 
@@ -2737,7 +2734,6 @@ function Card(props) {
                 onClose={() => setOpenAnimateModal(false)}
             >
                 <div className='flex justify-center mb-16' style={{ width: "100%" }}>
-                    <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                     <div className='TanHaoCardZi '>
                         {currUserCardInfo.state === 9 ? t('card_244') : t('card_31')}
                     </div>
@@ -2794,7 +2790,6 @@ function Card(props) {
             >
 
                 <div className='flex justify-center mb-16' style={{ width: "100%" }}>
-                    <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                     <div className='TanHaoCardZi'>
                         {t('card_32')}
                     </div>
@@ -2804,7 +2799,6 @@ function Card(props) {
                     className="dialog-content-inner dialog-content-select-fiat-width border-r-10 boxWidthCard flex justify-center"
                     sx={{
                         backgroundColor: "#2C394D",
-                        padding: "1.5rem",
                         overflow: "hidden",
                         margin: "0rem auto 0rem auto"
                     }}
@@ -2842,7 +2836,7 @@ function Card(props) {
                         color="secondary"
                         loading={openCardBtnShow}
                         variant="contained"
-                        style={{ width: "70%" }}
+                        style={{ width: "80%" }}
                         onClick={() => {
                             exChangeCard()
                         }}
@@ -3547,7 +3541,6 @@ function Card(props) {
                 onClose={() => setOpenZhiFu(false)}
             >
                 <div className='flex justify-center mb-16' style={{ width: "100%" }}>
-                    <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                     <div className='TanHaoCardZi'>
                         {t('card_61')}
                     </div>
@@ -3604,7 +3597,6 @@ function Card(props) {
                 onClose={() => setOpenChongZhi(false)}
             >
                 <div className='flex justify-center mb-16' style={{ width: "100%" }}>
-                    <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                     <div className='TanHaoCardZi'>
                         {t('card_61')}
                     </div>
@@ -4196,7 +4188,6 @@ function Card(props) {
                 onClose={() => setOpenGoogleAnimateModal(false)}
             >
                 <div className='flex justify-center mb-16' style={{ width: "100%" }}>
-                    <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                     <div className='TanHaoCardZi '>
                         {t('card_180')}
                     </div>
@@ -4254,7 +4245,6 @@ function Card(props) {
                 onClose={() => setOpenKycAddress(false)}
             >
                 <div className='flex justify-center mb-16' style={{ width: "100%" }}>
-                    <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                     <div className='TanHaoCardZi '>
                         提交申请
                     </div>
@@ -4327,7 +4317,6 @@ function Card(props) {
                 onClose={() => setOpenKycAuth(false)}
             >
                 <div className='flex justify-center mb-16' style={{ width: "100%" }}>
-                    <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
                     <div className='TanHaoCardZi '>
                         {t('card_259')}
                     </div>

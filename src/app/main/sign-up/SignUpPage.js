@@ -359,6 +359,7 @@ function ClassicSignUpPage() {
                                                     {time <= 0 && <IconButton
                                                         aria-label="toggle password visibility"
                                                         onClick={sendCode}
+                                                        className='txtSend'
                                                         // onMouseDown={handleMouseDownPassword}
                                                         edge="end"
                                                         sx={{
@@ -422,6 +423,7 @@ function ClassicSignUpPage() {
                                                 {time <= 0 && <IconButton
                                                     aria-label="toggle password visibility"
                                                     onClick={sendCode}
+                                                    className='txtSend'
                                                     // onMouseDown={handleMouseDownPassword}
                                                     edge="end"
                                                     sx={{

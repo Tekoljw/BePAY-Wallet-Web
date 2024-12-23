@@ -390,6 +390,7 @@ function ForgotPass() {
                                                         onClick={() => { sendCode(false) }}
                                                         // onMouseDown={handleMouseDownPassword}
                                                         edge="end"
+                                                        className='txtSend'
                                                         sx={{
                                                             fontSize: '1.4rem',
                                                             borderRadius: '5px'

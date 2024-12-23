@@ -213,6 +213,7 @@ function RetiedPhone(props) {
                                                 {time <=0 && <IconButton
                                                     aria-label="toggle password visibility"
                                                     onClick={sendCode}
+                                                    className='txtSend'
                                                     // onMouseDown={handleMouseDownPassword}
                                                     edge="end"
                                                     sx={{
