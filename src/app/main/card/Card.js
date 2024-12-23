@@ -2014,7 +2014,7 @@ function Card(props) {
                                                             <div className='zhangDanZi' >{t('card_25')}</div>
                                                         </div>
 
-                                                        {/* <div className='tianJiaKaPian flex items-center  pl-16' style={{ marginTop: "20px" }} onClick={() => {
+                                                        <div className='tianJiaKaPian flex items-center  pl-16' style={{ marginTop: "20px" }} onClick={() => {
                                                             setValue('userCreditNo', '')
                                                             setValue('userCreditKey', '')
                                                             setOpenJiHuoWindow(true)
@@ -2022,7 +2022,7 @@ function Card(props) {
                                                         }}>
                                                             <img className='cardIconW ' src="wallet/assets/images/card/jiaHao.png" alt="" />
                                                             <div className='zhangDanZi' >{t('card_252')}</div>
-                                                        </div> */}
+                                                        </div>
 
                                                         <div>
                                                             <div className='text-16 mt-28 ml-10'> {t('card_225')}</div>
