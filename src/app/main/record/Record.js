@@ -656,8 +656,10 @@ function Record() {
                                                 </div>
                                                 <div className='recordListSmallZi'>{ freezeBalanceTypes.indexOf(transferItem.type) > -1 ? t('card_265') : t('home_deposite_24')} <span>{transferItem.balance}</span>
                                                 </div>
-                                                <div className='recordListSmallZi'>{t('home_borrow_18')} <span>{transferItem.serviceFee}</span>
-                                                </div>
+                                                <div className='recordListSmallZi'>{t('home_borrow_18')} <span>{transferItem.serviceFee}</span></div>
+                                                {(transferItem.type === 18 || transferItem.type === 19) && <div className='recordListSmallZi'>{t('home_record_22')}<span> { 'UserId-' + transferItem.transferUserId}</span></div>}
+                                                {transferItem.type === 5 && <div className='recordListSmallZi'>{t('home_record_22')}<span> { 'Address-' + transferItem.transferAddress}</span></div>}
+                                                {transferItem.type === 3 && <div className='recordListSmallZi'>{t('home_record_22')}<span> { 'Account-' + transferItem.accountNo}</span></div>}
                                                 <div className='recordListSmallZi'>{
                                                     typeList.find(v => {
                                                         return v.key == (transferItem.type)

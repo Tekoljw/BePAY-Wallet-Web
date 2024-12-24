@@ -25,6 +25,7 @@ import {useTranslation} from "react-i18next";
 import history from "../../../@history/@history";
 import { selectUserData } from "../../store/user";
 import { showMessage } from 'app/store/fuse/messageSlice';
+import { getIPExtendInfo } from "app/store/config/configThunk";
 
 /**
  * Form Validation Schema
@@ -66,6 +67,47 @@ function RetiedPhone(props) {
 
     const [time,setTime] = useState(null);
     const timeRef = useRef();
+    const [tmpCode, setTmpCode] = useState('');
+    const [dataPage, setDataPage] = useState(1);
+    const [selectPhoneCode, setSelectPhoneCode] = useState([]);
+    const [searchPhoneCode, setSearchPhoneCode] = useState([]);
+
+    const pagePhoneCodeList = (page = 1, isSearch = true) => {
+        if (page <= dataPage && page !== 1) {
+            return
+        }
+        let tmpSelectData = [];
+        let startKey = 0;
+        let endKey = page === 1 ? 23 : (page + 1) * 23;
+        if (searchPhoneCode.length > 0) {
+            tmpSelectData = searchPhoneCode.slice(startKey, endKey)
+        } else {
+            tmpSelectData = phoneCode.list.slice(startKey, endKey)
+        }
+
+        function objHeavy(arr) {
+            let arr1 = []; //存id
+            let newArr = []; //存新数组
+            for (let i in arr) {
+                if (arr1.indexOf(arr[i].phone_code) == -1) {
+                    arr1.push(arr[i].phone_code);
+                    newArr.push(arr[i]);
+                }
+            }
+            return newArr;
+        }
+
+        // let tmpSelectPhoneCode = [...selectPhoneCode];
+        let tmpSelectPhoneCode = [];
+        tmpSelectPhoneCode.push(...tmpSelectData);
+        setDataPage(page);
+        // setSelectPhoneCode(objHeavy(tmpSelectPhoneCode));
+        setSelectPhoneCode(tmpSelectPhoneCode);
+        // setTimeout(() => {
+        //     document.getElementById("phoneCode-listbox").scrollTop = 30 * (page - 1) * 10;
+        // }, 500)
+    };
+
     //倒计时
     useEffect(()=>{
         if(time && time !== 0)
@@ -77,6 +119,44 @@ function RetiedPhone(props) {
             clearTimeout(timeRef.current)
         }
     },[time]);
+
+    useEffect(() => {
+        const getPhoneCode = async () => {
+            // const service = axios.create({
+            //     timeout: 50000, // request timeout
+            // });
+            // var post = {
+            //     url: `${domain.FUNIBET_API_DOMAIN}/gamecenter/getIPExtendInfo`,
+            //     method: 'post',
+            //     async: true
+            // };
+
+
+            let res = dispatch(getIPExtendInfo()).then((res) => {
+                let result = res.payload
+                if (result.queryCountry) {
+                    let countryText = result.queryCountry;
+                    if (countryText) {
+                        phoneCode.list.map((item) => {
+                            if (item.chinese_name === countryText) {
+                                setTmpCode(item.phone_code);
+                                return
+                            }
+                        })
+                    }
+                }
+            });
+        };
+        getPhoneCode();
+    }, []);
+
+    useEffect(() => {
+        control._formValues.nationCode = tmpCode;
+    }, [tmpCode]);
+
+    useEffect(() => {
+        pagePhoneCodeList(1, true);
+    }, [tmpPhoneCode]);
 
     async function sendCode() {
         setSelectedCountryCode(control._formValues.nationCode);
@@ -141,16 +221,38 @@ function RetiedPhone(props) {
                         onSubmit={handleSubmit(onSubmit)}
                     >
                         <Controller
+                            className='fontStyle'
                             name="nationCode"
                             control={control}
                             render={({ field }) => (
                                 <Autocomplete
+                                    id="phoneCode"
+                                    onHighlightChange={(event, option) => {
+                                        if (option?.english_name) {
+                                            if (selectPhoneCode.length > 0) {
+                                                var key = selectPhoneCode.findIndex(item => item.english_name === option.english_name);
+                                                if ((key + 1) % 23 === 0) {
+                                                    var page = ((key + 1) / 23) + 1;
+                                                    pagePhoneCodeList(page, false)
+                                                }
+                                            }
+                                        }
+                                    }}
                                     // disablePortal
                                     className="mb-24"
-                                    options={phoneCode.list}
+                                    // options={phoneCode.list}
+                                    options={selectPhoneCode}
                                     autoHighlight
                                     onInputChange={(event, newInputValue) => {
-                                        setTmpPhoneCode(newInputValue.replace(/\+/g, ""));
+                                        let tmpPhoneCodeText = newInputValue.replace(/\+/g, "")
+                                        let tmpSearchData = [];
+                                        phoneCode.list.map((item) => {
+                                            if (item.phone_code.match(tmpPhoneCodeText) || item.country_code.match(tmpPhoneCodeText.toUpperCase()) || item.local_name.match(tmpPhoneCodeText.toUpperCase())) {
+                                                tmpSearchData.push(item)
+                                            }
+                                        });
+                                        setTmpPhoneCode(tmpPhoneCodeText);
+                                        setSearchPhoneCode(tmpSearchData);
                                     }}
                                     filterOptions={(options) => {
                                         const reg = new RegExp(tmpPhoneCode, 'i');
@@ -161,10 +263,12 @@ function RetiedPhone(props) {
                                     }}
                                     onChange={(res, option) => {
                                         if (option) {
-                                            control._formValues.nationCode = option.phone_code
-                                        } 
+                                            control._formValues.nationCode = option.phone_code;
+                                            setTmpCode(option.phone_code)
+                                        }
                                     }}
-                                    getOptionLabel={(option) => {return control._formValues.nationCode}}
+                                    value={control._formValues.nationCode}
+                                    getOptionLabel={(option) => { return '+' + tmpCode }}
                                     renderOption={(props, option) => (
                                         <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
                                             <img
@@ -178,6 +282,8 @@ function RetiedPhone(props) {
                                     )}
                                     renderInput={(params) => (
                                         <TextField
+                                            className='fontStyle'
+                                            id="test-b"
                                             {...params}
                                             label={t('signIn_6')}
                                             inputProps={{

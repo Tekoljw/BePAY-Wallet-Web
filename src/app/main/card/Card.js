@@ -1321,11 +1321,11 @@ function Card(props) {
     const updatedKycInfoEvt = () => {
         setOpenKyc(false);
         refreshKycInfo();
-        if (kycInfoNavAction == 'applyStep1' || kycInfoNavAction == 'applyStep2' || kycInfoNavAction == 'applyStep3') {
-            setTimeout(() => {
-                kycInfoDialogControl();
-            }, 300)
-        } else if (kycInfoNavAction == 'changeCard1' || kycInfoNavAction == 'cardHome') {
+        if(kycInfoNavAction == 'applyStep1' || kycInfoNavAction == 'applyStep2' || kycInfoNavAction == 'applyStep3'){
+           setTimeout(()=> {
+            kycInfoDialogControl();
+           }, 1000)
+        } else if(kycInfoNavAction == 'changeCard1' || kycInfoNavAction == 'cardHome') {
             const index = _.findIndex(cardList[2], { id: currentCardItem.id });
             setTimeout(() => {
                 if (kycInfoNavAction == 'changeCard1' && document.querySelector(`#responsive-div-accordion${index} .gongNengTan2`)) {

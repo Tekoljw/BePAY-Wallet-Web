@@ -81,7 +81,7 @@ const locale = {
     home_record_19: '操作',
     home_record_20: '活动奖励',
     home_record_21: '邀请奖励',
-
+    home_record_22: '收款信息',
 
     home_sendTips_1: '地址',
     home_sendTips_2: 'Funi ID',
@@ -309,6 +309,7 @@ const locale = {
     reset_pass_4: '新密码',
     reset_pass_5: '确认密码',
     reset_pass_6: '重置密码',
+    reset_pass_7: '设置密码',
 
     home_Transaction: '转账',
     home_PendingReview: '待审核',
@@ -721,6 +722,7 @@ const locale = {
     server_error_11212: "用户旧的支付密码不对",
     server_error_11213: "用户更新支付密码失败",
     server_error_11214: "用户注册失败",
+    server_error_11221: "验证码已发送，请等待5分钟后再试",
     server_error_12003: "无效的虚拟币币种代码",
     server_error_12004: "智能网络不可用或无效",
     server_error_12005: "提币的费用配置获取失败",
@@ -841,6 +843,7 @@ const locale = {
     kyc_69:"地址2",
     kyc_70:"地址3",
     kyc_71:"示例",
+    kyc_72: "您的手机号填写有误",
 
     card_256:"请确保您的KYC信息正确并选择申请的地址",
     card_257:"修改KYC信息",

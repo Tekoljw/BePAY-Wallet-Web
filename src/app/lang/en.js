@@ -79,6 +79,9 @@ const locale = {
     home_record_17: 'Volunteer UnStake',
     home_record_18: 'Task Code',
     home_record_19: 'operate',
+    home_record_20: 'Activity Reward',
+    home_record_21: 'Invite Rewards',
+    home_record_22: 'Collection Information',
 
     home_sendTips_1: 'Address',
     home_sendTips_2: 'Funi ID',
@@ -307,6 +310,7 @@ const locale = {
     reset_pass_4: 'New PassWord',
     reset_pass_5: 'Password (Confirm)',
     reset_pass_6: 'Reset your password',
+    reset_pass_7: 'Setting your password',
 
     home_Transaction: 'Transaction',
     home_PendingReview: 'Pending Review',
@@ -718,6 +722,7 @@ const locale = {
     server_error_11212: "User's old payment password is incorrect",
     server_error_11213: "User failed to update payment password",
     server_error_11214: "User registration failed",
+    server_error_11221: 'he verification code has been sent, please wait 5 minutes and try again',
     server_error_12003: "Invalid virtual currency code",
     server_error_12004: "Smart network unavailable or invalid",
     server_error_12005: "Failed to get withdrawal fee configuration",
@@ -834,7 +839,7 @@ const locale = {
     kyc_69:"Address2",
     kyc_70:"Address3",
     kyc_71:"Example",
-
+    kyc_72: "Your mobile phone number is incorrect",
 
     card_256:"Please ensure that your KYC information is correct and select the address you have applied for.",
     card_257:"Modify KYC Information",

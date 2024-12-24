@@ -7,16 +7,20 @@ import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import _ from '@lodash';
 import Paper from '@mui/material/Paper';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import {
     resetPass
 } from '../../store/user/userThunk';
 import { useTranslation } from "react-i18next";
 import { showMessage } from 'app/store/fuse/messageSlice';
 import history from "../../../@history/@history";
-import {default as React} from "react";
-
-
+import { useState, useEffect, default as React, useRef } from 'react';
+import {
+    getUserLoginType
+} from "../../util/tools/function";
+import userLoginType from "../../define/userLoginType";
+import { selectUserData } from "../../store/user";
+import { isEmpty } from 'lodash';
 
 const defaultValues = {
     oldPassword: '',
@@ -25,11 +29,21 @@ const defaultValues = {
 };
 
 function ForgotPass() {
+    const [isTgLogin, setIsTgLogin] = useState(false);
+    const userData = useSelector(selectUserData);
     const { t } = useTranslation('mainPage');
     /**
      * Form Validation Schema
      */
-    const schema = yup.object().shape({
+    let validObj = isTgLogin ? {
+        password: yup
+            .string()
+            .required('Please enter your new password.')
+            .max(16, 'Password is too long - should be 16 chars maximum.')
+            // .min(6, 'Password is too short - should be 6 chars minimum.'),
+            .min(6,t("signUp_8")),
+        passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
+    }: {
         oldPassword: yup
             .string()
             .required('Please enter your old password.')
@@ -42,8 +56,9 @@ function ForgotPass() {
             // .min(6, 'Password is too short - should be 6 chars minimum.'),
             .min(6,t("signUp_8")),
         passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
-    });
-    const { control, formState, handleSubmit, reset } = useForm({
+    }
+    const schema = yup.object().shape(validObj);
+    const { control, formState, handleSubmit, reset, getValues, setValue } = useForm({
         mode: 'onChange',
         defaultValues,
         resolver: yupResolver(schema),
@@ -57,6 +72,15 @@ function ForgotPass() {
         window.localStorage.setItem('phoneTab', tab);
     }
 
+    useEffect(() => {
+        const loginType = getUserLoginType(userData);
+        if (loginType === userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP && userData?.profile?.user?.isDefaultPassword) {
+            setIsTgLogin(true)
+        }else{
+            setIsTgLogin(false)
+        }
+    }, [userData.profile]);
+
     async function onSubmit() {
         // // 密码必须为6-16x位数，且包含大小写字母和特殊符号
         // let regu = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!~@#$%^&*,\.])[0-9a-zA-Z!~@#$%^&*,\\.]{6,16}$/;
@@ -66,7 +90,8 @@ function ForgotPass() {
         //     return
         // }
 
-        await dispatch(resetPass(control._formValues));
+        await dispatch(resetPass(control._formValues))
+        
     }
 
     return (
@@ -81,7 +106,7 @@ function ForgotPass() {
             >
                 <div className="w-full  mx-auto sm:mx-0">
                     <div className="flex items-baseline mt-2 font-medium">
-                        <Typography>{t('reset_pass_2')}</Typography>
+                        <Typography>{ isTgLogin ? t('reset_pass_7') : t('reset_pass_2')}</Typography>
                         {/*<Link className="ml-4" to="/login">*/}
                         {/*    Sign in*/}
                         {/*</Link>*/}
@@ -93,23 +118,24 @@ function ForgotPass() {
                         className="flex flex-col justify-center w-full mt-32"
                         onSubmit={handleSubmit(onSubmit)}
                     >
-                        <Controller
-                            name="oldPassword"
-                            control={control}
-                            render={({ field }) => (
-                                <TextField
-                                    {...field}
-                                    className="mb-24"
-                                    label={t('reset_pass_3')}
-                                    type="password"
-                                    error={!!errors.oldPassword}
-                                    helperText={errors?.oldPassword?.message}
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                />
-                            )}
-                        />
+                        { !isTgLogin && <Controller
+                                name="oldPassword"
+                                control={control}
+                                render={({ field }) => (
+                                    <TextField
+                                        {...field}
+                                        className="mb-24"
+                                        label={t('reset_pass_3')}
+                                        type="password"
+                                        error={!!errors.oldPassword}
+                                        helperText={errors?.oldPassword?.message}
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                    />
+                                )}
+                            />
+                        }
 
                         <Controller
                             name="password"
@@ -166,7 +192,7 @@ function ForgotPass() {
                             size="large"
                             sx={{ paddingTop: "2px!important", paddingBottom: "2px!important", fontSize: "20px!important" }}
                         >
-                            {t('reset_pass_6')}
+                            { isTgLogin ? t('reset_pass_7') : t('reset_pass_6')}
                         </Button>
                     </form>
                 </div>

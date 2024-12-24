@@ -23,7 +23,7 @@ import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
-
+import { getIPExtendInfo } from "app/store/config/configThunk";
 import '../../../../styles/home.css';
 
 const container = {
@@ -79,6 +79,48 @@ function BindMailbox() {
 
     const [time,setTime] = useState(null);
     const timeRef = useRef();
+
+    const [tmpCode, setTmpCode] = useState('');
+    const [dataPage, setDataPage] = useState(1);
+    const [selectPhoneCode, setSelectPhoneCode] = useState([]);
+    const [searchPhoneCode, setSearchPhoneCode] = useState([]);
+
+    const pagePhoneCodeList = (page = 1, isSearch = true) => {
+        if (page <= dataPage && page !== 1) {
+            return
+        }
+        let tmpSelectData = [];
+        let startKey = 0;
+        let endKey = page === 1 ? 23 : (page + 1) * 23;
+        if (searchPhoneCode.length > 0) {
+            tmpSelectData = searchPhoneCode.slice(startKey, endKey)
+        } else {
+            tmpSelectData = phoneCode.list.slice(startKey, endKey)
+        }
+
+        function objHeavy(arr) {
+            let arr1 = []; //存id
+            let newArr = []; //存新数组
+            for (let i in arr) {
+                if (arr1.indexOf(arr[i].phone_code) == -1) {
+                    arr1.push(arr[i].phone_code);
+                    newArr.push(arr[i]);
+                }
+            }
+            return newArr;
+        }
+
+        // let tmpSelectPhoneCode = [...selectPhoneCode];
+        let tmpSelectPhoneCode = [];
+        tmpSelectPhoneCode.push(...tmpSelectData);
+        setDataPage(page);
+        // setSelectPhoneCode(objHeavy(tmpSelectPhoneCode));
+        setSelectPhoneCode(tmpSelectPhoneCode);
+        // setTimeout(() => {
+        //     document.getElementById("phoneCode-listbox").scrollTop = 30 * (page - 1) * 10;
+        // }, 500)
+    };
+
     //倒计时
     useEffect(()=>{
         if(time && time !== 0)
@@ -90,6 +132,44 @@ function BindMailbox() {
             clearTimeout(timeRef.current)
         }
     },[time]);
+
+    useEffect(() => {
+        const getPhoneCode = async () => {
+            // const service = axios.create({
+            //     timeout: 50000, // request timeout
+            // });
+            // var post = {
+            //     url: `${domain.FUNIBET_API_DOMAIN}/gamecenter/getIPExtendInfo`,
+            //     method: 'post',
+            //     async: true
+            // };
+
+
+            let res = dispatch(getIPExtendInfo()).then((res) => {
+                let result = res.payload
+                if (result.queryCountry) {
+                    let countryText = result.queryCountry;
+                    if (countryText) {
+                        phoneCode.list.map((item) => {
+                            if (item.chinese_name === countryText) {
+                                setTmpCode(item.phone_code);
+                                return
+                            }
+                        })
+                    }
+                }
+            });
+        };
+        getPhoneCode();
+    }, []);
+
+    useEffect(() => {
+        control._formValues.nationCode = tmpCode;
+    }, [tmpCode]);
+
+    useEffect(() => {
+        pagePhoneCodeList(1, true);
+    }, [tmpPhoneCode]);
 
     async function sendCode() {
       let sendRes = {};
@@ -193,53 +273,81 @@ function BindMailbox() {
                               // onSubmit={handleSubmit(onSubmit)}
                           >
                               {tabValue === 1 && <>
-                                  <Controller
-                                      name="nationCode"
-                                      control={control}
-                                      render={({ field }) => (
-                                          <Autocomplete
-                                              // disablePortal
-                                              className="mb-24"
-                                              options={phoneCode.list}
-                                              autoHighlight
-                                              onInputChange={(event, newInputValue) => {
-                                                  setTmpPhoneCode(newInputValue.replace(/\+/g, ""));
-                                              }}
-                                              filterOptions={(options) => {
-                                                  const reg = new RegExp(tmpPhoneCode, 'i');
-                                                  const array = options.filter((item) => {
-                                                      return reg.test(item.phone_code) || reg.test(item.local_name)
-                                                  });
-                                                  return array;
-                                              }}
-                                              onChange={(res, option) => {
-                                                  // control._formValues.nationCode = option.phone_code
-                                              }}
-                                              // getOptionLabel={(option) => {return control._formValues.nationCode}}
-                                              renderOption={(props, option) => (
-                                                  <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                                                      <img
-                                                          loading="lazy"
-                                                          width="20"
-                                                          src={`/wallet/assets/images/country/${option.country_code}.png`}
-                                                          alt=""
-                                                      />
-                                                      {option.local_name} ({option.country_code}) +{option.phone_code}
-                                                  </Box>
-                                              )}
-                                              renderInput={(params) => (
-                                                  <TextField
-                                                      {...params}
-                                                      label="nationCode"
-                                                      inputProps={{
-                                                          ...params.inputProps,
-                                                          autoComplete: 'nationCode', // disable autocomplete and autofill
-                                                      }}
-                                                  />
-                                              )}
-                                          />
-                                      )}
-                                  />
+                                <Controller
+                                    className='fontStyle'
+                                    name="nationCode"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <Autocomplete
+                                            id="phoneCode"
+                                            onHighlightChange={(event, option) => {
+                                                if (option?.english_name) {
+                                                    if (selectPhoneCode.length > 0) {
+                                                        var key = selectPhoneCode.findIndex(item => item.english_name === option.english_name);
+                                                        if ((key + 1) % 23 === 0) {
+                                                            var page = ((key + 1) / 23) + 1;
+                                                            pagePhoneCodeList(page, false)
+                                                        }
+                                                    }
+                                                }
+                                            }}
+                                            // disablePortal
+                                            className="mb-24"
+                                            // options={phoneCode.list}
+                                            options={selectPhoneCode}
+                                            autoHighlight
+                                            onInputChange={(event, newInputValue) => {
+                                                let tmpPhoneCodeText = newInputValue.replace(/\+/g, "")
+                                                let tmpSearchData = [];
+                                                phoneCode.list.map((item) => {
+                                                    if (item.phone_code.match(tmpPhoneCodeText) || item.country_code.match(tmpPhoneCodeText.toUpperCase()) || item.local_name.match(tmpPhoneCodeText.toUpperCase())) {
+                                                        tmpSearchData.push(item)
+                                                    }
+                                                });
+                                                setTmpPhoneCode(tmpPhoneCodeText);
+                                                setSearchPhoneCode(tmpSearchData);
+                                            }}
+                                            filterOptions={(options) => {
+                                                const reg = new RegExp(tmpPhoneCode, 'i');
+                                                const array = options.filter((item) => {
+                                                    return reg.test(item.phone_code) || reg.test(item.local_name)
+                                                });
+                                                return array;
+                                            }}
+                                            onChange={(res, option) => {
+                                                if (option) {
+                                                    control._formValues.nationCode = option.phone_code;
+                                                    setTmpCode(option.phone_code)
+                                                }
+                                            }}
+                                            value={control._formValues.nationCode}
+                                            getOptionLabel={(option) => { return '+' + tmpCode }}
+                                            renderOption={(props, option) => (
+                                                <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                                                    <img
+                                                        loading="lazy"
+                                                        width="20"
+                                                        src={`/wallet/assets/images/country/${option.country_code}.png`}
+                                                        alt=""
+                                                    />
+                                                    {option.local_name} ({option.country_code}) +{option.phone_code}
+                                                </Box>
+                                            )}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    className='fontStyle'
+                                                    id="test-b"
+                                                    {...params}
+                                                    label={t('signIn_6')}
+                                                    inputProps={{
+                                                        ...params.inputProps,
+                                                        autoComplete: 'nationCode', // disable autocomplete and autofill
+                                                    }}
+                                                />
+                                            )}
+                                        />
+                                    )}
+                                    />
 
                                   <Controller
                                       name="phone"

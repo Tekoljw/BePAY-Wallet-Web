@@ -438,6 +438,7 @@ export const resetPass = createAsyncThunk(
         const userResetPassData = await React.$api("user.changePass", data);
         if (userResetPassData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
+            dispatch(userProfile({forceUpdate: true}))
             history.push('/wallet/login');
         } else {
             showServerErrorTips(dispatch, userResetPassData);
