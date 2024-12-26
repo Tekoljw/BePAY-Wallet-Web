@@ -1326,9 +1326,9 @@ function Card(props) {
         setOpenKyc(false);
         refreshKycInfo();
         if(kycInfoNavAction == 'applyStep1' || kycInfoNavAction == 'applyStep2' || kycInfoNavAction == 'applyStep3'){
-           setTimeout(()=> {
-            kycInfoDialogControl();
-           }, 1000)
+            setTimeout( ()=> {
+                kycInfoDialogControl();
+            }, 100);
         } else if(kycInfoNavAction == 'changeCard1' || kycInfoNavAction == 'cardHome') {
             const index = _.findIndex(cardList[2], { id: currentCardItem.id });
             setTimeout(() => {
@@ -1439,13 +1439,19 @@ function Card(props) {
     }
 
     const kycInfoDialogControl = () => {
-        if (userData?.profile?.user?.bindKyc) {
-            setOpenKycAuth(false)
-            setOpenKycAddress(true)
-        } else {
-            setOpenKycAddress(false)
-            setOpenKycAuth(true)
-        }
+        dispatch(userProfile({ forceUpdate: true })).then((res)=>{
+            const result = res.payload;
+            if(result.errno === 0) {
+                const userData = result.data;
+                if (userData?.user?.bindKyc) {
+                    setOpenKycAuth(false)
+                    setOpenKycAddress(true)
+                } else {
+                    setOpenKycAddress(false)
+                    setOpenKycAuth(true)
+                }
+            }
+        });
     }
 
 
@@ -4248,7 +4254,7 @@ function Card(props) {
             >
                 <div className='flex justify-center mb-16' style={{ width: "100%" }}>
                     <div className='TanHaoCardZi '>
-                        提交申请
+                        {t('card_36')}
                     </div>
                 </div>
 

@@ -1087,7 +1087,7 @@ function Wallet(props) {
       if (canLoginAfterRequest(userData)) { //登录过以后才会获取余额值
         dispatch(userProfile());
         dispatch(centerGetTokenBalanceList());
-        dispatch(centerGetUserFiat()).then(() => {
+        dispatch(centerGetUserFiat({requestPayment: true})).then(() => {
           // setLoadingShow(false)
           dispatch(updateWalletLoading(false))
         });
