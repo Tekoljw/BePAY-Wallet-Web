@@ -140,10 +140,13 @@ function Earn(props) {
     const [openTianXie, setOpenTianXie] = useState(false);
     const [yaoQingMa, setYaoQingMa] = useState(0);
     const [openYaoQingQuKuan, setOpenYaoQingQuKuan] = useState(false);
+    const [showYaoQingBtn, setShowYaoQingBtn] = useState(false);
+    const [inputYaoQingVal, setInputYaoQingVal] = useState("");
 
     const handleChangeInputVal2 = (event) => {
         setInputIDVal(event.target.value);
     };
+    
     const [symbol, setSymbol] = useState('');
     const [symbolWallet, setSymbolWallet] = useState([]);
     const [symbolList, setSymbolList] = useState([]);
@@ -151,6 +154,10 @@ function Earn(props) {
 
     const handleChangeInputVal = (event) => {
         setYaoQingMa(event.target.value);
+    };
+
+    const handleChangeInputVal3 = (event) => {
+        setInputYaoQingVal(event.target.value);
     };
 
 
@@ -191,13 +198,40 @@ function Earn(props) {
         });
     }, []);
 
+
     const dispatch = useDispatch();
     const widgets = useSelector(selectWidgets);
+
 
     useEffect(() => {
         dispatch(getWidgets()).then(() => {
         });
     }, [dispatch]);
+
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (userData?.profile?.user?.inviterInviteCode === "") {
+                setShowYaoQingBtn(true);
+            } else { setShowYaoQingBtn(false); }
+        }, 0);
+    }, [userData.profile.user]);
+    
+    const sumbitYaoQingCode = async () => {
+        await dispatch(kycAddress({
+        })).then((res) => {
+            let result = res.payload;
+            if (result.errno === 0) {
+                let resultData = res.payload.data;
+                setInputYaoQingVal();
+                setTimeout(() => {
+
+                }, 0);
+            }
+        });
+    };
+
+
 
 
     const openKXianFunc = () => {
@@ -292,7 +326,7 @@ function Earn(props) {
                 if (index < 10) {
                     index += 1
                     loopCallInviteRewardDetails(index, temArr)
-                }else{
+                } else {
                     setInviteDefferentTypeReward(temArr);
                     return;
                 }
@@ -586,7 +620,7 @@ function Earn(props) {
     }
 
     const currenyPaytoken = (currentSymbol, currentBalance) => {
-        const symbolRate = _.get(_.find(config.symbols, {symbol: currentSymbol }), 'sellRate', 0);
+        const symbolRate = _.get(_.find(config.symbols, { symbol: currentSymbol }), 'sellRate', 0);
         return (currentBalance * symbolRate).toFixed(2)
     };
 
@@ -644,11 +678,15 @@ function Earn(props) {
                     >
                         <div className='flex  justify-between'>
                             <div className='text-16' style={{ height: "26px", lineHeight: "26px" }}>{t('card_113')}</div>
-                            <div className='px-10' style={{ backgroundColor: "#0D9488", borderRadius: "99px", height: "26px", lineHeight: "26px" }}
-                                onClick={() => {
-                                    setOpenTianXie(true)
-                                }}
-                            >{t("earn_2")}</div>
+                            {
+                                showYaoQingBtn && <div className='px-10' style={{ backgroundColor: "#0D9488", borderRadius: "99px", height: "26px", lineHeight: "26px" }}
+                                    onClick={() => {
+                                        setOpenTianXie(true)
+                                    }}
+                                >{t("earn_2")}</div>
+                            }
+
+
                         </div>
 
                         <div className='newBlocak'>
@@ -1594,7 +1632,7 @@ function Earn(props) {
                                         className='pt-10 pb-12 mt-20 flex justify-between' style={{ backgroundColor: "#191A1B", borderRadius: "10px", border: "4px solid #151617" }}>
                                         <div style={{ width: "60%" }}>
                                             <div className='text-14 ml-10' style={{ textAlign: "left" }}>质押总资产(BFT)</div>
-                                            <div className='text-12 ml-10 mt-12' style={{ textAlign: "left" }}>{ tokenPledgeActivityAllInfo.tokenPledgeRewardData ? parseJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData)?.all.symbol.BFT : '0.00' } ≈ {tokenPledgeActivityAllInfo.tokenPledgeRewardData ? currenyPaytoken('BFT', Number(parseJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData)?.all.symbol.BFT)) : '0.00'} USD</div>
+                                            <div className='text-12 ml-10 mt-12' style={{ textAlign: "left" }}>{tokenPledgeActivityAllInfo.tokenPledgeRewardData ? parseJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData)?.all.symbol.BFT : '0.00'} ≈ {tokenPledgeActivityAllInfo.tokenPledgeRewardData ? currenyPaytoken('BFT', Number(parseJson(tokenPledgeActivityAllInfo?.tokenPledgeRewardData)?.all.symbol.BFT)) : '0.00'} USD</div>
                                         </div>
                                         <div style={{ width: "40%" }}>
                                             <div className='text-14 mr-10' style={{ textAlign: "right" }}>质押笔数</div>
@@ -2216,7 +2254,7 @@ function Earn(props) {
                                 <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/card/usd.png"></img>
                                 <div className='text-14 ml-6' style={{ height: "24px", lineHeight: "24px" }}>换汇总收益(USDT)</div>
                             </div>
-                            <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "center", color: "#00FF96" }}>{ swapData?.totalReward ? Number(parseJson(swapData.totalReward)?.reward?.symbol?.USDT) : '0.00'}</div>
+                            <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "center", color: "#00FF96" }}>{swapData?.totalReward ? Number(parseJson(swapData.totalReward)?.reward?.symbol?.USDT) : '0.00'}</div>
                             <div className='flex  justify-between mt-20'>
                                 <div>
                                     <div style={{ textAlign: "center" }}>邀请人数</div>
@@ -2225,12 +2263,12 @@ function Earn(props) {
 
                                 <div>
                                     <div style={{ textAlign: "center" }}>{t('card_129')}</div>
-                                    <div className='mt-6' style={{ textAlign: "center" }}>{ swapData?.todayReward ? Number(parseJson(swapData.todayReward)?.reward?.symbol?.USDT) : '0.00' } USDT</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}>{swapData?.todayReward ? Number(parseJson(swapData.todayReward)?.reward?.symbol?.USDT) : '0.00'} USDT</div>
                                 </div>
 
                                 <div>
                                     <div style={{ textAlign: "center" }}>{t('card_153')}</div>
-                                    <div className='mt-6' style={{ textAlign: "center" }}>{ swapData?.yesterdayReward ? Number(parseJson(swapData.yesterdayReward)?.reward?.symbol?.USDT) : '0.00'} USDT</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}>{swapData?.yesterdayReward ? Number(parseJson(swapData.yesterdayReward)?.reward?.symbol?.USDT) : '0.00'} USDT</div>
                                 </div>
 
                             </div>
@@ -2262,7 +2300,7 @@ function Earn(props) {
                                 <img style={{ width: "24px", height: "24px" }} src="wallet/assets/images/card/usd.png"></img>
                                 <div className='text-14 ml-6' style={{ height: "24px", lineHeight: "24px" }}>支付总收益(USDT)</div>
                             </div>
-                            <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "center", color: "#00FF96" }}>{ walletPayRewardData?.totalReward ? Number( parseJson(walletPayRewardData.totalReward)?.reward?.symbol?.USDT): '0.00'} </div>
+                            <div className='mt-12 text-32 w-full fontBold' style={{ textAlign: "center", color: "#00FF96" }}>{walletPayRewardData?.totalReward ? Number(parseJson(walletPayRewardData.totalReward)?.reward?.symbol?.USDT) : '0.00'} </div>
                             <div className='flex  justify-between mt-20'>
                                 <div>
                                     <div style={{ textAlign: "center" }}>邀请人数</div>
@@ -2271,12 +2309,12 @@ function Earn(props) {
 
                                 <div>
                                     <div style={{ textAlign: "center" }}>{t('card_129')}</div>
-                                    <div className='mt-6' style={{ textAlign: "center" }}>{ walletPayRewardData?.todayReward ?  Number(parseJson(walletPayRewardData.todayReward)?.reward?.symbol?.USDT) :'0.00'} USDT</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}>{walletPayRewardData?.todayReward ? Number(parseJson(walletPayRewardData.todayReward)?.reward?.symbol?.USDT) : '0.00'} USDT</div>
                                 </div>
 
                                 <div>
                                     <div style={{ textAlign: "center" }}>{t('card_153')}</div>
-                                    <div className='mt-6' style={{ textAlign: "center" }}>{ walletPayRewardData?.yesterdayReward ? Number(parseJson(walletPayRewardData.yesterdayReward)?.reward?.symbol?.USDT) : '0.00'} USDT</div>
+                                    <div className='mt-6' style={{ textAlign: "center" }}>{walletPayRewardData?.yesterdayReward ? Number(parseJson(walletPayRewardData.yesterdayReward)?.reward?.symbol?.USDT) : '0.00'} USDT</div>
                                 </div>
                             </div>
                             <div style={{ height: "40px" }}></div>
@@ -2319,7 +2357,7 @@ function Earn(props) {
                             className='inputYaoQing'
                             value={yaoQingMa || ''}
                             placeholder={t("earn_1")}
-                            onChange={handleChangeInputVal}
+                            onChange={handleChangeInputVal3}
                         />
 
                         <div className='flex mt-16 mb-28 px-15 justify-between' >
@@ -2503,7 +2541,7 @@ function Earn(props) {
                                                 </div>
                                                 <div className='flex mt-4' style={{ width: "100%", height: "" }}>
                                                     <div className='' style={{ width: "30%", textAlign: "left" }}>提成USDT</div>
-                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{ (inviteDefferentTypeReward[3]?.today)? parseJson(inviteDefferentTypeReward[3].today)?.reward?.symbol?.USDT : '0.00'}</div>
+                                                    <div className='' style={{ width: "17.5%", textAlign: "center" }}>{(inviteDefferentTypeReward[3]?.today) ? parseJson(inviteDefferentTypeReward[3].today)?.reward?.symbol?.USDT : '0.00'}</div>
                                                     <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[3]?.yesterday)?.reward ? parseJson(inviteDefferentTypeReward[3].yesterday)?.reward?.symbol?.USDT : '0.00'}</div>
                                                     <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[3]?.curMonth)?.reward ? parseJson(inviteDefferentTypeReward[3].curMonth)?.reward?.symbol?.USDT : '0.00'}</div>
                                                     <div className='' style={{ width: "17.5%", textAlign: "center" }}>{parseJson(inviteDefferentTypeReward[3]?.beforeMonth)?.reward ? parseJson(inviteDefferentTypeReward[3].beforeMonth)?.reward?.symbol?.USDT : '0.00'}</div>
@@ -2538,7 +2576,7 @@ function Earn(props) {
                                                     <img className='mr-10' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/menu/icon-pools-active.png" alt="" />
                                                 </div>
                                                 <div>
-                                                    <div className='ml-8 fenChengZi'>质押收益分成<br /> <p className='fenChengZi2 mt-4'>直接邀请：{inviteRewardAllInfo.tokenPledgeRewardData ?  parseJson(inviteRewardAllInfo.tokenPledgeRewardData).direct : 0}人</p> </div>
+                                                    <div className='ml-8 fenChengZi'>质押收益分成<br /> <p className='fenChengZi2 mt-4'>直接邀请：{inviteRewardAllInfo.tokenPledgeRewardData ? parseJson(inviteRewardAllInfo.tokenPledgeRewardData).direct : 0}人</p> </div>
                                                 </div>
                                             </div>
                                             <div className='flex earnDepositeDi'>

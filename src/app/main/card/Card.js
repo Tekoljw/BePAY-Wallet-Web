@@ -86,6 +86,7 @@ const StyledAccordion = styled(Accordion)(({ theme }) => ({
     },
 }));
 
+
 const container = {
     show: {
         transition: {
@@ -94,11 +95,13 @@ const container = {
     },
 };
 
+
+
+
 const item = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0 },
 };
-
 
 
 function Card(props) {
@@ -253,6 +256,7 @@ function Card(props) {
             document.getElementById('CreateSty').classList.add('PinMoveAni');
         }, 0);
     };
+
 
     const closeCreatePinFunc = () => {
         document.getElementById('CreateSty').classList.remove('PinMoveAni');
@@ -1711,8 +1715,6 @@ function Card(props) {
                                                                 </Accordion>
                                                             </div>
                                                         </motion.div> */}
-
-
 
                                                         {cardList[2].map((cardItem, i) => {
                                                             if (cardItem.showState > 8) {
