@@ -1009,7 +1009,6 @@ function Kyc(props) {
                         if (value.payload) {
                             // refreshKycInfo();
                             dispatch(showMessage({ message: "Success", code: 1 }));
-                            dispatch(userProfile({ forceUpdate: true }));
                             props.updatedKycInfo();
                         }
                     }

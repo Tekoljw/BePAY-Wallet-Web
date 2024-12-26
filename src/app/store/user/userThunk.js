@@ -17,7 +17,7 @@ import userLoginType from "../../define/userLoginType";
 import { sendLogInfo } from "app/store/log/logThunk";
 import { getSymbols } from "app/store/config/configThunk";
 import userLoginState from "../../define/userLoginState";
-import {showServerErrorTips} from "../../util/tools/function";
+import { showServerErrorTips, getUserLoginType } from "../../util/tools/function";
 
 // 检查用户是否已经登录
 export const checkLoginState = createAsyncThunk(
@@ -436,10 +436,14 @@ export const resetPass = createAsyncThunk(
             passNew: settings.password,
         };
         const userResetPassData = await React.$api("user.changePass", data);
+        const { user } = getState();
+        const loginType = getUserLoginType(user);
         if (userResetPassData.errno === 0) {
             dispatch(showMessage({ message: 'success', code: 1 }));
             dispatch(userProfile({forceUpdate: true}))
-            history.push('/wallet/login');
+            if(loginType !== userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP){
+                history.push('/wallet/login');
+            }
         } else {
             showServerErrorTips(dispatch, userResetPassData);
         }
