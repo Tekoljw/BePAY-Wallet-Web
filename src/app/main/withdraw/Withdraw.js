@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import { TextareaAutosize } from '@mui/base';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import { useNavigate } from 'react-router-dom';
@@ -1324,7 +1325,7 @@ function Withdraw(props) {
                                         smallTabValue === 0 && <div className="px-10 ">
                                             <div className="flex items-center justify-between">
                                                 <FormControl className='addressShuoDuan' sx={{ width: '100%', borderRadius: "6px", borderColor: '#94A3B8', backgroundColor: "#151C2A" }} variant="outlined">
-                                                    <OutlinedInput
+                                                    <TextareaAutosize
                                                         id="outlined-adornment-address send-tips-container-address"
                                                         value={inputVal.address}
                                                         onChange={handleChangeInputVal('address')}
