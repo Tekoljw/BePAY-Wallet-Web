@@ -2,18 +2,26 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import React from "react";
 import { showMessage } from 'app/store/fuse/messageSlice';
 import {showServerErrorTips} from "../../util/tools/function";
+import { updateActivityInfos, updateActivityConfig, updateActivityControl, updateActivityInfosExpiredTime} from "../user/index";
 
 // 获取活动基础信息接口（赚钱页面）
 export const beingFiActivityInfo = createAsyncThunk(
     'activity/beingFiActivityInfo',
     async (settings, { dispatch, getState }) => {
+        const state = getState();
         settings = settings || {};
-
-        const resultData = await React.$apiGet("activity.beingFiActivityInfo", {});
-        if (resultData.errno === 0) {
-            return resultData
+        if (state.user.activityInfos && !settings.forceUpdate && state.user.activityInfosExpiredTime && state.user.activityInfosExpiredTime > new Date().getTime()) {
+            return state.user.activityInfos
         } else {
-            showServerErrorTips(dispatch, resultData);
+            const resultData = await React.$apiGet("activity.beingFiActivityInfo", {});
+            if (resultData.errno === 0) {
+                const expiredTime = new Date().getTime() + 3600 * 1000;
+                dispatch(updateActivityInfos(resultData));
+                dispatch(updateActivityInfosExpiredTime(expiredTime))
+                return resultData
+            } else {
+                showServerErrorTips(dispatch, resultData);
+            }   
         }
     }
 );
@@ -23,12 +31,17 @@ export const beingFiActivityControl = createAsyncThunk(
     'activity/beingFiActivityControl',
     async (settings, { dispatch, getState }) => {
         settings = settings || {};
-
-        const resultData = await React.$apiGet("activity.beingFiActivityControl", {});
-        if (resultData.errno === 0) {
-           return resultData
+        const state = getState();
+        if (state.user.activityControl && !settings.forceUpdate) {
+            return state.user.activityControl
         } else {
-            showServerErrorTips(dispatch, resultData);
+            const resultData = await React.$apiGet("activity.beingFiActivityControl", {});
+            if (resultData.errno === 0) {
+               dispatch(updateActivityControl(resultData));
+               return resultData
+            } else {
+                showServerErrorTips(dispatch, resultData);
+            }
         }
     }
 );
@@ -38,12 +51,17 @@ export const signInActivityConfig = createAsyncThunk(
     'activity/signInActivityConfig',
     async (settings, { dispatch, getState }) => {
         settings = settings || {};
-
-        const resultData = await React.$apiGet("activity.signInActivityConfig", {});
-        if (resultData.errno === 0) {
-            return resultData
+        const state = getState();
+        if (state.user.activityConfig && !settings.forceUpdate) {
+            return state.user.activityConfig
         } else {
-            showServerErrorTips(dispatch, resultData);
+            const resultData = await React.$apiGet("activity.signInActivityConfig", {});
+            if (resultData.errno === 0) {
+                dispatch(updateActivityConfig(resultData));
+                return resultData
+            } else {
+                showServerErrorTips(dispatch, resultData);
+            }
         }
     }
 );

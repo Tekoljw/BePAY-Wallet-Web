@@ -7,6 +7,7 @@ import { userProfile, centerGetTokenBalanceList, getListBank } from "../user/use
 import { getCryptoDisplay, centerGetUserFiat, getFiatDisplay, getNftDisplay, getWalletDisplay} from "../wallet/walletThunk"
 import { payoutBank, payoutPayWays, getCreditConfig } from "../payment/paymentThunk"
 import { getSwapFee } from "../swap/swapThunk"
+import { action } from 'mobx';
 
 // state
 const initialState = {
@@ -31,6 +32,10 @@ const initialState = {
     currencyCode: localStorage.getItem('currencyCode') || 'USD',
     loginState: userLoginState.USER_LOGIN_STATE_UN, //登录状态
     userRequestError: null, //用户请求错误
+    activityInfos: null,
+    activityConfig: null,
+    activityControl: null,
+    activityInfosExpiredTime: 0,
 };
 
 const userSlice = createSlice({
@@ -163,6 +168,26 @@ const userSlice = createSlice({
         updateUserRequestError: (state, action) => {
             let res = action.payload;
             state.userRequestError = res;
+        },
+
+        updateActivityInfos: (state, action) => {
+            let res = action.payload;
+            state.activityInfos = res;
+        },
+
+        updateActivityConfig: (state, action) => {
+            let res = action.payload;
+            state.activityConfig = res;
+        },
+
+        updateActivityControl: (state, action) => {
+            let res = action.payload;
+            state.activityControl = res;
+        },
+
+        updateActivityInfosExpiredTime: (state, action) => {
+            let res = action.payload;
+            state.activityInfosExpiredTime = res;
         }
     },
     extraReducers: (builder) => {
@@ -207,7 +232,7 @@ const userSlice = createSlice({
 });
 
 export const { updateWalletLoading, updateUser, updateUserToken, updateTransfer, updateWallet, updateFiat, updateCryptoDisplay, updateFiatDisplay, updateNftDisplay, updateWalletDisplay, updateCurrency, setTransferStats
-    , updateLoginState, updateBankList, updatePayoutBankList, updatePayoutWays, updateSwapFee, updateCreditConfig, updateUserRequestError} = userSlice.actions;
+    , updateLoginState, updateBankList, updatePayoutBankList, updatePayoutWays, updateSwapFee, updateCreditConfig, updateUserRequestError, updateActivityInfos, updateActivityConfig, updateActivityControl, updateActivityInfosExpiredTime} = userSlice.actions;
 
 export const selectUserData = ({ user }) => user;
 

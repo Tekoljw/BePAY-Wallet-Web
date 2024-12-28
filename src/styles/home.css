@@ -2942,6 +2942,21 @@ input#outlined-adornment-address\ send-tips-container-address {
     background-color: #151c2a;
     border-radius: 0.5rem;
 }
+textarea#outlined-adornment-address\ send-tips-container-address {
+    padding: 0.5rem 2.8rem 0.5rem 1rem;
+    min-height: 5rem !important;
+    max-height: 5rem !important;
+    box-sizing: border-box;
+    font-size: 1.4rem;
+    background-color: #151c2a;
+    border-radius: 0.5rem;
+    border: 1px solid rgb(88 85 85);
+}
+
+textarea#outlined-adornment-address\ send-tips-container-address:focus {
+    border:1px solid #12C1A2;
+    transition: all 0.25s;
+}
 
 .muiltr-1qeo8sv-MuiFormHelperText-root.Mui-error {
     background-color: rgb(15, 20, 32);
