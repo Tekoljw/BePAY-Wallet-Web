@@ -548,7 +548,7 @@ const locale = {
     card_193: "Kad Iklan",
     card_194: "Kad Perolehan Pekerjaan",
     card_195: "Disalin",
-    card_196: "PIN",
+    card_196: "1FA PIN",
     card_197: "Sila tunggu!",
     card_198: "Permohonan boleh dibuat dari tanah besar China",
     card_199: "Boleh digunakan di tanah besar China",
@@ -583,7 +583,7 @@ const locale = {
     kyc_54: "PIN lama",
     kyc_55: "Alamat e-mel tidak sah",
     kyc_56: "bimbit",
-    kyc_57: "Kaedah pengesahan",
+    kyc_57: "Pengesahan Keselamatan 2FA",
     Kyc_58: "Kod negara atau nombor telefon tidak boleh kosong",
     Kyc_59: "Hantar ke",
     Kyc_60: "Lihat dalam Google Authenticator",
@@ -850,7 +850,7 @@ const locale = {
 
     earn_1:"kod jemputan",
     earn_2:"Masukkan kod rujukan",
-
+    kyc_72: "PIN",
 
 
     

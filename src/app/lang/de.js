@@ -551,7 +551,7 @@ const locale = {
     card_193: "Werbekarte",
     card_194: "Arbeitsbeschaffungskarte",
     card_195: "Kopiert",
-    card_196: "PIN",
+    card_196: "1FA PIN",
     card_197: "Bitte erwarten Sie!",
     card_198: "Vom chinesischen Festland kann man sich bewerben",
     card_199: "Kann im Festlandchina verwendet werden",
@@ -586,7 +586,7 @@ const locale = {
     kyc_54:"alter PIN",
     kyc_55: "Ungültige E-Mail-Adresse",
     kyc_56: "Handy",
-    kyc_57: "Verifizierungsmethode",
+    kyc_57: "2FA-Sicherheitsüberprüfung",
     Kyc_58:"Ländercode oder Telefonnummer darf nicht leer sein",
     Kyc_59:"Senden an",
     Kyc_60:"In Google Authenticator anzeigen",
@@ -848,7 +848,7 @@ const locale = {
 
     earn_1:"Einladungscode",
     earn_2:"Geben Sie den Einladungs-Code ein",
-
+    kyc_72: "PIN",
 
 
     

@@ -563,7 +563,7 @@ const locale = {
     card_193: "Advertisement Card",
     card_194: "Job Procurement Card",
     card_195: "Copied",
-    card_196: "PIN",
+    card_196: "1FA PIN",
     card_197: "Comingsoon!",
     card_198: "Applications can be made from mainland China",
     card_199: "Can be used in mainland China",
@@ -597,7 +597,7 @@ const locale = {
     kyc_54: "Old PIN",
     kyc_55: "Invalid email address",
     kyc_56: "phone",
-    kyc_57: "Select Verification method",
+    kyc_57: "2FA Security Verification",
     Kyc_58: "nationCode or phone cannot empty",
     Kyc_59: "Send to",
     Kyc_60: "View in Google Authenticator",
@@ -854,7 +854,7 @@ const locale = {
 
     earn_1:"Invitation code",
     earn_2:"Enter referral code",
-
+    kyc_72: "PIN",
 
 
     

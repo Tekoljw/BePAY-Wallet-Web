@@ -97,6 +97,69 @@ function ResetPin(props) {
     const [selectPhoneCode, setSelectPhoneCode] = useState([]);
     const [searchPhoneCode, setSearchPhoneCode] = useState([]);
 
+    const inputRef5 = useRef(null);
+    const inputRef6 = useRef(null);
+    const inputRef7 = useRef(null);
+    const inputRef8 = useRef(null);
+    const inputRef9 = useRef(null);
+    const inputRef10 = useRef(null);
+
+
+    const handleFocus5 = () => {
+        setTimeout(() => {
+            inputRef5.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
+    };
+
+    const handleFocus6 = () => {
+        setTimeout(() => {
+            inputRef6.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
+    };
+
+    const handleFocus7 = () => {
+        setTimeout(() => {
+            inputRef7.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
+    };
+
+
+    const handleFocus8 = () => {
+        setTimeout(() => {
+            inputRef8.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
+    };
+
+    const handleFocus9 = () => {
+        setTimeout(() => {
+            inputRef9.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
+    };
+
+    const handleFocus10 = () => {
+        setTimeout(() => {
+            inputRef10.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
+    };
+
     const pagePhoneCodeList = (page = 1, isSearch = true) => {
         if (page <= dataPage && page !== 1) {
             return
@@ -593,6 +656,8 @@ function ResetPin(props) {
                                     className="mb-24"
                                     label={t('kyc_53')}
                                     type="password"
+                                    ref={inputRef5}
+                                    onFocus={handleFocus5}
                                     error={!!errors.passwordConfirm}
                                     helperText={errors?.passwordConfirm?.message}
                                     variant="outlined"
@@ -698,6 +763,8 @@ function ResetPin(props) {
                                                             label="smsCode"
                                                             value={inputVal.smsCode}
                                                             onChange={handleChangeInputVal2('smsCode')}
+                                                            ref={inputRef6}
+                                                            onFocus={handleFocus6}
                                                             aria-describedby="outlined-weight-helper-text"
                                                             inputProps={{
                                                                 'aria-label': 'smsCode',
@@ -719,6 +786,8 @@ function ResetPin(props) {
                                                             id="outlined-adornment-address"
                                                             label="password"
                                                             value={inputVal.password}
+                                                            ref={inputRef7}
+                                                            onFocus={handleFocus7}
                                                             onChange={handleChangeInputVal3('password')}
                                                             aria-describedby="outlined-weight-helper-text"
                                                             type="password"
@@ -884,6 +953,8 @@ function ResetPin(props) {
                                                         label="phone"
                                                         value={inputVal2.phone}
                                                         onChange={handleChangeInputVal5('phone')}
+                                                        ref={inputRef8}
+                                                        onFocus={handleFocus8}
                                                         aria-describedby="outlined-weight-helper-text"
                                                         inputProps={{
                                                             'aria-label': 'phone',
@@ -920,6 +991,8 @@ function ResetPin(props) {
                                                             id="outlined-adornment-address"
                                                             label="smsCode"
                                                             value={inputVal2.smsCode}
+                                                            ref={inputRef9}
+                                                            onFocus={handleFocus9}
                                                             onChange={handleChangeInputVal6('smsCode')}
                                                             aria-describedby="outlined-weight-helper-text"
                                                             inputProps={{
@@ -942,6 +1015,8 @@ function ResetPin(props) {
                                                             id="outlined-adornment-address"
                                                             label="password"
                                                             value={inputVal2.password}
+                                                            ref={inputRef10}
+                                                            onFocus={handleFocus10}
                                                             onChange={handleChangeInputVal7('password')}
                                                             aria-describedby="outlined-weight-helper-text"
                                                             type="password"

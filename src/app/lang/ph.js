@@ -549,7 +549,7 @@ const locale = {
     card_193: "Ad Card",
     card_194: "Kard ng Pagkuha ng Trabaho",
     card_195: "Nakopya",
-    card_196: "PIN",
+    card_196: "1FA PIN",
     card_197: "Mangyaring maghintay!",
     card_198: "Maaaring mag-apply mula sa mainland China",
     card_199: "Maaaring gamitin sa mainland China",
@@ -584,7 +584,7 @@ const locale = {
     kyc_54: "lumang PIN",
     kyc_55: "Di-wastong email address",
     kyc_56: "telepono",
-    kyc_57: "Paraan ng beripikasyon",
+    kyc_57: "2FA Pagpapatunay ng Seguridad",
     Kyc_58: "Ang country code o numero ng telepono ay hindi maaaring walang laman",
     Kyc_59: "Ipadala sa",
     Kyc_60: "Tingnan sa Google Authenticator",
@@ -845,7 +845,7 @@ const locale = {
 
     earn_1:"code ng imbitasyon",
     earn_2:"I-enter ang referral code",
-
+    kyc_72: "PIN",
 
 
     

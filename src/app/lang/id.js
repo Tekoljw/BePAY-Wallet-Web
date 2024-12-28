@@ -548,7 +548,7 @@ const locale = {
     card_193: "Kartu Iklan",
     card_194: "Kartu Pengadaan Kerja",
     card_195: "Tersalin",
-    card_196: "PIN",
+    card_196: "1FA PIN",
     card_197: "Harap tunggu!",
     card_198: "Dapat mendaftar dari daratan Tiongkok",
     card_199: "Dapat digunakan di Tiongkok daratan",
@@ -583,7 +583,7 @@ const locale = {
     kyc_54: "PIN lama",
     kyc_55: "Alamat email tidak valid",
     kyc_56: "ponsel",
-    kyc_57: "Metode verifikasi",
+    kyc_57: "Verifikasi Keamanan 2FA",
     Kyc_58: "Kode negara atau nomor telepon tidak boleh kosong",
     Kyc_59: "Kirim ke",
     Kyc_60: "Lihat di Google Authenticator",
@@ -847,7 +847,7 @@ const locale = {
 
     earn_1:"kode undangan",
     earn_2:"Masukkan kode undangan",
-
+    kyc_72: "PIN",
 
 
     

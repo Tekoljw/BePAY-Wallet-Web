@@ -72,7 +72,7 @@ function Security(props) {
     }, []);
 
     useEffect(() => {
-        let langArr = [t('menu_12'), t('menu_13'), t('menu_14'), t('menu_15'), t('menu_16'), "PIN"];
+        let langArr = [t('menu_12'), t('menu_13'), t('menu_14'), t('menu_15'), t('menu_16'), "1FA PIN"];
         if(!userData.userInfo.bindEmail) {
             langArr[1] = t('menu_19')
         }

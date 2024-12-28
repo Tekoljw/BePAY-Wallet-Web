@@ -548,7 +548,7 @@ const locale = {
     card_193: "Tarjeta de Anuncio",
     card_194: "Tarjeta de Adquisición de Trabajo",
     card_195: "Copiado",
-    card_196: "PIN",
+    card_196: "1FA PIN",
     card_197: "¡Por favor, mantente atento!",
     card_198: "Se puede solicitar desde el continente de China",
     card_199: "Se puede usar en la China continental",
@@ -583,7 +583,7 @@ const locale = {
     kyc_54:"PIN antiguo",
     kyc_55: "Dirección de correo electrónico no válida",
     kyc_56: "móvil",
-    kyc_57: "Método de verificación",
+    kyc_57: "Verificación de seguridad 2FA",
     Kyc_58:"El código de país o el número de teléfono no puede estar vacío",
     Kyc_59:"Enviar a",
     Kyc_60:"Ver en Google Authenticator",
@@ -847,7 +847,7 @@ const locale = {
 
     earn_1:"código de invitación",
     earn_2:"Introducir código de invitación",
-
+    kyc_72: "PIN",
 
 
     

@@ -547,7 +547,7 @@ const locale = {
     card_193: "廣告投放卡",
     card_194: "工作採購卡",
     card_195: "已複製",
-    card_196: "PIN",
+    card_196: "1FA PIN",
     card_197: "Veuillez patienter!",
     card_198: "中國大陸可以申請",
     card_199: "中國大陸可以使用",
@@ -582,7 +582,7 @@ const locale = {
     kyc_54:"舊PIN",
     kyc_55: "無效的電子郵件地址",
     kyc_56: "手機",
-    kyc_57: "選擇驗證方式",
+    kyc_57: "2FA 安全驗證",
     Kyc_58:"國家代碼或手機號碼不能為空",
     Kyc_59:"發送至",
     Kyc_60:"在Google Authenticator中查看",
@@ -847,7 +847,7 @@ const locale = {
 
     earn_1:"邀請碼",
     earn_2:"填寫邀請碼",
-
+    kyc_72: "PIN",
 
 
     

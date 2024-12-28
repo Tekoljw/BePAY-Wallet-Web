@@ -191,22 +191,41 @@ function Withdraw(props) {
     const [typeBinded, setTypeBined] = useState(false);
     const [openBindEmail, setOpenBindEmail] = useState(false);
     const [openBindPhone, setOpenBindPhone] = useState(false);
-    const inputRef = useRef(null);
     const handleChangeInputVal = (prop, value) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
         if (prop == 'amount' && event.target.value != '' && event.target.value != 0) {
             evalFee2(networkId, symbol, event.target.value, inputVal.address);
         }
     };
+    const inputRef5 = useRef(null);
+    const inputRef6 = useRef(null);
+    const inputRef7 = useRef(null);
 
-    const handleFocus = () => {
-        // EventBus.emit('toggleVisibility', false); // 触发事件并传递值
+    const handleFocus5 = () => {
         setTimeout(() => {
-            inputRef.current.scrollIntoView({
+            inputRef5.current.scrollIntoView({
                 behavior: 'smooth',
                 block: 'center',
             });
-        }, 100); // 延迟以等待键盘弹出
+        }, 150); // 延迟以等待键盘弹出
+    };
+
+    const handleFocus6 = () => {
+        setTimeout(() => {
+            inputRef6.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
+    };
+
+    const handleFocus7 = () => {
+        setTimeout(() => {
+            inputRef7.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
     };
 
     const [showGuangBiao, setShowGuangBiao] = useState(false);
@@ -1327,6 +1346,8 @@ function Withdraw(props) {
                                                 <FormControl className='addressShuoDuan' sx={{ width: '100%', borderRadius: "6px", borderColor: '#94A3B8', backgroundColor: "#151C2A" }} variant="outlined">
                                                     <TextareaAutosize
                                                         id="outlined-adornment-address send-tips-container-address"
+                                                        ref={inputRef5}
+                                                        onFocus={handleFocus5}
                                                         value={inputVal.address}
                                                         onChange={handleChangeInputVal('address')}
                                                         aria-describedby="outlined-weight-helper-text"
@@ -1354,7 +1375,7 @@ function Withdraw(props) {
                                             <Typography className="text-16 cursor-pointer mt-16">
                                                 {t('home_withdraw_3')}
                                             </Typography>
-                                            <div className="flex items-start py-16 justify-between" style={{}}>
+                                            <div className="flex items-start py-16 justify-between " style={{}}>
                                                 <FormControl sx={{ width: '80%', borderColor: '#94A3B8' }} variant="outlined">
                                                     <TextField
                                                         className='yuEShuRu'
@@ -1362,6 +1383,8 @@ function Withdraw(props) {
                                                         helperText={ismore(inputVal.amount) ? t('home_deposite_28') : ''}
                                                         id="outlined-adornment-address send-tips-container-amount"
                                                         value={inputVal.amount}
+                                                        ref={inputRef6}
+                                                        onFocus={handleFocus6}
                                                         onChange={handleChangeInputVal('amount')}
                                                         aria-describedby="outlined-weight-helper-text"
                                                         inputProps={{
@@ -1449,8 +1472,8 @@ function Withdraw(props) {
                                                     <OutlinedInput
                                                         id="outlined-adornment-address send-tips-container-address"
                                                         value={inputIDVal}
-                                                        ref={inputRef}
-                                                        onFocus={handleFocus}
+                                                        ref={inputRef7}
+                                                        onFocus={handleFocus7}
                                                         onChange={handleChangeInputVal2}
                                                         aria-describedby="outlined-weight-helper-text"
                                                     />
@@ -1477,7 +1500,7 @@ function Withdraw(props) {
                                                 {t('home_withdraw_3')}
                                             </Typography>
 
-                                            <div className="flex items-start justify-between" style={{ paddingTop: "1.6rem", paddingBottom: "0.5rem" }}>
+                                            <div className="flex items-start justify-between " style={{ paddingTop: "1.6rem", paddingBottom: "0.5rem" }}>
                                                 <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
                                                     <TextField
                                                         error={ismore(inputVal.amount)}

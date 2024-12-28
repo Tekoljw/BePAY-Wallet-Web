@@ -550,7 +550,7 @@ const locale = {
     card_193: "광고 카드",
     card_194: "작업 조달 카드",
     card_195: "복사됨",
-    card_196: "PIN",
+    card_196: "1FA PIN",
     card_197: "기대해 주세요!",
     card_198: "중국 본토에서 신청할 수 있습니다",
     card_199: "중국 본토에서 사용할 수 있습니다",
@@ -585,7 +585,7 @@ const locale = {
     kyc_54: "기존 PIN",
     kyc_55: "잘못된 이메일 주소",
     kyc_56: "휴대전화",
-    kyc_57: "검증 방식",
+    kyc_57: "2FA 보안 인증",
     Kyc_58: "국가 코드 또는 전화번호는 비워 둘 수 없습니다",
     Kyc_59: "보내기",
     Kyc_60: "Google Authenticator에서 보기",
@@ -849,7 +849,7 @@ const locale = {
 
     earn_1:"초대 코드",
     earn_2:"초대 코드를 입력하세요",
-
+    kyc_72: "PIN",
 
 
     

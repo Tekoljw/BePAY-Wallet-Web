@@ -104,19 +104,49 @@ function Fiat(props) {
         userId: '',
     });
     const inputRef = useRef(null);
+    const inputRef2 = useRef(null);
+    const inputRef3 = useRef(null);
+    const inputRef4 = useRef(null);
 
     const handleFocus = () => {
-        EventBus.emit('toggleVisibility', false); // 触发事件并传递值
+        // EventBus.emit('toggleVisibility', false); // 触发事件并传递值
         setTimeout(() => {
             inputRef.current.scrollIntoView({
                 behavior: 'smooth',
                 block: 'center',
             });
-        }, 200); // 延迟以等待键盘弹出
+        }, 150); // 延迟以等待键盘弹出
+    };
+
+    const handleFocus2 = () => {
+        setTimeout(() => {
+            inputRef2.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
+    };
+
+    const handleFocus3 = () => {
+        setTimeout(() => {
+            inputRef3.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
+    };
+
+    const handleFocus4 = () => {
+        setTimeout(() => {
+            inputRef4.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
     };
 
     const handleBlur = () => {
-        EventBus.emit('toggleVisibility', true); // 触发事件并传递值
+        // EventBus.emit('toggleVisibility', true); // 触发事件并传递值
     };
 
 
@@ -1189,6 +1219,8 @@ function Fiat(props) {
                                                         id="outlined-adornment-address send-tips-container-address"
                                                         value={inputVal.accountName}
                                                         className='yuEShuRu'
+                                                        ref={inputRef3}
+                                                        onFocus={handleFocus3}
                                                         onChange={handleChangeInputVal('accountName')}
                                                         aria-describedby="outlined-weight-helper-text"
                                                         inputProps={{
@@ -1311,6 +1343,8 @@ function Fiat(props) {
                                                     <OutlinedInput
                                                         id="outlined-adornment-address send-tips-container-address"
                                                         value={inputVal.accountName}
+                                                        ref={inputRef4}
+                                                        onFocus={handleFocus4}
                                                         onChange={handleChangeInputVal('accountName')}
                                                         className='yuEShuRu'
                                                         aria-describedby="outlined-weight-helper-text"
@@ -1527,6 +1561,8 @@ function Fiat(props) {
                                                 <OutlinedInput
                                                     className='yuEShuRu'
                                                     id="outlined-adornment-address send-tips-container-amount"
+                                                    ref={inputRef2}
+                                                    onFocus={handleFocus2}
                                                     value={inputVal.amount}
                                                     onChange={handleChangeInputVal('amount')}
                                                     aria-describedby="outlined-weight-helper-text"
