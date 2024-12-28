@@ -56,7 +56,7 @@ import userLoginType from "../../../define/userLoginType";
 import RetiedEmail from "../../login/RetiedEmail";
 import RetiedPhone from "../../login/RetiedPhone";
 import { editOrQueryWithdrawalHistoryInfo } from "../../../store/transfer/transferThunk";
-
+import EventBus from '../../eventBus/EventBus';
 
 const container = {
     show: {
@@ -103,6 +103,21 @@ function Fiat(props) {
         description: '',
         userId: '',
     });
+    const inputRef = useRef(null);
+
+    const handleFocus = () => {
+        EventBus.emit('toggleVisibility', false); // 触发事件并传递值
+        setTimeout(() => {
+            inputRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 200); // 延迟以等待键盘弹出
+    };
+
+    const handleBlur = () => {
+        EventBus.emit('toggleVisibility', true); // 触发事件并传递值
+    };
 
 
     const handleChangeUserIDVal = (valueNum) => {
@@ -155,7 +170,6 @@ function Fiat(props) {
             closeScan();
         });
     };
-
 
     const changeToBlack = (target) => {
         document.getElementById(target.target.id) && document.getElementById(target.target.id).classList && document.getElementById(target.target.id).classList.add('pinJianPanColor1');
@@ -1461,7 +1475,7 @@ function Fiat(props) {
                                                         <Select
                                                             labelId="demo-simple-select-label"
                                                             id="demo-simple-select"
-                                                            className='tiBiSelect'                  
+                                                            className='tiBiSelect'
                                                             value={accountType}
                                                             label="CPF"
                                                             onChange={handleChangeAccountType}
@@ -1587,6 +1601,9 @@ function Fiat(props) {
                                                     id="outlined-adornment-address send-tips-container-amount"
                                                     value={inputVal.amount}
                                                     className='yuEShuRu'
+                                                    ref={inputRef}
+                                                    onFocus={handleFocus}
+                                                    onBlur={handleBlur}
                                                     onChange={handleChangeInputVal('amount')}
                                                     aria-describedby="outlined-weight-helper-text"
                                                     inputProps={{

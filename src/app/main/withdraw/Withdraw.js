@@ -190,11 +190,22 @@ function Withdraw(props) {
     const [typeBinded, setTypeBined] = useState(false);
     const [openBindEmail, setOpenBindEmail] = useState(false);
     const [openBindPhone, setOpenBindPhone] = useState(false);
+    const inputRef = useRef(null);
     const handleChangeInputVal = (prop, value) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
         if (prop == 'amount' && event.target.value != '' && event.target.value != 0) {
             evalFee2(networkId, symbol, event.target.value, inputVal.address);
         }
+    };
+
+    const handleFocus = () => {
+        // EventBus.emit('toggleVisibility', false); // 触发事件并传递值
+        setTimeout(() => {
+            inputRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 100); // 延迟以等待键盘弹出
     };
 
     const [showGuangBiao, setShowGuangBiao] = useState(false);
@@ -1437,6 +1448,8 @@ function Withdraw(props) {
                                                     <OutlinedInput
                                                         id="outlined-adornment-address send-tips-container-address"
                                                         value={inputIDVal}
+                                                        ref={inputRef}
+                                                        onFocus={handleFocus}
                                                         onChange={handleChangeInputVal2}
                                                         aria-describedby="outlined-weight-helper-text"
                                                     />

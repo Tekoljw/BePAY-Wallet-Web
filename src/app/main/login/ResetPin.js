@@ -629,7 +629,7 @@ function ResetPin(props) {
                     </form>}
 
                 {resetTabValue === 1 &&
-                    <div>
+                    <div className=''>
                         <div className="mt-20"> {t('kyc_57')} </div>
                         <div className='mt-10'>
                             <div
@@ -1007,13 +1007,12 @@ function ResetPin(props) {
                                                     {t('kyc_50')}
                                                 </Button>
                                             </div>
-
-
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         }
+                        <div style={{ height: "80px" }}></div>
                     </div>
                 }
             </div>

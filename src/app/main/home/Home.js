@@ -39,6 +39,7 @@ import { loginTelegram, requestUserLoginData } from "../../util/tools/loginFunct
 // import FuseLoading from '@fuse/core/FuseLoading';
 import clsx from 'clsx';
 import userLoginType from "../../define/userLoginType";
+import EventBus from '../eventBus/EventBus';
 
 const Root = styled(FusePageCarded)(({ theme }) => ({
     '& .FusePageCarded-header': {},
@@ -61,6 +62,24 @@ function HomePage(props) {
     const accessType = getUrlParam('accessType') || 0;
     const loginType = getUserLoginType(userData);
     let currentPhoneTab = window.localStorage.getItem('phoneTab') ?? 'wallet';
+    const currentShowBar = window.localStorage.getItem('currentShowBar') ?? 'show';
+    const [isVisible, setIsVisible] = useState(true);
+
+    useEffect(() => {
+        const handleVisibilityChange = (value) => {
+            setIsVisible(value);
+        };
+
+        // 订阅事件
+        EventBus.subscribe('toggleVisibility', handleVisibilityChange);
+
+        // 组件卸载时取消订阅
+        return () => {
+            EventBus.unsubscribe('toggleVisibility', handleVisibilityChange);
+        };
+    }, []);
+
+
 
     // 滑动滑块
     const changeSlider = (phoneTab) => {
@@ -126,16 +145,16 @@ function HomePage(props) {
 
     useEffect(() => {
         console.log(accessType, 'home 请求的 loginType');
-        switch (accessType){
-            case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP:{ //telegramWebApp
+        switch (accessType) {
+            case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP: { //telegramWebApp
                 setMenuShow(true);
                 setLeftSidebarOpen(false);
                 //window.Telegram?.WebApp?.ready();
                 break;
             }
-            default:{
+            default: {
                 //历史记录是telegram_web_app访问，则隐藏
-                if(loginType === userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP){
+                if (loginType === userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP) {
                     setMenuShow(true);
                     setLeftSidebarOpen(false);
                 }
@@ -147,7 +166,7 @@ function HomePage(props) {
     useEffect(() => {
         // console.log(currentPhoneTab,'currentPhoneTab ===> ')
         currentPhoneTab = window.localStorage.getItem('phoneTab');
-        if(!currentPhoneTab){
+        if (!currentPhoneTab) {
             changePhoneTab('wallet');
         } else {
             changePhoneTab(currentPhoneTab);
@@ -251,12 +270,10 @@ function HomePage(props) {
                 scroll={isMobile ? 'normal' : 'content'}
             />
             {isMobile && <div >
-                <div class="containerMenu " style={{ position: "fixed", left: "0", right: "0", bottom: "0", zIndex: "999999", width: "100%", height: "60px ", margin: "0px auto", backgroundColor: "#171F29" }}>
+                <div className={clsx("containerMenu showMainBar", !isVisible && 'hideMainBar')} style={{ position: "fixed", left: "0", right: "0", zIndex: "999999", width: "100%", height: "60px ", margin: "0px auto", backgroundColor: "#171F29" }}>
                     {
                         !menuShow && <IconButton
-                            onClick={() => {
-                                setLeftSidebarOpen(true);
-                            }}
+                            onClick={() => { setLeftSidebarOpen(true); }}
                             aria-label="open left sidebar"
                             size="large"
                             style={{ maxWidth: "40px", marginLeft: "2rem", padding: "8px" }}

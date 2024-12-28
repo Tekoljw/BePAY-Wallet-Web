@@ -2305,6 +2305,14 @@ input[type='number'] {
     transition: all 0.25s;
 }
 
+.showMainBar {
+    bottom: 0;
+}
+
+.hideMainBar {
+    bottom: -60px !important;
+}
+
 .btnColorTitleBig {
     filter: brightness(1);
     transition: all 0.25s;
@@ -2793,8 +2801,6 @@ input[type='number'] {
     height: 6rem;
     border-radius: 1rem;
 }
-
-
 
 .cardBigBtn {
     min-height: 4.8rem !important;
