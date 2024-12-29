@@ -2,18 +2,26 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import React from "react";
 import { showMessage } from 'app/store/fuse/messageSlice';
 import {showServerErrorTips} from "../../util/tools/function";
+import { updateActivityInfos, updateActivityConfig, updateActivityControl, updateActivityInfosExpiredTime} from "../user/index";
 
 // 获取活动基础信息接口（赚钱页面）
 export const beingFiActivityInfo = createAsyncThunk(
     'activity/beingFiActivityInfo',
     async (settings, { dispatch, getState }) => {
+        const state = getState();
         settings = settings || {};
-
-        const resultData = await React.$apiGet("activity.beingFiActivityInfo", {});
-        if (resultData.errno === 0) {
-            return resultData
+        if (state.user.activityInfos && !settings.forceUpdate && state.user.activityInfosExpiredTime && state.user.activityInfosExpiredTime > new Date().getTime()) {
+            return state.user.activityInfos
         } else {
-            showServerErrorTips(dispatch, resultData);
+            const resultData = await React.$apiGet("activity.beingFiActivityInfo", {});
+            if (resultData.errno === 0) {
+                const expiredTime = new Date().getTime() + 3600 * 1000;
+                dispatch(updateActivityInfos(resultData));
+                dispatch(updateActivityInfosExpiredTime(expiredTime))
+                return resultData
+            } else {
+                showServerErrorTips(dispatch, resultData);
+            }   
         }
     }
 );
@@ -23,12 +31,17 @@ export const beingFiActivityControl = createAsyncThunk(
     'activity/beingFiActivityControl',
     async (settings, { dispatch, getState }) => {
         settings = settings || {};
-
-        const resultData = await React.$apiGet("activity.beingFiActivityControl", {});
-        if (resultData.errno === 0) {
-           return resultData
+        const state = getState();
+        if (state.user.activityControl && !settings.forceUpdate) {
+            return state.user.activityControl
         } else {
-            showServerErrorTips(dispatch, resultData);
+            const resultData = await React.$apiGet("activity.beingFiActivityControl", {});
+            if (resultData.errno === 0) {
+               dispatch(updateActivityControl(resultData));
+               return resultData
+            } else {
+                showServerErrorTips(dispatch, resultData);
+            }
         }
     }
 );
@@ -38,12 +51,17 @@ export const signInActivityConfig = createAsyncThunk(
     'activity/signInActivityConfig',
     async (settings, { dispatch, getState }) => {
         settings = settings || {};
-
-        const resultData = await React.$apiGet("activity.signInActivityConfig", {});
-        if (resultData.errno === 0) {
-            dispatch(showMessage({ message: 'success', code: 1 }));
+        const state = getState();
+        if (state.user.activityConfig && !settings.forceUpdate) {
+            return state.user.activityConfig
         } else {
-            showServerErrorTips(dispatch, resultData);
+            const resultData = await React.$apiGet("activity.signInActivityConfig", {});
+            if (resultData.errno === 0) {
+                dispatch(updateActivityConfig(resultData));
+                return resultData
+            } else {
+                showServerErrorTips(dispatch, resultData);
+            }
         }
     }
 );
@@ -56,7 +74,7 @@ export const signInActivityInfo = createAsyncThunk(
         
         const resultData = await React.$apiGet("activity.signInActivityInfo", {});
         if (resultData.errno === 0) {
-            dispatch(showMessage({ message: 'success', code: 1 }));
+            return resultData
         } else {
             showServerErrorTips(dispatch, resultData);
         }
@@ -71,7 +89,102 @@ export const signIn = createAsyncThunk(
         
         const resultData = await React.$api("activity.signIn", {});
         if (resultData.errno === 0) {
-            dispatch(showMessage({ message: 'success', code: 1 }));
+            return resultData
+        } else {
+            showServerErrorTips(dispatch, resultData);
+        }
+    }
+);
+
+// 获取转盘配置
+export const turnTableActivityConfig = createAsyncThunk(
+    'activity/turnTableActivityConfig',
+    async (settings, { dispatch, getState }) => {
+        settings = settings || {};
+
+        const resultData = await React.$apiGet("activity.turnTableActivityConfig", {});
+        if (resultData.errno === 0) {
+            return resultData
+        } else {
+            showServerErrorTips(dispatch, resultData);
+        }
+    }
+);
+
+// 获取转盘信息
+export const turnTableActivityInfo = createAsyncThunk(
+    'activity/turnTableActivityInfo',
+    async (settings, { dispatch, getState }) => {
+        settings = settings || {};
+        
+        const resultData = await React.$apiGet("activity.turnTableActivityInfo", {});
+        if (resultData.errno === 0) {
+            return resultData
+        } else {
+            showServerErrorTips(dispatch, resultData);
+        }
+    }
+);
+
+// 进行转动
+export const turntable = createAsyncThunk(
+    'activity/turntable',
+    async (settings, { dispatch, getState }) => {
+        settings = settings || {};
+        
+        const resultData = await React.$api("activity.turntable", {});
+        if (resultData.errno === 0) {
+            return resultData
+        } else {
+            showServerErrorTips(dispatch, resultData);
+        }
+    }
+);
+
+// 获取质押挖矿配置
+export const tokenPledgeActivityConfig = createAsyncThunk(
+    'activity/tokenPledgeActivityConfig',
+    async (settings, { dispatch, getState }) => {
+        settings = settings || {};
+
+        const resultData = await React.$apiGet("activity.tokenPledgeActivityConfig", {});
+        if (resultData.errno === 0) {
+            return resultData
+        } else {
+            showServerErrorTips(dispatch, resultData);
+        }
+    }
+);
+
+// 获取质押挖矿信息
+export const tokenPledgeActivityInfo = createAsyncThunk(
+    'activity/tokenPledgeActivityInfo',
+    async (settings, { dispatch, getState }) => {
+        settings = settings || {};
+        
+        const resultData = await React.$apiGet("activity.tokenPledgeActivityInfo", {});
+        if (resultData.errno === 0) {
+            return resultData
+        } else {
+            showServerErrorTips(dispatch, resultData);
+        }
+    }
+);
+
+// 质押挖矿
+export const pledge = createAsyncThunk(
+    'activity/pledge',
+    async (settings, { dispatch, getState }) => {
+        settings = settings || {};
+
+        let data = {
+            configId: settings.configId,
+            pledgeAmount: settings.pledgeAmount
+        }
+        
+        const resultData = await React.$api("activity.pledge", data);
+        if (resultData.errno === 0) {
+            return resultData
         } else {
             showServerErrorTips(dispatch, resultData);
         }

@@ -548,7 +548,7 @@ const locale = {
     card_193: "Cartão de Anúncio",
     card_194: "Cartão de Aquisição de Trabalho",
     card_195: "Copiado",
-    card_196: "PIN",
+    card_196: "1FA PIN",
     card_197: "Aguardem!",
     card_198: "Pode se inscrever a partir do continente da China",
     card_199: "Pode ser usado na China continental",
@@ -583,7 +583,7 @@ const locale = {
     kyc_54: "PIN antigo",
     kyc_55: "Endereço de e-mail inválido",
     kyc_56: "celular",
-    kyc_57: "Método de verificação",
+    kyc_57: "Verificação de segurança 2FA",
     Kyc_58: "O código do país ou o número de telefone não pode estar vazio",
     Kyc_59: "Enviar para",
     Kyc_60: "Ver no Google Authenticator",
@@ -843,6 +843,19 @@ const locale = {
     card_263:"Revisão bem-sucedida, ativos descongelados",
     card_264:"Falha na retirada, ativos congelados foram liberados",
     card_265:"Saldo",
+
+    earn_1:"código de convite",
+    earn_2:"Preencher o código de convite",
+    kyc_72: "PIN",
+
+
+    
+
+
+
+
+
+
 
 
 

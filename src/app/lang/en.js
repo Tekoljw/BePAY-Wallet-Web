@@ -79,6 +79,9 @@ const locale = {
     home_record_17: 'Volunteer UnStake',
     home_record_18: 'Task Code',
     home_record_19: 'operate',
+    home_record_20: 'Activity Reward',
+    home_record_21: 'Invite Rewards',
+    home_record_22: 'Collection Information',
 
     home_sendTips_1: 'Address',
     home_sendTips_2: 'Funi ID',
@@ -307,6 +310,7 @@ const locale = {
     reset_pass_4: 'New PassWord',
     reset_pass_5: 'Password (Confirm)',
     reset_pass_6: 'Reset your password',
+    reset_pass_7: 'Setting your password',
 
     home_Transaction: 'Transaction',
     home_PendingReview: 'Pending Review',
@@ -431,7 +435,7 @@ const locale = {
     card_58: "Cannot be used for transactions in mainland China.",
     card_59: "Passport,Contact information,Billing address,Personal photo",
     card_60: "Approximately three weeks",
-    card_61: "Insufficient balance",
+    card_61: "Insufficient available balance",
     card_62: "Your wallet balance is insufficient, please recharge",
     card_63: "Top up",
     card_64: "Align the QR code with the scanning frame",
@@ -493,13 +497,13 @@ const locale = {
     card_130: "Go to TOP.ONE start trading",
     card_131: "activate BeingFi card",
     card_132: "Check in every 7 days to accumulate and receive corresponding rewards",
-    card_133: "Monday",
-    card_134: "Tuesday",
-    card_135: "Wednesday",
-    card_136: "Thursday",
-    card_137: "Friday",
-    card_138: "Saturday",
-    card_139: "Sunday",
+    card_133: "1day",
+    card_134: "2day",
+    card_135: "3day",
+    card_136: "4day",
+    card_137: "5day",
+    card_138: "6day",
+    card_139: "7day",
     card_140: "January",
     card_141: "February",
     card_142: "March",
@@ -559,7 +563,7 @@ const locale = {
     card_193: "Advertisement Card",
     card_194: "Job Procurement Card",
     card_195: "Copied",
-    card_196: "PIN",
+    card_196: "1FA PIN",
     card_197: "Comingsoon!",
     card_198: "Applications can be made from mainland China",
     card_199: "Can be used in mainland China",
@@ -593,7 +597,7 @@ const locale = {
     kyc_54: "Old PIN",
     kyc_55: "Invalid email address",
     kyc_56: "phone",
-    kyc_57: "Select Verification method",
+    kyc_57: "2FA Security Verification",
     Kyc_58: "nationCode or phone cannot empty",
     Kyc_59: "Send to",
     Kyc_60: "View in Google Authenticator",
@@ -718,6 +722,7 @@ const locale = {
     server_error_11212: "User's old payment password is incorrect",
     server_error_11213: "User failed to update payment password",
     server_error_11214: "User registration failed",
+    server_error_11221: 'he verification code has been sent, please wait 5 minutes and try again',
     server_error_12003: "Invalid virtual currency code",
     server_error_12004: "Smart network unavailable or invalid",
     server_error_12005: "Failed to get withdrawal fee configuration",
@@ -772,7 +777,7 @@ const locale = {
     server_error_18003: "Failed to save referral code",
     server_error_19001: "Failed to transfer fiat currency to game",
     server_error_19002: "Failed to transfer virtual currency to game",
-    server_error_20001: "Insufficient original currency balance for exchange",
+    server_error_20001: "Insufficient available balance",
     server_error_20002: "Invalid exchange amount",
     server_error_20003: "Unsupported swap trading pair",
     server_error_20004: "Invalid swap order ID",
@@ -834,7 +839,7 @@ const locale = {
     kyc_69:"Address2",
     kyc_70:"Address3",
     kyc_71:"Example",
-
+    kyc_72: "Your mobile phone number is incorrect",
 
     card_256:"Please ensure that your KYC information is correct and select the address you have applied for.",
     card_257:"Modify KYC Information",
@@ -846,6 +851,20 @@ const locale = {
     card_263:"Review successful, frozen assets have been released",
     card_264:"Withdrawal failed, frozen assets have been released",
     card_265:"Frozen Balance",
+
+    earn_1:"Invitation code",
+    earn_2:"Enter referral code",
+    kyc_72: "PIN",
+
+
+    
+
+
+
+
+
+
+
 
 
 

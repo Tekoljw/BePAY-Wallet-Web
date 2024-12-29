@@ -156,6 +156,10 @@ import FuseSvgIcon from '../FuseSvgIcon';
 import LinearProgress, { LinearProgressProps } from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
 import LiinearPro from '../LinearPro/LiinearPro';
+import { height } from '@mui/system';
+
+
+
 
 const StyledSnackbar = styled(Snackbar)(({ theme, variant }) => ({
   '& .FuseMessage-content': {
@@ -187,11 +191,13 @@ function LinearProgressWithLabel(props) {
     <Box className='' sx={{ display: 'flex', marginTop: "-5px", justifyContent: "center", alignItems: 'center' }}>
       <Box sx={{ width: '96%' }}>
         {/* <LinearProgress variant="determinate" {...props} /> */}
-        <LiinearPro/>
+        <LiinearPro />
       </Box>
     </Box>
   );
 }
+
+
 
 
 const variantIcon = {
@@ -206,6 +212,9 @@ function FuseMessage(props) {
   const state = useSelector(selectFuseMessageState);
   const options = useSelector(selectFuseMessageOptions);
   const [progress, setProgress] = useState(100);
+
+
+
 
   // const ref = useRef(0);
   // useEffect(() => {
@@ -229,7 +238,7 @@ function FuseMessage(props) {
   //       //   }
   //       // });
   //     }, 100);
-     
+
   //     return () => {
   //       ref.current = 100;
   //       clearInterval(timer);
@@ -239,7 +248,7 @@ function FuseMessage(props) {
   //   // if(options.code==2){
   //   //   setProgress(100)
   //   // }
-    
+
   // });
   const ref = useRef(0);
   // useEffect(() => {
@@ -277,39 +286,29 @@ function FuseMessage(props) {
           },
         }}
       >
-        <div>
+        <div style={{ maxWidth: "100%" }}>
           <SnackbarContent className="FuseMessage-content messageBgColor "
             message={
-              <div className="flex items-center ">
-                {/* {options.code === 1 && <img className='w-24 h-24' src="wallet/assets/images/index/success.png"></img>}
-                {options.code === 2 && <img className='w-24 h-24' src="wallet/assets/images/index/error.png"></img>}
-                {options.code === 3 && <img className='w-24 h-24' src="wallet/assets/images/index/tanHao.png"></img>} */}
-                  {options.code === 1 && <img className='w-24 h-24' src="wallet/assets/images/menu/success.png"></img>}
-                 {options.code === 2 && <img className='w-24 h-24' src="wallet/assets/images/menu/error.png"></img>}
+              <div className="flex items-center" style={{}}  >
+
+                {options.code === 1 && <img className='w-24 h-24' src="wallet/assets/images/menu/success.png"></img>}
+                {options.code === 2 && <img className='w-24 h-24' src="wallet/assets/images/menu/error.png"></img>}
                 {options.code === 3 && <img className='w-24 h-24' src="wallet/assets/images/menu/tanHao.png"></img>}
-                {(options.code === undefined || options.code === null) && <img className='w-24 h-24' src="wallet/assets/images/menu/tanHao.png"></img>}
-                {variantIcon[options.variant] && (
-                  <FuseSvgIcon color="inherit">{variantIcon[options.variant]}</FuseSvgIcon>
-                )}
-                <Typography className="mx-8">{options.message}</Typography>
-                {/* <Typography className="mx-8">Successfully logged in</Typography> */}
+
+                <Typography className="" style={{ maxWidth: "240px", minWidth: "240px", minHeight: "24px", wordWrap: "break-word", marginLeft: "10px", marginRight: "10px" }} >{options.message}</Typography>
+
+                <FuseSvgIcon
+                  onClick={() => dispatch(hideMessage())}
+                  style={{ zIndex: "999" }}
+                >heroicons-outline:x</FuseSvgIcon>
+
               </div>
             }
-            action={[
-              <IconButton
-                key="close"
-                aria-label="Close"
-                color="inherit"
-                onClick={() => dispatch(hideMessage())}
-                size="large"
-                style={{ zIndex: "999" }}
-              >
-                <FuseSvgIcon>heroicons-outline:x</FuseSvgIcon>
-              </IconButton>,
-            ]}
+
           />
-            {options.code==1?<LiinearPro  mbck="#14C2A3"/>:options.code==2?<LiinearPro  mbck="#EE124B"/>:<LiinearPro  mbck="#14C2A3"/>}
-           {/* <LinearProgressWithLabel value={progress} /> */}
+          <div>
+            {options.code == 1 ? <LiinearPro mbck="#14C2A3" /> : options.code == 2 ? <LiinearPro mbck="#EE124B" /> : <LiinearPro mbck="#14C2A3" />}
+          </div>
         </div>
 
       </StyledSnackbar>

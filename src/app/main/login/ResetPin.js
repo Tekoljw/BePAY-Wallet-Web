@@ -29,6 +29,7 @@ import history from "../../../@history/@history";
 import { sendEmail, sendSms, bindPhone, bindEmail } from "../../store/user/userThunk";
 import { styled, FormHelperText } from "@mui/material";
 import { selectUserData } from "../../store/user";
+import { getIPExtendInfo } from "app/store/config/configThunk";
 
 const container = {
     show: {
@@ -91,6 +92,110 @@ function ResetPin(props) {
     const [time, setTime] = useState(null);
     const timeRef = useRef();
 
+    const [tmpCode, setTmpCode] = useState('');
+    const [dataPage, setDataPage] = useState(1);
+    const [selectPhoneCode, setSelectPhoneCode] = useState([]);
+    const [searchPhoneCode, setSearchPhoneCode] = useState([]);
+
+    const inputRef5 = useRef(null);
+    const inputRef6 = useRef(null);
+    const inputRef7 = useRef(null);
+    const inputRef8 = useRef(null);
+    const inputRef9 = useRef(null);
+    const inputRef10 = useRef(null);
+
+
+    const handleFocus5 = () => {
+        setTimeout(() => {
+            inputRef5.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
+    };
+
+    const handleFocus6 = () => {
+        setTimeout(() => {
+            inputRef6.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
+    };
+
+    const handleFocus7 = () => {
+        setTimeout(() => {
+            inputRef7.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
+    };
+
+
+    const handleFocus8 = () => {
+        setTimeout(() => {
+            inputRef8.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
+    };
+
+    const handleFocus9 = () => {
+        setTimeout(() => {
+            inputRef9.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
+    };
+
+    const handleFocus10 = () => {
+        setTimeout(() => {
+            inputRef10.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
+    };
+
+    const pagePhoneCodeList = (page = 1, isSearch = true) => {
+        if (page <= dataPage && page !== 1) {
+            return
+        }
+        let tmpSelectData = [];
+        let startKey = 0;
+        let endKey = page === 1 ? 23 : (page + 1) * 23;
+        if (searchPhoneCode.length > 0) {
+            tmpSelectData = searchPhoneCode.slice(startKey, endKey)
+        } else {
+            tmpSelectData = phoneCode.list.slice(startKey, endKey)
+        }
+
+        function objHeavy(arr) {
+            let arr1 = []; //存id
+            let newArr = []; //存新数组
+            for (let i in arr) {
+                if (arr1.indexOf(arr[i].phone_code) == -1) {
+                    arr1.push(arr[i].phone_code);
+                    newArr.push(arr[i]);
+                }
+            }
+            return newArr;
+        }
+
+        // let tmpSelectPhoneCode = [...selectPhoneCode];
+        let tmpSelectPhoneCode = [];
+        tmpSelectPhoneCode.push(...tmpSelectData);
+        setDataPage(page);
+        // setSelectPhoneCode(objHeavy(tmpSelectPhoneCode));
+        setSelectPhoneCode(tmpSelectPhoneCode);
+        // setTimeout(() => {
+        //     document.getElementById("phoneCode-listbox").scrollTop = 30 * (page - 1) * 10;
+        // }, 500)
+    };
+
     //倒计时
     useEffect(() => {
         if (time && time !== 0)
@@ -103,6 +208,43 @@ function ResetPin(props) {
         }
     }, [time]);
 
+    useEffect(() => {
+        const getPhoneCode = async () => {
+            // const service = axios.create({
+            //     timeout: 50000, // request timeout
+            // });
+            // var post = {
+            //     url: `${domain.FUNIBET_API_DOMAIN}/gamecenter/getIPExtendInfo`,
+            //     method: 'post',
+            //     async: true
+            // };
+
+
+            let res = dispatch(getIPExtendInfo()).then((res) => {
+                let result = res.payload
+                if (result.queryCountry) {
+                    let countryText = result.queryCountry;
+                    if (countryText) {
+                        phoneCode.list.map((item) => {
+                            if (item.chinese_name === countryText) {
+                                setTmpCode(item.phone_code);
+                                return
+                            }
+                        })
+                    }
+                }
+            });
+        };
+        getPhoneCode();
+    }, []);
+
+    useEffect(() => {
+        inputVal2.nationCode = tmpCode;
+    }, [tmpCode]);
+
+    useEffect(() => {
+        pagePhoneCodeList(1, true);
+    }, [tmpPhoneCode]);
 
     async function sendCode() {
         if (userData?.profile?.user?.bindEmail === true) {
@@ -137,7 +279,7 @@ function ResetPin(props) {
                     setTime(60)
                 }
             } else {
-                dispatch(showMessage({ message: t('Kyc_58'), code: 2 }));
+                dispatch(showMessage({ message: t('kyc_72'), code: 2 }));
             }
         } else {
             dispatch(showMessage({ message: t('Kyc_63'), code: 3 }));
@@ -514,6 +656,8 @@ function ResetPin(props) {
                                     className="mb-24"
                                     label={t('kyc_53')}
                                     type="password"
+                                    ref={inputRef5}
+                                    onFocus={handleFocus5}
                                     error={!!errors.passwordConfirm}
                                     helperText={errors?.passwordConfirm?.message}
                                     variant="outlined"
@@ -550,7 +694,7 @@ function ResetPin(props) {
                     </form>}
 
                 {resetTabValue === 1 &&
-                    <div>
+                    <div className=''>
                         <div className="mt-20"> {t('kyc_57')} </div>
                         <div className='mt-10'>
                             <div
@@ -594,6 +738,7 @@ function ResetPin(props) {
                                                                 {time <= 0 && <IconButton
                                                                     aria-label="toggle password visibility"
                                                                     onClick={sendCode}
+                                                                    className='txtSend'
                                                                     edge="end"
                                                                     sx={{
                                                                         fontSize: '1.4rem',
@@ -618,6 +763,8 @@ function ResetPin(props) {
                                                             label="smsCode"
                                                             value={inputVal.smsCode}
                                                             onChange={handleChangeInputVal2('smsCode')}
+                                                            ref={inputRef6}
+                                                            onFocus={handleFocus6}
                                                             aria-describedby="outlined-weight-helper-text"
                                                             inputProps={{
                                                                 'aria-label': 'smsCode',
@@ -639,6 +786,8 @@ function ResetPin(props) {
                                                             id="outlined-adornment-address"
                                                             label="password"
                                                             value={inputVal.password}
+                                                            ref={inputRef7}
+                                                            onFocus={handleFocus7}
                                                             onChange={handleChangeInputVal3('password')}
                                                             aria-describedby="outlined-weight-helper-text"
                                                             type="password"
@@ -722,15 +871,38 @@ function ResetPin(props) {
                                             <div className="flex flex-col justify-center w-full mt-32"  >
 
                                                 <Controller
+                                                    className='fontStyle'
                                                     name="nationCode"
                                                     control={control}
                                                     render={({ field }) => (
                                                         <Autocomplete
+                                                            id="phoneCode"
+                                                            onHighlightChange={(event, option) => {
+                                                                if (option?.english_name) {
+                                                                    if (selectPhoneCode.length > 0) {
+                                                                        var key = selectPhoneCode.findIndex(item => item.english_name === option.english_name);
+                                                                        if ((key + 1) % 23 === 0) {
+                                                                            var page = ((key + 1) / 23) + 1;
+                                                                            pagePhoneCodeList(page, false)
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }}
+                                                            // disablePortal
                                                             className="mb-24"
-                                                            options={phoneCode.list}
+                                                            // options={phoneCode.list}
+                                                            options={selectPhoneCode}
                                                             autoHighlight
                                                             onInputChange={(event, newInputValue) => {
-                                                                setTmpPhoneCode(newInputValue.replace(/\+/g, ""));
+                                                                let tmpPhoneCodeText = newInputValue.replace(/\+/g, "")
+                                                                let tmpSearchData = [];
+                                                                phoneCode.list.map((item) => {
+                                                                    if (item.phone_code.match(tmpPhoneCodeText) || item.country_code.match(tmpPhoneCodeText.toUpperCase()) || item.local_name.match(tmpPhoneCodeText.toUpperCase())) {
+                                                                        tmpSearchData.push(item)
+                                                                    }
+                                                                });
+                                                                setTmpPhoneCode(tmpPhoneCodeText);
+                                                                setSearchPhoneCode(tmpSearchData);
                                                             }}
                                                             filterOptions={(options) => {
                                                                 const reg = new RegExp(tmpPhoneCode, 'i');
@@ -741,10 +913,12 @@ function ResetPin(props) {
                                                             }}
                                                             onChange={(res, option) => {
                                                                 if (option) {
-                                                                    inputVal2.nationCode = option.phone_code
+                                                                    inputVal2.nationCode = option.phone_code;
+                                                                    setTmpCode(option.phone_code)
                                                                 }
                                                             }}
-                                                            getOptionLabel={(option) => { return inputVal2.nationCode }}
+                                                            value={inputVal2.nationCode}
+                                                            getOptionLabel={(option) => { return '+' + tmpCode }}
                                                             renderOption={(props, option) => (
                                                                 <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
                                                                     <img
@@ -758,6 +932,8 @@ function ResetPin(props) {
                                                             )}
                                                             renderInput={(params) => (
                                                                 <TextField
+                                                                    className='fontStyle'
+                                                                    id="test-b"
                                                                     {...params}
                                                                     label={t('signIn_6')}
                                                                     inputProps={{
@@ -777,6 +953,8 @@ function ResetPin(props) {
                                                         label="phone"
                                                         value={inputVal2.phone}
                                                         onChange={handleChangeInputVal5('phone')}
+                                                        ref={inputRef8}
+                                                        onFocus={handleFocus8}
                                                         aria-describedby="outlined-weight-helper-text"
                                                         inputProps={{
                                                             'aria-label': 'phone',
@@ -790,6 +968,7 @@ function ResetPin(props) {
                                                                 {time <= 0 && <IconButton
                                                                     aria-label="toggle password visibility"
                                                                     onClick={sendPhoneCode}
+                                                                    className='txtSend'
                                                                     edge="end"
                                                                     sx={{
                                                                         fontSize: '1.4rem',
@@ -812,6 +991,8 @@ function ResetPin(props) {
                                                             id="outlined-adornment-address"
                                                             label="smsCode"
                                                             value={inputVal2.smsCode}
+                                                            ref={inputRef9}
+                                                            onFocus={handleFocus9}
                                                             onChange={handleChangeInputVal6('smsCode')}
                                                             aria-describedby="outlined-weight-helper-text"
                                                             inputProps={{
@@ -834,6 +1015,8 @@ function ResetPin(props) {
                                                             id="outlined-adornment-address"
                                                             label="password"
                                                             value={inputVal2.password}
+                                                            ref={inputRef10}
+                                                            onFocus={handleFocus10}
                                                             onChange={handleChangeInputVal7('password')}
                                                             aria-describedby="outlined-weight-helper-text"
                                                             type="password"
@@ -899,13 +1082,12 @@ function ResetPin(props) {
                                                     {t('kyc_50')}
                                                 </Button>
                                             </div>
-
-
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         }
+                        <div style={{ height: "80px" }}></div>
                     </div>
                 }
             </div>

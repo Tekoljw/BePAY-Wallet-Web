@@ -420,7 +420,7 @@ const locale = {
     card_58: "中國大陸無法消費",
     card_59: "護照、聯繫方式、賬單地址、個人照片",
     card_60: "三週左右",
-    card_61: "餘額不足",
+    card_61: "用戶可用餘額不足",
     card_62: "您的錢包餘額不足，請前往充值",
     card_63: "充值",
     card_64: "將二維碼與掃描框對齊",
@@ -547,7 +547,7 @@ const locale = {
     card_193: "廣告投放卡",
     card_194: "工作採購卡",
     card_195: "已複製",
-    card_196: "PIN",
+    card_196: "1FA PIN",
     card_197: "Veuillez patienter!",
     card_198: "中國大陸可以申請",
     card_199: "中國大陸可以使用",
@@ -582,7 +582,7 @@ const locale = {
     kyc_54:"舊PIN",
     kyc_55: "無效的電子郵件地址",
     kyc_56: "手機",
-    kyc_57: "選擇驗證方式",
+    kyc_57: "2FA 安全驗證",
     Kyc_58:"國家代碼或手機號碼不能為空",
     Kyc_59:"發送至",
     Kyc_60:"在Google Authenticator中查看",
@@ -768,7 +768,7 @@ const locale = {
     server_error_18003:"保存邀請碼失敗",
     server_error_19001:"轉賬法幣到遊戲失敗",
     server_error_19002:"轉賬虛擬幣到遊戲失敗",
-    server_error_20001:"兌換的原幣種余額不足",
+    server_error_20001:"用戶可用餘額不足",
     server_error_20002:"無效的兌換金額",
     server_error_20003:"不支持的swap交易對",
     server_error_20004:"swap訂單Id無效",
@@ -844,6 +844,20 @@ const locale = {
     card_263:"審核成功，凍結資產已解除",
     card_264:"提幣失敗，凍結資產已解除",
     card_265:"凍結餘額",
+
+    earn_1:"邀請碼",
+    earn_2:"填寫邀請碼",
+    kyc_72: "PIN",
+
+
+    
+
+
+
+
+
+
+
 
 
 

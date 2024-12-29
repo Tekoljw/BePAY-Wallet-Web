@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import { TextareaAutosize } from '@mui/base';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import { useNavigate } from 'react-router-dom';
@@ -165,6 +166,7 @@ function Withdraw(props) {
         address: '',
         amount: '',
         showAmount: 0.00,
+        addressTwo: '',
     });
     const [withdrawConfig, setWithdrawConfig] = useState({});
     const [walletName, setWalletName] = useState('');
@@ -180,6 +182,7 @@ function Withdraw(props) {
     const [openSuccess, setOpenSuccess] = useState(true);
     const [isOkTijiao, setIsOkTijiao] = useState(false);
     const [divHeight, setDivHeight] = useState(0);
+    const divRef = useRef(null);
     const [currRequestId, setCurrRequestId] = useState(0);
     const [isLoadingBtn, setIsLoadingBtn] = useState(false);
     const [zhuanQuan, setZhuanQuan] = useState(true);
@@ -191,9 +194,38 @@ function Withdraw(props) {
     const handleChangeInputVal = (prop, value) => (event) => {
         setInputVal({ ...inputVal, [prop]: event.target.value });
         if (prop == 'amount' && event.target.value != '' && event.target.value != 0) {
-            console.log(networkId, 'networkId')
             evalFee2(networkId, symbol, event.target.value, inputVal.address);
         }
+    };
+    const inputRef5 = useRef(null);
+    const inputRef6 = useRef(null);
+    const inputRef7 = useRef(null);
+
+    const handleFocus5 = () => {
+        setTimeout(() => {
+            inputRef5.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
+    };
+
+    const handleFocus6 = () => {
+        setTimeout(() => {
+            inputRef6.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
+    };
+
+    const handleFocus7 = () => {
+        setTimeout(() => {
+            inputRef7.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
     };
 
     const [showGuangBiao, setShowGuangBiao] = useState(false);
@@ -434,7 +466,7 @@ function Withdraw(props) {
                     setTiJiaoState(1);
                     setWithDrawOrderID(result.data);
                 }, 1200);
-                dispatch(centerGetTokenBalanceList({forceUpdate: true}));
+                dispatch(centerGetTokenBalanceList({ forceUpdate: true }));
             } else if (result.errno === -2) { //需要google验证
                 setTwiceVerifyType(0);
                 setTypeBined(hasAuthEmail ? true : false);
@@ -533,7 +565,7 @@ function Withdraw(props) {
                 setTimeout(() => {
                     setZhuanQuan(false);
                     setTiJiaoState(1);
-                    dispatch(centerGetTokenBalanceList({ forceUpdate: true}));
+                    dispatch(centerGetTokenBalanceList({ forceUpdate: true }));
                 }, 1200);
             } else if (resData.errno === -2) {
                 setTwiceVerifyType(0);
@@ -586,6 +618,17 @@ function Withdraw(props) {
         setTransferState(transferStats);
     }, [transferStats]);
 
+
+    const truncateString = (str, length) => {
+        if (str.length <= length * 2) {
+            return str; // 如果字符串长度不够前后截取的要求，则直接返回
+        }
+        const start = str.slice(0, length); // 获取前 n 个字符
+        const end = str.slice(-length); // 获取后 n 个字符
+        return `${start}...${end}`; // 拼接结果
+    };
+
+
     const startScanQRCode = () => {
         openScan((result, err) => {
             if (result && result.text && result.text.length > 0) {
@@ -613,7 +656,6 @@ function Withdraw(props) {
 
     const evalFee = (coinName, networkId, priceLevel) => {
         let decimals = (arrayLookup(symbolsData, 'symbol', coinName, 'decimals') || 18) - 4;
-        console.log('decimals', decimals)
         dispatch(evalTokenTransferFee({
             coinName: coinName,
             networkId: networkId,
@@ -630,9 +672,17 @@ function Withdraw(props) {
             setFee(fee);
         });
     };
-    
+
 
     const evalFee2 = (networkId, coinName, amount, address) => {
+        if (smallTabValue === 1) {
+            if (Number(amount) > Number(arrayLookup(symbolWallet, 'symbol', symbol, 'balance'))) {
+                setIsOkTijiao(true)
+            } else {
+                setIsOkTijiao(false)
+            }
+            return
+        }
         let usdtGass = userData?.wallet?.inner?.find(item => Object.values(item).includes("USDT"));
         dispatch(cryptoWithdrawFee({
             networkId: networkId,
@@ -671,26 +721,26 @@ function Withdraw(props) {
         });
     };
     useEffect(() => {
-        // setLoadingShow(true)
+        setLoadingShow(true)
         setPhoneTab('withdraw');
         editOrQueryHistoryAddress();
     }, []);
 
     const editOrQueryHistoryAddress = (objTab) => {
         const data = {
-            withdrawalType: (!_.isUndefined(objTab))? ((objTab.smallTabValue === 0) ? 'external' : 'internal') : smallTabValue === 0 ? 'external': 'internal',
-            currencyType: (!_.isUndefined(objTab)) ? ( (objTab.tabValue === 0) ? 'crypto' : 'fiat' ) : tabValue === cryptoSelect ? 'crypto' : 'fiat'
+            withdrawalType: (!_.isUndefined(objTab)) ? ((objTab.smallTabValue === 0) ? 'external' : 'internal') : smallTabValue === 0 ? 'external' : 'internal',
+            currencyType: (!_.isUndefined(objTab)) ? ((objTab.tabValue === 0) ? 'crypto' : 'fiat') : tabValue === cryptoSelect ? 'crypto' : 'fiat'
         }
-        if(objTab && objTab.editId && objTab.note){
+        if (objTab && objTab.editId && objTab.note) {
             data.editId = objTab.editId
             data.note = objTab.note
         }
         dispatch(editOrQueryWithdrawalHistoryInfo(data)).then((res) => {
-            // setLoadingShow(false)
+            setLoadingShow(false)
             if (res.payload?.data?.length > 0) {
                 setHistoryAddress(res.payload.data);
                 setHistoryAddressBak(res.payload.data);
-            }else {
+            } else {
                 setHistoryAddress([])
                 setHistoryAddressBak();
             }
@@ -793,7 +843,7 @@ function Withdraw(props) {
     }, [cryptoDisplayData, symbolsData, networks, walletData]);
 
     useEffect(() => {
-        if(canLoginAfterRequest(userData)) { //已经进行过登录流程了
+        if (canLoginAfterRequest(userData)) { //已经进行过登录流程了
             dispatch(getCryptoDisplay()).then((res) => {
                 let result = res.payload;
                 setCryptoDisplayData(result?.data);
@@ -882,7 +932,7 @@ function Withdraw(props) {
     // 输入PIN Page
     const openInputPin = () => {
         setTimeout(() => {
-            applyMiddleEllipsis(document.getElementById('AddressText'), 32);
+            applyMiddleEllipsis(document.getElementById('AddressText'), 22);
         }, 100);
         setPin('')
         setOpenPinWindow(true)
@@ -935,12 +985,12 @@ function Withdraw(props) {
         if (tabValue === cryptoSelect) {
             setOpenYanZheng(false);
             setOpenGoogleCode(true);
-            dispatch(userProfile({ forceUpdate: true}));
+            dispatch(userProfile({ forceUpdate: true }));
             setTypeBined(true);
         } else if (tabValue === fiatSelect) {
             setOpenYanZheng(false);
             setFiatVerifiedAuth(true);
-            dispatch(userProfile({ forceUpdate: true}));
+            dispatch(userProfile({ forceUpdate: true }));
             setTypeBined(true);
         }
     }
@@ -1077,7 +1127,7 @@ function Withdraw(props) {
     const backPageEvt = () => {
         setOpenBindPhone(false)
         setOpenBindEmail(false);
-        dispatch(userProfile({ forceUpdate: true}));
+        dispatch(userProfile({ forceUpdate: true }));
         setTypeBined(true);
         myFunction;
         setOpenGoogleCode(true);
@@ -1112,7 +1162,7 @@ function Withdraw(props) {
 
                 if ((editData.editMode === true || isBlur) && historyAddressBak[index].note != item.note) {
                     dispatch(editOrQueryWithdrawalHistoryInfo({
-                       withdrawalType: smallTabValue === 0 ? 'external': 'internal',
+                        withdrawalType: smallTabValue === 0 ? 'external' : 'internal',
                         currencyType: tabValue === cryptoSelect ? 'crypto' : 'fiat',
                         editId: item.id,
                         note: item.note
@@ -1142,7 +1192,7 @@ function Withdraw(props) {
                             value={tabValue}
                             onChange={(ev, value) => {
                                 setTabValue(value)
-                                editOrQueryHistoryAddress({tabValue: value, smallTabValue: smallTabValue})
+                                editOrQueryHistoryAddress({ tabValue: value, smallTabValue: smallTabValue })
                             }}
                             indicatorColor="secondary"
                             textColor="inherit"
@@ -1256,7 +1306,7 @@ function Withdraw(props) {
                                         value={smallTabValue}
                                         onChange={(ev, value) => {
                                             setSmallTabValue(value);
-                                            editOrQueryHistoryAddress({tabValue: tabValue, smallTabValue: value});
+                                            editOrQueryHistoryAddress({ tabValue: tabValue, smallTabValue: value });
                                         }}
                                         indicatorColor="secondary"
                                         textColor="inherit"
@@ -1279,7 +1329,7 @@ function Withdraw(props) {
                                     >
                                         {Object.entries([t('card_8'), t('card_7')]).map(([key, label]) => (
                                             <Tab
-                                                className="text-16 font-semibold min-h-32 min-w-60 mx4 px-12 txtColorTitle opacity-100 zindex"
+                                                className="text-16 min-h-32 min-w-60 mx4 px-12 txtColorTitle opacity-100 zindex"
                                                 disableRipple
                                                 key={key}
                                                 label={label}
@@ -1293,15 +1343,14 @@ function Withdraw(props) {
                                     {
                                         smallTabValue === 0 && <div className="px-10 ">
                                             <div className="flex items-center justify-between">
-                                                <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
-                                                    <OutlinedInput
+                                                <FormControl className='addressShuoDuan' sx={{ width: '100%', borderRadius: "6px", borderColor: '#94A3B8', backgroundColor: "#151C2A" }} variant="outlined">
+                                                    <TextareaAutosize
                                                         id="outlined-adornment-address send-tips-container-address"
+                                                        ref={inputRef5}
+                                                        onFocus={handleFocus5}
                                                         value={inputVal.address}
                                                         onChange={handleChangeInputVal('address')}
                                                         aria-describedby="outlined-weight-helper-text"
-                                                        inputProps={{
-                                                            'aria-label': 'address',
-                                                        }}
                                                     />
                                                     <div className='flex pasteSty  items-center'>
                                                         <img className='pasteJianTou' src="wallet/assets/images/withdraw/pasteJianTou.png" alt="" onClick={() => {
@@ -1326,20 +1375,17 @@ function Withdraw(props) {
                                             <Typography className="text-16 cursor-pointer mt-16">
                                                 {t('home_withdraw_3')}
                                             </Typography>
-                                            <div className="flex items-start py-16 justify-between" style={{}}>
+                                            <div className="flex items-start py-16 justify-between " style={{}}>
                                                 <FormControl sx={{ width: '80%', borderColor: '#94A3B8' }} variant="outlined">
                                                     <TextField
+                                                        className='yuEShuRu'
                                                         error={ismore(inputVal.amount)}
                                                         helperText={ismore(inputVal.amount) ? t('home_deposite_28') : ''}
-                                                        step="0.000001"
                                                         id="outlined-adornment-address send-tips-container-amount"
                                                         value={inputVal.amount}
+                                                        ref={inputRef6}
+                                                        onFocus={handleFocus6}
                                                         onChange={handleChangeInputVal('amount')}
-                                                        endAdornment={<InputAdornment position="end">
-                                                            <Typography className="text-16 font-medium cursor-pointer color-2DD4BF">
-                                                                {t('home_withdraw_5')}
-                                                            </Typography>
-                                                        </InputAdornment>}
                                                         aria-describedby="outlined-weight-helper-text"
                                                         inputProps={{
                                                             'aria-label': 'amount',
@@ -1367,8 +1413,8 @@ function Withdraw(props) {
                                             </div>
                                             {/* <div>{t('card_223')} {Math.max(0, Number(inputVal.amount) - Number(fee))} {symbol}</div> */}
                                             <div className="flex items-center justify-between mb-16" >
-                                                <Typography className="text-16 cursor-pointer">
-                                                    <p style={{ fontSize: '1.3rem' }}> {t('home_withdraw_7')}: {tokenFee}  {symbol}</p>
+                                                <Typography className="cursor-pointer">
+                                                    <p> {t('home_withdraw_7')}: {tokenFee}  {symbol}</p>
                                                 </Typography>
 
                                                 {/* <Typography
@@ -1396,7 +1442,7 @@ function Withdraw(props) {
                                                     borderRadius: '8px'
                                                 }}
                                             >
-                                                <Typography className="text-14 px-16">
+                                                <Typography className="text-14 px-10">
                                                     <span style={{ color: '#FCE100' }}>⚠</span> {t('home_withdraw_15')}{TransactionFee}  USDT{t('home_withdraw_16')}{t('home_withdraw_17')}
                                                 </Typography>
                                             </Box>
@@ -1426,6 +1472,8 @@ function Withdraw(props) {
                                                     <OutlinedInput
                                                         id="outlined-adornment-address send-tips-container-address"
                                                         value={inputIDVal}
+                                                        ref={inputRef7}
+                                                        onFocus={handleFocus7}
                                                         onChange={handleChangeInputVal2}
                                                         aria-describedby="outlined-weight-helper-text"
                                                     />
@@ -1451,8 +1499,8 @@ function Withdraw(props) {
                                             <Typography className="text-16 cursor-pointer mt-16" >
                                                 {t('home_withdraw_3')}
                                             </Typography>
-                                            
-                                            <div className="flex items-start justify-between" style={{ paddingTop: "1.6rem", paddingBottom: "0.5rem" }}>
+
+                                            <div className="flex items-start justify-between " style={{ paddingTop: "1.6rem", paddingBottom: "0.5rem" }}>
                                                 <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
                                                     <TextField
                                                         error={ismore(inputVal.amount)}
@@ -1461,6 +1509,7 @@ function Withdraw(props) {
                                                         id="outlined-adornment-address send-tips-container-amount"
                                                         value={inputVal.amount}
                                                         onChange={handleChangeInputVal('amount')}
+                                                        className='yuEShuRu'
                                                         endAdornment={<InputAdornment position="end">
                                                             <Typography className="text-16 font-medium cursor-pointer color-2DD4BF">
                                                                 {t('home_withdraw_5')}
@@ -1475,17 +1524,11 @@ function Withdraw(props) {
                                                     />
                                                 </FormControl>
                                             </div>
-
-                                            <div className="flex items-center mb-20 justify-content-start " style={{}}>
-                                                {/* <Checkbox defaultChecked /> */}
-                                                {/* <Typography style={{ fontSize: '1.4rem' }}>
-                                                {t('home_sendTips_8')}
-                                            </Typography> */}
-                                                <div className='mt-4'><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8", fontSize: "1.3rem" }}>{t('card_177')}</span></div>
+                                            <div className="flex items-center mb-20 justify-content-start ">
+                                                <div className='mt-8'><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8" }}>{t('card_177')}</span></div>
                                             </div>
-
                                             <LoadingButton
-                                                disabled={openPinWindow}
+                                                disabled={isOkTijiao}
                                                 className={clsx('px-48 m-28 btnColorTitleBig loadingBtnSty')}
                                                 color="secondary"
                                                 loading={openPinWindow}
@@ -1966,7 +2009,11 @@ function Withdraw(props) {
                                         closePinFunc();
                                     }} />
                                 </div>
-                                <div id="AddressText" className='py-4' style={{ fontSize: smallTabValue == 0 ? "16px" : "20px", textAlign: "center", margin: "0 auto", color: "#909FB4", width: "100%", overflow: "hidden", whiteSpace: "nowrap" }}>{smallTabValue == 0 ? "Address" : "UserID"}  {smallTabValue == 0 ? inputVal.address : inputIDVal} </div>
+                                <div className='py-4  flex justify-center' style={{ fontSize: smallTabValue == 0 ? "16px" : "20px", textAlign: "center", margin: "0 auto", width: "100%" }}>
+                                    <div style={{ color: "#5E687A", marginRight: "10px" }}>{smallTabValue == 0 ? "Address " : "UserID "}</div>
+                                    <div id="AddressText" style={{ color: "white", overflow: "hidden", whiteSpace: "nowrap" }}>{smallTabValue == 0 ? inputVal.address : inputIDVal}</div> </div>
+
+
                                 <div className='flex justify-center mt-10 ' style={{ width: "100%", overflow: "hidden", borderBottom: "1px solid #2C3950", paddingBottom: "2rem" }}>
                                     <img className='MoneyWithdraw' style={{ borderRadius: '50%' }} src={arrayLookup(symbolsData, 'symbol', symbol, 'avatar') || ''}></img>
                                     <div className='flex'>
@@ -2135,35 +2182,35 @@ function Withdraw(props) {
                             }
                         </div>
                         <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "8px", fontSize: "24px" }}> -{inputVal.amount} {symbol}</motion.div>
-                        <motion.div variants={item} className='mx-20  mt-24' style={{ borderTop: "1px solid #2C3950" }}>
+                        <motion.div variants={item} className='mx-20  mt-20' style={{ borderTop: "1px solid #2C3950" }}>
                         </motion.div>
-                        <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                        <motion.div variants={item} className='flex justify-content-space px-20 mt-20' >
                             <div style={{ color: "#888B92" }}>{t('home_Type')}</div>
                             <div>{t('home_deposite_1')}</div>
                         </motion.div>
                         {
-                            smallTabValue === 1 && <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                            smallTabValue === 1 && <motion.div variants={item} className='flex justify-content-space px-20 mt-20' >
                                 <div style={{ color: "#888B92" }}>{t('card_7')}</div>
                                 <div style={{ width: "50%", wordWrap: "break-word", textAlign: "right" }}>{inputIDVal}</div>
                             </motion.div>
                         }
                         {
-                            smallTabValue === 0 && <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                            smallTabValue === 0 && <motion.div variants={item} className='flex justify-content-space px-20 mt-20' >
                                 <div style={{ color: "#888B92" }}>{t('home_withdraw_14')}</div>
                                 <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{inputVal.address}</div>
                             </motion.div>
                         }
 
-                        <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                        <motion.div variants={item} className='flex justify-content-space px-20 mt-20' >
                             <div style={{ color: "#888B92" }}>{t('home_borrow_18')}</div>
                             <div>{smallTabValue === 0 ? fee : 0}  {symbol} </div>
                         </motion.div>
 
-                        <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                        <motion.div variants={item} className='flex justify-content-space px-20 mt-20' >
                             <div style={{ color: "#888B92" }}>{t('home_ID')}</div>
                             <div style={{ width: "70%", wordWrap: "break-word", textAlign: "right" }}>{smallTabValue === 0 ? withDrawOrderID : currRequestId}</div>
                         </motion.div>
-                        <motion.div variants={item} className='flex justify-content-space px-20 mt-24' >
+                        <motion.div variants={item} className='flex justify-content-space px-20 mt-20' >
                             <div style={{ color: "#888B92" }}>{t('home_Time')}</div>
                             <div>{getNowTime()}</div>
                         </motion.div>
@@ -2348,10 +2395,10 @@ function Withdraw(props) {
                                 return (
                                     <div className='pasteDiZhi'>
                                         <div className='flex'>
-                                            <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"  onClick={() => {
+                                            <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png" onClick={() => {
                                                 handleEditAddressNote(index, { editMode: !addressItem.editMode })
                                             }}></img>
-                                             <OutlinedInput
+                                            <OutlinedInput
                                                 className='diZhiShuRu'
                                                 sx={{
                                                     padding: '0rem',
@@ -2374,10 +2421,10 @@ function Withdraw(props) {
                                             />
                                             {/* <div className='bianJiBiZi'>{item.note}</div> */}
                                         </div>
-                                        <div className='pasteDi' onClick={()=>{ 
-                                            smallTabValue === 0 ? setInputVal({ ...inputVal,  'address': addressItem.address }): setInputIDVal(addressItem.internalToUserId);
+                                        <div className='pasteDi' onClick={() => {
+                                            smallTabValue === 0 ? setInputVal({ ...inputVal, 'address': addressItem.address }) : setInputIDVal(addressItem.internalToUserId);
                                             closePasteFunc()
-                                        }}>{ smallTabValue === 0 ?  addressItem.address: addressItem.internalToUserId}</div>
+                                        }}>{smallTabValue === 0 ? addressItem.address : addressItem.internalToUserId}</div>
                                     </div>
                                 )
                             })

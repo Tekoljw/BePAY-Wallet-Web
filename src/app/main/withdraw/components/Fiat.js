@@ -22,7 +22,7 @@ import { makeWithdrawOrder, fiatSendTips, getFiatFee, payoutBank, payoutPayWays 
 import BN from "bn.js";
 import StyledAccordionSelect from "../../../components/StyledAccordionSelect";
 import { selectConfig } from "../../../store/config";
-import {arrayLookup, getNowTime, getUserLoginType, readClipboardText} from "../../../util/tools/function";
+import { arrayLookup, getNowTime, getUserLoginType, readClipboardText } from "../../../util/tools/function";
 import { openScan, closeScan } from "../../../util/tools/scanqrcode";
 import {
     getWithDrawConfig,
@@ -56,7 +56,7 @@ import userLoginType from "../../../define/userLoginType";
 import RetiedEmail from "../../login/RetiedEmail";
 import RetiedPhone from "../../login/RetiedPhone";
 import { editOrQueryWithdrawalHistoryInfo } from "../../../store/transfer/transferThunk";
-
+import EventBus from '../../eventBus/EventBus';
 
 const container = {
     show: {
@@ -103,6 +103,51 @@ function Fiat(props) {
         description: '',
         userId: '',
     });
+    const inputRef = useRef(null);
+    const inputRef2 = useRef(null);
+    const inputRef3 = useRef(null);
+    const inputRef4 = useRef(null);
+
+    const handleFocus = () => {
+        // EventBus.emit('toggleVisibility', false); // 触发事件并传递值
+        setTimeout(() => {
+            inputRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
+    };
+
+    const handleFocus2 = () => {
+        setTimeout(() => {
+            inputRef2.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
+    };
+
+    const handleFocus3 = () => {
+        setTimeout(() => {
+            inputRef3.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
+    };
+
+    const handleFocus4 = () => {
+        setTimeout(() => {
+            inputRef4.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }, 150); // 延迟以等待键盘弹出
+    };
+
+    const handleBlur = () => {
+        // EventBus.emit('toggleVisibility', true); // 触发事件并传递值
+    };
 
 
     const handleChangeUserIDVal = (valueNum) => {
@@ -155,7 +200,6 @@ function Fiat(props) {
             closeScan();
         });
     };
-
 
     const changeToBlack = (target) => {
         document.getElementById(target.target.id) && document.getElementById(target.target.id).classList && document.getElementById(target.target.id).classList.add('pinJianPanColor1');
@@ -247,7 +291,7 @@ function Fiat(props) {
                         setTimeout(() => {
                             setZhuanQuan(false);
                             setTiJiaoState(1);
-                            dispatch(centerGetUserFiat({ forceUpdate: true}));
+                            dispatch(centerGetUserFiat({ forceUpdate: true }));
                         }, 1200);
                     } else {
                         setOpenSuccess(false)
@@ -284,7 +328,10 @@ function Fiat(props) {
                         dispatch(showMessage({ message: t('card_224'), code: 2 }));
                     } else if (result.errmsg.includes("商户共管资金余额不足")) {
                         dispatch(showMessage({ message: t('wallet_30'), code: 2 }));
-                    } else {
+                    } else if (result.errno === 400) {//拦截机制有BUG，修复后要改回来
+                        dispatch(showMessage({ message: t('server_error_12502'), code: 2 }));
+                    }
+                    else {
                         dispatch(showMessage({ message: result.errmsg, code: 2 }));
                     }
                 }
@@ -326,7 +373,7 @@ function Fiat(props) {
                         setTimeout(() => {
                             setZhuanQuan(false);
                             setTiJiaoState(1);
-                            dispatch(centerGetUserFiat({ forceUpdate: true}));
+                            dispatch(centerGetUserFiat({ forceUpdate: true }));
                         }, 1200);
                     } else {
                         setOpenSuccess(false)
@@ -724,12 +771,12 @@ function Fiat(props) {
 
     const editOrQueryHistoryAddress = (objTab) => {
         dispatch(editOrQueryWithdrawalHistoryInfo({
-            withdrawalType: (!_.isUndefined(objTab))? ((objTab.smallTabValue === 0) ? 'external' : 'internal') : smallTabValue === 0 ? 'external': 'internal',
-            currencyType: (!_.isUndefined(objTab)) ? ( (objTab.tabValue === 0) ? 'crypto' : 'fiat' ) : tabValue === cryptoSelect ? 'crypto' : 'fiat'
+            withdrawalType: (!_.isUndefined(objTab)) ? ((objTab.smallTabValue === 0) ? 'external' : 'internal') : smallTabValue === 0 ? 'external' : 'internal',
+            currencyType: (!_.isUndefined(objTab)) ? ((objTab.tabValue === 0) ? 'crypto' : 'fiat') : tabValue === cryptoSelect ? 'crypto' : 'fiat'
         })).then((res) => {
             // setLoadingShow(false)
             const resultData = res?.payload?.data;
-            if(resultData) {
+            if (resultData) {
                 setHistoryAddressFiat(resultData);
                 setHistoryAddressFiatBak(resultData);
             }
@@ -836,7 +883,7 @@ function Fiat(props) {
             displayFiatData.push(item.name);
             tmpFiatDisplayData[item.name] = item
         });
-        if(fiatData?.length> 0){
+        if (fiatData?.length > 0) {
             fiatData.map((item, index) => {
                 tmpFiatsData[item.currencyCode] = item;
             });
@@ -958,7 +1005,7 @@ function Fiat(props) {
     const backPageEvt = () => {
         setOpenBindPhone(false)
         setOpenBindEmail(false);
-        dispatch(userProfile({ forceUpdate: true}));
+        dispatch(userProfile({ forceUpdate: true }));
         setTypeBined(true);
         myFunction;
         setOpenGoogleCode(true);
@@ -966,17 +1013,17 @@ function Fiat(props) {
 
     const handleEditAddressNote = (currentIndex, editData, isBlur) => {
         let tmpList = []
-        if(historyAddressFiat.length > 0) {
+        if (historyAddressFiat.length > 0) {
             historyAddressFiat.map(async (item, index) => {
                 if (index === currentIndex) {
                     tmpList.push({
                         ...item, ...editData
                     })
-    
+
                     if ((editData.editMode === true || isBlur) && historyAddressFiatBak[index].note != item.note) {
                         dispatch(editOrQueryWithdrawalHistoryInfo({
-                           withdrawalType: 'internal',
-                            currencyType:  'fiat',
+                            withdrawalType: 'internal',
+                            currencyType: 'fiat',
                             editId: item.id,
                             note: item.note
                         }))
@@ -984,7 +1031,7 @@ function Fiat(props) {
                 } else {
                     tmpList.push({ ...item })
                 }
-            })   
+            })
         }
 
         setHistoryAddressFiat(tmpList)
@@ -1055,12 +1102,12 @@ function Fiat(props) {
                                                         borderRadius: '99px'
                                                     }} src={row.avatar} alt="" />
                                                     <div className="px-12 font-medium">
-                                                        <Typography className="text-18 font-medium">{row.currencyCode}</Typography>
+                                                        <Typography className="text-16 font-medium">{row.currencyCode}</Typography>
                                                     </div>
                                                 </div>
                                                 <div style={{ marginLeft: 'auto' }}>
                                                     <div className="px-12 font-medium" style={{ textAlign: 'right' }}>
-                                                        <Typography className="text-18 font-medium">{row.balance}</Typography>
+                                                        <Typography className="text-16 font-medium">{row.balance}</Typography>
 
                                                     </div>
                                                 </div>
@@ -1100,8 +1147,8 @@ function Fiat(props) {
                                         value={smallTabValue}
                                         onChange={(ev, value) => {
                                             setSmallTabValue(value)
-                                            if(value == 1){
-                                                editOrQueryHistoryAddress({tabValue: 1, smallTabValue: value})
+                                            if (value == 1) {
+                                                editOrQueryHistoryAddress({ tabValue: 1, smallTabValue: value })
                                             }
                                         }}
                                         indicatorColor="secondary"
@@ -1125,7 +1172,7 @@ function Fiat(props) {
                                     >
                                         {Object.entries([t('card_8'), t('card_7')]).map(([key, label]) => (
                                             <Tab
-                                                className="text-16 font-semibold min-h-32 min-w-60 mx4 px-12 txtColorTitle opacity-100 zindex biZhongMR"
+                                                className="text-16  min-h-32 min-w-60 mx4 px-12 txtColorTitle opacity-100 zindex biZhongMR"
                                                 disableRipple
                                                 key={key}
                                                 label={label}
@@ -1149,6 +1196,7 @@ function Fiat(props) {
                                                         id="outlined-adornment-address send-tips-container-address"
                                                         value={inputVal.accountNo}
                                                         onChange={handleChangeInputVal('accountNo')}
+                                                        className='yuEShuRu'
                                                         aria-describedby="outlined-weight-helper-text"
                                                         inputProps={{
                                                             'aria-label': 'accountNo',
@@ -1170,6 +1218,9 @@ function Fiat(props) {
                                                     <OutlinedInput
                                                         id="outlined-adornment-address send-tips-container-address"
                                                         value={inputVal.accountName}
+                                                        className='yuEShuRu'
+                                                        ref={inputRef3}
+                                                        onFocus={handleFocus3}
                                                         onChange={handleChangeInputVal('accountName')}
                                                         aria-describedby="outlined-weight-helper-text"
                                                         inputProps={{
@@ -1192,6 +1243,7 @@ function Fiat(props) {
                                                     <OutlinedInput
                                                         id="outlined-adornment-address send-tips-container-address"
                                                         value={inputVal.mobile}
+                                                        className='yuEShuRu'
                                                         onChange={handleChangeInputVal('mobile')}
                                                         aria-describedby="outlined-weight-helper-text"
                                                         inputProps={{
@@ -1214,6 +1266,7 @@ function Fiat(props) {
                                                     <OutlinedInput
                                                         id="outlined-adornment-address send-tips-container-address"
                                                         value={inputVal.email}
+                                                        className='yuEShuRu'
                                                         onChange={handleChangeInputVal('email')}
                                                         aria-describedby="outlined-weight-helper-text"
                                                         inputProps={{
@@ -1240,6 +1293,7 @@ function Fiat(props) {
                                                                 id="outlined-adornment-address send-tips-container-address"
                                                                 value={inputVal.description}
                                                                 onChange={handleChangeInputVal('description')}
+                                                                className='yuEShuRu'
                                                                 aria-describedby="outlined-weight-helper-text"
                                                                 inputProps={{
                                                                     'aria-label': 'description',
@@ -1267,6 +1321,7 @@ function Fiat(props) {
                                                         id="outlined-adornment-address send-tips-container-address"
                                                         value={inputVal.accountNo}
                                                         onChange={handleChangeInputVal('accountNo')}
+                                                        className='yuEShuRu'
                                                         aria-describedby="outlined-weight-helper-text"
                                                         inputProps={{
                                                             'aria-label': 'accountNo',
@@ -1288,7 +1343,10 @@ function Fiat(props) {
                                                     <OutlinedInput
                                                         id="outlined-adornment-address send-tips-container-address"
                                                         value={inputVal.accountName}
+                                                        ref={inputRef4}
+                                                        onFocus={handleFocus4}
                                                         onChange={handleChangeInputVal('accountName')}
+                                                        className='yuEShuRu'
                                                         aria-describedby="outlined-weight-helper-text"
                                                         inputProps={{
                                                             'aria-label': 'accountName',
@@ -1315,6 +1373,7 @@ function Fiat(props) {
                                                     border: 'none',
                                                     borderRadius: '8px!important',
                                                     backgroundColor: '#1E293B!important',
+                                                    fontSize: "14px!important",
                                                     '&:before': {
                                                         display: 'none',
                                                     },
@@ -1329,8 +1388,7 @@ function Fiat(props) {
                                                         onChange={handleChangeEntryType}
                                                         displayEmpty
                                                         inputProps={{ "aria-label": "Without label" }}
-                                                        className="MuiSelect-icon "
-                                                        // IconComponent={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
+                                                        className="MuiSelect-icon  tiBiSelect"
                                                         MenuProps={{
                                                             PaperProps: {
                                                                 style: {
@@ -1350,7 +1408,7 @@ function Fiat(props) {
                                                                         className="flex items-center py-0 flex-grow"
                                                                         style={{ width: '100%' }}
                                                                     >
-                                                                        <Typography className="text-16 font-medium">{row.wayName}</Typography>
+                                                                        <Typography className="text-14 font-medium">{row.wayName}</Typography>
                                                                     </div>
                                                                 </MenuItem>
                                                             )
@@ -1386,7 +1444,7 @@ function Fiat(props) {
                                                         onChange={handleChangeBankId}
                                                         displayEmpty
                                                         inputProps={{ "aria-label": "Without label" }}
-                                                        className="MuiSelect-icon "
+                                                        className="MuiSelect-icon tiBiSelect"
                                                         // IconComponent={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}
                                                         MenuProps={{
                                                             PaperProps: {
@@ -1407,7 +1465,7 @@ function Fiat(props) {
                                                                         className="flex items-center py-0 flex-grow"
                                                                         style={{ width: '100%' }}
                                                                     >
-                                                                        <Typography className="text-16 font-medium">{row.bankName}</Typography>
+                                                                        <Typography className="text-14 font-medium">{row.bankName}</Typography>
                                                                     </div>
                                                                 </MenuItem>
                                                             )
@@ -1427,6 +1485,7 @@ function Fiat(props) {
                                                         <OutlinedInput
                                                             id="outlined-adornment-address send-tips-container-address"
                                                             value={inputVal.pixId}
+                                                            className='yuEShuRu'
                                                             onChange={handleChangeInputVal('pixId')}
                                                             aria-describedby="outlined-weight-helper-text"
                                                             inputProps={{
@@ -1446,10 +1505,11 @@ function Fiat(props) {
                                                 </div>
                                                 <div className="flex items-center justify-between">
                                                     <FormControl className='' sx={{ width: isMobileMedia ? '100%' : '89%', borderColor: '#94A3B8', backgroundColor: "#151C2A" }} variant="outlined">
-                                                        <InputLabel id="demo-simple-select-label">CPF</InputLabel>
+                                                        <InputLabel id="demo-simple-select-label" style={{ fontSize: "14px" }}>CPF</InputLabel>
                                                         <Select
                                                             labelId="demo-simple-select-label"
                                                             id="demo-simple-select"
+                                                            className='tiBiSelect'
                                                             value={accountType}
                                                             label="CPF"
                                                             onChange={handleChangeAccountType}
@@ -1459,7 +1519,6 @@ function Fiat(props) {
                                                             <MenuItem value={"PHONE"}>PHONE</MenuItem>
                                                             <MenuItem value={"EMAIL"}>EMAIL</MenuItem>
                                                         </Select>
-
                                                     </FormControl>
                                                 </div>
 
@@ -1471,6 +1530,7 @@ function Fiat(props) {
                                                         <OutlinedInput
                                                             id="outlined-adornment-address send-tips-container-address"
                                                             value={inputVal.cardNo}
+                                                            className='yuEShuRu'
                                                             onChange={handleChangeInputVal('cardNo')}
                                                             aria-describedby="outlined-weight-helper-text"
                                                             inputProps={{
@@ -1499,7 +1559,10 @@ function Fiat(props) {
                                         <div className="flex items-center py-16 justify-between" style={{}}>
                                             <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
                                                 <OutlinedInput
+                                                    className='yuEShuRu'
                                                     id="outlined-adornment-address send-tips-container-amount"
+                                                    ref={inputRef2}
+                                                    onFocus={handleFocus2}
                                                     value={inputVal.amount}
                                                     onChange={handleChangeInputVal('amount')}
                                                     aria-describedby="outlined-weight-helper-text"
@@ -1519,7 +1582,7 @@ function Fiat(props) {
                                                 borderRadius: '8px'
                                             }}
                                         >
-                                            <Typography className="text-14 px-16">
+                                            <Typography className="text-14 px-10">
                                                 <span style={{ color: '#FCE100' }}>⚠</span>{t('home_withdraw_15')} {fee} {currencyCode} . {t('home_withdraw_16')} {t('home_withdraw_17')}
                                             </Typography>
                                         </Box>
@@ -1539,6 +1602,7 @@ function Fiat(props) {
                                                     <OutlinedInput
                                                         id="outlined-adornment-address send-tips-container-address"
                                                         value={inputVal.userId}
+                                                        className='yuEShuRu'
                                                         onChange={handleChangeInputVal('userId')}
                                                         aria-describedby="outlined-weight-helper-text"
                                                     />
@@ -1572,6 +1636,10 @@ function Fiat(props) {
                                                 <OutlinedInput
                                                     id="outlined-adornment-address send-tips-container-amount"
                                                     value={inputVal.amount}
+                                                    className='yuEShuRu'
+                                                    ref={inputRef}
+                                                    onFocus={handleFocus}
+                                                    onBlur={handleBlur}
                                                     onChange={handleChangeInputVal('amount')}
                                                     aria-describedby="outlined-weight-helper-text"
                                                     inputProps={{
@@ -1581,7 +1649,7 @@ function Fiat(props) {
                                                 />
                                             </FormControl>
                                         </div>
-                                        <div className=''><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8", fontSize: "1.3rem" }}>{t('card_177')}</span></div>
+                                        <div className=''><span style={{ color: '#2DD4BF' }}>⚠ </span><span style={{ color: "#94A3B8" }}>{t('card_177')}</span></div>
                                     </div>
                                 }
 
@@ -2088,47 +2156,47 @@ function Fiat(props) {
                         </div>
 
                         <div className='pasteW'>
-                                {
-                                    historyAddressFiat.length > 0 && historyAddressFiat.map((addressItem, index) => {
-                                        return (
-                                            <div className='pasteDiZhi'>
-                                                <div className='flex'>
-                                                    <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png"  onClick={() => {
-                                                        handleEditAddressNote(index, { editMode: !addressItem.editMode })
-                                                    }}></img>
-                                                        <OutlinedInput
-                                                        className='diZhiShuRu'
-                                                        sx={{
-                                                            padding: '0rem',
-                                                            '& .MuiOutlinedInput-notchedOutline': {
-                                                                border: 'none',
-                                                            },
-                                                            color: addressItem.editMode ? '#ffffff' : '#94A3B8'
-                                                        }}
-                                                        value={addressItem.note}
-                                                        inputProps={{ 'aria-label': 'weight' }}
-                                                        onFocus={(event) => {
-                                                            handleEditAddressNote(index, { editMode: true })
-                                                        }}
-                                                        onChange={(event) => {
-                                                            handleEditAddressNote(index, { note: event.target.value, editMode: true })
-                                                        }}
-                                                        onBlur={(event) => {
-                                                            handleEditAddressNote(index, { note: event.target.value, editMode: false }, true)
-                                                        }}
-                                                    />
-                                                    {/* <div className='bianJiBiZi'>{item.note}</div> */}
-                                                </div>
-                                                <div className='pasteDi' onClick={()=>{ 
-                                                     if(smallTabValue === 1) {
-                                                        setInputVal({ ...inputVal, 'userId': addressItem.internalToUserId  });
-                                                        closePasteFunc()
-                                                    }
-                                                }}>{ addressItem.internalToUserId}</div>
+                            {
+                                historyAddressFiat.length > 0 && historyAddressFiat.map((addressItem, index) => {
+                                    return (
+                                        <div className='pasteDiZhi'>
+                                            <div className='flex'>
+                                                <img className='bianJiBiImg' src="wallet/assets/images/deposite/bianJiBi.png" onClick={() => {
+                                                    handleEditAddressNote(index, { editMode: !addressItem.editMode })
+                                                }}></img>
+                                                <OutlinedInput
+                                                    className='diZhiShuRu'
+                                                    sx={{
+                                                        padding: '0rem',
+                                                        '& .MuiOutlinedInput-notchedOutline': {
+                                                            border: 'none',
+                                                        },
+                                                        color: addressItem.editMode ? '#ffffff' : '#94A3B8'
+                                                    }}
+                                                    value={addressItem.note}
+                                                    inputProps={{ 'aria-label': 'weight' }}
+                                                    onFocus={(event) => {
+                                                        handleEditAddressNote(index, { editMode: true })
+                                                    }}
+                                                    onChange={(event) => {
+                                                        handleEditAddressNote(index, { note: event.target.value, editMode: true })
+                                                    }}
+                                                    onBlur={(event) => {
+                                                        handleEditAddressNote(index, { note: event.target.value, editMode: false }, true)
+                                                    }}
+                                                />
+                                                {/* <div className='bianJiBiZi'>{item.note}</div> */}
                                             </div>
-                                        )
-                                    })
-                                }
+                                            <div className='pasteDi' onClick={() => {
+                                                if (smallTabValue === 1) {
+                                                    setInputVal({ ...inputVal, 'userId': addressItem.internalToUserId });
+                                                    closePasteFunc()
+                                                }
+                                            }}>{addressItem.internalToUserId}</div>
+                                        </div>
+                                    )
+                                })
+                            }
                         </div>
                     </div>
                 </BootstrapDialog>

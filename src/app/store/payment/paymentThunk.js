@@ -370,6 +370,8 @@ export const applyCreditCard = createAsyncThunk(
     }
 );
 
+
+
 // 更新信用卡状态（删除，更新）
 export const creditCardUpdate = createAsyncThunk(
     'credit/creditCardUpdate',
@@ -391,7 +393,7 @@ export const creditCardUpdate = createAsyncThunk(
 
 // 换卡
 export const exchangeCreditCard = createAsyncThunk(
-    '/credit/exchangeCreditCard',
+    'credit/exchangeCreditCard',
     async (settings, { dispatch, getState }) => {
         const result = await React.$api("credit.exchangeCreditCard", settings);
         return result;
@@ -408,6 +410,21 @@ export const exchangeCreditCard = createAsyncThunk(
         }
     }
 );
+
+// 卡激活
+export const activeCreditCard = createAsyncThunk(
+    'credit/creditCardBindWallet',
+    async (settings, { dispatch, getState }) => {
+        const result = await React.$api("credit.creditCardBindWallet", settings);
+        if (result.errno === 0) {
+            return result
+        } else {
+            showServerErrorTips(dispatch, result);
+            return;
+        }
+    }
+);
+
 
 // 获取信用卡余额
 export const getCreditCardBalance = createAsyncThunk(

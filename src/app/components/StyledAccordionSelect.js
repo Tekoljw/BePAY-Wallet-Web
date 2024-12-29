@@ -9,7 +9,7 @@ import { styled } from '@mui/material/styles';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { useSelector } from "react-redux";
 import { selectConfig } from "../store/config";
-import { selectUserData } from '../store/user'
+import { selectUserData } from '../store/user';
 import OutlinedInput from "@mui/material/OutlinedInput";
 import FormControl from "@mui/material/FormControl";
 import { arrayLookup } from "../util/tools/function";
@@ -186,13 +186,13 @@ function StyledAccordionSelect(props) {
                                             borderRadius: '50%'
                                         }} src={row.avatar} alt="" />
                                         <div className="px-12 font-medium">
-                                            <Typography className="text-18 font-medium">{row.symbol}</Typography>
+                                            <Typography className="text-16 font-medium">{row.symbol}</Typography>
                                             <Typography className="text-14" style={{ color: '#94A3B8' }}>{ currencyCode }</Typography>
                                         </div>
                                     </div>
                                     <div style={{ marginLeft: 'auto' }}>
                                         <div className="px-12 font-medium" style={{ textAlign: 'right' }}>
-                                            <Typography className="text-18 font-medium">{Number(row.balance) ? Number(row.balance): '0.00'}</Typography>
+                                            <Typography className="text-16 font-medium">{Number(row.balance) ? Number(row.balance): '0.00'}</Typography>
                                             {currencyCode && <Typography className="text-14" style={{ color: '#94A3B8' }}>{currenyPaytoken(row.symbol, row.balance)}</Typography>}
 
                                         </div>

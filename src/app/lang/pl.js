@@ -549,7 +549,7 @@ const locale = {
     card_193: "Karta Reklamowa",
     card_194: "Karta Nabycia Pracy",
     card_195: "Skopiowano",
-    card_196: "PIN",
+    card_196: "1FA PIN",
     card_197: "Proszę czekać!",
     card_198: "Można składać wnioski z kontynentu Chin",
     card_199: "Może być używany w Chinach kontynentalnych",
@@ -584,7 +584,7 @@ const locale = {
     kyc_54: "stary PIN",
     kyc_55: "Nieprawidłowy adres e-mail",
     kyc_56: "komórkowy",
-    kyc_57: "Metoda weryfikacji",
+    kyc_57: "Weryfikacja bezpieczeństwa 2FA",
     Kyc_58: "Kod kraju lub numer telefonu nie może być pusty",
     Kyc_59: "Wyślij do",
     Kyc_60: "Wyświetl w Google Authenticator",
@@ -845,6 +845,20 @@ const locale = {
     card_263:"Weryfikacja zakończona sukcesem, zamrożone aktywa zostały uwolnione",
     card_264:"Nieudana wypłata, zamrożone aktywa zostały uwolnione",
     card_265:"Zablokowane Saldo",
+
+    earn_1:"kod zaproszenia",
+    earn_2:"Wprowadź kod zaproszenia",
+    kyc_72: "PIN",
+
+
+    
+
+
+
+
+
+
+
 
 
 

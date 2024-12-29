@@ -72,17 +72,17 @@ function Security(props) {
     }, []);
 
     useEffect(() => {
-        let langArr = [t('menu_12'), t('menu_13'), t('menu_14'), t('menu_15'), t('menu_16'), "PIN"];
+        let langArr = [t('menu_12'), t('menu_13'), t('menu_14'), t('menu_15'), t('menu_16'), "1FA PIN"];
         if(!userData.userInfo.bindEmail) {
             langArr[1] = t('menu_19')
         }
         if(!userData.userInfo.bindMobile) {
             langArr[2] = t('menu_20')
         }
-        // const loginType = getUserLoginType(userData);
-        // if (loginType === userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP) {
-        //     langArr = langArr.filter((str, i) => i !== 3);
-        // }
+        const loginType = getUserLoginType(userData);
+        if (loginType === userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP && userData?.profile?.user?.isDefaultPassword) {
+            langArr[3] = t('reset_pass_7')
+        }
         setRanges(langArr);
     }, [currentLanguage.id, userData.profile]);
 

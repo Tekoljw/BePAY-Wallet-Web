@@ -538,7 +538,7 @@ const locale = {
     card_193: "Thẻ Quảng Cáo",
     card_194: "Thẻ Mua Sắm Công Việc",
     card_195: "Đã sao chép",
-    card_196: "PIN",
+    card_196: "1FA PIN",
     card_197: "Xin vui lòng chờ đợi!",
     card_198: "Có thể đăng ký từ đại lục Trung Quốc",
     card_199: "Có thể sử dụng ở Trung Quốc đại lục",
@@ -573,7 +573,7 @@ const locale = {
     kyc_54: "PIN cũ",
     kyc_55: "Địa chỉ email không hợp lệ",
     kyc_56: "Điện thoại",
-    kyc_57: "Phương pháp xác thực",
+    kyc_57: "Xác minh bảo mật 2FA",
     Kyc_58: "Mã quốc gia hoặc số điện thoại không được để trống",
     Kyc_59: "Gửi đến",
     Kyc_60: "Xem trong Google Authenticator",
@@ -834,12 +834,9 @@ const locale = {
     card_264:"Rút tiền thất bại, tài sản bị đóng băng đã được giải phóng",
     card_265:"Số Dư Bị Đóng Băng",
 
-
-
-
-
-
-
+    earn_1:"mã mời",
+    earn_2:"Nhập mã giới thiệu",
+    kyc_72: "PIN",
 
 
 

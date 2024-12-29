@@ -7,7 +7,7 @@ const LiinearPro = (props) => {
 
   return (
     <div>
-      <div className='borders' style={{ backgroundColor: props.mbck, width: wid, margin: "-10px 0px 0px 20px" }} />
+      <div className='borders' style={{ backgroundColor: props.mbck, width: wid, margin: "-12px 0px 0px 45px" }} />
     </div>
   );
 }

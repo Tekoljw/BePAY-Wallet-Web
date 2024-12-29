@@ -525,10 +525,10 @@ function Swap() {
                 setTiJiaoState(1);
                 dispatch(centerGetTokenBalanceList({ forceUpdate: true}));
                 dispatch(centerGetUserFiat({ forceUpdate: true}));
-                setTimeout(() => {
-                  // userData = useSelector(selectUserData);
-                  symbolsFormatAmount();
-                }, 1000)
+                // setTimeout(() => {
+                //   // userData = useSelector(selectUserData);
+                //   symbolsFormatAmount();
+                // }, 1000)
               }, 1200);
             } else {
               setTimeout(() => {
@@ -550,7 +550,6 @@ function Swap() {
           amount: inputVal.amount,
         })
       ).then((res) => {
-        debugger;
         let result = res.payload
         lookData.id = result?.data?.orderId;
         lookData.newNum = (result?.data?.targetAmount)?.toFixed(2);

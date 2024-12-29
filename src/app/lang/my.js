@@ -421,7 +421,7 @@ const locale = {
     card_58: "Tidak boleh menggunakan di China daratan untuk pembelian.",
     card_59: "Passport Maklumat Hubungan Alamat Bil Gambar Peribadi",
     card_60: "Lebih kurang tiga minggu",
-    card_61: "Baki tidak mencukupi",
+    card_61: "Baki tersedia tidak mencukupi",
     card_62: "Baki dompet anda tidak mencukupi, sila tambah nilai",
     card_63: "isi semula",
     card_64: "Selaraskan kod dua dimensi dengan petak imbas.",
@@ -548,7 +548,7 @@ const locale = {
     card_193: "Kad Iklan",
     card_194: "Kad Perolehan Pekerjaan",
     card_195: "Disalin",
-    card_196: "PIN",
+    card_196: "1FA PIN",
     card_197: "Sila tunggu!",
     card_198: "Permohonan boleh dibuat dari tanah besar China",
     card_199: "Boleh digunakan di tanah besar China",
@@ -583,7 +583,7 @@ const locale = {
     kyc_54: "PIN lama",
     kyc_55: "Alamat e-mel tidak sah",
     kyc_56: "bimbit",
-    kyc_57: "Kaedah pengesahan",
+    kyc_57: "Pengesahan Keselamatan 2FA",
     Kyc_58: "Kod negara atau nombor telefon tidak boleh kosong",
     Kyc_59: "Hantar ke",
     Kyc_60: "Lihat dalam Google Authenticator",
@@ -769,7 +769,7 @@ const locale = {
     server_error_18003: "Gagal menyimpan kod jemputan",
     server_error_19001: "Pemindahan wang fiat ke permainan gagal",
     server_error_19002: "Pemindahan mata wang maya ke permainan gagal",
-    server_error_20001: "Baki mata wang asal tidak mencukupi",
+    server_error_20001: "Baki tersedia tidak mencukupi",
     server_error_20002: "Jumlah penukaran tidak sah",
     server_error_20003: "Pasangan dagangan swap tidak disokong",
     server_error_20004: "ID pesanan swap tidak sah",
@@ -846,6 +846,20 @@ const locale = {
     card_263:"Semakan berjaya, aset beku telah dilepaskan",
     card_264:"Pengeluaran gagal, aset beku telah dibebaskan",
     card_265:"Baki Beku",
+
+
+    earn_1:"kod jemputan",
+    earn_2:"Masukkan kod rujukan",
+    kyc_72: "PIN",
+
+
+    
+
+
+
+
+
+
 
 
 

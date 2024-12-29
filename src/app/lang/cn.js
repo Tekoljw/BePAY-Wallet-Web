@@ -81,7 +81,7 @@ const locale = {
     home_record_19: '操作',
     home_record_20: '活动奖励',
     home_record_21: '邀请奖励',
-
+    home_record_22: '收款信息',
 
     home_sendTips_1: '地址',
     home_sendTips_2: 'Funi ID',
@@ -309,6 +309,7 @@ const locale = {
     reset_pass_4: '新密码',
     reset_pass_5: '确认密码',
     reset_pass_6: '重置密码',
+    reset_pass_7: '设置密码',
 
     home_Transaction: '转账',
     home_PendingReview: '待审核',
@@ -431,7 +432,7 @@ const locale = {
     card_58: "中国大陆无法消费",
     card_59: "护照、联系方式、账单地址、个人照片",
     card_60: "三周左右",
-    card_61: "余额不足",
+    card_61: "用户可用余额不足",
     card_62: "您的钱包余额不足，请前往充值",
     card_63: "充值",
     card_64: "将二维码与扫描框对齐",
@@ -559,7 +560,7 @@ const locale = {
     card_193: "广告投放卡",
     card_194: "工作采购卡",
     card_195: "已复制",
-    card_196: "PIN",
+    card_196: "1FA PIN",
     card_197: "敬请期待！",
     card_198: "中国大陆可以申请",
     card_199: "中国大陆可以使用",
@@ -594,7 +595,7 @@ const locale = {
     kyc_54: "旧PIN",
     kyc_55: "无效的邮箱地址",
     kyc_56: "手机",
-    kyc_57: "选择验证方式",
+    kyc_57: "2FA 安全验证",
     Kyc_58: "国家代码或手机号不能为空",
     Kyc_59: "发送至",
     Kyc_60: "在谷歌验证器中查看",
@@ -721,17 +722,18 @@ const locale = {
     server_error_11212: "用户旧的支付密码不对",
     server_error_11213: "用户更新支付密码失败",
     server_error_11214: "用户注册失败",
+    server_error_11221: "验证码已发送，请等待5分钟后再试",
     server_error_12003: "无效的虚拟币币种代码",
     server_error_12004: "智能网络不可用或无效",
     server_error_12005: "提币的费用配置获取失败",
-    server_error_12006: "虚拟代币币种余额不足",
+    server_error_12006: "用户可用余额不足",
     server_error_12007: "保存虚拟代币余额失败",
     server_error_12008: "禁用的虚拟币种",
     server_error_12009: "未知的合约地址",
     server_error_12010: "虚拟币币种不支持",
     server_error_12011: "虚拟币调用remote api失败",
     server_error_12501: "无效的法币币种",
-    server_error_12502: "法币币种余额不足",
+    server_error_12502: "用户可用余额不足",
     server_error_12503: "保存法币币种余额失败",
     server_error_12504: "法币服务无法找到",
     server_error_12505: "法币服务命令不支持",
@@ -775,7 +777,7 @@ const locale = {
     server_error_18003: "保存邀请码失败",
     server_error_19001: "转账法币到游戏失败",
     server_error_19002: "转账虚拟币到游戏失败",
-    server_error_20001: "兑换的原币种余额不足",
+    server_error_20001: "用户可用余额不足",
     server_error_20002: "无效的兑换金额",
     server_error_20003: "不支持的swap交易对",
     server_error_20004: "swap订单Id无效",
@@ -824,6 +826,8 @@ const locale = {
     recordInfo_33: "邀请虚拟币奖励",
     recordInfo_34: "活动奖励法币",
     recordInfo_35: "活动奖励虚拟币",
+    recordInfo_36: "质押资产出金",
+    recordInfo_37: "解质押",
     card_246: "撤消",
     card_247: "申请中",
     card_248: "审核中",
@@ -839,6 +843,7 @@ const locale = {
     kyc_69:"地址2",
     kyc_70:"地址3",
     kyc_71:"示例",
+    kyc_72: "您的手机号填写有误",
 
     card_256:"请确保您的KYC信息正确并选择申请的地址",
     card_257:"修改KYC信息",
@@ -853,7 +858,9 @@ const locale = {
     card_265:"冻结余额",
 
 
-
+    earn_1:"邀请码",
+    earn_2:"填写邀请码",
+    kyc_72: "PIN",
 
 
 };

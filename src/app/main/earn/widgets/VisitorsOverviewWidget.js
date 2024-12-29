@@ -30,14 +30,14 @@ function VisitorsOverviewWidget(props) {
     if(demandInterestHistory.length> 0) {
       tempData = demandInterestHistory.map((item)=>{
         return {
-          x: d.createTime,
-          y: d.todayInterestValue
+          x: Number(item.createTime*1000),
+          y: item.curInterestValue
         }
       })
     }
     const chartInfoArr = [{
       data: tempData,
-      name: chartData.name
+      name: '日利率'
     }]
     setChartData(chartInfoArr)
   }, [demandInterestHistory])
@@ -59,7 +59,7 @@ function VisitorsOverviewWidget(props) {
         show: false,
       },
       zoom: {
-        enabled: false,
+        enabled: true,
       },
     },
     colors: [contrastTheme.palette.secondary.light],
@@ -73,7 +73,7 @@ function VisitorsOverviewWidget(props) {
       show: true,
       borderColor: contrastTheme.palette.divider,
       padding: {
-        top: 10,
+        top: 0,
         bottom: -40,
         left: 0,
         right: 0,
@@ -87,12 +87,17 @@ function VisitorsOverviewWidget(props) {
     },
     stroke: {
       width: 2,
+      curve: 'smooth'
     },
     tooltip: {
       followCursor: true,
       theme: 'dark',
       x: {
-        format: 'MMM dd, yyyy',
+        formatter: function (value) {
+          // 如果需要完全自定义，可以直接使用 timestamp
+          const date = new Date(value);
+          return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+        }
       },
       y: {
         formatter: (value) => `${value}`,
@@ -112,15 +117,25 @@ function VisitorsOverviewWidget(props) {
           width: 2,
         },
       },
+      // tickAmount: 5,
+      // tooltip: {
+      //   enabled: true,
+      // },
       labels: {
         offsetY: -20,
         style: {
           colors: contrastTheme.palette.text.secondary,
         },
-      },
-      tickAmount: 20,
-      tooltip: {
-        enabled: false,
+        datetimeFormatter: {
+          year: 'yyyy',         // 年份格式
+          month: 'yyyy-MM',     // 月份格式
+          day: 'yyyy-MM-dd',    // 日期格式
+        },
+        formatter: function (value, timestamp) {
+          // 如果需要完全自定义，可以直接使用 timestamp
+          const date = new Date(timestamp);
+          return `${date.getMonth() + 1}-${date.getDate()}`;
+        }
       },
       type: 'datetime',
     },
@@ -131,8 +146,8 @@ function VisitorsOverviewWidget(props) {
       axisBorder: {
         show: false,
       },
-      min: (min) => min - 750,
-      max: (max) => max + 250,
+      min: (min) => min - 0.1,
+      max: (max) => max + 0.1,
       tickAmount: 5,
       show: false,
     },

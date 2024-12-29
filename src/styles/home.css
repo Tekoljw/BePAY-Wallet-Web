@@ -1,13 +1,3 @@
-/* @font-face {
-    font-family: 'pfht_z';
-    src: url("../../public/assets/fonts/pfht_z.ttf");
-}
-
-@font-face {
-    font-family: 'Furore';
-    src: url("../../public/assets/fonts/Furore.otf");
-} */
-
 .font-furore {
     font-family: "Furore";
 }
@@ -919,7 +909,7 @@ input[type='number'] {
 .pasteJianTou {
     width: 2.6rem;
     height: 2.6rem;
-    margin: 0 0.5rem;
+    margin: 0 0rem;
 }
 
 .pasteSty {
@@ -1010,6 +1000,12 @@ input[type='number'] {
     padding: 0 1rem 2rem 1rem;
 }
 
+.fulibaoTipsZi {
+    width: 100%;
+    text-align: center;
+    margin-top: 16px;
+}
+
 .payButtom {
     width: 12.5rem;
     height: 4rem;
@@ -1026,14 +1022,14 @@ input[type='number'] {
 }
 
 .PinMoveAni {
-    bottom: -60%;
+    bottom: -75%;
     animation: testMove3 0.3s ease-in-out;
     animation-fill-mode: forwards;
 }
 
 @keyframes testMove3 {
     from {
-        bottom: -60%;
+        bottom: -75%;
     }
 
     to {
@@ -1159,7 +1155,6 @@ input[type='number'] {
     background-color: #1E293B;
 }
 
-
 .container {
     perspective: 2000px;
     z-index: 9998;
@@ -1246,7 +1241,6 @@ input[type='number'] {
     aspect-ratio: 716 / 416;
 }
 
-
 .pasteW {
     width: calc(100% - 3rem);
     margin: 0 auto;
@@ -1281,7 +1275,7 @@ input[type='number'] {
 .walletBalanceZi {
     height: 2.4rem;
     line-height: 2.4rem;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
 }
 
 .cardGongNeng {
@@ -1293,7 +1287,7 @@ input[type='number'] {
     width: 30%;
     height: 3rem;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     text-decoration: underline;
     color: #ffffff;
     padding-right: 1.6rem;
@@ -1349,6 +1343,16 @@ input[type='number'] {
     border: none;
 }
 
+.yuEShuRu .muiltr-m96d3a-MuiInputBase-input-MuiOutlinedInput-input {
+    font-size: 14px !important;
+    padding: 0px 10px !important;
+}
+
+.yuEShuRu .muiltr-bdvqlr-MuiInputBase-input-MuiOutlinedInput-input {
+    font-size: 14px !important;
+    padding: 0px 10px !important;
+}
+
 .gongNengTan2 {
     background: linear-gradient(to bottom, #1E293B, #374252);
     border-radius: 1rem !important;
@@ -1376,14 +1380,18 @@ input[type='number'] {
 .yuEZi {
     font-size: 1.4rem;
     color: #ffffff;
-    font-weight: 600;
 }
 
-.fenChengZi {}
 
 .fenChengZi2 {
     font-size: 1.2rem;
     color: #94a3b8;
+}
+
+.huiZhangWH {
+    width: 60px;
+    height: 60px;
+    margin-right: 6px;
 }
 
 .huiZiColor {
@@ -1484,6 +1492,13 @@ input[type='number'] {
     height: 3.6rem
 }
 
+
+.tiBiSelect .muiltr-1y1awvf-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+    padding-left: 10px !important;
+}
+
+
+
 .openingFee {
     color: #46DFB7;
 }
@@ -1504,7 +1519,6 @@ input[type='number'] {
 .openCardBtn {
     background-color: #0D9488;
     border-radius: 5rem;
-    font-weight: bold;
     height: 3rem;
     line-height: 3rem;
     text-align: center;
@@ -1578,7 +1592,6 @@ input[type='number'] {
     width: 100%;
     text-align: center;
     font-size: 2rem;
-    font-weight: 600;
     color: #ffffff;
 }
 
@@ -1681,6 +1694,10 @@ input[type='number'] {
     aspect-ratio: 716 / 416;
 }
 
+.addressShuoDuan .muiltr-m96d3a-MuiInputBase-input-MuiOutlinedInput-input {
+    padding: 15px 28px 15px 10px !important;
+}
+
 .cardErrorZi {
     margin-top: 3rem;
     width: 100%;
@@ -1753,13 +1770,13 @@ input[type='number'] {
 }
 
 .bianShe1 {
-    background: linear-gradient(to right, #8770DF, #F68C9A);
-    margin: 0 auto;
+    background: #0D9488;
+    margin: 10px auto 0px auto;
 }
 
 .bianShe2 {
-    background: linear-gradient(to right, #FFF3B7, #FEB4B4);
-    margin: 0 auto;
+    background: #0D9488;
+    margin: 10px auto 0px auto;
 }
 
 .quanYiHuiZi {
@@ -1816,6 +1833,7 @@ input[type='number'] {
 .carousel .control-dots {
     margin: 0.5rem 0 !important;
 }
+
 
 .cardIconInFoW {
     margin-top: 0.25rem;
@@ -1894,6 +1912,15 @@ input[type='number'] {
     border-radius: 8px;
     margin-bottom: 32px;
 }
+
+.guiZeShuoMing {
+    margin-left: 4%;
+    width: 92%;
+    border-bottom: 1px solid #374252;
+    padding-bottom: 12px;
+    margin-top: 16px;
+}
+
 
 .yaoQingxiaHuaXian {
     background: linear-gradient(to right, rgba(46, 56, 71, 1), rgba(46, 56, 71, 0));
@@ -2013,9 +2040,9 @@ input[type='number'] {
 }
 
 .eyeGongNengZi2 {
-    font-size: 3.2rem;
-    height: 3.2rem;
-    line-height: 3.2rem;
+    font-size: 3rem;
+    height: 3rem;
+    line-height: 3rem;
     margin-left: 1rem;
 }
 
@@ -2211,7 +2238,7 @@ input[type='number'] {
 .danChuangTxt {
     word-break: break-word;
     white-space: normal;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
 }
 
 
@@ -2276,6 +2303,14 @@ input[type='number'] {
 .jiaShow:hover {
     transform: rotate(90deg);
     transition: all 0.25s;
+}
+
+.showMainBar {
+    bottom: 0;
+}
+
+.hideMainBar {
+    bottom: -60px !important;
 }
 
 .btnColorTitleBig {
@@ -2548,8 +2583,6 @@ input[type='number'] {
 }
 
 
-
-
 .recordSelectHeight {
     height: 50px;
     font-size: 1.6rem !important;
@@ -2574,7 +2607,7 @@ input[type='number'] {
 }
 
 .recordListSmallZi {
-    height: 2.4rem;
+    /* height: 2.4rem; */
     line-height: 2.4rem;
 }
 
@@ -2769,8 +2802,6 @@ input[type='number'] {
     border-radius: 1rem;
 }
 
-
-
 .cardBigBtn {
     min-height: 4.8rem !important;
 }
@@ -2910,12 +2941,27 @@ input#outlined-adornment-address\ outlined-adornment-address-wallet-input-meta {
 }
 
 input#outlined-adornment-address\ send-tips-container-address {
-    padding: 0 2.7rem 0 0.5rem;
+    padding: 0 2.8rem 0 1rem;
     height: 5rem;
     box-sizing: border-box;
     font-size: 1.4rem;
     background-color: #151c2a;
     border-radius: 0.5rem;
+}
+textarea#outlined-adornment-address\ send-tips-container-address {
+    padding: 0.5rem 2.8rem 0.5rem 1rem;
+    min-height: 5rem !important;
+    max-height: 5rem !important;
+    box-sizing: border-box;
+    font-size: 1.4rem;
+    background-color: #151c2a;
+    border-radius: 0.5rem;
+    border: 1px solid rgb(88 85 85);
+}
+
+textarea#outlined-adornment-address\ send-tips-container-address:focus {
+    border:1px solid #12C1A2;
+    transition: all 0.25s;
 }
 
 .muiltr-1qeo8sv-MuiFormHelperText-root.Mui-error {
@@ -2953,6 +2999,7 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
     height: 26px;
     line-height: 26px;
 }
+
 
 
 
@@ -3569,7 +3616,18 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
 .messageBgColor {
     background-color: #1E2633;
     color: #ffffff;
-    min-width: 290px;
+    min-width: 344px;
+    max-width: 100%;
+    padding-bottom: 20px;
+    padding-top: 10px;
+}
+
+.messageBgColor .muiltr-1kr9x0n-MuiSnackbarContent-action {
+    padding-left: 0px !important;
+}
+
+.messageBgColor .muiltr-1exqwzz-MuiSnackbarContent-message {
+    padding: 0px !important;
 }
 
 .muiltr-luvjfm-MuiSlider-root {
@@ -3677,6 +3735,22 @@ input#outlined-adornment-weight\ deposite-container-amount+fieldset {
 .txtBrightness:hover {
     transition: all 0.25s;
     filter: brightness(1.3);
+}
+
+
+.txtSend {
+    transition: all 0.25s;
+    opacity: 1;
+    color: #fff;
+}
+
+.txtSend:hover {
+    transition: all 0.25s;
+    color: #2DD4BF;
+}
+
+.garyShadow {
+    opacity: 0.4;
 }
 
 .justifyContent {

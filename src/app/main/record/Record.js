@@ -92,6 +92,8 @@ function Record() {
     // public static final int LOG_TYPE_ASSETS_CRYPTO_INVITE_REWARD = 33;  //邀请虚拟币奖励
     // public static final int LOG_TYPE_ASSETS_ACTIVITY_FIAT = 34; //活动奖励法币
     // public static final int LOG_TYPE_ASSETS_ACTIVITY_CRYPTO = 35; //活动奖励虚拟币
+    // public static final int LOG_TYPE_ASSETS_PLEDGE_TOKEN = 36; //质押
+    // public static final int LOG_TYPE_ASSETS_RELEASE_PLEDGE = 37; //解质押
     // public static final int LOG_TYPE_ASSETS_FIAT_FROZEN = 38; // 法币资产冻结
     // public static final int LOG_TYPE_ASSETS_CRYPTO_FROZEN = 39; // 虚拟币资产冻结
     // public static final int LOG_TYPE_ASSETS_FIAT_UN_FROZEN_SUCCESS = 40; // 法币资产解冻(提现成功)
@@ -137,6 +139,8 @@ function Record() {
         { key: 33, label: t('recordInfo_33')},
         { key: 34, label: t('recordInfo_34')},
         { key: 35, label: t('recordInfo_35')},
+        { key: 36, label: t('recordInfo_36')},
+        { key: 37, label: t('recordInfo_37')},
         { key: 38, label: t('card_262')},
         { key: 39, label: t('card_262')},
         { key: 40, label: t('card_263')},
@@ -159,8 +163,8 @@ function Record() {
         // { id: 10, label: 'Admin Withdraw' },
         // { id: 11, label: 'Hash Game Bet' },
         { id: 2, label: t('home_record_15') },
-        // { id: 7, label: t('home_record_16') },
-        // { id: 8, label: t('home_record_17') },
+        { id: 7, label: t('home_record_16') },
+        { id: 8, label: t('home_record_17') },
         // { id: 9, label: t('home_record_18') },
         // { id: 16, label: 'TRANSFER_TO_GAME' },
         // { id: 17, label: 'TRANSFER_FROM_GAME' },
@@ -252,7 +256,7 @@ function Record() {
                 limit: rowsPerPage,
                 userCreditNo: kaPianItem == 0 ? null : kaPianItem,
             })).then((res) => {
-                // setLoadingShow(false)
+                setLoadingShow(false)
                 setTimeout(() => {
                     setIsLoading(false)
                 }, 500)
@@ -279,7 +283,7 @@ function Record() {
 
 
     useEffect(() => {
-        // setLoadingShow(true)
+        setLoadingShow(true)
         handleTransferRecord()
     }, [type, timeItem, kaPianItem]);
 
@@ -652,8 +656,10 @@ function Record() {
                                                 </div>
                                                 <div className='recordListSmallZi'>{ freezeBalanceTypes.indexOf(transferItem.type) > -1 ? t('card_265') : t('home_deposite_24')} <span>{transferItem.balance}</span>
                                                 </div>
-                                                <div className='recordListSmallZi'>{t('home_borrow_18')} <span>{transferItem.serviceFee}</span>
-                                                </div>
+                                                <div className='recordListSmallZi'>{t('home_borrow_18')} <span>{transferItem.serviceFee}</span></div>
+                                                {transferItem.transferUserId && <div className='recordListSmallZi'>{t('home_record_22')}<span> { 'UserId-' + transferItem.transferUserId}</span></div>}
+                                                {transferItem.transferAddress && <div className='recordListSmallZi'>{t('home_record_22')}<span> { 'Address-' + transferItem.transferAddress}</span></div>}
+                                                {transferItem.accountNo && <div className='recordListSmallZi'>{t('home_record_22')}<span> { 'Account-' + transferItem.accountNo}</span></div>}
                                                 <div className='recordListSmallZi'>{
                                                     typeList.find(v => {
                                                         return v.key == (transferItem.type)

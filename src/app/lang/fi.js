@@ -547,7 +547,7 @@ const locale = {
     card_193: "Mainoskortti",
     card_194: "Työhankintakortti",
     card_195: "Kopioitu",
-    card_196: "PIN",
+    card_196: "1FA PIN",
     card_197: "Odota!",
     card_198: "Kiinan mantereelta voi hakea",
     card_199: "Voi käyttää Manner-Kiinassa",
@@ -582,7 +582,7 @@ const locale = {
     kyc_54: "vanha PIN",
     kyc_55: "Virheellinen sähköpostiosoite",
     kyc_56: "matkapuhelin",
-    kyc_57: "Varmennusmenetelmä",
+    kyc_57: "2FA-turvatarkistus",
     Kyc_58: "Maatunnus tai puhelinnumero ei voi olla tyhjä",
     Kyc_59: "Lähetä",
     Kyc_60: "Näytä Google Authenticatorissa",
@@ -845,6 +845,20 @@ const locale = {
     card_263:"Tarkistus onnistui, jäädytetyt varat on vapautettu",
     card_264:"Nostopyyntö epäonnistui, jäädytetyt varat on vapautettu",
     card_265:"Jäädytetty Saldo",
+
+    earn_1:"kutsukoodi",
+    earn_2:"Syötä kutsukoodi",
+    kyc_72: "PIN",
+
+
+    
+
+
+
+
+
+
+
 
 
 

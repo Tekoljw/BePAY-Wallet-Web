@@ -546,7 +546,7 @@ const locale = {
     card_193: "Reklam Kartı",
     card_194: "İş Tedarik Kartı",
     card_195: "Kopyalandı",
-    card_196: "PIN",
+    card_196: "1FA PIN",
     card_197: "Lütfen bekleyin!",
     card_198: "Ana karadan başvuru yapılabilir",
     card_199: "Ana karada kullanılabilir",
@@ -581,7 +581,7 @@ const locale = {
     kyc_54: "eski PIN",
     kyc_55: "Geçersiz e-posta adresi",
     kyc_56: "telefonu",
-    kyc_57: "Doğrulama yöntemi",
+    kyc_57: "2FA Güvenlik Doğrulaması",
     Kyc_58: "Ülke kodu veya telefon numarası boş olamaz",
     Kyc_59: "Gönder",
     Kyc_60: "Google Authenticator'da Görüntüle",
@@ -843,6 +843,20 @@ const locale = {
     card_263:"İnceleme başarılı, dondurulmuş varlıklar serbest bırakıldı",
     card_264:"Çekim başarısız, dondurulmuş varlıklar serbest bırakıldı",
     card_265:"Donmuş Bakiye",
+
+
+    earn_1:"davet kodu",
+    earn_2:"Davet kodunu girin",
+    kyc_72: "PIN",
+
+
+    
+
+
+
+
+
+
 
 
 

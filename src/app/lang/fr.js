@@ -548,7 +548,7 @@ const locale = {
     card_193: "Carte Publicitaire",
     card_194: "Carte d'Approvisionnement de Travail",
     card_195: "Copié",
-    card_196: "PIN",
+    card_196: "1FA PIN",
     card_197: "Veuillez patienter!",
     card_198: "Les demandes peuvent être faites depuis la Chine continentale",
     card_199: "Peut être utilisé en Chine continentale",
@@ -583,7 +583,7 @@ const locale = {
     kyc_54: "ancien code PIN",
     kyc_55: "Adresse e-mail invalide",
     kyc_56: "portable",
-    kyc_57: "Méthode de vérification",
+    kyc_57: "Vérification de sécurité 2FA",
     Kyc_58: "Le code du pays ou le numéro de téléphone ne peut pas être vide",
     Kyc_59: "Envoyer à",
     Kyc_60: "Voir dans Google Authenticator",
@@ -843,6 +843,20 @@ const locale = {
     card_263:"Vérification réussie, les actifs gelés ont été libérés",
     card_264:"Échec du retrait, les actifs gelés ont été libérés",
     card_265:"Solde Gelé",
+
+    earn_1:"code d'invitation",
+    earn_2:"Entrez le code de parrainage",
+    kyc_72: "PIN",
+
+
+    
+
+
+
+
+
+
+
 
 
 
