@@ -36,6 +36,7 @@ import { FormHelperText } from '@mui/material';
 import { handleCopyText } from "../../util/tools/function";
 import { useNavigate } from 'react-router-dom';
 import {
+    uniqueInvite,
     signInActivityConfig,
     signInActivityInfo,
     signIn,
@@ -139,14 +140,13 @@ function Earn(props) {
     const [biZhongU, setBiZhongU] = useState("usdt");
     const [biZhongB, setBiZhongB] = useState("bft");
     const [openTianXie, setOpenTianXie] = useState(false);
-    const [yaoQingMa, setYaoQingMa] = useState(0);
+    const [yaoQingMa, setYaoQingMa] = useState('');
     const [openYaoQingQuKuan, setOpenYaoQingQuKuan] = useState(false);
-    const [showYaoQingBtn, setShowYaoQingBtn] = useState(false);
-    const [inputYaoQingVal, setInputYaoQingVal] = useState("");
 
     // 质押pin验证相关
     const [pin, setPin] = useState('');
     const [hasPin, setHasPin] = useState(false);
+    const [hasInviterInviteCode, setHasInviterInviteCode] = useState(false);
     const [openPinWindow, setOpenPinWindow] = useState(false);
     const [createPinWindow, setCreatePinWindow] = useState(false);
     const [openPinErr, setOpenPinErr] = useState(false);
@@ -163,12 +163,8 @@ function Earn(props) {
     const [symbolList, setSymbolList] = useState([]);
     //activityId:  1:签到, 2:钱包支付分成, 3:活期利息 4:swap兑换分成 5:转盘 6:质押挖矿 7:合约交易 8:复利宝 9:社区活动 10:钱包全球节点
 
-    const handleChangeInputVal = (event) => {
-        setYaoQingMa(event.target.value);
-    };
-
     const handleChangeInputVal3 = (event) => {
-        setInputYaoQingVal(event.target.value);
+        setYaoQingMa(event.target.value);
     };
 
 
@@ -221,7 +217,14 @@ function Earn(props) {
 
     useEffect(() => {
         setHasPin(userData.profile?.user?.hasSetPaymentPassword ?? false)
-    }, [userData.profile]);
+        setHasInviterInviteCode(userData.profile?.user?.inviterInviteCode ?? false)
+        setTimeout(()=>{
+            if(userData?.isEarnFirstTime && !userData.profile?.user?.inviterInviteCode) {
+                setYaoQingMa('')
+                setOpenTianXie(true)
+            }
+        }, 1000)
+    }, [userData.profile, activityList]);
 
 
     const changeToBlack = (target) => {
@@ -231,24 +234,21 @@ function Earn(props) {
     const changeToWhite = (target) => {
         document.getElementById(target.target.id) && document.getElementById(target.target.id).classList && document.getElementById(target.target.id).classList.remove('pinJianPanColor1');
     };
-
-    useEffect(() => {
-        setTimeout(() => {
-            if (userData?.profile?.user?.inviterInviteCode === "") {
-                setShowYaoQingBtn(true);
-            } else { setShowYaoQingBtn(false); }
-        }, 0);
-    }, [userData.profile.user]);
     
-    const sumbitYaoQingCode = async () => {
-        await dispatch(kycAddress({
+    const submitYaoQingCode = async () => {
+        setIsLoadingBtn(true);
+        await dispatch(uniqueInvite({
+            inviteCode: yaoQingMa
         })).then((res) => {
             let result = res.payload;
-            if (result.errno === 0) {
-                let resultData = res.payload.data;
-                setInputYaoQingVal();
+            setIsLoadingBtn(false);
+            if (result?.errno === 0) {
+                dispatch(showMessage({ message: 'success', code: 1 }))
+                setYaoQingMa('')
+                setOpenTianXie(false)
+                setHasInviterInviteCode(true)
                 setTimeout(() => {
-
+                   dispatch(userProfile({forceUpdate: true })) 
                 }, 0);
             }
         });
@@ -807,7 +807,7 @@ function Earn(props) {
                         <div className='flex  justify-between'>
                             <div className='text-16' style={{ height: "26px", lineHeight: "26px" }}>{t('card_113')}</div>
                             {
-                                showYaoQingBtn && <div className='px-10' style={{ backgroundColor: "#0D9488", borderRadius: "99px", height: "26px", lineHeight: "26px" }}
+                                !hasInviterInviteCode && <div className='px-10' style={{ backgroundColor: "#0D9488", borderRadius: "99px", height: "26px", lineHeight: "26px" }}
                                     onClick={() => {
                                         setOpenTianXie(true)
                                     }}
@@ -2473,7 +2473,7 @@ function Earn(props) {
                         className="faBiDiCard tanChuanDiSe"
                         open={openTianXie}
                         onClose={() => {
-                            setYaoQingMa(0)
+                            setYaoQingMa('')
                             setOpenTianXie(false)
                         }
                         }
@@ -2494,13 +2494,13 @@ function Earn(props) {
 
                         <div className='flex mt-16 mb-28 px-15 justify-between' >
                             <LoadingButton
-                                disabled={false}
+                                disabled={_.isEmpty(yaoQingMa)}
                                 className="boxCardBtn"
                                 color="secondary"
-                                loading={false}
+                                loading={isLoadingBtn}
                                 variant="contained"
                                 onClick={() => {
-
+                                    submitYaoQingCode()
                                 }}
                             >
                                 {t('kyc_23')}
@@ -2513,7 +2513,7 @@ function Earn(props) {
                                 loading={false}
                                 variant="contained"
                                 onClick={() => {
-                                    setYaoQingMa(0)
+                                    setYaoQingMa('')
                                     setOpenTianXie(false)
                                 }}
                             >

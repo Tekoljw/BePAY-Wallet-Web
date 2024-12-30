@@ -1089,10 +1089,14 @@ function Wallet(props) {
         dispatch(centerGetTokenBalanceList());
         dispatch(centerGetUserFiat({requestPayment: true})).then(() => {
           // setLoadingShow(false)
-          dispatch(updateWalletLoading(false))
+          setTimeout(()=>{
+            dispatch(updateWalletLoading(false))
+          }, 3000)
         });
       } else {
-        dispatch(updateWalletLoading(false))
+        setTimeout(()=>{
+          dispatch(updateWalletLoading(false))
+        }, 3000)
       }
     }, 500)
   }, []);

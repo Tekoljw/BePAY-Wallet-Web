@@ -36,6 +36,7 @@ const initialState = {
     activityConfig: null,
     activityControl: null,
     activityInfosExpiredTime: 0,
+    isEarnFirstTime: false
 };
 
 const userSlice = createSlice({
@@ -188,6 +189,11 @@ const userSlice = createSlice({
         updateActivityInfosExpiredTime: (state, action) => {
             let res = action.payload;
             state.activityInfosExpiredTime = res;
+        },
+
+        updateIsEarnFirstTime: (state, action) => {
+            let res = action.payload;
+            state.isEarnFirstTime = res;
         }
     },
     extraReducers: (builder) => {
@@ -232,7 +238,7 @@ const userSlice = createSlice({
 });
 
 export const { updateWalletLoading, updateUser, updateUserToken, updateTransfer, updateWallet, updateFiat, updateCryptoDisplay, updateFiatDisplay, updateNftDisplay, updateWalletDisplay, updateCurrency, setTransferStats
-    , updateLoginState, updateBankList, updatePayoutBankList, updatePayoutWays, updateSwapFee, updateCreditConfig, updateUserRequestError, updateActivityInfos, updateActivityConfig, updateActivityControl, updateActivityInfosExpiredTime} = userSlice.actions;
+    , updateLoginState, updateBankList, updatePayoutBankList, updatePayoutWays, updateSwapFee, updateCreditConfig, updateUserRequestError, updateActivityInfos, updateActivityConfig, updateActivityControl, updateActivityInfosExpiredTime, updateIsEarnFirstTime} = userSlice.actions;
 
 export const selectUserData = ({ user }) => user;
 
