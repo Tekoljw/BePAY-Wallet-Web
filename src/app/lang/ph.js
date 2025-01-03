@@ -845,7 +845,6 @@ const locale = {
 
     earn_1:"code ng imbitasyon",
     earn_2:"I-enter ang referral code",
-    kyc_72: "PIN",
 
 
     

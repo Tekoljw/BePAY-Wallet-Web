@@ -849,7 +849,6 @@ const locale = {
 
     earn_1:"초대 코드",
     earn_2:"초대 코드를 입력하세요",
-    kyc_72: "PIN",
 
 
     

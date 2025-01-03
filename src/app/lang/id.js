@@ -847,7 +847,6 @@ const locale = {
 
     earn_1:"kode undangan",
     earn_2:"Masukkan kode undangan",
-    kyc_72: "PIN",
 
 
     

@@ -850,7 +850,6 @@ const locale = {
 
     earn_1:"kod jemputan",
     earn_2:"Masukkan kod rujukan",
-    kyc_72: "PIN",
 
 
     

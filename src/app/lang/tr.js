@@ -847,7 +847,6 @@ const locale = {
 
     earn_1:"davet kodu",
     earn_2:"Davet kodunu girin",
-    kyc_72: "PIN",
 
 
     

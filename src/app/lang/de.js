@@ -848,7 +848,6 @@ const locale = {
 
     earn_1:"Einladungscode",
     earn_2:"Geben Sie den Einladungs-Code ein",
-    kyc_72: "PIN",
 
 
     

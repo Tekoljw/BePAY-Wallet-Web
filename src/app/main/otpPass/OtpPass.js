@@ -93,6 +93,7 @@ export default function OtpPass({googleTextKey,setGoogleCode, resizeLayout}) {
     );
     // 点击input时，重新聚焦当前的input，弹出键盘
     const handleClick = React.useCallback(() => {
+        console.log("dddddddddddddddddddddddddd")
         focusInput(curFocusIndexRef.current);
     }, [focusInput]);
 

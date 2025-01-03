@@ -848,7 +848,6 @@ const locale = {
 
     earn_1:"kutsukoodi",
     earn_2:"Syötä kutsukoodi",
-    kyc_72: "PIN",
 
 
     

@@ -846,7 +846,6 @@ const locale = {
 
     earn_1:"招待コード",
     earn_2:"招待コードを入力",
-    kyc_72: "PIN",
 
 
     

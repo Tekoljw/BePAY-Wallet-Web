@@ -818,38 +818,34 @@ const locale = {
     card_246: "Cancelar",
     card_247: "Em processo de solicitação",
     card_248: "Em análise",
-    
+
     card_249: "Adicionar",
     card_250: "Por favor, feche o mini aplicativo e clique no botão de atualizar para tentar novamente.",
     card_251: "Cartão de Pagamento Apple",
     card_252: "Ativar cartão existente",
     card_253: "Priorize o uso de um endereço dos EUA, se não tiver, clique em [Exemplo] no KYC para fornecer as informações necessárias",
-    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
-    card_255:"Apple, ",
+    card_254: "Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255: "Apple, ",
 
-    kyc_68:"Endereço1",
-    kyc_69:"Endereço2",
-    kyc_70:"Endereço3",
-    kyc_71:"Exemplo",
-
-
-    card_256:"Por favor, certifique-se de que suas informações de KYC estão corretas e escolha o endereço solicitado.",
-    card_257:"Modificar informações de KYC",
-    card_258:"Pagar taxa de substituição de cartão:",
-    card_259:"Verificação KYC",
-    card_260:"É necessário concluir a verificação KYC antes de solicitar o cartão.",
-    card_261:"Por favor, entre em contato com o serviço de atendimento ao cliente online para mais detalhes.",
-    card_262:"Em revisão, os ativos foram congelados",
-    card_263:"Revisão bem-sucedida, ativos descongelados",
-    card_264:"Falha na retirada, ativos congelados foram liberados",
-    card_265:"Saldo",
-
-    earn_1:"código de convite",
-    earn_2:"Preencher o código de convite",
-    kyc_72: "PIN",
+    kyc_68: "Endereço1",
+    kyc_69: "Endereço2",
+    kyc_70: "Endereço3",
+    kyc_71: "Exemplo",
 
 
-    
+    card_256: "Por favor, certifique-se de que suas informações de KYC estão corretas e escolha o endereço solicitado.",
+    card_257: "Modificar informações de KYC",
+    card_258: "Pagar taxa de substituição de cartão:",
+    card_259: "Verificação KYC",
+    card_260: "É necessário concluir a verificação KYC antes de solicitar o cartão.",
+    card_261: "Por favor, entre em contato com o serviço de atendimento ao cliente online para mais detalhes.",
+    card_262: "Em revisão, os ativos foram congelados",
+    card_263: "Revisão bem-sucedida, ativos descongelados",
+    card_264: "Falha na retirada, ativos congelados foram liberados",
+    card_265: "Saldo",
+
+    earn_1: "código de convite",
+    earn_2: "Preencher o código de convite",
 
 
 
@@ -868,7 +864,10 @@ const locale = {
 
 
 
-    
+
+
+
+
 };
 export default locale;
 

@@ -860,7 +860,6 @@ const locale = {
 
     earn_1:"邀请码",
     earn_2:"填写邀请码",
-    kyc_72: "PIN",
 
 
 };

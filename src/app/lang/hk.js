@@ -847,7 +847,6 @@ const locale = {
 
     earn_1:"邀請碼",
     earn_2:"填寫邀請碼",
-    kyc_72: "PIN",
 
 
     

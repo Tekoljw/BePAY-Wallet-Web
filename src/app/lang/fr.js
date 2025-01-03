@@ -846,7 +846,6 @@ const locale = {
 
     earn_1:"code d'invitation",
     earn_2:"Entrez le code de parrainage",
-    kyc_72: "PIN",
 
 
     

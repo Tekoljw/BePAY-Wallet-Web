@@ -836,9 +836,6 @@ const locale = {
 
     earn_1:"mã mời",
     earn_2:"Nhập mã giới thiệu",
-    kyc_72: "PIN",
-
-
 
 
 
