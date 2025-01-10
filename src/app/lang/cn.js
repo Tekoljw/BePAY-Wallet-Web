@@ -861,6 +861,46 @@ const locale = {
     earn_1:"邀请码",
     earn_2:"填写邀请码",
 
+    server_error_18004: "邀请码对应的用户不存在",
+    server_error_18005: "使用邀请码失败",
+    server_error_18006: "使用邀请码成功",
+    server_error_18007: "邀请信息已经存在",
+    server_error_18008: "重置邀请失败",
+    server_error_18009: "重置邀请成功",
+    server_error_18010: "不能邀请自己",
+    server_error_18011: "邀请关系已经存在",
+
+    server_error_40201: "今天已经签到了",
+    server_error_40202: "签到配置不存在",
+    
+    server_error_40301: "活动没有开启",
+    server_error_40302: "必须绑定手机才能参与活动",
+    server_error_40303: "必须是收到邀请的用户才能参与活动",
+    server_error_40304: "必须创建了信用卡的用户才能参与活动",
+
+    server_error_40401: "质押挖矿配置不存在",
+    server_error_40402: "质押挖矿数量到达最大数量",
+    server_error_40403: "质押挖矿金额小于最小金额",
+    server_error_40404: "质押挖矿扣除金额失败",
+
+    server_error_40501: "转盘配置为空",
+    server_error_40502: "转盘配置不存在",
+    server_error_40503: "转盘次数用完",
+
+    server_error_40601: "全球节点配置为空",
+    server_error_40602: "全球节点购买余额不足",
+    server_error_40603: "全球节点购买失败",
+
+    server_error_40701: "双向理财配置为空",
+    server_error_40702: "双向理财购买余额不足",
+    server_error_40703: "双向理财购买失败",
+    server_error_40704: "双向理财购买金额为空",
+
+    server_error_40801: "复利宝提出的币种为空",
+    server_error_40802: "复利宝提出的金额错误",
+    server_error_40803: "复利宝提出的记录不存在",
+    server_error_40804: "复利宝提出的金额超过余额",
+    server_error_40805: "复利宝提出的记录添加错误",
 
 };
 

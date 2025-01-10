@@ -850,7 +850,47 @@ const locale = {
     earn_2:"Wprowadź kod zaproszenia",
 
 
+    server_error_18004: "",
+    server_error_18005: "",
+    server_error_18006: "",
+    server_error_18007: "",
+    server_error_18008: "",
+    server_error_18009: "",
+    server_error_18010: "",
+    server_error_18011: "",
+
+    server_error_40201: "",
+    server_error_40202: "",
     
+    server_error_40301: "",
+    server_error_40302: "",
+    server_error_40303: "",
+    server_error_40304: "",
+
+    server_error_40401: "",
+    server_error_40402: "",
+    server_error_40403: "",
+    server_error_40404: "",
+
+    server_error_40501: "",
+    server_error_40502: "",
+    server_error_40503: "",
+
+    server_error_40601: "",
+    server_error_40602: "",
+    server_error_40603: "",
+
+    server_error_40701: "",
+    server_error_40702: "",
+    server_error_40703: "",
+    server_error_40704: "",
+
+    server_error_40801: "",
+    server_error_40802: "",
+    server_error_40803: "",
+    server_error_40804: "",
+    server_error_40805: "",
+
 
 
 
