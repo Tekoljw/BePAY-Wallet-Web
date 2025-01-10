@@ -857,7 +857,6 @@ const locale = {
     card_264:"提币失败，冻结资产已解除",
     card_265:"冻结余额",
 
-
     earn_1:"邀请码",
     earn_2:"填写邀请码",
 
@@ -901,7 +900,6 @@ const locale = {
     server_error_40803: "复利宝提出的记录不存在",
     server_error_40804: "复利宝提出的金额超过余额",
     server_error_40805: "复利宝提出的记录添加错误",
-
 };
 
 export default locale;

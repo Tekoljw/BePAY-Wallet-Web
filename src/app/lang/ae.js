@@ -850,50 +850,46 @@ const locale = {
     earn_1:"رمز الدعوة",
     earn_2:"إدخال رمز الدعوة",
 
+    server_error_18004: "المستخدم المرتبط برمز الدعوة غير موجود",
+    server_error_18005: "فشل استخدام رمز الدعوة",
+    server_error_18006: "تم استخدام رمز الدعوة بنجاح",
+    server_error_18007: "تم بالفعل دعوة",
+    server_error_18008: "فشل إعادة تعيين الدعوة",
+    server_error_18009: "إعادة تعيين الدعوة بنجاح",
+    server_error_18010: "لا يمكنك دعوة نفسك",
+    server_error_18011: "علاقة الدعوة موجودة بالفعل",
+
+    server_error_40201: "تم التوقيع اليوم",
+    server_error_40202: "إعدادات التسجيل غير موجودة",
     
+    server_error_40301: "الحدث غير مفعل",
+    server_error_40302: "يجب ربط الهاتف للمشاركة في النشاط",
+    server_error_40303: "يجب أن يكون المستخدمون المدعوين فقط قادرين على المشاركة في الفعالية",
+    server_error_40304: "فقط المستخدمين الذين أنشأوا بطاقة ائتمان يمكنهم المشاركة في الحدث",
 
-    server_error_18004: "",
-    server_error_18005: "",
-    server_error_18006: "",
-    server_error_18007: "",
-    server_error_18008: "",
-    server_error_18009: "",
-    server_error_18010: "",
-    server_error_18011: "",
+    server_error_40401: "إعدادات تعدين الرهن غير موجودة",
+    server_error_40402: "تم الوصول إلى الحد الأقصى لعدد التعدين عن طريق الرهن",
+    server_error_40403: "مبلغ تعدين الرهن أقل من المبلغ الأدنى",
+    server_error_40404: "فشل خصم مبلغ التعدين بالرهانات",
 
-    server_error_40201: "",
-    server_error_40202: "",
-    
-    server_error_40301: "",
-    server_error_40302: "",
-    server_error_40303: "",
-    server_error_40304: "",
+    server_error_40501: "تكوين العجلة فارغ",
+    server_error_40502: "إعدادات العجلة غير موجودة",
+    server_error_40503: "تم استخدام جميع دورات العجلة",
 
-    server_error_40401: "",
-    server_error_40402: "",
-    server_error_40403: "",
-    server_error_40404: "",
+    server_error_40601: "تكوين العقد العالمي فارغ",
+    server_error_40602: "رصيد شراء العقد العالمي غير كاف",
+    server_error_40603: "فشل شراء العقد العالمي",
 
-    server_error_40501: "",
-    server_error_40502: "",
-    server_error_40503: "",
+    server_error_40701: "تكوين التمويل الثنائي فارغ",
+    server_error_40702: "رصيد غير كافٍ لشراء الاستثمار الثنائي",
+    server_error_40703: "فشل شراء المالية الثنائية",
+    server_error_40704: "مبلغ شراء الإدارة الثنائية فارغ",
 
-    server_error_40601: "",
-    server_error_40602: "",
-    server_error_40603: "",
-
-    server_error_40701: "",
-    server_error_40702: "",
-    server_error_40703: "",
-    server_error_40704: "",
-
-    server_error_40801: "",
-    server_error_40802: "",
-    server_error_40803: "",
+    server_error_40801: "العملة لسحب الرفاهية فارغة",
+    server_error_40802: "مبلغ السحب من مركب الكنز غير صحيح",
+    server_error_40803: "لا يوجد سجل لسحب الرصيد من الكنز المركب",
     server_error_40804: "",
-    server_error_40805: "",
-
-
+    server_error_40805: "خطأ في إضافة سجل السحب من الكنز المركب",
 
 };
 
