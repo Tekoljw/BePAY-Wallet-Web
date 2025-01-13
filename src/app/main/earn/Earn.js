@@ -109,6 +109,7 @@ function Earn(props) {
     const [activityList, setActivityList] = useState([]);
     const [activityInfo, setActivityInfo] = useState({});
     const config = useSelector(selectConfig);
+    const symbolsData = config.symbols;
     const [swapData, setSwapData] = useState({});
     const [walletPayRewardData, setWalletPayRewardData] = useState({});
     const [demandInterestActivityData, setDemandInterestActivityData] = useState({});
@@ -160,6 +161,8 @@ function Earn(props) {
     
     const [symbol, setSymbol] = useState('');
     const [symbolWallet, setSymbolWallet] = useState([]);
+    const [inviteSymbolWallet, setInviteSymbolWallet] = useState([]);
+    const [inviteSymbol, setInviteSymbol] = useState('');
     const [symbolList, setSymbolList] = useState([]);
     //activityId:  1:签到, 2:钱包支付分成, 3:活期利息 4:swap兑换分成 5:转盘 6:质押挖矿 7:合约交易 8:复利宝 9:社区活动 10:钱包全球节点
 
@@ -181,7 +184,7 @@ function Earn(props) {
         dispatch(beingFiActivityInfo()).then((res) => {
             const result = res.payload
             if (result?.errno === 0) {
-                setActivityInfo(result.data)
+                setActivityInfo(result.data);
             }
         });
         dispatch(signInActivityConfig()).then((res) => {
@@ -205,6 +208,9 @@ function Earn(props) {
         });
     }, []);
 
+    useEffect(() => {
+        symbolsFormatAmount();
+    }, [symbolsData, config.payment.currency, activityInfo]);
 
     const dispatch = useDispatch();
     const widgets = useSelector(selectWidgets);
@@ -226,6 +232,55 @@ function Earn(props) {
         }, 1000)
     }, [userData.profile, activityList]);
 
+    // 使用 useEffect 在状态更新后打印
+    useEffect(() => {
+        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+        console.log(inviteSymbolWallet);
+    }, [inviteSymbolWallet]); // 当 inviteSymbolWallet 变化时执行
+
+
+    //格式化币种和网络
+    const symbolsFormatAmount = () => {
+        let currencyRate = arrayLookup(config.payment.currency, 'currencyCode', 'USD', 'buyRate') || 0;
+        let displayData = [];
+        symbolsData.map((item, index) => {
+            if (displayData.indexOf(item.symbol) === -1 && (item.symbol === 'USDT'|| item.symbol === 'BFT')) {
+                displayData.push(item.symbol);
+            }
+        });
+        if (displayData.length > 0) {
+            const tmpSymbols = [];
+            // 美元汇率
+            let dollarCurrencyRate = arrayLookup(config.payment.currency, 'currencyCode', 'USD', 'buyRate') || 0;
+            displayData.forEach((item, index) => {
+                if (item != 'eBGT') {
+                    // 兑换成USDT的汇率
+                    let symbolRate = arrayLookup(symbolsData, 'symbol', item, 'buyRate') || 0;
+                    var balance = getSymbolMoney(item);
+                    tmpSymbols.push({
+                        avatar: arrayLookup(symbolsData, 'symbol', item, 'avatar') || '',
+                        symbol: item,
+                        balance: balance, // 余额
+                        dollarFiat: (balance * symbolRate * dollarCurrencyRate).toFixed(2), // 换算成美元
+                        currencyAmount: (balance * symbolRate * currencyRate).toFixed(2), // 换算成当前选择法币
+                    });
+                }
+            });
+            setInviteSymbolWallet(tmpSymbols);
+        } else {
+            setInviteSymbolWallet([]);
+        }
+    };
+
+    const getSymbolMoney = (symbol) => {
+        let balance = 0;
+        if(symbol === 'USDT'){
+            balance = Number(activityInfo?.inviteReward?.inviteRewardAllUSDT) === 0 ? '0.00' : Number(activityInfo?.inviteReward?.inviteRewardAllUSDT)      
+        }else if(symbol === 'BFT'){
+            balance = Number(activityInfo?.inviteReward?.inviteRewardAllBFT) === 0 ? '0.00' : Number(activityInfo?.inviteReward?.inviteRewardAllBFT)
+        }
+        return balance ? balance : '0.00'
+    };
 
     const changeToBlack = (target) => {
         document.getElementById(target.target.id) && document.getElementById(target.target.id).classList && document.getElementById(target.target.id).classList.add('pinJianPanColor1');
@@ -2187,9 +2242,9 @@ function Earn(props) {
                                 }}
                             >
                                 <StyledAccordionSelect
-                                    symbol={symbolWallet}
+                                    symbol={inviteSymbolWallet}
                                     currencyCode="USDT"
-                                    setSymbol={setSymbol}
+                                    setSymbol={setInviteSymbol}
                                 />
                             </Box>
                             <div className='mt-16 text-16' >
@@ -2986,7 +3041,7 @@ function Earn(props) {
                                             </div>
                                             <div className='flex earnDepositeDi'>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
-                                                    <div style={{}}>{inviteRewardAllInfo.tokenPledgeRewardData && parseJson(inviteRewardAllInfo.tokenPledgeRewardData).reward ? (Number(parseJson(inviteRewardAllInfo.tokenPledgeRewardData)?.reward?.symbol?.USDT) === 0 ? '0.00' : Number(inviteRewardAllInfo.tokenPledgeRewardData?.reward?.symbol?.USDT)) : '0.00'}</div>
+                                                    <div style={{}}>{inviteRewardAllInfo.tokenPledgeRewardData && parseJson(inviteRewardAllInfo.tokenPledgeRewardData).reward ? (Number(parseJson(inviteRewardAllInfo.tokenPledgeRewardData)?.reward?.symbol?.USDT) === 0 ? '0.00' : Number(parseJson(inviteRewardAllInfo.tokenPledgeRewardData)?.reward?.symbol?.USDT)) : '0.00'}</div>
                                                 </div>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
                                                     <img className='ml-10 mr-6' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
@@ -3046,7 +3101,7 @@ function Earn(props) {
                                             </div>
                                             <div className='flex earnDepositeDi'>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
-                                                    <div style={{}}>{inviteRewardAllInfo.tokenContractRewardData && parseJson(inviteRewardAllInfo.tokenContractRewardData).reward ? (Number(parseJson(inviteRewardAllInfo.tokenContractRewardData)?.reward?.symbol?.USDT) === 0 ? '0.00' : Number(inviteRewardAllInfo.tokenContractRewardData?.reward?.symbol?.USDT)) : '0.00'}</div>
+                                                    <div style={{}}>{inviteRewardAllInfo.tokenContractRewardData && parseJson(inviteRewardAllInfo.tokenContractRewardData).reward ? (Number(parseJson(inviteRewardAllInfo.tokenContractRewardData)?.reward?.symbol?.USDT) === 0 ? '0.00' : Number(parseJson(inviteRewardAllInfo.tokenContractRewardData)?.reward?.symbol?.USDT)) : '0.00'}</div>
                                                 </div>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
                                                     <img className='ml-10 mr-6' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
@@ -3106,7 +3161,7 @@ function Earn(props) {
                                             </div>
                                             <div className='flex earnDepositeDi'>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
-                                                    <div style={{}}>{inviteRewardAllInfo.payCommissionRewardData && parseJson(inviteRewardAllInfo.payCommissionRewardData).reward ? (Number(parseJson(inviteRewardAllInfo.payCommissionRewardData)?.reward?.symbol?.USDT) === 0 ? '0.00' : Number(inviteRewardAllInfo.payCommissionRewardData?.reward?.symbol?.USDT)) : '0.00'}</div>
+                                                    <div style={{}}>{inviteRewardAllInfo.payCommissionRewardData && parseJson(inviteRewardAllInfo.payCommissionRewardData).reward ? (Number(parseJson(inviteRewardAllInfo.payCommissionRewardData)?.reward?.symbol?.USDT) === 0 ? '0.00' : Number(parseJson(inviteRewardAllInfo.payCommissionRewardData)?.reward?.symbol?.USDT)) : '0.00'}</div>
                                                 </div>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
                                                     <img className='ml-10 mr-6' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
@@ -3165,7 +3220,7 @@ function Earn(props) {
                                             </div>
                                             <div className='flex earnDepositeDi'>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
-                                                    <div style={{}}>{inviteRewardAllInfo.swapRewardData && parseJson(inviteRewardAllInfo.swapRewardData).reward ? (Number(parseJson(inviteRewardAllInfo.swapRewardData)?.reward?.symbol?.USDT) === 0 ? '0.00' : Number(inviteRewardAllInfo.swapRewardData?.reward?.symbol?.USDT)) : '0.00'} </div>
+                                                    <div style={{}}>{inviteRewardAllInfo.swapRewardData && parseJson(inviteRewardAllInfo.swapRewardData).reward ? (Number(parseJson(inviteRewardAllInfo.swapRewardData)?.reward?.symbol?.USDT) === 0 ? '0.00' : Number(parseJson(inviteRewardAllInfo.swapRewardData)?.reward?.symbol?.USDT)) : '0.00'} </div>
                                                 </div>
                                                 <div className='flex  align-item' style={{ height: "100%" }}>
                                                     <img className='ml-10 mr-6' style={{ width: "2rem", height: "2rem" }} src="wallet/assets/images/symbol/USDT.png" alt="" />
