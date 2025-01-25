@@ -137,7 +137,7 @@ function Test() {
                         <div className='flex mt-16  justify-between'>
                             <div className='lanDiZi pb-10 pb-10'>
                                 <div><span style={{ color: "#A4A4A4" }}>瓜分</span><span style={{ marginLeft: "10px", color: "#FFC600", fontWeight: "bold", fontSize: "24px" }}>1000,000,000</span></div>
-                                <div><span style={{ color: "#1BB9FF", fontWeight: "bold", fontSize: "24px" }}>BFT</span><span style={{ marginLeft: "10px", color: "#ffffff", fontWeight: "bold", fontSize: "14px" }}>BeingFi Token</span></div>
+                                <div><span style={{ color: "#1BB9FF", fontWeight: "bold", fontSize: "24px" }}>BFT</span><span style={{ marginLeft: "10px", color: "#ffffff", fontWeight: "bold", fontSize: "14px" }}>BePay Token</span></div>
                             </div>
                             <img className='earnYouTu ' src="wallet/assets/images/earn/bi1.png" />
 

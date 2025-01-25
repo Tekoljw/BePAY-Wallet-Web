@@ -952,7 +952,7 @@ function Earn(props) {
                             <div className='flex mt-16  justify-between'>
                                 <div className='lanDiZi pb-10 pb-10'>
                                     <div><span style={{ color: "#A4A4A4" }}>{t('card_119')}</span><span style={{ marginLeft: "10px", color: "#FFC600", fontWeight: "bold", fontSize: "29px" }}>1000,000,000</span></div>
-                                    <div><span style={{ color: "#1BB9FF", fontWeight: "bold", fontSize: "24px" }}>BFT</span><span style={{ marginLeft: "10px", color: "#ffffff", fontWeight: "bold", fontSize: "14px" }}>BeingFi Token</span></div>
+                                    <div><span style={{ color: "#1BB9FF", fontWeight: "bold", fontSize: "24px" }}>BFT</span><span style={{ marginLeft: "10px", color: "#ffffff", fontWeight: "bold", fontSize: "14px" }}>BePay Token</span></div>
                                 </div>
                                 <img className='earnYouTu ' src="wallet/assets/images/earn/bi1.png" />
                             </div>
@@ -1054,7 +1054,7 @@ function Earn(props) {
                             <div className='flex justify-between pt-4'>
                                 <div className='huangDiZi'>
                                     <div className='flex'>
-                                        <div className='' style={{ fontSize: "20px", overflow: 'hidden' }}>BeingFi</div>
+                                        <div className='' style={{ fontSize: "20px", overflow: 'hidden' }}>BePay</div>
                                         <img className='swapWH' src="wallet/assets/images/earn/swapImg.png" />
                                         <div className='' style={{ fontSize: "20px", overflow: 'hidden' }}>Swap</div>
                                     </div>
@@ -1083,7 +1083,7 @@ function Earn(props) {
                                 <div className='huangDiZi'>
                                     <div className='flex'>
                                         <img className='mr-10' style={{ width: "26px", height: "26px" }} src="wallet/assets/images/earn/zhiFuImg.png" />
-                                        <div className='' style={{ fontSize: "20px", overflow: 'hidden' }}>BeingFi 支付</div>
+                                        <div className='' style={{ fontSize: "20px", overflow: 'hidden' }}>BePay 支付</div>
                                     </div>
                                     <div><span >小费，</span><span style={{ fontSize: "20px", color: "#30F2DD" }}>大收益</span></div>
                                     <div><span style={{ color: "#FFFFFF", fontSize: "14px" }}>享受佣金 </span><span style={{ color: "#ffc600", fontWeight: "bold", fontSize: "29px" }}>{(activityInfo?.walletPayRate * 100)?.toFixed(3)}%</span></div>

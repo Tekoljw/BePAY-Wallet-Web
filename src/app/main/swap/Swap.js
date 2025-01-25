@@ -196,7 +196,7 @@ function Swap() {
         setopenapp('Funibet Wallet')
       }
       if (openType.list[1].no == window.sessionStorage.getItem("openAppId")) {
-        setopenapp('BeingFi Wallet')
+        setopenapp('BePay Wallet')
       }
     }
   }, [window.sessionStorage.getItem("openAppId")])
@@ -729,7 +729,7 @@ function Swap() {
         {/*                        return "/wallet/assets/images/login/icon-right-16.png";*/}
         {/*                      case "Binance Smart":*/}
         {/*                        return "/wallet/assets/images/login/icon-right-17.png";*/}
-        {/*                      case "BeingFi Wallet":*/}
+        {/*                      case "BePay Wallet":*/}
         {/*                        return "/wallet/assets/images/menu/LOGO.png ";*/}
         {/*                      default:*/}
         {/*                        return "/wallet/assets/images/menu/icon-wallet-active.png ";*/}
