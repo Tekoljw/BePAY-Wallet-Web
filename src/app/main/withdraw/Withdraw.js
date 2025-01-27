@@ -1342,7 +1342,7 @@ function Withdraw(props) {
                                     {/*通过地址转账*/}
                                     {
                                         smallTabValue === 0 && <div className="px-10 ">
-                                            <div className="flex items-center justify-between">
+                                            <div className="flex items-center justify-between ">
                                                 <FormControl className='addressShuoDuan' sx={{ width: '100%', borderRadius: "6px", borderColor: '#94A3B8', backgroundColor: "#151C2A" }} variant="outlined">
                                                     <TextareaAutosize
                                                         id="outlined-adornment-address send-tips-container-address"

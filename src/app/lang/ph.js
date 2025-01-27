@@ -482,7 +482,7 @@ const locale = {
     card_128: "Total na kita",
     card_129: "Ngayong araw na kita",
     card_130: "Pumunta sa TOP.ONE para magsimula ng trading",
-    card_131: "Mag-activate ng BeingFi card",
+    card_131: "Mag-activate ng BePay card",
     card_132: "Mag-check in tuwing ika-7 araw upang mag-ipon at makatanggap ng kaukulang gantimpala",
     card_133: "Lunes",
     card_134: "Martes",
@@ -509,12 +509,12 @@ const locale = {
     card_155: "24-oras na taunang porsyento",
     card_156: "Magdeposito agad",
     card_157: "Mga patakaran ng airdrop na kaganapan",
-    card_158: "Paghahati-hati ng kabuuang halaga para sa lahat ng BeingFi crypto bank users",
+    card_158: "Paghahati-hati ng kabuuang halaga para sa lahat ng BePay crypto bank users",
     card_159: "Ang kabuuang premyo ay ilalabas araw-araw",
     card_160: "Formula para sa pagkalkula ng kita",
     card_161: "Ang iyong kita = Kabuuang assets ng account / Kabuuang assets ng lahat ng user sa platform * Kabuuang ipinamahaging gantimpala",
     card_162: "Pumunta sa Top.one upang mag-trade ng BFT contracts. Anumang pagkalugi sa transaksyon, maging ito man ay investment loss o fee loss, ay bibigyan ka ng 100% na halaga ng BFT spot bilang kompensasyon ayon sa dating market price.",
-    card_163: "Kailangan mong i-activate ang BeingFi crypto bank card bago makalahok sa aktibidad na ito!",
+    card_163: "Kailangan mong i-activate ang BePay crypto bank card bago makalahok sa aktibidad na ito!",
     card_164: "I-activate agad",
     card_165: "I-bind ang invitation code",
     card_166: "Ang aktibidad na ito ay bukas lamang para sa mga inimbitahang user!",
@@ -607,8 +607,8 @@ const locale = {
     server_error_10201: "Nabigong makuha ang address ng wallet",
     server_error_11001: "Nabigo ang paglikha ng order",
     server_error_11002: "Walang impormasyon ng user",
-    server_error_11003: "Walang user ng BeingFi",
-    server_error_11101: "Hindi pumasa ang KYC ng BeingFi user",
+    server_error_11003: "Walang user ng BePay",
+    server_error_11101: "Hindi pumasa ang KYC ng BePay user",
     server_error_12001: "Ang ID ng user ng merchant ay null",
     server_error_12002: "Mali sa paglahok sa staking ng NFT",
     server_error_13001: "Walang umiiral na tagapagbigay ng credit card",
@@ -690,7 +690,7 @@ const locale = {
     server_error_10206: "Maling may-ari ng order",
     server_error_10207: "Walang order type",
     server_error_10208: "Hindi wastong order",
-    server_error_11004: "Walang BeingFi user email",
+    server_error_11004: "Walang BePay user email",
     server_error_11005: "Walang impormasyon ng kalaban na user",
     server_error_11006: "Hindi wastong address ng user",
     server_error_11007: "Walang laman ang address",
@@ -845,10 +845,49 @@ const locale = {
 
     earn_1:"code ng imbitasyon",
     earn_2:"I-enter ang referral code",
-    kyc_72: "PIN",
 
 
     
+    server_error_18004: "Ang gumagamit na tumutugma sa invitation code ay wala",
+    server_error_18005: "Nabigong gamitin ang invitation code",
+    server_error_18006: "Matagumpay na ginamit ang invitation code",
+    server_error_18007: "Ang impormasyon ng imbitasyon ay umiiral na",
+    server_error_18008: "Nabigong i-reset ang imbitasyon",
+    server_error_18009: "Matagumpay na na-reset ang paanyaya",
+    server_error_18010: "Hindi mo maaaring imbitahan ang iyong sarili",
+    server_error_18011: "Ang relasyon ng imbitasyon ay umiiral na",
+
+    server_error_40201: "Nakapag-check-in na ako ngayon araw",
+    server_error_40202: "Walang nahanap na configuration ng pag-sign in",
+    
+    server_error_40301: "Hindi aktibo ang kaganapan",
+    server_error_40302: "Kailangan mong i-bind ang iyong telepono upang makilahok sa aktibidad",
+    server_error_40303: "Tanging mga imbitadong user lamang ang makakalahok sa kaganapan",
+    server_error_40304: "Tanging mga user na nakalikha ng credit card ang makakapag-participate sa event",
+
+    server_error_40401: "Ang configuration ng staking mining ay wala",
+    server_error_40402: "Naabot na ng halaga ng pagmimina sa staking ang maximum na limitasyon",
+    server_error_40403: "Ang halaga ng staking mining ay mas mababa kaysa sa minimum na halaga",
+    server_error_40404: "Nabigong pagbabawas ng halaga ng pagmimina ng staking",
+
+    server_error_40501: "Walang laman ang configuration ng gulong",
+    server_error_40502: "Walang umiiral na configuration ng gulong",
+    server_error_40503: "Wala nang natirang pag-ikot ng gulong",
+
+    server_error_40601: "Walang laman ang configuration ng global node",
+    server_error_40602: "Kulang ang balanse para sa pagbili ng global node",
+    server_error_40603: "Nabigong bumili ng global na node",
+
+    server_error_40701: "Walang laman ang dalawang-daan na financial na configuration",
+    server_error_40702: "Kulang ang balanse para sa pagbili ng dalawang-way na pamumuhunan",
+    server_error_40703: "Nabigong pagbili ng dalawang-daan na pinansyal",
+    server_error_40704: "Ang halaga ng pagbili ng dalawang-daan na pinansyal ay wala",
+
+    server_error_40801: "Walang laman na pera para sa pag-withdraw ng Compound Treasure",
+    server_error_40802: "Mali ang halaga ng pag-withdraw ng Compound Treasure",
+    server_error_40803: "Walang rekord ng pag-withdraw ng Compound Treasure",
+    server_error_40804: "Ang halagang inwithdraw mula sa Compound Treasure ay lumampas sa balanse",
+    server_error_40805: "Error sa pagdagdag ng talaan para sa Compound Treasure na withdrawal",
 
 
 

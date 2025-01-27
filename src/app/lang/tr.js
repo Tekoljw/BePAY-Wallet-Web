@@ -479,7 +479,7 @@ const locale = {
     card_128: "toplam kazanç",
     card_129: "bugünkü kazanç",
     card_130: "TOP.ONE’a giderek işlem yapmaya başlayın",
-    card_131: "BeingFi kartını aktifleştirin",
+    card_131: "BePay kartını aktifleştirin",
     card_132: "Her 7 günde bir giriş yaparak, uygun ödülleri biriktirip kazanın",
     card_133: "Pazartesi",
     card_134: "Salı",
@@ -506,12 +506,12 @@ const locale = {
     card_155: "24 saatlik yıllık getiri",
     card_156: "hemen para yatırın",
     card_157: "airdrop etkinliği kuralları",
-    card_158: "Tüm BeingFi kripto banka kullanıcıları toplamı paylaşacak",
+    card_158: "Tüm BePay kripto banka kullanıcıları toplamı paylaşacak",
     card_159: "Her gün toplam ödül havuzunu serbest bırakmak",
     card_160: "kazanç hesaplama formülü",
     card_161: "Kazancınız = Hesap toplam varlığı / Platformdaki tüm kullanıcıların toplam varlığı * Serbest bırakılan toplam ödül",
     card_162: "Top.one borsa platformuna gidip BFT sözleşmesiyle uzun ve kısa işlemler yapın. Tüm işlem kayıplarınız, ister yatırım zararları ister işlem ücreti zararları olsun, eski piyasa fiyatına göre %100 değerinde BFT spot coin ile telafi edilecektir.",
-    card_163: "Bu etkinliğe katılmak için öncelikle BeingFi kripto bank kartınızı aktifleştirmeniz gerekmektedir!",
+    card_163: "Bu etkinliğe katılmak için öncelikle BePay kripto bank kartınızı aktifleştirmeniz gerekmektedir!",
     card_164: "hemen açın",
     card_165: "davet kodunu bağlayın",
     card_166: "Bu etkinlik yalnızca davet edilen kullanıcılara açıktır!",
@@ -603,8 +603,8 @@ const locale = {
     server_error_10101: "Cüzdan adresi alınamadı",
     server_error_10201: "Sipariş oluşturma başarısız",
     server_error_11001: "Kullanıcı bilgisi bulunamadı",
-    server_error_11002: "BeingFi kullanıcısı mevcut değil",
-    server_error_11003: "BeingFi kullanıcısının KYC doğrulaması geçmedi",
+    server_error_11002: "BePay kullanıcısı mevcut değil",
+    server_error_11003: "BePay kullanıcısının KYC doğrulaması geçmedi",
     server_error_11101: "Tüccar kullanıcı kimliği null",
     server_error_12001: "NFT staking kontrol parametresi hatası",
     server_error_12002: "NFT staking katılım hatası",
@@ -687,7 +687,7 @@ const locale = {
     server_error_10206: "Sipariş sahibi hatalı",
     server_error_10207: "Sipariş tipi boş",
     server_error_10208: "Sipariş geçersiz",
-    server_error_11004: "BeingFi kullanıcı e-posta adresi bulunamadı",
+    server_error_11004: "BePay kullanıcı e-posta adresi bulunamadı",
     server_error_11005: "Rakip kullanıcı bilgisi bulunamadı",
     server_error_11006: "Kullanıcı adresi geçersiz",
     server_error_11007: "Adres boş",
@@ -847,10 +847,49 @@ const locale = {
 
     earn_1:"davet kodu",
     earn_2:"Davet kodunu girin",
-    kyc_72: "PIN",
 
 
     
+    server_error_18004: "Davet koduna karşılık gelen kullanıcı mevcut değil",
+    server_error_18005: "Davet kodu kullanılmadı",
+    server_error_18006: "Davet kodu başarıyla kullanıldı",
+    server_error_18007: "Davet bilgisi zaten mevcut",
+    server_error_18008: "Davet sıfırlama başarısız oldu",
+    server_error_18009: "Davet sıfırlama başarılı",
+    server_error_18010: "Kendinizi davet edemezsiniz",
+    server_error_18011: "Davet ilişkisi zaten mevcut",
+
+    server_error_40201: "Bugün giriş yaptım",
+    server_error_40202: "Giriş yapılandırması bulunamadı",
+    
+    server_error_40301: "Etkinlik etkin değil",
+    server_error_40302: "Etkinliğe katılmak için telefonunuzu bağlamalısınız",
+    server_error_40303: "Sadece davet edilen kullanıcılar etkinliğe katılabilir",
+    server_error_40304: "Sadece kredi kartı oluşturmuş kullanıcılar etkinliğe katılabilir",
+
+    server_error_40401: "Stake madenciliği yapılandırması mevcut değil",
+    server_error_40402: "Stake madenciliği miktarı maksimum limite ulaştı",
+    server_error_40403: "Stake madencilik miktarı, minimum miktardan azdır",
+    server_error_40404: "Stake madenciliği kesinti başarısız",
+
+    server_error_40501: "Çark yapılandırması boş",
+    server_error_40502: "Çark yapılandırması mevcut değil",
+    server_error_40503: "Çark döndürme sayısı tükenmiş",
+
+    server_error_40601: "Küresel düğüm yapılandırması boş",
+    server_error_40602: "Küresel düğüm alımı için yetersiz bakiye",
+    server_error_40603: "Küresel düğüm satın alımı başarısız",
+
+    server_error_40701: "İki yönlü finansal yapı boş",
+    server_error_40702: "İki yönlü finansal alım için bakiye yetersiz",
+    server_error_40703: "İki yönlü finansal satın alma başarısız oldu",
+    server_error_40704: "İki yönlü finansal satın alma miktarı boş",
+
+    server_error_40801: "Compound Treasure çekimi için para birimi boş",
+    server_error_40802: "Số tiền rút Compound Treasure không đúng",
+    server_error_40803: "Compound Treasure çekim kaydı mevcut değil",
+    server_error_40804: "Bileşik Hazine'den çekilen tutar bakiyeyi aşıyor",
+    server_error_40805: "Compound Treasure çekim kaydını eklerken hata",
 
 
 

@@ -480,7 +480,7 @@ const locale = {
     card_128: "總收益",
     card_129: "今日收益",
     card_130: "前往TOP.ONE開始交易",
-    card_131: "開通BeingFi卡片",
+    card_131: "開通BePay卡片",
     card_132: "每7天累積簽到，獲得相應獎勳",
     card_133: "星期一",
     card_134: "星期二",
@@ -507,12 +507,12 @@ const locale = {
     card_155: "24小時年化",
     card_156: "立即入金",
     card_157: "空投活動規則",
-    card_158: "所有BeingFi加密銀行用戶瓜分總計",
+    card_158: "所有BePay加密銀行用戶瓜分總計",
     card_159: "每天釋放總獎池",
     card_160: "收益計算公式",
     card_161: "您的收益=賬戶總資産/平颱所有用戶總資産*釋放總獎勵",
     card_162: "前往交易所Top.one對BFT合約的進行多空交易，所有交易損失，不論是投資虧損，還是手續費損失，您都將以前市場價獲得100%等值的BFT現貨贈送作爲補償。",
-    card_163: "先開通BeingFi加密銀行卡才可參與該活動!",
+    card_163: "先開通BePay加密銀行卡才可參與該活動!",
     card_164: "立即開通",
     card_165: "綁定邀請碼",
     card_166: "該活動僅對受邀請的用戶開放！",
@@ -604,8 +604,8 @@ const locale = {
     server_error_10101:"錢包地址獲取失敗",
     server_error_10201:"生產訂單失敗",
     server_error_11001:"用戶資訊不存在",
-    server_error_11002:"BeingFi手機信息用戶不存在",
-    server_error_11003:"BeingFi用戶KYC沒有通過審核",
+    server_error_11002:"BePay手機信息用戶不存在",
+    server_error_11003:"BePay用戶KYC沒有通過審核",
     server_error_11101:"商戶用戶Id是null",
     server_error_12001:"NFT質押檢查參數錯誤",
     server_error_12002:"NFT質押參與錯誤",
@@ -688,7 +688,7 @@ const locale = {
     server_error_10206:"訂單擁有者錯誤",
     server_error_10207:"訂單類型為空",
     server_error_10208:"訂單無效",
-    server_error_11004:"BeingFi用戶郵箱不存在",
+    server_error_11004:"BePay用戶郵箱不存在",
     server_error_11005:"對手用戶信息不存在",
     server_error_11006:"用戶地址無效",
     server_error_11007:"地址是空",
@@ -847,11 +847,50 @@ const locale = {
 
     earn_1:"邀請碼",
     earn_2:"填寫邀請碼",
-    kyc_72: "PIN",
 
 
     
 
+    server_error_18004: "邀請碼對應的用戶不存在",
+    server_error_18005: "使用邀請碼失敗",
+    server_error_18006: "使用邀请码成功",
+    server_error_18007: "邀請信息已存在",
+    server_error_18008: "重置邀請失敗",
+    server_error_18009: "重置邀請成功",
+    server_error_18010: "不能邀請自己",
+    server_error_18011: "邀請關係已存在",
+
+    server_error_40201: "今天已經簽到",
+    server_error_40202: "登入配置不存在",
+    
+    server_error_40301: "活動沒有開啟",
+    server_error_40302: "必須綁定手機才能參加活動",
+    server_error_40303: "只有受邀用戶才能參加活動",
+    server_error_40304: "只有創建了信用卡的用戶才能參加活動",
+
+    server_error_40401: "质押挖矿配置不存在",
+    server_error_40402: "质押挖矿数量到达最大数量",
+    server_error_40403: "质押挖矿金额小于最小金额",
+    server_error_40404: "质押挖矿扣除金额失败",
+
+    server_error_40501: "轉盤配置為空",
+    server_error_40502: "轉盤配置不存在",
+    server_error_40503: "轉盤次數用完",
+
+    server_error_40601: "全球節點配置為空",
+    server_error_40602: "全球節點購買餘額不足",
+    server_error_40603: "全球節點購買失敗",
+
+    server_error_40701: "雙向理財配置為空",
+    server_error_40702: "雙向理財購買餘額不足",
+    server_error_40703: "雙向理財購買失敗",
+    server_error_40704: "雙向理財購買金額為空",
+
+    server_error_40801: "复利宝提出的幣種為空",
+    server_error_40802: "复利宝提出的金额错误",
+    server_error_40803: "复利宝提出的记录不存在",
+    server_error_40804: "复利宝提出的金额超过余额",
+    server_error_40805: "复利宝提出的记录添加错误",
 
 
 

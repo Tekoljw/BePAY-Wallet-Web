@@ -480,7 +480,7 @@ const locale = {
     card_128: "kokonaistuotto",
     card_129: "tämän päivän tuotto",
     card_130: "Siirry TOP.ONE aloittamaan kaupankäynti",
-    card_131: "Avaa BeingFi-kortti",
+    card_131: "Avaa BePay-kortti",
     card_132: "Kirjaudu sisään joka 7. päivä kerryttääksesi ja saadaksesi vastaavat palkinnot",
     card_133: "maanantai",
     card_134: "tiistai",
@@ -507,12 +507,12 @@ const locale = {
     card_155: "24 tunnin vuosituotto",
     card_156: "tee talletus heti",
     card_157: "ilmaisen jakelun tapahtumasaati",
-    card_158: "Kaikki BeingFi-kryptopankin käyttäjät jakavat yhteensä",
+    card_158: "Kaikki BePay-kryptopankin käyttäjät jakavat yhteensä",
     card_159: "vapauta päivittäin koko palkintopotti",
     card_160: "tuoton laskentakaava",
     card_161: "Voittosi = tilin kokonaissaldo / alustan kaikkien käyttäjien kokonaissaldo * vapautetut palkinnot",
     card_162: "Siirry kaupankäyntipaikkaan Top.one ja tee long/short-kauppaa BFT-sopimuksilla. Kaikki kaupankäynnin tappiot, olipa kyseessä sijoitustappio tai kaupankäyntimaksut, korvataan sinulle 100 % arvoisella BFT-käteisellä, joka perustuu aiempaan markkinahintaan.",
-    card_163: "Osallistuminen tähän tapahtumaan edellyttää, että avaat ensin BeingFi-kryptopankkikortin!",
+    card_163: "Osallistuminen tähän tapahtumaan edellyttää, että avaat ensin BePay-kryptopankkikortin!",
     card_164: "avaa heti",
     card_165: "liitä kutsukoodi",
     card_166: "Tämä tapahtuma on avoin vain kutsutuille käyttäjille!",
@@ -604,8 +604,8 @@ const locale = {
     server_error_10101: "Lompakon osoitteen nouto epäonnistui",
     server_error_10201: "Tilauksen luominen epäonnistui",
     server_error_11001: "Käyttäjätietoja ei löydy",
-    server_error_11002: "BeingFi-käyttäjää ei löydy",
-    server_error_11003: "BeingFi-käyttäjän KYC-tarkistus ei läpäissyt",
+    server_error_11002: "BePay-käyttäjää ei löydy",
+    server_error_11003: "BePay-käyttäjän KYC-tarkistus ei läpäissyt",
     server_error_11101: "Kauppiaan käyttäjä-ID on null",
     server_error_12001: "Virhe NFT-stakingin tarkistusparametreissa",
     server_error_12002: "Virhe NFT-staking-osallistumisessa",
@@ -689,7 +689,7 @@ const locale = {
     server_error_10206: "Tilausten omistaja on virheellinen",
     server_error_10207: "Tilaus on tyhjä",
     server_error_10208: "Tilaus on virheellinen",
-    server_error_11004: "BeingFi-käyttäjän sähköpostiosoitetta ei ole",
+    server_error_11004: "BePay-käyttäjän sähköpostiosoitetta ei ole",
     server_error_11005: "Vastapuolen käyttäjätiedot eivät ole saatavilla",
     server_error_11006: "Käyttäjän osoite on virheellinen",
     server_error_11007: "Osoite on tyhjä",
@@ -848,11 +848,50 @@ const locale = {
 
     earn_1:"kutsukoodi",
     earn_2:"Syötä kutsukoodi",
-    kyc_72: "PIN",
 
 
     
 
+    server_error_18004: "Kutsukoodia vastaavaa käyttäjää ei ole olemassa",
+    server_error_18005: "Kutsukoodin käyttäminen epäonnistui",
+    server_error_18006: "Kutsu-koodi käytetty onnistuneesti",
+    server_error_18007: "Kutsutiedot ovat jo olemassa",
+    server_error_18008: "Kutsun nollaaminen epäonnistui",
+    server_error_18009: "Kutsun nollaus onnistui",
+    server_error_18010: "Et voi kutsua itseäsi",
+    server_error_18011: "Kutsusuhde on jo olemassa",
+
+    server_error_40201: "Olen kirjautunut sisään tänään",
+    server_error_40202: "Kirjautumiskonfiguraatio ei löydy",
+    
+    server_error_40301: "Tapahtuma ei ole aktiivinen",
+    server_error_40302: "Puhelimen täytyy olla sidottu osallistuaksesi toimintaan",
+    server_error_40303: "Vain kutsutut käyttäjät voivat osallistua tapahtumaan",
+    server_error_40304: "Vain käyttäjät, jotka ovat luoneet luottokortin, voivat osallistua tapahtumaan",
+
+    server_error_40401: "Staking-kaivoskokonaisuutta ei ole",
+    server_error_40402: "Staking-kaivostoiminnan määrä on saavuttanut enimmäisrajan",
+    server_error_40403: "Staking-määrä on pienempi kuin vähimmäismäärä",
+    server_error_40404: "Staking-muistutuksen vähennys epäonnistui",
+
+    server_error_40501: "Pyörän asetukset ovat tyhjät",
+    server_error_40502: "Pyörän kokoonpanoa ei ole",
+    server_error_40503: "Se agotaron los giros de la rueda",
+
+    server_error_40601: "Globaalin solmun kokoonpano on tyhjä",
+    server_error_40602: "Riittämätön saldo globaalin solmun ostoon",
+    server_error_40603: "Global solmun osto epäonnistui",
+
+    server_error_40701: "Kaksisuuntainen talouskonfiguraatio on tyhjä",
+    server_error_40702: "Riittämätön saldo kaksisuuntaiseen sijoitushankintaan",
+    server_error_40703: "Kaksisuuntainen talousostos epäonnistui",
+    server_error_40704: "Kaksisuuntaisen sijoituksen ostosumma on tyhjä",
+
+    server_error_40801: "Compound Treasuren nostovaluutta on tyhjä",
+    server_error_40802: "Compound Treasure -nostosumma virheellinen",
+    server_error_40803: "Compound Treasure -nostotietuetta ei ole olemassa",
+    server_error_40804: "Komponentti-aarteen nostettu summa ylittää saldon",
+    server_error_40805: "Virhe lisättäessä Compound Treasure -noston tietuetta",
 
 
 

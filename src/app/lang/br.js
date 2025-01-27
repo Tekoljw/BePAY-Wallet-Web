@@ -481,7 +481,7 @@ const locale = {
     card_128: "rendimento total",
     card_129: "rendimento de hoje",
     card_130: "vá para TOP.ONE para começar a negociar",
-    card_131: "ativar o cartão BeingFi",
+    card_131: "ativar o cartão BePay",
     card_132: "Faça o check-in a cada 7 dias para acumular e receber recompensas correspondentes",
     card_133: "segunda-feira",
     card_134: "terça-feira",
@@ -508,12 +508,12 @@ const locale = {
     card_155: "taxa anualizada de 24 horas",
     card_156: "deposite agora",
     card_157: "regras da atividade de airdrop",
-    card_158: "todos os usuários do banco criptográfico BeingFi dividem o total",
+    card_158: "todos os usuários do banco criptográfico BePay dividem o total",
     card_159: "liberação diária do prêmio total",
     card_160: "fórmula de cálculo do rendimento",
     card_161: "Seu rendimento = Total de ativos da conta / Total de ativos de todos os usuários da plataforma * Recompensa total liberada",
     card_162: "Vá para a exchange Top.one para negociar contratos BFT em posições longas e curtas. Todas as perdas de negociação, sejam perdas de investimento ou taxas de transação, serão compensadas com um presente de BFT à vista equivalente a 100% do valor de mercado anterior.",
-    card_163: "É necessário ativar o cartão criptográfico BeingFi antes de participar desta atividade!",
+    card_163: "É necessário ativar o cartão criptográfico BePay antes de participar desta atividade!",
     card_164: "ativar agora",
     card_165: "vincular o código de convite",
     card_166: "Esta atividade é exclusiva para usuários convidados!",
@@ -605,8 +605,8 @@ const locale = {
     server_error_10101: "Falha ao obter o endereço da carteira",
     server_error_10201: "Falha na criação do pedido",
     server_error_11001: "Informação do usuário não encontrada",
-    server_error_11002: "Usuário BeingFi não encontrado",
-    server_error_11003: "O KYC do usuário BeingFi não foi aprovado",
+    server_error_11002: "Usuário BePay não encontrado",
+    server_error_11003: "O KYC do usuário BePay não foi aprovado",
     server_error_11101: "O ID do usuário do comerciante é null",
     server_error_12001: "Erro de parâmetro na verificação de staking de NFT",
     server_error_12002: "Erro na participação de staking de NFT",
@@ -689,7 +689,7 @@ const locale = {
     server_error_10206: "Proprietário do pedido incorreto",
     server_error_10207: "Tipo de pedido vazio",
     server_error_10208: "Pedido inválido",
-    server_error_11004: "E-mail do usuário BeingFi não existe",
+    server_error_11004: "E-mail do usuário BePay não existe",
     server_error_11005: "Informações do usuário oponente não existem",
     server_error_11006: "Endereço do usuário inválido",
     server_error_11007: "Endereço vazio",
@@ -818,38 +818,77 @@ const locale = {
     card_246: "Cancelar",
     card_247: "Em processo de solicitação",
     card_248: "Em análise",
-    
+
     card_249: "Adicionar",
     card_250: "Por favor, feche o mini aplicativo e clique no botão de atualizar para tentar novamente.",
     card_251: "Cartão de Pagamento Apple",
     card_252: "Ativar cartão existente",
     card_253: "Priorize o uso de um endereço dos EUA, se não tiver, clique em [Exemplo] no KYC para fornecer as informações necessárias",
-    card_254:"Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
-    card_255:"Apple, ",
+    card_254: "Alibaba, Pinduodu, Tencent, 12306, Facebook, steam, Pubg, Taobao, Yettel, Yandex, Google, GitHub, Oracle, Cloudways, ExpressVPN, Midjourney, United Air",
+    card_255: "Apple, ",
 
-    kyc_68:"Endereço1",
-    kyc_69:"Endereço2",
-    kyc_70:"Endereço3",
-    kyc_71:"Exemplo",
-
-
-    card_256:"Por favor, certifique-se de que suas informações de KYC estão corretas e escolha o endereço solicitado.",
-    card_257:"Modificar informações de KYC",
-    card_258:"Pagar taxa de substituição de cartão:",
-    card_259:"Verificação KYC",
-    card_260:"É necessário concluir a verificação KYC antes de solicitar o cartão.",
-    card_261:"Por favor, entre em contato com o serviço de atendimento ao cliente online para mais detalhes.",
-    card_262:"Em revisão, os ativos foram congelados",
-    card_263:"Revisão bem-sucedida, ativos descongelados",
-    card_264:"Falha na retirada, ativos congelados foram liberados",
-    card_265:"Saldo",
-
-    earn_1:"código de convite",
-    earn_2:"Preencher o código de convite",
-    kyc_72: "PIN",
+    kyc_68: "Endereço1",
+    kyc_69: "Endereço2",
+    kyc_70: "Endereço3",
+    kyc_71: "Exemplo",
 
 
+    card_256: "Por favor, certifique-se de que suas informações de KYC estão corretas e escolha o endereço solicitado.",
+    card_257: "Modificar informações de KYC",
+    card_258: "Pagar taxa de substituição de cartão:",
+    card_259: "Verificação KYC",
+    card_260: "É necessário concluir a verificação KYC antes de solicitar o cartão.",
+    card_261: "Por favor, entre em contato com o serviço de atendimento ao cliente online para mais detalhes.",
+    card_262: "Em revisão, os ativos foram congelados",
+    card_263: "Revisão bem-sucedida, ativos descongelados",
+    card_264: "Falha na retirada, ativos congelados foram liberados",
+    card_265: "Saldo",
+
+    earn_1: "código de convite",
+    earn_2: "Preencher o código de convite",
+
+
+
+    server_error_18004: "O usuário correspondente ao código de convite não existe",
+    server_error_18005: "Falha ao usar o código de convite",
+    server_error_18006: "Código de convite usado com sucesso",
+    server_error_18007: "A informação do convite já existe",
+    server_error_18008: "Falha ao redefinir convite",
+    server_error_18009: "Redefinir convite com sucesso",
+    server_error_18010: "Não pode convidar a si mesmo",
+    server_error_18011: "A relação de convite já existe",
+
+    server_error_40201: "Já fiz o check-in hoje",
+    server_error_40202: "Configuração de login inexistente",
     
+    server_error_40301: "O evento não está ativado",
+    server_error_40302: "É necessário vincular o telefone para participar da atividade",
+    server_error_40303: "Apenas usuários convidados podem participar da atividade",
+    server_error_40304: "Somente usuários que criaram um cartão de crédito podem participar do evento",
+
+    server_error_40401: "Configuração de mineração de staking não existe",
+    server_error_40402: "A quantidade de mineração por staking atingiu o limite máximo",
+    server_error_40403: "O valor do staking é inferior ao valor mínimo",
+    server_error_40404: "Falha na dedução do valor de mineração por staking",
+
+    server_error_40501: "A configuração da roda está vazia",
+    server_error_40502: "Configuração da roleta não existe",
+    server_error_40503: "Número de giros da roda esgotado",
+
+    server_error_40601: "A configuração do nó global está vazia",
+    server_error_40602: "Saldo insuficiente para compra de nó global",
+    server_error_40603: "Falha na compra do nó global",
+
+    server_error_40701: "A configuração de finanças bidirecionais está vazia",
+    server_error_40702: "Saldo insuficiente para compra de investimento bidirecional",
+    server_error_40703: "Compra financeira bidirecional falhou",
+    server_error_40704: "O valor da compra de investimentos bidirecionais está vazio",
+
+    server_error_40801: "A moeda para retirada do Tesouro Composto está vazia",
+    server_error_40802: "Quantia de retirada do Tesouro Composto incorreta",
+    server_error_40803: "O registro de retirada do Tesouro Compostos não existe",
+    server_error_40804: "O valor retirado do Tesouro Compostos excede o saldo",
+    server_error_40805: "Erro ao adicionar registro de saque do Tesouro Composto",
 
 
 
@@ -868,7 +907,7 @@ const locale = {
 
 
 
-    
+
 };
 export default locale;
 

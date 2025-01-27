@@ -381,7 +381,7 @@ const locale = {
     card_4: "Send",
     card_5: "Buy",
     card_6: "Create Address",
-    card_7: "Transfer in BeingFi",
+    card_7: "Transfer in BePay",
     card_8: "Send/Withdraw",
     card_9: "Apply for card",
     card_10: "Wallet balance",
@@ -495,7 +495,7 @@ const locale = {
     card_128: "total revenue",
     card_129: "daily earnings",
     card_130: "Go to TOP.ONE start trading",
-    card_131: "activate BeingFi card",
+    card_131: "activate BePay card",
     card_132: "Check in every 7 days to accumulate and receive corresponding rewards",
     card_133: "1day",
     card_134: "2day",
@@ -522,12 +522,12 @@ const locale = {
     card_155: "24-hour annualized",
     card_156: "deposit immediately",
     card_157: "airdrop rules",
-    card_158: "All BeingFi crypto bank users share the total amount",
+    card_158: "All BePay crypto bank users share the total amount",
     card_159: "release total prize pool daily",
     card_160: "profit calculation formula",
     card_161: "Your earnings = (Account total assets / Total assets of all platform users) * Total released rewards",
     card_162: "Go to the exchange Top.one to trade BFT contracts for both long and short positions. For all trading losses, whether due to investment losses or transaction fees, you will receive a 100% equivalent value of BFT spot tokens as compensation based on the market price at the time.",
-    card_163: "You must first activate a BeingFi crypto bank card to participate in this activity!",
+    card_163: "You must first activate a BePay crypto bank card to participate in this activity!",
     card_164: "activate now",
     card_165: "enter invitation code",
     card_166: "This activity is open only to invited users!",
@@ -619,8 +619,8 @@ const locale = {
     server_error_10101: "Failed to retrieve wallet address",
     server_error_10201: "Order creation failed",
     server_error_11001: "User information not found",
-    server_error_11002: "BeingFi user does not exist",
-    server_error_11003: "BeingFi user's KYC verification did not pass",
+    server_error_11002: "BePay user does not exist",
+    server_error_11003: "BePay user's KYC verification did not pass",
     server_error_11101: "Merchant user ID is null",
     server_error_12001: "NFT staking check parameter error",
     server_error_12002: "NFT staking participation error",
@@ -703,7 +703,7 @@ const locale = {
     server_error_10206: "Order owner error",
     server_error_10207: "Order type is empty",
     server_error_10208: "Invalid order",
-    server_error_11004: "BeingFi user email does not exist",
+    server_error_11004: "BePay user email does not exist",
     server_error_11005: "Counterparty user information does not exist",
     server_error_11006: "User address is invalid",
     server_error_11007: "Address is empty",
@@ -854,10 +854,47 @@ const locale = {
 
     earn_1:"Invitation code",
     earn_2:"Enter referral code",
-    kyc_72: "PIN",
-
-
     
+    server_error_18004: "The user corresponding to the invitation code does not exist",
+    server_error_18005: "Failed to use the invitation code",
+    server_error_18006: "Successfully used invitation code",
+    server_error_18007: "Invitation information already exists",
+    server_error_18008: "Reset invitation failed",
+    server_error_18009: "Reset invitation successful",
+    server_error_18010: "Cannot invite yourself",
+    server_error_18011: "The invitation relationship already exists",
+
+    server_error_40201: "I have checked in today",
+    server_error_40202: "Sign-in configuration not found",
+    
+    server_error_40301: "The event is not active",
+    server_error_40302: "You must bind your phone to participate in the activity",
+    server_error_40303: "Only invited users can participate in the event",
+    server_error_40304: "Only users who have created a credit card can participate in the event",
+
+    server_error_40401: "Staking mining configuration does not exist",
+    server_error_40402: "The staking mining amount has reached the maximum limit",
+    server_error_40403: "Staking mining amount is less than the minimum amount",
+    server_error_40404: "Staking mining deduction failed",
+
+    server_error_40501: "The wheel configuration is empty",
+    server_error_40502: "Wheel configuration does not exist",
+    server_error_40503: "Wheel spins used up",
+
+    server_error_40601: "Global node configuration is empty",
+    server_error_40602: "Insufficient balance for global node purchase",
+    server_error_40603: "Global node purchase failed",
+
+    server_error_40701: "Two-way financial configuration is empty",
+    server_error_40702: "Insufficient balance for two-way financial purchase",
+    server_error_40703: "Two-way financial purchase failed",
+    server_error_40704: "The amount for two-way financial purchase is empty",
+
+    server_error_40801: "The currency for Compound Treasure withdrawal is empty",
+    server_error_40802: "Compound Treasure withdrawal amount is incorrect",
+    server_error_40803: "The record for Compound Treasure withdrawal does not exist",
+    server_error_40804: "The amount withdrawn from Compound Treasure exceeds the balance",
+    server_error_40805: "Error adding record for Compound Treasure withdrawal",
 
 
 

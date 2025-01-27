@@ -483,7 +483,7 @@ const locale = {
     card_128: "총 수익",
     card_129: "오늘 수익",
     card_130: "TOP.ONE으로 가서 거래 시작하기",
-    card_131: "BeingFi 카드 개통하기",
+    card_131: "BePay 카드 개통하기",
     card_132: "7일마다 체크인하여 해당 보상을 받으세요",
     card_133: "월요일",
     card_134: "화요일",
@@ -510,12 +510,12 @@ const locale = {
     card_155: "24시간 연환율",
     card_156: "즉시 입금하기",
     card_157: "에어드랍 이벤트 규칙",
-    card_158: "모든 BeingFi 암호화 은행 사용자들이 총액을 나누어 갖습니다",
+    card_158: "모든 BePay 암호화 은행 사용자들이 총액을 나누어 갖습니다",
     card_159: "매일 총 상금 풀을 해제합니다",
     card_160: "수익 계산 공식",
     card_161: "귀하의 수익 = 계좌 총 자산 / 플랫폼 모든 사용자 총 자산 * 해제된 총 보상",
     card_162: "거래소 Top.one으로 가서 BFT 계약으로 다수 및 공매도 거래를 진행하세요. 모든 거래 손실, 투자 손실이든 수수료 손실이든 관계없이, 이전 시장 가격으로 100%에 해당하는 BFT 현물을 보상으로 제공받게 됩니다.",
-    card_163: "먼저 BeingFi 암호화 카드를 개통해야 이 활동에 참여할 수 있습니다!",
+    card_163: "먼저 BePay 암호화 카드를 개통해야 이 활동에 참여할 수 있습니다!",
     card_164: "즉시 개통하기",
     card_165: "초대 코드 입력",
     card_166: "이 활동은 초대된 사용자만 참여할 수 있습니다！",
@@ -607,8 +607,8 @@ const locale = {
     server_error_10101: "지갑 주소 가져오기 실패",
     server_error_10201: "주문 생성 실패",
     server_error_11001: "사용자 정보가 존재하지 않습니다",
-    server_error_11002: "BeingFi 사용자가 존재하지 않습니다",
-    server_error_11003: "BeingFi 사용자의 KYC 인증이 통과되지 않았습니다",
+    server_error_11002: "BePay 사용자가 존재하지 않습니다",
+    server_error_11003: "BePay 사용자의 KYC 인증이 통과되지 않았습니다",
     server_error_11101: "상인 사용자 ID가 null입니다",
     server_error_12001: "NFT 스테이킹 확인 파라미터 오류",
     server_error_12002: "NFT 스테이킹 참여 오류",
@@ -691,7 +691,7 @@ const locale = {
     server_error_10206: "주문 소유자 오류",
     server_error_10207: "주문 유형 없음",
     server_error_10208: "잘못된 주문",
-    server_error_11004: "BeingFi 사용자 이메일 없음",
+    server_error_11004: "BePay 사용자 이메일 없음",
     server_error_11005: "상대 사용자 정보 없음",
     server_error_11006: "사용자 주소가 유효하지 않음",
     server_error_11007: "주소가 비어 있음",
@@ -849,11 +849,50 @@ const locale = {
 
     earn_1:"초대 코드",
     earn_2:"초대 코드를 입력하세요",
-    kyc_72: "PIN",
 
 
     
 
+    server_error_18004: "초대 코드에 해당하는 사용자가 존재하지 않습니다",
+    server_error_18005: "초대 코드 사용 실패",
+    server_error_18006: "초대 코드가 성공적으로 사용되었습니다",
+    server_error_18007: "초대 정보가 이미 존재합니다",
+    server_error_18008: "초대 리셋 실패",
+    server_error_18009: "초대 재설정 성공",
+    server_error_18010: "자신을 초대할 수 없습니다",
+    server_error_18011: "초대 관계가 이미 존재합니다",
+
+    server_error_40201: "오늘 체크인 했습니다",
+    server_error_40202: "로그인 설정을 찾을 수 없습니다",
+    
+    server_error_40301: "이벤트가 활성화되지 않았습니다",
+    server_error_40302: "활동에 참여하려면 휴대폰을 연결해야 합니다",
+    server_error_40303: "초대받은 사용자만 활동에 참여할 수 있습니다",
+    server_error_40304: "신용카드를 만든 사용자만 이벤트에 참여할 수 있습니다",
+
+    server_error_40401: "스테이킹 채굴 설정이 존재하지 않습니다",
+    server_error_40402: "스테이킹 채굴 수량이 최대 한도에 도달했습니다",
+    server_error_40403: "스테이킹 마이닝 금액이 최소 금액보다 적습니다",
+    server_error_40404: "스테이킹 마이닝 금액 공제 실패",
+
+    server_error_40501: "휠 설정이 비어 있습니다",
+    server_error_40502: "휠 설정이 존재하지 않습니다",
+    server_error_40503: "휠 회수가 다 사용되었습니다",
+
+    server_error_40601: "글로벌 노드 구성은 비어 있습니다",
+    server_error_40602: "글로벌 노드 구매 잔액 부족",
+    server_error_40603: "글로벌 노드 구매 실패",
+
+    server_error_40701: "양방향 재정 설정이 비어 있습니다",
+    server_error_40702: "양방향 금융 구매 잔액 부족",
+    server_error_40703: "양방향 금융 구매 실패",
+    server_error_40704: "양방향 금융 구매 금액이 비어 있습니다",
+
+    server_error_40801: "복리보상 출금 통화가 비어 있습니다",
+    server_error_40802: "복리보물 인출 금액이 잘못되었습니다",
+    server_error_40803: "컴파운드 트레저 인출 기록이 존재하지 않습니다",
+    server_error_40804: "복리 보물에서 인출한 금액이 잔액을 초과했습니다",
+    server_error_40805: "복리보물 출금 기록 추가 오류",
 
 
 

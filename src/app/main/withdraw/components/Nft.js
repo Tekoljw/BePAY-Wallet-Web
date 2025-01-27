@@ -655,7 +655,7 @@ function Nft(props) {
                                 </motion.div>
                                 <motion.div className='flex justify-content-center' variants={item} style={{ margin: "0 auto", marginTop: "20px", fontSize: "20px", }}>
                                     <img style={{ width: "28px", height: "28px", borderRadius: "5px" }} src='wallet/assets/images/wallet/zt.png'></img>
-                                    <div className='ml-12'>BeingFi Genesis Robot</div>
+                                    <div className='ml-12'>BePay Genesis Robot</div>
                                 </motion.div>
                                 <motion.div variants={item} style={{ margin: "0 auto", textAlign: "center", marginTop: "10px", fontSize: "16px", color: "#ffc600" }}>● Pending Review</motion.div>
                                 <motion.div variants={item} className='flex justify-content-space px-20 mt-40' >

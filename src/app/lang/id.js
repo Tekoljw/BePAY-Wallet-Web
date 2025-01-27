@@ -481,7 +481,7 @@ const locale = {
     card_128: "total pendapatan",
     card_129: "pendapatan hari ini",
     card_130: "Pergi ke TOP.ONE untuk mulai berdagang",
-    card_131: "Aktifkan kartu BeingFi",
+    card_131: "Aktifkan kartu BePay",
     card_132: "Check-in setiap 7 hari untuk mengumpulkan dan menerima hadiah yang sesuai",
     card_133: "Senin",
     card_134: "Selasa",
@@ -508,12 +508,12 @@ const locale = {
     card_155: "annualisasi 24 jam",
     card_156: "setor uang segera",
     card_157: "aturan kegiatan airdrop",
-    card_158: "Semua pengguna bank kripto BeingFi membagi total",
+    card_158: "Semua pengguna bank kripto BePay membagi total",
     card_159: "Melepaskan total hadiah setiap hari",
     card_160: "rumus perhitungan pendapatan",
     card_161: "Pendapatan Anda = (total aset akun / total aset semua pengguna platform) * total hadiah yang dilepaskan",
     card_162: "Pergi ke bursa Top.one untuk melakukan perdagangan kontrak BFT baik posisi panjang maupun pendek. Semua kerugian perdagangan, baik kerugian investasi maupun biaya transaksi, akan dikompensasikan dengan pemberian BFT spot setara 100% dari nilai pasar sebelumnya",
-    card_163: "Anda harus mengaktifkan kartu kripto BeingFi terlebih dahulu untuk dapat berpartisipasi dalam acara ini!",
+    card_163: "Anda harus mengaktifkan kartu kripto BePay terlebih dahulu untuk dapat berpartisipasi dalam acara ini!",
     card_164: "Aktifkan sekarang",
     card_165: "Ikat kode undangan",
     card_166: "Acara ini hanya terbuka untuk pengguna yang diundang!",
@@ -605,8 +605,8 @@ const locale = {
     server_error_10101: "Gagal mengambil alamat dompet",
     server_error_10201: "Pembuatan pesanan gagal",
     server_error_11001: "Informasi pengguna tidak ditemukan",
-    server_error_11002: "Pengguna BeingFi tidak ada",
-    server_error_11003: "Verifikasi KYC pengguna BeingFi tidak lolos",
+    server_error_11002: "Pengguna BePay tidak ada",
+    server_error_11003: "Verifikasi KYC pengguna BePay tidak lolos",
     server_error_11101: "ID pengguna pedagang adalah null",
     server_error_12001: "Kesalahan parameter pemeriksaan staking NFT",
     server_error_12002: "Kesalahan partisipasi staking NFT",
@@ -689,7 +689,7 @@ const locale = {
     server_error_10206: "Pemilik pesanan salah",
     server_error_10207: "Tipe pesanan kosong",
     server_error_10208: "Pesanan tidak valid",
-    server_error_11004: "Email pengguna BeingFi tidak ada",
+    server_error_11004: "Email pengguna BePay tidak ada",
     server_error_11005: "Informasi pengguna lawan tidak ada",
     server_error_11006: "Alamat pengguna tidak valid",
     server_error_11007: "Alamat kosong",
@@ -847,10 +847,49 @@ const locale = {
 
     earn_1:"kode undangan",
     earn_2:"Masukkan kode undangan",
-    kyc_72: "PIN",
 
 
     
+    server_error_18004: "Pengguna yang sesuai dengan kode undangan tidak ada",
+    server_error_18005: "Gagal menggunakan kode undangan",
+    server_error_18006: "Kode undangan berhasil digunakan",
+    server_error_18007: "Informasi undangan sudah ada",
+    server_error_18008: "Gagal mengatur ulang undangan",
+    server_error_18009: "Reset undangan berhasil",
+    server_error_18010: "Anda tidak bisa mengundang diri sendiri",
+    server_error_18011: "Hubungan undangan sudah ada",
+
+    server_error_40201: "Saya sudah check-in hari ini",
+    server_error_40202: "Konfigurasi masuk tidak ditemukan",
+    
+    server_error_40301: "Acara belum aktif",
+    server_error_40302: "Anda harus mengikat ponsel untuk ikut serta dalam kegiatan",
+    server_error_40303: "Hanya pengguna yang diundang yang dapat berpartisipasi dalam acara",
+    server_error_40304: "Hanya pengguna yang telah membuat kartu kredit yang dapat berpartisipasi dalam acara",
+
+    server_error_40401: "Konfigurasi pertambangan staking tidak ada",
+    server_error_40402: "Jumlah penambangan staking telah mencapai batas maksimum",
+    server_error_40403: "Jumlah staking mining kurang dari jumlah minimum",
+    server_error_40404: "Gagal pemotongan jumlah penambangan staking",
+
+    server_error_40501: "Konfigurasi roda kosong",
+    server_error_40502: "Konfigurasi roda tidak ada",
+    server_error_40503: "Jumlah putaran roda habis",
+
+    server_error_40601: "Konfigurasi node global kosong",
+    server_error_40602: "Saldo tidak mencukupi untuk pembelian node global",
+    server_error_40603: "Pembelian node global gagal",
+
+    server_error_40701: "Konfigurasi keuangan dua arah kosong",
+    server_error_40702: "Saldo tidak cukup untuk pembelian investasi dua arah",
+    server_error_40703: "Pembelian keuangan dua arah gagal",
+    server_error_40704: "Jumlah pembelian keuangan dua arah kosong",
+
+    server_error_40801: "Mata uang untuk penarikan Compound Treasure kosong",
+    server_error_40802: "Jumlah penarikan Compound Treasure salah",
+    server_error_40803: "Rekor penarikan Compound Treasure tidak ada",
+    server_error_40804: "Jumlah yang ditarik dari Harta Bunga Majemuk melebihi saldo",
+    server_error_40805: "Kesalahan saat menambahkan catatan penarikan Compound Treasure",
 
 
 

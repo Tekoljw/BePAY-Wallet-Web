@@ -484,7 +484,7 @@ const locale = {
     card_128: "Gesamtgewinn",
     card_129: "Heutiger Gewinn",
     card_130: "Gehe zu TOP.ONE, um mit dem Handel zu beginnen",
-    card_131: "Beantragen Sie die BeingFi-Karte",
+    card_131: "Beantragen Sie die BePay-Karte",
     card_132: "Melden Sie sich alle 7 Tage an, um entsprechende Belohnungen zu erhalten",
     card_133: "Montag",
     card_134: "Dienstag",
@@ -511,12 +511,12 @@ const locale = {
     card_155: "24-Stunden annualisiert",
     card_156: "Soforteinzahlung",
     card_157: "Airdrop-Aktivitätsregeln",
-    card_158: "Alle BeingFi-Krypto-Banknutzer teilen sich die Gesamtsumme",
+    card_158: "Alle BePay-Krypto-Banknutzer teilen sich die Gesamtsumme",
     card_159: "Täglich den Gesamtpreisfonds freigeben",
     card_160: "Berechnungsformel für den Ertrag",
     card_161: "Ihr Ertrag = (Ihr Kontoguthaben / Gesamtes Vermögen aller Plattform-Nutzer) * Freigegebener Gesamtpreis",
     card_162: "Gehen Sie zur Börse Top.one, um Long- und Short-Trades auf den BFT-Kontrakt durchzuführen. Alle Handelsverluste, sei es durch Investitionsverluste oder durch Handelsgebühren, werden Ihnen als Entschädigung in Form von BFT-Spot-Token im Wert von 100% des Marktpreises der vorherigen Zeit erstattet.",
-    card_163: "Zuerst müssen Sie die BeingFi-Krypto-Bankkarte aktivieren, um an dieser Aktion teilzunehmen!",
+    card_163: "Zuerst müssen Sie die BePay-Krypto-Bankkarte aktivieren, um an dieser Aktion teilzunehmen!",
     card_164: "Jetzt aktivieren",
     card_165: "Einladungscode binden",
     card_166: "Diese Veranstaltung ist nur für eingeladene Nutzer zugänglich!",
@@ -608,8 +608,8 @@ const locale = {
     server_error_10101:"Wallet-Adresse konnte nicht abgerufen werden",
     server_error_10201:"Bestellungserstellung fehlgeschlagen",
     server_error_11001:"Benutzerinformationen nicht vorhanden",
-    server_error_11002:"BeingFi-Benutzer existiert nicht",
-    server_error_11003:"Der KYC-Überprüfung von BeingFi-Benutzer ist nicht bestanden",
+    server_error_11002:"BePay-Benutzer existiert nicht",
+    server_error_11003:"Der KYC-Überprüfung von BePay-Benutzer ist nicht bestanden",
     server_error_11101:"Händler-Benutzer-ID ist null",
     server_error_12001:"Parameterfehler bei der NFT-Staking-Überprüfung",
     server_error_12002:"Fehler bei der Teilnahme am NFT-Staking",
@@ -692,7 +692,7 @@ const locale = {
     server_error_10206:"Fehler beim Bestellinhaber",
     server_error_10207:"Bestelltyp leer",
     server_error_10208:"Bestellung ungültig",
-    server_error_11004:"BeingFi-Benutzer-E-Mail existiert nicht",
+    server_error_11004:"BePay-Benutzer-E-Mail existiert nicht",
     server_error_11005:"Benutzerinformationen des Gegenübers existieren nicht",
     server_error_11006:"Ungültige Benutzeradresse",
     server_error_11007:"Adresse ist leer",
@@ -848,10 +848,49 @@ const locale = {
 
     earn_1:"Einladungscode",
     earn_2:"Geben Sie den Einladungs-Code ein",
-    kyc_72: "PIN",
 
 
     
+    server_error_18004: "Der Benutzer, der dem Einladungscode entspricht, existiert nicht",
+    server_error_18005: "Verwendung des Einladungscodes fehlgeschlagen",
+    server_error_18006: "Einladungs-Code erfolgreich verwendet",
+    server_error_18007: "Einladungsinformationen existieren bereits",
+    server_error_18008: "Zurücksetzen der Einladung fehlgeschlagen",
+    server_error_18009: "Einladung erfolgreich zurückgesetzt",
+    server_error_18010: "Du kannst dich nicht selbst einladen",
+    server_error_18011: "Die Einladung ist bereits vorhanden",
+
+    server_error_40201: "Ich habe mich heute eingecheckt",
+    server_error_40202: "Anmeldungskonfiguration nicht vorhanden",
+    
+    server_error_40301: "Das Event ist nicht aktiviert",
+    server_error_40302: "Sie müssen Ihr Handy binden, um an der Aktivität teilzunehmen",
+    server_error_40303: "Nur eingeladene Nutzer können an der Veranstaltung teilnehmen",
+    server_error_40304: "Nur Benutzer, die eine Kreditkarte erstellt haben, können an der Veranstaltung teilnehmen",
+
+    server_error_40401: "Staking-Mining-Konfiguration existiert nicht",
+    server_error_40402: "Die Menge des Staking-Mining hat das maximale Limit erreicht",
+    server_error_40403: "Der Staking-Betrag ist geringer als der Mindestbetrag",
+    server_error_40404: "Fehler bei der Abzug des Staking-Mining-Betrags",
+
+    server_error_40501: "Die Raddrehungskonfiguration ist leer",
+    server_error_40502: "Raddrehkonfiguration existiert nicht",
+    server_error_40503: "Drehzahl der Räder aufgebraucht",
+
+    server_error_40601: "Die globale Knotenkonfiguration ist leer",
+    server_error_40602: "Unzureichendes Guthaben für den Kauf des globalen Knotens",
+    server_error_40603: "Kauf des globalen Knotens fehlgeschlagen",
+
+    server_error_40701: "Zwei-Wege-Finanzkonfiguration ist leer",
+    server_error_40702: "Unzureichendes Guthaben für den Kauf von Zwei-Wege-Investitionen",
+    server_error_40703: "Kauf der Zwei-Wege-Finanzierung fehlgeschlagen",
+    server_error_40704: "Der Betrag für den Kauf von Zwei-Wege-Investitionen ist leer",
+
+    server_error_40801: "Die Währung für die Compound Treasure-Abhebung ist leer",
+    server_error_40802: "Falscher Betrag für die Compound Treasure Auszahlung",
+    server_error_40803: "Der Auszahlungsdatensatz des Compound Treasure existiert nicht",
+    server_error_40804: "Der abgehobene Betrag aus dem Zinseszins-Tresor überschreitet das Guthaben",
+    server_error_40805: "Fehler beim Hinzufügen des Abhebungsdatensatzes für Compound Treasure",
 
 
 

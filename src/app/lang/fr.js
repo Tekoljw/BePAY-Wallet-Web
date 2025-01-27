@@ -481,7 +481,7 @@ const locale = {
     card_128: "revenu total",
     card_129: "revenu du jour",
     card_130: "Rendez-vous sur TOP.ONE pour commencer à trader",
-    card_131: "Activer la carte BeingFi",
+    card_131: "Activer la carte BePay",
     card_132: "Connectez-vous tous les 7 jours pour accumuler et recevoir des récompenses correspondantes",
     card_133: "lundi",
     card_134: "mardi",
@@ -508,12 +508,12 @@ const locale = {
     card_155: "rendement annualisé sur 24 heures",
     card_156: "effectuer un dépôt immédiat",
     card_157: "règles de l'airdrop",
-    card_158: "Tous les utilisateurs de la banque cryptographique BeingFi se partagent le total",
+    card_158: "Tous les utilisateurs de la banque cryptographique BePay se partagent le total",
     card_159: "Libération quotidienne du pool de prix",
     card_160: "formule de calcul des revenus",
     card_161: "Votre revenu = Total des actifs du compte / Total des actifs de tous les utilisateurs de la plateforme * Récompense totale libérée",
     card_162: "Rendez-vous sur l'échange Top.one pour effectuer des transactions longues et courtes sur les contrats BFT. Pour toutes les pertes de transaction, qu'il s'agisse de pertes d'investissement ou de frais de transaction, vous recevrez une compensation sous forme de BFT au comptant équivalent à 100 % de la valeur du marché précédent.",
-    card_163: "Vous devez d'abord activer une carte bancaire cryptographique BeingFi pour participer à cette activité!",
+    card_163: "Vous devez d'abord activer une carte bancaire cryptographique BePay pour participer à cette activité!",
     card_164: "activer immédiatement",
     card_165: "lier le code d’invitation",
     card_166: "Cette activité est réservée uniquement aux utilisateurs invités!",
@@ -605,8 +605,8 @@ const locale = {
     server_error_10101: "Échec de récupération de l'adresse du portefeuille",
     server_error_10201: "Échec de la création de commande",
     server_error_11001: "Informations utilisateur introuvables",
-    server_error_11002: "L'utilisateur BeingFi n'existe pas",
-    server_error_11003: "La vérification KYC de l'utilisateur BeingFi n'a pas été approuvée",
+    server_error_11002: "L'utilisateur BePay n'existe pas",
+    server_error_11003: "La vérification KYC de l'utilisateur BePay n'a pas été approuvée",
     server_error_11101: "L'ID utilisateur du marchand est null",
     server_error_12001: "Erreur de paramètre dans la vérification de staking NFT",
     server_error_12002: "Erreur de participation au staking NFT",
@@ -689,7 +689,7 @@ const locale = {
     server_error_10206: "Propriétaire de la commande incorrect",
     server_error_10207: "Type de commande vide",
     server_error_10208: "Commande invalide",
-    server_error_11004: "L'email de l'utilisateur BeingFi n'existe pas",
+    server_error_11004: "L'email de l'utilisateur BePay n'existe pas",
     server_error_11005: "Les informations de l'utilisateur opposé n'existent pas",
     server_error_11006: "Adresse de l'utilisateur invalide",
     server_error_11007: "Adresse vide",
@@ -846,11 +846,50 @@ const locale = {
 
     earn_1:"code d'invitation",
     earn_2:"Entrez le code de parrainage",
-    kyc_72: "PIN",
 
 
     
 
+    server_error_18004: "L'utilisateur correspondant au code d'invitation n'existe pas",
+    server_error_18005: "Échec de l'utilisation du code d'invitation",
+    server_error_18006: "Code d'invitation utilisé avec succès",
+    server_error_18007: "Les informations d'invitation existent déjà",
+    server_error_18008: "Échec de la réinitialisation de l'invitation",
+    server_error_18009: "Réinitialisation de l'invitation réussie",
+    server_error_18010: "Vous ne pouvez pas vous inviter vous-même",
+    server_error_18011: "La relation d'invitation existe déjà",
+
+    server_error_40201: "Je me suis inscrit aujourd'hui",
+    server_error_40202: "Configuration de connexion introuvable",
+    
+    server_error_40301: "L'événement n'est pas activé",
+    server_error_40302: "Vous devez lier votre téléphone pour participer à l'activité",
+    server_error_40303: "Seuls les utilisateurs invités peuvent participer à l'événement",
+    server_error_40304: "Seuls les utilisateurs ayant créé une carte de crédit peuvent participer à l'événement",
+
+    server_error_40401: "La configuration du mining par staking n'existe pas",
+    server_error_40402: "La quantité de minage par staking a atteint la limite maximale",
+    server_error_40403: "Le montant de minage par mise est inférieur au montant minimum",
+    server_error_40404: "Échec de la déduction du montant de l'exploitation minière par staking",
+
+    server_error_40501: "La configuration de la roue est vide",
+    server_error_40502: "La configuration de la roue n'existe pas",
+    server_error_40503: "Nombre de tours de roue épuisé",
+
+    server_error_40601: "La configuration du nœud global est vide",
+    server_error_40602: "Solde insuffisant pour l'achat du nœud global",
+    server_error_40603: "Échec de l'achat du nœud global",
+
+    server_error_40701: "La configuration financière bidirectionnelle est vide",
+    server_error_40702: "Solde insuffisant pour l'achat d'investissement bidirectionnel",
+    server_error_40703: "Échec de l'achat financier bidirectionnel",
+    server_error_40704: "Le montant d'achat pour l'investissement bidirectionnel est vide",
+
+    server_error_40801: "Compound Treasuren nostovaluutta on tyhjä",
+    server_error_40802: "La devise pour le retrait du Trésor Composé est vide",
+    server_error_40803: "Montant de retrait du Compound Treasure incorrect",
+    server_error_40804: "Le record de retrait de Compound Treasure n'existe pas",
+    server_error_40805: "Erreur lors de l'ajout du dossier de retrait de Compound Treasure",
 
 
 

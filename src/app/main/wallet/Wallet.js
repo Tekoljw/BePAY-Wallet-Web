@@ -223,7 +223,7 @@ function Wallet(props) {
         setopenapp('Funibet Wallet')
       }
       if (openType.list[1].no == window.sessionStorage.getItem("openAppId")) {
-        setopenapp('BeingFi Wallet')
+        setopenapp('BePay Wallet')
         console.log();
       }
     } else {
@@ -362,22 +362,32 @@ function Wallet(props) {
   //   }
   // }, [symbols]);
 
+  const divRef = useRef(null);
+
+
   useEffect(() => {
-    if (userData.profile.wallet?.Crypto + userData.profile.wallet?.Fiat > 200) {
-      if (userData.profile.user.bindEmail === false && userData.profile.user.bindMobile === false) {
-        if (openBindEmail === false && openBindPhone === false) {
-          setOpenBindWinow(true);
+    if (divRef.current) {
+      if (userData.profile.wallet?.Crypto + userData.profile.wallet?.Fiat > 200) {
+        if (userData.profile.user.bindEmail === false && userData.profile.user.bindMobile === false) {
+          if (openBindEmail === false && openBindPhone === false) {
+            if (!userData.walletLoading) {
+              setTimeout(() => {
+                setOpenBindWinow(true);
+              }, 0);
+            }
+          }
         }
+      } else {
+        setOpenBindWinow(false);
       }
-    } else {
-      setOpenBindWinow(false);
     }
-  }, [userData.profile]);
+  }, [userData.profile, userData.walletLoading]);
+
 
   const backPageEvt = () => {
     setOpenBindPhone(false)
     setOpenBindEmail(false);
-    dispatch(userProfile({ forceUpdate: true}))
+    dispatch(userProfile({ forceUpdate: true }))
     myFunction;
   }
 
@@ -1087,12 +1097,16 @@ function Wallet(props) {
       if (canLoginAfterRequest(userData)) { //登录过以后才会获取余额值
         dispatch(userProfile());
         dispatch(centerGetTokenBalanceList());
-        dispatch(centerGetUserFiat({requestPayment: true})).then(() => {
+        dispatch(centerGetUserFiat({ requestPayment: true })).then(() => {
           // setLoadingShow(false)
-          dispatch(updateWalletLoading(false))
+          setTimeout(() => {
+            dispatch(updateWalletLoading(false))
+          }, 3000)
         });
       } else {
-        dispatch(updateWalletLoading(false))
+        setTimeout(() => {
+          dispatch(updateWalletLoading(false))
+        }, 3000)
       }
     }, 500)
   }, []);
@@ -1446,7 +1460,7 @@ function Wallet(props) {
   }, [userData.profile?.user?.regWallet]);
 
   return (
-    <div id="mainWallet" style={{ position: "relative" }}>
+    <div id="mainWallet" ref={divRef} style={{ position: "relative" }}>
       {
         !loadingShow && <motion.div variants={container} initial="hidden" animate="show">
           <Box
@@ -1549,7 +1563,7 @@ function Wallet(props) {
                                         return "/wallet/assets/images/login/icon-right-16.png";
                                       case "Binance Smart":
                                         return "/wallet/assets/images/login/icon-right-17.png";
-                                      case "BeingFi Wallet":
+                                      case "BePay Wallet":
                                         return "/wallet/assets/images/menu/LOGO.png ";
                                       case "value2":
                                         return "";
@@ -1613,7 +1627,7 @@ function Wallet(props) {
                                       return "/wallet/assets/images/login/icon-right-17.png";
                                     case "Wallet Connect":
                                       return "/wallet/assets/images/menu/icon-wallet-active.png ";
-                                    case "BeingFi Wallet":
+                                    case "BePay Wallet":
                                       return "/wallet/assets/images/menu/LOGO.png ";
                                     default:
                                       return "/wallet/assets/images/logo/loading-img.png ";
@@ -3241,7 +3255,7 @@ function Wallet(props) {
               onClose={() => setOpenBindWinow(false)}
             >
               <div className='flex justify-center mb-16' style={{ width: "100%" }}>
-                <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' />
+                {/* <img src="wallet/assets/images/card/tanHao.png" className='TanHaoCard' /> */}
                 <div className='TanHaoCardZi '>
                   {t('kyc_26')}
                 </div>

@@ -481,7 +481,7 @@ const locale = {
     card_128: "jumlah pendapatan",
     card_129: "pendapatan hari ini",
     card_130: "ke TOP.ONE untuk memulakan perdagangan",
-    card_131: "aktifkan kad BeingFi",
+    card_131: "aktifkan kad BePay",
     card_132: "Daftar masuk setiap 7 hari untuk mengumpul dan menerima ganjaran yang sepadan",
     card_133: "Isnin",
     card_134: "Selasa",
@@ -508,12 +508,12 @@ const locale = {
     card_155: "kadar tahunan 24 jam",
     card_156: "Masukkan wang segera",
     card_157: "Peraturan Aktiviti Airdrop",
-    card_158: "Semua pengguna bank kripto BeingFi membahagikan jumlah keseluruhan.",
+    card_158: "Semua pengguna bank kripto BePay membahagikan jumlah keseluruhan.",
     card_159: "Mengeluarkan jumlah hadiah keseluruhan setiap hari.",
     card_160: "Formula pengiraan keuntungan",
     card_161: "Pendapatan anda = Aset keseluruhan akaun / Aset keseluruhan semua pengguna platform * Jumlah ganjaran yang dikeluarkan",
     card_162: "Pergi ke bursa Top.one untuk berdagang kontrak BFT dengan posisi long atau short. Semua kerugian perdagangan, sama ada kerugian pelaburan atau yuran transaksi, akan dikompensasi dengan pemberian BFT spot sebanyak 100% nilai yang sama berdasarkan harga pasaran sebelum ini.",
-    card_163: "Anda perlu membuka akaun kad kripto BeingFi terlebih dahulu untuk menyertai aktiviti ini!",
+    card_163: "Anda perlu membuka akaun kad kripto BePay terlebih dahulu untuk menyertai aktiviti ini!",
     card_164: "Buka segera",
     card_165: "Ikat kod undangan",
     card_166: "Aktiviti ini hanya terbuka kepada pengguna yang dijemput!",
@@ -605,8 +605,8 @@ const locale = {
     server_error_10101: "Gagal mendapatkan alamat dompet",
     server_error_10201: "Ciptaan pesanan gagal",
     server_error_11001: "Maklumat pengguna tiada",
-    server_error_11002: "Pengguna BeingFi tidak wujud",
-    server_error_11003: "KYC pengguna BeingFi tidak berjaya",
+    server_error_11002: "Pengguna BePay tidak wujud",
+    server_error_11003: "KYC pengguna BePay tidak berjaya",
     server_error_11101: "ID pengguna pedagang adalah null",
     server_error_12001: "Ralat parameter semakan staking NFT",
     server_error_12002: "Ralat penyertaan NFT staking",
@@ -689,7 +689,7 @@ const locale = {
     server_error_10206: "Pemilik pesanan salah",
     server_error_10207: "Jenis pesanan kosong",
     server_error_10208: "Pesanan tidak sah",
-    server_error_11004: "E-mel pengguna BeingFi tidak wujud",
+    server_error_11004: "E-mel pengguna BePay tidak wujud",
     server_error_11005: "Maklumat pengguna lawan tidak wujud",
     server_error_11006: "Alamat pengguna tidak sah",
     server_error_11007: "Alamat kosong",
@@ -850,11 +850,50 @@ const locale = {
 
     earn_1:"kod jemputan",
     earn_2:"Masukkan kod rujukan",
-    kyc_72: "PIN",
 
 
     
 
+    server_error_18004: "Pengguna yang berkaitan dengan kod jemputan tidak wujud",
+    server_error_18005: "Gagal menggunakan kod jemputan",
+    server_error_18006: "Kod jemputan digunakan dengan berjaya",
+    server_error_18007: "Maklumat jemputan sudah ada",
+    server_error_18008: "Gagal menetapkan semula jemputan",
+    server_error_18009: "Reset jemputan berjaya",
+    server_error_18010: "Anda tidak boleh menjemput diri sendiri",
+    server_error_18011: "Hubungan jemputan sudah wujud",
+
+    server_error_40201: "Saya sudah daftar masuk hari ini",
+    server_error_40202: "Konfigurasi log masuk tidak ditemui",
+    
+    server_error_40301: "Acara belum diaktifkan",
+    server_error_40302: "Anda mesti mengikat telefon untuk menyertai aktiviti",
+    server_error_40303: "Hanya pengguna yang dijemput boleh menyertai acara",
+    server_error_40304: "Hanya pengguna yang telah membuat kad kredit boleh menyertai acara ini",
+
+    server_error_40401: "Konfigurasi perlombongan staking tidak wujud",
+    server_error_40402: "Jumlah perlombongan staking telah mencapai had maksimum",
+    server_error_40403: "Jumlah perlombongan staking kurang daripada jumlah minimum",
+    server_error_40404: "Potongan jumlah perlombongan staking gagal",
+
+    server_error_40501: "Konfigurasi roda kosong",
+    server_error_40502: "Konfigurasi roda tidak wujud",
+    server_error_40503: "Bilangan putaran roda telah habis",
+
+    server_error_40601: "Konfigurasi nod global kosong",
+    server_error_40602: "Baki tidak mencukupi untuk pembelian nod global",
+    server_error_40603: "Pembelian nod global gagal",
+
+    server_error_40701: "Konfigurasi kewangan dua hala kosong",
+    server_error_40702: "Baki tidak mencukupi untuk pembelian pelaburan dua hala",
+    server_error_40703: "Pembelian kewangan dua hala gagal",
+    server_error_40704: "Jumlah pembelian kewangan dua hala kosong",
+
+    server_error_40801: "Mata wang untuk pengeluaran Compound Treasure kosong",
+    server_error_40802: "Jumlah pengeluaran Compound Treasure salah",
+    server_error_40803: "Rekod pengeluaran Compound Treasure tidak wujud",
+    server_error_40804: "Jumlah yang dikeluarkan dari Harta Faedah Majmuk melebihi baki",
+    server_error_40805: "Ralat menambah rekod penarikan Compound Treasure",
 
 
 

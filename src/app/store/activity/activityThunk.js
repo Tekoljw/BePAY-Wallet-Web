@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import React from "react";
 import { showMessage } from 'app/store/fuse/messageSlice';
 import {showServerErrorTips} from "../../util/tools/function";
-import { updateActivityInfos, updateActivityConfig, updateActivityControl, updateActivityInfosExpiredTime} from "../user/index";
+import { updateActivityInfos, updateActivityConfig, updateActivityControl, updateActivityInfosExpiredTime, updateIsEarnFirstTime} from "../user/index";
 
 // 获取活动基础信息接口（赚钱页面）
 export const beingFiActivityInfo = createAsyncThunk(
@@ -33,12 +33,14 @@ export const beingFiActivityControl = createAsyncThunk(
         settings = settings || {};
         const state = getState();
         if (state.user.activityControl && !settings.forceUpdate) {
+            dispatch(updateIsEarnFirstTime(false));
             return state.user.activityControl
         } else {
+            dispatch(updateIsEarnFirstTime(true));
             const resultData = await React.$apiGet("activity.beingFiActivityControl", {});
             if (resultData.errno === 0) {
-               dispatch(updateActivityControl(resultData));
-               return resultData
+                dispatch(updateActivityControl(resultData));
+                return resultData
             } else {
                 showServerErrorTips(dispatch, resultData);
             }
