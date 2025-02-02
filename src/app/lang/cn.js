@@ -378,7 +378,7 @@ const locale = {
     card_4: "出款",
     card_5: "购买",
     card_6: "创建地址",
-    card_7: "向必赢用户转账",
+    card_7: "向BePay用户转账",
     card_8: "出款/提款",
     card_9: "申请卡片",
     card_10: "钱包余额",
