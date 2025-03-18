@@ -2574,7 +2574,7 @@ function Card(props) {
 
                             <div className='flex justify-between mt-10'>
                                 <div className='quanYiHuiZi'>{t('home_borrow_18')}</div>
-                                <div>1.5%</div>
+                                <div>0.5%</div>
                             </div>
 
                             <div className='flex justify-between mt-10'>
