@@ -1756,8 +1756,8 @@ function Wallet(props) {
 
               <div className="accountGongNengDi" onClick={() => {
                 copyTiShiFunc()
-                // changePhoneTab("buyCrypto");
-                // history.push('/wallet/home/buyCrypto')
+                changePhoneTab("buyCrypto");
+                history.push('/wallet/home/buyCrypto')
               }}>
                 <img className="accountGoneNengImg" src="/wallet/assets/images/menu/buyCrypto-active2.png"></img>
                 <div className="accountGoneNengZi">{t("card_5")}</div>

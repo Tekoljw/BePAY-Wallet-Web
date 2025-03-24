@@ -226,6 +226,20 @@ export const getStarPayPaymentOption = createAsyncThunk(
     }
 );
 
+
+// 获取RampPay的法币支付参数
+export const getRampPaymentOption = createAsyncThunk(
+    '/payment/Ramp/fiatPaymentOptions',
+    async (settings, { dispatch, getState }) => {
+        const paymentOption = await React.$api("payment.Ramp.paymentOption");
+        // 直接返回处理
+        return showServerErrorTips(dispatch, paymentOption);
+    }
+);
+
+
+
+
 // 获取StarPay的加密货币支付参数
 export const getStarPayCryptoTarget = createAsyncThunk(
     '/payment/StarPay/cryptoTarget',
@@ -235,6 +249,13 @@ export const getStarPayCryptoTarget = createAsyncThunk(
         return showServerErrorTips(dispatch, cryptoTarget);
     }
 );
+
+
+
+
+
+
+
 
 export const getStarPayConfig = createAsyncThunk(
     '/payment/StarPay/config',

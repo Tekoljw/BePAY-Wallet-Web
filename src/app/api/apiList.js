@@ -403,6 +403,25 @@ export default {
             },
         },
 
+
+        Ramp : {
+            config: {
+                url: "/payment/Ramp/config",
+                method: "post",
+                json: true,
+            },
+
+            paymentOption: {
+                url: "/payment/Ramp/fiatPaymentOptions",
+                method: "post",
+            },
+
+            cryptoTarget: {
+                url: "/payment/Ramp/fiatCryptoTarget",
+                method: "post",
+            },
+        },
+
         manualCryptoNotify: {
             url: "/payment/manualCryptoNotify",
             method: "post",
