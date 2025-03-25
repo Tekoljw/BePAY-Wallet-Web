@@ -5,7 +5,7 @@ import { setKycInfo } from "../config/index";
 import { updatePayoutBankList, updatePayoutWays, updateCreditConfig } from "../user/index"
 
 import format from 'date-fns/format';
-import {showServerErrorTips} from "../../util/tools/function";
+import { showServerErrorTips } from "../../util/tools/function";
 
 // action/thunk
 // 获取kyc状态
@@ -251,6 +251,22 @@ export const getStarPayCryptoTarget = createAsyncThunk(
 );
 
 
+// 获取Ramp的加密货币支付参数
+export const getRampCryptoTarget = createAsyncThunk(
+    '/payment/Ramp/fiatCryptoTarget',
+    async (settings, { dispatch, getState }) => {
+        settings = settings || {};
+        let data = {
+            currencyCode: settings.currencyCode
+        }
+        const cryptoTarget = await React.$api("payment.Ramp.cryptoTarget", data);
+        // 直接返回处理
+        return showServerErrorTips(dispatch, cryptoTarget);
+    }
+);
+
+
+
 
 
 
@@ -275,7 +291,7 @@ export const makeWithdrawOrder = createAsyncThunk(
     'payment/makeWithdrawOrder',
     async (settings, { dispatch, getState }) => {
         const result = await React.$api("payment.makeWithdrawOrder", settings);
-        return  showServerErrorTips(dispatch, result);
+        return showServerErrorTips(dispatch, result);
     }
 );
 
@@ -284,7 +300,7 @@ export const fiatSendTips = createAsyncThunk(
     'transfer/fiat/sendTips',
     async (settings, { dispatch, getState }) => {
         const result = await React.$api("payment.sendTips", settings);
-        return  showServerErrorTips(dispatch, result);
+        return showServerErrorTips(dispatch, result);
     }
 );
 

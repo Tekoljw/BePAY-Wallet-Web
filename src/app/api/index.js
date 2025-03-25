@@ -11,8 +11,8 @@ function getApiObj(url, data = {}) {
     return api;
 }
 
-// const BASE_API = '//test-api.funihash.com';
-const BASE_API = '//api.beingfi.com';
+const BASE_API = '//test-api.funihash.com';
+// const BASE_API = '//api.beingfi.com';
 
 const URL_PREFIX = BASE_API + "/fingernft";
 export function api(url, data = {}) {
