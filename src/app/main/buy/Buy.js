@@ -28,7 +28,6 @@ import {
     getLegendTradingPaymentOption,
     getStarPayPaymentOption,
     getRampPaymentOption,
-    getRampCryptoTarget,
     getStarPayCryptoTarget,
     getStarPayConfig
 } from "../../store/payment/paymentThunk";
@@ -38,7 +37,6 @@ import FormControl from "@mui/material/FormControl";
 import { useTranslation } from "react-i18next";
 import { showMessage } from "app/store/fuse/messageSlice";
 import userLoginType from "../../define/userLoginType";
-import { current } from '@reduxjs/toolkit';
 
 const container = {
     show: {
@@ -81,7 +79,6 @@ function Buy(props) {
     };
 
     const [amount, setAmount] = useState('');
-    const [buyAddress, setBuyAddress] = useState('');
     const userData = useSelector(selectUserData);
     const fiatsData = userData.fiat || [];
     const walletData = userData.wallet || {};
@@ -90,18 +87,13 @@ function Buy(props) {
     const symbols = useSelector(selectConfig).symbols || [];
     const [fiats, setFiats] = useState([]);
     const [fiatObj, setFiatObj] = useState({});
-    const [cryptos, setCryptos] = useState([]);
     const [fiatsSelected, setFiatsSelected] = useState(0);
-    const [cryptoSelected, setCryptoSelected] = useState(0);
-    const [currencyCode, setCurrencyCode] = useState('INR');
+    const [currencyCode, setCurrencyCode] = useState('USD');
     const [currencyBalance, setCurrencyBalance] = useState(0);
     const [payType, setPayType] = useState('StarPay');
     const [symbolWallet, setSymbolWallet] = useState([]);
     const [symbol, setSymbol] = useState('');
     const [noSupplier, setNoSupplier] = useState(false);
-    const [currencyCrypto, setCurrencyCrypto] = useState('ACH');
-    const [currencyNetWork, setCurrencyNetWork] = useState('ETH');
-
     const getCryptoTarget = async () => {
         let res = await dispatch(getLegendTradingCryptoTarget());
         return res;
@@ -127,23 +119,10 @@ function Buy(props) {
         return res;
     }
 
-    const getRampPayTarget = async () => {
-        const data = {
-            currencyCode: currencyCode,
-        };
-        let res = await dispatch(getRampCryptoTarget(data));
-        return res;
-    }
-
-    const getRampOption = async () => {
-        let res = await dispatch(getRampPaymentOption());
-        return res;
-    }
 
     const getSdkSymbolData = async (payType) => {
         let allSymbols = [];
         let paymentOption = {};
-        let cryptoTarget = {};
         if (payType === 'LegendTrading') {
             await Promise.all([getCryptoTarget(), getPaymentOption()]).then((resArr) => {
                 let cryptoTarget = resArr[0];
@@ -152,7 +131,12 @@ function Buy(props) {
                 })
                 paymentOption = resArr[1];
             });
+            // var cryptoTarget = await dispatch(getLegendTradingCryptoTarget());
+            // var paymentOption = await dispatch(getLegendTradingPaymentOption());
+
         } else if (payType === 'FaTPay') {
+            // var cryptoTarget = await dispatch(getFaTPayCryptoTarget());
+            // var paymentOption = await dispatch(getFaTPayPaymentOption());
             await Promise.all([getFaTPayTarget(), getFaTPayOption()]).then((resArr) => {
                 let cryptoTarget = resArr[0];
                 paymentOption = resArr[1];
@@ -164,78 +148,58 @@ function Buy(props) {
             });
 
         } else if (payType === 'StarPay') {
-            // await Promise.all([getStarPayTarget(), getStarPayOption()]).then((resArr) => {
-            await Promise.all([getRampOption()]).then((resArr) => {
-                paymentOption = resArr[0];
-                // if (cryptoTarget && cryptoTarget.payload && cryptoTarget.payload.data && cryptoTarget.payload.data.length > 0) {
-                //     cryptoTarget.payload.data.forEach((symbol, index) => {
-                //         if (allSymbols.indexOf(symbol.cryptoCurrency) === -1) {
-                //             allSymbols.push(symbol.cryptoCurrency);
-                //         }
-                //     })
-                // }
+            await Promise.all([getStarPayTarget(), getStarPayOption()]).then((resArr) => {
+                let cryptoTarget = resArr[0];
+                paymentOption = resArr[1];
+                if (cryptoTarget && cryptoTarget.payload && cryptoTarget.payload.data && cryptoTarget.payload.data.length > 0) {
+                    cryptoTarget.payload.data.forEach((symbol, index) => {
+                        if (allSymbols.indexOf(symbol.cryptoCurrency) === -1) {
+                            allSymbols.push(symbol.cryptoCurrency);
+                        }
+                    })
+                }
             });
         }
 
-        // if (allSymbols?.length > 0) {
-        //     let tmpSymbols = [];
-        //     for (let i = 0; i < allSymbols.length; i++) {
-        //         tmpSymbols[i] = {
-        //             avatar: arrayLookup(symbols, 'symbol', allSymbols[i], 'avatar') || 0,
-        //             balance: (arrayLookup(walletData.inner, 'symbol', allSymbols[i], 'balance') || 0).toFixed(6),
-        //             symbol: allSymbols[i],
-        //             tradeLock: arrayLookup(walletData.inner, 'symbol', allSymbols[i], 'tradeLock') || 0,
-        //             withdrawLock: arrayLookup(walletData.inner, 'symbol', allSymbols[i], 'withdrawLock') || 0
-        //         };
-        //     }
-        //     setSymbolWallet(tmpSymbols);
-        // }
-
+        if (allSymbols?.length > 0) {
+            let tmpSymbols = [];
+            for (let i = 0; i < allSymbols.length; i++) {
+                tmpSymbols[i] = {
+                    avatar: arrayLookup(symbols, 'symbol', allSymbols[i], 'avatar') || 0,
+                    balance: (arrayLookup(walletData.inner, 'symbol', allSymbols[i], 'balance') || 0).toFixed(6),
+                    symbol: allSymbols[i],
+                    tradeLock: arrayLookup(walletData.inner, 'symbol', allSymbols[i], 'tradeLock') || 0,
+                    withdrawLock: arrayLookup(walletData.inner, 'symbol', allSymbols[i], 'withdrawLock') || 0
+                };
+            }
+            setSymbolWallet(tmpSymbols);
+        }
         if (paymentOption?.payload?.data) {
             let tmpFiats = [];
-            // let tmpFiatObj = {};
-            // for (let [key, payment] of Object.entries(paymentOption.payload.data)) {
-            //     tmpFiats.push({
-            //         currencyCode: payment.currency,
-            //         balance: arrayLookup(fiatsData, 'currencyCode', payment.fiatCurrency, 'balance') || 0,
-            //         minAmount: payment.paymentOptions[0]?.minAmount ?? 0,
-            //         maxAmount: payment.paymentOptions[0]?.maxAmount ?? 0,
-            //         avatar: payment.avatar
-            //     });
-            //     tmpFiatObj[payment.fiatCurrency] = {
-            //         currencyCode: payment.fiatCurrency,
-            //         balance: arrayLookup(fiatsData, 'currencyCode', payment.fiatCurrency, 'balance') || 0,
-            //         minAmount: payment.paymentOptions[0]?.minAmount ?? 0,
-            //         maxAmount: payment.paymentOptions[0]?.maxAmount ?? 0,
-            //         avatar: payment.avatar
-            //     }
-            // }
+            let tmpFiatObj = {};
+            for (let [key, payment] of Object.entries(paymentOption.payload.data)) {
+                tmpFiats.push({
+                    currencyCode: payment.fiatCurrency,
+                    balance: arrayLookup(fiatsData, 'currencyCode', payment.fiatCurrency, 'balance') || 0,
+                    minAmount: payment.paymentOptions[0]?.minAmount ?? 0,
+                    maxAmount: payment.paymentOptions[0]?.maxAmount ?? 0,
+                    avatar: payment.avatar
+                });
 
-            paymentOption.payload.data.map((row, index) => {
-                if (!tmpFiats.some(item => item.currencyCode === row.currency)) {
-                    tmpFiats.push({
-                        currencyCode: row.currency,
-                        minAmount: row.payMin ?? 0,
-                        maxAmount: row.payMax ?? 0,
-                        avatar: "https://bedao.io/static/Icon/currency/" + row.currency + ".png"
-                    });
+                tmpFiatObj[payment.fiatCurrency] = {
+                    currencyCode: payment.fiatCurrency,
+                    balance: arrayLookup(fiatsData, 'currencyCode', payment.fiatCurrency, 'balance') || 0,
+                    minAmount: payment.paymentOptions[0]?.minAmount ?? 0,
+                    maxAmount: payment.paymentOptions[0]?.maxAmount ?? 0,
+                    avatar: payment.avatar
                 }
-            })
-
+            }
             if (tmpFiats.length > 0) {
                 setFiats(tmpFiats);
-                // setFiatObj(tmpFiatObj);
-                // setCurrencyCode(tmpFiats[0].currencyCode);
-                // setCurrencyBalance(tmpFiats[0].balance);
+                setFiatObj(tmpFiatObj);
+                setCurrencyCode(tmpFiats[0].currencyCode);
+                setCurrencyBalance(tmpFiats[0].balance);
             }
-
-            // if (cryptoTarget?.payload?.data) {
-            //     let tmpCrypto = [];
-            //     cryptoTarget.payload.data.map((row, index) => {
-            //         console.log("pppppppppppppppppp", row);
-            //     })
-            //     setCryptos(cryptoTarget.payload.data);
-            // }
         }
     };
 
@@ -244,38 +208,14 @@ function Buy(props) {
     }, []);
 
     useEffect(() => {
-        if (fiats.length > 0) {
-            getRampPayTarget();
-        }
-    }, [fiats]);
-
-    // useEffect(() => {
-    //     getSdkSymbolData(payType);
-    // }, [walletData.inner]);
-
-
-
-    useEffect(() => {
-        if (fiats.length > 0) {
-            setCurrencyCode(fiats[fiatsSelected].currencyCode)
-        }
-    }, [fiatsSelected]);
-
-
-    useEffect(() => {
-        console.log("iiiiiiiiii", currencyCode);
-    }, [currencyCode]);
-
+        getSdkSymbolData(payType);
+    }, [walletData.inner]);
 
     // select切换
     const handleChangeFiats = (event) => {
         setFiatsSelected(event.target.value);
         setCurrencyCode(fiats[event.target.value].currencyCode);
-        // setCurrencyBalance(fiats[event.target.value].balance);
-    };
-
-    const handleChangeCrypto = (event) => {
-        // setCurrencyCrypto();
+        setCurrencyBalance(fiats[event.target.value].balance);
     };
 
     // 购买
@@ -296,30 +236,31 @@ function Buy(props) {
                 // balance: 11         // 法币金额
             });
         } else if (payType === 'StarPay') {
-            getRampPayTarget();
-            // if (amount >= fiatObj[currencyCode]?.minAmount && amount <= fiatObj[currencyCode]?.maxAmount) {
-            //     dispatch(getStarPayConfig({
-            //         fiatCurrency: currencyCode,
-            //         amount,
-            //     })).then((res) => {
-            //         let result = res.payload
-            //         if (result.payurl) {
-            //             const loginType = getUserLoginType(userData);
-            //             switch (loginType) {
-            //                 case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP: { //telegramWebApp
-            //                     window.location.href = result.payurl
-            //                     break;
-            //                 }
-            //                 default: {
-            //                     window.open(result.payurl)
-            //                     break;
-            //                 }
-            //             }
-            //         }
-            //     });
-            // } else {
-            //     dispatch(showMessage({ message: 'Amount error', code: 2 }));
-            // }
+            getRampOption();
+            
+            if (amount >= fiatObj[currencyCode]?.minAmount && amount <= fiatObj[currencyCode]?.maxAmount) {
+                dispatch(getStarPayConfig({
+                    fiatCurrency: currencyCode,
+                    amount,
+                })).then((res) => {
+                    let result = res.payload
+                    if (result.payurl) {
+                        const loginType = getUserLoginType(userData);
+                        switch (loginType) {
+                            case userLoginType.USER_LOGIN_TYPE_TELEGRAM_WEB_APP: { //telegramWebApp
+                                window.location.href = result.payurl
+                                break;
+                            }
+                            default: {
+                                window.open(result.payurl)
+                                break;
+                            }
+                        }
+                    }
+                });
+            } else {
+                dispatch(showMessage({ message: 'Amount error', code: 2 }));
+            }
 
         }
     };
@@ -405,8 +346,6 @@ function Buy(props) {
                             className=""
                             style={{ padding: "1.2rem 1.5rem 1.5rem 1.5rem" }}
                         >
-
-
                             <Typography className="text-20 font-medium mb-16">
                                 {tabValue === 0 && <>
                                     {t('home_buy_1')}
@@ -414,79 +353,9 @@ function Buy(props) {
                                 {tabValue === 1 && <>
                                     {t('home_buy_2')}
                                 </>}&nbsp;
-                                {currencyCrypto}
+                                {symbol}
                             </Typography>
-
-
                             <Box
-                                className="w-full rounded-16 flex flex-col select-fieldset-noborder"
-                                sx={{
-                                    backgroundColor: '#1E293B',
-                                    border: 'none'
-                                }}
-                            >
-                                <FormControl sx={{
-                                    m: 1,
-                                    minWidth: "100%",
-                                    margin: 0,
-                                    border: 'none',
-                                    borderRadius: '8px!important',
-                                    backgroundColor: '#1E293B!important',
-                                    '&:before': {
-                                        display: 'none',
-                                    },
-                                    '&:first-of-type': {},
-                                    '&:last-of-type': {
-                                        marginBottom: 0,
-                                    }
-                                }}
-                                >
-                                    <Select
-                                        value={fiatsSelected}
-                                        onChange={handleChangeCrypto}
-                                        displayEmpty
-                                        inputProps={{ "aria-label": "Without label" }}
-                                        className="MuiSelect-icon"
-                                        MenuProps={{
-                                            PaperProps: {
-                                                style: {
-                                                    maxHeight: 300,
-                                                    border: 'none'
-                                                },
-                                            },
-                                        }}
-                                    >
-                                        {fiats.map((row, index) => {
-                                            return (
-                                                <MenuItem
-                                                    key={index}
-                                                    value={index}
-                                                >
-                                                    <div
-                                                        key={index}
-                                                        className="flex items-center py-4 flex-grow"
-                                                        style={{ width: '100%' }}
-                                                    >
-                                                        <div className="flex items-center">
-                                                            <img style={{
-                                                                width: '3rem',
-                                                                borderRadius: '999px'
-                                                            }} src={row.avatar} alt="" />
-                                                            <div className="px-12 font-medium">
-                                                                <Typography className="text-20 font-medium">{row.currencyCode}</Typography>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </MenuItem>
-                                            )
-                                        })}
-                                    </Select>
-                                </FormControl>
-                            </Box>
-
-
-
-                            {/* <Box
                                 className="w-full rounded-16 flex flex-col"
                                 sx={{
                                     backgroundColor: '#1E293B',
@@ -497,7 +366,7 @@ function Buy(props) {
                                     symbol={symbolWallet}
                                     setSymbol={setSymbol}
                                 />}
-                            </Box> */}
+                            </Box>
 
                             <Typography className="text-20 font-medium my-16">
                                 {tabValue === 0 && <>
@@ -573,57 +442,66 @@ function Buy(props) {
                                         })}
                                     </Select>
                                 </FormControl>
+
+                                {/*<StyledAccordion*/}
+                                {/*    component={motion.div}*/}
+                                {/*    variants={item}*/}
+                                {/*    classes={{*/}
+                                {/*        root: 'FaqPage-panel shadow',*/}
+                                {/*    }}*/}
+                                {/*    expanded={expanded === true}*/}
+                                {/*    onChange={toggleAccordion(true)}*/}
+                                {/*>*/}
+                                {/*    <AccordionSummary*/}
+                                {/*        expandIcon={<FuseSvgIcon>heroicons-outline:chevron-down</FuseSvgIcon>}*/}
+                                {/*    >*/}
+                                {/*        <div className="flex items-center py-4 flex-grow" style={{width: '100%'}}>*/}
+                                {/*            <div className="flex items-center">*/}
+                                {/*                <img style={{*/}
+                                {/*                    width: '3rem'*/}
+                                {/*                }} src="" alt=""/>*/}
+                                {/*                <div className="px-12 font-medium">*/}
+                                {/*                    <Typography className="text-16 font-medium">{currencyCode}</Typography>*/}
+                                {/*                </div>*/}
+                                {/*            </div>*/}
+                                {/*            <div style={{marginLeft: 'auto'}}>*/}
+                                {/*                <div className="px-12 font-medium" style={{textAlign: 'right'}}>*/}
+                                {/*                    /!*<Typography className="text-16 font-medium">{currencyBalance}</Typography>*!/*/}
+                                {/*                </div>*/}
+                                {/*            </div>*/}
+                                {/*        </div>*/}
+                                {/*    </AccordionSummary>*/}
+                                {/*    <AccordionDetails>*/}
+                                {/*        <div*/}
+                                {/*            style={{*/}
+                                {/*                flexWrap: 'wrap',*/}
+                                {/*            }}*/}
+                                {/*            className='flex items-center justify-between'*/}
+                                {/*        >*/}
+                                {/*            {fiats.map((row, index) => {*/}
+                                {/*                return (*/}
+                                {/*                    <div*/}
+                                {/*                        key={index}*/}
+                                {/*                        style={{*/}
+                                {/*                            width: '30%',*/}
+                                {/*                            margin: '.8rem 1.5%',*/}
+                                {/*                            textAlign: 'center',*/}
+                                {/*                            border: '1px solid #2DD4BF',*/}
+                                {/*                            borderRadius: '8px'*/}
+                                {/*                        }}*/}
+                                {/*                        className="my-8 cursor-pointer"*/}
+                                {/*                        onClick={() => {setCurrencyCode(row.currencyCode);setCurrencyBalance(row.balance)}}*/}
+                                {/*                    >*/}
+                                {/*                        <Typography className="text-16 font-medium">{row.currencyCode}</Typography>*/}
+                                {/*                        /!*<Typography className="text-12" style={{color: '#94A3B8'}}>{row.balance}</Typography>*!/*/}
+                                {/*                    </div>*/}
+                                {/*                )*/}
+                                {/*            })}*/}
+                                {/*        </div>*/}
+                                {/*    </AccordionDetails>*/}
+                                {/*</StyledAccordion>*/}
+
                             </Box>
-
-
-                            <Typography className="text-20 font-medium my-16">
-                                {tabValue === 0 && <>
-                                    支付方式
-                                </>}
-                            </Typography>
-
-
-                            {tabValue === 0 && <>
-                                <Box
-                                    className={clsx("w-full rounded-8  flex flex-col my-16 cursor-pointer")}
-                                    sx={{
-                                        backgroundColor: '#1E293B',
-                                        border: "1px solid #1E293B"
-                                    }}
-                                    onClick={() => {
-                                        setPayType('StarPay');
-                                        initSymbolAndFiat();
-                                        getSdkSymbolData('StarPay');
-                                    }}
-                                >
-                                    <StyledAccordion
-                                        component={motion.div}
-                                        variants={item}
-                                        classes={{
-                                            root: 'FaqPage-panel shadow',
-                                        }}
-                                        expanded={expanded === 2}
-                                        onChange={toggleAccordion(2)}
-                                    >
-                                        <div className="flex items-center flex-grow buy-pay-type " style={{ width: '100%', padding: '1.6rem 1.2rem' }}>
-                                            <div className="flex items-center">
-                                                <div style={{
-                                                    width: '30px',
-                                                    borderRadius: '5px',
-                                                }}>
-                                                    <img className='border-r-10' src="wallet/assets/images/buy/wechat_pay.png" alt="" />
-                                                </div>
-                                                <div className="px-12 font-medium">
-                                                    <Typography className="text-20 font-medium">微信</Typography>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </StyledAccordion>
-                                </Box>
-                            </>}
-
-
-
 
                             <Typography className="text-20 font-medium my-16" >{t('home_buy_4')}</Typography>
 
@@ -732,22 +610,6 @@ function Buy(props) {
                                         />
 
                                     </FormControl>
-
-                                    <Typography className="text-20 font-medium my-16" >Address</Typography>
-
-                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
-                                        <OutlinedInput
-                                            id="outlined-adornment-address send-tips-container-address"
-                                            value={buyAddress}
-                                            onChange={(event) => { setBuyAddress(event.target.value) }}
-                                            aria-describedby="outlined-weight-helper-text"
-                                            inputProps={{
-                                                'aria-label': 'address',
-                                            }}
-                                        />
-
-                                    </FormControl>
-
                                 </>}
                             </>}
 
