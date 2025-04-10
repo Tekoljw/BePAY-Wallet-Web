@@ -265,7 +265,15 @@ export const getRampCryptoTarget = createAsyncThunk(
     }
 );
 
-
+export const getRampConfig = createAsyncThunk(
+    '/payment/Ramp/getRampConfig',
+    async (settings, { dispatch, getState }) => {
+        settings = settings || {};
+        const res = await React.$api("payment.Ramp.config", settings);
+        // 直接返回处理
+        return showServerErrorTips(dispatch, res);
+    }
+);
 
 
 

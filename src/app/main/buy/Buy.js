@@ -30,7 +30,8 @@ import {
     getRampPaymentOption,
     getRampCryptoTarget,
     getStarPayCryptoTarget,
-    getStarPayConfig
+    getStarPayConfig,
+    getRampConfig,
 } from "../../store/payment/paymentThunk";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
@@ -88,19 +89,29 @@ function Buy(props) {
     const config = useSelector(selectConfig);
     const currencys = useSelector(selectConfig).payment.currency || [];
     const symbols = useSelector(selectConfig).symbols || [];
-    const [fiats, setFiats] = useState([]);
     const [fiatObj, setFiatObj] = useState({});
     const [cryptos, setCryptos] = useState([]);
-    const [fiatsSelected, setFiatsSelected] = useState(0);
     const [cryptoSelected, setCryptoSelected] = useState(0);
-    const [currencyCode, setCurrencyCode] = useState('INR');
     const [currencyBalance, setCurrencyBalance] = useState(0);
     const [payType, setPayType] = useState('StarPay');
     const [symbolWallet, setSymbolWallet] = useState([]);
-    const [symbol, setSymbol] = useState('');
     const [noSupplier, setNoSupplier] = useState(false);
     const [currencyCrypto, setCurrencyCrypto] = useState('ACH');
     const [currencyNetWork, setCurrencyNetWork] = useState('ETH');
+
+
+    const [fiats, setFiats] = useState({});
+    const [currencyCode, setCurrencyCode] = useState('USD');
+    const [fiatsSelected, setFiatsSelected] = useState(0);
+    const [currencyPayWay, setCurrencyPayWay] = useState([]);
+    const [currencyPayWaySelected, setCurrencyPayWaySelected] = useState(0);
+    const [symbolList, setSymbolList] = useState([]);
+    const [symbol, setSymbol] = useState('');
+    const [symbolSelected, setSymbolSelected] = useState(0);
+    const [cryptoNetwork, setCryptoNetwork] = useState('');
+    const [cryptoNetworkList, setCryptoNetworkList] = useState([]);
+    const [cryptoNetworkSelected, setCryptoNetworkSelected] = useState(0);
+
 
     const getCryptoTarget = async () => {
         let res = await dispatch(getLegendTradingCryptoTarget());
@@ -127,17 +138,87 @@ function Buy(props) {
         return res;
     }
 
-    const getRampPayTarget = async () => {
+    const getRampPayTarget = async (currencyParam) => {
         const data = {
-            currencyCode: currencyCode,
+            currencyCode: currencyParam,
         };
         let res = await dispatch(getRampCryptoTarget(data));
-        return res;
+
+        let symbolOptions = {}
+        if (res.payload?.data) {
+            res.payload.data.map((row, index) => {
+
+                if (symbolOptions[row.crypto]) {
+                    symbolOptions[row.crypto].networkList.push(row)
+                } else {
+                    symbolOptions[row.crypto] = {...row,
+                        networkList: [row]
+                    }
+                }
+            })
+        }
+
+        if (Object.keys(symbolOptions).length !== 0) {
+            let symbolOptionsArr = Object.values(symbolOptions)
+            setSymbolList(symbolOptionsArr)
+            setSymbol(symbolOptionsArr[0].crypto)
+            getSymbolData(symbolOptionsArr[0].crypto, symbolOptionsArr)
+        }
+
+    }
+
+    const getSymbolData = (symbol, symbolsParam) => {
+        if (!symbolsParam) {
+            symbolsParam = symbolList
+        }
+
+        if (symbolsParam.length > 0) {
+            let symbolSelectIndex = symbolsParam.findIndex(item => item.crypto === symbol)
+            setSymbolSelected(symbolSelectIndex)
+            setCryptoNetworkList(symbolsParam[symbolSelectIndex].networkList);
+            setCryptoNetwork(symbolsParam[symbolSelectIndex].networkList[0].network)
+        }
     }
 
     const getRampOption = async () => {
         let res = await dispatch(getRampPaymentOption());
-        return res;
+        let fiatOptions = {}
+        if (res.payload?.data) {
+            res.payload.data.map((row, index) => {
+
+                if (fiatOptions[row.currency]) {
+                    fiatOptions[row.currency].payWay.push(row)
+                } else {
+                    fiatOptions[row.currency] = {...row,
+                        avatar: "https://bedao.io/static/Icon/currency/" + row.currency + ".png",
+                        payWay: [row]
+                    }
+                }
+            })
+        }
+
+        if (Object.keys(fiatOptions).length !== 0) {
+            let faitOptionsArr = Object.values(fiatOptions)
+            let defaultCurrency = userData.currencyCode || 'USD'
+            setCurrencyCode(defaultCurrency)
+            setFiats(faitOptionsArr)
+
+            getCurrencyData(defaultCurrency, faitOptionsArr)
+        }
+    }
+
+    const getCurrencyData = (currency, fiatsParam) => {
+        if (!fiatsParam) {
+            fiatsParam = fiats
+        }
+
+        if (fiatsParam.length > 0) {
+            let fiatSelectIndex = fiatsParam.findIndex(item => item.currency === currency)
+            setFiatsSelected(fiatSelectIndex)
+            setCurrencyPayWay(fiatsParam[fiatSelectIndex].payWay);
+
+            getRampPayTarget(currency)
+        }
     }
 
     const getSdkSymbolData = async (payType) => {
@@ -241,43 +322,72 @@ function Buy(props) {
 
     useEffect(() => {
         setPhoneTab('buyCrypto');
+        getRampOption();
     }, []);
 
     useEffect(() => {
-        if (fiats.length > 0) {
-            getRampPayTarget();
-        }
-    }, [fiats]);
-
-    // useEffect(() => {
-    //     getSdkSymbolData(payType);
-    // }, [walletData.inner]);
-
-
-
-    useEffect(() => {
-        if (fiats.length > 0) {
-            setCurrencyCode(fiats[fiatsSelected].currencyCode)
-        }
-    }, [fiatsSelected]);
-
-
-    useEffect(() => {
-        console.log("iiiiiiiiii", currencyCode);
+        getCurrencyData(currencyCode)
     }, [currencyCode]);
+
+    useEffect(() => {
+        getSymbolData(symbol)
+    }, [symbol]);
 
 
     // select切换
     const handleChangeFiats = (event) => {
         setFiatsSelected(event.target.value);
-        setCurrencyCode(fiats[event.target.value].currencyCode);
+        setCurrencyCode(fiats[event.target.value].currency);
+        setCurrencyPayWay(fiats[event.target.value].payWay);
+        setCurrencyPayWaySelected(0)
         // setCurrencyBalance(fiats[event.target.value].balance);
     };
 
+    const handleChangePayWay = (event) => {
+        setCurrencyPayWaySelected(event.target.value);
+    }
+
+    const handleChangeNetwork = (event) => {
+        setCryptoNetworkSelected(event.target.value);
+        setCryptoNetwork(cryptoNetworkList[event.target.value].network);
+    }
+
     const handleChangeCrypto = (event) => {
         // setCurrencyCrypto();
+        setSymbolSelected(event.target.value);
+        setSymbol(symbolList[event.target.value].crypto);
+        setCryptoNetworkList(symbolList[event.target.value].networkList);
+        setCryptoNetworkSelected(0)
+        setCryptoNetwork(symbolList[event.target.value].networkList[0].network)
     };
 
+    const handleSubmit = async () => {
+        let minAmount = parseInt(cryptoNetworkList[cryptoNetworkSelected].minPurchaseAmount);
+        let maxAmount = parseInt(cryptoNetworkList[cryptoNetworkSelected].maxPurchaseAmount);
+
+        if (amount < minAmount || amount > maxAmount) {
+            dispatch(showMessage({
+                message: `Amount range：${minAmount} - ${maxAmount}`,
+                code: 2
+            }));
+            return
+        }
+        let res = await dispatch(getRampConfig({
+            fiatCurrency: currencyCode,
+            // payWayCode: currencyPayWay[currencyPayWaySelected].payWayCode,
+            cryptoCurrency: symbol,
+            chain: cryptoNetwork,
+            amount: amount,
+            // address: buyAddress,
+        }));
+
+        let result = res.payload
+        if (result.errno === 0 && result.data.status === 'success') {
+            history.push(result.data.payData)
+        } else {
+            dispatch(showMessage({ message: 'System busy', code: 2 }));
+        }
+    }
     // 购买
     const goBuy = () => {
         if (payType === 'LegendTrading') {
@@ -406,100 +516,7 @@ function Buy(props) {
                             style={{ padding: "1.2rem 1.5rem 1.5rem 1.5rem" }}
                         >
 
-
                             <Typography className="text-20 font-medium mb-16">
-                                {tabValue === 0 && <>
-                                    {t('home_buy_1')}
-                                </>}
-                                {tabValue === 1 && <>
-                                    {t('home_buy_2')}
-                                </>}&nbsp;
-                                {currencyCrypto}
-                            </Typography>
-
-
-                            <Box
-                                className="w-full rounded-16 flex flex-col select-fieldset-noborder"
-                                sx={{
-                                    backgroundColor: '#1E293B',
-                                    border: 'none'
-                                }}
-                            >
-                                <FormControl sx={{
-                                    m: 1,
-                                    minWidth: "100%",
-                                    margin: 0,
-                                    border: 'none',
-                                    borderRadius: '8px!important',
-                                    backgroundColor: '#1E293B!important',
-                                    '&:before': {
-                                        display: 'none',
-                                    },
-                                    '&:first-of-type': {},
-                                    '&:last-of-type': {
-                                        marginBottom: 0,
-                                    }
-                                }}
-                                >
-                                    <Select
-                                        value={fiatsSelected}
-                                        onChange={handleChangeCrypto}
-                                        displayEmpty
-                                        inputProps={{ "aria-label": "Without label" }}
-                                        className="MuiSelect-icon"
-                                        MenuProps={{
-                                            PaperProps: {
-                                                style: {
-                                                    maxHeight: 300,
-                                                    border: 'none'
-                                                },
-                                            },
-                                        }}
-                                    >
-                                        {fiats.map((row, index) => {
-                                            return (
-                                                <MenuItem
-                                                    key={index}
-                                                    value={index}
-                                                >
-                                                    <div
-                                                        key={index}
-                                                        className="flex items-center py-4 flex-grow"
-                                                        style={{ width: '100%' }}
-                                                    >
-                                                        <div className="flex items-center">
-                                                            <img style={{
-                                                                width: '3rem',
-                                                                borderRadius: '999px'
-                                                            }} src={row.avatar} alt="" />
-                                                            <div className="px-12 font-medium">
-                                                                <Typography className="text-20 font-medium">{row.currencyCode}</Typography>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </MenuItem>
-                                            )
-                                        })}
-                                    </Select>
-                                </FormControl>
-                            </Box>
-
-
-
-                            {/* <Box
-                                className="w-full rounded-16 flex flex-col"
-                                sx={{
-                                    backgroundColor: '#1E293B',
-                                    border: 'none'
-                                }}
-                            >
-                                {symbolWallet.length > 0 && <StyledAccordionSelect
-                                    symbol={symbolWallet}
-                                    setSymbol={setSymbol}
-                                />}
-                            </Box> */}
-
-                            <Typography className="text-20 font-medium my-16">
                                 {tabValue === 0 && <>
                                     {t('home_buy_3')}
                                 </>}
@@ -547,7 +564,7 @@ function Buy(props) {
                                             },
                                         }}
                                     >
-                                        {fiats.map((row, index) => {
+                                        {fiats.length > 0 && fiats.map((row, index) => {
                                             return (
                                                 <MenuItem
                                                     key={index}
@@ -564,7 +581,153 @@ function Buy(props) {
                                                                 borderRadius: '999px'
                                                             }} src={row.avatar} alt="" />
                                                             <div className="px-12 font-medium">
-                                                                <Typography className="text-20 font-medium">{row.currencyCode}</Typography>
+                                                                <Typography className="text-20 font-medium">{row.currency}</Typography>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </MenuItem>
+                                            )
+                                        })}
+                                    </Select>
+                                </FormControl>
+                            </Box>
+
+                            <Typography className="text-20 font-medium my-16">
+                                {tabValue === 0 && <>
+                                    {t('home_buy_1')}
+                                </>}
+                                {tabValue === 1 && <>
+                                    {t('home_buy_2')}
+                                </>}&nbsp;
+                                {symbol}
+                            </Typography>
+
+
+                            <Box
+                                className="w-full rounded-16 flex flex-col select-fieldset-noborder"
+                                sx={{
+                                    backgroundColor: '#1E293B',
+                                    border: 'none'
+                                }}
+                            >
+                                <FormControl sx={{
+                                    m: 1,
+                                    minWidth: "100%",
+                                    margin: 0,
+                                    border: 'none',
+                                    borderRadius: '8px!important',
+                                    backgroundColor: '#1E293B!important',
+                                    '&:before': {
+                                        display: 'none',
+                                    },
+                                    '&:first-of-type': {},
+                                    '&:last-of-type': {
+                                        marginBottom: 0,
+                                    }
+                                }}
+                                >
+                                    <Select
+                                        value={symbolSelected}
+                                        onChange={handleChangeCrypto}
+                                        displayEmpty
+                                        inputProps={{ "aria-label": "Without label" }}
+                                        className="MuiSelect-icon"
+                                        MenuProps={{
+                                            PaperProps: {
+                                                style: {
+                                                    maxHeight: 300,
+                                                    border: 'none'
+                                                },
+                                            },
+                                        }}
+                                    >
+                                        {symbolList.map((row, index) => {
+                                            return (
+                                                <MenuItem
+                                                    key={index}
+                                                    value={index}
+                                                >
+                                                    <div
+                                                        key={index}
+                                                        className="flex items-center py-4 flex-grow"
+                                                        style={{ width: '100%' }}
+                                                    >
+                                                        <div className="flex items-center">
+                                                            <img style={{
+                                                                width: '3rem',
+                                                                borderRadius: '999px'
+                                                            }} src={row.icon} alt="" />
+                                                            <div className="px-12 font-medium">
+                                                                <Typography className="text-20 font-medium">{row.crypto}</Typography>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </MenuItem>
+                                            )
+                                        })}
+                                    </Select>
+                                </FormControl>
+                            </Box>
+
+                            <Typography className="text-20 font-medium my-16">
+                                {tabValue === 0 && <>
+                                    Chain
+                                </>}
+                            </Typography>
+
+
+                            <Box
+                                className="w-full rounded-16 flex flex-col select-fieldset-noborder"
+                                sx={{
+                                    backgroundColor: '#1E293B',
+                                    border: 'none'
+                                }}
+                            >
+                                <FormControl sx={{
+                                    m: 1,
+                                    minWidth: "100%",
+                                    margin: 0,
+                                    border: 'none',
+                                    borderRadius: '8px!important',
+                                    backgroundColor: '#1E293B!important',
+                                    '&:before': {
+                                        display: 'none',
+                                    },
+                                    '&:first-of-type': {},
+                                    '&:last-of-type': {
+                                        marginBottom: 0,
+                                    }
+                                }}
+                                >
+                                    <Select
+                                        value={cryptoNetworkSelected}
+                                        onChange={handleChangeNetwork}
+                                        displayEmpty
+                                        inputProps={{ "aria-label": "Without label" }}
+                                        className="MuiSelect-icon"
+                                        MenuProps={{
+                                            PaperProps: {
+                                                style: {
+                                                    maxHeight: 300,
+                                                    border: 'none'
+                                                },
+                                            },
+                                        }}
+                                    >
+                                        {cryptoNetworkList.map((row, index) => {
+                                            return (
+                                                <MenuItem
+                                                    key={index}
+                                                    value={index}
+                                                >
+                                                    <div
+                                                        key={index}
+                                                        className="flex items-center py-4 flex-grow"
+                                                        style={{ width: '100%' }}
+                                                    >
+                                                        <div className="flex items-center">
+                                                            <div className="px-12 font-medium">
+                                                                <Typography className="text-20 font-medium">{row.network}</Typography>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -576,57 +739,96 @@ function Buy(props) {
                             </Box>
 
 
+
+                            {/* <Box
+                                className="w-full rounded-16 flex flex-col"
+                                sx={{
+                                    backgroundColor: '#1E293B',
+                                    border: 'none'
+                                }}
+                            >
+                                {symbolWallet.length > 0 && <StyledAccordionSelect
+                                    symbol={symbolWallet}
+                                    setSymbol={setSymbol}
+                                />}
+                            </Box> */}
+
+
                             <Typography className="text-20 font-medium my-16">
                                 {tabValue === 0 && <>
-                                    支付方式
+                                    Pay Type
                                 </>}
                             </Typography>
 
 
-                            {tabValue === 0 && <>
-                                <Box
-                                    className={clsx("w-full rounded-8  flex flex-col my-16 cursor-pointer")}
-                                    sx={{
-                                        backgroundColor: '#1E293B',
-                                        border: "1px solid #1E293B"
-                                    }}
-                                    onClick={() => {
-                                        setPayType('StarPay');
-                                        initSymbolAndFiat();
-                                        getSdkSymbolData('StarPay');
-                                    }}
-                                >
-                                    <StyledAccordion
-                                        component={motion.div}
-                                        variants={item}
-                                        classes={{
-                                            root: 'FaqPage-panel shadow',
-                                        }}
-                                        expanded={expanded === 2}
-                                        onChange={toggleAccordion(2)}
-                                    >
-                                        <div className="flex items-center flex-grow buy-pay-type " style={{ width: '100%', padding: '1.6rem 1.2rem' }}>
-                                            <div className="flex items-center">
-                                                <div style={{
-                                                    width: '30px',
-                                                    borderRadius: '5px',
-                                                }}>
-                                                    <img className='border-r-10' src="wallet/assets/images/buy/wechat_pay.png" alt="" />
-                                                </div>
-                                                <div className="px-12 font-medium">
-                                                    <Typography className="text-20 font-medium">微信</Typography>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </StyledAccordion>
-                                </Box>
-                            </>}
+                            {/*{tabValue === 0 && <>*/}
+                            {/*    <Box*/}
+                            {/*        className="w-full rounded-16 flex flex-col select-fieldset-noborder"*/}
+                            {/*        sx={{*/}
+                            {/*            backgroundColor: '#1E293B',*/}
+                            {/*            border: 'none'*/}
+                            {/*        }}*/}
+                            {/*    >*/}
+                            {/*        <FormControl sx={{*/}
+                            {/*            m: 1,*/}
+                            {/*            minWidth: "100%",*/}
+                            {/*            margin: 0,*/}
+                            {/*            border: 'none',*/}
+                            {/*            borderRadius: '8px!important',*/}
+                            {/*            backgroundColor: '#1E293B!important',*/}
+                            {/*            '&:before': {*/}
+                            {/*                display: 'none',*/}
+                            {/*            },*/}
+                            {/*            '&:first-of-type': {},*/}
+                            {/*            '&:last-of-type': {*/}
+                            {/*                marginBottom: 0,*/}
+                            {/*            }*/}
+                            {/*        }}*/}
+                            {/*        >*/}
+                            {/*            <Select*/}
+                            {/*                value={currencyPayWaySelected}*/}
+                            {/*                onChange={handleChangePayWay}*/}
+                            {/*                displayEmpty*/}
+                            {/*                inputProps={{ "aria-label": "Without label" }}*/}
+                            {/*                className="MuiSelect-icon"*/}
+                            {/*                MenuProps={{*/}
+                            {/*                    PaperProps: {*/}
+                            {/*                        style: {*/}
+                            {/*                            maxHeight: 300,*/}
+                            {/*                            border: 'none'*/}
+                            {/*                        },*/}
+                            {/*                    },*/}
+                            {/*                }}*/}
+                            {/*            >*/}
+                            {/*                {currencyPayWay.length > 0 && currencyPayWay.map((row, index) => {*/}
+                            {/*                    return (*/}
+                            {/*                        <MenuItem*/}
+                            {/*                            key={index}*/}
+                            {/*                            value={index}*/}
+                            {/*                        >*/}
+                            {/*                            <div*/}
+                            {/*                                key={index}*/}
+                            {/*                                className="flex items-center py-4 flex-grow"*/}
+                            {/*                                style={{ width: '100%' }}*/}
+                            {/*                            >*/}
+                            {/*                                <div className="flex items-center">*/}
+                            {/*                                    <div className="px-12 font-medium">*/}
+                            {/*                                        <Typography className="text-20 font-medium">{row.payWayName}</Typography>*/}
+                            {/*                                    </div>*/}
+                            {/*                                </div>*/}
+                            {/*                            </div>*/}
+                            {/*                        </MenuItem>*/}
+                            {/*                    )*/}
+                            {/*                })}*/}
+                            {/*            </Select>*/}
+                            {/*        </FormControl>*/}
+                            {/*    </Box>*/}
+                            {/*</>}*/}
 
 
 
 
                             <Typography className="text-20 font-medium my-16" >{t('home_buy_4')}</Typography>
-
                             {tabValue === 0 && <>
                                 <Box
                                     className={clsx("w-full rounded-8  flex flex-col my-16 cursor-pointer", payType === 'StarPay' && 'buy-pay-type-acitve')}
@@ -635,9 +837,6 @@ function Buy(props) {
                                         border: "1px solid #1E293B"
                                     }}
                                     onClick={() => {
-                                        setPayType('StarPay');
-                                        initSymbolAndFiat();
-                                        getSdkSymbolData('StarPay');
                                     }}
                                 >
                                     <StyledAccordion
@@ -647,7 +846,7 @@ function Buy(props) {
                                             root: 'FaqPage-panel shadow',
                                         }}
                                         expanded={expanded === 2}
-                                        onChange={toggleAccordion(2)}
+                                        // onChange={toggleAccordion(2)}
                                     >
                                         <div className="flex items-center flex-grow buy-pay-type " style={{ width: '100%', padding: '1.6rem 1.2rem' }}>
                                             <div className="flex items-center">
@@ -733,20 +932,20 @@ function Buy(props) {
 
                                     </FormControl>
 
-                                    <Typography className="text-20 font-medium my-16" >Address</Typography>
+                                    {/*<Typography className="text-20 font-medium my-16" >Address</Typography>*/}
 
-                                    <FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">
-                                        <OutlinedInput
-                                            id="outlined-adornment-address send-tips-container-address"
-                                            value={buyAddress}
-                                            onChange={(event) => { setBuyAddress(event.target.value) }}
-                                            aria-describedby="outlined-weight-helper-text"
-                                            inputProps={{
-                                                'aria-label': 'address',
-                                            }}
-                                        />
+                                    {/*<FormControl sx={{ width: '100%', borderColor: '#94A3B8' }} variant="outlined">*/}
+                                    {/*    <OutlinedInput*/}
+                                    {/*        id="outlined-adornment-address send-tips-container-address"*/}
+                                    {/*        value={buyAddress}*/}
+                                    {/*        onChange={(event) => { setBuyAddress(event.target.value) }}*/}
+                                    {/*        aria-describedby="outlined-weight-helper-text"*/}
+                                    {/*        inputProps={{*/}
+                                    {/*            'aria-label': 'address',*/}
+                                    {/*        }}*/}
+                                    {/*    />*/}
 
-                                    </FormControl>
+                                    {/*</FormControl>*/}
 
                                 </>}
                             </>}
@@ -790,9 +989,9 @@ function Buy(props) {
                                 color="secondary"
                                 variant="contained"
                                 sx={{ backgroundColor: '#0D9488', color: '#ffffff' }}
-                                disabled={tabValue === 1 && payType === 'StarPay'}
+                                disabled={tabValue === 1}
                                 onClick={() => {
-                                    goBuy();
+                                    handleSubmit();
                                 }}
                             >
                                 {tabValue === 0 && <>

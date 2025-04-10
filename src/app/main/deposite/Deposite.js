@@ -267,8 +267,6 @@ function Deposite() {
     const [tokenId, setTokenId] = useState('');
     const [openExtraAddressFeeModal, setOpenExtraAddressFeeModal] = useState(false);
     const [balanceNotEnough, setBalanceNotEnough] = useState(false);
-
-    console.log('enter deposit page')
     const changePhoneTab = (tab) => {
         window.localStorage.setItem('phoneTab', tab);
     }
